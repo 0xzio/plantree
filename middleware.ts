@@ -2,15 +2,6 @@ import { CID } from 'multiformats/cid'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
-function isValidCID(cidString: string) {
-  try {
-    CID.parse(cidString)
-    return true
-  } catch (error) {
-    return false
-  }
-}
-
 // This function can be marked `async` if using `await` inside
 export async function middleware(req: NextRequest) {
   const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN
@@ -38,10 +29,10 @@ export async function middleware(req: NextRequest) {
 
     const ipfsUrl = `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${cid}${pathname}`
 
-    const response = await fetch(ipfsUrl)
-    const contentType = response.headers.get('content-type')
+    const res = await fetch(ipfsUrl)
+    const contentType = res.headers.get('content-type')
 
-    if (!response.ok) {
+    if (!res.ok) {
       return NextResponse.json(
         { error: 'Failed to fetch content from IPFS' },
         { status: 500 },
@@ -49,21 +40,28 @@ export async function middleware(req: NextRequest) {
     }
 
     if (contentType && contentType.startsWith('image/')) {
-      const blob = await response.blob()
+      const blob = await res.blob()
       const arrayBuffer = await blob.arrayBuffer()
 
       return new NextResponse(arrayBuffer, {
+        status: 200,
         headers: {
           'Content-Type': contentType || 'application/octet-stream',
           'Content-Length': arrayBuffer.byteLength.toString(),
+          'Cache-Control': 'max-age=31536000',
+          'CDN-Cache-Control': 'max-age=31536000',
+          'Vercel-CDN-Cache-Control': 'max-age=31536000',
         },
       })
     } else {
-      const ipfsContent = await response.text()
+      const ipfsContent = await res.text()
 
       return new NextResponse(ipfsContent, {
         headers: {
           'Content-Type': contentType || 'text/plain',
+          'Cache-Control': 'max-age=31536000',
+          'CDN-Cache-Control': 'max-age=31536000',
+          'Vercel-CDN-Cache-Control': 'max-age=31536000',
         },
       })
     }
