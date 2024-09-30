@@ -1,5 +1,5 @@
 {
-  "name": "space3-root",
+  "name": "plantree-web",
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev",
