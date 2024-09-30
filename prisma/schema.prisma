@@ -1,0 +1,19 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL") // uses connection pooling
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Cid {
+  id        String @id @default(uuid())
+  original  String @unique
+  lowercase String @unique
+
+  @@index([lowercase])
+}
