@@ -34,7 +34,11 @@ export async function middleware(req: NextRequest) {
 
     if (!res.ok) {
       return NextResponse.json(
-        { error: 'Failed to fetch content from IPFS' },
+        {
+          error: 'Failed to fetch content from IPFS',
+          msg: res.json(),
+          raw: res,
+        },
         { status: 500 },
       )
     }
@@ -79,6 +83,6 @@ export const config = {
      * 4. all root files inside /public (e.g. /favicon.ico)
      */
     // '/((?!api/|_next/|_static/|_vercel|[\\w-]+\\.\\w+).*)',
-    '/((?!api/|_next/|_static/|_vercel).*)',
+    '/((?!api/|_static/|_vercel).*)',
   ],
 }

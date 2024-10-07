@@ -17,3 +17,9 @@ model Cid {
 
   @@index([lowercase])
 }
+
+model Domain {
+  id           String @id @default(uuid())
+  spaceAddress String
+  domain       String @unique
+}
