@@ -1,4 +1,3 @@
-import { CID } from 'multiformats/cid'
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 
@@ -27,7 +26,7 @@ export async function middleware(req: NextRequest) {
 
     const { cid } = await fetch(GET_CID_URL).then((res) => res.json())
 
-    const ipfsUrl = `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${cid}${pathname}`
+    const ipfsUrl = `${process.env.NEXT_PUBLIC_IPFS_GATEWAY}/ipfs/${cid}${pathname}`
 
     const res = await fetch(ipfsUrl)
     const contentType = res.headers.get('content-type')

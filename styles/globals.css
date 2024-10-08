@@ -71,3 +71,20 @@
     @apply bg-background text-foreground;
   } */
 }
+
+.plan-editor > div {
+  height: 100%;
+}
+
+.about-editor > div > div {
+  height: 100%;
+}
+
+.table tr th:last-child,
+.table tr td:last-child {
+  text-align: right;
+}
+
+.table td {
+  padding: 6px 0;
+}

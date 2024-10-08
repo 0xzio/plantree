@@ -1,0 +1,128 @@
+'use client'
+
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import LoadingDots from '@/components/icons/loading-dots'
+import { Button } from '@/components/ui/button'
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
+import { Space } from '@/domains/Space'
+import { spaceAtom, useSpace } from '@/hooks/useSpace'
+import { updateSpaceById } from '@/hooks/useSpaces'
+import { spaceAbi } from '@/lib/abi'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { revalidateMetadata } from '@/lib/revalidateTag'
+import { api } from '@/lib/trpc'
+import { wagmiConfig } from '@/lib/wagmi'
+import { store } from '@/store'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
+import { toast } from 'sonner'
+import { z } from 'zod'
+import { useUpdateSpaceDialog } from './useUpdateSpaceDialog'
+
+const FormSchema = z.object({
+  subdomain: z.string().min(1, {
+    message: 'Subdomain must be at least 1 characters.',
+  }),
+})
+
+export function UpdateSpaceForm() {
+  const { space } = useSpace()
+  const { setIsOpen } = useUpdateSpaceDialog()
+  const [loading, setLoading] = useState(false)
+
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      subdomain: space.subdomain,
+    },
+  })
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    try {
+      setLoading(true)
+      // console.log('data:', data)
+
+      const res = await fetch('/api/ipfs-add', {
+        method: 'POST',
+        body: JSON.stringify({
+          address: space.address,
+          content: JSON.stringify({
+            ...space.spaceInfo,
+            ...data,
+          }),
+        }),
+        headers: { 'Content-Type': 'application/json' },
+      }).then((d) => d.json())
+
+      const hash = await writeContract(wagmiConfig, {
+        address: space.address,
+        abi: spaceAbi,
+        functionName: 'updateConfig',
+        args: [res.cid, space.stakingRevenuePercent],
+      })
+
+      await waitForTransactionReceipt(wagmiConfig, { hash })
+
+      updateSpaceById(space.id, data)
+
+      store.set(
+        spaceAtom,
+        new Space({
+          ...space.raw,
+          ...data,
+          uri: res.cid,
+        }),
+      )
+
+      toast.success('updated successfully!')
+      revalidateMetadata('spaces')
+      setIsOpen(false)
+    } catch (error) {
+      const msg = extractErrorMessage(error)
+      toast.error(msg || 'Failed to update. Please try again later.')
+    }
+
+    setLoading(false)
+  }
+
+  return (
+    <div className="flex flex-col gap-8">
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <FormField
+            control={form.control}
+            name="subdomain"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Subdomain</FormLabel>
+                <FormControl>
+                  <Input
+                    placeholder="Subdomain"
+                    {...field}
+                    className="w-full"
+                  />
+                </FormControl>
+                <FormDescription>The subdomain of your site.</FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <Button type="submit" className="w-32">
+            {loading ? <LoadingDots color="#808080" /> : <p>Save</p>}
+          </Button>
+        </form>
+      </Form>
+    </div>
+  )
+}

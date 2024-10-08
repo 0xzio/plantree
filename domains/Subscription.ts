@@ -13,6 +13,10 @@ const SECONDS_PER_DAY = 86400
 export class Subscription {
   constructor(public raw: SubscriptionRaw) {}
 
+  get planId() {
+    return this.raw.planId
+  }
+
   get start() {
     return this.raw.startTime
   }

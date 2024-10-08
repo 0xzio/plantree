@@ -1,7 +1,13 @@
+import { editorDefaultValue, SECONDS_PER_DAY } from '@/lib/constants'
 import { precision } from '@/lib/math'
-import { FEE_RATE, SECONDS_PER_DAY } from './Space'
+import { FEE_RATE } from './Space'
 
 export const SECONDS_PER_MONTH = BigInt(24 * 60 * 60 * 30) // 30 days
+
+export type PlanInfo = {
+  name: string
+  benefits: string
+}
 
 export type PlanRaw = {
   uri: string
@@ -9,16 +15,48 @@ export type PlanRaw = {
   isActive: boolean
 }
 
+export type PlanType = PlanRaw & PlanInfo
+
+export enum PlanStatus {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
+}
+
 export class Plan {
   constructor(
-    public raw: PlanRaw,
+    public id: number,
+    public raw: PlanType,
     private x: bigint,
     private y: bigint,
     private k: bigint,
   ) {}
 
-  get name() {
+  get uri() {
     return this.raw.uri
+  }
+
+  get name() {
+    return this.raw.name
+  }
+
+  get benefits() {
+    try {
+      JSON.parse(this.raw.benefits)
+      return this.raw.benefits
+    } catch (error) {
+      return JSON.stringify(editorDefaultValue)
+    }
+  }
+  get benefitsJson() {
+    return JSON.parse(this.raw.benefits)
+  }
+
+  get isActive() {
+    return this.raw.isActive
+  }
+
+  get status() {
+    return this.raw.isActive ? PlanStatus.ACTIVE : PlanStatus.INACTIVE
   }
 
   get subscriptionPrice() {

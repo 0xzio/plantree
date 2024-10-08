@@ -1,0 +1,183 @@
+import { spaceAbi } from '@/lib/abi'
+import { IPFS_GATEWAY } from '@/lib/constants'
+import { redisKeys } from '@/lib/redisKeys'
+import { SpaceInfo, SpaceOnEvent, SpaceType } from '@/lib/types'
+import { wagmiConfig } from '@/lib/wagmi'
+import { readContracts } from '@wagmi/core'
+import { gql, request } from 'graphql-request'
+import Redis from 'ioredis'
+import ky from 'ky'
+import { Address } from 'viem'
+import { z } from 'zod'
+import { publicProcedure, router } from '../trpc'
+
+const redis = new Redis(process.env.REDIS_URL!)
+interface EthPriceResponse {
+  price: number
+}
+
+const spaceQuery = gql`
+  query space($id: String!) {
+    space(id: $id) {
+      id
+      spaceId
+      address
+      founder
+      symbol
+      name
+      preBuyEthAmount
+      ethVolume
+      tokenVolume
+      tradeCreatorFee
+      memberCount
+      uri
+      members {
+        id
+      }
+    }
+  }
+`
+
+export const spaceRouter = router({
+  getSpace: publicProcedure
+    .input(
+      z.object({
+        chainId: z.number().optional(),
+        address: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { chainId } = input
+      const address = input.address.toLowerCase() as Address
+      const key = redisKeys.space(address)
+      const ttl = 60 * 5 //  5 minutes
+
+      const cachedSpace = await redis.get(key)
+
+      if (typeof cachedSpace === 'string' && cachedSpace.length > 0) {
+        return JSON.parse(cachedSpace) as SpaceType
+      }
+
+      const [res1, res2] = await Promise.all([
+        readContracts(wagmiConfig, {
+          contracts: [
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'token',
+            },
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'config',
+            },
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'name',
+            },
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'symbol',
+            },
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'totalSupply',
+            },
+          ],
+          allowFailure: false,
+        }),
+
+        request<{ space: SpaceOnEvent }>({
+          url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+          document: spaceQuery,
+          variables: {
+            id: address.toLowerCase(),
+          },
+        }),
+      ])
+
+      const uri = res1[1][0]
+      const stakingRevenuePercent = res1[1][1]
+
+      let spaceInfo = {} as SpaceInfo
+      if (uri) {
+        spaceInfo = await ky
+          .get(`${IPFS_GATEWAY}/ipfs/${uri}`)
+          .json<SpaceInfo>()
+      }
+
+      const space = {
+        ...res2.space,
+        address: address,
+        x: res1[0][0].toString(),
+        y: res1[0][1].toString(),
+        k: res1[0][2].toString(),
+        uri,
+        stakingRevenuePercent: stakingRevenuePercent.toString(),
+        symbol: res1[3],
+        totalSupply: res1[4].toString(),
+        ...spaceInfo,
+        name: spaceInfo?.name || res1[2] || res2?.space.name,
+      } as SpaceType
+
+      await redis.set(key, JSON.stringify(space), 'EX', ttl)
+      return space
+    }),
+
+  logoImages: publicProcedure
+    .input(
+      z.array(
+        z.object({
+          address: z.string(),
+          uri: z.string().optional(),
+        }),
+      ),
+    )
+    .query(async ({ input }) => {
+      const ttl = 60 * 60 // 60 minutes
+      const logo: Record<string, string> = {}
+
+      for (const item of input) {
+        if (!item.uri) continue
+
+        const key = redisKeys.spaceLogo(item.address)
+        const cid = await redis.get(key)
+
+        if (typeof cid === 'string' && cid.length > 0) {
+          logo[item.address] = cid
+        } else {
+          const url = IPFS_GATEWAY + '/ipfs/' + item.uri!
+          const res = await ky.get(url).json<{ logo: string }>()
+
+          await redis.set(key, res.logo, 'EX', ttl)
+          logo[item.address] = res.logo
+        }
+      }
+
+      return logo
+    }),
+
+  ethPrice: publicProcedure.query(async ({ ctx }) => {
+    const cacheKey = 'ETHUSDT_PRICE'
+    const cacheTTL = 30 //  30s
+    try {
+      const cachedPrice = await redis.get(cacheKey)
+      if (cachedPrice) return parseFloat(cachedPrice)
+
+      const response = await ky
+        .get('https://cache.bodhi.wtf/etherprice')
+        .json<EthPriceResponse>()
+
+      const ethPrice = response.price
+      await redis.set(cacheKey, ethPrice.toString(), 'EX', cacheTTL)
+
+      return ethPrice
+    } catch (error) {
+      console.error('Error fetching ETH price:', error)
+      throw new Error('Failed to fetch ETH price')
+    }
+  }),
+})

@@ -12,21 +12,19 @@ module.exports = {
   publicRuntimeConfig: {
     NODE_ENV: env.NODE_ENV,
   },
-  transpilePackages: [],
+  transpilePackages: ['react-tweet'],
 
   images: {
     remotePatterns: [
+      { hostname: '*.spaceprotocol.xyz' },
       { hostname: 'public.blob.vercel-storage.com' },
       { hostname: '2cil7amusloluyl8.public.blob.vercel-storage.com' },
       { hostname: '*.public.blob.vercel-storage.com' },
       { hostname: 'res.cloudinary.com' },
-      { hostname: 'abs.twimg.com' },
-      { hostname: 'pbs.twimg.com' },
       { hostname: 'avatar.vercel.sh' },
       { hostname: 'avatars.githubusercontent.com' },
       { hostname: 'www.google.com' },
       { hostname: 'flag.vercel.app' },
-      { hostname: 'illustrations.popsy.co' },
     ],
   },
   webpack: (config, { isServer }) => {

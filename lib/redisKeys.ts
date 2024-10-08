@@ -1,6 +1,10 @@
 export const redisKeys = {
-  space(id: string) {
-    return `space:${id}`
+  space(address: string) {
+    return `space:${address}`
+  },
+
+  spaceLogo(address: string) {
+    return `space:logo:${address}`
   },
 
   mySpaces(address: string) {

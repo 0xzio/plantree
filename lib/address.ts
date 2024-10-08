@@ -3,21 +3,15 @@ import { NetworkNames } from './constants'
 const NETWORK = process.env.NEXT_PUBLIC_NETWORK as NetworkNames
 
 const developAddress = {
-  USDC: '0x87174b7C93dB67ab6307951e3A71e70C720D9700',
-
-  SpaceFactory: '0x5d5bf147e2C4824C6A488821475A63F3aaD71183',
+  SpaceFactory: '0xBB49C3C9a9d34FcaDC6Bcc7EffFC1d6592e8473a',
 }
 
 const arbSepoliaAddress = {
-  USDC: '0x87174b7C93dB67ab6307951e3A71e70C720D9700',
-
-  SpaceFactory: '0x5d5bf147e2C4824C6A488821475A63F3aaD71183',
+  SpaceFactory: '0x7338e3E4CeD6916686cf4E82c515ECD9D244C934',
 }
 
 const baseSepoliaAddress = {
-  USDC: '0x87174b7C93dB67ab6307951e3A71e70C720D9700',
-
-  SpaceFactory: '0x5026a0b7b8de5900EdAE9bb5D51D878e732D9AeB',
+  SpaceFactory: '0x6A96100F5e5231c3e838e1150eEF9255062895Ee',
 }
 
 export const addressMap: Record<keyof typeof developAddress, any> =

@@ -22,4 +22,6 @@ model Domain {
   id           String @id @default(uuid())
   spaceAddress String
   domain       String @unique
+  cid          String @default("")
+  ipns         String @default("")
 }
