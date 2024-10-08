@@ -12,7 +12,7 @@ export async function middleware(req: NextRequest) {
 
   let hash = host?.replace(`.${ROOT_DOMAIN}`, '') || ''
 
-  console.log('====hash:', hash)
+  // console.log('====hash:', hash)
 
   if (hash.length) {
     if (!hash.startsWith('qm')) {

@@ -20,7 +20,7 @@ model Cid {
 
 model Domain {
   id           String @id @default(uuid())
-  spaceAddress String
+  spaceAddress String @unique
   domain       String @unique
   cid          String @default("")
   ipns         String @default("")
