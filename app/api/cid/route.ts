@@ -22,7 +22,6 @@ export async function POST(req: Request) {
   }
 
   const cid = json.cid as string
-
   const item = await prisma.cid.findUnique({ where: { original: cid } })
 
   if (!item) {

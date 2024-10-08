@@ -26,8 +26,7 @@ export function useQueryLogoImages(spaces: SpaceOnEvent[]) {
 
   useEffect(() => {
     if (data) {
-      console.log('======data:', data)
-
+      // console.log('======data:', data)
       store.set(logoImagesAtom, data)
     }
   }, [data])
