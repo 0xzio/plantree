@@ -4,14 +4,17 @@ const NETWORK = process.env.NEXT_PUBLIC_NETWORK as NetworkNames
 
 const developAddress = {
   SpaceFactory: '0xBB49C3C9a9d34FcaDC6Bcc7EffFC1d6592e8473a',
+  TreeToken: '0x3b124F95542B8bD7B8E0F54367E4F69702FAcBC6',
 }
 
 const arbSepoliaAddress = {
   SpaceFactory: '0x7338e3E4CeD6916686cf4E82c515ECD9D244C934',
+  TreeToken: '0x3b124F95542B8bD7B8E0F54367E4F69702FAcBC6',
 }
 
 const baseSepoliaAddress = {
   SpaceFactory: '0x6A96100F5e5231c3e838e1150eEF9255062895Ee',
+  TreeToken: '0x3b124F95542B8bD7B8E0F54367E4F69702FAcBC6',
 }
 
 export const addressMap: Record<keyof typeof developAddress, any> =

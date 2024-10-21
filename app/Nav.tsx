@@ -19,11 +19,10 @@ export const Nav = () => {
     //   isExternal: true,
     //   to: process.env.NEXT_PUBLIC_ABOUT_URL!,
     // },
-    // {
-    //   text: 'Join this project',
-    //   isToast: true,
-    //   to: '/',
-    // },
+    {
+      text: 'Sponsor',
+      to: '/sponsor',
+    },
   ]
 
   return (

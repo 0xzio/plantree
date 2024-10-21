@@ -8,9 +8,9 @@ import { Config, cookieToInitialState, State, WagmiProvider } from 'wagmi'
 const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
 
 const metadata = {
-  name: 'Respace',
-  description: 'Building Space On-Chain',
-  url: 'https://www.respace.one', // origin must match your domain & subdomain
+  name: 'Plantree',
+  description: 'A tool to build web3 independent blog',
+  url: 'https://www.plantree.xyz',
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
 }
 
@@ -21,8 +21,12 @@ const modal = createAppKit({
   networks: networks,
   defaultNetwork: networks[0],
   metadata: metadata,
+  showWallets: true,
   features: {
     analytics: true, // Optional - defaults to your Cloud configuration
+    email: false,
+    socials: false,
+    allWallets: true,
   },
 })
 

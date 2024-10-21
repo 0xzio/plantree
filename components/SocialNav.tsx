@@ -20,7 +20,7 @@ export function SocialNav({ className }: Props) {
         <span className="i-[ic--round-discord] w-7 h-7  hover:text-neutral-600"></span>
       </a>
       <a
-        href="https://github.com/0xzio/penx"
+        href="https://github.com/plantree-xyz/plantree"
         target="_blank"
         className="inline-flex"
       >
