@@ -157,9 +157,9 @@ export function CreateSpaceForm() {
     <Form {...form}>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="grid gap-4 pb-20 items-center"
+        className="grid gap-4 items-center"
       >
-        <div className="p-4 pb-8 mb-4 space-y-4">
+        <div className="pb-8 mb-4 space-y-4">
           <FormField
             control={form.control}
             name="logo"

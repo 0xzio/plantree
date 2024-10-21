@@ -20,8 +20,21 @@ export const Nav = () => {
     //   to: process.env.NEXT_PUBLIC_ABOUT_URL!,
     // },
     {
+      text: 'Tokenomics',
+      to: '/tokenomics',
+    },
+
+    {
       text: 'Sponsor',
       to: '/sponsor',
+    },
+    {
+      text: 'Rewards',
+      to: '/rewards',
+    },
+    {
+      text: 'Docs',
+      to: '/docs',
     },
   ]
 
@@ -32,10 +45,10 @@ export const Nav = () => {
           return (
             <div
               key={i}
-              className="inline-flex text-neutral-600 cursor-pointer"
+              className="inline-flex text-foreground/80 cursor-pointer"
               onClick={() => {
                 toast.success(
-                  'Join Respace Discord and contact 0xZio in "Join this project" channel.',
+                  'Join Plantree Discord and contact 0xZio in "Join this project" channel.',
                 )
               }}
             >
@@ -49,7 +62,7 @@ export const Nav = () => {
               <a
                 href={item.to}
                 target="_blank"
-                className="text-neutral-600 flex items-center gap-1"
+                className="text-foreground/80 flex items-center gap-1"
               >
                 {item.text && <div>{item.text}</div>}
                 {!!item.icon && item.icon}
@@ -63,7 +76,7 @@ export const Nav = () => {
 
         return (
           <div key={i}>
-            <Link href={item.to} className="text-neutral-600">
+            <Link href={item.to} className="text-foreground/80">
               {item.text}
             </Link>
           </div>

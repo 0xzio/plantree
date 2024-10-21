@@ -11,8 +11,8 @@ export function LaunchButton() {
   const { push } = useRouter()
   return (
     <Button
-      size="lg"
-      className="font-semibold rounded-2xl h-12 px-10 text-base"
+      variant="ghost"
+      className="rounded-2xl border border-black hover:bg-black hover:text-white"
       onClick={() => {
         if (!isConnected) return open()
         push('/create-space')

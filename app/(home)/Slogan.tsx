@@ -15,17 +15,17 @@ const poppins = Poppins({
 
 export function Slogan() {
   return (
-    <div className="space-y-2">
-      <div className="text-4xl leading-normal font-bold space-y-2">
-        <div
-          className={cn(
-            'font-semibold leading-none md:leading-tight',
-            poppins.className,
-          )}
-        >
-          The best time to plant a tree was 20 years ago, <br /> The second-best
-          time is now.
+    <div className="space-y-6 text-center">
+      <div className="text-6xl leading-tight font-bold space-y-2">
+        Build your own <br />
+        <div className="bg-gradient-to-r from-orange-500  to-pink-500 bg-clip-text text-transparent">
+          web3 independent blog
         </div>
+      </div>
+
+      <div className="text-xl text-foreground/60">
+        The best time to plant a tree was 20 years ago, <br /> The second-best
+        time is now.
       </div>
     </div>
   )

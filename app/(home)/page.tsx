@@ -25,7 +25,7 @@ export default async function HomePage() {
             key={space.id}
             href={`/space/${space.id}`}
             className={cn(
-              'flex items-center justify-between p-5 gap-3 bg-white rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',
+              'flex items-center justify-between p-5 gap-3 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',
               // spaces.length !== index + 1 && 'border-b border-neutral-100/90',
             )}
           >
@@ -43,16 +43,16 @@ export default async function HomePage() {
                   <div className="text-xl font-semibold mr-3">{space.name}</div>
                 </div>
                 <div className="flex gap-2 items-center">
-                  <div className="text-neutral-700 text-sm">
+                  <div className="text-foreground/80 text-sm">
                     ${space.symbol}
                   </div>
-                  <div className="text-xs text-neutral-500">
+                  <div className="text-xs text-foreground/60">
                     TVL {precision.toDecimal(space.ethVolume).toFixed(6)} ETH
                   </div>
                 </div>
 
                 <div className="flex items-center gap-3">
-                  <div className="text-xs text-neutral-500">
+                  <div className="text-xs text-foreground/60">
                     {space.memberCount} members
                   </div>
                   <div className="flex gap-1">

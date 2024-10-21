@@ -2,6 +2,7 @@
 
 import { CreateSpaceForm } from '@/components/CreateSpaceDialog/CreateSpaceForm'
 import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -14,8 +15,8 @@ export default function Page() {
           <div className="flex items-center gap-2 mb-10">
             <Button
               size="icon"
-              variant="secondary"
-              className="rounded-full"
+              variant="ghost"
+              className="rounded-full shadow bg-white"
               onClick={() => {
                 push('/')
               }}
@@ -24,9 +25,9 @@ export default function Page() {
             </Button>
             <div className="font-semibold">Create Space</div>
           </div>
-          <div className="w-[500px] flex-col flex justify-center">
+          <Card className="w-[500px] flex-col flex justify-center p-5 shadow border-none">
             <CreateSpaceForm />
-          </div>
+          </Card>
         </div>
       </div>
     </div>

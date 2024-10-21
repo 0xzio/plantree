@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
@@ -72,9 +73,9 @@ export default async function RootLayout({
           // cal.variable,
           // inter.variable,
           // fontSans.variable,
-          'bg-orange-50',
+          'bg-zinc-50 dark:bg-zinc-900',
+          // 'bg-orange-50',
           poppins.className,
-          // url === '/' && 'bg-zinc-100',
         )}
       >
         <NextTopLoader
@@ -87,7 +88,7 @@ export default async function RootLayout({
         <ThemeProvider
           attribute="class"
           // defaultTheme="system"
-          defaultTheme="light"
+          defaultTheme="dark"
           enableSystem
           disableTransitionOnChange
         >
@@ -107,15 +108,26 @@ export default async function RootLayout({
                   </Link>
                 </div>
 
-                <div className="flex items-center gap-10">
-                  <Nav />
+                <Nav />
+
+                <div className="flex items-center gap-2">
                   <SocialNav className="text-neutral-800" />
+                  <ModeToggle />
                   <Profile />
                 </div>
               </div>
 
               <div className="relative">
                 <div className="z-10 relative">{children}</div>
+                <div
+                  className="fixed left-[30%] top-[400px] -z-10 w-[800px] h-[800px] opacity-30 dark:opacity-0"
+                  style={{
+                    filter: 'blur(150px) saturate(150%)',
+                    transform: 'translateZ(0)',
+                    backgroundImage:
+                      'radial-gradient(at 27% 37%, #3a8bfd 0, transparent 50%), radial-gradient(at 97% 21%, #9772fe 0, transparent 50%), radial-gradient(at 52% 99%, #fd3a4e 0, transparent 50%), radial-gradient(at 10% 29%, #5afc7d 0, transparent 50%), radial-gradient(at 97% 96%, #e4c795 0, transparent 50%), radial-gradient(at 33% 50%, #8ca8e8 0, transparent 50%), radial-gradient(at 79% 53%, #eea5ba 0, transparent 50%)',
+                  }}
+                ></div>
               </div>
             </div>
 
