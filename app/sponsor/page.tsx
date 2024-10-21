@@ -1,10 +1,10 @@
-'use client'
-
 import { Transaction } from '@/components/token/Transaction'
 import { Badge } from '@/components/ui/badge'
 import { addressMap } from '@/lib/address'
 import { Globe } from 'lucide-react'
 import { SponsorSlogan } from './SponsorSlogan'
+
+// export const runtime = 'edge'
 
 export default function HomePage() {
   return (

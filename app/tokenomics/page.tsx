@@ -9,6 +9,8 @@ interface TokenInfoItemProps {
   value: ReactNode
 }
 
+// export const runtime = 'edge'
+
 function TokenInfoItem({ label, value }: TokenInfoItemProps) {
   return (
     <div className="space-y-2">
