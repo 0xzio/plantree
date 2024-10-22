@@ -9,6 +9,7 @@
  */
 
 import { prisma } from '@/lib/prisma'
+import { UserRole } from '@prisma/client'
 import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import type { Context } from './context'
@@ -49,3 +50,31 @@ export const mergeRouters = t.mergeRouters
  * @link https://trpc.io/docs/v11/server/server-side-calls
  */
 export const createCallerFactory = t.createCallerFactory
+
+// procedure that asserts that the user is logged in
+export const protectedProcedure = t.procedure.use(
+  async ({ ctx, next, path, ...rest }) => {
+    if (!ctx.token?.uid) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'user not found',
+      })
+    }
+
+    const role = ctx.token.role as any
+    if (![UserRole.ADMIN].includes(role)) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message: 'No permission',
+      })
+    }
+
+    // if (['spae.update'].includes(path)) {
+    //   checkSpacePermission(ctx.token.uid, rest.input.id)
+    // }
+
+    return next({
+      ctx: { token: ctx.token },
+    })
+  },
+)

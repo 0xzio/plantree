@@ -9,6 +9,7 @@ interface CreateContextOptions {
 type Token = {
   name: string
   uid: string
+  role: string
   address: string
   email: string
   sub: string
@@ -26,7 +27,9 @@ export async function createContextInner(_opts: CreateContextOptions) {
   return {}
 }
 
-export type Context = Awaited<ReturnType<typeof createContextInner>> & {}
+export type Context = Awaited<ReturnType<typeof createContextInner>> & {
+  token: Token
+}
 
 /**
  * Creates context for an incoming request

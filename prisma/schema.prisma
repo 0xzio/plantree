@@ -10,6 +10,31 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum UserRole {
+  ADMIN
+  USER
+}
+
+model User {
+  id            String    @id @default(uuid())
+  address       String    @unique
+  name          String?
+  ensName       String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  bio           String    @default("")
+  role          UserRole  @default(USER)
+  discord       Json? // discord oauth info
+  github        Json? // github oauth info
+  google        Json? // google oauth info
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@index([id])
+  @@index([address])
+}
+
 model Cid {
   id        String @id @default(uuid())
   original  String @unique
