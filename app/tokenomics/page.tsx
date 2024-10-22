@@ -103,12 +103,9 @@ export default function Page() {
       <div className="flex flex-col justify-center p-8 gap-12 bg-background dark:bg-zinc-800 rounded-2xl shadow">
         <div className="font-extrabold text-5xl pt">How get $TREE?</div>
         <div>
-          <div className="text-xl leading-relaxed text-foreground/60 mb-4">
-            There to way to get $TREE:
-          </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
-              <div className="text-xl font-bold">
+              <div className="text-xl font-medium">
                 1. Sponsor Plantree project and get $TREE:{' '}
               </div>
               <Button size="sm" asChild variant="brand">
@@ -116,24 +113,85 @@ export default function Page() {
               </Button>
             </div>
 
-            <div className="flex flex-col gap-4">
-              <div className="text-xl font-bold">
-                2. Do any contribution to Plantree project and get rewards.
+            <div className="flex items-center gap-4">
+              <div className="text-xl font-medium">
+                2. Create a blog and get $TREE automatically.
               </div>
-              <ul className="list-disc list-inside ml-5">
-                <li>Item 1</li>
-                <li>Item 2</li>
-                <li>Item 3</li>
-                <li>Item 3</li>
-                <li>Item 3</li>
-                <li>Item 3</li>
-              </ul>
+            </div>
 
-              <div>
+            <div className="flex flex-col gap-2 text-foreground">
+              <div className="flex items-center gap-4">
+                <div className="text-xl font-medium ">
+                  3. Contribute to the Plantree project and earn rewards.
+                </div>
                 <Button size="sm" asChild variant="brand">
                   <Link href="/sponsor">Request rewards</Link>
                 </Button>
               </div>
+              <ul className="list-disc list-inside ml-5 text-foreground/80">
+                <li>
+                  Contribute code to{' '}
+                  <a
+                    href="https://github.com/plantree-xyz/plantree"
+                    className="text-brand-500"
+                  >
+                    github.com/plantree-xyz/plantree
+                  </a>
+                  .
+                </li>
+                <li>
+                  Contribute valid issues to{' '}
+                  <a
+                    href="https://github.com/plantree-xyz/plantree"
+                    target="_blank"
+                    className="text-brand-500"
+                  >
+                    github.com/plantree-xyz/plantree
+                  </a>
+                  .
+                </li>
+                <li>
+                  Improve docs{' '}
+                  <a
+                    href="https://github.com/plantree-xyz/plantree-docs"
+                    target="_blank"
+                    className="text-brand-500"
+                  >
+                    https:/github.com/plantree-xyz/plantree-docs
+                  </a>
+                  .
+                </li>
+                <li>
+                  Improve official themes{' '}
+                  <a
+                    href="https://github.com/plantree-xyz/plantree-themes"
+                    target="_blank"
+                    className="text-brand-500"
+                  >
+                    github.com/plantree-xyz/plantree-themes
+                  </a>
+                  .
+                </li>
+                <li>Create new theme.</li>
+                <li>Any contributions to the Plantree project...</li>
+              </ul>
+            </div>
+
+            <div className="flex flex-col gap-2">
+              <div className="flex items-center gap-4">
+                <div className="text-xl font-medium">
+                  4. Curate the Plantree project and earn rewards.
+                </div>
+                <Button size="sm" asChild variant="brand">
+                  <Link href="/sponsor">Request rewards</Link>
+                </Button>
+              </div>
+              <ul className="list-disc list-inside ml-5">
+                <li>Write some post about Plantree</li>
+                <li>Post a tweet about Plantree on X</li>
+                <li>Make a cast about Plantree on Farcaster</li>
+                <li>Any curation to the Plantree project...</li>
+              </ul>
             </div>
           </div>
         </div>
