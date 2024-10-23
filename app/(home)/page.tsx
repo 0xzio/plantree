@@ -7,7 +7,7 @@ import Link from 'next/link'
 import { LaunchButton } from './LaunchButton'
 import { SpaceLogo } from './SpaceLogo'
 
-// export const runtime = 'edge'
+export const dynamic = 'force-static'
 
 export default async function HomePage() {
   const spaces = await getHomeSpaces()

@@ -11,8 +11,6 @@ import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth'
 import credentialsProvider from 'next-auth/providers/credentials'
 import { Address, createPublicClient, http } from 'viem'
 import { mainnet } from 'viem/chains'
-import { spaceAbi } from './abi'
-import { wagmiConfig } from './wagmi'
 
 const nextAuthSecret = process.env.NEXTAUTH_SECRET
 if (!nextAuthSecret) {

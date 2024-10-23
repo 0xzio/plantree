@@ -6,6 +6,8 @@ import { Card } from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
+export const dynamic = 'force-static'
+
 export default function Page() {
   const { push } = useRouter()
   return (
