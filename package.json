@@ -2,7 +2,7 @@
   "name": "plantree-web",
   "private": true,
   "scripts": {
-    "dev": "prisma generate && next dev",
+    "dev": "prisma generate && next dev -p 4000",
     "build": "prisma generate && next build",
     "db-generate": "prisma generate",
     "db-push": "prisma generate && prisma db push",
@@ -56,6 +56,7 @@
     "date-fns": "^2.30.0",
     "focus-trap-react": "^10.2.3",
     "framer-motion": "^10.16.4",
+    "googleapis": "^144.0.0",
     "graphql-request": "^6.1.0",
     "gray-matter": "^4.0.3",
     "ioredis": "^5.4.1",
