@@ -36,6 +36,8 @@ function AllocationItem({ percent, desc, dotColor }: AllocationItemProps) {
   )
 }
 
+export const dynamic = 'force-static'
+
 export default function Page() {
   return (
     <div className="mt-20 space-y-20 pb-20">

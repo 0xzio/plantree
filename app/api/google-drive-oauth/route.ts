@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state') as string
 
-  const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-oauth`
+  const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-drive-oauth`
 
   console.log('=======state:', state, 'redirectUri:', redirectUri)
 
