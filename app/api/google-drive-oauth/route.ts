@@ -21,42 +21,18 @@ export async function GET(req: NextRequest) {
 
   const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-drive-oauth`
 
-  console.log('=======state:', state, 'redirectUri:', redirectUri)
+  // console.log('=======state:', state, 'redirectUri:', redirectUri)
 
   if (!code || !state) {
     return NextResponse.redirect('/error') // Handle error accordingly
   }
 
   const [host, address] = state.split('____')
-  console.log('>>>>>>>>host, address:', host, address)
+  // console.log('>>>>>>>>host, address:', host, address)
 
   const auth = new google.auth.OAuth2(clientId, clientSecret, redirectUri)
 
   const { tokens } = await auth.getToken(code)
-
-  console.log('========tokens:', tokens)
-
-  const oauth2Client = new google.auth.OAuth2(clientId, clientSecret)
-  oauth2Client.setCredentials(tokens)
-
-  const oauth2 = google.oauth2({
-    auth: oauth2Client,
-    version: 'v2',
-  })
-
-  const userInfo = await oauth2.userinfo.get()
-
-  // console.log('userInfo======userInfo.data:', userInfo.data)
-
-  // await prisma.user.update({
-  //   where: { address: siteUrl },
-  //   data: {
-  //     google: {
-  //       ...tokens,
-  //       ...userInfo.data,
-  //     },
-  //   },
-  // })
 
   return NextResponse.redirect(
     `${host}/api/google-oauth?address=${address}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`,
