@@ -2,12 +2,14 @@
  * This file contains the root router of your tRPC-backend
  */
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
+import { rewardsRouter } from './routers/rewards'
 import { spaceRouter } from './routers/space'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => 'yay!'),
   space: spaceRouter,
+  rewards: rewardsRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

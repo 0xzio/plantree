@@ -78,3 +78,17 @@ export const protectedProcedure = t.procedure.use(
     })
   },
 )
+
+// Procedure that checks if the user is logged in
+export const loggedInProcedure = t.procedure.use(async ({ ctx, next }) => {
+  if (!ctx.token?.uid) {
+    throw new TRPCError({
+      code: 'UNAUTHORIZED',
+      message: 'User not found',
+    })
+  }
+
+  return next({
+    ctx: { token: ctx.token },
+  })
+})

@@ -15,6 +15,28 @@ enum UserRole {
   USER
 }
 
+enum ContributionType {
+  DEVELOPMENT
+  CONTENT
+  CURATE
+  OTHER
+}
+
+enum Platform {
+  GITHUB
+  X
+  DISCORD
+  FARCASTER
+  OTHER
+}
+
+enum RequestStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  COMPLETED
+}
+
 model User {
   id            String    @id @default(uuid())
   address       String    @unique
@@ -49,4 +71,20 @@ model Domain {
   domain       String @unique
   cid          String @default("")
   ipns         String @default("")
+}
+
+model RewardRequest {
+  id               String           @id @default(uuid())
+  userAddress      String
+  type             ContributionType
+  platform         Platform?
+  content          String
+  status           RequestStatus    @default(PENDING)
+  tokenAmount      Float?           @default(0.0)
+  transactionHash  String?         
+  comments         String?          
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  @@index([userAddress])
 }
