@@ -99,14 +99,15 @@ const RewardTable = ({ data }: { data: RewardRequest[] }) => (
       </TableRow>
     </TableHeader>
     <TableBody>
-      {data.map((reward: RewardRequest) => (
-        <TableRow key={reward.id}>
-          <TableCell className="font-medium">{reward.type}</TableCell>
-          <TableCell>{reward.status}</TableCell>
-          <TableCell>{reward.tokenAmount}</TableCell>
-          <TableCell>{new Date(reward.createdAt).toLocaleString()}</TableCell>
-        </TableRow>
-      ))}
+      {data &&
+        data.map((reward: RewardRequest) => (
+          <TableRow key={reward.id}>
+            <TableCell className="font-medium">{reward.type}</TableCell>
+            <TableCell>{reward.status}</TableCell>
+            <TableCell>{reward.tokenAmount}</TableCell>
+            <TableCell>{new Date(reward.createdAt).toLocaleString()}</TableCell>
+          </TableRow>
+        ))}
     </TableBody>
   </Table>
 )
