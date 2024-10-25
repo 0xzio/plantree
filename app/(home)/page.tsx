@@ -8,6 +8,7 @@ import { LaunchButton } from './LaunchButton'
 import { SpaceLogo } from './SpaceLogo'
 
 export const dynamic = 'force-static'
+export const revalidate = 3600 * 24
 
 export default async function HomePage() {
   const spaces = await getHomeSpaces()

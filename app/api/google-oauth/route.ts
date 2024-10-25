@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { google } from 'googleapis'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -8,24 +7,18 @@ const clientSecret = process.env.GOOGLE_CLIENT_SECRET!
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
   const code = url.searchParams.get('code')
-  const state = url.searchParams.get('state') as string
+  const host = url.searchParams.get('state') as string
 
-  const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-drive-oauth`
+  const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-oauth`
 
-  // console.log('=======state:', state, 'redirectUri:', redirectUri)
-
-  if (!code || !state) {
+  if (!code || !host) {
     return NextResponse.redirect('/error') // Handle error accordingly
   }
 
-  const [host, address] = state.split('____')
-  // console.log('>>>>>>>>host, address:', host, address)
-
   const auth = new google.auth.OAuth2(clientId, clientSecret, redirectUri)
-
   const { tokens } = await auth.getToken(code)
 
   return NextResponse.redirect(
-    `${host}/api/google-drive-oauth?address=${address}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`,
+    `${host}?auth_type=google&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`,
   )
 }
