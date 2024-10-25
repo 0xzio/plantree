@@ -19,11 +19,11 @@ export default function Page() {
         <CreateButton />
       </div>
 
-      <SummaryDashboard isLoading={isLoading} rewardRequests={data} />
+      <SummaryDashboard isLoading={isLoading} rewardRequests={data!} />
       <h2 className="scroll-m-20  text-3xl font-semibold tracking-tight first:mt-0">
         Your History
       </h2>
-      <RewardHistory isLoading={isLoading} rewardRequests={data} />
+      <RewardHistory isLoading={isLoading} rewardRequests={data!} />
     </div>
   )
 }

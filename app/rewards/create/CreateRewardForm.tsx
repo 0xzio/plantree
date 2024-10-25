@@ -57,7 +57,7 @@ export function CreateRewardRequestForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
-      await mutateAsync({ ...data })
+      await mutateAsync(data as any)
       toast.success('Request created successfully!')
       push('/rewards')
     } catch (error) {
