@@ -1,6 +1,6 @@
-import { Readable } from 'stream'
 import { create } from 'kubo-rpc-client'
 import { NextApiRequest, NextApiResponse, PageConfig } from 'next'
+import NextCors from 'nextjs-cors'
 
 export const config: PageConfig = {
   api: {
@@ -12,6 +12,11 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
+  await NextCors(req, res, {
+    methods: ['GET', 'HEAD', 'PUT', 'PATCH', 'POST', 'DELETE'],
+    origin: '*',
+    optionsSuccessStatus: 200,
+  })
   if (req.method !== 'POST') {
     return res.status(405).json({ error: 'Only POST method is allowed' })
   }
@@ -26,7 +31,8 @@ export default async function handler(
 
   req.on('end', async () => {
     // Combine all chunks into a single buffer
-    const buffer = Buffer.concat(chunks)
+    // TODO: handle any
+    const buffer = Buffer.concat(chunks as any)
 
     const client = create(new URL('http://43.154.135.183:5001'))
     const { cid } = await client.add(
@@ -36,7 +42,10 @@ export default async function handler(
       { pin: true },
     )
 
-    res.json({ cid: cid.toString() })
+    res.json({
+      cid: cid.toString(),
+      url: `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${cid.toString()}`,
+    })
   })
 
   req.on('error', (err) => {
