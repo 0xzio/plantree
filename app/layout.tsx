@@ -96,7 +96,8 @@ export default async function RootLayout({
             <div className="flex flex-col gap-4 container px-2">
               <div className="z-10  py-3 relative flex justify-between">
                 <div className="flex items-center">
-                  <Link href="/" className="cursor-pointer">
+                  <Link href="/" className="cursor-pointer flex items-center">
+                    <span className="i-[fluent-emoji--deciduous-tree] w-7 h-7"></span>
                     <div
                       className={cn(
                         'font-bold text-2xl flex',

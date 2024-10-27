@@ -18,7 +18,7 @@ export function LaunchButton() {
         push('/create-space')
       }}
     >
-      Create a tree
+      Plant a tree
     </Button>
   )
 }

@@ -22,6 +22,9 @@ export function useQueryLogoImages(spaces: SpaceOnEvent[]) {
         uri: space.uri,
       }))
       .filter((space) => space.uri),
+    {
+      enabled: spaces.length > 0,
+    },
   )
 
   useEffect(() => {

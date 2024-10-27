@@ -8,7 +8,6 @@ export async function generateStaticParams() {
   const t0 = Date.now()
   const spaces = await getSpaceIds()
   const t1 = Date.now()
-  // return posts.map((post) => ({ slug: [post.slug] }))
   console.log('get space ids time>>>>>', t1 - t0)
   return spaces.map((item) => item.id)
 }

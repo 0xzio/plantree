@@ -16,7 +16,6 @@ import {
 import { Input } from '@/components/ui/input'
 import { Space } from '@/domains/Space'
 import { spaceAtom, useSpace } from '@/hooks/useSpace'
-import { updateSpaceById } from '@/hooks/useSpaces'
 import { spaceAbi } from '@/lib/abi'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { revalidateMetadata } from '@/lib/revalidateTag'
@@ -72,8 +71,6 @@ export function UpdateSpaceForm() {
       })
 
       await waitForTransactionReceipt(wagmiConfig, { hash })
-
-      updateSpaceById(space.id, data)
 
       store.set(
         spaceAtom,

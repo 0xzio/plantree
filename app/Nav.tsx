@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
+import { ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { toast } from 'sonner'
 
@@ -14,11 +15,6 @@ type NavItem = {
 
 export const Nav = () => {
   const navData: NavItem[] = [
-    // {
-    //   text: 'About Space3',
-    //   isExternal: true,
-    //   to: process.env.NEXT_PUBLIC_ABOUT_URL!,
-    // },
     {
       text: 'Tokenomics',
       to: '/tokenomics',
@@ -34,7 +30,8 @@ export const Nav = () => {
     },
     {
       text: 'Docs',
-      to: '/docs',
+      isExternal: true,
+      to: 'https://docs.plantree.xyz',
     },
   ]
 
@@ -66,9 +63,9 @@ export const Nav = () => {
               >
                 {item.text && <div>{item.text}</div>}
                 {!!item.icon && item.icon}
-                {/* <div inlineFlex>
+                <div className="inline-flex">
                   <ExternalLink size={16}></ExternalLink>
-                </div> */}
+                </div>
               </a>
             </div>
           )

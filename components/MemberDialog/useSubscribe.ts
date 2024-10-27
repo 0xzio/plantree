@@ -1,7 +1,6 @@
 import { Space } from '@/domains/Space'
 import { useAddress } from '@/hooks/useAddress'
 import { useMembers } from '@/hooks/useMembers'
-import { refetchSpaces } from '@/hooks/useSpaces'
 import { useSubscriptions } from '@/hooks/useSubscriptions'
 import { erc20Abi, spaceAbi } from '@/lib/abi'
 import { checkChain } from '@/lib/checkChain'
@@ -93,11 +92,7 @@ export function useSubscribe(space: Space) {
         (sub) => sub.planId === plan.id && sub.account === address,
       )!
 
-      await Promise.all([
-        subscription.refetch(),
-        members.refetch(),
-        refetchSpaces(),
-      ])
+      await Promise.all([subscription.refetch(), members.refetch()])
 
       if (isSubscribe) {
         toast.success('Subscribe successful!')
