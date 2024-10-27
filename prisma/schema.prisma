@@ -74,17 +74,17 @@ model Domain {
 }
 
 model RewardRequest {
-  id               String           @id @default(uuid())
-  userAddress      String
-  type             ContributionType
-  platform         Platform?
-  content          String
-  status           RequestStatus    @default(PENDING)
-  tokenAmount      Float?           @default(0.0)
-  transactionHash  String?         
-  comments         String?          
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
+  id              String           @id @default(uuid())
+  userAddress     String
+  type            ContributionType
+  platform        Platform?
+  content         String
+  status          RequestStatus    @default(PENDING)
+  tokenAmount     Float?           @default(0.0)
+  transactionHash String?
+  comments        String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
 
   @@index([userAddress])
 }

@@ -1,7 +1,6 @@
 import { PropsWithChildren, Suspense } from 'react'
 import { Button } from '@/components/ui/button'
 import { getHomeSpaces } from '@/lib/fetchers'
-import { LaunchButton } from './LaunchButton'
 import { Slogan } from './Slogan'
 import { SpaceInfoLoader } from './SpaceInfoLoader'
 
