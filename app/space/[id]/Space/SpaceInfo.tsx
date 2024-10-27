@@ -12,7 +12,6 @@ import { SpaceStats } from './SpaceStats'
 interface Props {}
 
 export function SpaceInfo({}: Props) {
-  const pathname = usePathname()
   const { isLoading } = useQuerySpace()
   const { space } = useSpace()
 

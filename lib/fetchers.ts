@@ -40,8 +40,37 @@ export async function getHomeSpaces() {
     },
     ['spaces'],
     {
-      revalidate: 10,
+      revalidate: 60 * 60 * 24 * 365,
       tags: ['spaces'],
+    },
+  )()
+}
+
+const spaceIdsQuery = gql`
+  {
+    spaces(first: 1000) {
+      id
+    }
+  }
+`
+
+export async function getSpaceIds() {
+  return await unstable_cache(
+    async () => {
+      try {
+        const { spaces = [] } = await request<{ spaces: SpaceType[] }>({
+          url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+          document: spaceIdsQuery,
+        })
+        return spaces
+      } catch (error) {
+        return []
+      }
+    },
+    ['space-ids'],
+    {
+      revalidate: 60 * 60 * 24 * 365,
+      tags: ['space-ids'],
     },
   )()
 }

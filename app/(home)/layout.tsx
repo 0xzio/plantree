@@ -5,6 +5,9 @@ import { LaunchButton } from './LaunchButton'
 import { Slogan } from './Slogan'
 import { SpaceInfoLoader } from './SpaceInfoLoader'
 
+export const dynamic = 'force-static'
+export const revalidate = 3600 * 24 * 365
+
 export default async function HomePage({ children }: PropsWithChildren) {
   const spaces = await getHomeSpaces()
 

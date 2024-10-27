@@ -24,7 +24,6 @@ export function DashboardLayout({ children }: PropsWithChildren) {
   return (
     <div className="mx-auto pb-20">
       <div className="min-h-screen flex-row justify-center flex relative">
-        <CreateSpaceDialog />
         <div
           className="flex-1 overflow-x-hidden z-1"
           style={
