@@ -170,7 +170,7 @@ export function AppForm() {
           type="submit"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots color="#808080" /> : <p>Confirm</p>}
+          {isLoading ? <LoadingDots  /> : <p>Confirm</p>}
         </Button>
       </form>
     </Form>

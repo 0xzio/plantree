@@ -3,7 +3,7 @@
 import Editor from '@/components/editor/advanced-editor'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useQuerySpace, useSpace } from '@/hooks/useSpace'
-import { SpaceInfo } from '../Space/SpaceInfo'
+import { SpaceInfo } from './Space/SpaceInfo'
 
 export function PageSpace() {
   const { isLoading } = useQuerySpace()
@@ -28,7 +28,7 @@ export function PageSpace() {
     )
   }
   return (
-    <div>
+    <div className="w-full sm:max-w-2xl mx-auto space-y-20">
       <SpaceInfo />
       <Editor
         className="p-3 break-all"

@@ -153,7 +153,7 @@ export function CreateRewardRequestForm() {
         </div>
 
         <Button size="lg" type="submit" className="w-full">
-          {isLoading ? <LoadingDots color="#808080" /> : <p>Create Request</p>}
+          {isLoading ? <LoadingDots  /> : <p>Create Request</p>}
         </Button>
       </form>
     </Form>

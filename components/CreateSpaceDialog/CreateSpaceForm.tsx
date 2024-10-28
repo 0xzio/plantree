@@ -20,9 +20,9 @@ import { addressMap } from '@/lib/address'
 import { checkChain } from '@/lib/checkChain'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
+import { revalidatePath } from '@/lib/revalidatePath'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { wagmiConfig } from '@/lib/wagmi'
-import { store } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
   readContract,
@@ -142,7 +142,16 @@ export function CreateSpaceForm() {
       toast.success('Space created successfully!')
       revalidateMetadata('spaces')
 
-      push('/')
+      push(`/space/${spaceAddresses[spaceAddresses.length - 1]}`)
+
+      revalidatePath('/space/[id]', 'page')
+      revalidatePath('/', 'layout')
+
+      setTimeout(() => {
+        revalidatePath('/space/[id]', 'page')
+        revalidatePath('/', 'layout')
+      }, 2000)
+
       setIsOpen(false)
     } catch (error) {
       console.log('========error:', error)
@@ -183,16 +192,16 @@ export function CreateSpaceForm() {
             name="name"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Space name</FormLabel>
+                <FormLabel>Site name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Space Name"
+                    placeholder="Site name"
                     {...field}
                     className="w-full"
                   />
                 </FormControl>
                 <FormDescription>
-                  This is space public display name.
+                  This is site public display name.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -220,7 +229,7 @@ export function CreateSpaceForm() {
                 </FormControl>
 
                 <FormDescription>
-                  Your space token is ${symbolName}.
+                  Your site token is ${symbolName}.
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -229,7 +238,7 @@ export function CreateSpaceForm() {
         </div>
 
         <Button size="lg" type="submit" className="w-full">
-          {isLoading ? <LoadingDots color="#808080" /> : <p>Create Space</p>}
+          {isLoading ? <LoadingDots /> : <p>Create Space</p>}
         </Button>
       </form>
     </Form>

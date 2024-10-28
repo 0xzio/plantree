@@ -150,7 +150,7 @@ export function AddVestingForm() {
           className="w-full"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots color="#808080" /> : <p>Add</p>}
+          {isLoading ? <LoadingDots  /> : <p>Add</p>}
         </Button>
       </form>
     </Form>

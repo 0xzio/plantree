@@ -118,7 +118,7 @@ export const StakingPanel = () => {
 
   const renderButtonContent = () => {
     if (loading) {
-      return <LoadingDots color="white" />;
+      return <LoadingDots  />;
     }
 
     if (!isAmountValid) {

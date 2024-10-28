@@ -1,15 +1,16 @@
+import { cn } from '@/lib/utils'
 import styles from './loading-dots.module.css'
 
 interface LoadingDotsProps {
-  color?: string
+  className?: string
 }
 
-export const LoadingDots = ({ color = '#000' }: LoadingDotsProps) => {
+export const LoadingDots = ({ className }: LoadingDotsProps) => {
   return (
     <span className={styles.loading}>
-      <span style={{ backgroundColor: color }} />
-      <span style={{ backgroundColor: color }} />
-      <span style={{ backgroundColor: color }} />
+      <span className={cn('bg-background', className)} />
+      <span className={cn('bg-background', className)} />
+      <span className={cn('bg-background', className)} />
     </span>
   )
 }

@@ -9,12 +9,15 @@ export default async function HomePage({ children }: PropsWithChildren) {
   return (
     <div className="flex flex-col justify-center pt-5 md:pt-20 gap-8 relative pb-20">
       <Slogan></Slogan>
-      <div className="flex items-center justify-center gap2">
+      <div className="flex flex-col items-center justify-center gap-1">
         <Button size="lg" className="h-12 text-base" asChild>
           <a href="https://docs.plantree.xyz/getting-started" target="_blank">
-            Deploy a blog for free
+            Deploy a blog
           </a>
         </Button>
+        <div className="text-sm text-foreground/40">
+          Deploy a blog for free in 10 minutes
+        </div>
       </div>
 
       {children}

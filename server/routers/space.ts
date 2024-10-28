@@ -7,6 +7,7 @@ import { readContracts } from '@wagmi/core'
 import { gql, request } from 'graphql-request'
 import Redis from 'ioredis'
 import ky from 'ky'
+import pRetry, { AbortError } from 'p-retry'
 import { Address } from 'viem'
 import { z } from 'zod'
 import { publicProcedure, router } from '../trpc'
@@ -55,10 +56,10 @@ export const spaceRouter = router({
       const cachedSpace = await redis.get(key)
 
       if (typeof cachedSpace === 'string' && cachedSpace.length > 0) {
-        return JSON.parse(cachedSpace) as SpaceType
+        // return JSON.parse(cachedSpace) as SpaceType
       }
 
-      const [res1, res2] = await Promise.all([
+      const [res1] = await Promise.all([
         readContracts(wagmiConfig, {
           contracts: [
             {
@@ -89,15 +90,13 @@ export const spaceRouter = router({
           ],
           allowFailure: false,
         }),
-
-        request<{ space: SpaceOnEvent }>({
-          url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
-          document: spaceQuery,
-          variables: {
-            id: address.toLowerCase(),
-          },
-        }),
       ])
+
+      const res2 = await pRetry(async () => fetchSpace(address), {
+        retries: 10,
+      })
+
+      // console.log('=====res2:', res2)
 
       const uri = res1[1][0]
       const stakingRevenuePercent = res1[1][1]
@@ -110,7 +109,7 @@ export const spaceRouter = router({
       }
 
       const space = {
-        ...res2.space,
+        ...res2,
         address: address,
         x: res1[0][0].toString(),
         y: res1[0][1].toString(),
@@ -120,7 +119,7 @@ export const spaceRouter = router({
         symbol: res1[3],
         totalSupply: res1[4].toString(),
         ...spaceInfo,
-        name: spaceInfo?.name || res1[2] || res2?.space.name,
+        name: spaceInfo?.name || res1[2] || res2?.name,
       } as SpaceType
 
       await redis.set(key, JSON.stringify(space), 'EX', ttl)
@@ -181,3 +180,20 @@ export const spaceRouter = router({
     }
   }),
 })
+
+async function fetchSpace(address: string) {
+  const { space } = await request<{ space: SpaceOnEvent }>({
+    url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+    document: spaceQuery,
+    variables: {
+      id: address.toLowerCase(),
+    },
+  })
+
+  // Abort retrying if the resource doesn't exist
+  if (!space) {
+    throw new AbortError('Failed to fetch space')
+  }
+
+  return space
+}

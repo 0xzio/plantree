@@ -194,7 +194,7 @@ export default function Uploader() {
         } flex h-10 w-full items-center justify-center rounded-md border text-sm transition-all focus:outline-none`}
       >
         {saving ? (
-          <LoadingDots color="#808080" />
+          <LoadingDots  />
         ) : (
           <p className="text-sm">Confirm upload</p>
         )}

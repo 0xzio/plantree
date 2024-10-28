@@ -29,8 +29,8 @@ import { z } from 'zod'
 import { useUpdateSpaceDialog } from './useUpdateSpaceDialog'
 
 const FormSchema = z.object({
-  subdomain: z.string().min(1, {
-    message: 'Subdomain must be at least 1 characters.',
+  siteUrl: z.string().min(1, {
+    message: 'site URL must be at least 1 characters.',
   }),
 })
 
@@ -42,7 +42,7 @@ export function UpdateSpaceForm() {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      subdomain: space.subdomain,
+      siteUrl: space.siteUrl,
     },
   })
 
@@ -98,25 +98,25 @@ export function UpdateSpaceForm() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
-            name="subdomain"
+            name="siteUrl"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Subdomain</FormLabel>
+                <FormLabel>Site URL</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="Subdomain"
+                    placeholder="https://..."
                     {...field}
                     className="w-full"
                   />
                 </FormControl>
-                <FormDescription>The subdomain of your site.</FormDescription>
+                <FormDescription>The URL of your site.</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
           />
 
           <Button type="submit" className="w-32">
-            {loading ? <LoadingDots color="#808080" /> : <p>Save</p>}
+            {loading ? <LoadingDots /> : <p>Save</p>}
           </Button>
         </form>
       </Form>

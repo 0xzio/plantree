@@ -9,9 +9,5 @@ export function SpaceInfo({}: Props) {
   const { space } = useSpace()
   if (!space) return null
 
-  return (
-    <div className="grid gap-6">
-      <SpaceBasicInfo />
-    </div>
-  )
+  return <SpaceBasicInfo />
 }

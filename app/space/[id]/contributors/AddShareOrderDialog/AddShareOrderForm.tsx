@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
@@ -13,76 +13,60 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { useEthPrice } from '@/hooks/useEthPrice'
+import { useShareOrders } from '@/hooks/useShareOrders'
 import { useSpace } from '@/hooks/useSpace'
 import { spaceAbi } from '@/lib/abi'
-import { addToIpfs } from '@/lib/addToIpfs'
 import { checkChain } from '@/lib/checkChain'
-import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
-import { trpc } from '@/lib/trpc'
 import { wagmiConfig } from '@/lib/wagmi'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
+import { writeContract } from '@wagmi/core'
 import { toast } from 'sonner'
 import { Address } from 'viem'
 import { z } from 'zod'
-import { useAddPlanDialog } from './useAddPlanDialog'
+import { useAddShareOrderDialog } from './useAddShareOrderDialog'
 
 const FormSchema = z.object({
-  name: z.string().min(1, { message: 'Plan name is required' }),
+  amount: z.string().min(1, { message: 'Amount is required' }),
   price: z.string().min(1, { message: 'Price is required' }),
 })
 
-export function AddPlanForm() {
+export function AddShareOrderForm() {
   const [isLoading, setLoading] = useState(false)
-  const { setIsOpen } = useAddPlanDialog()
+  const { setIsOpen } = useAddShareOrderDialog()
   const { space } = useSpace()
-  const { ethPrice } = useEthPrice()
+  const { orders = [], refetch } = useShareOrders()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: '',
+      amount: '',
       price: '',
     },
   })
-
-  const price = form.watch('price')
-  const priceBuyPrice = useMemo(() => {
-    if (!price || !ethPrice) return 0
-    return Number(price) / ethPrice
-  }, [price, ethPrice])
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
       await checkChain()
 
-      const cid = await addToIpfs(
-        JSON.stringify({
-          name: data.name,
-          benefits: JSON.stringify(editorDefaultValue),
-        }),
-      )
-
-      const price = precision.token(Number(data.price) / ethPrice)
-      const hash = await writeContract(wagmiConfig, {
+      await writeContract(wagmiConfig, {
         address: space.address as Address,
         abi: spaceAbi,
-        functionName: 'createPlan',
-        args: [cid, price, BigInt(0)],
+        functionName: 'createShareOrder',
+        args: [BigInt(data.amount), precision.token(data.price)],
       })
 
-      await waitForTransactionReceipt(wagmiConfig, { hash })
+      refetch()
 
       setIsOpen(false)
-      toast.success('Add Plan successfully!')
+      toast.success('Add Contributor successfully!')
     } catch (error) {
+      console.log('error:', error)
+
       const msg = extractErrorMessage(error)
-      toast.error(msg || 'Failed to add plan. Please try again.')
+      toast.error(msg || 'Failed to add Contributor. Please try again.')
     }
     setLoading(false)
   }
@@ -92,12 +76,17 @@ export function AddPlanForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="name"
+          name="amount"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Plan name</FormLabel>
+              <FormLabel>Amount</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} className="w-full" />
+                <NumberInput
+                  placeholder=""
+                  precision={0}
+                  {...field}
+                  className="w-full"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -109,14 +98,11 @@ export function AddPlanForm() {
           name="price"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>
-                Subscription price (${price || '0'}/month) =
-                {priceBuyPrice.toFixed(5)} ETH
-              </FormLabel>
+              <FormLabel>Price</FormLabel>
               <FormControl>
                 <NumberInput
                   placeholder=""
-                  precision={2}
+                  precision={10}
                   {...field}
                   className="w-full"
                 />
@@ -131,7 +117,7 @@ export function AddPlanForm() {
           className="w-full"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots color="#808080" /> : <p>Add</p>}
+          {isLoading ? <LoadingDots  /> : <p>Add</p>}
         </Button>
       </form>
     </Form>

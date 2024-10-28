@@ -25,52 +25,79 @@ export function SpaceBasicInfo({}: Props) {
       <UpdateSpaceDialog />
       <img
         alt={space.name || ''}
-        className="w-20 h-20 rounded-lg shadow-sm bg-white"
+        className="w-20 h-20 rounded-lg shadow-sm bg-background"
         src={
           space.logo ||
           'https://public.blob.vercel-storage.com/eEZHAoPTOBSYGBE3/JRajRyC-PhBHEinQkupt02jqfKacBVHLWJq7Iy.png'
         }
       />
-      <div className="font-semibold text-lg">{space.name}</div>
-      {/* <Badge variant="secondary">{isOwner ? 'Owner' : 'Member'}</Badge> */}
+      <div className="flex gap-2">
+        <div className="font-bold text-2xl">{space.name}</div>
+        {isOwner && <Badge>Owner</Badge>}
+      </div>
 
       <div className="text-sm text-secondary-foreground">
         {space.description || 'No description yet.'}
       </div>
 
-      <div className="grid gap-1 mt-4">
+      <div className="flex flex-col gap-1 mt-4 text-foreground w-full">
         <div className="flex items-center justify-center gap-2">
           <SpaceAddress />
         </div>
-        <div className="mt-10 text-lg grid grid-cols-1 gap-2 w-full md:w-[560px]">
+        <div className="mt-10 text-lg grid grid-cols-1 gap-2 w-full">
           <Entry>
             <div></div>
-            <div>https://{space.subdomain}.plantree.xyz</div>
-            {/* <ExternalLinkIcon size={18} className="text-neutral-500" /> */}
-            {isOwner && (
-              <Button
-                size="icon"
-                variant="ghost"
-                className="rounded-full w-7 h-7"
-                onClick={() => {
-                  setIsOpen(true)
-                }}
-              >
-                <Edit3 size={18} />
-              </Button>
-            )}
+            <div>{space.siteUrl ? space.siteUrl : 'Set your site URL'}</div>
+            <div>
+              {isOwner && (
+                <Button
+                  size="icon"
+                  variant="ghost"
+                  className="rounded-full w-7 h-7"
+                  onClick={() => {
+                    setIsOpen(true)
+                  }}
+                >
+                  <Edit3
+                    size={18}
+                    className="cursor-pointer text-foreground/50"
+                  />
+                </Button>
+              )}
+            </div>
           </Entry>
 
           <Entry
             onClick={() => {
-              window.open(`https://www.respace.one/space/${space.address}`)
+              window.open(
+                `https://www.spaceprotocol.xyz/space/${space.address}`,
+              )
             }}
           >
             <div></div>
-            <div>View in respace.one</div>
+            <div>
+              View in <span className="text-brand-500">spaceprotocol.xyz</span>
+            </div>
             <ExternalLinkIcon
               size={18}
-              className="text-neutral-500 cursor-pointer"
+              className="cursor-pointer text-foreground/50"
+            />
+          </Entry>
+
+          <Entry
+            onClick={() => {
+              window.open(
+                `https://www.spaceprotocol.xyz/space/${space.address}`,
+              )
+            }}
+          >
+            <div></div>
+            <div>
+              Buy site token <Badge size="lg">${space.symbolName}</Badge>
+            </div>
+            <ExternalLinkIcon
+              size={18}
+              className="cursor-pointer text-foreground/50"
             />
           </Entry>
         </div>
@@ -88,7 +115,7 @@ function Entry({
     <div
       className={cn(
         className,
-        'h-[64px] bg-white py-2 px-3 rounded-3xl flex items-center justify-between cursor-pointer shadow-sm',
+        'h-[64px] bg-background dark:bg-background/50 py-2 px-3 rounded-3xl flex items-center justify-between cursor-pointer shadow-sm',
       )}
       onClick={() => onClick?.()}
     >

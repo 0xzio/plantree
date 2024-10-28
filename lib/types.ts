@@ -48,6 +48,7 @@ export type SpaceInfo = {
   about: string
   logo: string
   subdomain: string
+  siteUrl: string
 }
 
 export type Plan = {

@@ -14,7 +14,7 @@ export function CreateSpaceDialog() {
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Space</DialogTitle>
+          <DialogTitle>Create site</DialogTitle>
         </DialogHeader>
         <CreateSpaceForm />
       </DialogContent>

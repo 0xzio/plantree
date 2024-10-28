@@ -40,8 +40,6 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
 
   const imageUrl = useMemo(() => {
     if (value?.startsWith('blob') || value?.startsWith('http')) return value
-    console.log('=========IPFS_GATEWAY:', IPFS_GATEWAY)
-
     return IPFS_GATEWAY + `/ipfs/${value}`
   }, [value])
 

@@ -35,7 +35,7 @@ const config = {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       colors: {
-        brand: colors.green,
+        brand: colors.emerald,
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',

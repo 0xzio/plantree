@@ -64,6 +64,10 @@ export class Space {
     return this.raw.subdomain || this.symbolName.toLowerCase()
   }
 
+  get siteUrl() {
+    return this.raw.siteUrl || ''
+  }
+
   get description() {
     return this.raw.description
   }

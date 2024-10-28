@@ -23,7 +23,7 @@ export function PageCreateSpace() {
             >
               <ChevronLeft></ChevronLeft>
             </Button>
-            <div className="font-semibold">Create Space</div>
+            <div className="font-semibold">Create site</div>
           </div>
           <Card className="w-[500px] flex-col flex justify-center p-5 shadow border-none">
             <CreateSpaceForm />

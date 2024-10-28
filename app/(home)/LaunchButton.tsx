@@ -11,14 +11,14 @@ export function LaunchButton() {
   const { push } = useRouter()
   return (
     <Button
-      variant="ghost"
-      className="rounded-2xl border border-black hover:bg-black hover:text-white"
+      variant="brand"
+      className=""
       onClick={() => {
         if (!isConnected) return open()
         push('/create-space')
       }}
     >
-      Plant a tree
+      Create a site
     </Button>
   )
 }

@@ -16,7 +16,7 @@ const poppins = Poppins({
 export function Slogan() {
   return (
     <div className="space-y-6 text-center">
-      <div className="text-6xl leading-tight font-bold space-y-2">
+      <div className="text-6xl leading-tight font-extrabold space-y-2">
         Build your own <br />
         <div className="bg-gradient-to-r from-orange-500  to-pink-500 bg-clip-text text-transparent">
           web3 independent blog
