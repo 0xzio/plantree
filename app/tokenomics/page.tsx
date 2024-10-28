@@ -41,9 +41,22 @@ export const dynamic = 'force-static'
 export default function Page() {
   return (
     <div className="mt-20 space-y-20 pb-20">
-      <div className="flex flex-col justify-center p-8 gap-8 bg-background dark:bg-zinc-800 rounded-2xl shadow">
-        <div className="font-extrabold text-5xl">$TREE Token</div>
-        <div className="text-xl leading-relaxed text-foreground/90">
+      <div className="flex flex-col justify-center p-8 gap-4 bg-background dark:bg-zinc-800 rounded-2xl shadow">
+        <div className="font-bold text-5xl">$TREE</div>
+        <div className="text-4xl font-thin text-foreground/60 space-y-1">
+          <div className="">
+            Meme for{' '}
+            <span className="text-brand-500 font-bold">Independent Blog</span>
+          </div>
+          <div>
+            Meme for <span className="text-orange-500 font-bold">Writers</span>
+          </div>
+          <div className="">
+            Meme for{' '}
+            <span className="text-sky-500 font-bold">Plantree community</span>
+          </div>
+        </div>
+        <div className="text-xl leading-relaxed text-foreground/80">
           $TREE is the token of Plantree community, a Web3 blogging platform
           that champions content ownership and free expression. Designed to
           reward quality creators, $TREE enables tipping, subscription models,
@@ -68,7 +81,7 @@ export default function Page() {
             />
           </div>
           <div className="flex-1 space-y-4">
-            <div className="text-2xl font-bold text-foreground/40">
+            <div className="text-2xl font-bold text-foreground/70">
               Allocation
             </div>
             <div className="space-y-4">

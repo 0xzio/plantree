@@ -93,7 +93,8 @@ export function SpaceBasicInfo({}: Props) {
           >
             <div></div>
             <div>
-              Buy site token <Badge size="lg">${space.symbolName}</Badge>
+              Buy site token{' '}
+              <span className="font-bold">${space.symbolName}</span>
             </div>
             <ExternalLinkIcon
               size={18}

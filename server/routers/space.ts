@@ -59,7 +59,7 @@ export const spaceRouter = router({
         // return JSON.parse(cachedSpace) as SpaceType
       }
 
-      const [res1] = await Promise.all([
+      const [res1, res2] = await Promise.all([
         readContracts(wagmiConfig, {
           contracts: [
             {
@@ -90,13 +90,11 @@ export const spaceRouter = router({
           ],
           allowFailure: false,
         }),
+
+        pRetry(async () => fetchSpace(address), {
+          retries: 10,
+        }),
       ])
-
-      const res2 = await pRetry(async () => fetchSpace(address), {
-        retries: 10,
-      })
-
-      // console.log('=====res2:', res2)
 
       const uri = res1[1][0]
       const stakingRevenuePercent = res1[1][1]
