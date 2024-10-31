@@ -16,7 +16,7 @@ module.exports = {
 
   images: {
     remotePatterns: [
-      { hostname: '*.spaceprotocol.xyz' },
+      { hostname: '*.respace.one' },
       { hostname: 'public.blob.vercel-storage.com' },
       { hostname: '2cil7amusloluyl8.public.blob.vercel-storage.com' },
       { hostname: '*.public.blob.vercel-storage.com' },

@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://www.buidlspace.xyz" alt="Respace Logo">
-    <img src="https://www.spaceprotocol.xyz/images/logo-512.png" height="120"/></a>
+    <img src="https://www.respace.one/images/logo-512.png" height="120"/></a>
 
 <h1 style="border-bottom: none">
     <b>Respace</b><br />
@@ -9,7 +9,7 @@
     <br>
 </h1>
 
-[Discord](https://discord.gg/nyVpH9njDu) | [Website](https://www.spaceprotocol.xyz/) | [Issues](https://github.com/penxio/space3/issues)
+[Discord](https://discord.gg/nyVpH9njDu) | [Website](https://www.respace.one/) | [Issues](https://github.com/penxio/space3/issues)
 
 </div>
 

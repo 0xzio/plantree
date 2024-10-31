@@ -1,5 +1,5 @@
 import { spaceAbi } from '@/lib/abi'
-import { IPFS_GATEWAY } from '@/lib/constants'
+import { IPFS_GATEWAY, SUBGRAPH_URL } from '@/lib/constants'
 import { redisKeys } from '@/lib/redisKeys'
 import { SpaceInfo, SpaceOnEvent, SpaceType } from '@/lib/types'
 import { wagmiConfig } from '@/lib/wagmi'
@@ -181,7 +181,7 @@ export const spaceRouter = router({
 
 async function fetchSpace(address: string) {
   const { space } = await request<{ space: SpaceOnEvent }>({
-    url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+    url: SUBGRAPH_URL,
     document: spaceQuery,
     variables: {
       id: address.toLowerCase(),

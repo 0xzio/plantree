@@ -30,7 +30,9 @@ import {
   waitForTransactionReceipt,
 } from '@wagmi/core'
 import { useRouter, useSearchParams } from 'next/navigation'
+import pRetry, { AbortError } from 'p-retry'
 import { toast } from 'sonner'
+import { zeroAddress } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 import { z } from 'zod'
 import { FileUpload } from '../FileUpload'
@@ -66,6 +68,21 @@ export function CreateSpaceForm() {
   const { push } = useRouter()
   const { setIsOpen } = useCreateSpaceDialog()
   const { writeContractAsync } = useWriteContract()
+  const { data: price } = useReadContract({
+    address: addressMap.SpaceFactory,
+    abi: spaceFactoryAbi,
+    functionName: 'price',
+  })
+
+  const { data: currentUserSpaces = [] } = useReadContract({
+    address: addressMap.SpaceFactory,
+    abi: spaceFactoryAbi,
+    functionName: 'getUserSpaces',
+    args: [address!],
+    query: {
+      enabled: !address,
+    },
+  })
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -77,6 +94,21 @@ export function CreateSpaceForm() {
 
   const name = form.watch('name')
   const symbolName = form.watch('symbolName')
+
+  async function fetchLatestUserSpaces() {
+    const spaceAddresses = await readContract(wagmiConfig, {
+      address: addressMap.SpaceFactory,
+      abi: spaceFactoryAbi,
+      functionName: 'getUserSpaces',
+      args: [address!],
+    })
+
+    if (spaceAddresses.length == currentUserSpaces.length) {
+      throw new Error('No get the latest user spaces')
+    }
+
+    return spaceAddresses
+  }
 
   useEffect(() => {
     form.setValue(
@@ -125,18 +157,20 @@ export function CreateSpaceForm() {
             symbol: data.symbolName,
             uri: res.cid,
             preBuyEthAmount: BigInt(0),
+            referral: zeroAddress,
           },
         ],
-        value: precision.token('0.00001'),
+        value: price,
       })
 
       await waitForTransactionReceipt(wagmiConfig, { hash })
 
-      const spaceAddresses = await readContract(wagmiConfig, {
-        address: addressMap.SpaceFactory,
-        abi: spaceFactoryAbi,
-        functionName: 'getUserSpaces',
-        args: [address!],
+      const spaceAddresses = await pRetry(fetchLatestUserSpaces, {
+        retries: 20,
+        minTimeout: 500,
+        onFailedAttempt(error) {
+          console.log('=====error:', error.attemptNumber, error.name)
+        },
       })
 
       toast.success('Space created successfully!')
@@ -238,7 +272,7 @@ export function CreateSpaceForm() {
         </div>
 
         <Button size="lg" type="submit" className="w-full">
-          {isLoading ? <LoadingDots /> : <p>Create Space</p>}
+          {isLoading ? <LoadingDots /> : <p>Create site</p>}
         </Button>
       </form>
     </Form>

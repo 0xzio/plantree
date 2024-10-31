@@ -1,5 +1,6 @@
 import { gql, request } from 'graphql-request'
 import { unstable_cache } from 'next/cache'
+import { SUBGRAPH_URL } from './constants'
 import { SpaceOnEvent, SpaceType } from './types'
 
 const spacesQuery = gql`
@@ -30,7 +31,7 @@ export async function getHomeSpaces() {
     async () => {
       try {
         const { spaces = [] } = await request<{ spaces: SpaceType[] }>({
-          url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+          url: SUBGRAPH_URL,
           document: spacesQuery,
         })
         return spaces
@@ -59,7 +60,7 @@ export async function getSpaceIds() {
     async () => {
       try {
         const { spaces = [] } = await request<{ spaces: SpaceType[] }>({
-          url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+          url: SUBGRAPH_URL,
           document: spaceIdsQuery,
         })
         return spaces

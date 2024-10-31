@@ -1,14 +1,19 @@
-import type { SIWECreateMessageArgs, SIWESession, SIWEVerifyMessageArgs } from '@reown/appkit-siwe';
-import { createSIWEConfig, formatMessage } from '@reown/appkit-siwe';
-import { baseSepolia } from '@reown/appkit/networks';
-import { getCsrfToken, getSession, signIn, signOut } from 'next-auth/react';
+import type {
+  SIWECreateMessageArgs,
+  SIWESession,
+  SIWEVerifyMessageArgs,
+} from '@reown/appkit-siwe'
+import { createSIWEConfig, formatMessage } from '@reown/appkit-siwe'
+import { getCsrfToken, getSession, signIn, signOut } from 'next-auth/react'
+import { getChain } from './wagmiConfig'
 
+const chain = getChain()
 
 export const siweConfig = createSIWEConfig({
   getMessageParams: async () => ({
     domain: typeof window !== 'undefined' ? window.location.host : '',
     uri: typeof window !== 'undefined' ? window.location.origin : '',
-    chains: [baseSepolia.id],
+    chains: [chain.id],
     statement: 'Please sign with your account',
   }),
   createMessage: ({ address, ...args }: SIWECreateMessageArgs) =>

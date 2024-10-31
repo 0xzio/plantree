@@ -1,4 +1,5 @@
 import { gql, request } from 'graphql-request'
+import { SUBGRAPH_URL } from './constants'
 import { SpaceOnEvent } from './types'
 
 const spaceQuery = gql`
@@ -29,7 +30,7 @@ export async function getSpace(address: string) {
   while (attempts < maxRetries) {
     try {
       const res = await request<{ space: SpaceOnEvent }>({
-        url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+        url: SUBGRAPH_URL,
         document: spaceQuery,
         variables: {
           id: address.toLowerCase(),

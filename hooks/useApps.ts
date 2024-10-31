@@ -1,3 +1,4 @@
+import { SUBGRAPH_URL } from '@/lib/constants'
 import { App } from '@/lib/types'
 import { useQuery } from '@tanstack/react-query'
 import { gql, request } from 'graphql-request'
@@ -20,7 +21,7 @@ export function useApps() {
     queryKey: ['apps'],
     async queryFn() {
       return request({
-        url: process.env.NEXT_PUBLIC_SUBGRAPH_URL!,
+        url: SUBGRAPH_URL,
         document: query,
       })
     },

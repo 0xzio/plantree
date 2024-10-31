@@ -70,13 +70,13 @@ export function SpaceBasicInfo({}: Props) {
           <Entry
             onClick={() => {
               window.open(
-                `https://www.spaceprotocol.xyz/space/${space.address}`,
+                `https://www.respace.one/space/${space.address}`,
               )
             }}
           >
             <div></div>
             <div>
-              View in <span className="text-brand-500">spaceprotocol.xyz</span>
+              View in <span className="text-brand-500">respace.one</span>
             </div>
             <ExternalLinkIcon
               size={18}
@@ -87,7 +87,7 @@ export function SpaceBasicInfo({}: Props) {
           <Entry
             onClick={() => {
               window.open(
-                `https://www.spaceprotocol.xyz/space/${space.address}`,
+                `https://www.respace.one/space/${space.address}`,
               )
             }}
           >

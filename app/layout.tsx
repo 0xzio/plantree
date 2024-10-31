@@ -32,15 +32,15 @@ const poppins = Poppins({
   display: 'swap',
 })
 
-const title = 'Respace: Building Space On-Chain'
-const description = 'Respace is a Protocol for Building Space On-Chain.'
+const title = 'Plantree'
+const description = 'The best way to build web3 independent blog.'
 // const image = 'https://vercel.pub/thumbnail.png'
 
 export const metadata: Metadata = {
   title,
   description,
 
-  icons: ['https://spaceprotocol.xyz/favicon.ico'],
+  icons: ['https://plantree.xyz/favicon.ico'],
   openGraph: {
     title,
     description,
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
     title,
     description,
     // images: [image],
-    creator: '@space3',
+    creator: '@plantree',
   },
-  metadataBase: new URL('https://spaceprotocol.xyz'),
+  metadataBase: new URL('https://plantree.xyz'),
 }
 
 export default async function RootLayout({
@@ -73,7 +73,7 @@ export default async function RootLayout({
           // cal.variable,
           // inter.variable,
           // fontSans.variable,
-          'bg-zinc-50 dark:bg-zinc-900',
+          // 'bg-zinc-50 dark:bg-zinc-900',
           // 'bg-orange-50',
           poppins.className,
         )}

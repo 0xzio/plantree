@@ -25,7 +25,10 @@ export enum NetworkNames {
   SEPOLIA = 'SEPOLIA',
   ARB_SEPOLIA = 'ARB_SEPOLIA',
   BASE_SEPOLIA = 'BASE_SEPOLIA',
+  BASE = 'BASE',
 }
+
+export const NETWORK = process.env.NEXT_PUBLIC_NETWORK as NetworkNames
 
 export const editorDefaultValue = {
   type: 'doc',
@@ -41,3 +44,8 @@ export const editorDefaultValue = {
     },
   ],
 }
+
+export const SUBGRAPH_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
+    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'
