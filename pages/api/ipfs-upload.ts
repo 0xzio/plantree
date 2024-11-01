@@ -21,6 +21,8 @@ export default async function handler(
     return res.status(405).json({ error: 'Only POST method is allowed' })
   }
 
+  const pin = req.query?.pin === 'true' ? true : false
+
   // Create a buffer to store the incoming data
   const chunks: Buffer[] = []
 
@@ -35,12 +37,7 @@ export default async function handler(
     const buffer = Buffer.concat(chunks as any)
 
     const client = create(new URL('http://43.154.135.183:5001'))
-    const { cid } = await client.add(
-      {
-        content: buffer,
-      },
-      { pin: true },
-    )
+    const { cid } = await client.add({ content: buffer }, { pin })
 
     res.json({
       cid: cid.toString(),

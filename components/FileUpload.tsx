@@ -22,7 +22,7 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
       const src = URL.createObjectURL(file)
       onChange?.(src)
 
-      const res = await fetch('/api/ipfs-upload', {
+      const res = await fetch('/api/ipfs-upload?pin=true', {
         method: 'POST',
         body: file,
       })

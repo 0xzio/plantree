@@ -10,5 +10,6 @@ export default async function handler(
 
   res.json({
     hello: 'World!',
+    query: req.query,
   })
 }
