@@ -10,6 +10,7 @@ import ky from 'ky'
 import pRetry, { AbortError } from 'p-retry'
 import { Address } from 'viem'
 import { z } from 'zod'
+import { getEthPrice } from '../lib/getEthPrice'
 import { publicProcedure, router } from '../trpc'
 
 const redis = new Redis(process.env.REDIS_URL!)
@@ -157,25 +158,8 @@ export const spaceRouter = router({
       return logo
     }),
 
-  ethPrice: publicProcedure.query(async ({ ctx }) => {
-    const cacheKey = 'ETHUSDT_PRICE'
-    const cacheTTL = 30 //  30s
-    try {
-      const cachedPrice = await redis.get(cacheKey)
-      if (cachedPrice) return parseFloat(cachedPrice)
-
-      const response = await ky
-        .get('https://cache.bodhi.wtf/etherprice')
-        .json<EthPriceResponse>()
-
-      const ethPrice = response.price
-      await redis.set(cacheKey, ethPrice.toString(), 'EX', cacheTTL)
-
-      return ethPrice
-    } catch (error) {
-      console.error('Error fetching ETH price:', error)
-      throw new Error('Failed to fetch ETH price')
-    }
+  ethPrice: publicProcedure.query(() => {
+    return getEthPrice()
   }),
 })
 
