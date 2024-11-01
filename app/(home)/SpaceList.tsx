@@ -43,11 +43,7 @@ export function SpaceList() {
           )}
         >
           <div className="flex items-center gap-2">
-            <Suspense
-              fallback={<div className="w-12 h-12 rounded-lg bg-neutral-100" />}
-            >
-              <SpaceLogo address={space.address} />
-            </Suspense>
+            <SpaceLogo uri={space.uri} />
 
             <div className="grid gap-1">
               <div className="flex items-center gap-2">
