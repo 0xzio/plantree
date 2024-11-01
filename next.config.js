@@ -15,6 +15,8 @@ module.exports = {
   transpilePackages: ['react-tweet'],
 
   images: {
+    dangerouslyAllowSVG: true,
+    contentDispositionType: 'attachment',
     remotePatterns: [
       { hostname: '*.respace.one' },
       { hostname: 'public.blob.vercel-storage.com' },

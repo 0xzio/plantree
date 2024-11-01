@@ -21,13 +21,13 @@ export default async function handler(
     return res.status(405).json({ error: 'Only POST method is allowed' })
   }
 
-  const cid = await addToIpfs(req.body.content)
+  const cid = await addToIpfs(req.body)
 
-  const address = req.body?.address?.toLowerCase() as Address
+  const address = req.query?.address as Address
   if (address) {
-    const key = redisKeys.space(address)
+    const key = redisKeys.space(address.toLowerCase())
     await redis.del(key)
-    await redis.del(redisKeys.spaceLogo(address))
+    await redis.del(redisKeys.spaceLogo(address.toLowerCase()))
   }
   res.json({
     cid,

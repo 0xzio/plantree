@@ -141,7 +141,7 @@ export function CreateSpaceForm() {
       const res = await fetch('/api/ipfs-add', {
         method: 'POST',
         body: JSON.stringify({
-          content: JSON.stringify({ logo: data.logo }),
+          logo: data.logo,
         }),
         headers: { 'Content-Type': 'application/json' },
       }).then((d) => d.json())

@@ -51,14 +51,11 @@ export function UpdateSpaceForm() {
       setLoading(true)
       // console.log('data:', data)
 
-      const res = await fetch('/api/ipfs-add', {
+      const res = await fetch(`/api/ipfs-add?address=${space.address}`, {
         method: 'POST',
         body: JSON.stringify({
-          address: space.address,
-          content: JSON.stringify({
-            ...space.spaceInfo,
-            ...data,
-          }),
+          ...space.spaceInfo,
+          ...data,
         }),
         headers: { 'Content-Type': 'application/json' },
       }).then((d) => d.json())
