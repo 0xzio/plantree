@@ -6,7 +6,6 @@ import { loggedInProcedure, protectedProcedure, router } from '../trpc'
 export const rewardsRouter = router({
   list: loggedInProcedure.query(async ({ ctx, input }) => {
     const userAddress = ctx.token.address
-    console.log('userAddress', userAddress)
 
     return prisma.rewardRequest.findMany({
       where: {
