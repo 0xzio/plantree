@@ -1,4 +1,3 @@
-import { prisma } from '@/lib/prisma'
 import { google } from 'googleapis'
 import { NextRequest, NextResponse } from 'next/server'
 
@@ -25,7 +24,19 @@ export async function GET(req: NextRequest) {
 
   const { tokens } = await auth.getToken(code)
 
+  const oauth2Client = new google.auth.OAuth2(clientId, clientSecret)
+  oauth2Client.setCredentials(tokens)
+
+  const oauth2 = google.oauth2({
+    auth: oauth2Client,
+    version: 'v2',
+  })
+
+  const userInfo = await oauth2.userinfo.get()
+
+  console.log('User Profile:', userInfo.data)
+
   return NextResponse.redirect(
-    `${host}/api/google-drive-oauth?address=${address}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}`,
+    `${host}/api/google-drive-oauth?address=${address}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}&email=${userInfo.data.email}&name=${userInfo.data.name}&picture=${userInfo.data.picture}`,
   )
 }
