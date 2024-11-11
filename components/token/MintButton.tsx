@@ -23,6 +23,7 @@ export const MintButton = ({
     <>
       {isConnected ? (
         <Button
+          variant="brand"
           className="w-full h-[56px] rounded-2xl text-lg"
           disabled={isLoading || disabled}
           onClick={() => onMint()}
@@ -30,7 +31,10 @@ export const MintButton = ({
           {children}
         </Button>
       ) : (
-        <WalletConnectButton className="w-full h-[56px] rounded-2xl text-lg">
+        <WalletConnectButton
+          variant="brand"
+          className="w-full h-[56px] rounded-2xl text-lg"
+        >
           Connect wallet
         </WalletConnectButton>
       )}

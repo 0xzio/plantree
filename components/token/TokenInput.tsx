@@ -24,7 +24,7 @@ export const TokenInput = ({ value, onChange }: Props) => {
   }
 
   return (
-    <div className="mb-2 bg-white rounded-2xl p-4 shadow h-[114px]">
+    <div className="mb-2 bg-background dark:bg-foreground/5 rounded-2xl p-4 shadow h-[114px]">
       <div className="text-sm">Sponsor</div>
       <div className="flex font-[600] items-center gap-1">
         <NumberInput
@@ -32,7 +32,7 @@ export const TokenInput = ({ value, onChange }: Props) => {
           value={value}
           onChange={(value) => onChange(value)}
           placeholder="0.0"
-          className="p-2 font-bold text-3xl pl-0 bg-white rounded w-full border-none focus:border-none outline-none focus-visible:ring-0 focus-visible:ring-transparent"
+          className="p-2 font-bold text-3xl pl-0 rounded w-full bg-transparent border-none focus:border-none outline-none focus-visible:ring-0 focus-visible:ring-transparent"
         />
         <img src="/eth.png" alt="ETH" className="w-[20px] h-auto" />
         <span className="text-lg ml-1 font-semibold">ETH</span>
@@ -42,7 +42,7 @@ export const TokenInput = ({ value, onChange }: Props) => {
         <Button
           // disabled={isConnected}
           onClick={setMax}
-          className="h-6 text-white px-2 rounded-full"
+          className="h-6 px-2 rounded-full"
         >
           Max
         </Button>

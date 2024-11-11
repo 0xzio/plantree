@@ -63,7 +63,7 @@ export const BuyPanel = ({ isConnected }: Props) => {
           <Button
             onClick={handleMax}
             disabled={!ethBalance}
-            className="h-6 cursor-pointer text-xs text-white rounded-md px-2"
+            className="h-6 cursor-pointer text-xs rounded-md px-2"
           >
             Max
           </Button>

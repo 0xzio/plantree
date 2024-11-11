@@ -90,7 +90,7 @@ export const Transaction = () => {
         // isInsufficientBalance={isInsufficientBalance}
         // isAmountValid={isAmountValid}
       >
-        {isLoading ? <LoadingDots  /> : btnText}
+        {isLoading ? <LoadingDots /> : btnText}
       </MintButton>
       <TokenProgress />
     </div>
