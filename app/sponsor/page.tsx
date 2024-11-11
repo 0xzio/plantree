@@ -14,9 +14,9 @@ export default function HomePage() {
       <SponsorSlogan />
       <div className="text-center">
         <Badge variant="outline" className="text-center inline-flex gap-1">
-          <div>Token contract: {addressMap.TreeToken}</div>
+          <div>Token contract: {addressMap.PenToken}</div>
           <a
-            href={`https://basescan.org/address/${addressMap.TreeToken}`}
+            href={`https://basescan.org/address/${addressMap.PenToken}`}
             target="_blank"
           >
             <Globe size={14} className="cursor-pointer" />

@@ -1,12 +1,12 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useAppKit } from '@reown/appkit/react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRouter } from 'next/navigation'
 import { useAccount } from 'wagmi'
 
 export function LaunchButton() {
-  const { open } = useAppKit()
+  const { openConnectModal } = useConnectModal()
   const { isConnected } = useAccount()
   const { push } = useRouter()
   return (
@@ -14,7 +14,7 @@ export function LaunchButton() {
       variant="brand"
       className=""
       onClick={() => {
-        if (!isConnected) return open()
+        if (!isConnected) return openConnectModal?.()
         push('/create-space')
       }}
     >

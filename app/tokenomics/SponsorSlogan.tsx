@@ -2,10 +2,10 @@ export function SponsorSlogan() {
   return (
     <div className="text-center mx-auto space-y-4">
       <div className="text-6xl leading-tight text-center font-bold space-y-2">
-        <div className="">Sponsor Plantree project</div>
+        <div className="">Sponsor PenX project</div>
       </div>
       <div className="w-full md:max-w-[600px] text-lg text-neutral-600 text-center mx-auto">
-        Plantree is an open-source project and also it is a public good. If you
+        PenX is an open-source project and also it is a public good. If you
         love{' '}
         <a
           href="https://www.penx.io/"
@@ -14,8 +14,8 @@ export function SponsorSlogan() {
         >
           penx.io
         </a>{' '}
-        project, you can sponsor the Plantree project, and you will receive{' '}
-        <span className="text-brand-500">$TREE</span> tokens.
+        project, you can sponsor the PenX project, and you will receive{' '}
+        <span className="text-brand-500">$PEN</span> tokens.
       </div>
     </div>
   )

@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '@rainbow-me/rainbowkit/styles.css'
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
@@ -33,7 +34,7 @@ const poppins = Poppins({
 })
 
 const title = 'PenX'
-const description = 'The best way to build web3 independent blog.'
+const description = 'The best way to build web3 individual blog.'
 // const image = 'https://vercel.pub/thumbnail.png'
 
 export const metadata: Metadata = {

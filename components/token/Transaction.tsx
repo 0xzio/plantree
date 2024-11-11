@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useEthBalance, useQueryEthBalance } from '@/hooks/useEthBalance'
-import { treeTokenAbi } from '@/lib/abi'
+import { penTokenAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
@@ -41,8 +41,8 @@ export const Transaction = () => {
     setIsLoading(true)
     try {
       const hash = await writeContractAsync({
-        address: addressMap.TreeToken,
-        abi: treeTokenAbi,
+        address: addressMap.PenToken,
+        abi: penTokenAbi,
         functionName: 'sponsor',
         value: precision.token(input),
       })
@@ -52,7 +52,7 @@ export const Transaction = () => {
       setOutput('')
       inkBalance.refetch()
       eth.refetch()
-      toast.success('Sponsor Plantree successfully!')
+      toast.success('Sponsor PenX successfully!')
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg || 'Failed to sponsor')

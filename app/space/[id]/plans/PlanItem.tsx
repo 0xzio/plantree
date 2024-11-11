@@ -9,7 +9,7 @@ import { useEthPrice } from '@/hooks/useEthPrice'
 import { useMembers } from '@/hooks/useMembers'
 import { useSpace } from '@/hooks/useSpace'
 import { useSubscriptions } from '@/hooks/useSubscriptions'
-import { useAppKit } from '@reown/appkit/react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { EditIcon } from 'lucide-react'
 import { useAccount } from 'wagmi'
 import { useUpdatePlanDialog } from './UpdatePlanDialog/useUpdatePlanDialog'
@@ -24,7 +24,7 @@ export function PlanItem({ plan }: Props) {
   const { setState } = useUpdatePlanDialog()
   const { space } = useSpace()
   const { isConnected } = useAccount()
-  const { open } = useAppKit()
+  const { openConnectModal } = useConnectModal()
   const { subscriptions } = useSubscriptions()
   const { setState: setMemberState } = useMemberDialog()
   const subscription = subscriptions.find((s) => s.planId === plan.id)!
@@ -59,7 +59,7 @@ export function PlanItem({ plan }: Props) {
       <Button
         variant="outline"
         onClick={() => {
-          if (!isConnected) return open()
+          if (!isConnected) return openConnectModal?.()
           setMemberState({
             isOpen: true,
             plan,

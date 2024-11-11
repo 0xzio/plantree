@@ -2,7 +2,7 @@
 
 import { useEthBalance } from '@/hooks/useEthBalance'
 import { toFloorFixed } from '@/lib/utils'
-import { useAppKit } from '@reown/appkit/react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { NumberInput } from '../NumberInput'
 import { Button } from '../ui/button'
@@ -16,10 +16,10 @@ interface Props {
 export const TokenInput = ({ value, onChange }: Props) => {
   const { ethBalance } = useEthBalance()
   const { isConnected } = useAccount()
-  const { open } = useAppKit()
+  const { openConnectModal } = useConnectModal()
 
   const setMax = () => {
-    if (!isConnected) return open()
+    if (!isConnected) return openConnectModal?.()
     onChange(toFloorFixed(ethBalance.valueDecimal, 5).toString())
   }
 

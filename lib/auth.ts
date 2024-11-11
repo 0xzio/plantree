@@ -1,16 +1,17 @@
+import { spaceAbi } from '@/lib/abi'
+import { NETWORK, NetworkNames } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { User, UserRole } from '@prisma/client'
-import {
-  getAddressFromMessage,
-  getChainIdFromMessage,
-  verifySignature,
-  type SIWESession,
-} from '@reown/appkit-siwe'
 import { readContract } from '@wagmi/core'
 import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth'
 import credentialsProvider from 'next-auth/providers/credentials'
 import { Address, createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
+import { base, baseSepolia, mainnet } from 'viem/chains'
+import {
+  parseSiweMessage,
+  validateSiweMessage,
+  type SiweMessage,
+} from 'viem/siwe'
 
 const nextAuthSecret = process.env.NEXTAUTH_SECRET
 if (!nextAuthSecret) {
@@ -39,29 +40,53 @@ export const authOptions: NextAuthOptions = {
           placeholder: '0x0',
         },
       },
-      async authorize(credentials) {
+      async authorize(credentials: any) {
         try {
-          if (!credentials?.message) {
-            throw new Error('SiweMessage is undefined')
-          }
-          const { message, signature } = credentials
-          const address = getAddressFromMessage(message)
-          const chainId = getChainIdFromMessage(message)
+          const siweMessage = parseSiweMessage(
+            credentials?.message,
+          ) as SiweMessage
 
-          const isValid = await verifySignature({
-            address,
-            message,
-            signature,
-            chainId,
-            projectId: process.env.NEXT_PUBLIC_PROJECT_ID!,
+          if (
+            !validateSiweMessage({
+              address: siweMessage?.address,
+              message: siweMessage,
+            })
+          ) {
+            return null
+          }
+
+          const nextAuthUrl =
+            process.env.NEXTAUTH_URL ||
+            (process.env.VERCEL_URL
+              ? `https://${process.env.VERCEL_URL}`
+              : null)
+          if (!nextAuthUrl) {
+            return null
+          }
+
+          const nextAuthHost = new URL(nextAuthUrl).host
+          if (siweMessage.domain !== nextAuthHost) {
+            return null
+          }
+
+          const publicClient = createPublicClient({
+            chain: getChain(),
+            transport: http(),
           })
 
-          if (isValid) {
-            const user = await createUser(address)
-            return { chainId, ...user }
-          }
+          const valid = await publicClient.verifyMessage({
+            address: siweMessage?.address,
+            message: credentials?.message,
+            signature: credentials?.signature,
+          })
 
-          return null
+          if (!valid) {
+            return null
+          }
+          const address = siweMessage.address
+
+          const user = await createUserByAddress(address)
+          return { ...user }
         } catch (e) {
           return null
         }
@@ -118,7 +143,7 @@ export function getSession() {
   } | null>
 }
 
-async function createUser(address: any) {
+async function createUserByAddress(address: any) {
   let user = await prisma.user.findUnique({ where: { address } })
 
   let ensName: string | null = ''
@@ -141,4 +166,11 @@ async function createUser(address: any) {
   }
 
   return { ...user, ensName }
+}
+
+function getChain() {
+  if (NETWORK === NetworkNames.BASE_SEPOLIA) {
+    return baseSepolia
+  }
+  return base
 }

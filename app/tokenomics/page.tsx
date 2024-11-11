@@ -42,40 +42,41 @@ export default function Page() {
   return (
     <div className="mt-20 space-y-20 pb-20">
       <div className="flex flex-col justify-center p-8 gap-4 bg-background dark:bg-zinc-800 rounded-2xl shadow">
-        <div className="font-bold text-5xl">$TREE</div>
+        <div className="font-bold text-5xl">$PEN</div>
         <div className="text-4xl font-thin text-foreground/60 space-y-1">
           <div className="">
-            Meme for{' '}
-            <span className="text-brand-500 font-bold">Independent Blog</span>
+            Tip token for{' '}
+            <span className="text-brand-500 font-bold">individual Blog</span>
           </div>
           <div>
-            Meme for <span className="text-orange-500 font-bold">Writers</span>
+            Tip token for{' '}
+            <span className="text-orange-500 font-bold">Writers</span>
           </div>
           <div className="">
-            Meme for{' '}
-            <span className="text-sky-500 font-bold">Plantree community</span>
+            Tip token for{' '}
+            <span className="text-sky-500 font-bold">PenX community</span>
           </div>
         </div>
         <div className="text-xl leading-relaxed text-foreground/80">
-          $TREE is the token of Plantree community, a Web3 blogging platform
-          that champions content ownership and free expression. Designed to
-          reward quality creators, $TREE enables tipping, subscription models,
-          and governance participation. By holding $TREE, users can engage in
+          $PEN is the token of PenX community, a Web3 blogging platform that
+          champions content ownership and free expression. Designed to reward
+          quality creators, $PEN enables tipping, subscription models, and
+          governance participation. By holding $PEN, users can engage in
           community decisions and earn rewards, fostering a vibrant ecosystem
           where ideas flourish and creativity thrives. Join us in planting the
           seeds for a decentralized blog future!
         </div>
         <div className="flex justify-between mt-4">
           <div className="flex-1 space-y-6">
-            <TokenInfoItem label="Token name" value="Tree" />
-            <TokenInfoItem label="Symbol" value="$TREE" />
+            <TokenInfoItem label="Token name" value="Pen" />
+            <TokenInfoItem label="Symbol" value="$PEN" />
             <TokenInfoItem label="Chain" value="Base" />
             <TokenInfoItem label="Supply" value="30,000,000,000" />
             <TokenInfoItem
               label="Contract"
               value={
                 <div className="text-sm sm:text-base">
-                  {addressMap.TreeToken}
+                  {addressMap.PenToken}
                 </div>
               }
             />
@@ -87,7 +88,7 @@ export default function Page() {
             <div className="space-y-4">
               <AllocationItem
                 percent="66%"
-                desc="Plantree community"
+                desc="PenX community"
                 dotColor="bg-green-500"
               />
               <AllocationItem
@@ -116,12 +117,12 @@ export default function Page() {
       </div>
 
       <div className="flex flex-col justify-center p-8 gap-12 bg-background dark:bg-zinc-800 rounded-2xl shadow">
-        <div className="font-extrabold text-5xl pt">How get $TREE?</div>
+        <div className="font-extrabold text-5xl pt">How get $PEN?</div>
         <div>
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
               <div className="text-xl font-medium">
-                1. Sponsor Plantree project and get $TREE:{' '}
+                1. Sponsor PenX project and get $PEN:{' '}
               </div>
               <Button size="sm" asChild variant="brand">
                 <Link href="/sponsor">Go to sponsor</Link>
@@ -130,14 +131,14 @@ export default function Page() {
 
             <div className="flex items-center gap-4">
               <div className="text-xl font-medium">
-                2. Create a blog and get $TREE automatically.
+                2. Create a blog and get $PEN automatically.
               </div>
             </div>
 
             <div className="flex flex-col gap-2 text-foreground">
               <div className="flex items-center gap-4">
                 <div className="text-xl font-medium ">
-                  3. Contribute to the Plantree project and earn rewards.
+                  3. Contribute to the PenX project and earn rewards.
                 </div>
                 <Button size="sm" asChild variant="brand">
                   <Link href="/sponsor">Request rewards</Link>
@@ -188,24 +189,24 @@ export default function Page() {
                   .
                 </li>
                 <li>Create new theme.</li>
-                <li>Any contributions to the Plantree project...</li>
+                <li>Any contributions to the PenX project...</li>
               </ul>
             </div>
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-4">
                 <div className="text-xl font-medium">
-                  4. Curate the Plantree project and earn rewards.
+                  4. Curate the PenX project and earn rewards.
                 </div>
                 <Button size="sm" asChild variant="brand">
                   <Link href="/sponsor">Request rewards</Link>
                 </Button>
               </div>
               <ul className="list-disc list-inside ml-5">
-                <li>Write some post about Plantree</li>
-                <li>Post a tweet about Plantree on X</li>
-                <li>Make a cast about Plantree on Farcaster</li>
-                <li>Any curation to the Plantree project...</li>
+                <li>Write some post about PenX</li>
+                <li>Post a tweet about PenX on X</li>
+                <li>Make a cast about PenX on Farcaster</li>
+                <li>Any curation to the PenX project...</li>
               </ul>
             </div>
           </div>

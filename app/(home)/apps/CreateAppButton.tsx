@@ -3,13 +3,14 @@
 import { useEffect, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { useAddress } from '@/hooks/useAddress'
-import { useAppKit } from '@reown/appkit/react'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { useAppDialog } from './AppDialog/useAppDialog'
 
 export function CreateAppButton() {
   const address = useAddress()
-  const { open } = useAppKit()
+
+  const { openConnectModal } = useConnectModal()
   const { isConnected } = useAccount()
   const { setIsOpen } = useAppDialog()
   const [isClient, setIsClient] = useState(false)
@@ -29,7 +30,7 @@ export function CreateAppButton() {
       size="lg"
       className="font-semibold rounded-2xl h-12 px-10 text-base"
       onClick={() => {
-        if (!isConnected) return open()
+        if (!isConnected) return openConnectModal?.()
         setIsOpen(true)
       }}
     >

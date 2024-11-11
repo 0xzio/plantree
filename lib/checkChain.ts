@@ -1,5 +1,5 @@
 import { getAccount, getChains, switchChain } from '@wagmi/core'
-import { networks, wagmiConfig } from './wagmi'
+import { wagmiConfig } from './wagmi'
 
 export async function checkChain() {
   const account = getAccount(wagmiConfig)

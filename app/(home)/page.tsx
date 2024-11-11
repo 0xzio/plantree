@@ -17,7 +17,7 @@ export default async function HomePage() {
   return (
     <div>
       <div className="flex items-center justify-between mt-10 mb-6">
-        <div className="text-2xl font-semibold">Planted trees</div>
+        <div className="text-2xl font-semibold">Sites</div>
         <Suspense fallback={''}>
           <LaunchButton />
         </Suspense>

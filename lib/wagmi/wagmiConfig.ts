@@ -1,30 +1,24 @@
-import { WagmiAdapter } from '@reown/appkit-adapter-wagmi'
-import { AppKitNetwork, base, baseSepolia } from '@reown/appkit/networks'
-import { cookieStorage, createStorage, http } from '@wagmi/core'
+'use client'
+
+import { getDefaultConfig } from '@rainbow-me/rainbowkit'
+import { publicActions } from 'viem'
+import { base, baseSepolia } from 'wagmi/chains'
 import { NETWORK, NetworkNames } from '../constants'
 
-// Get projectId from https://cloud.walletconnect.com
-export const projectId = process.env.NEXT_PUBLIC_PROJECT_ID
-
-if (!projectId) throw new Error('Project ID is not defined')
+const PROJECT_ID = process.env.NEXT_PUBLIC_PROJECT_ID as string
 
 export function getChain() {
-  if (NETWORK === NetworkNames.BASE) {
-    return base
+  if (NETWORK === NetworkNames.BASE_SEPOLIA) {
+    return baseSepolia
   }
-  return baseSepolia
+  return base
 }
 
-export const networks: [AppKitNetwork, ...AppKitNetwork[]] = [getChain()]
-
-//Set up the Wagmi Adapter (Config)
-export const wagmiAdapter = new WagmiAdapter({
-  storage: createStorage({
-    storage: cookieStorage,
-  }),
+export const wagmiConfig = getDefaultConfig({
+  appName: 'PenX',
+  projectId: PROJECT_ID,
+  chains: [getChain()],
   ssr: true,
-  projectId,
-  networks,
 })
 
-export const wagmiConfig = wagmiAdapter.wagmiConfig
+export const publicClient = wagmiConfig.getClient().extend(publicActions)

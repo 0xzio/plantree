@@ -19,9 +19,9 @@ import {
 import { useAddress } from '@/hooks/useAddress'
 import { trpc } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
-import { useDisconnect } from '@reown/appkit/react'
 import { Cloud, Gauge, LifeBuoy, LogOut, UserRoundPen } from 'lucide-react'
 import { useRouter } from 'next/navigation'
+import { useDisconnect } from 'wagmi'
 import { ProfileAvatar } from './ProfileAvatar'
 import { WalletInfo } from './WalletInfo'
 

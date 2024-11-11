@@ -19,12 +19,12 @@ export function Slogan() {
       <div className="text-6xl leading-tight font-extrabold space-y-2">
         Build your own <br />
         <div className="bg-gradient-to-r from-orange-500  to-pink-500 bg-clip-text text-transparent">
-          web3 independent blog
+          web3 individual blog
         </div>
       </div>
 
       <div className="text-xl text-foreground/60">
-        The best way to build web3 independent blog.
+        The best way to build web3 individual blog.
       </div>
     </div>
   )

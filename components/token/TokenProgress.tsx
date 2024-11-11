@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useEffect, useState } from 'react'
 import { Progress } from '@/components/ui/progress'
-import { treeTokenAbi } from '@/lib/abi'
+import { penTokenAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { precision } from '@/lib/math'
 import { useReadContract } from 'wagmi'
@@ -12,8 +12,8 @@ interface Props {}
 export const TokenProgress = ({}: PropsWithChildren<Props>) => {
   const MAX_SUPPLY = 3_000_000_000
   const { data, isLoading } = useReadContract({
-    address: addressMap.TreeToken,
-    abi: treeTokenAbi,
+    address: addressMap.PenToken,
+    abi: penTokenAbi,
     functionName: 'sponsoredAmount',
   })
 

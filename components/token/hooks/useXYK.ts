@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { treeTokenAbi } from '@/lib/abi'
+import { penTokenAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { atom, useAtom } from 'jotai'
 import { useReadContracts } from 'wagmi'
@@ -23,18 +23,18 @@ export function useQueryXYK() {
   const { data, ...rest } = useReadContracts({
     contracts: [
       {
-        address: addressMap.TreeToken,
-        abi: treeTokenAbi,
+        address: addressMap.PenToken,
+        abi: penTokenAbi,
         functionName: 'x',
       },
       {
-        address: addressMap.TreeToken,
-        abi: treeTokenAbi,
+        address: addressMap.PenToken,
+        abi: penTokenAbi,
         functionName: 'y',
       },
       {
-        address: addressMap.TreeToken,
-        abi: treeTokenAbi,
+        address: addressMap.PenToken,
+        abi: penTokenAbi,
         functionName: 'k',
       },
     ],

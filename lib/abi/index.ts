@@ -1,2 +1,2 @@
 export * from './space'
-export { treeTokenAbi } from './tree-token'
+export { penTokenAbi } from './penx'
