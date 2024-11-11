@@ -8,11 +8,11 @@ export function SponsorSlogan() {
         Plantree is an open-source project and also it is a public good. If you
         love{' '}
         <a
-          href="https://www.plantree.xyz/"
+          href="https://www.penx.io/"
           target="_blank"
           className="underline decoration-brand-500 text-brand-500"
         >
-          plantree.xyz
+          penx.io
         </a>{' '}
         project, you can sponsor the Plantree project, and you will receive{' '}
         <span className="text-brand-500">$TREE</span> tokens.

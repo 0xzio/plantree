@@ -32,7 +32,7 @@ const poppins = Poppins({
   display: 'swap',
 })
 
-const title = 'Plantree'
+const title = 'PenX'
 const description = 'The best way to build web3 independent blog.'
 // const image = 'https://vercel.pub/thumbnail.png'
 
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
   title,
   description,
 
-  icons: ['https://plantree.xyz/favicon.ico'],
+  icons: ['https://penx.io/favicon.ico'],
   openGraph: {
     title,
     description,
@@ -51,9 +51,9 @@ export const metadata: Metadata = {
     title,
     description,
     // images: [image],
-    creator: '@plantree',
+    creator: '@penx',
   },
-  metadataBase: new URL('https://plantree.xyz'),
+  metadataBase: new URL('https://penx.io'),
 }
 
 export default async function RootLayout({
@@ -96,14 +96,13 @@ export default async function RootLayout({
               <div className="z-10  py-3 relative flex justify-between">
                 <div className="flex items-center">
                   <Link href="/" className="cursor-pointer flex items-center">
-                    <span className="i-[fluent-emoji--deciduous-tree] w-7 h-7"></span>
                     <div
                       className={cn(
                         'font-bold text-2xl flex',
                         logoFont.className,
                       )}
                     >
-                      <span className="">Plantree</span>
+                      <span className="">PenX</span>
                     </div>
                   </Link>
                 </div>

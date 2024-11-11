@@ -1,5 +1,5 @@
 {
-  "name": "plantree-web",
+  "name": "penx-web",
   "private": true,
   "scripts": {
     "dev": "prisma generate && next dev -p 4000",

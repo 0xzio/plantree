@@ -11,7 +11,7 @@ const projectId = process.env.NEXT_PUBLIC_PROJECT_ID as string
 const metadata = {
   name: 'Plantree',
   description: 'A tool to build web3 independent blog',
-  url: 'https://www.plantree.xyz',
+  url: 'https://www.penx.io',
   icons: ['https://avatars.githubusercontent.com/u/179229932'],
 }
 

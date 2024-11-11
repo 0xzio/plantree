@@ -147,43 +147,43 @@ export default function Page() {
                 <li>
                   Contribute code to{' '}
                   <a
-                    href="https://github.com/plantree-xyz/plantree"
+                    href="https://github.com/penx-lab/penx"
                     className="text-brand-500"
                   >
-                    github.com/plantree-xyz/plantree
+                    github.com/penx-lab/penx
                   </a>
                   .
                 </li>
                 <li>
                   Contribute valid issues to{' '}
                   <a
-                    href="https://github.com/plantree-xyz/plantree"
+                    href="https://github.com/penx-lab/penx"
                     target="_blank"
                     className="text-brand-500"
                   >
-                    github.com/plantree-xyz/plantree
+                    github.com/penx-lab/penx
                   </a>
                   .
                 </li>
                 <li>
                   Improve docs{' '}
                   <a
-                    href="https://github.com/plantree-xyz/plantree-docs"
+                    href="https://github.com/penx-lab/penx-docs"
                     target="_blank"
                     className="text-brand-500"
                   >
-                    https:/github.com/plantree-xyz/plantree-docs
+                    https:/github.com/penx-lab/penx-docs
                   </a>
                   .
                 </li>
                 <li>
                   Improve official themes{' '}
                   <a
-                    href="https://github.com/plantree-xyz/plantree-themes"
+                    href="https://github.com/penx-lab/penx-themes"
                     target="_blank"
                     className="text-brand-500"
                   >
-                    github.com/plantree-xyz/plantree-themes
+                    github.com/penx-lab/penx-themes
                   </a>
                   .
                 </li>

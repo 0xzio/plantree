@@ -31,7 +31,7 @@ export const Nav = () => {
     {
       text: 'Docs',
       isExternal: true,
-      to: 'https://docs.plantree.xyz',
+      to: 'https://docs.penx.io',
     },
   ]
 
@@ -45,7 +45,7 @@ export const Nav = () => {
               className="inline-flex text-foreground/80 cursor-pointer"
               onClick={() => {
                 toast.success(
-                  'Join Plantree Discord and contact 0xZio in "Join this project" channel.',
+                  'Join PenX Discord and contact 0xZio in "Join this project" channel.',
                 )
               }}
             >

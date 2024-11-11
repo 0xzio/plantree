@@ -11,7 +11,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
       <Slogan></Slogan>
       <div className="flex flex-col items-center justify-center gap-1">
         <Button size="lg" className="h-12 text-base" asChild>
-          <a href="https://docs.plantree.xyz/getting-started" target="_blank">
+          <a href="https://docs.penx.io/getting-started" target="_blank">
             Deploy a blog
           </a>
         </Button>

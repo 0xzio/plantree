@@ -24,8 +24,7 @@ export function Slogan() {
       </div>
 
       <div className="text-xl text-foreground/60">
-        The best time to plant a tree was 20 years ago, <br /> The second-best
-        time is now.
+        The best way to build web3 independent blog.
       </div>
     </div>
   )
