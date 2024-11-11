@@ -1,22 +1,28 @@
 import { spaceAbi } from '@/lib/abi'
-import { IPFS_GATEWAY, SUBGRAPH_URL } from '@/lib/constants'
+import {
+  IPFS_GATEWAY,
+  NETWORK,
+  NetworkNames,
+  SUBGRAPH_URL,
+} from '@/lib/constants'
 import { redisKeys } from '@/lib/redisKeys'
 import { SpaceInfo, SpaceOnEvent, SpaceType } from '@/lib/types'
-import { wagmiConfig } from '@/lib/wagmi'
-import { readContracts } from '@wagmi/core'
 import { gql, request } from 'graphql-request'
 import Redis from 'ioredis'
 import ky from 'ky'
 import pRetry, { AbortError } from 'p-retry'
-import { Address } from 'viem'
+import { Address, createPublicClient, http } from 'viem'
+import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
 import { getEthPrice } from '../lib/getEthPrice'
 import { publicProcedure, router } from '../trpc'
 
 const redis = new Redis(process.env.REDIS_URL!)
-interface EthPriceResponse {
-  price: number
-}
+
+const publicClient = createPublicClient({
+  chain: NETWORK === NetworkNames.BASE ? base : baseSepolia,
+  transport: http(),
+})
 
 const spaceQuery = gql`
   query space($id: String!) {
@@ -61,7 +67,7 @@ export const spaceRouter = router({
       }
 
       const [res1, res2] = await Promise.all([
-        readContracts(wagmiConfig, {
+        publicClient.multicall({
           contracts: [
             {
               address: address as Address,

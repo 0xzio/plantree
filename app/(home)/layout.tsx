@@ -11,8 +11,8 @@ export default async function HomePage({ children }: PropsWithChildren) {
       <Slogan></Slogan>
       <div className="flex flex-col items-center justify-center gap-1">
         <Button size="lg" className="h-12 text-base" asChild>
-          <a href="https://docs.penx.io/getting-started" target="_blank">
-            Deploy a blog
+          <a href="https://docs.penx.io/deploy-in-10-minutes" target="_blank">
+            Deploy in 10 minutes
           </a>
         </Button>
         <div className="text-sm text-foreground/40">

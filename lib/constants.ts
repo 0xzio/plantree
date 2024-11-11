@@ -30,20 +30,12 @@ export enum NetworkNames {
 
 export const NETWORK = process.env.NEXT_PUBLIC_NETWORK as NetworkNames
 
-export const editorDefaultValue = {
-  type: 'doc',
-  content: [
-    {
-      type: 'paragraph',
-      content: [
-        {
-          type: 'text',
-          text: '',
-        },
-      ],
-    },
-  ],
-}
+export const editorDefaultValue = [
+  {
+    type: 'p',
+    children: [{ text: '' }],
+  },
+]
 
 export const SUBGRAPH_URL =
   NETWORK === NetworkNames.BASE

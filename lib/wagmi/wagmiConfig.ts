@@ -1,5 +1,3 @@
-'use client'
-
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { publicActions } from 'viem'
 import { base, baseSepolia } from 'wagmi/chains'
