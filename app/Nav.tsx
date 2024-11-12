@@ -31,7 +31,7 @@ export const Nav = () => {
     {
       text: 'Docs',
       isExternal: true,
-      to: 'https://docs.penx.io',
+      to: 'https://docs.penx.io/deploy-in-10-minutes',
     },
   ]
 
