@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
   const t0 = Date.now()
 
-  let cap = 50
+  let cap = 100
 
   const spaces = await baseClient.readContract({
     address: addressMap.SpaceFactory,

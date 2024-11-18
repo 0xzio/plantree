@@ -26,7 +26,7 @@ export async function GET(req: Request) {
 
   const t0 = Date.now()
 
-  let cap = 100
+  let cap = 200
 
   const spaces = await baseClient.readContract({
     address: addressMap.SpaceFactory,
@@ -36,10 +36,10 @@ export async function GET(req: Request) {
   })
 
   if (spaces.length) {
-    cap = 5000
+    cap = 4000
   } else {
     const ensName = await mainnetClient.getEnsName({ address })
-    if (ensName) cap = 3000
+    if (ensName) cap = 2000
   }
 
   const t1 = Date.now()
