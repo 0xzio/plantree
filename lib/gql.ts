@@ -2,7 +2,7 @@ import { gql } from 'graphql-request'
 
 export const spacesQuery = gql`
   {
-    spaces(first: 100) {
+    spaces(first: 100, orderBy: "timestamp", orderDirection: "asc") {
       id
       spaceId
       address
