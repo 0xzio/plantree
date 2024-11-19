@@ -16,15 +16,12 @@ const poppins = Poppins({
 export function Slogan() {
   return (
     <div className="space-y-6 text-center">
-      <div className="text-6xl leading-tight font-extrabold space-y-2">
-        Build your own <br />
-        <div className="bg-gradient-to-r from-orange-500  to-pink-500 bg-clip-text text-transparent">
-          web3 individual blog
-        </div>
+      <div className="text-7xl leading-tight font-bold space-y-2 text-foreground">
+        Build <span className="italic text-foreground">modern</span> blog
       </div>
 
       <div className="text-xl text-foreground/60">
-        The best way to build web3 individual blog.
+        The best way to build individual blog. Design for super individual.
       </div>
     </div>
   )

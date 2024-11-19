@@ -34,7 +34,7 @@ const poppins = Poppins({
 })
 
 const title = 'PenX'
-const description = 'The best way to build web3 individual blog.'
+const description = 'Build modern blog'
 // const image = 'https://vercel.pub/thumbnail.png'
 
 export const metadata: Metadata = {
