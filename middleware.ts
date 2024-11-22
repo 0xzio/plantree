@@ -38,7 +38,7 @@ export default async function middleware(req: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
-  const token = await getToken({ req })
+  console.log('path=======:', path)
 
   if (path === '/login' || path === '/') {
     const token = await getToken({ req })
@@ -49,14 +49,14 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  if (path === '/') {
-    return NextResponse.rewrite(
-      new URL(`/home${path === '/' ? '' : path}`, req.url),
-      {
-        headers: { 'x-current-path': path },
-      },
-    )
-  }
+  // if (path === '/') {
+  //   return NextResponse.rewrite(
+  //     new URL(`/home${path === '/' ? '' : path}`, req.url),
+  //     {
+  //       headers: { 'x-current-path': path },
+  //     },
+  //   )
+  // }
 
   if (path.startsWith('/~') || path === '/d') {
     const token = await getToken({ req })

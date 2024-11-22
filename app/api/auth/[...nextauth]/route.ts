@@ -211,17 +211,18 @@ async function handler(req: Request, res: Response) {
         },
       }),
     ],
-    // pages: {
-    //   signIn: `/login`,
-    //   verifyRequest: `/login`,
-    //   error: '/login', // Error code passed in query string as ?error=
-    // },
+    pages: {
+      signIn: `/login`,
+      verifyRequest: `/login`,
+      error: '/error', // Error code passed in query string as ?error=
+      newUser: '/~',
+    },
     session: { strategy: 'jwt' },
     callbacks: {
       async jwt({ token, account, user, profile, trigger, session }) {
         if (user) {
           const sessionUser = user as User & { chainId: string; sites: Site[] }
-          console.log('=====sessionUser:', sessionUser)
+          // console.log('=====sessionUser:', sessionUser)
 
           token.uid = sessionUser.id
           token.address = sessionUser.address as string
