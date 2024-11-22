@@ -1,9 +1,6 @@
 import { precision } from '@/lib/math'
-import Redis from 'ioredis'
 import { createPublicClient, http } from 'viem'
 import { arbitrum } from 'viem/chains'
-
-const redis = new Redis(process.env.REDIS_URL!)
 
 const priceAbi = [
   {
@@ -18,9 +15,6 @@ const priceAbi = [
 ] as const
 
 export async function getEthPrice(): Promise<number> {
-  const cacheKey = 'ETHUSDT_PRICE'
-  const cacheTTL = 30 //  30s
-
   const publicClient = createPublicClient({
     chain: arbitrum,
     transport: http(),
@@ -34,12 +28,7 @@ export async function getEthPrice(): Promise<number> {
   })
 
   try {
-    const cachedPrice = await redis.get(cacheKey)
-    if (cachedPrice) return parseFloat(cachedPrice)
-
     const ethPrice = precision.toDecimal(price, 8)
-    await redis.set(cacheKey, ethPrice.toString(), 'EX', cacheTTL)
-
     return ethPrice
   } catch (error) {
     console.error('Error fetching ETH price:', error)

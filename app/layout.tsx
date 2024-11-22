@@ -5,8 +5,8 @@ import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { Badge } from '@/components/ui/badge'
+import { getSite } from '@/lib/fetchers'
 import { cn } from '@/lib/utils'
-import { Analytics } from '@vercel/analytics/react'
 import { Metadata } from 'next'
 import {
   // Inter as FontSans,
@@ -65,6 +65,7 @@ export default async function RootLayout({
   const headerList = headers()
   const cookies = headers().get('cookie')
   const url = headerList.get('x-current-path') || ''
+  const site = await getSite()
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -130,8 +131,6 @@ export default async function RootLayout({
                 ></div>
               </div>
             </div>
-
-            <Analytics />
           </Providers>
         </ThemeProvider>
 

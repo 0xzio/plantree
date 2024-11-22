@@ -1,5 +1,3 @@
-import { ExecutionRevertedError } from 'viem'
-
 export function extractErrorMessage(error: any) {
   const userRejectedMessageRaw = `User rejected the request`
   if (!error.shortMessage) {

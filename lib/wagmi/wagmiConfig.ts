@@ -1,9 +1,9 @@
+'use client'
+
 import { getDefaultConfig } from '@rainbow-me/rainbowkit'
 import { publicActions } from 'viem'
 import { base, baseSepolia } from 'wagmi/chains'
-import { NETWORK, NetworkNames } from '../constants'
-
-const PROJECT_ID = process.env.NEXT_PUBLIC_PROJECT_ID as string
+import { NETWORK, NetworkNames, PROJECT_ID } from '../constants'
 
 export function getChain() {
   if (NETWORK === NetworkNames.BASE_SEPOLIA) {

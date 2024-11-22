@@ -65,7 +65,7 @@ export class Space {
   }
 
   get siteUrl() {
-    return this.raw.siteUrl || ''
+    return ''
   }
 
   get description() {

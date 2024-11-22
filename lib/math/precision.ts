@@ -11,16 +11,14 @@ export enum Decimals {
   PRICE = 8,
   USD = 6,
 }
-function powString(x: number) {
-  return 1 + '0'.repeat(x)
-}
 
 export const precision = {
   token(value: number | string, decimal: number = Decimals.TOKEN) {
     if (isInt(value)) {
-      return BigInt(powString(decimal)) * BigInt(value)
+      return BigInt(Math.pow(10, decimal)) * BigInt(value)
     }
-    return BigInt(times(powString(decimal), value).toFixed(0))
+
+    return BigInt(times(Math.pow(10, decimal), value).toFixed(0))
   },
 
   rate(value: number | string, decimal = Decimals.RATE) {

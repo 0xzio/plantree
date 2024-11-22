@@ -1,4 +1,12 @@
 export const redisKeys = {
+  posts() {
+    return `posts`
+  },
+
+  publishedPosts() {
+    return `publishedPosts`
+  },
+
   space(address: string) {
     return `space:${address}`
   },

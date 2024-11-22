@@ -48,7 +48,6 @@ export type SpaceInfo = {
   about: string
   logo: string
   subdomain: string
-  siteUrl: string
 }
 
 export type Plan = {
@@ -100,4 +99,70 @@ export type SubscriptionRecord = {
     id: string
     address: string
   }
+}
+
+export type Creation = {
+  id: string
+  creationId: string
+  creator: Address
+  space: Address
+  mintedAmount: string
+}
+
+export type MintRecord = {
+  id: string
+  creationId: string
+  minter: Address
+  curator: Address
+  amount: string
+  price: string
+}
+
+export type TipRecord = {
+  id: string
+  tipper: Address
+  receiver: Address
+  amount: string
+  uri: string
+  tipperRewardPercent: string
+}
+
+export type GoogleInfo = {
+  access_token: string
+  scope: string
+  token_type: string
+  expiry_date: number
+  refresh_token: string
+
+  id: string
+  email: string
+  picture: string
+}
+
+export type Socials = {
+  farcaster: string
+  x: string
+  mastodon: string
+  github: string
+  facebook: string
+  youtube: string
+  linkedin: string
+  threads: string
+  instagram: string
+  medium: string
+}
+
+export type SubscriptionRaw = {
+  planId: number
+  account: string
+  startTime: bigint
+  duration: bigint
+  amount: bigint
+  uri: string
+}
+
+export type SubscriptionInSession = {
+  planId: number
+  startTime: number
+  duration: number
 }

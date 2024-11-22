@@ -1,8 +1,10 @@
-import { forwardRef, useMemo, useRef, useState } from 'react'
+import { forwardRef, useRef, useState } from 'react'
 import LoadingDots from '@/components/icons/loading-dots'
-import { IPFS_GATEWAY } from '@/lib/constants'
+import { uploadFile } from '@/lib/uploadFile'
+import { getUrl } from '@/lib/utils'
 import { Edit3 } from 'lucide-react'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 interface Props {
   value?: string
@@ -22,33 +24,26 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
       const src = URL.createObjectURL(file)
       onChange?.(src)
 
-      const res = await fetch('/api/ipfs-upload?pin=true', {
-        method: 'POST',
-        body: file,
-      })
-
-      if (res.ok) {
-        const data = await res.json()
-        console.log('=======data.cid:', data.cid)
-        onChange?.(data.cid)
-      } else {
-        console.log('Failed to upload file')
+      try {
+        const data = await uploadFile(file)
+        toast.success('Image uploaded successfully!')
+        onChange?.(data.url!)
+      } catch (error) {
+        console.log('Failed to upload file:', error)
       }
+
       setLoading(false)
     }
   }
-
-  const imageUrl = useMemo(() => {
-    if (value?.startsWith('blob') || value?.startsWith('http')) return value
-    return IPFS_GATEWAY + `/ipfs/${value}`
-  }, [value])
 
   return (
     <div ref={ref}>
       <div className="w-20 h-20 rounded-2xl bg-accent relative cursor-pointer flex items-center justify-center overflow-hidden">
         {value && (
-          <img
-            src={imageUrl}
+          <Image
+            src={getUrl(value)}
+            width={80}
+            height={80}
             className="absolute left-0 top-0 w-full h-full cursor-pointer"
             alt=""
           />

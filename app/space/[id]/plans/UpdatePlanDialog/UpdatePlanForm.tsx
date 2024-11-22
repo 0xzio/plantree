@@ -2,7 +2,6 @@
 
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import Editor from '@/components/editor/advanced-editor'
 import LoadingDots from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
 import { Button } from '@/components/ui/button'
@@ -180,30 +179,6 @@ export function UpdatePlanForm() {
               )}
             />
           </div>
-
-          <div className="flex-1 flex-shrink-0">
-            <FormField
-              control={form.control}
-              name="benefits"
-              render={({ field }) => (
-                <FormItem className="w-full h-full">
-                  <FormLabel>Benefits</FormLabel>
-                  <FormControl>
-                    <div className="h-[360px]  border border-neutral-200 rounded-lg overflow-auto">
-                      <Editor
-                        className="p-3 break-all plan-editor"
-                        initialValue={JSON.parse(field.value)}
-                        onChange={(v) => {
-                          field.onChange(JSON.stringify(v))
-                        }}
-                      />
-                    </div>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-          </div>
         </div>
 
         <div className="text-center mt-4">
@@ -212,7 +187,7 @@ export function UpdatePlanForm() {
             type="submit"
             disabled={isLoading || !form.formState.isValid}
           >
-            {isLoading ? <LoadingDots  /> : <p>Update</p>}
+            {isLoading ? <LoadingDots /> : <p>Update</p>}
           </Button>
         </div>
       </form>

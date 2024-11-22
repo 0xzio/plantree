@@ -1,6 +1,5 @@
 'use client'
 
-import { useLogoImages } from '@/hooks/useLogoImages'
 import Image from 'next/image'
 
 interface Props {

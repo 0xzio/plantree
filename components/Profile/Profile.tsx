@@ -1,25 +1,34 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-import { WalletConnectButton } from '@/components/WalletConnectButton'
-import { cn } from '@/lib/utils'
+import { useSession } from 'next-auth/react'
 import { useAccount } from 'wagmi'
+import LoginButton from '../LoginButton'
+import { useSiteContext } from '../SiteContext'
+import { Avatar, AvatarFallback } from '../ui/avatar'
+import { ProfileDialog } from './ProfileDialog/ProfileDialog'
 import { ProfilePopover } from './ProfilePopover'
 
 interface Props {}
 
 export function Profile({}: Props) {
-  const { isConnected, address } = useAccount()
-  const [isClient, setIsClient] = useState(false)
+  const { data, status } = useSession()
+  const { address = '' } = useAccount()
+  const site = useSiteContext()
 
-  useEffect(() => {
-    setIsClient(true)
-  }, [])
+  if (status === 'loading')
+    return (
+      <Avatar className="h-8 w-8">
+        <AvatarFallback></AvatarFallback>
+      </Avatar>
+    )
 
-  if (!isClient) return null
+  const authenticated = !!data
 
-  if (!isConnected) {
-    return <WalletConnectButton className={cn('rounded-full')} />
-  }
-  return <ProfilePopover />
+  return (
+    <>
+      <ProfileDialog />
+      {!authenticated && <LoginButton />}
+      {authenticated && <ProfilePopover />}
+    </>
+  )
 }

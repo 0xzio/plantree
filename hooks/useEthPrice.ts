@@ -11,7 +11,7 @@ export function useEthPrice() {
 }
 
 export function useQueryEthPrice() {
-  const { data, ...rest } = trpc.space.ethPrice.useQuery()
+  const { data, ...rest } = trpc.user.ethPrice.useQuery()
 
   useEffect(() => {
     if (typeof data !== 'undefined') {

@@ -1,10 +1,10 @@
 import { prisma } from '@/lib/prisma'
 import { ContributionType, Platform } from '@prisma/client'
 import { z } from 'zod'
-import { loggedInProcedure, protectedProcedure, router } from '../trpc'
+import { protectedProcedure, router } from '../trpc'
 
 export const rewardsRouter = router({
-  list: loggedInProcedure.query(async ({ ctx, input }) => {
+  list: protectedProcedure.query(async ({ ctx, input }) => {
     const userAddress = ctx.token.address
 
     return prisma.rewardRequest.findMany({
@@ -19,7 +19,7 @@ export const rewardsRouter = router({
     })
   }),
 
-  create: loggedInProcedure
+  create: protectedProcedure
     .input(
       z.object({
         type: z.nativeEnum(ContributionType),
@@ -42,7 +42,7 @@ export const rewardsRouter = router({
       return newRewardRequest
     }),
 
-  delete: loggedInProcedure
+  delete: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
       const userAddress = ctx.token.address

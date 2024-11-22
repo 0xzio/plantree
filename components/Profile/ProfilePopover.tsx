@@ -1,6 +1,6 @@
 'use client'
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { memo } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -16,12 +16,23 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { useAddress } from '@/hooks/useAddress'
-import { trpc } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
-import { Cloud, Gauge, LifeBuoy, LogOut, UserRoundPen } from 'lucide-react'
+import { AuthType } from '@prisma/client'
+import {
+  DatabaseBackup,
+  FileText,
+  Gauge,
+  KeySquare,
+  LogOut,
+  Settings,
+  UserCog,
+  UserRound,
+  Wallet,
+} from 'lucide-react'
+import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import { useDisconnect } from 'wagmi'
+import { useSiteContext } from '../SiteContext'
+import { Skeleton } from '../ui/skeleton'
 import { ProfileAvatar } from './ProfileAvatar'
 import { WalletInfo } from './WalletInfo'
 
@@ -29,15 +40,21 @@ interface Props {
   className?: string
   showAddress?: boolean
   showEnsName?: boolean
+  showDropIcon?: boolean
 }
 
-export function ProfilePopover({
+export const ProfilePopover = memo(function ProfilePopover({
   showAddress,
   showEnsName,
+  showDropIcon = false,
   className = '',
 }: Props) {
+  const { data } = useSession()
   const { push } = useRouter()
-  const { disconnect } = useDisconnect()
+  const { authType } = useSiteContext()
+  const isGoogleOauth = authType === AuthType.GOOGLE
+
+  if (!data) return <div></div>
 
   return (
     <DropdownMenu>
@@ -45,25 +62,83 @@ export function ProfilePopover({
         <ProfileAvatar
           showAddress={showAddress}
           showEnsName={showEnsName}
+          showDropIcon={showDropIcon}
+          image={data.user?.image || ''}
           className={cn('cursor-pointer', className)}
         />
       </DropdownMenuTrigger>
-
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="grid gap-2">
-          <ProfileAvatar showAddress showEnsName showCopy />
-          <WalletInfo />
+          {isGoogleOauth && (
+            <div>
+              <div>{data.user?.name || data.user?.email}</div>
+            </div>
+          )}
+
+          {!isGoogleOauth && (
+            <>
+              <ProfileAvatar showAddress showEnsName showCopy />
+              <WalletInfo />
+            </>
+          )}
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+
+        <DropdownMenuGroup>
+          {/* <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              push('/wallet')
+            }}
+          >
+            <Wallet className="mr-2 h-4 w-4" />
+            <span>Wallet</span>
+          </DropdownMenuItem> */}
+
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              push('/~/objects/today')
+            }}
+          >
+            <Gauge className="mr-2 h-4 w-4" />
+            <span>Dashboard</span>
+          </DropdownMenuItem>
+
+          <DropdownMenuItem
+            className="cursor-pointer"
+            onClick={() => {
+              push('/~/settings')
+            }}
+          >
+            <Settings className="mr-2 h-4 w-4" />
+            <span>Settings</span>
+          </DropdownMenuItem>
+
+          {/* <DropdownMenuItem
+                className="cursor-pointer"
+                onClick={() => {
+                  push('/~/access-token')
+                }}
+              >
+                <KeySquare className="mr-2 h-4 w-4" />
+                <span>Access Token</span>
+              </DropdownMenuItem> */}
+        </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem
           className="cursor-pointer"
-          onClick={() => disconnect()}
+          onClick={async () => {
+            try {
+              await signOut()
+              push('/')
+            } catch (error) {}
+          }}
         >
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
-          <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )
-}
+})
