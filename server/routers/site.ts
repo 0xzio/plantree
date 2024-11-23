@@ -6,6 +6,10 @@ import { getSite } from '../lib/getSite'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const siteRouter = router({
+  list: publicProcedure.query(async () => {
+    return prisma.site.findMany()
+  }),
+
   getSite: publicProcedure.query(async () => {
     const site = await getSite()
     return site
