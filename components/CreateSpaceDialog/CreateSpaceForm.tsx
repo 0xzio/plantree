@@ -15,13 +15,14 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddress } from '@/hooks/useAddress'
-import { spaceAbi, spaceFactoryAbi } from '@/lib/abi'
+import { spaceFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
+import { appEmitter } from '@/lib/app-emitter'
 import { checkChain } from '@/lib/checkChain'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { precision } from '@/lib/math'
 import { revalidatePath } from '@/lib/revalidatePath'
 import { revalidateMetadata } from '@/lib/revalidateTag'
+import { api } from '@/lib/trpc'
 import { wagmiConfig } from '@/lib/wagmi'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -29,13 +30,14 @@ import {
   readContracts,
   waitForTransactionReceipt,
 } from '@wagmi/core'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import pRetry, { AbortError } from 'p-retry'
 import { toast } from 'sonner'
 import { zeroAddress } from 'viem'
 import { useReadContract, useWriteContract } from 'wagmi'
 import { z } from 'zod'
 import { FileUpload } from '../FileUpload'
+import { useSiteContext } from '../SiteContext'
 import { useCreateSpaceDialog } from './useCreateSpaceDialog'
 
 const FormSchema = z.object({
@@ -64,6 +66,7 @@ const FormSchema = z.object({
 
 export function CreateSpaceForm() {
   const address = useAddress()
+  const site = useSiteContext()
   const [isLoading, setLoading] = useState(false)
   const { push } = useRouter()
   const { setIsOpen } = useCreateSpaceDialog()
@@ -146,6 +149,8 @@ export function CreateSpaceForm() {
         headers: { 'Content-Type': 'application/json' },
       }).then((d) => d.json())
 
+      console.log('====res:', res, price)
+
       const hash = await writeContractAsync({
         address: addressMap.SpaceFactory,
         abi: spaceFactoryAbi,
@@ -163,6 +168,8 @@ export function CreateSpaceForm() {
         value: price,
       })
 
+      console.log('======price:', price)
+
       await waitForTransactionReceipt(wagmiConfig, { hash })
 
       const spaceAddresses = await pRetry(fetchLatestUserSpaces, {
@@ -173,10 +180,18 @@ export function CreateSpaceForm() {
         },
       })
 
-      toast.success('Space created successfully!')
-      revalidateMetadata('spaces')
+      const spaceAddress = spaceAddresses[spaceAddresses.length - 1]
 
-      push(`/space/${spaceAddresses[spaceAddresses.length - 1]}`)
+      await api.site.updateSite.mutate({
+        id: site.id,
+        spaceId: spaceAddress,
+      })
+
+      appEmitter.emit('SITE_UPDATED', { ...site, spaceId: spaceAddress })
+
+      toast.success('Space created successfully!')
+
+      push(`/~/objects/today`)
 
       revalidatePath('/space/[id]', 'page')
       revalidatePath('/', 'layout')
@@ -202,7 +217,7 @@ export function CreateSpaceForm() {
         onSubmit={form.handleSubmit(onSubmit)}
         className="grid gap-4 items-center"
       >
-        <div className="pb-8 mb-4 space-y-4">
+        <div className="pb-8 space-y-4">
           <FormField
             control={form.control}
             name="logo"
@@ -226,7 +241,7 @@ export function CreateSpaceForm() {
             name="name"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Site name</FormLabel>
+                <FormLabel>Site name on chain</FormLabel>
                 <FormControl>
                   <Input
                     placeholder="Site name"
@@ -255,7 +270,7 @@ export function CreateSpaceForm() {
                       $
                     </div>
                     <Input
-                      placeholder="Pathname"
+                      placeholder="Symbol name"
                       {...field}
                       className="w-full pl-7"
                     />
@@ -272,7 +287,7 @@ export function CreateSpaceForm() {
         </div>
 
         <Button size="lg" type="submit" className="w-full">
-          {isLoading ? <LoadingDots /> : <p>Create site</p>}
+          {isLoading ? <LoadingDots /> : <p>Enable web</p>}
         </Button>
       </form>
     </Form>

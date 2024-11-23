@@ -1,13 +1,14 @@
 'use client'
 
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSite } from '@/hooks/useSite'
 import { trpc } from '@/lib/trpc'
-import { StorageProviderSettingForm } from './StorageProviderSettingForm'
+import { AppearanceSettingForm } from './AppearanceSettingForm'
 
 export const dynamic = 'force-static'
 
 export default function Page() {
-  const { isLoading, data } = trpc.site.getSite.useQuery()
+  const { isLoading, site, error } = useSite()
 
   if (isLoading) {
     return (
@@ -18,7 +19,7 @@ export default function Page() {
   }
   return (
     <div>
-      <StorageProviderSettingForm site={data!} />
+      <AppearanceSettingForm site={site!} />
     </div>
   )
 }

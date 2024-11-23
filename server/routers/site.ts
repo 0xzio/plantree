@@ -2,7 +2,6 @@ import { prisma } from '@/lib/prisma'
 import { AuthType, StorageProvider } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
-import { getSite } from '../lib/getSite'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const siteRouter = router({
@@ -10,15 +9,26 @@ export const siteRouter = router({
     return prisma.site.findMany()
   }),
 
-  getSite: publicProcedure.query(async () => {
-    const site = await getSite()
+  getSite: protectedProcedure
+    .input(z.object({ id: z.string() }))
+    .query(async ({ input }) => {
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: input.id },
+      })
+      return site
+    }),
+
+  bySubdomain: protectedProcedure.input(z.string()).query(async ({ input }) => {
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { subdomain: input },
+    })
     return site
   }),
 
   updateSite: protectedProcedure
     .input(
       z.object({
-        id: z.string().optional(),
+        id: z.string(),
         logo: z.string().optional(),
         name: z.string().optional(),
         description: z.string().optional(),

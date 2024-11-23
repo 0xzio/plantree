@@ -21,11 +21,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Site } from '@penxio/types'
-import { AuthType } from '@prisma/client'
+import { Site } from '@prisma/client'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -38,7 +38,7 @@ interface Props {
 }
 
 export function AppearanceSettingForm({ site }: Props) {
-  const { refetch } = trpc.site.getSite.useQuery()
+  const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const form = useForm<z.infer<typeof FormSchema>>({

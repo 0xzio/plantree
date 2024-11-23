@@ -1,13 +1,13 @@
 'use client'
 
 import LoadingDots from '@/components/icons/loading-dots'
-import { trpc } from '@/lib/trpc'
-import { AuthTypeSettingForm } from './AuthTypeSettingForm'
+import { useSite } from '@/hooks/useSite'
+import { SiteSettingForm } from './SiteSettingForm'
 
 export const dynamic = 'force-static'
 
 export default function Page() {
-  const { isLoading, data } = trpc.site.getSite.useQuery()
+  const { isLoading, site } = useSite()
 
   if (isLoading) {
     return (
@@ -18,7 +18,7 @@ export default function Page() {
   }
   return (
     <div>
-      <AuthTypeSettingForm site={data!} />
+      <SiteSettingForm site={site!} />
     </div>
   )
 }

@@ -13,10 +13,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { Site } from '@penxio/types'
+import { Site } from '@prisma/client'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -29,7 +30,7 @@ interface Props {
 }
 
 export function Web3SettingForm({ site }: Props) {
-  const { refetch } = trpc.site.getSite.useQuery()
+  const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   console.log('====site:', site)

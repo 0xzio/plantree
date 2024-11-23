@@ -1,14 +1,18 @@
 import { ProfilePopover } from '@/components/Profile/ProfilePopover'
 import { Badge } from '@/components/ui/badge'
+import { useSite } from '@/hooks/useSite'
 import { Calendar, Feather, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
+import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { NodesBox } from './NodesBox'
 import { SidebarItem } from './SidebarItem'
 import { SyncBar } from './SyncBar/SyncBar'
 
 export const Sidebar = () => {
   const pathname = usePathname()
+  const { site } = useSite()
+  const { spaceId } = site
 
   return (
     <div className="flex-col flex-1 flex gap-3 h-screen border-r border-r-sidebar">
@@ -78,6 +82,7 @@ export const Sidebar = () => {
             label="Settings"
           />
         </Link>
+        {!spaceId && <EnableWeb3Entry />}
       </div>
 
       <div className="flex-1 z-10 overflow-auto px-2">

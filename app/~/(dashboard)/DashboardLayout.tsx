@@ -4,8 +4,10 @@ import { ReactNode, useEffect, useState } from 'react'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
 import LoadingDots from '@/components/icons/loading-dots'
 import { NodesProvider } from '@/components/NodesProvider'
+import { SiteProvider } from '@/components/SiteContext'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
+import { useSite } from '@/hooks/useSite'
 import { SIDEBAR_WIDTH } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { useSession } from 'next-auth/react'
@@ -18,6 +20,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   useQueryEthPrice()
   useQueryEthBalance()
   const { status, data: session } = useSession()
+  const { site } = useSite()
 
   const pathname = usePathname()
   const isNode = pathname?.includes('/~/objects')
@@ -29,7 +32,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     }
   }, [status, push])
 
-  if (status === 'loading' || !session)
+  if (status === 'loading' || !session || !site)
     return (
       <div className="h-screen flex items-center justify-center">
         <LoadingDots className="bg-foreground/60"></LoadingDots>
@@ -37,27 +40,29 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     )
 
   return (
-    <div className="h-screen flex fixed top-0 left-0 bottom-0 right-0">
-      <div
-        className={cn('h-screen sticky top-0 hidden md:flex')}
-        style={{ width: SIDEBAR_WIDTH }}
-      >
-        <Sidebar />
+    <SiteProvider site={site as any}>
+      <div className="h-screen flex fixed top-0 left-0 bottom-0 right-0">
+        <div
+          className={cn('h-screen sticky top-0 hidden md:flex')}
+          style={{ width: SIDEBAR_WIDTH }}
+        >
+          <Sidebar />
+        </div>
+        <div className="flex-1 pb-40 h-screen overflow-auto">
+          <NodesProvider>
+            {/* <NavbarWrapper /> */}
+            <CreationDialog />
+            <div
+              className={cn(
+                !isNode && 'mx-auto md:max-w-2xl pt-16 pb-20',
+                isNode,
+              )}
+            >
+              {children}
+            </div>
+          </NodesProvider>
+        </div>
       </div>
-      <div className="flex-1 pb-40 h-screen overflow-auto">
-        <NodesProvider>
-          {/* <NavbarWrapper /> */}
-          <CreationDialog />
-          <div
-            className={cn(
-              !isNode && 'mx-auto md:max-w-2xl pt-16 pb-20',
-              isNode,
-            )}
-          >
-            {children}
-          </div>
-        </NodesProvider>
-      </div>
-    </div>
+    </SiteProvider>
   )
 }

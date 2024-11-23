@@ -4,23 +4,10 @@ import { getUrl } from '@/lib/utils'
 import { Site } from '@penxio/types'
 import { AuthType, StorageProvider } from '@prisma/client'
 
-export async function getSite() {
-  const site = await prisma.site.findFirst()
-
-  if (!site) {
-    return {
-      name: 'Site Name',
-      description: 'Description of your site',
-      about: editorDefaultValue,
-      logo: 'https://penx.io/logo.png',
-      font: '',
-      image: '',
-      socials: {},
-      config: {},
-      authType: AuthType.REOWN,
-      storageProvider: StorageProvider.IPFS,
-    } as any as Site
-  }
+export async function getSite(id = '') {
+  const site = await prisma.site.findFirstOrThrow({
+    // where: { id },
+  })
 
   function getAbout() {
     if (!site?.about) return editorDefaultValue

@@ -1,7 +1,7 @@
 import { NETWORK, NetworkNames } from './constants'
 
 const baseSepoliaAddress = {
-  SpaceFactory: '0x6A96100F5e5231c3e838e1150eEF9255062895Ee',
+  SpaceFactory: '0x2728B1E9cEf2d2278EB7C951a553D0E5a6aE45d0',
   CreationFactory: '0xB2ebC5f85E0DA834CB71884150d2Fd738fEf918B',
   PenToken: '0xd8501D1063Db721512572738e53775F11C05Df10',
   Tip: '0xe31E51b20C1a054Fa46Dacd31C8a45ce3C97C834',

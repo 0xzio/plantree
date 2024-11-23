@@ -31,6 +31,8 @@ export default async function middleware(req: NextRequest) {
       process.env.NEXT_PUBLIC_ROOT_DOMAIN
     }`
   }
+  // const token = await getToken({ req })
+  // console.log('====token:', token)
 
   const searchParams = req.nextUrl.searchParams.toString()
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
@@ -61,7 +63,10 @@ export default async function middleware(req: NextRequest) {
     if (!token) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
-    return NextResponse.rewrite(new URL(path, req.url))
+
+    return NextResponse.rewrite(new URL(path, req.url), {
+      headers: { 'x-subdomain': token.subdomain as any },
+    })
   }
 
   if (path.startsWith('/@')) {

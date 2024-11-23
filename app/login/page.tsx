@@ -19,8 +19,6 @@ export const dynamic = 'force-static'
 export const revalidate = 3600 * 24
 
 export default async function Page() {
-  const site = await getSite()
-
   return (
     <div className="h-screen flex flex-col items-center justify-between relative">
       <Link
