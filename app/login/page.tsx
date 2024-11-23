@@ -1,6 +1,7 @@
 import { GoogleOauthButton } from '@/components/GoogleOauthButton'
 import { GoogleOauthDialog } from '@/components/GoogleOauthDialog/GoogleOauthDialog'
 import { useSiteContext } from '@/components/SiteContext'
+import { TextLogo } from '@/components/TextLogo'
 import {
   Card,
   CardContent,
@@ -21,14 +22,14 @@ export default async function Page() {
   const site = await getSite()
 
   return (
-    <div className="h-screen flex flex-col items-center justify-between">
+    <div className="h-screen flex flex-col items-center justify-between relative">
       <Link
         href="/"
-        className="text-xl font-bold text-foreground/60 hover:text-foreground py-4 cursor-pointer"
+        className="text-xl font-bold text-foreground/60 hover:text-foreground py-4 cursor-pointer z-20"
       >
-        {site.name}
+        <TextLogo />
       </Link>
-      <div className="flex-1 flex items-center justify-center w-full -mt-20">
+      <div className="flex-1 flex items-center justify-center w-full -mt-20 z-10">
         <Card className="flex flex-col sm:w-96">
           <CardHeader>
             <CardTitle>Login</CardTitle>

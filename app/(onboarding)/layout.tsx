@@ -1,7 +1,7 @@
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
-import { cn } from '@/lib/utils'
+import { TextLogo } from '@/components/TextLogo'
 import { Philosopher } from 'next/font/google'
 import Link from 'next/link'
 import { Nav } from './Nav'
@@ -18,9 +18,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div className="z-10  py-3 relative flex justify-between">
         <div className="flex items-center">
           <Link href="/" className="cursor-pointer flex items-center">
-            <div className={cn('font-bold text-2xl flex', logoFont.className)}>
-              <span className="">PenX</span>
-            </div>
+            <TextLogo />
           </Link>
         </div>
 

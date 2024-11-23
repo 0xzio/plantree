@@ -7,7 +7,8 @@ export const isNavigator = typeof navigator !== 'undefined'
 
 export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
 
-export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
+// export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
+export const IPFS_UPLOAD_URL = '/api/ipfs-upload'
 export const IPFS_ADD_URL = 'https://penx.io/api/ipfs-add'
 // export const IPFS_ADD_URL = 'http://localhost:4000/api/ipfs-add'
 export const IPFS_GATEWAY = 'https://ipfs-gateway.spaceprotocol.xyz'

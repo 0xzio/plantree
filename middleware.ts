@@ -38,8 +38,6 @@ export default async function middleware(req: NextRequest) {
     searchParams.length > 0 ? `?${searchParams}` : ''
   }`
 
-  console.log('path=======:', path)
-
   if (path === '/login' || path === '/') {
     const token = await getToken({ req })
     if (token) {

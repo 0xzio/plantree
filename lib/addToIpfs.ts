@@ -1,10 +1,12 @@
-import { IPFS_ADD_URL } from './constants'
+import { create } from 'kubo-rpc-client'
 
 export async function addToIpfs(value: string) {
-  const res = await fetch(IPFS_ADD_URL, {
-    method: 'POST',
-    body: value,
-    headers: { 'Content-Type': 'application/json' },
-  }).then((d) => d.json())
-  return res.cid
+  const client = create(new URL(process.env.NEXT_PUBLIC_IPFS_API!))
+  const { cid } = await client.add(
+    {
+      content: typeof value === 'object' ? JSON.stringify(value) : value,
+    },
+    { pin: true },
+  )
+  return cid.toString()
 }
