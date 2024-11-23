@@ -1,9 +1,9 @@
 import { useState } from 'react'
-import { useAddress } from '@/app/(creator-fi)/hooks/useAddress'
 import LoadingDots from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
+import { useAddress } from '@/hooks/useAddress'
 import { trpc } from '@/lib/trpc'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
@@ -19,14 +19,19 @@ const CommentSchema = z.object({
 interface Props {
   postId: string
   // For reply
-  parentId?: string;
+  parentId?: string
   refetchComments: () => void
   onCancel?: () => void
 }
 
 const maxCharacters = 1000
 
-export function CommentInput({ postId, parentId, refetchComments, onCancel }: Props) {
+export function CommentInput({
+  postId,
+  parentId,
+  refetchComments,
+  onCancel,
+}: Props) {
   const userID = useAddress()
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
@@ -52,7 +57,7 @@ export function CommentInput({ postId, parentId, refetchComments, onCancel }: Pr
         postId,
         userId: userID as string,
         content,
-        parentId
+        parentId,
       })
 
       setContent('')
@@ -82,16 +87,17 @@ export function CommentInput({ postId, parentId, refetchComments, onCancel }: Pr
         </div>
 
         <div className="flex justify-end">
-          {
-            parentId && <Button
+          {parentId && (
+            <Button
               onClick={() => {
                 setContent('')
                 onCancel && onCancel()
               }}
-              className="w-20 text-xs h-8 mr-1">
+              className="w-20 text-xs h-8 mr-1"
+            >
               <p>Cancel</p>
             </Button>
-          }
+          )}
 
           {!authenticated ? (
             <WalletConnectButton className="w-30 text-xs h-8">

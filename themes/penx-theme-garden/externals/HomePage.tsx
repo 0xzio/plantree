@@ -1,5 +1,5 @@
-import { Post, Site } from '@penxio/types'
 import { Lobster, Merienda } from 'next/font/google'
+import { Post, Site } from '@penxio/types'
 import { PostItem } from '../components/PostItem'
 
 const lobster = Lobster({
@@ -32,7 +32,7 @@ export function HomePage({
               key={post.slug}
               post={post}
               PostActions={PostActions}
-              site={site}
+              ContentRender={ContentRender}
               receivers={receivers}
             />
           )

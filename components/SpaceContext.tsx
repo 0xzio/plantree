@@ -1,9 +1,9 @@
 'use client'
 
 import { createContext, PropsWithChildren, useContext } from 'react'
+import { Space } from '@/domains/Space'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
 import { SpaceType } from '@/lib/types'
-import { Space } from '../app/(creator-fi)/domains/Space'
 
 export const SpaceContext = createContext({} as Space)
 

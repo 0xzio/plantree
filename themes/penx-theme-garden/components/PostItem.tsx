@@ -1,15 +1,15 @@
 'use client'
 
-import { Post, PostType, Site } from '@penxio/types'
+import { Post, PostType } from '@penxio/types'
 import { cn, formatDate } from '@penxio/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Node } from 'slate'
 
 interface PostItemProps {
-  site: Site
   post: Post
   receivers?: string[]
+  ContentRender?: (props: { content: any[]; className?: string }) => JSX.Element
   PostActions?: (props: {
     post: Post
     receivers?: string[]
@@ -17,18 +17,13 @@ interface PostItemProps {
   }) => JSX.Element
 }
 
-export function PostItem({
-  site,
-  post,
-  PostActions,
-  receivers = [],
-}: PostItemProps) {
+export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const { slug, title } = post
   const { address = '' } = post.user
   const name = post.user.name || address.slice(0, 6) + '...' + address.slice(-4)
 
-  const params = useSearchParams()
-  const type = params?.get('type')
+  const params = useSearchParams()!
+  const type = params.get('type')
 
   if (type === 'photos' && post.type !== PostType.IMAGE) return null
   if (type === 'notes' && post.type !== PostType.NOTE) return null
@@ -59,7 +54,7 @@ export function PostItem({
     const str = nodes.map((node) => Node.string(node)).join('')
 
     return (
-      <Link href={`/@${site.subdomain}/posts/${slug}`} className="space-y-2">
+      <Link href={`/posts/${slug}`} className="space-y-2">
         <div className="text-2xl font-bold hover:scale-105 transition-all origin-left">
           {post.title}
         </div>

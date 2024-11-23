@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
+import { Lobster } from 'next/font/google'
 import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
-import { Lobster } from 'next/font/google'
 import Link from './Link'
 import { PostTypeNav } from './PostTypeNav'
 
@@ -10,6 +10,15 @@ const lobster = Lobster({
   subsets: ['latin'],
   display: 'swap',
 })
+
+const headerNavLinks = [
+  { href: '/', title: 'Home' },
+  // { href: '/posts', title: 'Blog' },
+  // { href: '/tags', title: 'Tags' },
+  { href: '/about', title: 'About' },
+  { href: '/creator-fi/trade', title: 'CreatorFi' },
+  { href: '/membership', title: 'Membership', isMembership: true },
+]
 
 interface Props {
   site: Site
@@ -21,14 +30,6 @@ interface Props {
 }
 
 export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
-  const prefix = `/@${site.subdomain}`
-  const headerNavLinks = [
-    { href: `${prefix}`, title: 'Home' },
-    // { href: '/tags', title: 'Tags' },
-    { href: `${prefix}/about`, title: 'About' },
-    { href: `${prefix}/creator-fi/trade`, title: 'CreatorFi' },
-    { href: `${prefix}/membership`, title: 'Membership', isMembership: true },
-  ]
   return (
     <header
       className={cn(
@@ -38,11 +39,11 @@ export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
       <div className="lg:flex items-center space-x-4 leading-5 sm:space-x-6 hidden w-60">
         <div className="flex items-center space-x-4">
           {headerNavLinks.map((link) => {
-            if (link.href === `${prefix}/creator-fi/trade` && !site.spaceId) {
+            if (link.href === '/creator-fi/trade' && !site.spaceId) {
               return null
             }
 
-            if (link.href === `${prefix}/membership` && !site.spaceId) {
+            if (link.href === '/membership' && !site.spaceId) {
               return null
             }
             return (

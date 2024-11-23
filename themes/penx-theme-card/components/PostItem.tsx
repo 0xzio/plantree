@@ -1,21 +1,20 @@
-import { Post, Site } from '@penxio/types'
+import { Post } from '@penxio/types'
 import { formatDate } from '@penxio/utils'
 import Image from './Image'
 import Link from './Link'
 import Tag from './Tag'
 
 interface PostItemProps {
-  site: Site
   post: Post
 }
 
-export function PostItem({ post, site }: PostItemProps) {
+export function PostItem({ post }: PostItemProps) {
   const { slug, title } = post
 
   return (
     <article key={slug} className="flex flex-col space-y-5">
       <Link
-        href={`/@${site.subdomain}/posts/${slug}`}
+        href={`/posts/${slug}`}
         className="object-cover w-full h-52 bg-neutral-100 rounded-lg overflow-hidden hover:scale-105 transition-all"
       >
         {!!post?.image && (
@@ -44,7 +43,7 @@ export function PostItem({ post, site }: PostItemProps) {
           </div>
           <h2 className="text-2xl font-bold leading-8 tracking-tight">
             <Link
-              href={`/@${site.subdomain}/posts/${slug}`}
+              href={`/posts/${slug}`}
               className="hover:text-black transition-colors text-foreground/80"
             >
               {title}

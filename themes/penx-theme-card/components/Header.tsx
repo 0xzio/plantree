@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
+import { Merienda } from 'next/font/google'
 import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
-import { Merienda } from 'next/font/google'
 import Link from './Link'
 
 const merienda = Merienda({
@@ -9,6 +9,14 @@ const merienda = Merienda({
   subsets: ['latin'],
   display: 'swap',
 })
+
+const headerNavLinks = [
+  { href: '/', title: 'Home' },
+  { href: '/posts', title: 'Blog' },
+  // { href: '/tags', title: 'Tags' },
+  { href: '/about', title: 'About' },
+  { href: '/membership', title: 'Membership', isMembership: true },
+]
 
 const headerNavLinksRight = [{ href: '/creator-fi/trade', title: 'CreatorFi' }]
 
@@ -29,14 +37,6 @@ export const Header = ({
   ConnectButton,
   Airdrop,
 }: Props) => {
-  const prefix = `/@${site.subdomain}`
-  const headerNavLinks = [
-    { href: `${prefix}/`, title: 'Home' },
-    { href: `${prefix}/posts`, title: 'Blog' },
-    // { href: '/tags', title: 'Tags' },
-    { href: `${prefix}/about`, title: 'About' },
-    { href: `${prefix}/membership`, title: 'Membership', isMembership: true },
-  ]
   return (
     <header className={cn('flex items-center w-full py-4 h-16 z-50')}>
       <div className="flex-1 no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
@@ -60,7 +60,7 @@ export const Header = ({
         })}
       </div>
 
-      <Link href={prefix} aria-label={site.name}>
+      <Link href="/" aria-label={site.name}>
         <div className="flex items-center justify-between">
           <div
             className={cn(
@@ -76,7 +76,7 @@ export const Header = ({
       <div className="flex items-center justify-end flex-1 gap-4">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
           {headerNavLinksRight.map((link) => {
-            if (link.href === `${prefix}/creator-fi/trade` && !site.spaceId) {
+            if (link.href === '/creator-fi/trade' && !site.spaceId) {
               return null
             }
             return (

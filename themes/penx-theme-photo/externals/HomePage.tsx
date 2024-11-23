@@ -1,6 +1,6 @@
+import { Lobster, Merienda } from 'next/font/google'
 import { Post, PostType, Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
-import { Lobster, Merienda } from 'next/font/google'
 import { PostItem } from '../components/PostItem'
 
 const merienda = Lobster({
@@ -38,7 +38,6 @@ export function HomePage({ posts = [], site, PostActions }: Props) {
           return (
             <PostItem
               key={post.slug}
-              site={site}
               post={post}
               PostActions={PostActions}
               receivers={receivers}

@@ -1,8 +1,7 @@
-import { Post, Site } from '@penxio/types'
+import { Post } from '@penxio/types'
 import { cn, formatDate } from '@penxio/utils'
 
 interface PostItemProps {
-  site: Site
   post: Post
   receivers?: string[]
   PostActions?: (props: {
@@ -12,12 +11,7 @@ interface PostItemProps {
   }) => JSX.Element
 }
 
-export function PostItem({
-  site,
-  post,
-  PostActions,
-  receivers = [],
-}: PostItemProps) {
+export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const { slug, title } = post
   const { address = '' } = post.user
   const name = post.user.name || address.slice(0, 6) + '...' + address.slice(-4)

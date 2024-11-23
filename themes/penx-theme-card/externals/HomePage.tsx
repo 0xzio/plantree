@@ -54,7 +54,7 @@ export function HomePage({ posts = [], site, ContentRender }: Props) {
         <div className="grid grid-cols-3 gap-x-6 gap-y-10">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, POSTS_PER_PAGE).map((post) => {
-            return <PostItem key={post.slug} site={site} post={post} />
+            return <PostItem key={post.slug} post={post} />
           })}
         </div>
       </div>

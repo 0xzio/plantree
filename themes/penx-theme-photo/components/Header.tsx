@@ -3,6 +3,15 @@ import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
 import Link from './Link'
 
+const headerNavLinks = [
+  { href: '/', title: 'Home' },
+  // { href: '/posts', title: 'Blog' },
+  // { href: '/tags', title: 'Tags' },
+  { href: '/about', title: 'About' },
+  { href: '/creator-fi/trade', title: 'CreatorFi' },
+  { href: '/membership', title: 'Membership', isMembership: true },
+]
+
 interface Props {
   site: Site
   Logo: () => ReactNode
@@ -19,15 +28,6 @@ export const Header = ({
   Airdrop,
   ConnectButton,
 }: Props) => {
-  const prefix = `/@${site.subdomain}`
-  const headerNavLinks = [
-    { href: `${prefix}`, title: 'Home' },
-    // { href: '/tags', title: 'Tags' },
-    { href: `${prefix}/about`, title: 'About' },
-    { href: `${prefix}/creator-fi/trade`, title: 'CreatorFi' },
-    { href: `${prefix}/membership`, title: 'Membership', isMembership: true },
-  ]
-
   return (
     <header
       className={cn(

@@ -1,21 +1,20 @@
-import { Post, Site } from '@penxio/types'
+import { Post } from '@penxio/types'
 import { formatDate } from '@penxio/utils'
 import Link from './Link'
 import Tag from './Tag'
 
 interface PostItemProps {
-  site: Site
   post: Post
 }
 
-export function PostItem({ site, post }: PostItemProps) {
+export function PostItem({ post }: PostItemProps) {
   const { slug, title } = post
 
   return (
     <div>
       <Link
         key={slug}
-        href={`/@${site.subdomain}/posts/${slug}`}
+        href={`/posts/${slug}`}
         className="hover:text-black flex items-center justify-between gap-6 text-foreground/80"
       >
         <div className="text-lg">{title}</div>

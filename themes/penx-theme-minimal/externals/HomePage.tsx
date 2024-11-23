@@ -27,7 +27,7 @@ export function HomePage({ posts = [], site, ContentRender }: Props) {
 
           {posts.length > POSTS_PER_PAGE && (
             <Link
-              href={`/@${site.subdomain}/posts`}
+              href="/posts"
               className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
             >
               All posts &rarr;
@@ -37,7 +37,7 @@ export function HomePage({ posts = [], site, ContentRender }: Props) {
         <div className="grid grid-cols-1 gap-3">
           {!posts.length && 'No posts found.'}
           {posts.slice(0, POSTS_PER_PAGE).map((post) => {
-            return <PostItem key={post.slug} site={site} post={post} />
+            return <PostItem key={post.slug} post={post} />
           })}
         </div>
       </div>

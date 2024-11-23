@@ -1,4 +1,4 @@
-import { Post, Site } from '@penxio/types'
+import { Post } from '@penxio/types'
 import { Pagination } from './Pagination'
 import { PostItem } from './PostItem'
 
@@ -7,14 +7,12 @@ interface PaginationProps {
   currentPage: number
 }
 interface PostListProps {
-  site: Site
   posts: Post[]
   initialDisplayPosts?: Post[]
   pagination?: PaginationProps
 }
 
 export function PostList({
-  site,
   posts,
   initialDisplayPosts = [],
   pagination,
@@ -26,7 +24,7 @@ export function PostList({
     <div className="">
       <div className="grid grid-cols-1 gap-6">
         {displayPosts.map((post) => {
-          return <PostItem key={post.slug} site={site} post={post} />
+          return <PostItem key={post.slug} post={post} />
         })}
       </div>
       {pagination && pagination.totalPages > 1 && (

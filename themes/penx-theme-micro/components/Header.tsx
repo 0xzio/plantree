@@ -3,6 +3,15 @@ import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
 import Link from './Link'
 
+const headerNavLinks = [
+  { href: '/', title: 'Home' },
+  { href: '/posts', title: 'Blog' },
+  // { href: '/tags', title: 'Tags' },
+  { href: '/about', title: 'About' },
+  { href: '/creator-fi/trade', title: 'CreatorFi' },
+  { href: '/membership', title: 'Membership', isMembership: true },
+]
+
 interface Props {
   site: Site
   Logo: () => ReactNode
@@ -20,15 +29,6 @@ export const Header = ({
   ConnectButton,
   Airdrop,
 }: Props) => {
-  const prefix = `/@${site.subdomain}`
-  const headerNavLinks = [
-    { href: `${prefix}`, title: 'Home' },
-    { href: `${prefix}/posts`, title: 'Blog' },
-    // { href: '/tags', title: 'Tags' },
-    { href: `${prefix}/about`, title: 'About' },
-    { href: `${prefix}/creator-fi/trade`, title: 'CreatorFi' },
-    { href: `${prefix}/membership`, title: 'Membership', isMembership: true },
-  ]
   return (
     <header
       className={cn('flex items-center w-full justify-between py-4 h-16 z-50')}
@@ -36,7 +36,7 @@ export const Header = ({
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
           {headerNavLinks.map((link) => {
-            if (link.href === `${prefix}/creator-fi/trade` && !site.spaceId) {
+            if (link.href === '/creator-fi/trade' && !site.spaceId) {
               return null
             }
             return (

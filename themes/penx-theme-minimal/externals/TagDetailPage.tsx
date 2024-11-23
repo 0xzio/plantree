@@ -1,12 +1,11 @@
-import { Post, Site, Tag } from '@penxio/types'
+import { Post, Tag } from '@penxio/types'
 import { PostListWithTag } from '../components/PostListWithTag'
 
 interface Props {
-  site: Site
   posts: Post[]
   tags: Tag[]
 }
 
-export function TagDetailPage({ site, posts = [], tags = [] }: Props) {
-  return <PostListWithTag site={site} posts={posts} tags={tags} />
+export function TagDetailPage({ posts = [], tags = [] }: Props) {
+  return <PostListWithTag posts={posts} tags={tags} />
 }

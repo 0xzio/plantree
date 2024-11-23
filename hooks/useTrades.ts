@@ -33,13 +33,13 @@ export function useTrades() {
   const { data, ...rest } = useQuery<{
     trades: Trade[]
   }>({
-    queryKey: ['trades', space.address],
+    queryKey: ['trades', space?.address],
     async queryFn() {
       return request({
         url: SUBGRAPH_URL,
         document: query,
         variables: {
-          spaceAddress: space.address!?.toLowerCase(),
+          spaceAddress: space?.address!?.toLowerCase(),
         },
       })
     },

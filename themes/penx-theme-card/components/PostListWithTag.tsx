@@ -1,4 +1,4 @@
-import { Post, Site, Tag } from '@penxio/types'
+import { Post, Tag } from '@penxio/types'
 import PageTitle from './PageTitle'
 import { PostList } from './PostList'
 import { TagList } from './TagList'
@@ -8,7 +8,6 @@ interface PaginationProps {
   currentPage: number
 }
 interface PostListWithTagProps {
-  site: Site
   posts: Post[]
   tags: Tag[]
   initialDisplayPosts?: Post[]
@@ -16,7 +15,6 @@ interface PostListWithTagProps {
 }
 
 export function PostListWithTag({
-  site,
   posts,
   tags = [],
   initialDisplayPosts = [],
@@ -30,7 +28,7 @@ export function PostListWithTag({
       <PageTitle>Tags</PageTitle>
       <TagList tags={tags} />
       <div className="mt-10">
-        <PostList site={site} posts={displayPosts} />
+        <PostList posts={displayPosts} />
       </div>
     </div>
   )

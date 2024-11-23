@@ -11,17 +11,17 @@ import { useSpace } from './useSpace'
 export function usePlans() {
   const { space } = useSpace()
   const { data: plans = [], ...rest } = useQuery({
-    queryKey: ['plans', space.address],
+    queryKey: ['plans', space?.address],
     queryFn: async () => {
       const [token, plansRes] = await readContracts(wagmiConfig, {
         contracts: [
           {
-            address: space.address,
+            address: space?.address,
             abi: spaceAbi,
             functionName: 'token',
           },
           {
-            address: space.address,
+            address: space?.address,
             abi: spaceAbi,
             functionName: 'getPlans',
           },
@@ -50,7 +50,7 @@ export function usePlans() {
 
       return plans
     },
-    enabled: !!space.address,
+    enabled: !!space?.address,
   })
 
   return { plans, ...rest }

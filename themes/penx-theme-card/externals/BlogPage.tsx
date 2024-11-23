@@ -1,9 +1,8 @@
-import { Post, Site } from '@penxio/types'
+import { Post } from '@penxio/types'
 import PageTitle from '../components/PageTitle'
 import { PostList } from '../components/PostList'
 
 interface Props {
-  site: Site
   posts: Post[]
   initialDisplayPosts: Post[]
   pagination: {
@@ -13,7 +12,6 @@ interface Props {
 }
 
 export function BlogPage({
-  site,
   posts = [],
   pagination,
   initialDisplayPosts,
@@ -22,7 +20,6 @@ export function BlogPage({
     <div className="space-y-6">
       <PageTitle className="text-center">Blog</PageTitle>
       <PostList
-        site={site}
         posts={posts}
         pagination={pagination}
         initialDisplayPosts={initialDisplayPosts}

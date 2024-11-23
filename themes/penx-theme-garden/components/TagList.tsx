@@ -1,8 +1,8 @@
 'use client'
 
-import { Tag } from '@penxio/types'
 import { slug } from 'github-slugger'
 import { usePathname } from 'next/navigation'
+import { Tag } from '@penxio/types'
 import Link from './Link'
 
 interface PostListWithTagProps {

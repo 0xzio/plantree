@@ -1,4 +1,4 @@
-import { editorDefaultValue } from '@/app/(creator-fi)/constants'
+import { editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getUrl } from '@/lib/utils'
 import { Site } from '@penxio/types'
