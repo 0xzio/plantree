@@ -39,7 +39,7 @@ export function PostItem({ post }: PostItemProps) {
         ))}
       </div>
       <div className="flex items-center gap-2">
-        <div className="text-sm text-zinc-500">
+        <div className="text-sm text-foreground/50">
           <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
         </div>
         <Link href={`/~/objects/${post.nodeId}`}>

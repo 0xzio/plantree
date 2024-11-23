@@ -18,7 +18,7 @@ const toolButtonVariants = cva('rounded bg-[rgba(0,0,0,0.5)] px-1', {
   variants: {
     variant: {
       default: 'text-white',
-      disabled: 'cursor-not-allowed text-gray-400',
+      disabled: 'cursor-not-allowed text-foreground/40',
     },
   },
 });

@@ -9,7 +9,13 @@ interface Props {
   onChange: (value: string) => void
 }
 
-export const AmountInput = ({ symbolName, icon, value, onChange, disabled = false }: Props) => {
+export const AmountInput = ({
+  symbolName,
+  icon,
+  value,
+  onChange,
+  disabled = false,
+}: Props) => {
   return (
     <div className="flex h-9 items-center gap-1">
       <input
@@ -32,7 +38,7 @@ export const AmountInput = ({ symbolName, icon, value, onChange, disabled = fals
           onChange(e.target.value)
         }}
         placeholder="0.0"
-        className="h-full w-full border-none bg-transparent  pl-0 text-2xl font-bold text-black dark:text-zinc-200 outline-none focus:border-none focus:outline-none focus:ring-0"
+        className="h-full w-full border-none bg-transparent  pl-0 text-2xl font-bold text-foreground outline-none focus:border-none focus:outline-none focus:ring-0"
       />
       {icon}
       <span className="text-lg font-semibold">{symbolName}</span>

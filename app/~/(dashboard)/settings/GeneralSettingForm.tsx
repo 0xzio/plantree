@@ -152,7 +152,7 @@ export function GeneralSettingForm({ site }: Props) {
               <FormItem className="w-full h-full">
                 <FormLabel>About</FormLabel>
                 <FormControl>
-                  <div className="h-[360px]  border border-neutral-200 rounded-lg overflow-auto prose-neutral prose-p:leading-none">
+                  <div className="h-[360px]  border border-foreground/20 rounded-lg overflow-auto prose-neutral prose-p:leading-none">
                     <PlateEditor
                       value={JSON.parse(field.value)}
                       onChange={(v) => {

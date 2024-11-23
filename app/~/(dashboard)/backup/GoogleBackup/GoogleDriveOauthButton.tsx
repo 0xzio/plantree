@@ -55,9 +55,7 @@ export function GoogleDriveOauthButton({}: Props) {
             <div className="text-base font-semibold">
               Backup to google drive
             </div>
-            <div className="text-zinc-100 text-xs font-light">
-              Connect to Google drive
-            </div>
+            <div className="text-xs font-light">Connect to Google drive</div>
           </div>
         </>
       )}

@@ -39,12 +39,12 @@ export function SettingNav({}: Props) {
       <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
         Web3
       </Link>
-      <Link
+      {/* <Link
         href={Paths.storageProvider}
         className={linkClassName(Paths.storageProvider)}
       >
         Storage provider
-      </Link>
+      </Link> */}
       <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
         Socials
       </Link>

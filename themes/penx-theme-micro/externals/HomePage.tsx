@@ -14,7 +14,7 @@ interface Props {
 export function HomePage({ posts = [], site, ContentRender }: Props) {
   return (
     <div className="">
-      <div className="prose max-w-none mb-10 text-zinc-700 dark:text-zinc-200">
+      <div className="prose max-w-none mb-10 text-foreground/70">
         <PageTitle>{site.name}</PageTitle>
         <ContentRender content={site.about} />
       </div>

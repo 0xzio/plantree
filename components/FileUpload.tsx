@@ -56,7 +56,7 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
         />
         {loading && <LoadingDots />}
         <div
-          className="rounded-full h-6 w-6 border flex items-center justify-center bg-white absolute top-1 right-1"
+          className="rounded-full h-6 w-6 border flex items-center justify-center bg-background absolute top-1 right-1"
           onClick={() => {
             inputRef.current?.click()
           }}
