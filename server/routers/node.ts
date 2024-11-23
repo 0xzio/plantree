@@ -1,4 +1,4 @@
-import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import { isNodesBroken } from '@/lib/isNodesBroken'
 import { INode, NodeType } from '@/lib/model'
 import { prisma } from '@/lib/prisma'
 import { GateType, Node, PostType, Prisma } from '@prisma/client'
@@ -220,20 +220,6 @@ function isAllNodes(nodes: INode[]) {
   }
 
   return set.size === 0
-}
-
-function isNodesBroken(nodes: INode[]) {
-  const set = new Set([
-    NodeType.ROOT,
-    NodeType.DATABASE_ROOT,
-    NodeType.DAILY_ROOT,
-  ])
-
-  for (const node of nodes) {
-    if (set.has(node.type)) set.delete(node.type)
-  }
-
-  return set.size !== 0
 }
 
 async function cleanDeletedNodes(

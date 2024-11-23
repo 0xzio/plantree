@@ -2,7 +2,7 @@
 
 import LoadingDots from '@/components/icons/loading-dots'
 import { useSite } from '@/hooks/useSite'
-import { SiteSettingForm } from './SiteSettingForm'
+import { GeneralSettingForm } from './GeneralSettingForm'
 
 export const dynamic = 'force-static'
 
@@ -18,7 +18,7 @@ export default function Page() {
   }
   return (
     <div>
-      <SiteSettingForm site={site!} />
+      <GeneralSettingForm site={site!} />
     </div>
   )
 }

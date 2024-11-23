@@ -1,2 +1,2 @@
 export * from './space'
-export { penTokenAbi } from './penx'
+export { penTokenAbi, tipAbi, dailyClaimAbi, creationFactoryAbi } from './penx'

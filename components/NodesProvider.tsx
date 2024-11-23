@@ -1,6 +1,7 @@
 'use client'
 
 import { PropsWithChildren, useEffect } from 'react'
+import { isNodesBroken } from '@/lib/isNodesBroken'
 import { db } from '@/lib/local-db'
 import { INode } from '@/lib/model'
 import { useNodes } from '@/lib/node-hooks'
@@ -19,7 +20,8 @@ export const NodesProvider = ({ children }: PropsWithChildren) => {
     queryFn: async () => {
       const t0 = Date.now()
       let nodes = await db.listNodesByUserId(session?.userId!)
-      if (!nodes?.length) {
+
+      if (!nodes?.length || isNodesBroken(nodes)) {
         const remoteNodes = await api.node.myNodes.query()
         if (remoteNodes.length) {
           await db.deleteNodeByUserId()

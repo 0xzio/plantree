@@ -18,9 +18,12 @@ export const revalidate = 3600 * 24
 
 export async function generateMetadata({
   params,
+  ...rest
 }: {
   params: any
 }): Promise<Metadata> {
+  console.log('======params====:', params, rest)
+
   const slug = decodeURI(params.slug.join('/'))
   const post = await getPost(slug)
 

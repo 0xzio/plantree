@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma'
 
-export async function initUserByAddress(address: any) {
+export async function initUserByAddress(address: string) {
   return prisma.$transaction(
     async (tx) => {
       let user = await tx.user.findUnique({
@@ -22,7 +22,7 @@ export async function initUserByAddress(address: any) {
           name: 'My Site',
           description: 'My personal site',
           userId: newUser.id,
-          subdomain: address,
+          subdomain: address.toLowerCase(),
           socials: {},
           config: {},
           logo: 'https://penx.io/logo.png',

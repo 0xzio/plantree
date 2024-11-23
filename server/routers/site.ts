@@ -11,19 +11,33 @@ export const siteRouter = router({
 
   getSite: protectedProcedure
     .input(z.object({ id: z.string() }))
-    .query(async ({ input }) => {
-      const site = await prisma.site.findUniqueOrThrow({
+    .query(async ({ ctx, input }) => {
+      return prisma.site.findUniqueOrThrow({
         where: { id: input.id },
       })
-      return site
     }),
 
-  bySubdomain: protectedProcedure.input(z.string()).query(async ({ input }) => {
-    const site = await prisma.site.findUniqueOrThrow({
-      where: { subdomain: input },
-    })
-    return site
-  }),
+  bySubdomain: protectedProcedure
+    .input(z.string())
+    .query(async ({ input, ctx }) => {
+      const site = await prisma.site.findUnique({
+        where: { subdomain: input },
+      })
+
+      if (site) return site
+
+      const user = await prisma.user.findUniqueOrThrow({
+        where: { id: ctx.token.uid },
+        include: {
+          sites: { select: { id: true } },
+        },
+      })
+
+      const siteId = user.sites[0]?.id
+      return prisma.site.findUniqueOrThrow({
+        where: { id: siteId },
+      })
+    }),
 
   updateSite: protectedProcedure
     .input(
@@ -31,6 +45,7 @@ export const siteRouter = router({
         id: z.string(),
         logo: z.string().optional(),
         name: z.string().optional(),
+        subdomain: z.string().optional(),
         description: z.string().optional(),
         about: z.string().optional(),
         themeName: z.string().optional(),

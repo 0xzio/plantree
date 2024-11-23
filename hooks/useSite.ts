@@ -9,5 +9,5 @@ export function useSite() {
       enabled: !!session?.subdomain,
     },
   )
-  return { site, ...rest }
+  return { site: site!, ...rest }
 }
