@@ -17,7 +17,7 @@ interface Props {
 
 export function TippedAmount(props: Props) {
   const params = useParams()
-  const slug = params.slug
+  const slug = params?.slug
 
   if (slug) {
     return <TippedAmountInPostDetail {...props} />

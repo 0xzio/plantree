@@ -16,7 +16,7 @@ interface Props {
 }
 
 export function NodeItem({ node }: Props) {
-  const params = useParams()
+  const params = useParams()!
   const { push } = useRouter()
   const [open, setOpen] = useState(false)
   const { title = '' } = node

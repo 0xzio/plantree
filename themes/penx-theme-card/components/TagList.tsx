@@ -1,8 +1,8 @@
 'use client'
 
+import { Tag } from '@penxio/types'
 import { slug } from 'github-slugger'
 import { usePathname } from 'next/navigation'
-import { Tag } from '@penxio/types'
 import Link from './Link'
 
 interface PostListWithTagProps {
@@ -10,7 +10,7 @@ interface PostListWithTagProps {
 }
 
 export function TagList({ tags = [] }: PostListWithTagProps) {
-  const pathname = usePathname()
+  const pathname = usePathname()!
 
   return (
     <ul className="flex flex-wrap gap-x-5 w-full justify-center">

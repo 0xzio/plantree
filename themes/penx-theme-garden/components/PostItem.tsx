@@ -28,7 +28,7 @@ export function PostItem({
   const name = post.user.name || address.slice(0, 6) + '...' + address.slice(-4)
 
   const params = useSearchParams()
-  const type = params.get('type')
+  const type = params?.get('type')
 
   if (type === 'photos' && post.type !== PostType.IMAGE) return null
   if (type === 'notes' && post.type !== PostType.NOTE) return null

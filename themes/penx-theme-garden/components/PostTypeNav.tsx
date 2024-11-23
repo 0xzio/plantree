@@ -1,14 +1,14 @@
 'use client'
 
+import { cn } from '@penxio/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
-import { cn } from '@penxio/utils'
 
 interface Props {}
 
 export const PostTypeNav = ({}: Props) => {
   const param = useSearchParams()
-  const type = param.get('type')
+  const type = param?.get('type')
 
   return (
     <div className="flex items-center text-sm gap-5 text-foreground/40">

@@ -23,7 +23,7 @@ export function useSubscribe(space: Space) {
   const { setIsOpen, plan } = useMemberDialog()
   const { push } = useRouter()
   const params = useSearchParams()
-  const postSlug = params.get('post_slug')
+  const postSlug = params?.get('post_slug')
   const { update } = useSession()
   const wagmiConfig = useWagmiConfig()
   const checkChain = useCheckChain()
