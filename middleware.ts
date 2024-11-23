@@ -43,7 +43,13 @@ export default async function middleware(req: NextRequest) {
     hostname === 'localhost:4000' ||
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
 
-  console.log('======isRoot:', isRoot)
+  console.log(
+    '======isRoot:',
+    isRoot,
+    'hostname:',
+    hostname,
+    process.env.NEXT_PUBLIC_ROOT_DOMAIN,
+  )
 
   if (['/login', '/'].includes(path) && isRoot) {
     const token = await getToken({ req })
