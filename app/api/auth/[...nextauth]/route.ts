@@ -215,7 +215,7 @@ async function handler(req: Request, res: Response) {
       signIn: `/login`,
       verifyRequest: `/login`,
       error: '/error', // Error code passed in query string as ?error=
-      newUser: '/~',
+      newUser: '/',
     },
     session: { strategy: 'jwt' },
     callbacks: {

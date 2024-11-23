@@ -51,7 +51,7 @@ export default async function middleware(req: NextRequest) {
     process.env.NEXT_PUBLIC_ROOT_DOMAIN,
   )
 
-  if (['/login', '/'].includes(path) && isRoot) {
+  if (path === '/login' && isRoot) {
     const token = await getToken({ req })
     if (token) {
       return NextResponse.redirect(new URL('~/objects/today', req.url))
@@ -60,12 +60,33 @@ export default async function middleware(req: NextRequest) {
     }
   }
 
-  if (path.startsWith('/~') || path === '/d') {
+  if (path === '/login' && !isRoot) {
+    const token = await getToken({ req })
+    if (token) {
+      return NextResponse.redirect(new URL('/', req.url))
+    } else {
+      return NextResponse.next()
+    }
+  }
+
+  if (path === '/' && isRoot) {
+    const token = await getToken({ req })
+    if (token) {
+      return NextResponse.redirect(new URL('~/objects/today', req.url))
+    } else {
+      return NextResponse.rewrite(new URL(`/root${path}`, req.url))
+    }
+  }
+
+  if (isRoot && !path.startsWith('/~')) {
+    return NextResponse.rewrite(new URL(`/root${path}`, req.url))
+  }
+
+  if (path.startsWith('/~') && isRoot) {
     const token = await getToken({ req })
     if (!token) {
       return NextResponse.redirect(new URL('/login', req.url))
     }
-
     return NextResponse.rewrite(new URL(path, req.url))
   }
 

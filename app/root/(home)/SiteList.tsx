@@ -2,6 +2,7 @@
 
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSites } from '@/hooks/useSites'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { cn, getUrl } from '@/lib/utils'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -31,7 +32,7 @@ export function SiteList() {
       {sites.map((site, index) => (
         <Link
           key={site.id}
-          href={`/@${site.subdomain}`}
+          href={`${location.protocol}//${site.subdomain}.${ROOT_DOMAIN}`}
           target="_blank"
           className={cn(
             'flex items-center justify-between p-5 gap-3 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',

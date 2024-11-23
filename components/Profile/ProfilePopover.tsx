@@ -16,6 +16,7 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { AuthType } from '@prisma/client'
 import {
@@ -98,7 +99,12 @@ export const ProfilePopover = memo(function ProfilePopover({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              push('/~/objects/today')
+              const path = '/~/objects/today'
+              if (location.host === ROOT_DOMAIN) {
+                push(path)
+                return
+              }
+              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
             }}
           >
             <Gauge className="mr-2 h-4 w-4" />
@@ -108,7 +114,12 @@ export const ProfilePopover = memo(function ProfilePopover({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              push('/~/settings')
+              const path = '/~/settings'
+              if (location.host === ROOT_DOMAIN) {
+                push(path)
+                return
+              }
+              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
             }}
           >
             <Settings className="mr-2 h-4 w-4" />

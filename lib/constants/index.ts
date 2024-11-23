@@ -5,6 +5,8 @@ export const isBrowser = typeof window !== 'undefined'
 export const isProd = process.env.NODE_ENV === 'production'
 export const isNavigator = typeof navigator !== 'undefined'
 
+export const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
+
 export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
 
 // export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'

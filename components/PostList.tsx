@@ -4,7 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Post } from '@/hooks/usePost'
 import { usePosts } from '@/hooks/usePosts'
-import { PostStatus } from '@/lib/constants'
+import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
@@ -25,7 +25,7 @@ export function PostItem({ post }: PostItemProps) {
       <div>
         <Link
           target="_blank"
-          href={`/@${subdomain}/posts/${post.slug}`}
+          href={`${location.protocol}//${subdomain}.${ROOT_DOMAIN}`}
           className="inline-flex items-center hover:scale-105 transition-transform"
         >
           <div className="text-base font-bold">{post.title || 'Untitled'}</div>

@@ -1,3 +1,4 @@
+import { editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 
 export async function initUserByAddress(address: string) {
@@ -25,6 +26,7 @@ export async function initUserByAddress(address: string) {
           subdomain: address.toLowerCase(),
           socials: {},
           config: {},
+          about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
         },
       })
