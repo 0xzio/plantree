@@ -13,6 +13,7 @@ export function SettingNav({}: Props) {
     general: '/~/settings',
     appearance: '/~/settings/appearance',
     socials: '/~/settings/socials',
+    domain: '/~/settings/domain',
     authType: '/~/settings/auth-type',
     web3: '/~/settings/web3',
     contributors: '/~/settings/contributors',
@@ -38,6 +39,10 @@ export function SettingNav({}: Props) {
       </Link> */}
       <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
         Web3
+      </Link>
+
+      <Link href={Paths.domain} className={linkClassName(Paths.domain)}>
+        Domain
       </Link>
       {/* <Link
         href={Paths.storageProvider}

@@ -1,3 +1,4 @@
+import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { AuthType, StorageProvider } from '@prisma/client'
 import { revalidatePath } from 'next/cache'
@@ -90,6 +91,27 @@ export const siteRouter = router({
       revalidatePath('/', 'page')
       revalidatePath('/about/page', 'page')
       revalidatePath('/~', 'layout')
+      return newSite
+    }),
+
+  customDomain: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        domain: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input
+      const domain = input.domain
+      const newSite = await prisma.site.update({
+        where: { id },
+        data: {
+          customDomain: domain,
+        },
+      })
+
+      const res = await addDomainToVercel(domain)
       return newSite
     }),
 })

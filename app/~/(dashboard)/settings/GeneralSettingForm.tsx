@@ -29,7 +29,6 @@ const FormSchema = z.object({
   name: z.string().min(1, {
     message: 'Name must be at least 1 characters.',
   }),
-  subdomain: z.string(),
   description: z.string(),
   about: z.string(),
 })
@@ -49,7 +48,6 @@ export function GeneralSettingForm({ site }: Props) {
     defaultValues: {
       logo: site.logo || '',
       name: site.name || '',
-      subdomain: site.subdomain,
       description: site.description || '',
       about: site.about,
     },
@@ -61,7 +59,6 @@ export function GeneralSettingForm({ site }: Props) {
         id: site.id,
         logo: data.logo,
         name: data.name,
-        subdomain: data.subdomain,
         description: data.description,
         about: data.about,
       })
@@ -84,33 +81,6 @@ export function GeneralSettingForm({ site }: Props) {
             render={({ field }) => <FileUpload {...field} />}
           />
         </div>
-
-        <FormField
-          control={form.control}
-          name="subdomain"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Subdomain</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <Input
-                    placeholder="Pathname"
-                    pattern="[a-zA-Z0-9\-]+"
-                    maxLength={100}
-                    {...field}
-                    className="w-full"
-                  />
-
-                  <div className="absolute right-2 top-2 text-secondary-foreground">
-                    .{process.env.NEXT_PUBLIC_ROOT_DOMAIN}
-                  </div>
-                </div>
-              </FormControl>
-              <FormDescription>The subdomain for your site.</FormDescription>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
         <FormField
           control={form.control}
