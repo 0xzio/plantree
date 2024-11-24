@@ -1,22 +1,18 @@
 'use client'
 
 import { MemberDialog } from '@/components/MemberDialog/MemberDialog'
-import { useSpaceContext } from '@/components/SpaceContext'
-import { useAddress } from '@/hooks/useAddress'
 import { usePlans } from '@/hooks/usePlans'
 import { cn } from '@/lib/utils'
-import { AddPlanDialog } from './AddPlanDialog/AddPlanDialog'
 import { PlanItem } from './PlanItem'
 import { UpdatePlanDialog } from './UpdatePlanDialog/UpdatePlanDialog'
 
 interface Props {
+  align?: 'center' | 'left'
   className?: string
 }
 
-export function PlanList({ className }: Props) {
+export function PlanList({ className, align = 'left' }: Props) {
   const { plans, isLoading } = usePlans()
-  const space = useSpaceContext()
-  const address = useAddress()
 
   if (isLoading) return <div className="text-foreground/60">Loading...</div>
 
@@ -26,18 +22,13 @@ export function PlanList({ className }: Props) {
 
   return (
     <div className="w-full flex flex-col gap-6">
-      {space.isFounder(address) && (
-        <div className="flex justify-center">
-          <AddPlanDialog />
-        </div>
-      )}
-
       <UpdatePlanDialog />
       <MemberDialog />
       <div
         className={cn(
-          'mt-4 flex items-center justify-center gap-4 flex-wrap',
+          'mt-4 flex items-center gap-4 flex-wrap',
           className,
+          align == 'center' && 'justify-center',
         )}
       >
         {plans.map((item, index) => {

@@ -42,7 +42,7 @@ export function AmountInput({ isSubscribe, value, onChange }: Props) {
 
             return
           }
-          setIndex('0')
+          setIndex('')
           onChange(value)
         }}
         className="w-full"

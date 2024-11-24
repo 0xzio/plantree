@@ -8,11 +8,13 @@ export const dynamic = 'force-static'
 export const revalidate = 3600 * 24
 
 export default async function RootLayout({
+  params,
   children,
 }: {
   children: React.ReactNode
+  params: { domain: string }
 }) {
-  const site = await getSite()
+  const site = await getSite(params)
   const { SiteLayout } = loadTheme(site.themeName)
 
   return (

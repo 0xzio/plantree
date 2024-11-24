@@ -90,6 +90,7 @@ export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             variant,
           }),
           className,
+          props.readOnly && 'px-0 pt-0'
         )}
         disabled={disabled}
         disableDefaultStyles

@@ -2,19 +2,23 @@ import { SpaceProvider } from '@/components/SpaceContext'
 import { getSite, getSpace } from '@/lib/fetchers'
 import Image from 'next/image'
 import Link from 'next/link'
-import { PlanList } from '../(creator-fi)/creator-fi/plans/PlanList'
+import { PlanList } from '../(creator-fi)/creator-fi/(membership)/plans/PlanList'
 
 export const dynamic = 'force-static'
 export const revalidate = 3600 * 24
 
-export default async function HomePage() {
-  const [site] = await Promise.all([getSite()])
+export default async function HomePage({
+  params,
+}: {
+  params: { domain: string }
+}) {
+  const [site] = await Promise.all([getSite(params)])
 
   if (!site?.spaceId) return null
   const space = await getSpace(site.spaceId)
 
   return (
-    <SpaceProvider space={space}>
+    <SpaceProvider space={space} site={site}>
       <Link
         href="/"
         className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-foreground/5 mt-2 ml-2"
@@ -53,7 +57,7 @@ export default async function HomePage() {
         <div className="text-center text-4xl font-bold">
           Choose a subscription plan
         </div>
-        <PlanList />
+        <PlanList align="center" />
       </div>
     </SpaceProvider>
   )

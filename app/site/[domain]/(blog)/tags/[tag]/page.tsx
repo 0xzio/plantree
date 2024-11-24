@@ -5,8 +5,12 @@ import { Metadata } from 'next'
 export const dynamic = 'force-static'
 export const revalidate = 3600 * 24
 
-export async function generateMetadata(): Promise<Metadata> {
-  const site = await getSite()
+export async function generateMetadata({
+  params,
+}: {
+  params: { domain: string }
+}): Promise<Metadata> {
+  const site = await getSite(params)
   return {
     title: `Tags | ${site.name}`,
     description: site.description,
@@ -21,13 +25,17 @@ export const generateStaticParams = async () => {
   return paths
 }
 
-export default async function TagPage({ params }: { params: { tag: string } }) {
+export default async function TagPage({
+  params,
+}: {
+  params: { tag: string; domain: string }
+}) {
   const tagName = decodeURI(params.tag)
 
   const [tagWithPosts, tags, site] = await Promise.all([
     getTagWithPost(tagName),
     getTags(),
-    getSite(),
+    getSite(params),
   ])
 
   const posts = tagWithPosts?.postTags.map((postTag) => postTag.post) || []

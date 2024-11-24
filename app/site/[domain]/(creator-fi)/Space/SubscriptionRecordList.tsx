@@ -27,6 +27,10 @@ export function SubscriptionRecordList({ space }: Props) {
     )
   }
 
+  if (!records?.length) {
+    return <div className="text-foreground/60">No activities yet!</div>
+  }
+
   return (
     <div className="mt-4 space-y-3">
       {records.map((item) => (

@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
-import { Lobster } from 'next/font/google'
 import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
+import { Lobster } from 'next/font/google'
 import Link from './Link'
 import { PostTypeNav } from './PostTypeNav'
 
@@ -51,9 +51,9 @@ export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
                 key={link.title}
                 href={link.href}
                 className={cn(
-                  'font-medium flex items-center hover:text-brand-500 dark:hover:text-brand-400 text-foreground/60 text-xs',
+                  'font-medium flex items-center hover:text-brand-500 text-foreground/60 text-xs hover:scale-105 transition-all',
                   link.isMembership &&
-                    'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-xs',
+                    'border border-brand-500 text-brand-500 rounded-full px-2 py-1 text-xs',
                 )}
               >
                 {link.title}

@@ -1,23 +1,31 @@
 'use client'
 
-import { PropsWithChildren } from 'react'
+import { PropsWithChildren, useState } from 'react'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
-import { SpaceType } from '@/lib/types'
+import { HolderList } from './Space/HolderList'
 import { SpaceHeader } from './Space/SpaceHeader'
 import { SpaceInfo } from './Space/SpaceInfo'
+import { TradeList } from './Space/TradeList'
 import { Transaction } from './Space/Transaction'
+
+enum TabTypes {
+  Holders = 'Holders',
+  Trades = 'Trades',
+}
 
 interface Props {}
 
 export function CreatorFiLayout({ children }: PropsWithChildren<Props>) {
+  const [type, setType] = useState(TabTypes.Trades)
   useQueryEthBalance()
   useQueryEthPrice()
 
   return (
     <div>
       <SpaceHeader />
-      <div className="flex lg:flex-row flex-col-reverse w-full sm:w-full mx-auto gap-12 mt-10 p-3 lg:p-0 md:max-w-5xl lg:max-w-6xl">
+      <div className="flex lg:flex-row flex-col-reverse w-full sm:w-full mx-auto gap-12 mt-10 p-3 lg:p-0 lg:max-w-7xl">
         <div className="flex flex-col gap-6 md:flex-1 rounded-2xl w-full md:w-auto">
           <SpaceInfo />
           {children}
@@ -26,7 +34,7 @@ export function CreatorFiLayout({ children }: PropsWithChildren<Props>) {
         <div className="flex flex-col w-full lg:w-[360px] flex-shrink-0">
           <Transaction />
           <div className="mt-8 lg:block">
-            {/* <Tabs
+            <Tabs
               className="w-full"
               value={type}
               onValueChange={(v) => {
@@ -48,7 +56,7 @@ export function CreatorFiLayout({ children }: PropsWithChildren<Props>) {
                   <HolderList />
                 </TabsContent>
               )}
-            </Tabs> */}
+            </Tabs>
           </div>
         </div>
       </div>

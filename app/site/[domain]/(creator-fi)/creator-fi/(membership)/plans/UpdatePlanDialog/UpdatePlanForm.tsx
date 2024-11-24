@@ -71,6 +71,8 @@ export function UpdatePlanForm() {
       setLoading(true)
       await checkChain()
 
+      console.log('update plan......')
+
       const cid = await addToIpfs(
         JSON.stringify({
           name: data.name,
@@ -78,7 +80,7 @@ export function UpdatePlanForm() {
         }),
       )
 
-      // console.log('cid=======:', cid)
+      console.log('cid=======:', cid)
 
       const price = precision.token(Number(data.price) / ethPrice)
       const hash = await writeContract(wagmiConfig, {

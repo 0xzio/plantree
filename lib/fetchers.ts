@@ -1,21 +1,56 @@
 import prisma from '@/lib/prisma'
-import { getSite as getSiteInfo } from '@/server/lib/getSite'
+import { Site } from '@penxio/types'
 import { gql, request } from 'graphql-request'
 import ky from 'ky'
 import { unstable_cache } from 'next/cache'
-import { isProd, PostStatus, RESPACE_BASE_URI, SUBGRAPH_URL } from './constants'
+import {
+  editorDefaultValue,
+  isProd,
+  PostStatus,
+  RESPACE_BASE_URI,
+  ROOT_DOMAIN,
+  SUBGRAPH_URL,
+} from './constants'
 import { SpaceType } from './types'
 import { getUrl } from './utils'
 
-export async function getSite() {
+export async function getSite(params: any) {
+  const domain = decodeURIComponent(params.domain)
+
+  const subdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
+    ? domain.replace(`.${ROOT_DOMAIN}`, '')
+    : null
+  // console.log('======domain:', domain, 'subdomain:', subdomain)
+
   return await unstable_cache(
     async () => {
-      return getSiteInfo()
+      const site = await prisma.site.findUniqueOrThrow({
+        where: subdomain ? { subdomain } : { customDomain: domain },
+        include: { user: true },
+      })
+
+      function getAbout() {
+        if (!site?.about) return editorDefaultValue
+        try {
+          return JSON.parse(site.about)
+        } catch (error) {
+          return editorDefaultValue
+        }
+      }
+
+      return {
+        ...site,
+        // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
+        spaceId: process.env.NEXT_PUBLIC_SPACE_ID || site.spaceId,
+        logo: getUrl(site.logo || ''),
+        image: getUrl(site.image || ''),
+        about: getAbout(),
+      } as any as Site
     },
-    [`site`],
+    [`site-${domain}`],
     {
       revalidate: isProd ? 3600 * 24 : 10,
-      tags: [`site`],
+      tags: [`site-${domain}`],
     },
   )()
 }
@@ -123,6 +158,8 @@ export async function getSpace(spaceId: string) {
       const response = await ky
         .get(RESPACE_BASE_URI + `/api/get-space?address=${spaceId}`)
         .json<SpaceType>()
+      console.log('---=====>response:', response)
+
       return response
     },
     [`space-${spaceId}`],

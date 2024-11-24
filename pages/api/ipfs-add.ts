@@ -1,6 +1,6 @@
-import { addToIpfs } from '@/lib/addToIpfs'
 import { redisKeys } from '@/lib/redisKeys'
 import Redis from 'ioredis'
+import { create } from 'kubo-rpc-client'
 import { NextApiRequest, NextApiResponse, PageConfig } from 'next'
 import NextCors from 'nextjs-cors'
 import { Address } from 'viem'
@@ -21,7 +21,7 @@ export default async function handler(
     return res.status(405).json({ error: 'Only POST method is allowed' })
   }
 
-  const cid = await addToIpfs(req.body)
+  const cid = await addToIpfsServer(req.body)
 
   const address = req.query?.address as Address
   if (address) {
@@ -33,4 +33,15 @@ export default async function handler(
     cid,
     url: `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${cid.toString()}`,
   })
+}
+
+async function addToIpfsServer(value: string) {
+  const client = create(new URL(process.env.NEXT_PUBLIC_IPFS_API!))
+  const { cid } = await client.add(
+    {
+      content: typeof value === 'object' ? JSON.stringify(value) : value,
+    },
+    { pin: true },
+  )
+  return cid.toString()
 }

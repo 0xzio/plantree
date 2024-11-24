@@ -38,12 +38,16 @@ export async function generateStaticParams() {
   return posts.map((post) => ({ slug: [post.slug] }))
 }
 
-export default async function Page({ params }: { params: { slug: string[] } }) {
+export default async function Page({
+  params,
+}: {
+  params: { domain: string; slug: string[] }
+}) {
   const slug = decodeURI(params.slug.join('/'))
   const [post, posts, site] = await Promise.all([
     getPost(slug),
     getPosts(),
-    getSite(),
+    getSite(params),
   ])
 
   const postIndex = posts.findIndex((p) => p.slug === slug)

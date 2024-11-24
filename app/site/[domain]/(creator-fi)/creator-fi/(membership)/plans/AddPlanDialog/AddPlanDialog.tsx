@@ -1,3 +1,4 @@
+import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
@@ -8,11 +9,16 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useAddress } from '@/hooks/useAddress'
 import { AddPlanForm } from './AddPlanForm'
 import { useAddPlanDialog } from './useAddPlanDialog'
 
 export function AddPlanDialog() {
+  const space = useSpaceContext()
+  const address = useAddress()
   const { isOpen, setIsOpen } = useAddPlanDialog()
+  if (!space.isFounder(address)) return null
+
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogTrigger asChild>

@@ -13,9 +13,9 @@ export function UpdateSpaceDialog() {
   const { isOpen, setIsOpen } = useUpdateSpaceDialog()
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
-      <DialogContent className="sm:max-w-[520px]">
+      <DialogContent className="sm:max-w-[1200px]">
         <DialogHeader>
-          <DialogTitle>Set site URL</DialogTitle>
+          <DialogTitle>Update Space</DialogTitle>
         </DialogHeader>
         <UpdateSpaceForm />
       </DialogContent>
