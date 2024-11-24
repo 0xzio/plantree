@@ -13,14 +13,7 @@ import {
   validateSiweMessage,
   type SiweMessage,
 } from 'viem/siwe'
-import { initUserByAddress } from './initUser'
-
-type GoogleLoginInfo = {
-  email: string
-  openid: string
-  picture: string
-  name: string
-}
+import { initUserByAddress, initUserByGoogleInfo } from './initUser'
 
 declare module 'next-auth' {
   interface Session {
@@ -203,7 +196,7 @@ async function handler(req: Request, res: Response) {
               throw new Error('Login fail')
             }
 
-            const user = await createUserByGoogleInfo(credentials)
+            const user = await initUserByGoogleInfo(credentials)
             return user
           } catch (e) {
             return null
@@ -272,26 +265,6 @@ async function handler(req: Request, res: Response) {
       },
     },
   })
-}
-
-async function createUserByGoogleInfo(info: GoogleLoginInfo) {
-  let user = await prisma.user.findUnique({ where: { openid: info.openid } })
-  if (!user) {
-    const count = await prisma.user.count()
-    const role = count === 0 ? UserRole.ADMIN : UserRole.READER
-
-    user = await prisma.user.create({
-      data: {
-        role,
-        name: info.name,
-        email: info.email,
-        openid: info.openid,
-        image: info.picture,
-      },
-    })
-  }
-
-  return user
 }
 
 async function updateSubscriptions(address: Address) {

@@ -27,20 +27,10 @@ interface Props {
   site: Site
 }
 
-export const SiteProvider = ({
-  site: propSite,
-  children,
-}: PropsWithChildren<Props>) => {
-  const [site, setSite] = useState<Site>(propSite)
+export const SiteProvider = ({ site, children }: PropsWithChildren<Props>) => {
   useEffect(() => {
     window.__SITE__ = site
   }, [site])
-
-  useEffect(() => {
-    appEmitter.on('SITE_UPDATED', (newSite) => {
-      setSite(newSite)
-    })
-  }, [])
 
   return <SiteContext.Provider value={site}>{children}</SiteContext.Provider>
 }

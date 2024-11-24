@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { useAddress } from '@/hooks/useAddress'
+import { useSite } from '@/hooks/useSite'
 import { spaceFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { appEmitter } from '@/lib/app-emitter'
@@ -67,6 +68,7 @@ const FormSchema = z.object({
 export function CreateSpaceForm() {
   const address = useAddress()
   const site = useSiteContext()
+  const { refetch } = useSite()
   const [isLoading, setLoading] = useState(false)
   const { push } = useRouter()
   const { setIsOpen } = useCreateSpaceDialog()
@@ -187,19 +189,18 @@ export function CreateSpaceForm() {
         spaceId: spaceAddress,
       })
 
-      appEmitter.emit('SITE_UPDATED', { ...site, spaceId: spaceAddress })
-
       toast.success('Space created successfully!')
+      await refetch()
 
       push(`/~/objects/today`)
 
-      revalidatePath('/space/[id]', 'page')
-      revalidatePath('/', 'layout')
+      // revalidatePath('/space/[id]', 'page')
+      // revalidatePath('/', 'layout')
 
-      setTimeout(() => {
-        revalidatePath('/space/[id]', 'page')
-        revalidatePath('/', 'layout')
-      }, 2000)
+      // setTimeout(() => {
+      //   revalidatePath('/space/[id]', 'page')
+      //   revalidatePath('/', 'layout')
+      // }, 2000)
 
       setIsOpen(false)
     } catch (error) {
