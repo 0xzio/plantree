@@ -5,24 +5,21 @@ import {
   NetworkNames,
   SUBGRAPH_URL,
 } from '@/lib/constants'
+import { getBasePublicClient } from '@/lib/getBasePublicClient'
 import { redisKeys } from '@/lib/redisKeys'
 import { SpaceInfo, SpaceOnEvent, SpaceType } from '@/lib/types'
 import { gql, request } from 'graphql-request'
 import Redis from 'ioredis'
 import ky from 'ky'
 import pRetry, { AbortError } from 'p-retry'
-import { Address, createPublicClient, http } from 'viem'
-import { base, baseSepolia } from 'viem/chains'
+import { Address } from 'viem'
 import { z } from 'zod'
 import { getEthPrice } from '../lib/getEthPrice'
 import { publicProcedure, router } from '../trpc'
 
 const redis = new Redis(process.env.REDIS_URL!)
 
-const publicClient = createPublicClient({
-  chain: NETWORK === NetworkNames.BASE ? base : baseSepolia,
-  transport: http(),
-})
+const publicClient = getBasePublicClient(NETWORK)
 
 const spaceQuery = gql`
   query space($id: String!) {

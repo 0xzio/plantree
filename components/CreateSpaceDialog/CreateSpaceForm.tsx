@@ -288,7 +288,7 @@ export function CreateSpaceForm() {
         </div>
 
         <Button size="lg" type="submit" className="w-full">
-          {isLoading ? <LoadingDots /> : <p>Enable web</p>}
+          {isLoading ? <LoadingDots /> : <p>Enable web3</p>}
         </Button>
       </form>
     </Form>

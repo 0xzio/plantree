@@ -1,5 +1,6 @@
 import { spaceAbi } from '@/lib/abi'
 import { NETWORK, NetworkNames, PROJECT_ID } from '@/lib/constants'
+import { getBasePublicClient } from '@/lib/getBasePublicClient'
 import { prisma } from '@/lib/prisma'
 import { SubscriptionInSession } from '@/lib/types'
 import { Site, User, UserRole } from '@prisma/client'
@@ -88,10 +89,7 @@ async function handler(req: Request, res: Response) {
             //   return null
             // }
 
-            const publicClient = createPublicClient({
-              chain: getChain(),
-              transport: http(),
-            })
+            const publicClient = getBasePublicClient(NETWORK)
 
             const valid = await publicClient.verifyMessage({
               address: siweMessage?.address,
@@ -271,10 +269,8 @@ async function updateSubscriptions(address: Address) {
   const site = await prisma.site.findFirst()
   if (!site?.spaceId) return []
   try {
-    const publicClient = createPublicClient({
-      chain: getChain(),
-      transport: http(),
-    })
+    const publicClient = getBasePublicClient(NETWORK)
+
     const subscription = await publicClient.readContract({
       abi: spaceAbi,
       address: site?.spaceId as Address,

@@ -17,7 +17,9 @@ const priceAbi = [
 export async function getEthPrice(): Promise<number> {
   const publicClient = createPublicClient({
     chain: arbitrum,
-    transport: http(),
+    transport: http(
+      'https://arb-mainnet.g.alchemy.com/v2/gk85VnszAKLshOjVjaQyb_XyQxH93HTq',
+    ),
   })
 
   const price = await publicClient.readContract({
