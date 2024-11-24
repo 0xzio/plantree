@@ -2,11 +2,9 @@
 
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { NumberInput } from '@/components/NumberInput'
-import { PlanStatus } from '@/domains/Plan'
-import { usePlans } from '@/hooks/usePlans'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import LoadingDots from '@/components/icons/loading-dots'
+import { NumberInput } from '@/components/NumberInput'
 import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import {
@@ -19,8 +17,10 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { PlanStatus } from '@/domains/Plan'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { useEthPrice } from '@/hooks/useEthPrice'
+import { usePlans } from '@/hooks/usePlans'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { spaceAbi } from '@/lib/abi'
 import { addToIpfs } from '@/lib/addToIpfs'
@@ -164,7 +164,7 @@ export function UpdatePlanForm() {
                       type="single"
                     >
                       <ToggleGroupItem
-                        className="h-full flex-1 bg-accent text-sm font-semibold ring-black data-[state=on]:bg-white"
+                        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background"
                         value={PlanStatus.ACTIVE}
                       >
                         Active
@@ -172,7 +172,7 @@ export function UpdatePlanForm() {
 
                       <ToggleGroupItem
                         value={PlanStatus.INACTIVE}
-                        className="h-full flex-1 bg-accent text-sm font-semibold ring-black data-[state=on]:bg-white"
+                        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background"
                       >
                         Inactive
                       </ToggleGroupItem>
@@ -192,7 +192,7 @@ export function UpdatePlanForm() {
                 <FormItem className="h-full w-full">
                   <FormLabel>Benefits</FormLabel>
                   <FormControl>
-                    <div className="h-[360px]  overflow-auto rounded-lg border border-neutral-200">
+                    <div className="h-[360px]  overflow-auto rounded-lg border border-foreground/20">
                       <PlateEditor
                         value={JSON.parse(field.value)}
                         onChange={(v) => {

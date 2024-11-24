@@ -36,19 +36,19 @@ export function PointInput({ value, onChange }: Props) {
         >
           <ToggleGroupItem
             value="1"
-            className="h-7 bg-accent text-xs hover:bg-neutral-200"
+            className="h-7 bg-accent text-xs hover:bg-foreground/20"
           >
             50
           </ToggleGroupItem>
           <ToggleGroupItem
             value="2"
-            className="h-7 bg-accent text-xs hover:bg-neutral-200"
+            className="h-7 bg-accent text-xs hover:bg-foreground/20"
           >
             100
           </ToggleGroupItem>
           <ToggleGroupItem
             value="3"
-            className="h-7 bg-accent text-xs hover:bg-neutral-200"
+            className="h-7 bg-accent text-xs hover:bg-foreground/20"
           >
             200
           </ToggleGroupItem>

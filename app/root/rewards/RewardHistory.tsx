@@ -24,7 +24,7 @@ export const RewardHistory = ({ rewardRequests, isLoading }: Props) => {
   return (
     <Tabs defaultValue="all" className="">
       <TabsList>
-        <TabsTrigger value="all" className="data-[state=active]:bg-white">
+        <TabsTrigger value="all" className="data-[state=active]:bg-background">
           All
         </TabsTrigger>
         <TabsTrigger value="pending">Pending</TabsTrigger>

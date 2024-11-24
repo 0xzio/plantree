@@ -16,7 +16,7 @@ export function SpaceStats({}: Props) {
   return (
     <div className="flex items-center justify-between gap-2">
       <StatsItem title="Total members" value={space.memberCount} />
-      <StatsItem title="Total supply" value={`${space.totalSupplyFormatted}`} />
+      {/* <StatsItem title="Total supply" value={`${space.totalSupplyFormatted}`} /> */}
       <StatsItem
         title="Total volume"
         value={

@@ -31,9 +31,9 @@ export const TokenProgress = ({}: PropsWithChildren<Props>) => {
       <Progress
         max={MAX_SUPPLY}
         value={progress}
-        className="bg-white shadow-sm"
+        className="bg-background shadow-sm"
       />
-      <div className="flex text-neutral-400 text-xs mt-1 justify-between">
+      <div className="flex text-foreground/40 text-xs mt-1 justify-between">
         <div>Sponsored amount: {precision.toDecimal(data!).toFixed(0)}</div>
         <div className="text-center">Sponsor supply: 3000000000 (300ETH)</div>
       </div>

@@ -16,7 +16,7 @@ export function PageCreate() {
             <Button
               size="icon"
               variant="ghost"
-              className="rounded-full shadow bg-white"
+              className="rounded-full shadow bg-background"
               onClick={() => {
                 push('/rewards')
               }}

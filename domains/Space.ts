@@ -113,7 +113,7 @@ export class Space {
     }
   }
 
-  isFounder(account: Address) {
+  isFounder = (account: Address) => {
     return this.raw.founder.toLowerCase() === account.toLowerCase()
   }
 

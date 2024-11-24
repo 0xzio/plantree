@@ -1,3 +1,4 @@
+import { useSpaceContext } from '@/components/SpaceContext'
 import { Plan, PlanInfo } from '@/domains/Plan'
 import { spaceAbi } from '@/lib/abi'
 import { IPFS_GATEWAY } from '@/lib/constants'
@@ -6,10 +7,9 @@ import { wagmiConfig } from '@/lib/wagmi'
 import { useQuery } from '@tanstack/react-query'
 import { readContracts } from '@wagmi/core'
 import ky from 'ky'
-import { useSpace } from './useSpace'
 
 export function usePlans() {
-  const { space } = useSpace()
+  const space = useSpaceContext()
   const { data: plans = [], ...rest } = useQuery({
     queryKey: ['plans', space?.address],
     queryFn: async () => {

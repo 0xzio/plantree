@@ -52,16 +52,18 @@ export function MemberForm({ space }: Props) {
     defaultValues: {
       type: SubscriptionType.SUBSCRIBE,
       token: 'ETH',
-      times: '180', // 180 days by default
+      times: '', // 180 days by default
     },
   })
 
-  const isSubscribe = form.watch('type') === SubscriptionType.SUBSCRIBE
+  const type = form.watch('type')
   const token = form.watch('token')
   const times = form.watch('times')
+  const isSubscribe = type === SubscriptionType.SUBSCRIBE
 
   const getAmount = (token: string, days: string, isSubscribe: boolean) => {
     // if (!subscription?.raw) return BigInt(0)
+    if (!isSubscribe && !subscription) return BigInt(0)
 
     if (!days) return BigInt(0)
     if (isSubscribe) {
@@ -100,6 +102,10 @@ export function MemberForm({ space }: Props) {
     setLoading(false)
   }
 
+  useEffect(() => {
+    form.setValue('times', '')
+  }, [type])
+
   return (
     <Form {...form}>
       <form
@@ -122,7 +128,7 @@ export function MemberForm({ space }: Props) {
                   type="single"
                 >
                   <ToggleGroupItem
-                    className="data-[state=on]:bg-white ring-black bg-accent text-sm font-semibold flex-1 h-full"
+                    className="data-[state=on]:bg-background ring-foreground bg-accent text-sm font-semibold flex-1 h-full"
                     value={SubscriptionType.SUBSCRIBE}
                   >
                     Subscribe
@@ -130,7 +136,7 @@ export function MemberForm({ space }: Props) {
 
                   <ToggleGroupItem
                     value={SubscriptionType.UNSUBSCRIBE}
-                    className="data-[state=on]:bg-white ring-black bg-accent text-sm font-semibold flex-1 h-full"
+                    className="data-[state=on]:bg-background ring-foreground bg-accent text-sm font-semibold flex-1 h-full"
                   >
                     Unsubscribe
                   </ToggleGroupItem>
@@ -186,7 +192,7 @@ export function MemberForm({ space }: Props) {
         )}
 
         <div className="flex items-center justify-between h-6">
-          <div className="text-sm text-neutral-500">
+          <div className="text-sm text-foreground/50">
             Total {isSubscribe ? 'cost' : 'refund'}
           </div>
           <div className="text-sm">
@@ -199,7 +205,7 @@ export function MemberForm({ space }: Props) {
           size="lg"
           disabled={loading || !form.formState.isValid}
         >
-          {loading ? <LoadingDots  /> : 'Confirm'}
+          {loading ? <LoadingDots /> : 'Confirm'}
         </Button>
       </form>
     </Form>
@@ -210,7 +216,9 @@ function TokenBalance() {
   const { subscription } = useMemberDialog()
   return (
     <div className="flex items-center gap-1">
-      <div className="font-bold">{subscription?.timeFormatted}</div>
+      <div className="font-bold">
+        {subscription ? subscription?.timeFormatted : '0 days'}
+      </div>
     </div>
   )
 }

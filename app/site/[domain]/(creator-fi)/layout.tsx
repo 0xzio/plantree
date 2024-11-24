@@ -19,7 +19,7 @@ export default async function Layout({
         <StoreProvider>
           <Toaster className="dark:hidden" />
           <Toaster theme="dark" className="hidden dark:block" />
-          <CreatorFiLayout space={space}>{children}</CreatorFiLayout>
+          <CreatorFiLayout>{children}</CreatorFiLayout>
         </StoreProvider>
       </SpaceProvider>
     </div>

@@ -44,7 +44,7 @@ export function SummaryDashboard({ rewardRequests, isLoading }: Props) {
 
   if (isLoading) {
     return (
-      <div className="flex w-full border border-inherit rounded-3xl bg-white dark:bg-secondary">
+      <div className="flex w-full border border-inherit rounded-3xl bg-background">
         {categories.map((category, index) => (
           <div
             key={index}
@@ -61,7 +61,7 @@ export function SummaryDashboard({ rewardRequests, isLoading }: Props) {
   }
 
   return (
-    <div className="flex w-full border border-inherit rounded-3xl bg-white dark:bg-secondary">
+    <div className="flex w-full border border-inherit rounded-3xl bg-background">
       {categories.map((category, index) => (
         <div
           key={index}

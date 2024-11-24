@@ -15,7 +15,7 @@ export function PostItem({ post }: PostItemProps) {
     <article key={slug} className="flex flex-col space-y-5">
       <Link
         href={`/posts/${slug}`}
-        className="object-cover w-full h-52 bg-neutral-100 rounded-lg overflow-hidden hover:scale-105 transition-all"
+        className="object-cover w-full h-52 bg-foreground/10 rounded-lg overflow-hidden hover:scale-105 transition-all"
       >
         {!!post?.image && (
           <Image
@@ -44,7 +44,7 @@ export function PostItem({ post }: PostItemProps) {
           <h2 className="text-2xl font-bold leading-8 tracking-tight">
             <Link
               href={`/posts/${slug}`}
-              className="hover:text-black transition-colors text-foreground/80"
+              className="hover:text-foreground transition-colors text-foreground/80"
             >
               {title}
             </Link>

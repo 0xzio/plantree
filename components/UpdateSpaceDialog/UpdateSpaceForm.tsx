@@ -15,7 +15,7 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Space } from '@/domains/Space'
-import { spaceAtom, useSpace } from '@/hooks/useSpace'
+import { spaceAtom } from '@/hooks/useSpace'
 import { spaceAbi } from '@/lib/abi'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { revalidateMetadata } from '@/lib/revalidateTag'
@@ -26,6 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { waitForTransactionReceipt, writeContract } from '@wagmi/core'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { useSpaceContext } from '../SpaceContext'
 import { useUpdateSpaceDialog } from './useUpdateSpaceDialog'
 
 const FormSchema = z.object({
@@ -35,7 +36,7 @@ const FormSchema = z.object({
 })
 
 export function UpdateSpaceForm() {
-  const { space } = useSpace()
+  const space = useSpaceContext()
   const { setIsOpen } = useUpdateSpaceDialog()
   const [loading, setLoading] = useState(false)
 

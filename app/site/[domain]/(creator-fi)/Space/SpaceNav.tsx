@@ -16,14 +16,14 @@ export function SpaceNav({}: Props) {
     shares: `/creator-fi/contributors`,
     subscriptionRecords: `/creator-fi/subscription-records`,
     funding: `/creator-fi/funding`,
-    trade: `/creator-fi/trade`,
+    trade: `/creator-fi`,
     staking: `/creator-fi/staking`,
   }
 
   const linkClassName = (path: string) =>
     cn(
       'inline-flex item-center justify-center py-1.5 border-b-2 px-3 -mb-[1px] border-transparent',
-      path === pathname && 'border-black border-zinc-400',
+      path === pathname && 'border-foreground/40',
     )
 
   return (

@@ -14,7 +14,7 @@ interface Props {
 export function HomePage({ posts = [], site, ContentRender }: Props) {
   return (
     <div className="mt-12">
-      <div className="max-w-none mb-10 hover:text-black text-foreground/80">
+      <div className="max-w-none mb-10 hover:text-foreground text-foreground/80">
         <div className="flex flex-col items-center flex-shrink-0">
           {site.logo && (
             <Image

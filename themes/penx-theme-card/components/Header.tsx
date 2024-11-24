@@ -18,7 +18,7 @@ const headerNavLinks = [
   { href: '/membership', title: 'Membership', isMembership: true },
 ]
 
-const headerNavLinksRight = [{ href: '/creator-fi/trade', title: 'CreatorFi' }]
+const headerNavLinksRight = [{ href: '/creator-fi', title: 'CreatorFi' }]
 
 interface Props {
   site: Site
@@ -76,7 +76,7 @@ export const Header = ({
       <div className="flex items-center justify-end flex-1 gap-4">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
           {headerNavLinksRight.map((link) => {
-            if (link.href === '/creator-fi/trade' && !site.spaceId) {
+            if (link.href === '/creator-fi' && !site.spaceId) {
               return null
             }
             return (

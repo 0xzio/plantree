@@ -41,7 +41,7 @@ export const dynamic = 'force-static'
 export default function Page() {
   return (
     <div className="mt-20 space-y-20 pb-20">
-      <div className="flex flex-col justify-center p-8 gap-4 bg-background dark:bg-zinc-800 rounded-2xl shadow">
+      <div className="flex flex-col justify-center p-8 gap-4 bg-background rounded-2xl shadow">
         <div className="font-bold text-5xl">$PEN</div>
         <div className="text-4xl font-thin text-foreground/60 space-y-1">
           <div className="">
@@ -116,7 +116,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center p-8 gap-12 bg-background dark:bg-zinc-800 rounded-2xl shadow">
+      <div className="flex flex-col justify-center p-8 gap-12 bg-background rounded-2xl shadow">
         <div className="font-extrabold text-5xl pt">How get $PEN?</div>
         <div>
           <div className="flex flex-col gap-4">

@@ -23,7 +23,7 @@ export function SpaceList() {
               <Skeleton
                 key={i}
                 className={cn(
-                  'flex items-center justify-between p-5 gap-3 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all h-[116px]',
+                  'flex items-center justify-between p-5 gap-3 bg-background dark:bg-foreground/80 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all h-[116px]',
                 )}
               ></Skeleton>
             ))}
@@ -38,7 +38,7 @@ export function SpaceList() {
           key={space.id}
           href={`/space/${space.id}`}
           className={cn(
-            'flex items-center justify-between p-5 gap-3 bg-white dark:bg-zinc-800 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',
+            'flex items-center justify-between p-5 gap-3 bg-background dark:bg-foreground/80 rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',
             // spaces.length !== index + 1 && 'border-b border-neutral-100/90',
           )}
         >

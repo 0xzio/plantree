@@ -8,7 +8,7 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
-import { useSpace } from '@/hooks/useSpace'
+import { useSpaceContext } from '../SpaceContext'
 import { MemberForm } from './MemberForm'
 import { useMemberDialog } from './useMemberDialog'
 
@@ -16,7 +16,7 @@ interface Props {}
 
 export function MemberDialog({}: Props) {
   const { isOpen, setIsOpen } = useMemberDialog()
-  const { space } = useSpace()
+  const space = useSpaceContext()
   useQueryEthBalance()
 
   return (
@@ -25,7 +25,7 @@ export function MemberDialog({}: Props) {
         <DialogDescription></DialogDescription>
         <DialogHeader>
           <DialogTitle>Subscription</DialogTitle>
-          <div className="text-sm text-neutral-600">
+          <div className="text-sm text-foreground/60">
             Subscribe to become a member of the{' '}
             <span className="font-bold">{space.name}</span> space.
           </div>

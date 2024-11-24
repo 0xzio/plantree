@@ -12,7 +12,7 @@ export function CreateButton() {
   return (
     <Button
       variant="default"
-      className="rounded-2xl border border-black hover:bg-black hover:text-white"
+      className="rounded-2xl border border-foreground hover:bg-foreground hover:text-background"
       onClick={() => {
         if (!isConnected) return openConnectModal?.()
         push('/rewards/create')

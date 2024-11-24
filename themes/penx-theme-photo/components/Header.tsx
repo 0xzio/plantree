@@ -8,7 +8,7 @@ const headerNavLinks = [
   // { href: '/posts', title: 'Blog' },
   // { href: '/tags', title: 'Tags' },
   { href: '/about', title: 'About' },
-  { href: '/creator-fi/trade', title: 'CreatorFi' },
+  { href: '/creator-fi', title: 'CreatorFi' },
   { href: '/membership', title: 'Membership', isMembership: true },
 ]
 
@@ -37,7 +37,7 @@ export const Header = ({
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="flex items-center space-x-4">
           {headerNavLinks.map((link) => {
-            if (link.href === '/creator-fi/trade' && !site.spaceId) {
+            if (link.href === '/creator-fi' && !site.spaceId) {
               return null
             }
 

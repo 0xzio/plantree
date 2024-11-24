@@ -1,16 +1,19 @@
 'use client'
 
-import { useSpaceContext } from '@/components/SpaceContext'
 import { MemberDialog } from '@/components/MemberDialog/MemberDialog'
+import { useSpaceContext } from '@/components/SpaceContext'
 import { useAddress } from '@/hooks/useAddress'
 import { usePlans } from '@/hooks/usePlans'
+import { cn } from '@/lib/utils'
 import { AddPlanDialog } from './AddPlanDialog/AddPlanDialog'
 import { PlanItem } from './PlanItem'
 import { UpdatePlanDialog } from './UpdatePlanDialog/UpdatePlanDialog'
 
-interface Props {}
+interface Props {
+  className?: string
+}
 
-export function PlanList({}: Props) {
+export function PlanList({ className }: Props) {
   const { plans, isLoading } = usePlans()
   const space = useSpaceContext()
   const address = useAddress()
@@ -31,7 +34,12 @@ export function PlanList({}: Props) {
 
       <UpdatePlanDialog />
       <MemberDialog />
-      <div className="mt-4 flex items-center justify-center gap-4 flex-wrap">
+      <div
+        className={cn(
+          'mt-4 flex items-center justify-center gap-4 flex-wrap',
+          className,
+        )}
+      >
         {plans.map((item, index) => {
           return <PlanItem key={index} plan={item} />
         })}

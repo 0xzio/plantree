@@ -25,7 +25,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Nav />
 
         <div className="flex items-center gap-2">
-          <SocialNav className="text-neutral-800" />
+          <SocialNav className="text-foreground/80" />
           <ModeToggle />
           <Profile />
         </div>

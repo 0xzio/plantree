@@ -3,7 +3,6 @@
 import { PropsWithChildren, useEffect, useState } from 'react'
 import { Input } from '@/components/ui/input'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
-import { Subscription } from '@/domains/Subscription'
 import { useSubscriptions } from '@/hooks/useSubscriptions'
 import { matchNumber, toFloorFixed } from '@/lib/utils'
 
@@ -14,20 +13,14 @@ interface Props {
 }
 
 export function AmountInput({ isSubscribe, value, onChange }: Props) {
-  const [index, setIndex] = useState('2')
+  const [index, setIndex] = useState('')
   const { subscriptions } = useSubscriptions()
 
-  useEffect(() => {
-    if (isSubscribe) {
-      // onChange('180')
-      return
-    }
-    if (!subscriptions.length) return
-    // onChange(subscriptions[0].daysFormatted.toString())
-    setIndex('3')
-  }, [isSubscribe, subscriptions])
-
   const [subscription] = subscriptions
+
+  useEffect(() => {
+    if (!value) setIndex('')
+  }, [value])
 
   return (
     <div className="relative">
@@ -75,7 +68,7 @@ export function AmountInput({ isSubscribe, value, onChange }: Props) {
             <ToggleItem value="3">356</ToggleItem>
           </ToggleGroup>
         )}
-        {!isSubscribe && (
+        {!isSubscribe && subscription && (
           <ToggleGroup
             size="sm"
             value={index}
@@ -105,7 +98,7 @@ function ToggleItem({ value, children }: PropsWithChildren<{ value: string }>) {
   return (
     <ToggleGroupItem
       value={value}
-      className="h-8 w-12 bg-accent text-xs hover:bg-neutral-200 data-[state=on]:bg-black data-[state=on]:text-white rounded-full font-semibold"
+      className="h-8 w-12 bg-accent text-xs hover:bg-foreground/20 data-[state=on]:bg-foreground data-[state=on]:text-background rounded-full font-semibold"
     >
       {children}
     </ToggleGroupItem>

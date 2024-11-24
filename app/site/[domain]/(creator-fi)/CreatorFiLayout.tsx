@@ -1,59 +1,57 @@
 'use client'
 
-import { PropsWithChildren, Suspense } from 'react'
-import { Profile } from '@/components/Profile/Profile'
+import { PropsWithChildren } from 'react'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
+import { useQueryEthPrice } from '@/hooks/useEthPrice'
 import { SpaceType } from '@/lib/types'
-import Link from 'next/link'
-import { SpaceBasicInfo } from './Space/SpaceBasicInfo'
-import { SpaceNav } from './Space/SpaceNav'
+import { SpaceHeader } from './Space/SpaceHeader'
+import { SpaceInfo } from './Space/SpaceInfo'
+import { Transaction } from './Space/Transaction'
 
-interface HeaderProps {
-  space: SpaceType
-}
-function Header({ space }: HeaderProps) {
-  return (
-    <header className="flex h-16 items-center justify-between px-4">
-      <div className="flex flex-1 items-center gap-2 ">
-        <Link
-          href="/"
-          className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-foreground/5"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            // width="1em"
-            // height="2em"
-            viewBox="0 0 12 24"
-            className="h-6"
-          >
-            <path
-              fill="currentColor"
-              fillRule="evenodd"
-              d="m3.343 12l7.071 7.071L9 20.485l-7.778-7.778a1 1 0 0 1 0-1.414L9 3.515l1.414 1.414z"
-            ></path>
-          </svg>
-        </Link>
-        <SpaceBasicInfo space={space} />
-      </div>
-      <SpaceNav />
-      <div className="flex flex-1 justify-end">
-        <Profile />
-      </div>
-    </header>
-  )
-}
+interface Props {}
 
-interface Props {
-  space: SpaceType
-}
-
-export function CreatorFiLayout({ children, space }: PropsWithChildren<Props>) {
+export function CreatorFiLayout({ children }: PropsWithChildren<Props>) {
   useQueryEthBalance()
+  useQueryEthPrice()
 
   return (
-    <>
-      <Header space={space} />
-      {children}
-    </>
+    <div>
+      <SpaceHeader />
+      <div className="flex lg:flex-row flex-col-reverse w-full sm:w-full mx-auto gap-12 mt-10 p-3 lg:p-0 md:max-w-5xl lg:max-w-6xl">
+        <div className="flex flex-col gap-6 md:flex-1 rounded-2xl w-full md:w-auto">
+          <SpaceInfo />
+          {children}
+        </div>
+
+        <div className="flex flex-col w-full lg:w-[360px] flex-shrink-0">
+          <Transaction />
+          <div className="mt-8 lg:block">
+            {/* <Tabs
+              className="w-full"
+              value={type}
+              onValueChange={(v) => {
+                setType(v as TabTypes)
+              }}
+            >
+              <TabsList className="mb-2">
+                <TabsTrigger value={TabTypes.Trades}>Trades</TabsTrigger>
+                <TabsTrigger value={TabTypes.Holders}>Holders</TabsTrigger>
+              </TabsList>
+
+              {type === TabTypes.Trades && (
+                <TabsContent value={TabTypes.Trades}>
+                  <TradeList />
+                </TabsContent>
+              )}
+              {type === TabTypes.Holders && (
+                <TabsContent value={TabTypes.Holders}>
+                  <HolderList />
+                </TabsContent>
+              )}
+            </Tabs> */}
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
