@@ -33,11 +33,11 @@ export const Nav = () => {
       isExternal: true,
       to: 'https://docs.penx.io/deploy-in-10-minutes',
     },
-    {
-      text: 'Docs',
-      isExternal: true,
-      to: 'https://docs.penx.io/deploy-in-10-minutes',
-    },
+    // {
+    //   text: 'Docs',
+    //   isExternal: true,
+    //   to: 'https://docs.penx.io/deploy-in-10-minutes',
+    // },
   ]
 
   return (

@@ -32,6 +32,7 @@ import {
 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
+import { useAccount } from 'wagmi'
 import { useSiteContext } from '../SiteContext'
 import { Skeleton } from '../ui/skeleton'
 import { ProfileAvatar } from './ProfileAvatar'
@@ -52,8 +53,6 @@ export const ProfilePopover = memo(function ProfilePopover({
 }: Props) {
   const { data } = useSession()
   const { push } = useRouter()
-  const { authType } = useSiteContext()
-  const isGoogleOauth = authType === AuthType.GOOGLE
 
   if (!data) return <div></div>
 
@@ -70,18 +69,13 @@ export const ProfilePopover = memo(function ProfilePopover({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="grid gap-2">
-          {isGoogleOauth && (
-            <div>
-              <div>{data.user?.name || data.user?.email}</div>
-            </div>
-          )}
-
-          {!isGoogleOauth && (
-            <>
-              <ProfileAvatar showAddress showEnsName showCopy />
-              <WalletInfo />
-            </>
-          )}
+          <ProfileAvatar
+            showAddress
+            showEnsName
+            showCopy
+            image={data.user?.image || ''}
+          />
+          {data.address && <WalletInfo />}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 

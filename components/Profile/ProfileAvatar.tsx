@@ -50,7 +50,8 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
         {...rest}
       >
         <UserAvatar address={address} image={image} />
-        {(showEnsName || showAddress) && (
+        {!address && <div>{session?.user?.name || session?.user?.email}</div>}
+        {(showEnsName || showAddress) && address && (
           <>
             <div>
               {showEnsName && ensName && (
