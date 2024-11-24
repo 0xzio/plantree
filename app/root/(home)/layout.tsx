@@ -1,6 +1,7 @@
 import { PropsWithChildren } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 import { Slogan } from './Slogan'
 
 export const dynamic = 'force-static'
@@ -31,10 +32,8 @@ export default async function HomePage({ children }: PropsWithChildren) {
         </Badge>
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
-        <Button size="lg" className="h-12 text-base" asChild>
-          <a href="https://docs.penx.io/deploy-in-10-minutes" target="_blank">
-            Deploy in 10 minutes
-          </a>
+        <Button size="lg" className="h-12 text-base px-8" asChild>
+          <Link href="/login">Create a blog</Link>
         </Button>
       </div>
 
