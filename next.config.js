@@ -1,9 +1,11 @@
 const { env } = require('./server/env')
+const { createVanillaExtractPlugin } = require('@vanilla-extract/next-plugin')
+const withVanillaExtract = createVanillaExtractPlugin()
 
 /**
  * @type {import('next').NextConfig}
  */
-module.exports = {
+const nextConfig = {
   experimental: {
     serverActions: {
       allowedOrigins: ['app.localhost:4000'],
@@ -62,3 +64,5 @@ module.exports = {
     return config
   },
 }
+
+module.exports = withVanillaExtract(nextConfig)

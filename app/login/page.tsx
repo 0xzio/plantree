@@ -1,6 +1,7 @@
 'use client'
 
 import { useCallback, useEffect, useState } from 'react'
+import { SignInButton } from '@/components/facaster-auth'
 import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog'
 import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog'
 import { GoogleOauthButton } from '@/components/GoogleOauthButton'
@@ -16,8 +17,8 @@ import {
 import { WalletConnectButton } from '@/components/WalletConnectButton'
 import {
   AuthKitProvider,
+  SignInButton as FSignInButton,
   QRCode,
-  SignInButton,
   StatusAPIResponse,
   useProfile,
   useSignIn,
@@ -41,7 +42,7 @@ export default function Page() {
   const handleSuccess = useCallback(
     async (res: StatusAPIResponse) => {
       // alert('Signed in successfully')
-      await signIn('credentials', {
+      await signIn('penx-farcaster', {
         message: res.message,
         signature: res.signature,
         name: res.username,
@@ -86,6 +87,22 @@ export default function Page() {
               }}
               onSignOut={() => signOut()}
             />
+
+            {/* <FSignInButton
+              onStatusResponse={(res) => {
+                if (res.state === 'pending' && !isOpen) {
+                  setIsOpen(true)
+                }
+              }}
+              nonce={getNonce}
+              onSuccess={handleSuccess}
+              onError={(error) => {
+                // alert('Failed to sign in' + JSON.stringify(error))
+                setIsOpen(false)
+                toast.error('Failed to sign in')
+              }}
+              onSignOut={() => signOut()}
+            /> */}
 
             {/* <Profile /> */}
 

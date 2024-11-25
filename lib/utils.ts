@@ -111,3 +111,31 @@ export function isValidUUIDv4(uuid = ''): boolean {
     /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
   return regex.test(uuid)
 }
+
+export function isAndroid(): boolean {
+  return (
+    typeof navigator !== 'undefined' && /android/i.test(navigator.userAgent)
+  )
+}
+
+export function isSmallIOS(): boolean {
+  return (
+    typeof navigator !== 'undefined' && /iPhone|iPod/.test(navigator.userAgent)
+  )
+}
+
+export function isLargeIOS(): boolean {
+  return (
+    typeof navigator !== 'undefined' &&
+    (/iPad/.test(navigator.userAgent) ||
+      (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1))
+  )
+}
+
+export function isIOS(): boolean {
+  return isSmallIOS() || isLargeIOS()
+}
+
+export function isMobile(): boolean {
+  return isAndroid() || isIOS()
+}
