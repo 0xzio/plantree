@@ -1,6 +1,7 @@
 import { Airdrop } from '@/components/Airdrop/Airdrop'
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
+import { SiteProvider } from '@/components/SiteContext'
 import { getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 
@@ -26,7 +27,7 @@ export default async function RootLayout({
       ConnectButton={Profile}
       Airdrop={Airdrop}
     >
-      {children}
+      <SiteProvider site={site}>{children}</SiteProvider>
     </SiteLayout>
   )
 }
