@@ -44,6 +44,7 @@ export function Providers({
             rpcUrl: 'https://mainnet.optimism.io',
             domain: ROOT_DOMAIN,
             siweUri: `https://${ROOT_DOMAIN}/login`,
+            redirectUrl: `https://${ROOT_DOMAIN}/login`,
           }}
         >
           <WagmiProvider config={wagmiConfig}>

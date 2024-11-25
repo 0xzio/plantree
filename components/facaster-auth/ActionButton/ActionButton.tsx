@@ -1,19 +1,28 @@
-import { Button } from '../Button'
+import { ReactNode } from 'react'
+import { Button } from '@/components/ui/button'
 import { FarcasterLogo } from '../FarcasterLogo'
 
 export function ActionButton({
+  loading,
   label,
   onClick,
   initializing,
 }: {
-  label: string
+  label: ReactNode
   onClick: () => void
   initializing: boolean
+  loading: boolean
 }) {
   return (
-    <Button kind="primary" onClick={onClick} disabled={initializing}>
+    <Button
+      variant="farcaster"
+      onClick={onClick}
+      disabled={initializing || loading}
+    >
       <FarcasterLogo height={20} fill="white" />
-      <span style={{ marginLeft: 9 }}>{label}</span>
+      <div style={{ marginLeft: 9 }} className="flex items-center gap-1">
+        {label}
+      </div>
     </Button>
   )
 }

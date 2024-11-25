@@ -1,31 +1,19 @@
-'use client'
+'use client';
 
-import { useCallback, useEffect, useState } from 'react'
-import { SignInButton } from '@/components/facaster-auth'
-import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog'
-import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog'
-import { GoogleOauthButton } from '@/components/GoogleOauthButton'
-import { TextLogo } from '@/components/TextLogo'
-import { Button } from '@/components/ui/button'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { WalletConnectButton } from '@/components/WalletConnectButton'
-import {
-  AuthKitProvider,
-  SignInButton as FSignInButton,
-  QRCode,
-  StatusAPIResponse,
-  useProfile,
-  useSignIn,
-} from '@farcaster/auth-kit'
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
-import Link from 'next/link'
-import { toast } from 'sonner'
+import { useCallback, useEffect, useState } from 'react';
+import { SignInButton } from '@/components/facaster-auth';
+import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog';
+import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog';
+import { GoogleOauthButton } from '@/components/GoogleOauthButton';
+import { TextLogo } from '@/components/TextLogo';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { WalletConnectButton } from '@/components/WalletConnectButton';
+import { AuthKitProvider, SignInButton as FSignInButton, QRCode, StatusAPIResponse, useProfile, useSignIn } from '@farcaster/auth-kit';
+import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react';
+import Link from 'next/link';
+import { toast } from 'sonner';
+
 
 export const dynamic = 'force-static'
 // export const revalidate = 3600 * 24
@@ -41,7 +29,7 @@ export default function Page() {
 
   const handleSuccess = useCallback(
     async (res: StatusAPIResponse) => {
-      // alert('Signed in successfully')
+      alert('Signed in successfully')
       await signIn('penx-farcaster', {
         message: res.message,
         signature: res.signature,
@@ -71,12 +59,24 @@ export default function Page() {
             <CardDescription>Login with Google or Web3 Wallets</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            <FarcasterOauthDialog />
+            {/* <FarcasterOauthDialog /> */}
             <SignInButton
+              onStatusResponse={(res) => {}}
+              nonce={getNonce}
+              onSuccess={handleSuccess}
+              onError={(error) => {
+                alert('Failed to sign in' + JSON.stringify(error))
+                setIsOpen(false)
+                toast.error('Failed to sign in')
+              }}
+              onSignOut={() => signOut()}
+            />
+
+            <FSignInButton
               onStatusResponse={(res) => {
-                if (res.state === 'pending' && !isOpen) {
-                  setIsOpen(true)
-                }
+                // if (res.state === 'pending' && !isOpen) {
+                //   setIsOpen(true)
+                // }
               }}
               nonce={getNonce}
               onSuccess={handleSuccess}
@@ -87,22 +87,6 @@ export default function Page() {
               }}
               onSignOut={() => signOut()}
             />
-
-            {/* <FSignInButton
-              onStatusResponse={(res) => {
-                if (res.state === 'pending' && !isOpen) {
-                  setIsOpen(true)
-                }
-              }}
-              nonce={getNonce}
-              onSuccess={handleSuccess}
-              onError={(error) => {
-                // alert('Failed to sign in' + JSON.stringify(error))
-                setIsOpen(false)
-                toast.error('Failed to sign in')
-              }}
-              onSignOut={() => signOut()}
-            /> */}
 
             {/* <Profile /> */}
 

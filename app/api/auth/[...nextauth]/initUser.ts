@@ -83,7 +83,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         data: {
           name: info.name,
           email: info.email,
-          google: info.openid,
+          googleId: info.openid,
           image: info.picture,
         },
       })

@@ -208,6 +208,7 @@ async function handler(req: Request, res: Response) {
         },
       }),
       CredentialsProvider({
+        id: 'penx-farcaster',
         name: 'Sign in with Farcaster',
         credentials: {
           message: {

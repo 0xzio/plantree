@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
+import LoadingDots from '@/components/icons/loading-dots'
 import { isMobile } from '@/lib/utils'
 import { AuthClientError, StatusAPIResponse } from '@farcaster/auth-client'
 import { useSignIn, UseSignInArgs } from '@farcaster/auth-kit'
@@ -20,10 +21,12 @@ export function SignInButton({
   ...signInArgs
 }: SignInButtonProps) {
   const { onSuccess, onStatusResponse, onError } = signInArgs
+  const [loading, setLoading] = useState(false)
 
   const onSuccessCallback = useCallback(
     (res: StatusAPIResponse) => {
       onSuccess?.(res)
+      setLoading(false)
     },
     [onSuccess],
   )
@@ -38,12 +41,14 @@ export function SignInButton({
   const onErrorCallback = useCallback(
     (error?: AuthClientError) => {
       onError?.(error)
+      setLoading(false)
     },
     [onError],
   )
 
   const onSignOutCallback = useCallback(() => {
     onSignOut?.()
+    setLoading(false)
   }, [onSignOut])
 
   const signInState = useSignIn({
@@ -81,6 +86,7 @@ export function SignInButton({
     setShowDialog(true)
     signIn()
     if (url && isMobile()) {
+      setLoading(true)
       window.open(url, '_blank')
     }
   }, [isError, reconnect, signIn, url])
@@ -107,7 +113,17 @@ export function SignInButton({
             initializing={!url}
             onClick={onClick}
             // label={'Sign in'}
-            label={'Farcaster login'}
+            label={
+              loading ? (
+                <>
+                  <span>Farcaster login</span>
+                  <LoadingDots></LoadingDots>
+                </>
+              ) : (
+                'Farcaster login'
+              )
+            }
+            loading={loading}
           />
           {url && (
             <QRCodeDialog
