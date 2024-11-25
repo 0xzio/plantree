@@ -1,4 +1,5 @@
 import '@/styles/globals.css'
+import '@farcaster/auth-kit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'

@@ -1,12 +1,13 @@
 import { spaceAbi } from '@/lib/abi'
-import { NETWORK, NetworkNames, PROJECT_ID } from '@/lib/constants'
+import { NETWORK, NetworkNames, PROJECT_ID, ROOT_DOMAIN } from '@/lib/constants'
 import { getBasePublicClient } from '@/lib/getBasePublicClient'
 import { prisma } from '@/lib/prisma'
 import { SubscriptionInSession } from '@/lib/types'
+import { createAppClient, viemConnector } from '@farcaster/auth-client'
 import { Site, User, UserRole } from '@prisma/client'
 import { AuthTokenClaims, PrivyClient } from '@privy-io/server-auth'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
-import credentialsProvider from 'next-auth/providers/credentials'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { Address, createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import {
@@ -14,7 +15,11 @@ import {
   validateSiweMessage,
   type SiweMessage,
 } from 'viem/siwe'
-import { initUserByAddress, initUserByGoogleInfo } from './initUser'
+import {
+  initUserByAddress,
+  initUserByFarcasterInfo,
+  initUserByGoogleInfo,
+} from './initUser'
 
 declare module 'next-auth' {
   interface Session {
@@ -46,7 +51,7 @@ async function handler(req: Request, res: Response) {
   return await NextAuth(req as any, res as any, {
     secret: nextAuthSecret,
     providers: [
-      credentialsProvider({
+      CredentialsProvider({
         name: 'Ethereum',
         credentials: {
           message: {
@@ -110,7 +115,7 @@ async function handler(req: Request, res: Response) {
           }
         },
       }),
-      credentialsProvider({
+      CredentialsProvider({
         id: 'privy',
         name: 'Privy',
         credentials: {
@@ -163,7 +168,7 @@ async function handler(req: Request, res: Response) {
         },
       }),
 
-      credentialsProvider({
+      CredentialsProvider({
         id: 'penx-google',
         name: 'PenX',
         credentials: {
@@ -197,6 +202,68 @@ async function handler(req: Request, res: Response) {
             const user = await initUserByGoogleInfo(credentials)
             return user
           } catch (e) {
+            console.log('=======>>>>e:', e)
+            return null
+          }
+        },
+      }),
+      CredentialsProvider({
+        name: 'Sign in with Farcaster',
+        credentials: {
+          message: {
+            label: 'Message',
+            type: 'text',
+            placeholder: '0x0',
+          },
+          signature: {
+            label: 'Signature',
+            type: 'text',
+            placeholder: '0x0',
+          },
+          // In a production app with a server, these should be fetched from
+          // your Farcaster data indexer rather than have them accepted as part
+          // of credentials.
+          name: {
+            label: 'Name',
+            type: 'text',
+            placeholder: '0x0',
+          },
+          pfp: {
+            label: 'Pfp',
+            type: 'text',
+            placeholder: '0x0',
+          },
+        },
+        async authorize(credentials: any) {
+          console.log('======credentials:', credentials)
+
+          try {
+            const appClient = createAppClient({
+              ethereum: viemConnector(),
+            })
+
+            const verifyResponse = await appClient.verifySignInMessage({
+              message: credentials?.message as string,
+              signature: credentials?.signature as `0x${string}`,
+              domain: ROOT_DOMAIN,
+              nonce: credentials.csrfToken,
+            })
+            const { success, fid } = verifyResponse
+
+            if (!success) {
+              return null
+            }
+
+            console.log('======:fid', fid.toString(), 'username:', credentials)
+
+            const user = await initUserByFarcasterInfo({
+              fid: fid.toString(),
+              name: credentials?.name,
+              image: credentials?.pfp,
+            })
+            return user
+          } catch (error) {
+            console.log('=====farcaster sign error==>>>>:', error)
             return null
           }
         },
@@ -312,11 +379,4 @@ async function getAuthSecret() {
   })
   secret = site?.authSecret || ''
   return site?.authSecret || ''
-}
-
-function getChain() {
-  if (NETWORK === NetworkNames.BASE_SEPOLIA) {
-    return baseSepolia
-  }
-  return base
 }

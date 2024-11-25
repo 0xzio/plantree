@@ -61,7 +61,7 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-  [data-registry="plate"] {
+  [data-registry='plate'] {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;
     --card: 0 0% 100%;
@@ -90,7 +90,7 @@
     --brand: 217.2 91.2% 59.8%;
     --highlight: 47.9 95.8% 53.1%;
   }
-  [data-registry="plate"].dark {
+  [data-registry='plate'].dark {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
     --card: 240 10% 3.9%;
@@ -179,4 +179,23 @@
 
 .prose li > p {
   margin: 0;
+}
+
+.fc-authkit-signin-button {
+  width: 100%;
+}
+
+.fc-authkit-signin-button button,
+.fc-authkit-signin-button .fc-authkit-profile-button,
+.fc-authkit-signin-button .fc-authkit-profile-button button {
+  width: 100%;
+  height: 44px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+}
+
+.fc-authkit-signin-button button svg {
+  width: 18px;
+  height: auto;
 }

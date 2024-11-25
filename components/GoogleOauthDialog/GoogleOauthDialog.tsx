@@ -60,7 +60,7 @@ export function GoogleOauthDialog() {
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent
         closable={false}
-        className="h-64 flex items-center justify-center w-[96%] sm:max-w-[425px] rounded-xl focus-visible:outline-none"
+        className="h-64 flex items-center justify-center w-[90%] sm:max-w-[425px] rounded-xl focus-visible:outline-none"
       >
         <IconGoogle className="w-6 h-6" />
         <div className="text-lg">Logging in</div>

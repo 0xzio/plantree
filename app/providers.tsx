@@ -2,9 +2,11 @@
 
 import { Suspense } from 'react'
 import { GoogleOauthDialog } from '@/components/GoogleOauthDialog/GoogleOauthDialog'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { trpc, trpcClient } from '@/lib/trpc'
 import { wagmiConfig } from '@/lib/wagmi/wagmiConfig'
 import { StoreProvider } from '@/store'
+import { AuthKitProvider } from '@farcaster/auth-kit'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
 import {
   GetSiweMessageOptions,
@@ -36,17 +38,26 @@ export function Providers({
         <GoogleOauthDialog />
       </Suspense>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
-        <WagmiProvider config={wagmiConfig}>
-          <QueryClientProvider client={queryClient}>
-            <RainbowKitSiweNextAuthProvider
-              getSiweMessageOptions={getSiweMessageOptions}
-            >
-              <RainbowKitProvider>
-                <StoreProvider>{children}</StoreProvider>
-              </RainbowKitProvider>
-            </RainbowKitSiweNextAuthProvider>
-          </QueryClientProvider>
-        </WagmiProvider>
+        <AuthKitProvider
+          config={{
+            // relay: 'https://relay.farcaster.xyz',
+            rpcUrl: 'https://mainnet.optimism.io',
+            domain: ROOT_DOMAIN,
+            siweUri: `https://${ROOT_DOMAIN}/login`,
+          }}
+        >
+          <WagmiProvider config={wagmiConfig}>
+            <QueryClientProvider client={queryClient}>
+              <RainbowKitSiweNextAuthProvider
+                getSiweMessageOptions={getSiweMessageOptions}
+              >
+                <RainbowKitProvider>
+                  <StoreProvider>{children}</StoreProvider>
+                </RainbowKitProvider>
+              </RainbowKitSiweNextAuthProvider>
+            </QueryClientProvider>
+          </WagmiProvider>
+        </AuthKitProvider>
       </trpc.Provider>
     </SessionProvider>
   )
