@@ -25,7 +25,7 @@ export function HomePage({ posts = [], site, PostActions }: Props) {
 
   return (
     <div className="mx-auto sm:max-w-xl flex flex-col gap-10 -mt-16">
-      <div className="flex items-center gap-2 sticky top-0 bg-background/40 py-4 z-50 backdrop-blur-sm">
+      <div className="flex items-center gap-2 sticky top-0 bg-background/40 py-4 z-40 backdrop-blur-sm">
         {site.logo && (
           <img src={site.logo} alt="" className="w-10 h-10 rounded-full" />
         )}

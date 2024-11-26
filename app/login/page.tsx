@@ -2,8 +2,6 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import { SignInButton } from '@/components/facaster-auth'
-import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog'
-import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog'
 import { GoogleOauthButton } from '@/components/GoogleOauthButton'
 import { TextLogo } from '@/components/TextLogo'
 import { Button } from '@/components/ui/button'
@@ -31,30 +29,24 @@ export const dynamic = 'force-static'
 // export const revalidate = 3600 * 24
 
 export default function Page() {
-  const { isOpen, setIsOpen } = useFarcasterOauthDialog()
-
   const getNonce = useCallback(async () => {
     const nonce = await getCsrfToken()
     if (!nonce) throw new Error('Unable to generate nonce')
     return nonce
   }, [])
 
-  const handleSuccess = useCallback(
-    async (res: StatusAPIResponse) => {
-      // alert('Signed in successfully')
-      await signIn('penx-farcaster', {
-        message: res.message,
-        signature: res.signature,
-        name: res.username,
-        pfp: res.pfpUrl,
-        redirect: false,
-      })
+  const handleSuccess = useCallback(async (res: StatusAPIResponse) => {
+    // alert('Signed in successfully')
+    await signIn('penx-farcaster', {
+      message: res.message,
+      signature: res.signature,
+      name: res.username,
+      pfp: res.pfpUrl,
+      redirect: false,
+    })
 
-      toast.success('Signed in successfully')
-      setIsOpen(false)
-    },
-    [setIsOpen],
-  )
+    toast.success('Signed in successfully')
+  }, [])
 
   return (
     <div className="h-screen flex flex-col items-center justify-between relative">
@@ -71,34 +63,18 @@ export default function Page() {
             <CardDescription>Login with Google or Web3 Wallets</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
-            {/* <FarcasterOauthDialog /> */}
             <SignInButton
-              onStatusResponse={(res) => {}}
+              // onStatusResponse={(res) => {
+              //   alert(JSON.stringify(res))
+              // }}
               nonce={getNonce}
               onSuccess={handleSuccess}
               onError={(error) => {
                 // alert('Failed to sign in' + JSON.stringify(error))
-                setIsOpen(false)
                 toast.error('Failed to sign in')
               }}
               onSignOut={() => signOut()}
             />
-
-            {/* <FSignInButton
-              onStatusResponse={(res) => {
-                // if (res.state === 'pending' && !isOpen) {
-                //   setIsOpen(true)
-                // }
-              }}
-              nonce={getNonce}
-              onSuccess={handleSuccess}
-              onError={(error) => {
-                alert('Failed to sign in' + JSON.stringify(error))
-                setIsOpen(false)
-                toast.error('Failed to sign in')
-              }}
-              onSignOut={() => signOut()}
-            /> */}
 
             <div className="space-y-1">
               {/* <div className="text-foreground/40">Wallet login</div> */}

@@ -91,9 +91,12 @@ enum UserRole {
 model User {
   id            String        @id @default(uuid()) @db.Uuid
   address       String?       @unique @db.VarChar(50)
-  googleId      String?       @unique @db.VarChar(255)
   fid           String?       @unique @db.VarChar(255)
-  fName         String?       @db.VarChar(255)
+  googleId      String?       @unique @db.VarChar(255)
+  githubId      String?       @unique @db.VarChar(255)
+  github        Json? // github oauth info
+  google        Json? // google oauth info
+  farcaster     Json? // google oauth info
   name          String?       @db.VarChar(255)
   displayName   String?       @db.VarChar(255)
   ensName       String?       @db.VarChar(255)
@@ -105,8 +108,6 @@ model User {
   bio           String        @default("") @db.VarChar(5000)
   about         String        @default("")
   subscriptions Json?
-  github        Json? // github oauth info
-  google        Json? // google oauth info
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   posts         Post[]

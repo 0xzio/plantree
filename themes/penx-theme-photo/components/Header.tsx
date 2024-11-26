@@ -31,7 +31,7 @@ export const Header = ({
   return (
     <header
       className={cn(
-        'flex items-center w-full justify-between py-4 h-16 z-50 sticky top-0',
+        'flex items-center w-full justify-between py-4 h-16 z-40 sticky top-0',
       )}
     >
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">

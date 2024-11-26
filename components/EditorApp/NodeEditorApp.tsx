@@ -5,6 +5,7 @@ import { NodeProvider, useNodes } from '@/lib/node-hooks'
 import { nodeToSlate } from '@/lib/serializer'
 import { NodeService } from '@/lib/service'
 import { useDebouncedCallback } from 'use-debounce'
+import { PublishPopover } from '../PublishPopover'
 import { NodeEditor } from './NodeEditor'
 import { PCNav } from './NodeNav/PCNav'
 
@@ -35,6 +36,8 @@ export function NodeEditorApp({ node }: Props) {
     <NodeProvider value={{ node }}>
       <div className="relative h-screen flex-1 px-2 md:px-0 py-2 md:py-0">
         <PCNav></PCNav>
+        <PublishPopover className="flex md:hidden fixed top-1 right-2 h-9 w-20 z-50" />
+
         <div
           className="mx-auto md:max-w-[750px] pt-14 pl-0 sm:pl-10 pr-0 sm:pr-1 break-words pb-20"
           style={{

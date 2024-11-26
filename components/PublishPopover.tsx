@@ -1,7 +1,7 @@
 'use client'
 
 import { Dispatch, SetStateAction, useState } from 'react'
-import { Post, updatePostPublishStatus, usePost } from '@/hooks/usePost'
+import { usePublishPost } from '@/hooks/usePublishPost'
 import { IObjectNode, Node } from '@/lib/model'
 import { useNodes } from '@/lib/node-hooks'
 import { cn } from '@/lib/utils'
@@ -9,7 +9,6 @@ import { store } from '@/store'
 import { GateType } from '@prisma/client'
 import { PopoverClose } from '@radix-ui/react-popover'
 import { useParams, usePathname } from 'next/navigation'
-import { usePublishPost } from '@/hooks/usePublishPost'
 import LoadingDots from './icons/loading-dots'
 import { useSiteContext } from './SiteContext'
 import { Button } from './ui/button'
@@ -17,9 +16,11 @@ import { Label } from './ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { Switch } from './ui/switch'
 
-interface Props {}
+interface Props {
+  className?: string
+}
 
-export function PublishPopover({}: Props) {
+export function PublishPopover({ className }: Props) {
   const [isOpen, setOpen] = useState(false)
   return (
     <Popover
@@ -29,7 +30,7 @@ export function PublishPopover({}: Props) {
       }}
     >
       <PopoverTrigger asChild>
-        <Button className="w-24" onClick={() => setOpen(true)}>
+        <Button className={cn('w-24', className)} onClick={() => setOpen(true)}>
           Publish
         </Button>
       </PopoverTrigger>

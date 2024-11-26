@@ -3,6 +3,7 @@ import LoadingDots from '@/components/icons/loading-dots'
 import { isMobile } from '@/lib/utils'
 import { AuthClientError, StatusAPIResponse } from '@farcaster/auth-client'
 import { useSignIn, UseSignInArgs } from '@farcaster/auth-kit'
+import { toast } from 'sonner'
 import { ActionButton } from '../ActionButton/index'
 import { ProfileButton } from '../ProfileButton/index'
 import { QRCodeDialog } from '../QRCodeDialog/index'
@@ -25,8 +26,8 @@ export function SignInButton({
 
   const onSuccessCallback = useCallback(
     (res: StatusAPIResponse) => {
-      onSuccess?.(res)
       setLoading(false)
+      onSuccess?.(res)
     },
     [onSuccess],
   )
@@ -40,8 +41,8 @@ export function SignInButton({
 
   const onErrorCallback = useCallback(
     (error?: AuthClientError) => {
-      onError?.(error)
       setLoading(false)
+      onError?.(error)
     },
     [onError],
   )
@@ -81,12 +82,19 @@ export function SignInButton({
 
   const onClick = useCallback(() => {
     if (isError) {
+      setLoading(false)
       reconnect()
     }
     setShowDialog(true)
     signIn()
     if (url && isMobile()) {
       setLoading(true)
+      setTimeout(() => {
+        if (loading) {
+          toast.error('Error connecting to farcaster. Please try again.')
+        }
+        setLoading(false)
+      }, 1000 * 30)
       window.open(url, '_blank')
     }
   }, [isError, reconnect, signIn, url])

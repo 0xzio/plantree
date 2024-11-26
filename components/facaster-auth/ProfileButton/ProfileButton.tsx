@@ -1,12 +1,9 @@
 import { useRef, useState } from 'react'
+import { Button } from '@/components/ui/button'
 import useDetectClickOutside from '@/hooks/useDetectClickOutside'
+import { cn } from '@/lib/utils'
 import { SignOutButton } from '../SignOutButton/index'
-import { secondaryButton } from '../styles.css'
-import {
-  profileButtonContainer,
-  profileImage,
-  profileName,
-} from './ProfileButton.css'
+import { profileImage, profileName } from './ProfileButton.css'
 
 interface UserDataProps {
   fid?: number
@@ -33,20 +30,12 @@ export function ProfileButton({
   const showSignOut = showSignOutButton && !hideSignOut
 
   return (
-    <div
-      className={`fc-authkit-profile-button ${profileButtonContainer}`}
-      ref={ref}
-    >
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'flex-end',
-        }}
-      >
-        <button
+    <div className="fc-authkit-profile-button w-full" ref={ref}>
+      <div className="w-full flex flex-col justify-end">
+        <Button
+          variant="farcaster"
           type="button"
-          className={secondaryButton}
+          className="w-full mb-2"
           onClick={() => setShowSignOutButton(!showSignOutButton)}
         >
           <img className={profileImage} src={pfpUrl} alt="avatar" />
@@ -70,7 +59,7 @@ export function ProfileButton({
               </g>
             </svg>
           )}
-        </button>
+        </Button>
         {showSignOut && <SignOutButton signOut={signOut} />}
       </div>
     </div>

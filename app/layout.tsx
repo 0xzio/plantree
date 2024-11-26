@@ -1,6 +1,7 @@
-import '@/styles/globals.css'
 import '@farcaster/auth-kit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
+import 'react-datepicker/dist/react-datepicker.css'
+import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
@@ -12,7 +13,6 @@ import {
   // Yeseva_One,
 } from 'next/font/google'
 import { headers } from 'next/headers'
-import Link from 'next/link'
 import NextTopLoader from 'nextjs-toploader'
 import { Providers } from './providers'
 

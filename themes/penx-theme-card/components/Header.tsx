@@ -38,7 +38,7 @@ export const Header = ({
   Airdrop,
 }: Props) => {
   return (
-    <header className={cn('flex items-center w-full py-4 h-16 z-50')}>
+    <header className={cn('flex items-center w-full py-4 h-16 z-40')}>
       <div className="flex-1 no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
         {headerNavLinks.map((link) => {
           if (link.href === '/membership' && !site.spaceId) {

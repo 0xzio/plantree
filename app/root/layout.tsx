@@ -4,6 +4,7 @@ import { SocialNav } from '@/components/SocialNav'
 import { TextLogo } from '@/components/TextLogo'
 import { Philosopher } from 'next/font/google'
 import Link from 'next/link'
+import { Footer } from './Footer'
 import { Nav } from './Nav'
 
 const logoFont = Philosopher({
@@ -14,7 +15,7 @@ const logoFont = Philosopher({
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col gap-4 container px-2">
+    <div className="flex flex-col gap-4 container px-2 min-h-screen">
       <div className="z-10  py-3 relative flex justify-between">
         <div className="flex items-center">
           <Link href="/" className="cursor-pointer flex items-center">
@@ -25,8 +26,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Nav />
 
         <div className="flex items-center gap-2">
-          <SocialNav className="text-foreground/80" />
-          <ModeToggle />
           <Profile />
         </div>
       </div>
@@ -43,6 +42,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           }}
         ></div>
       </div>
+      <Footer />
     </div>
   )
 }

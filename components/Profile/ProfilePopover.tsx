@@ -18,11 +18,13 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import { useSignIn } from '@farcaster/auth-kit'
 import { AuthType } from '@prisma/client'
 import {
   DatabaseBackup,
   FileText,
   Gauge,
+  Home,
   KeySquare,
   LogOut,
   Settings,
@@ -31,7 +33,7 @@ import {
   Wallet,
 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
-import { useRouter } from 'next/navigation'
+import { usePathname, useRouter } from 'next/navigation'
 import { useAccount } from 'wagmi'
 import { useSiteContext } from '../SiteContext'
 import { Skeleton } from '../ui/skeleton'
@@ -53,6 +55,8 @@ export const ProfilePopover = memo(function ProfilePopover({
 }: Props) {
   const { data } = useSession()
   const { push } = useRouter()
+  const sigInState = useSignIn({})
+  const pathname = usePathname()
 
   if (!data) return <div></div>
 
@@ -89,6 +93,18 @@ export const ProfilePopover = memo(function ProfilePopover({
             <Wallet className="mr-2 h-4 w-4" />
             <span>Wallet</span>
           </DropdownMenuItem> */}
+
+          {pathname !== '/' && (
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={() => {
+                push('/')
+              }}
+            >
+              <Home className="mr-2 h-4 w-4" />
+              <span>Home</span>
+            </DropdownMenuItem>
+          )}
 
           <DropdownMenuItem
             className="cursor-pointer"
@@ -136,6 +152,7 @@ export const ProfilePopover = memo(function ProfilePopover({
           onClick={async () => {
             try {
               await signOut()
+              sigInState?.signOut()
               push('/')
             } catch (error) {}
           }}

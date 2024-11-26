@@ -20,7 +20,7 @@ export async function initUserByAddress(address: string) {
 
       const site = await tx.site.create({
         data: {
-          name: 'My Site',
+          name: address.slice(0, 6),
           description: 'My personal site',
           userId: newUser.id,
           subdomain: address.toLowerCase(),
@@ -85,19 +85,23 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           email: info.email,
           googleId: info.openid,
           image: info.picture,
+          google: {
+            name: info.name,
+            image: info.picture,
+          },
         },
       })
 
       const site = await tx.site.create({
         data: {
-          name: 'My Site',
+          name: info.name,
           description: 'My personal site',
           userId: newUser.id,
           subdomain: newUser.id.toLowerCase(),
           socials: {},
           config: {},
           about: JSON.stringify(editorDefaultValue),
-          logo: 'https://penx.io/logo.png',
+          logo: info.picture,
         },
       })
 
@@ -150,22 +154,26 @@ export async function initUserByFarcasterInfo(info: FarcasterLoginInfo) {
 
       let newUser = await prisma.user.create({
         data: {
-          fName: info.name,
+          name: info.name,
           fid: info.fid,
           image: info.image,
+          farcaster: {
+            name: info.name,
+            image: info.image,
+          },
         },
       })
 
       const site = await tx.site.create({
         data: {
-          name: 'My Site',
+          name: info.name,
           description: 'My personal site',
           userId: newUser.id,
-          subdomain: newUser.id.toLowerCase(),
+          subdomain: newUser.fid!.toLowerCase(),
           socials: {},
           config: {},
           about: JSON.stringify(editorDefaultValue),
-          logo: 'https://penx.io/logo.png',
+          logo: info.image,
         },
       })
 

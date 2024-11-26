@@ -28,6 +28,7 @@ export function CollectorsDialog({ post }: Props) {
   )
 
   if (typeof post.creationId !== 'number') return null
+
   return (
     <>
       <MintedAmount post={post} setIsOpen={setIsOpen} />

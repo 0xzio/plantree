@@ -33,7 +33,7 @@ export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
   return (
     <header
       className={cn(
-        'flex items-start w-full justify-between py-4 z-50 bg-background/40 backdrop-blur-sm',
+        'flex items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm',
       )}
     >
       <div className="lg:flex items-center space-x-4 leading-5 sm:space-x-6 hidden w-60">

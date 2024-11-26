@@ -63,7 +63,7 @@ export const TitleElement = withRef(
         {!isDaily && (
           <div
             contentEditable={false}
-            className="flex items-center gap-2 text-xs font-normal pt-2 text-foreground/40 z-50"
+            className="flex items-center gap-2 text-xs font-normal pt-2 text-foreground/40 z-30"
           >
             <div
               contentEditable={false}

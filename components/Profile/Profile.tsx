@@ -1,10 +1,11 @@
 'use client'
 
 import { useSession } from 'next-auth/react'
+import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import LoginButton from '../LoginButton'
-import { useSiteContext } from '../SiteContext'
 import { Avatar, AvatarFallback } from '../ui/avatar'
+import { Button } from '../ui/button'
 import { ProfileDialog } from './ProfileDialog/ProfileDialog'
 import { ProfilePopover } from './ProfilePopover'
 
@@ -27,7 +28,14 @@ export function Profile({}: Props) {
     <>
       <ProfileDialog />
       {!authenticated && <LoginButton />}
-      {authenticated && <ProfilePopover />}
+      {authenticated && (
+        <>
+          <Link href="/~/objects/today">
+            <Button size="sm">Dashboard</Button>
+          </Link>
+          <ProfilePopover />
+        </>
+      )}
     </>
   )
 }

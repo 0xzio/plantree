@@ -31,7 +31,7 @@ export const Header = ({
 }: Props) => {
   return (
     <header
-      className={cn('flex items-center w-full justify-between py-4 h-16 z-50')}
+      className={cn('flex items-center w-full justify-between py-4 h-16 z-40')}
     >
       <div className="flex items-center space-x-4 leading-5 sm:space-x-6">
         <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">

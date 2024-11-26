@@ -43,13 +43,13 @@ export default async function middleware(req: NextRequest) {
     hostname === 'localhost:4000' ||
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
 
-  console.log(
-    '======isRoot:',
-    isRoot,
-    'hostname:',
-    hostname,
-    process.env.NEXT_PUBLIC_ROOT_DOMAIN,
-  )
+  // console.log(
+  //   '======isRoot:',
+  //   isRoot,
+  //   'hostname:',
+  //   hostname,
+  //   process.env.NEXT_PUBLIC_ROOT_DOMAIN,
+  // )
 
   if (path === '/login' && isRoot) {
     const token = await getToken({ req })
@@ -66,15 +66,6 @@ export default async function middleware(req: NextRequest) {
       return NextResponse.redirect(new URL('/', req.url))
     } else {
       return NextResponse.next()
-    }
-  }
-
-  if (path === '/' && isRoot) {
-    const token = await getToken({ req })
-    if (token) {
-      return NextResponse.redirect(new URL('~/objects/today', req.url))
-    } else {
-      return NextResponse.rewrite(new URL(`/root${path}`, req.url))
     }
   }
 

@@ -16,7 +16,7 @@ const poppins = Poppins({
 export function Slogan() {
   return (
     <div className="space-y-6 text-center">
-      <div className="text-7xl leading-tight font-bold space-y-2 text-foreground">
+      <div className="text-6xl md:text-7xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
         Build <span className="italic text-foreground">modern</span> blog
       </div>
 
