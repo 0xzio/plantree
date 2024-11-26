@@ -1,19 +1,31 @@
-'use client';
+'use client'
 
-import { useCallback, useEffect, useState } from 'react';
-import { SignInButton } from '@/components/facaster-auth';
-import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog';
-import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog';
-import { GoogleOauthButton } from '@/components/GoogleOauthButton';
-import { TextLogo } from '@/components/TextLogo';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { WalletConnectButton } from '@/components/WalletConnectButton';
-import { AuthKitProvider, SignInButton as FSignInButton, QRCode, StatusAPIResponse, useProfile, useSignIn } from '@farcaster/auth-kit';
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react';
-import Link from 'next/link';
-import { toast } from 'sonner';
-
+import { useCallback, useEffect, useState } from 'react'
+import { SignInButton } from '@/components/facaster-auth'
+import { FarcasterOauthDialog } from '@/components/FarcasterOauthDialog/FarcasterOauthDialog'
+import { useFarcasterOauthDialog } from '@/components/FarcasterOauthDialog/useFarcasterOauthDialog'
+import { GoogleOauthButton } from '@/components/GoogleOauthButton'
+import { TextLogo } from '@/components/TextLogo'
+import { Button } from '@/components/ui/button'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { WalletConnectButton } from '@/components/WalletConnectButton'
+import {
+  AuthKitProvider,
+  SignInButton as FSignInButton,
+  QRCode,
+  StatusAPIResponse,
+  useProfile,
+  useSignIn,
+} from '@farcaster/auth-kit'
+import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
+import Link from 'next/link'
+import { toast } from 'sonner'
 
 export const dynamic = 'force-static'
 // export const revalidate = 3600 * 24
@@ -29,7 +41,7 @@ export default function Page() {
 
   const handleSuccess = useCallback(
     async (res: StatusAPIResponse) => {
-      alert('Signed in successfully')
+      // alert('Signed in successfully')
       await signIn('penx-farcaster', {
         message: res.message,
         signature: res.signature,
@@ -65,14 +77,14 @@ export default function Page() {
               nonce={getNonce}
               onSuccess={handleSuccess}
               onError={(error) => {
-                alert('Failed to sign in' + JSON.stringify(error))
+                // alert('Failed to sign in' + JSON.stringify(error))
                 setIsOpen(false)
                 toast.error('Failed to sign in')
               }}
               onSignOut={() => signOut()}
             />
 
-            <FSignInButton
+            {/* <FSignInButton
               onStatusResponse={(res) => {
                 // if (res.state === 'pending' && !isOpen) {
                 //   setIsOpen(true)
@@ -81,14 +93,12 @@ export default function Page() {
               nonce={getNonce}
               onSuccess={handleSuccess}
               onError={(error) => {
-                // alert('Failed to sign in' + JSON.stringify(error))
+                alert('Failed to sign in' + JSON.stringify(error))
                 setIsOpen(false)
                 toast.error('Failed to sign in')
               }}
               onSignOut={() => signOut()}
-            />
-
-            {/* <Profile /> */}
+            /> */}
 
             <div className="space-y-1">
               {/* <div className="text-foreground/40">Wallet login</div> */}
@@ -110,29 +120,5 @@ export default function Page() {
         </Card>
       </div>
     </div>
-  )
-}
-
-function Profile() {
-  const { data: session } = useSession()
-
-  return session ? (
-    <div style={{ fontFamily: 'sans-serif' }}>
-      <p>Signed in as {session.user?.name}</p>
-      <p>
-        <button
-          type="button"
-          style={{ padding: '6px 12px', cursor: 'pointer' }}
-          onClick={() => signOut()}
-        >
-          Click here to sign out
-        </button>
-      </p>
-    </div>
-  ) : (
-    <p>
-      Click the &quot;Sign in with Farcaster&quote; button above, then scan the
-      QR code to sign in.
-    </p>
   )
 }

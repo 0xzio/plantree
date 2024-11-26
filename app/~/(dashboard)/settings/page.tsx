@@ -16,9 +16,5 @@ export default function Page() {
       </div>
     )
   }
-  return (
-    <div>
-      <GeneralSettingForm site={site!} />
-    </div>
-  )
+  return <GeneralSettingForm site={site!} />
 }

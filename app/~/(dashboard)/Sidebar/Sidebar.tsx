@@ -1,6 +1,7 @@
 import { ProfilePopover } from '@/components/Profile/ProfilePopover'
 import { Badge } from '@/components/ui/badge'
 import { useSite } from '@/hooks/useSite'
+import { cn } from '@/lib/utils'
 import { Calendar, Feather, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
@@ -8,14 +9,23 @@ import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { NodesBox } from './NodesBox'
 import { SidebarItem } from './SidebarItem'
 import { SyncBar } from './SyncBar/SyncBar'
+import { useSidebarSheet } from './useSidebarSheet'
 
-export const Sidebar = () => {
+interface SidebarProps {
+  bordered?: boolean
+}
+export const Sidebar = ({ bordered = true }: SidebarProps) => {
   const pathname = usePathname()
   const { site } = useSite()
   const { spaceId } = site
 
   return (
-    <div className="flex-col flex-1 flex gap-3 h-screen border-r border-r-sidebar">
+    <div
+      className={cn(
+        'flex-col flex-1 flex gap-3 h-screen border-r-sidebar',
+        bordered && 'border-r',
+      )}
+    >
       <div className="px-4 flex items-center h-16">
         <ProfilePopover
           showAddress
