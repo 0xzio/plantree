@@ -3,6 +3,7 @@
 import LoadingDots from '@/components/icons/loading-dots'
 import { Separator } from '@/components/ui/separator'
 import { useSite } from '@/hooks/useSite'
+import { getSiteCustomDomain } from '@/lib/getSiteDomain'
 import { CustomDomainForm } from './CustomDomainForm'
 import { DomainConfiguration } from './DomainConfiguration'
 import { SubdomainDomainForm } from './SubdomainDomainForm'
@@ -19,12 +20,14 @@ export default function Page() {
       </div>
     )
   }
+
+  const customDomain = getSiteCustomDomain(site)
   return (
     <div className="space-y-8">
       <SubdomainDomainForm site={site!} />
       <Separator></Separator>
       <CustomDomainForm site={site!} />
-      {site.customDomain && <DomainConfiguration domain={site.customDomain} />}
+      {customDomain && <DomainConfiguration domain={customDomain} />}
     </div>
   )
 }

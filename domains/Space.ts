@@ -60,10 +60,6 @@ export class Space {
     return BigInt(this.raw.stakingRevenuePercent)
   }
 
-  get subdomain() {
-    return this.raw.subdomain || this.symbolName.toLowerCase()
-  }
-
   get siteUrl() {
     return ''
   }

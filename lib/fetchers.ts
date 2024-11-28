@@ -16,16 +16,17 @@ import { getUrl } from './utils'
 
 export async function getSite(params: any) {
   const domain = decodeURIComponent(params.domain)
-
-  const subdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
-    ? domain.replace(`.${ROOT_DOMAIN}`, '')
-    : null
-  // console.log('======domain:', domain, 'subdomain:', subdomain)
+  const isSubdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
 
   return await unstable_cache(
     async () => {
+      const { siteId } = await prisma.domain.findUniqueOrThrow({
+        where: { domain: domain, isSubdomain },
+        select: { siteId: true, isSubdomain: true },
+      })
+
       const site = await prisma.site.findUniqueOrThrow({
-        where: subdomain ? { subdomain } : { customDomain: domain },
+        where: { id: siteId },
         include: { user: true },
       })
 

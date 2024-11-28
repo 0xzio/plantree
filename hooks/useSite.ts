@@ -3,11 +3,10 @@ import { useSession } from 'next-auth/react'
 
 export function useSite() {
   const { data: session } = useSession()
-
   const { data: site, ...rest } = trpc.site.bySubdomain.useQuery(
-    session?.subdomain!,
+    session?.domain?.domain!,
     {
-      enabled: !!session?.subdomain,
+      enabled: !!session?.domain,
     },
   )
   return { site: site!, ...rest }

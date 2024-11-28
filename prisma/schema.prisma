@@ -75,6 +75,7 @@ model Site {
   channels        Channel[]
   messages        Message[]
   posts           Post[]
+  domains         Domain[]
 
   @@index([userId])
   @@map("site")
@@ -352,12 +353,22 @@ model Cid {
   @@map("cid")
 }
 
+enum SubdomainType {
+  Custom
+  EnsName
+  FarcasterName
+  Address
+  UserId
+}
+
 model Domain {
-  id           String @id @default(uuid()) @db.Uuid
-  spaceAddress String @unique
-  domain       String @unique
-  cid          String @default("")
-  ipns         String @default("")
+  id            String        @id @default(uuid()) @db.Uuid
+  domain        String        @unique
+  isSubdomain   Boolean       @default(true)
+  subdomainType SubdomainType @default(Custom)
+  disabled      Boolean       @default(false)
+  site          Site          @relation(fields: [siteId], references: [id])
+  siteId        String        @db.Uuid
 
   @@map("domain")
 }

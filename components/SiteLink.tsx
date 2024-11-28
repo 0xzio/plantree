@@ -4,23 +4,21 @@ import { useDomainStatus } from '@/app/~/(dashboard)/settings/domain/use-domain-
 import { Badge } from '@/components/ui/badge'
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
+import { getSiteDomain } from '@/lib/getSiteDomain'
 import { ExternalLink } from 'lucide-react'
 import LoadingCircle from './icons/loading-circle'
 
 export function SiteLink() {
   const { site } = useSite()
-  const link = `${site?.subdomain}.${ROOT_DOMAIN}`
 
-  if (!site.customDomain) {
+  const { isSubdomain, domain } = getSiteDomain(site)
+  const link = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
+
+  if (isSubdomain) {
     return <SiteLinkContent link={link} />
   }
 
-  return (
-    <CustomDomainSiteLink
-      customDomain={site.customDomain}
-      subdomain={site.subdomain}
-    />
-  )
+  return <CustomDomainSiteLink customDomain={domain} subdomain={domain} />
 }
 
 interface SiteLinkContentProps {

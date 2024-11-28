@@ -3,6 +3,7 @@
 import { Skeleton } from '@/components/ui/skeleton'
 import { useSites } from '@/hooks/useSites'
 import { ROOT_DOMAIN } from '@/lib/constants'
+import { getSiteDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { cn, getUrl } from '@/lib/utils'
 import { Site } from '@prisma/client'
 import Image from 'next/image'
@@ -37,10 +38,12 @@ export function SiteList() {
   )
 }
 
-function SiteItem({ site }: { site: Site }) {
-  const link = site.customDomain
-    ? `${location.protocol}//${site.customDomain}`
-    : `${location.protocol}//${site.subdomain}.${ROOT_DOMAIN}`
+function SiteItem({ site }: { site: SiteWithDomains }) {
+  const { domain, isSubdomain } = getSiteDomain(site)
+  const link = isSubdomain
+    ? `${location.protocol}//${domain}.${ROOT_DOMAIN}`
+    : `${location.protocol}//${domain}`
+
   return (
     <Link
       key={site.id}
