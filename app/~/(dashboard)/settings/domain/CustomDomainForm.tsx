@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { getSiteCustomDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Site } from '@prisma/client'
@@ -26,17 +27,18 @@ const FormSchema = z.object({
 })
 
 interface Props {
-  site: Site
+  site: SiteWithDomains
 }
 
 export function CustomDomainForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.customDomain.useMutation()
 
+  const customDomain = getSiteCustomDomain(site)
+
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
-      // domain: site.customDomain || '',
-      domain: '',
+      domain: customDomain,
     },
     resolver: zodResolver(FormSchema),
   })
@@ -44,7 +46,7 @@ export function CustomDomainForm({ site }: Props) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await mutateAsync({
-        id: site.id,
+        siteId: site.id,
         domain: data.domain,
       })
       refetch()

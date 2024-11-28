@@ -15,6 +15,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { getSiteSubdomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Site } from '@prisma/client'
@@ -26,17 +27,17 @@ const FormSchema = z.object({
 })
 
 interface Props {
-  site: Site
+  site: SiteWithDomains
 }
 
 export function SubdomainDomainForm({ site }: Props) {
   const { refetch } = useSite()
-  const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
+  const { isPending, mutateAsync } = trpc.site.customSubdomain.useMutation()
 
+  const subdomain = getSiteSubdomain(site)
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
-      // domain: site.subdomain || '',
-      domain: '',
+      domain: subdomain,
     },
     resolver: zodResolver(FormSchema),
   })
@@ -44,8 +45,8 @@ export function SubdomainDomainForm({ site }: Props) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await mutateAsync({
-        id: site.id,
-        subdomain: data.domain,
+        siteId: site.id,
+        domain: data.domain,
       })
       refetch()
       toast.success('Updated successfully!')

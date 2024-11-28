@@ -31,6 +31,7 @@ export async function initUserByAddress(address: string) {
           config: {},
           about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
+          themeName: 'garden',
           domains: {
             create: [
               {
@@ -115,6 +116,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           config: {},
           about: JSON.stringify(editorDefaultValue),
           logo: info.picture,
+          themeName: 'garden',
           domains: {
             create: [
               {
@@ -197,6 +199,7 @@ export async function initUserByFarcasterInfo(info: FarcasterLoginInfo) {
           config: {},
           about: JSON.stringify(editorDefaultValue),
           logo: info.image,
+          themeName: 'garden',
           domains: {
             create: [
               {

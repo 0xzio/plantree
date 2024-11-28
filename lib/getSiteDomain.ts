@@ -25,6 +25,20 @@ export function getSiteDomain(site: SiteWithDomains) {
   }
 }
 
+export function getSiteSubdomain(site: SiteWithDomains) {
+  const domains = site.domains
+  const item = domains.find(
+    (d) => d.isSubdomain && d.subdomainType === SubdomainType.Custom,
+  )
+  return item?.domain || ''
+}
+
+export function getSiteCustomDomain(site: SiteWithDomains) {
+  const domains = site.domains
+  const item = domains.find((d) => !d.isSubdomain)
+  return item?.domain || ''
+}
+
 function sortDomains(domains: Domain[]): Domain[] {
   const sortKeys = [
     SubdomainType.Custom,

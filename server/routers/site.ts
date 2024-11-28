@@ -1,6 +1,7 @@
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import { AuthType, StorageProvider } from '@prisma/client'
+import { AuthType, StorageProvider, SubdomainType } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
@@ -39,6 +40,7 @@ export const siteRouter = router({
       })
       const site = await prisma.site.findUnique({
         where: { id: siteId },
+        include: { domains: true },
       })
 
       if (site) return site
@@ -52,6 +54,7 @@ export const siteRouter = router({
 
       return prisma.site.findUniqueOrThrow({
         where: { id: user.sites[0]?.id },
+        include: { domains: true },
       })
     }),
 
@@ -61,7 +64,6 @@ export const siteRouter = router({
         id: z.string(),
         logo: z.string().optional(),
         name: z.string().optional(),
-        subdomain: z.string().optional(),
         description: z.string().optional(),
         about: z.string().optional(),
         themeName: z.string().optional(),
@@ -109,15 +111,58 @@ export const siteRouter = router({
       return newSite
     }),
 
-  customDomain: protectedProcedure
+  customSubdomain: protectedProcedure
     .input(
       z.object({
-        id: z.string(),
+        siteId: z.string(),
         domain: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { id } = input
+      const { siteId } = input
+
+      const domain = await prisma.domain.findUnique({
+        where: {
+          subdomainType: SubdomainType.Custom,
+          domain: input.domain,
+          isSubdomain: true,
+        },
+      })
+
+      if (!domain) {
+        await prisma.domain.create({
+          data: {
+            domain: input.domain,
+            isSubdomain: true,
+            siteId,
+          },
+        })
+      } else {
+        if (siteId !== domain.siteId) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Domain already exists.',
+          })
+        }
+
+        await prisma.domain.update({
+          where: { id: domain.id },
+          data: { domain: input.domain },
+        })
+      }
+
+      return true
+    }),
+
+  customDomain: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        domain: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { siteId } = input
 
       const domain = await prisma.domain.findUnique({
         where: {
@@ -131,10 +176,17 @@ export const siteRouter = router({
           data: {
             domain: input.domain,
             isSubdomain: false,
-            siteId: id,
+            siteId,
           },
         })
       } else {
+        if (siteId !== domain.siteId) {
+          throw new TRPCError({
+            code: 'BAD_REQUEST',
+            message: 'Domain already exists.',
+          })
+        }
+
         await prisma.domain.update({
           where: { id: domain.id },
           data: { domain: input.domain },
