@@ -18,8 +18,9 @@ export function getSiteDomain(site: SiteWithDomains) {
   }
 
   const sortedDomains = sortDomains(domains)
+
   return {
-    domain: sortedDomains[0].domain,
+    domain: sortedDomains[0]?.domain,
     isSubdomain: true,
   }
 }

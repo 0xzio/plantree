@@ -27,7 +27,10 @@ declare module 'next-auth' {
     userId: string
     ensName: string | null
     role: string
-    domain: string
+    domain: {
+      domain: string
+      isSubdomain: boolean
+    }
     subscriptions: SubscriptionInSession[]
   }
 }
@@ -78,20 +81,6 @@ async function handler(req: Request, res: Response) {
               return null
             }
 
-            // const nextAuthUrl =
-            //   process.env.NEXTAUTH_URL ||
-            //   (process.env.VERCEL_URL
-            //     ? `https://${process.env.VERCEL_URL}`
-            //     : null)
-            // if (!nextAuthUrl) {
-            //   return null
-            // }
-
-            // const nextAuthHost = new URL(nextAuthUrl).host
-            // if (siweMessage.domain !== nextAuthHost) {
-            //   return null
-            // }
-
             const publicClient = getBasePublicClient(NETWORK)
 
             const valid = await publicClient.verifyMessage({
@@ -109,6 +98,7 @@ async function handler(req: Request, res: Response) {
             updateSubscriptions(address as Address)
             return { ...user }
           } catch (e) {
+            // console.log('e======:', e)
             return null
           }
         },

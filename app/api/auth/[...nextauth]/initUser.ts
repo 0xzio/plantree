@@ -9,18 +9,16 @@ export async function initUserByAddress(address: string) {
         where: { address },
         include: {
           sites: {
-            select: {
-              domains: true,
-            },
             include: {
               domains: true,
             },
           },
         },
       })
+
       if (user) return user
 
-      let newUser = await prisma.user.create({
+      let newUser = await tx.user.create({
         data: { address },
       })
 
@@ -55,21 +53,16 @@ export async function initUserByAddress(address: string) {
         },
       })
 
-      // await tx.contributor.create({
-      //   data: {
-      //     userId: newUser.id,
-      //     siteId: site.id,
-      //   },
-      // })
-
-      // await tx.channel.create({
-      //   data: { name: 'general', siteId: site.id, type: 'TEXT' },
-      // })
-
-      return {
-        ...newUser,
-        sites: [site],
-      }
+      return tx.user.findUnique({
+        where: { id: newUser.id },
+        include: {
+          sites: {
+            include: {
+              domains: true,
+            },
+          },
+        },
+      })
     },
     {
       maxWait: 5000, // default: 2000
@@ -92,9 +85,6 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         where: { googleId: info.openid },
         include: {
           sites: {
-            select: {
-              domains: true,
-            },
             include: {
               domains: true,
             },
@@ -103,7 +93,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
       })
       if (user) return user
 
-      let newUser = await prisma.user.create({
+      let newUser = await tx.user.create({
         data: {
           name: info.name,
           email: info.email,
@@ -147,21 +137,16 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         },
       })
 
-      // await tx.contributor.create({
-      //   data: {
-      //     userId: newUser.id,
-      //     siteId: site.id,
-      //   },
-      // })
-
-      // await tx.channel.create({
-      //   data: { name: 'general', siteId: site.id, type: 'TEXT' },
-      // })
-
-      return {
-        ...newUser,
-        sites: [site],
-      }
+      return tx.user.findUnique({
+        where: { id: newUser.id },
+        include: {
+          sites: {
+            include: {
+              domains: true,
+            },
+          },
+        },
+      })
     },
     {
       maxWait: 5000, // default: 2000
@@ -183,9 +168,6 @@ export async function initUserByFarcasterInfo(info: FarcasterLoginInfo) {
         where: { fid: info.fid },
         include: {
           sites: {
-            select: {
-              domains: true,
-            },
             include: {
               domains: true,
             },
@@ -194,7 +176,7 @@ export async function initUserByFarcasterInfo(info: FarcasterLoginInfo) {
       })
       if (user) return user
 
-      let newUser = await prisma.user.create({
+      let newUser = await tx.user.create({
         data: {
           name: info.name,
           fid: info.fid,
@@ -237,21 +219,16 @@ export async function initUserByFarcasterInfo(info: FarcasterLoginInfo) {
         },
       })
 
-      await tx.contributor.create({
-        data: {
-          userId: newUser.id,
-          siteId: site.id,
+      return tx.user.findUnique({
+        where: { id: newUser.id },
+        include: {
+          sites: {
+            include: {
+              domains: true,
+            },
+          },
         },
       })
-
-      await tx.channel.create({
-        data: { name: 'general', siteId: site.id, type: 'TEXT' },
-      })
-
-      return {
-        ...newUser,
-        sites: [site],
-      }
     },
     {
       maxWait: 5000, // default: 2000

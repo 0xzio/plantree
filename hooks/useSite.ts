@@ -5,7 +5,7 @@ export function useSite() {
   const { data: session } = useSession()
 
   const { data: site, ...rest } = trpc.site.bySubdomain.useQuery(
-    session?.domain!,
+    session?.domain?.domain!,
     {
       enabled: !!session?.domain,
     },
