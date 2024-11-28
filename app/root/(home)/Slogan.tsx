@@ -17,7 +17,8 @@ export function Slogan() {
   return (
     <div className="space-y-6 text-center">
       <div className="text-6xl md:text-7xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
-        Build <span className="italic text-foreground">modern</span> blog
+        Build digital garden
+        <br /> for creators
       </div>
 
       <div className="text-xl text-foreground/60">
