@@ -7,7 +7,19 @@ import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const siteRouter = router({
   list: publicProcedure.query(async () => {
-    return prisma.site.findMany()
+    return prisma.site.findMany({
+      include: {
+        domains: true,
+      },
+    })
+  }),
+
+  mySites: publicProcedure.query(async () => {
+    return prisma.site.findMany({
+      include: {
+        channels: true,
+      },
+    })
   }),
 
   getSite: protectedProcedure
@@ -21,8 +33,12 @@ export const siteRouter = router({
   bySubdomain: protectedProcedure
     .input(z.string())
     .query(async ({ input, ctx }) => {
+      const { siteId } = await prisma.domain.findUniqueOrThrow({
+        where: { domain: input },
+        select: { siteId: true },
+      })
       const site = await prisma.site.findUnique({
-        where: { subdomain: input },
+        where: { id: siteId },
       })
 
       if (site) return site
@@ -34,9 +50,8 @@ export const siteRouter = router({
         },
       })
 
-      const siteId = user.sites[0]?.id
       return prisma.site.findUniqueOrThrow({
-        where: { id: siteId },
+        where: { id: user.sites[0]?.id },
       })
     }),
 
@@ -103,15 +118,30 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id } = input
-      const domain = input.domain
-      const newSite = await prisma.site.update({
-        where: { id },
-        data: {
-          customDomain: domain,
+
+      const domain = await prisma.domain.findUnique({
+        where: {
+          domain: input.domain,
+          isSubdomain: false,
         },
       })
 
-      const res = await addDomainToVercel(domain)
-      return newSite
+      if (!domain) {
+        await prisma.domain.create({
+          data: {
+            domain: input.domain,
+            isSubdomain: false,
+            siteId: id,
+          },
+        })
+      } else {
+        await prisma.domain.update({
+          where: { id: domain.id },
+          data: { domain: input.domain },
+        })
+      }
+
+      const res = await addDomainToVercel(input.domain)
+      return res
     }),
 })

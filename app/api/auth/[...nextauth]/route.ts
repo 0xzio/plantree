@@ -1,15 +1,14 @@
 import { spaceAbi } from '@/lib/abi'
 import { NETWORK, NetworkNames, PROJECT_ID, ROOT_DOMAIN } from '@/lib/constants'
 import { getBasePublicClient } from '@/lib/getBasePublicClient'
+import { getSiteDomain, UserWithDomains } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { SubscriptionInSession } from '@/lib/types'
 import { createAppClient, viemConnector } from '@farcaster/auth-client'
-import { Site, User, UserRole } from '@prisma/client'
-import { AuthTokenClaims, PrivyClient } from '@privy-io/server-auth'
+import { PrivyClient } from '@privy-io/server-auth'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
-import { Address, createPublicClient, http } from 'viem'
-import { base, baseSepolia } from 'viem/chains'
+import { Address } from 'viem'
 import {
   parseSiweMessage,
   validateSiweMessage,
@@ -25,11 +24,10 @@ declare module 'next-auth' {
   interface Session {
     address: string
     name: string
-    chainId: number | string
     userId: string
     ensName: string | null
     role: string
-    subdomain: string
+    domain: string
     subscriptions: SubscriptionInSession[]
   }
 }
@@ -280,16 +278,15 @@ async function handler(req: Request, res: Response) {
     callbacks: {
       async jwt({ token, account, user, profile, trigger, session }) {
         if (user) {
-          const sessionUser = user as User & { chainId: string; sites: Site[] }
+          const sessionUser = user as UserWithDomains
           // console.log('=====sessionUser:', sessionUser)
 
           token.uid = sessionUser.id
           token.address = sessionUser.address as string
-          token.chainId = sessionUser.chainId
           token.ensName = sessionUser.ensName as string
           token.name = sessionUser.name as string
           token.role = sessionUser.role as string
-          token.subdomain = sessionUser.sites[0]?.subdomain as string
+          token.domain = getSiteDomain(sessionUser.sites[0])
 
           token.subscriptions = Array.isArray(sessionUser.subscriptions)
             ? sessionUser.subscriptions.map((i: any) => ({
@@ -321,10 +318,9 @@ async function handler(req: Request, res: Response) {
         session.userId = token.uid as string
         session.address = token.address as string
         session.name = token.name as string
-        session.chainId = token.chainId as string
         session.ensName = token.ensName as string
         session.role = token.role as string
-        session.subdomain = token.subdomain as string
+        session.domain = token.domain as string
         session.subscriptions = token.subscriptions as any
 
         return session

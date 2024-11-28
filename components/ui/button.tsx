@@ -18,7 +18,7 @@ const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/60 hover:ring-1 hover:ring-black/10',
         ghost: 'hover:bg-accent hover:text-accent-foreground',
         link: 'text-primary underline-offset-4 hover:underline',
-        farcaster: 'bg-purple-500 text-background hover:bg-purple-500/90',
+        farcaster: 'bg-purple-500 text-white hover:bg-purple-500/90',
       },
       size: {
         default: 'h-10 px-4 py-3',

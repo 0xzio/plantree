@@ -35,7 +35,8 @@ export function SubdomainDomainForm({ site }: Props) {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
-      domain: site.subdomain || '',
+      // domain: site.subdomain || '',
+      domain: '',
     },
     resolver: zodResolver(FormSchema),
   })

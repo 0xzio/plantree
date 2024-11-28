@@ -9,18 +9,19 @@ import LoadingCircle from './icons/loading-circle'
 
 export function SiteLink() {
   const { site } = useSite()
-  const link = `${site?.subdomain}.${ROOT_DOMAIN}`
+  return <div>TODO</div>
+  // const link = `${site?.subdomain}.${ROOT_DOMAIN}`
 
-  if (!site.customDomain) {
-    return <SiteLinkContent link={link} />
-  }
+  // if (!site.customDomain) {
+  //   return <SiteLinkContent link={link} />
+  // }
 
-  return (
-    <CustomDomainSiteLink
-      customDomain={site.customDomain}
-      subdomain={site.subdomain}
-    />
-  )
+  // return (
+  //   <CustomDomainSiteLink
+  //     customDomain={site.customDomain}
+  //     subdomain={site.subdomain}
+  //   />
+  // )
 }
 
 interface SiteLinkContentProps {

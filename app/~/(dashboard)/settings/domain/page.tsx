@@ -24,7 +24,7 @@ export default function Page() {
       <SubdomainDomainForm site={site!} />
       <Separator></Separator>
       <CustomDomainForm site={site!} />
-      {site.customDomain && <DomainConfiguration domain={site.customDomain} />}
+      {/* {site.customDomain && <DomainConfiguration domain={site.customDomain} />} */}
     </div>
   )
 }
