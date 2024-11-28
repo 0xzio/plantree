@@ -13,6 +13,7 @@ export async function generateMetadata({
   params: { domain: string }
 }): Promise<Metadata> {
   const site = await getSite(params)
+
   return {
     title: site.name,
     description: site.description,
