@@ -96,7 +96,7 @@ async function handler(req: Request, res: Response) {
 
             const user = await initUserByAddress(address)
             updateSubscriptions(address as Address)
-            return { ...user }
+            return { ...user } as any
           } catch (e) {
             // console.log('e======:', e)
             return null
@@ -310,7 +310,7 @@ async function handler(req: Request, res: Response) {
         session.name = token.name as string
         session.ensName = token.ensName as string
         session.role = token.role as string
-        session.domain = token.domain as string
+        session.domain = token.domain as any
         session.subscriptions = token.subscriptions as any
 
         return session

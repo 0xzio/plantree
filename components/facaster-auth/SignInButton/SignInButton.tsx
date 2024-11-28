@@ -97,7 +97,7 @@ export function SignInButton({
       }, 1000 * 30)
       window.open(url, '_blank')
     }
-  }, [isError, reconnect, signIn, url])
+  }, [isError, reconnect, signIn, url, loading])
 
   const authenticated = isSuccess && validSignature
 
