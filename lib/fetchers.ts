@@ -15,8 +15,12 @@ import { SpaceType } from './types'
 import { getUrl } from './utils'
 
 export async function getSite(params: any) {
-  const domain = decodeURIComponent(params.domain)
+  let domain = decodeURIComponent(params.domain)
   const isSubdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
+
+  if (isSubdomain) {
+    domain = domain.replace(`.${ROOT_DOMAIN}`, '')
+  }
 
   return await unstable_cache(
     async () => {
