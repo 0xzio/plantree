@@ -65,8 +65,6 @@ model Site {
   config          Json?
   themeName       String?         @db.VarChar(50)
   themeConfig     Json?
-  subdomain       String          @unique @db.VarChar(255)
-  customDomain    String?         @unique @db.VarChar(255)
   memberCount     Int             @default(0) @db.Integer
   postCount       Int             @default(0) @db.Integer
   createdAt       DateTime        @default(now())
