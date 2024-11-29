@@ -16,11 +16,16 @@ import { getUrl } from './utils'
 
 export async function getSite(params: any) {
   let domain = decodeURIComponent(params.domain)
+  console.log('params=======:', params, 'domain:', domain)
+
   const isSubdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
+  console.log('=====isSubdomain:', isSubdomain)
 
   if (isSubdomain) {
     domain = domain.replace(`.${ROOT_DOMAIN}`, '')
   }
+
+  console.log('=========>>>>domain:', domain)
 
   return await unstable_cache(
     async () => {
@@ -28,11 +33,13 @@ export async function getSite(params: any) {
         where: { domain: domain, isSubdomain },
         select: { siteId: true, isSubdomain: true },
       })
+      console.log('=====siteId:', siteId)
 
       const site = await prisma.site.findUniqueOrThrow({
         where: { id: siteId },
         include: { user: true },
       })
+      console.log('=====site:', site)
 
       function getAbout() {
         if (!site?.about) return editorDefaultValue
@@ -54,7 +61,8 @@ export async function getSite(params: any) {
     },
     [`site-${domain}`],
     {
-      revalidate: isProd ? 3600 * 24 : 10,
+      // revalidate: isProd ? 3600 * 24 : 10,
+      revalidate: 10,
       tags: [`site-${domain}`],
     },
   )()

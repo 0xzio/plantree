@@ -32,6 +32,7 @@ export default async function HomePage({
   if (!HomePage) {
     return <div>Theme not found</div>
   }
+  // return <div>Home....{params?.domain}</div>
 
   return (
     <HomePage

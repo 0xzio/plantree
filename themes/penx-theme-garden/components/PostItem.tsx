@@ -20,7 +20,8 @@ interface PostItemProps {
 export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const { slug, title } = post
   const { address = '' } = post.user
-  const name = post.user.name || address.slice(0, 6) + '...' + address.slice(-4)
+  const name =
+    post.user.name || address?.slice(0, 6) + '...' + address?.slice(-4)
 
   const params = useSearchParams()!
   const type = params.get('type')
@@ -51,7 +52,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
 
     const nodes: any[] =
       typeof post.content === 'string' ? JSON.parse(post.content) : post.content
-    const str = nodes.map((node) => Node.string(node)).join('')
+    const str = nodes.map((node) => Node.string(node)).join('') || ''
 
     return (
       <Link href={`/posts/${slug}`} className="space-y-2">
@@ -59,7 +60,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
           {post.title}
         </div>
         <div className="text-foreground/80 hover:text-foreground transition-all hover:scale-105 break-words break-all">
-          {str.slice(0, 260)}x...
+          {str?.slice(0, 260)}x...
         </div>
       </Link>
     )
