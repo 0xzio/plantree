@@ -49,6 +49,7 @@ const nextConfig = {
       { hostname: 'lh3.googleusercontent.com' },
       { hostname: 'www.google.com' },
       { hostname: 'flag.vercel.app' },
+      { hostname: 'imagedelivery.net' },
     ],
   },
 
