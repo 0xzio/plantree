@@ -335,7 +335,7 @@ export const authOptions: NextAuthOptions = {
         const sessionAccount = user as AccountWithUser
         // console.log('=====sessionUser:', sessionUser)
 
-        token.uid = sessionAccount.id
+        token.uid = sessionAccount.userId
         token.address = getAddress(sessionAccount)
         token.ensName = sessionAccount.user?.ensName as string
         token.name = sessionAccount.user.name as string
