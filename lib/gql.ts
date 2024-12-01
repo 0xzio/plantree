@@ -22,3 +22,28 @@ export const spacesQuery = gql`
     }
   }
 `
+
+export const spaceTokenTradesQuery = gql`
+  query listTrades(
+    $tokenAddress: String!
+    $startTimestamp: Int!
+    $endTimestamp: Int!
+  ) {
+    trades(
+      first: 1000
+      orderBy: "timestamp"
+      orderDirection: "desc"
+      where: {
+        space_: { id: $tokenAddress }
+        timestamp_gte: $startTimestamp
+        timestamp_lte: $endTimestamp
+      }
+    ) {
+      type
+      account
+      ethAmount
+      tokenAmount
+      timestamp
+    }
+  }
+`
