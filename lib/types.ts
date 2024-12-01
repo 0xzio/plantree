@@ -1,3 +1,4 @@
+import { Account, Domain, Site, User } from '@prisma/client'
 import { Address } from 'viem'
 
 export type App = {
@@ -224,4 +225,14 @@ export interface DomainVerificationResponse {
     value: string
     reason: string
   }[]
+}
+
+export type SiteWithDomain = Site & {
+  domains: Domain[]
+}
+
+export type AccountWithUser = Account & {
+  user: User & {
+    sites: SiteWithDomain[]
+  }
 }

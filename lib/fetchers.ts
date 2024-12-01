@@ -76,7 +76,6 @@ export async function getPosts() {
           postTags: { include: { tag: true } },
           user: {
             select: {
-              address: true,
               email: true,
               name: true,
               image: true,

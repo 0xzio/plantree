@@ -137,11 +137,12 @@ export default async function handler(
   res.json({ ok: true, site })
 }
 
+// TODO:
 async function initUserByFarcasterUser(info: FarcasterUser) {
   return prisma.$transaction(
     async (tx) => {
-      let user = await tx.user.findUnique({
-        where: { fid: info.fid.toString() },
+      let user = await tx.account.findUnique({
+        where: { providerAccountId: info.fid.toString() },
       })
 
       if (user) {
@@ -158,15 +159,15 @@ async function initUserByFarcasterUser(info: FarcasterUser) {
         data: {
           name: info.username,
           displayName: info.display_name,
-          address,
-          fid: info.fid.toString(),
+          // address,
+          // fid: info.fid.toString(),
           image: info.pfp_url,
           bio: info.profile?.bio?.text || '',
-          farcaster: {
-            name: info.username,
-            displayName: info.display_name,
-            image: info.pfp_url,
-          },
+          // farcaster: {
+          //   name: info.username,
+          //   displayName: info.display_name,
+          //   image: info.pfp_url,
+          // },
         },
       })
 

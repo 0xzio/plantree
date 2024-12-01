@@ -5,7 +5,7 @@ import { gql, request } from 'graphql-request'
 
 export function useCreations(space: string) {
   const query = gql`
-    query geCreations($space: Bytes!) {
+    query trades($space: Bytes!) {
       creations(where: { space: $space }) {
         id
         creationId

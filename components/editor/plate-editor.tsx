@@ -59,7 +59,7 @@ export function PlateEditor({
           <CursorOverlay containerRef={containerRef} />
         </EditorContainer>
 
-        <SettingsDialog />
+        {/* <SettingsDialog /> */}
       </Plate>
     </DndProvider>
   )

@@ -78,13 +78,11 @@ export function CommentContent({ postId }: Props) {
               <div key={comment.id} className="my-2 bg-background rounded">
                 <div className="flex items-center">
                   <UserAvatar
-                    address={comment.user.address as string}
+                    address={comment.user.email as string}
                     className="h-8 w-8"
                   />
                   <p className="ml-1 text-sm text-gray-600">
-                    {comment.user?.address &&
-                      comment.user?.address.slice(0, 16)}
-                    ...
+                    {comment.user?.displayName}
                   </p>
                 </div>
                 <p className="mt-2 ml-1">{comment.content}</p>
@@ -127,21 +125,17 @@ export function CommentContent({ postId }: Props) {
                       <div key={reply.id} className="mb-3">
                         <div className="flex items-center mb-1">
                           <UserAvatar
-                            address={reply.user.address as string}
+                            address={reply.user.image as string}
                             className="h-6 w-6"
                           />
                           <p className="ml-2 text-sm text-gray-600 font-bold">
-                            {reply.user?.address
-                              ? `${reply.user.address.slice(0, 10)}...`
-                              : ''}
+                            {reply.user?.displayName}
                           </p>
                           {reply.parent?.user && (
                             <p className="ml-2 text-sm text-gray-400">
                               replied to &nbsp;
                               <span className="font-bold text-gray-500">
-                                {reply.user?.address
-                                  ? `${reply.user.address.slice(0, 10)}...`
-                                  : ''}
+                                {reply.user?.displayName}
                               </span>
                             </p>
                           )}

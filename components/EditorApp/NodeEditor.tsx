@@ -75,7 +75,7 @@ export function NodeEditor({
           <CursorOverlay containerRef={containerRef} />
         </EditorContainer>
 
-        <SettingsDialog />
+        {/* <SettingsDialog /> */}
       </Plate>
     </DndProvider>
   )

@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { UserRole } from '@prisma/client'
+import { ProviderType, UserRole } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { getEthPrice } from '../lib/getEthPrice'
@@ -11,11 +11,7 @@ export const userRouter = router({
   }),
 
   contributors: publicProcedure.query(async ({ ctx }) => {
-    return prisma.user.findMany({
-      where: {
-        OR: [{ role: UserRole.ADMIN }, { role: UserRole.AUTHOR }],
-      },
-    })
+    return prisma.user.findMany()
   }),
 
   me: protectedProcedure.query(async ({ ctx }) => {
@@ -25,11 +21,21 @@ export const userRouter = router({
   getAddressByUserId: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
-      const { address = '' } = await prisma.user.findUniqueOrThrow({
+      const { accounts = [] } = await prisma.user.findUniqueOrThrow({
         where: { id: input },
-        select: { address: true },
+        include: {
+          accounts: {
+            select: {
+              providerAccountId: true,
+              providerType: true,
+            },
+          },
+        },
       })
-      return address
+      const account = accounts.find(
+        (a) => a.providerType === ProviderType.WALLET,
+      )
+      return account?.providerAccountId || ''
     }),
 
   updateProfile: protectedProcedure
@@ -56,37 +62,38 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const admin = await prisma.user.findFirstOrThrow({
-        where: { id: ctx.token.uid },
-      })
-      if (admin.role !== UserRole.ADMIN) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'Only admin can update contributor',
-        })
-      }
+      return true
+      // const admin = await prisma.user.findFirstOrThrow({
+      //   where: { id: ctx.token.uid },
+      // })
+      // if (admin.role !== UserRole.ADMIN) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'Only admin can update contributor',
+      //   })
+      // }
 
-      const user = await prisma.user.findFirst({
-        where: {
-          OR: [{ address: input.q }, { email: input.q }],
-        },
-      })
-      if (!user) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'User not found, please check the address or email',
-        })
-      }
-      if (user.role !== UserRole.READER) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'User is a contributor already!',
-        })
-      }
-      return prisma.user.update({
-        where: { id: user.id },
-        data: { role: UserRole.AUTHOR },
-      })
+      // const user = await prisma.user.findFirst({
+      //   where: {
+      //     OR: [{ address: input.q }, { email: input.q }],
+      //   },
+      // })
+      // if (!user) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'User not found, please check the address or email',
+      //   })
+      // }
+      // if (user.role !== UserRole.READER) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'User is a contributor already!',
+      //   })
+      // }
+      // return prisma.user.update({
+      //   where: { id: user.id },
+      //   data: { role: UserRole.AUTHOR },
+      // })
     }),
 
   updateContributor: protectedProcedure
@@ -97,20 +104,21 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const user = await prisma.user.findFirstOrThrow({
-        where: { id: ctx.token.uid },
-      })
-      if (user.role !== UserRole.ADMIN) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'Only admin can update contributor',
-        })
-      }
+      return true
+      // const user = await prisma.user.findFirstOrThrow({
+      //   where: { id: ctx.token.uid },
+      // })
+      // if (user.role !== UserRole.ADMIN) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'Only admin can update contributor',
+      //   })
+      // }
 
-      return prisma.user.update({
-        where: { id: input.userId },
-        data: { role: input.role },
-      })
+      // return prisma.user.update({
+      //   where: { id: input.userId },
+      //   data: { role: input.role },
+      // })
     }),
 
   deleteContributor: protectedProcedure
@@ -120,27 +128,28 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const user = await prisma.user.findFirstOrThrow({
-        where: { id: ctx.token.uid },
-      })
-      if (user.role !== UserRole.ADMIN) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'Only admin can remove contributor',
-        })
-      }
+      return true
+      // const user = await prisma.user.findFirstOrThrow({
+      //   where: { id: ctx.token.uid },
+      // })
+      // if (user.role !== UserRole.ADMIN) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'Only admin can remove contributor',
+      //   })
+      // }
 
-      if (ctx.token.uid === input.userId) {
-        throw new TRPCError({
-          code: 'BAD_GATEWAY',
-          message: 'Cannot remove yourself',
-        })
-      }
+      // if (ctx.token.uid === input.userId) {
+      //   throw new TRPCError({
+      //     code: 'BAD_GATEWAY',
+      //     message: 'Cannot remove yourself',
+      //   })
+      // }
 
-      return prisma.user.update({
-        where: { id: input.userId },
-        data: { role: UserRole.READER },
-      })
+      // return prisma.user.update({
+      //   where: { id: input.userId },
+      //   data: { role: UserRole.READER },
+      // })
     }),
 
   ethPrice: publicProcedure.query(({ ctx }) => {

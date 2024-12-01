@@ -34,7 +34,7 @@ export default function ContributorList({}: Props) {
       <Table className="">
         <TableHeader>
           <TableRow>
-            <TableHead className="text-left pl-0">Address</TableHead>
+            {/* <TableHead className="text-left pl-0">Address</TableHead> */}
             <TableHead>Email</TableHead>
             <TableHead>Role</TableHead>
             <TableHead className="text-right pr-0">Operations</TableHead>
@@ -52,7 +52,7 @@ export default function ContributorList({}: Props) {
           {!isLoading &&
             users?.map((user) => (
               <TableRow key={user.id} className="text-muted-foreground">
-                <TableCell className="pl-0">{user.address}</TableCell>
+                {/* <TableCell className="pl-0">{user.address}</TableCell> */}
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
                   <SelectRole user={user} />
@@ -83,39 +83,40 @@ interface SelectRoleProps {
   user: User
 }
 function SelectRole({ user }: SelectRoleProps) {
-  const [role, setRole] = useState(user.role)
-  const { refetch } = trpc.user.contributors.useQuery()
-  return (
-    <Select
-      value={role}
-      onValueChange={async (value) => {
-        setRole(value as UserRole)
-        try {
-          await api.user.updateContributor.mutate({
-            userId: user.id,
-            role: value as UserRole,
-          })
-          await refetch()
+  return null
+  // const [role, setRole] = useState(user.role)
+  // const { refetch } = trpc.user.contributors.useQuery()
+  // return (
+  //   <Select
+  //     value={role}
+  //     onValueChange={async (value) => {
+  //       setRole(value as UserRole)
+  //       try {
+  //         await api.user.updateContributor.mutate({
+  //           userId: user.id,
+  //           role: value as UserRole,
+  //         })
+  //         await refetch()
 
-          toast.success('Contributor role updated successfully!')
-        } catch (error) {
-          toast.error(
-            extractErrorMessage(error) || 'Failed to update contributor role!',
-          )
-        }
-      }}
-    >
-      <SelectTrigger className="w-24">
-        <SelectValue placeholder={role.toLowerCase()} />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectItem value={UserRole.ADMIN}>
-          {UserRole.ADMIN.toLowerCase()}
-        </SelectItem>
-        <SelectItem value={UserRole.AUTHOR}>
-          {UserRole.AUTHOR.toLowerCase()}
-        </SelectItem>
-      </SelectContent>
-    </Select>
-  )
+  //         toast.success('Contributor role updated successfully!')
+  //       } catch (error) {
+  //         toast.error(
+  //           extractErrorMessage(error) || 'Failed to update contributor role!',
+  //         )
+  //       }
+  //     }}
+  //   >
+  //     <SelectTrigger className="w-24">
+  //       <SelectValue placeholder={role.toLowerCase()} />
+  //     </SelectTrigger>
+  //     <SelectContent>
+  //       <SelectItem value={UserRole.ADMIN}>
+  //         {UserRole.ADMIN.toLowerCase()}
+  //       </SelectItem>
+  //       <SelectItem value={UserRole.AUTHOR}>
+  //         {UserRole.AUTHOR.toLowerCase()}
+  //       </SelectItem>
+  //     </SelectContent>
+  //   </Select>
+  // )
 }

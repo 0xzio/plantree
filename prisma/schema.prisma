@@ -89,17 +89,11 @@ enum UserRole {
 
 model User {
   id            String        @id @default(uuid()) @db.Uuid
-  address       String?       @unique @db.VarChar(50)
-  fid           String?       @unique @db.VarChar(255)
-  googleId      String?       @unique @db.VarChar(255)
-  githubId      String?       @unique @db.VarChar(255)
   github        Json? // github oauth info
   google        Json? // google oauth info
-  farcaster     Json? // google oauth info
   name          String?       @db.VarChar(255)
   displayName   String?       @db.VarChar(255)
   ensName       String?       @db.VarChar(255)
-  role          UserRole      @default(READER)
   email         String?       @unique @db.VarChar(255)
   emailVerified DateTime?
   image         String?       @db.VarChar(2183)
@@ -116,10 +110,34 @@ model User {
   contributors  Contributor[]
   messages      Message[]
   sites         Site[]
+  accounts      Account[]
 
   @@index([id])
-  @@index([address])
   @@map("user")
+}
+
+enum ProviderType {
+  GOOGLE
+  GITHUB
+  WALLET
+  FARCASTER
+}
+
+model Account {
+  id                String       @id @default(uuid()) @db.Uuid
+  providerType      ProviderType
+  providerAccountId String       @unique @default("") @db.VarChar(255)
+  providerInfo      Json?
+  refreshToken      String?      @db.VarChar(255)
+  accessToken       String?      @db.VarChar(255)
+  expiresAt         Int?
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
+  user              User         @relation(fields: [userId], references: [id])
+  userId            String       @db.Uuid
+
+  @@index([userId])
+  @@map("account")
 }
 
 model Node {
