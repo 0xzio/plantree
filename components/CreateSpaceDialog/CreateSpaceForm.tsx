@@ -121,7 +121,7 @@ export function CreateSpaceForm() {
       name
         .toUpperCase()
         .trim()
-        .replace(/[^A-Z]/g, ''),
+        .replace(/[^(A-Z|0-9)]/g, ''),
     )
   }, [name, form])
 
@@ -132,7 +132,7 @@ export function CreateSpaceForm() {
         symbolName
           .toUpperCase()
           .trim()
-          .replace(/[^A-Z]/g, ''),
+          .replace(/[^(A-Z|0-9)]/g, ''),
       )
     }
   }, [symbolName, form])

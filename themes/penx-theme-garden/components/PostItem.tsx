@@ -47,7 +47,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
     }
 
     if (post.type === PostType.NOTE) {
-      return <div className="text-foreground/80">000{post.title}</div>
+      return <div className="text-foreground/80">{post.title}</div>
     }
 
     const nodes: any[] =
@@ -60,7 +60,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
           {post.title}
         </div>
         <div className="text-foreground/80 hover:text-foreground transition-all hover:scale-105 break-words break-all">
-          {str?.slice(0, 260)}x...
+          {str?.slice(0, 260)}...
         </div>
       </Link>
     )
