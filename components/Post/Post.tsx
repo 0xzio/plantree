@@ -53,13 +53,13 @@ export function Post({ post }: { post: PostType }) {
             onChange={(e) => {
               setData({ ...data, title: e.target.value })
             }}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white text-4xl font-bold"
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
           />
           <TextareaAutosize
             placeholder="Description"
             defaultValue={post?.description || ''}
             onChange={(e) => setData({ ...data, description: e.target.value })}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
           />
         </div>
         <div className="mb-8 space-y-2">

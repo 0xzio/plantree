@@ -107,7 +107,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         <div className="mx-2 py-2 space-y-1">
           <SiteModeSelect />
         </div>
-        <SyncBar />
+        {!isBasicMode && <SyncBar />}
       </div>
     </div>
   )
