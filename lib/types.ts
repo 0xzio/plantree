@@ -72,6 +72,7 @@ export type Trade = {
   ethAmount: string
   creatorFee: string
   protocolFee: string
+  timestamp: number
   space: {
     id: string
     address: string
@@ -235,4 +236,14 @@ export type AccountWithUser = Account & {
   user: User & {
     sites: SiteWithDomain[]
   }
+}
+
+export type Period = '1m' | '5m' | '15m' | '1h' | '4h' | '1d';
+
+export type Candle = {
+  timestamp: number
+  open: number
+  close: number
+  low: number
+  high: number
 }
