@@ -54,7 +54,8 @@ export default async function middleware(req: NextRequest) {
   if (path === '/login' && isRoot) {
     const token = await getToken({ req })
     if (token) {
-      return NextResponse.redirect(new URL('~/objects/today', req.url))
+      // return NextResponse.redirect(new URL('~/objects/today', req.url))
+      return NextResponse.redirect(new URL('~/posts', req.url))
     } else {
       return NextResponse.next()
     }

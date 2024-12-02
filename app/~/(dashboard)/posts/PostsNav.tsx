@@ -11,6 +11,7 @@ export function PostsNav({}: Props) {
 
   const Paths = {
     published: '/~/posts',
+    drafts: '/~/posts/drafts',
     archived: '/~/posts/archived',
   }
 
@@ -22,6 +23,10 @@ export function PostsNav({}: Props) {
 
   return (
     <div className="flex border-b gap-8">
+      <Link href={Paths.drafts} className={linkClassName(Paths.drafts)}>
+        Drafts
+      </Link>
+
       <Link href={Paths.published} className={linkClassName(Paths.published)}>
         Published
       </Link>

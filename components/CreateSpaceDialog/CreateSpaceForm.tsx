@@ -192,7 +192,8 @@ export function CreateSpaceForm() {
       toast.success('Space created successfully!')
       await refetch()
 
-      push(`/~/objects/today`)
+      // push(`/~/objects/today`)
+      push(`/~/posts`)
 
       // revalidatePath('/space/[id]', 'page')
       // revalidatePath('/', 'layout')

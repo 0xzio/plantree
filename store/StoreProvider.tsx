@@ -2,7 +2,6 @@
 
 import { PropsWithChildren, useEffect } from 'react'
 import { setLocalSession } from '@/lib/local-session'
-import { UserRole } from '@prisma/client'
 import { Provider } from 'jotai'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'

@@ -1,7 +1,9 @@
 'use client'
 
 import { Dispatch, SetStateAction, useState } from 'react'
+import { usePost } from '@/hooks/usePost'
 import { usePublishPost } from '@/hooks/usePublishPost'
+import { useSite } from '@/hooks/useSite'
 import { IObjectNode, Node } from '@/lib/model'
 import { useNodes } from '@/lib/node-hooks'
 import { cn } from '@/lib/utils'
@@ -22,6 +24,7 @@ interface Props {
 
 export function PublishPopover({ className }: Props) {
   const [isOpen, setOpen] = useState(false)
+
   return (
     <Popover
       open={isOpen}
@@ -30,7 +33,12 @@ export function PublishPopover({ className }: Props) {
       }}
     >
       <PopoverTrigger asChild>
-        <Button className={cn('w-24', className)} onClick={() => setOpen(true)}>
+        <Button
+          className={cn('w-24', className)}
+          onClick={() => {
+            setOpen(true)
+          }}
+        >
           Publish
         </Button>
       </PopoverTrigger>
@@ -44,6 +52,8 @@ interface PublishPopoverContentProps {
 }
 
 function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
+  const { site } = useSite()
+  const { post } = usePost()
   const { spaceId } = useSiteContext()
   const { nodeId } = useParams()!
   const { nodes } = useNodes()
@@ -61,7 +71,8 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
     activeNode?.props?.collectible || false,
   )
   const { isLoading, publishPost } = usePublishPost()
-  if (!activeNode) return null
+
+  if (!activeNode && !post) return null
 
   return (
     <PopoverContent align="end" className="w-[360px] flex flex-col gap-5">
@@ -107,7 +118,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
           className="w-full"
           onClick={async () => {
             await publishPost(
-              activeNode.raw as IObjectNode,
+              activeNode ? (activeNode.raw as IObjectNode) : (null as any),
               gateType,
               collectible,
             )

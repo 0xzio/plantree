@@ -1,6 +1,11 @@
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import { AuthType, StorageProvider, SubdomainType } from '@prisma/client'
+import {
+  AuthType,
+  SiteMode,
+  StorageProvider,
+  SubdomainType,
+} from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
@@ -67,6 +72,7 @@ export const siteRouter = router({
         description: z.string().optional(),
         about: z.string().optional(),
         themeName: z.string().optional(),
+        mode: z.nativeEnum(SiteMode).optional(),
         spaceId: z.string().optional(),
         socials: z
           .object({

@@ -52,8 +52,8 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const headerList = headers()
   const cookies = headers().get('cookie')
+  const headerList = headers()
   const url = headerList.get('x-current-path') || ''
 
   return (

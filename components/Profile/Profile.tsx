@@ -1,5 +1,7 @@
 'use client'
 
+import { useSite } from '@/hooks/useSite'
+import { SiteMode } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
@@ -13,7 +15,7 @@ interface Props {}
 
 export function Profile({}: Props) {
   const { data, status } = useSession()
-  const { address = '' } = useAccount()
+  const { site } = useSite()
 
   if (status === 'loading')
     return (
@@ -30,7 +32,11 @@ export function Profile({}: Props) {
       {!authenticated && <LoginButton />}
       {authenticated && (
         <>
-          <Link href="/~/objects/today">
+          <Link
+            href={
+              site.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+            }
+          >
             <Button size="sm">Dashboard</Button>
           </Link>
           <ProfilePopover />

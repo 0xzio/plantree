@@ -26,6 +26,8 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
 
   const pathname = usePathname()
   const isNode = pathname?.includes('/~/objects')
+  const isPost = pathname?.includes('/~/post/')
+  const isFullWidth = isNode || isPost
 
   useEffect(() => {
     if (status === 'loading') return
@@ -58,7 +60,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             <CreationDialog />
             <div
               className={cn(
-                !isNode && 'mx-auto md:max-w-2xl pt-16 pb-20',
+                !isFullWidth && 'mx-auto md:max-w-2xl pt-16 pb-20',
                 isNode,
               )}
             >

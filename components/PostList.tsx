@@ -8,7 +8,8 @@ import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
-import { Archive, Edit3Icon, Trash2 } from 'lucide-react'
+import { Archive, Edit3Icon, ExternalLink } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useSiteContext } from './SiteContext'
 
@@ -18,17 +19,26 @@ interface PostItemProps {
 
 export function PostItem({ post }: PostItemProps) {
   const { refetch } = usePosts()
+  const { data } = useSession()
   const { subdomain } = useSiteContext()
 
+  const isPublished = post.postStatus === PostStatus.PUBLISHED
   return (
     <div className={cn('flex flex-col gap-2 py-[6px]')}>
       <div>
         <Link
-          target="_blank"
-          href={`${location.protocol}//${subdomain}.${ROOT_DOMAIN}`}
-          className="inline-flex items-center hover:scale-105 transition-transform"
+          target={isPublished ? '_blank' : '_self'}
+          href={
+            isPublished
+              ? `${location.protocol}//${data?.domain.domain}.${ROOT_DOMAIN}`
+              : `/~/post/${post.id}`
+          }
+          className="inline-flex items-center hover:scale-105 transition-transform gap-2"
         >
           <div className="text-base font-bold">{post.title || 'Untitled'}</div>
+          {isPublished && (
+            <ExternalLink size={14} className="text-foreground/40" />
+          )}
         </Link>
       </div>
       <div className="flex gap-2">
@@ -42,7 +52,8 @@ export function PostItem({ post }: PostItemProps) {
         <div className="text-sm text-foreground/50">
           <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
         </div>
-        <Link href={`/~/objects/${post.nodeId}`}>
+        {/* <Link href={`/~/objects/${post.nodeId}`}> */}
+        <Link href={`/~/post/${post.id}`}>
           <Button
             size="xs"
             variant="ghost"

@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 import { GoogleOauthDialog } from '@/components/GoogleOauthDialog/GoogleOauthDialog'
 import { ROOT_DOMAIN } from '@/lib/constants'
+import { queryClient } from '@/lib/queryClient'
 import { trpc, trpcClient } from '@/lib/trpc'
 import { wagmiConfig } from '@/lib/wagmi/wagmiConfig'
 import { StoreProvider } from '@/store'
@@ -12,12 +13,10 @@ import {
   GetSiweMessageOptions,
   RainbowKitSiweNextAuthProvider,
 } from '@rainbow-me/rainbowkit-siwe-next-auth'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider } from '@tanstack/react-query'
 import { SessionProvider } from 'next-auth/react'
 import { Toaster } from 'sonner'
 import { WagmiProvider } from 'wagmi'
-
-const queryClient = new QueryClient()
 
 const getSiweMessageOptions: GetSiweMessageOptions = () => ({
   statement: 'Sign in with ethereum',

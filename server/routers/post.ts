@@ -38,13 +38,16 @@ export const postRouter = router({
       where: { id: input },
     })
 
-    syncToGoogleDrive(ctx.token.uid, post as any)
+    // syncToGoogleDrive(ctx.token.uid, post as any)
     // console.log('post-------xxxxxxxxxx:', post?.postTags)
     return post
   }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const post = await prisma.post.findUnique({
+    const post = await prisma.post.findUniqueOrThrow({
+      include: {
+        postTags: { include: { tag: true } },
+      },
       where: { slug: input },
     })
     return post
@@ -116,7 +119,8 @@ export const postRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        nodeId: z.string(),
+        postId: z.string().optional(),
+        nodeId: z.string().optional(),
         creationId: z.number().optional(),
         type: z.nativeEnum(PostType),
         gateType: z.nativeEnum(GateType),
@@ -130,9 +134,22 @@ export const postRouter = router({
       const { nodeId, gateType, collectible, creationId } = input
 
       let post = await prisma.post.findFirst({
-        where: { nodeId },
+        where: { OR: [{ nodeId }, { id: input.postId }] },
       })
-      const [title, ...nodes] = JSON.parse(input.content)
+
+      function getPostInfo() {
+        if (input.postId) {
+          return { title: post?.title, content: input.content }
+        }
+
+        const [title, ...nodes] = JSON.parse(input.content)
+
+        return {
+          title: SlateNode.string(title),
+          content: JSON.stringify(nodes),
+        }
+      }
+      const info = getPostInfo()
 
       if (!post) {
         post = await prisma.post.create({
@@ -140,27 +157,27 @@ export const postRouter = router({
             siteId: input.siteId,
             userId,
             slug: input.nodeId,
-            title: SlateNode.string(title),
+            title: info.title,
             type: input.type,
             nodeId: input.nodeId,
             postStatus: PostStatus.PUBLISHED,
             image: input.image,
             gateType: input.gateType,
             collectible: input.collectible,
-            content: JSON.stringify(nodes),
+            content: info.content,
           },
         })
       } else {
         post = await prisma.post.update({
           where: { id: post.id },
           data: {
-            title: SlateNode.string(title),
+            title: info.title,
             type: input.type,
             image: input.image,
             postStatus: PostStatus.PUBLISHED,
             gateType: input.gateType,
             collectible: input.collectible,
-            content: JSON.stringify(nodes),
+            content: info.content,
           },
         })
       }

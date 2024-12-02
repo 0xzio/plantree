@@ -2,14 +2,15 @@ import { ProfilePopover } from '@/components/Profile/ProfilePopover'
 import { Badge } from '@/components/ui/badge'
 import { useSite } from '@/hooks/useSite'
 import { cn } from '@/lib/utils'
+import { SiteMode } from '@prisma/client'
 import { Calendar, Feather, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { NodesBox } from './NodesBox'
 import { SidebarItem } from './SidebarItem'
+import { SiteModeSelect } from './SiteModeSelect'
 import { SyncBar } from './SyncBar/SyncBar'
-import { useSidebarSheet } from './useSidebarSheet'
 
 interface SidebarProps {
   bordered?: boolean
@@ -18,6 +19,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
   const pathname = usePathname()
   const { site } = useSite()
   const { spaceId } = site
+  const isBasicMode = site.mode === SiteMode.BASIC
 
   return (
     <div
@@ -35,13 +37,15 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       </div>
 
       <div className="flex flex-col gap-1 px-2">
-        <Link href="/~/objects/today">
-          <SidebarItem
-            isActive={pathname === '/~/objects/today'}
-            icon={<Calendar size={18} />}
-            label="Today"
-          />
-        </Link>
+        {!isBasicMode && (
+          <Link href="/~/objects/today">
+            <SidebarItem
+              isActive={pathname === '/~/objects/today'}
+              icon={<Calendar size={18} />}
+              label="Today"
+            />
+          </Link>
+        )}
 
         {/* <SidebarItem
               icon={
@@ -76,12 +80,12 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             icon={<Feather size={18} />}
             label="Posts"
           >
-            <Badge
+            {/* <Badge
               className="text-xs font-normal h-6 bg-green-500/20 text-green-500"
               variant="secondary"
             >
               Published
-            </Badge>
+            </Badge> */}
           </SidebarItem>
         </Link>
 
@@ -97,9 +101,14 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
 
       <div className="flex-1 z-10 overflow-auto px-2">
         {/* <FavoriteBox nodeList={nodeList} /> */}
-        <NodesBox />
+        {!isBasicMode && <NodesBox />}
       </div>
-      <SyncBar />
+      <div>
+        <div className="mx-2 py-2 space-y-1">
+          <SiteModeSelect />
+        </div>
+        <SyncBar />
+      </div>
     </div>
   )
 }

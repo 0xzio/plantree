@@ -16,10 +16,11 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
-import { AuthType } from '@prisma/client'
+import { AuthType, SiteMode } from '@prisma/client'
 import {
   DatabaseBackup,
   FileText,
@@ -57,6 +58,7 @@ export const ProfilePopover = memo(function ProfilePopover({
   const { push } = useRouter()
   const sigInState = useSignIn({})
   const pathname = usePathname()
+  const { site } = useSite()
 
   if (!data) return <div></div>
 
@@ -109,7 +111,8 @@ export const ProfilePopover = memo(function ProfilePopover({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              const path = '/~/objects/today'
+              const path =
+                site.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
               if (location.host === ROOT_DOMAIN) {
                 push(path)
                 return
