@@ -69,8 +69,8 @@ function populateCandleData(
 
   trades.forEach((trade) => {
     const tradeTime = Number(trade.timestamp)
-    const ethAmount = parseFloat(trade.ethAmount) / 1e18 // Convert ETH amount to proper value
-    const tokenAmount = parseFloat(trade.tokenAmount) / 1e18 // Convert token amount to proper value
+    const ethAmount = parseFloat(trade.ethAmount) // Convert ETH amount to proper value
+    const tokenAmount = parseFloat(trade.tokenAmount) // Convert token amount to proper value
 
     if (tokenAmount === 0) return // Skip if token amount is zero
 
