@@ -1,99 +1,130 @@
-import { getSpaceTokenTrades } from '../getSpaceTokenTrades'
 import { Candle, Period, Trade } from '../types'
+import { getCompleteTrades } from './getTrades'
 
 export async function getCandlesData(
   tokenAddress: string,
   period: Period,
   limit: number,
 ): Promise<Candle[]> {
-
-    // todo
-
-  const secondsPeriod = periodToSeconds(period) 
+  // Convert period to seconds
+  const secondsPeriod = periodToSeconds(period)
+  // Current Unix timestamp in seconds
   const endTimestamp = Math.floor(Date.now() / 1000)
-  const startTimestamp = endTimestamp - secondsPeriod * limit
+  // Nearest whole timestamp
+  const nearestWholeTimestamp =
+    Math.floor(endTimestamp / secondsPeriod) * secondsPeriod
+  // Calculate start timestamp by going back (limit - 1) periods from the nearest whole timestamp
+  const startTimestamp = nearestWholeTimestamp - secondsPeriod * (limit - 1)
 
-  let trades: Trade[] = []
-  let currentStartTimestamp = startTimestamp
+  let trades: Trade[] = await getCompleteTrades(
+    tokenAddress,
+    startTimestamp,
+    endTimestamp,
+  )
 
-  while (trades.length === 0 && currentStartTimestamp < endTimestamp) {
-    trades = await getSpaceTokenTrades(
-      tokenAddress,
-      currentStartTimestamp,
-      endTimestamp,
-    )
-    currentStartTimestamp -= secondsPeriod 
-  }
+  // Initialize the candles array
+  const candles: Candle[] = initializeCandles(
+    startTimestamp,
+    secondsPeriod,
+    limit,
+  )
 
-  const candles: Candle[] = []
-  let lastPrice = 0 
+  // Process trades to populate candle data
+  const lastPrice = populateCandleData(
+    candles,
+    trades,
+    startTimestamp,
+    secondsPeriod,
+  )
 
-  const candleCount = Math.ceil((endTimestamp - startTimestamp) / secondsPeriod)
-  for (let i = 0; i < candleCount; i++) {
-    candles.push({
-      timestamp: startTimestamp + i * secondsPeriod,
-      open: 0,
-      high: 0,
-      low: 0,
-      close: 0,
-    })
-  }
+  // Fill in missing candle data with the last known price
+  fillMissingCandleData(candles, lastPrice)
+
+  return candles.slice(-limit).reverse()
+}
+
+// Initialize the candles array
+function initializeCandles(
+  startTimestamp: number,
+  secondsPeriod: number,
+  limit: number,
+): Candle[] {
+  return Array.from({ length: limit }, (_, i) => ({
+    timestamp: startTimestamp + i * secondsPeriod,
+    open: 0,
+    high: 0,
+    low: 0,
+    close: 0,
+  }))
+}
+
+// Populate candle data based on trades
+function populateCandleData(
+  candles: Candle[],
+  trades: Trade[],
+  startTimestamp: number,
+  secondsPeriod: number,
+): number {
+  let lastPrice = 0
 
   trades.forEach((trade) => {
     const tradeTime = Number(trade.timestamp)
-    const ethAmount = parseFloat(trade.ethAmount) / 1e18
-    const tokenAmount = parseFloat(trade.tokenAmount) / 1e18
+    const ethAmount = parseFloat(trade.ethAmount) / 1e18 // Convert ETH amount to proper value
+    const tokenAmount = parseFloat(trade.tokenAmount) / 1e18 // Convert token amount to proper value
 
-    if (tokenAmount === 0) return
+    if (tokenAmount === 0) return // Skip if token amount is zero
 
-    const tokenPrice = ethAmount / tokenAmount
-    lastPrice = tokenPrice 
+    const tokenPrice = ethAmount / tokenAmount // Calculate token price
+    lastPrice = tokenPrice // Update last price
 
     const candleIndex = Math.floor((tradeTime - startTimestamp) / secondsPeriod)
 
     if (candleIndex >= 0 && candleIndex < candles.length) {
-      if (candles[candleIndex].open === 0) {
-        candles[candleIndex].open = tokenPrice
-      }
-      candles[candleIndex].high = Math.max(
-        candles[candleIndex].high,
-        tokenPrice,
-      )
-      candles[candleIndex].low =
-        candles[candleIndex].low === 0
-          ? tokenPrice
-          : Math.min(candles[candleIndex].low, tokenPrice)
-      candles[candleIndex].close = tokenPrice
+      const candle = candles[candleIndex]
+      candle.open = candle.open === 0 ? tokenPrice : candle.open
+      candle.high = Math.max(candle.high, tokenPrice)
+      candle.low =
+        candle.low === 0 ? tokenPrice : Math.min(candle.low, tokenPrice)
+      candle.close = tokenPrice
     }
   })
 
-  candles.forEach((candle) => {
-    if (candle.high === 0 && candle.low === 0 && candle.close === 0) {
-      candle.open = lastPrice 
-      candle.high = lastPrice 
-      candle.low = lastPrice
-      candle.close = lastPrice 
-    }
-  })
-
-  return candles.slice(-limit)
+  return lastPrice
 }
 
-function periodToSeconds(period: Period): number {
-  switch (period) {
-    case '1m':
-      return 60 
-    case '5m':
-      return 5 * 60 
-    case '15m':
-      return 15 * 60
-    case '1h':
-      return 60 * 60
-    case '4h':
-      return 4 * 60 * 60 
-    case '1d':
-      return 24 * 60 * 60 
-    default:
-      throw new Error(`Invalid period: ${period}`)
+// Fill missing candle data with the last known price
+function fillMissingCandleData(candles: Candle[], lastPrice: number): void {
+  for (let i = 0; i < candles.length; i++) {
+    const candle = candles[i]
+
+    // Check if the candle data is missing
+    if (candle.high === 0 && candle.low === 0 && candle.close === 0) {
+      if (lastPrice !== null) {
+        candle.open = lastPrice
+        candle.high = lastPrice
+        candle.low = lastPrice
+        candle.close = lastPrice
+      }
+    }
+    // Update lastPrice to the current candle's close price
+    lastPrice = candle.close
   }
+}
+
+// Convert period to seconds
+function periodToSeconds(period: Period): number {
+  const periodMap: Record<Period, number> = {
+    '1m': 60,
+    '5m': 300,
+    '15m': 900,
+    '1h': 3600,
+    '4h': 14400,
+    '1d': 86400,
+  }
+
+  const seconds = periodMap[period]
+  if (seconds === undefined) {
+    throw new Error(`Invalid period: ${period}`)
+  }
+  return seconds
 }
