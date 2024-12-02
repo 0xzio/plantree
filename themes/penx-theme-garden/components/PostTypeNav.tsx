@@ -4,14 +4,21 @@ import { cn } from '@penxio/utils'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-interface Props {}
+interface Props {
+  className?: string
+}
 
-export const PostTypeNav = ({}: Props) => {
+export const PostTypeNav = ({ className }: Props) => {
   const param = useSearchParams()!
   const type = param.get('type')
 
   return (
-    <div className="flex items-center text-sm gap-5 text-foreground/40">
+    <div
+      className={cn(
+        'flex items-center text-sm gap-5 text-foreground/40',
+        className,
+      )}
+    >
       <Link href="/" className={cn(!type && 'text-foreground')}>
         All
       </Link>

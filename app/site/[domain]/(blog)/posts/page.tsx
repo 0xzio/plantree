@@ -20,7 +20,8 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { domain: string } }) {
-  const [posts, site] = await Promise.all([getPosts(), getSite(params)])
+  const site = await getSite(params)
+  const posts = await getPosts(site.id)
   const pageNumber = 1
   const initialDisplayPosts = posts.slice(
     POSTS_PER_PAGE * (pageNumber - 1),

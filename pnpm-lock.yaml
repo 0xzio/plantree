@@ -51,11 +51,11 @@ importers:
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.1(react@18.2.0))
       '@penxio/types':
-        specifier: ^0.0.6
-        version: 0.0.6
+        specifier: ^0.0.8
+        version: 0.0.8
       '@penxio/utils':
-        specifier: ^0.0.6
-        version: 0.0.6
+        specifier: ^0.0.8
+        version: 0.0.8
       '@prisma/client':
         specifier: ^5.21.1
         version: 5.21.1(prisma@5.21.1)
@@ -2665,8 +2665,14 @@ packages:
   '@penxio/types@0.0.6':
     resolution: {integrity: sha512-yXxRUtJ16XgNX3br7qsxCgX3zhunEsQKWs0iEewmbuwj8AZ+QyK4tDg7Qa69nHdtGdl7l3I7ms/+sL0kOfW3mw==}
 
+  '@penxio/types@0.0.8':
+    resolution: {integrity: sha512-SdlYETm5z/DZk2RfAXnzfBwdA7Kp2oyTtAe1QOIAbKpWwROJUnllgQLwx0jI4jTQzsGWM8kKdNOrLlmMv6mySA==}
+
   '@penxio/utils@0.0.6':
     resolution: {integrity: sha512-sZJpENSP2LMiVrbSVte5UJPI0MdY5/+yKrK2HewpO3djB2931o+4GUoDe+H64R5fgbW4JufazhCCCszfsOyxzQ==}
+
+  '@penxio/utils@0.0.8':
+    resolution: {integrity: sha512-uFXhgjRcxjeLatLJvmKGNH2JjTFZOwu5CpK8HedTwsHgueNg1Q1+hN4TIfuPNy6YY4WteIO7rRTCUbikTPXXmQ==}
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -12990,7 +12996,14 @@ snapshots:
 
   '@penxio/types@0.0.6': {}
 
+  '@penxio/types@0.0.8': {}
+
   '@penxio/utils@0.0.6':
+    dependencies:
+      clsx: 2.1.1
+      tailwind-merge: 2.5.4
+
+  '@penxio/utils@0.0.8':
     dependencies:
       clsx: 2.1.1
       tailwind-merge: 2.5.4

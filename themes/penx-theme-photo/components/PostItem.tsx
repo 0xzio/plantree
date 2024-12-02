@@ -1,4 +1,6 @@
-import { Post } from '@penxio/types'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { isAddress } from '@/lib/utils'
+import { Post, User } from '@penxio/types'
 import { cn, formatDate } from '@penxio/utils'
 
 interface PostItemProps {
@@ -13,19 +15,33 @@ interface PostItemProps {
 
 export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const { slug, title } = post
-  const { address = '' } = post.user
-  const name = post.user.name || address.slice(0, 6) + '...' + address.slice(-4)
+  const name = getUserName(post.user)
+
+  const getAvatar = () => {
+    if (post.user.image) {
+      return (
+        <Avatar className="h-6 w-6">
+          <AvatarImage src={post.user.image || ''} />
+          <AvatarFallback>{post.user.displayName}</AvatarFallback>
+        </Avatar>
+      )
+    }
+
+    return (
+      <div
+        className={cn(
+          'bg-red-300 h-6 w-6 rounded-full flex-shrink-0',
+          generateGradient(post.user.displayName || post.user.name),
+        )}
+      ></div>
+    )
+  }
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-1 text-sm">
-          <div
-            className={cn(
-              'bg-red-300 h-6 w-6 rounded-full',
-              generateGradient(address),
-            )}
-          ></div>
+          {getAvatar()}
           <div className="font-medium">{name}</div>
           <div className="text-foreground/50 text-sm">posted</div>
           <div className="">{title}</div>p
@@ -100,4 +116,20 @@ function generateGradient(walletAddress: string) {
   const from = getFromColor(hash)
   const to = getToColor(hash >> 8)
   return `bg-gradient-to-r ${from} ${to}`
+}
+
+function getUserName(user: User) {
+  const { displayName = '', name } = user
+
+  if (displayName) {
+    if (isAddress(displayName)) {
+      return displayName.slice(0, 3) + '...' + displayName.slice(-4)
+    }
+    return user.displayName || user.name
+  }
+
+  if (isAddress(name)) {
+    return name.slice(0, 3) + '...' + name.slice(-4)
+  }
+  return user.displayName || user.name
 }

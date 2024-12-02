@@ -2,6 +2,7 @@ import { ContentRender } from '@/components/ContentRender/ContentRender'
 import { PostActions } from '@/components/PostActions/PostActions'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import prisma from '@/lib/prisma'
 import { GateType, Post } from '@prisma/client'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -22,8 +23,6 @@ export async function generateMetadata({
 }: {
   params: any
 }): Promise<Metadata> {
-  console.log('======params====:', params, rest)
-
   const slug = decodeURI(params.slug.join('/'))
   const post = await getPost(slug)
 
@@ -33,8 +32,9 @@ export async function generateMetadata({
   }
 }
 
-export async function generateStaticParams() {
-  const posts = await getPosts()
+export async function generateStaticParams(params: any) {
+  const site = await prisma.site.findFirst()
+  const posts = site ? await getPosts(site.id) : []
   return posts.map((post) => ({ slug: [post.slug] }))
 }
 
@@ -44,11 +44,9 @@ export default async function Page({
   params: { domain: string; slug: string[] }
 }) {
   const slug = decodeURI(params.slug.join('/'))
-  const [post, posts, site] = await Promise.all([
-    getPost(slug),
-    getPosts(),
-    getSite(params),
-  ])
+  const site = await getSite(params)
+  const posts = await getPosts(site.id)
+  const post = await getPost(slug)
 
   const postIndex = posts.findIndex((p) => p.slug === slug)
   if (postIndex === -1 || !post) {

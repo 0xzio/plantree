@@ -16,16 +16,12 @@ import { getUrl } from './utils'
 
 export async function getSite(params: any) {
   let domain = decodeURIComponent(params.domain)
-  console.log('params=======:', params, 'domain:', domain)
 
   const isSubdomain = domain.endsWith(`.${ROOT_DOMAIN}`)
-  console.log('=====isSubdomain:', isSubdomain)
 
   if (isSubdomain) {
     domain = domain.replace(`.${ROOT_DOMAIN}`, '')
   }
-
-  console.log('=========>>>>domain:', domain)
 
   return await unstable_cache(
     async () => {
@@ -33,13 +29,11 @@ export async function getSite(params: any) {
         where: { domain: domain, isSubdomain },
         select: { siteId: true, isSubdomain: true },
       })
-      console.log('=====siteId:', siteId)
 
       const site = await prisma.site.findUniqueOrThrow({
         where: { id: siteId },
         include: { user: true },
       })
-      console.log('=====site:', site)
 
       function getAbout() {
         if (!site?.about) return editorDefaultValue
@@ -68,7 +62,7 @@ export async function getSite(params: any) {
   )()
 }
 
-export async function getPosts() {
+export async function getPosts(siteId: string) {
   return await unstable_cache(
     async () => {
       const posts = await prisma.post.findMany({
@@ -76,6 +70,12 @@ export async function getPosts() {
           postTags: { include: { tag: true } },
           user: {
             select: {
+              accounts: {
+                select: {
+                  providerAccountId: true,
+                  providerType: true,
+                },
+              },
               email: true,
               name: true,
               image: true,
@@ -83,6 +83,7 @@ export async function getPosts() {
           },
         },
         where: {
+          siteId,
           postStatus: PostStatus.PUBLISHED,
         },
         orderBy: [{ createdAt: 'desc' }],

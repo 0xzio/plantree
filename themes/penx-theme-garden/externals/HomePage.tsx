@@ -1,5 +1,5 @@
-import { Lobster, Merienda } from 'next/font/google'
 import { Post, Site } from '@penxio/types'
+import { Lobster, Merienda } from 'next/font/google'
 import { PostItem } from '../components/PostItem'
 
 const lobster = Lobster({
@@ -21,7 +21,14 @@ export function HomePage({
   PostActions,
   ContentRender,
 }: Props) {
-  const receivers = Array.from(new Set(posts.map((post) => post.user.address)))
+  const addresses = posts.reduce((acc, { user }) => {
+    const { accounts = [] } = user
+    for (const a of accounts) {
+      if (a.providerType === 'WALLET') acc.push(a.providerAccountId)
+    }
+    return acc
+  }, [] as string[])
+  const receivers = Array.from(new Set(addresses))
 
   return (
     <div className="mx-auto sm:max-w-xl flex flex-col gap-10 mt-4">

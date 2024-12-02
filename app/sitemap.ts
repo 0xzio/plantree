@@ -5,16 +5,16 @@ export default async function Sitemap() {
   const headersList = headers()
   const domain = headersList.get('host')
 
-  const posts = await getPosts()
+  // const posts = await getPosts()
 
   return [
     {
       url: `https://${domain}`,
       lastModified: new Date(),
     },
-    ...posts.map(({ slug }) => ({
-      url: `https://${domain}/posts/${slug}`,
-      lastModified: new Date(),
-    })),
+    // ...posts.map(({ slug }) => ({
+    //   url: `https://${domain}/posts/${slug}`,
+    //   lastModified: new Date(),
+    // })),
   ]
 }

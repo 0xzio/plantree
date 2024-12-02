@@ -1,5 +1,6 @@
 import { getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import prisma from '@/lib/prisma'
 import { Metadata } from 'next'
 
 const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PAGE_SIZE || 20)
@@ -20,7 +21,8 @@ export async function generateMetadata({
 }
 
 export const generateStaticParams = async () => {
-  const posts = await getPosts()
+  const site = await prisma.site.findFirst()
+  const posts = site ? await getPosts(site.id) : []
   const totalPages = Math.ceil(posts.length / POSTS_PER_PAGE)
   const paths = Array.from({ length: totalPages }, (_, i) => ({
     page: (i + 1).toString(),
@@ -34,7 +36,8 @@ export default async function Page({
 }: {
   params: { page: string; domain: string }
 }) {
-  const [posts, site] = await Promise.all([getPosts(), getSite(params)])
+  const site = await getSite(params)
+  const posts = await getPosts(site.id)
 
   const pageNumber = parseInt(params.page as string)
   const initialDisplayPosts = posts.slice(
