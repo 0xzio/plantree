@@ -19,7 +19,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
   const pathname = usePathname()
   const { site } = useSite()
   const { spaceId } = site
-  const isBasicMode = site.mode === SiteMode.BASIC
+  const isBasicMode = site?.mode === SiteMode.BASIC
 
   return (
     <div

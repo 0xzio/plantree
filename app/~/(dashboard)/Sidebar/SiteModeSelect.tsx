@@ -21,7 +21,7 @@ export function SiteModeSelect() {
   return (
     <ToggleGroup
       className="h-11 gap-3 rounded-lg bg-accent p-1 text-foreground/80"
-      defaultValue={site.mode}
+      defaultValue={site?.mode}
       onValueChange={async (v) => {
         queryClient.setQueriesData(
           {

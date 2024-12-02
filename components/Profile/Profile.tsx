@@ -34,7 +34,7 @@ export function Profile({}: Props) {
         <>
           <Link
             href={
-              site.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+              site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
             }
           >
             <Button size="sm">Dashboard</Button>
