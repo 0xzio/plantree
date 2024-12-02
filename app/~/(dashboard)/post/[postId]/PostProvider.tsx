@@ -14,15 +14,15 @@ export function PostProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!params?.postId) return
-    if (store.get(postAtom)) return
-
-    loadPost(params?.postId)
+    if (params?.id && store.get(postAtom).id !== params?.id) {
+      loadPost(params?.postId)
+    }
   }, [params?.postId])
 
   if (isPostLoading || !post) {
     return (
       <div className="h-[80vh] flex justify-center items-center">
-        <LoadingDots />
+        <LoadingDots className="bg-foreground/60" />
       </div>
     )
   }

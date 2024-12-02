@@ -68,7 +68,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
     activeNode?.props?.gateType || GateType.FREE,
   )
   const [collectible, setCollectible] = useState(
-    activeNode?.props?.collectible || false,
+    post?.collectible || activeNode?.props?.collectible || false,
   )
   const { isLoading, publishPost } = usePublishPost()
 

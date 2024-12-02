@@ -5,6 +5,7 @@ import LoadingCircle from '@/components/icons/loading-circle'
 import { Button } from '@/components/ui/button'
 import { loadPost } from '@/hooks/usePost'
 import { useSite } from '@/hooks/useSite'
+import { editorDefaultValue } from '@/lib/constants'
 import { api } from '@/lib/trpc'
 import { PostType } from '@prisma/client'
 import { Pen } from 'lucide-react'
@@ -21,6 +22,8 @@ export function CreatePostButton() {
       const post = await api.post.create.mutate({
         siteId: site.id,
         type: PostType.ARTICLE,
+        title: '',
+        content: JSON.stringify(editorDefaultValue),
       })
       await loadPost(post.id)
       push(`/~/post/${post.id}`)

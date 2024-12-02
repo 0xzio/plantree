@@ -17,7 +17,12 @@ export function useCreatePost() {
 
   const createPost = async (type: PostType) => {
     try {
-      const post = await mutateAsync({ type, siteId: id })
+      const post = await mutateAsync({
+        type,
+        siteId: id,
+        title: '',
+        content: '',
+      })
       store.set(postAtom, post as any)
       await refetch()
       // revalidateMetadata('posts')

@@ -58,20 +58,16 @@ export const postRouter = router({
       z.object({
         siteId: z.string(),
         type: z.nativeEnum(PostType),
-        title: z.string().optional(),
+        title: z.string(),
+        content: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const newPost = await prisma.post.create({
+      return prisma.post.create({
         data: {
-          siteId: input.siteId,
           userId: ctx.token.uid,
-          type: input.type,
+          ...input,
         },
-      })
-
-      return prisma.post.findUniqueOrThrow({
-        where: { id: newPost.id },
       })
     }),
 

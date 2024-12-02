@@ -127,7 +127,7 @@ export function CollectDialog({ isLoading, isOpen, setState, post }: Props) {
             {isLoading ? (
               <>
                 <span className="">Collecting</span>
-                <LoadingDots />
+                <LoadingDots className="bg-white" />
               </>
             ) : (
               'Collect'

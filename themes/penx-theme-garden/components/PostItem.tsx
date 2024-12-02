@@ -21,6 +21,7 @@ interface PostItemProps {
 
 export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const { slug, title } = post
+
   const name = getUserName(post.user)
 
   const params = useSearchParams()!
