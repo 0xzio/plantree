@@ -44,7 +44,7 @@ export const postRouter = router({
   }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const post = await prisma.post.findUniqueOrThrow({
+    const post = await prisma.post.findUnique({
       include: {
         postTags: { include: { tag: true } },
       },

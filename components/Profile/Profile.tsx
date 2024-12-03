@@ -1,9 +1,11 @@
 'use client'
 
 import { useSite } from '@/hooks/useSite'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { SiteMode } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import { useAccount } from 'wagmi'
 import LoginButton from '../LoginButton'
 import { Avatar, AvatarFallback } from '../ui/avatar'
@@ -16,6 +18,7 @@ interface Props {}
 export function Profile({}: Props) {
   const { data, status } = useSession()
   const { site } = useSite()
+  const { push } = useRouter()
 
   if (status === 'loading')
     return (
@@ -32,13 +35,20 @@ export function Profile({}: Props) {
       {!authenticated && <LoginButton />}
       {authenticated && (
         <div className="flex items-center gap-2">
-          <Link
-            href={
-              site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
-            }
+          <Button
+            size="sm"
+            onClick={() => {
+              const path =
+                site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+              if (location.host === ROOT_DOMAIN) {
+                push(path)
+                return
+              }
+              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
+            }}
           >
-            <Button size="sm">Dashboard</Button>
-          </Link>
+            Dashboard
+          </Button>
           <ProfilePopover />
         </div>
       )}
