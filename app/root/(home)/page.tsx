@@ -2,6 +2,23 @@ import { Suspense } from 'react'
 import { LaunchButton } from './LaunchButton'
 import { SiteList } from './SiteList'
 
+const appUrl = process.env.NEXT_PUBLIC_URL
+
+const frame = {
+  version: 'next',
+  imageUrl: `${appUrl}/opengraph-image`,
+  button: {
+    title: 'Create my digital garden',
+    action: {
+      type: 'launch_frame',
+      name: 'PenX',
+      url: appUrl,
+      splashImageUrl: `${appUrl}/images/logo-192.png`,
+      splashBackgroundColor: '#f7f7f7',
+    },
+  },
+}
+
 export const dynamic = 'force-static'
 export const revalidate = 3600 * 24 * 365
 

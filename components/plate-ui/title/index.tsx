@@ -41,7 +41,7 @@ export const TitleElement = withRef(
       <div
         {...props.attributes}
         className={cn(
-          'text-foreground/80 relative flex flex-col gap-0 pr-2',
+          'text-foreground/80 relative flex flex-col pr-2',
           isDatabase && 'pl-9',
           isDailyRoot && 'pl-4',
           !isNote && 'mb-4',
