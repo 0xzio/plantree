@@ -71,7 +71,7 @@ export function usePublishPost() {
             abi: creationFactoryAbi,
             functionName: 'create',
             args: [
-              post.slug || node?.id,
+              post?.slug || node?.id,
               precision.token(0.0001024),
               spaceId as Address,
             ],

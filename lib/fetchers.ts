@@ -86,7 +86,7 @@ export async function getPosts(siteId: string) {
           siteId,
           postStatus: PostStatus.PUBLISHED,
         },
-        orderBy: [{ createdAt: 'desc' }],
+        orderBy: [{ publishedAt: 'desc' }],
       })
       return posts.map((post) => ({
         ...post,
