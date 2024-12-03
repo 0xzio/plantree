@@ -22,6 +22,39 @@ export const postRouter = router({
     return posts
   }),
 
+  listSitePosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const posts = await prisma.post.findMany({
+        where: {
+          siteId: input.siteId,
+          postStatus: PostStatus.PUBLISHED,
+        },
+        include: {
+          postTags: { include: { tag: true } },
+          user: {
+            select: {
+              displayName: true,
+              image: true,
+              accounts: {
+                select: {
+                  providerAccountId: true,
+                  providerType: true,
+                },
+              },
+            },
+          },
+        },
+        orderBy: { createdAt: 'desc' },
+      })
+
+      return posts
+    }),
+
   publishedPosts: publicProcedure.query(async ({ ctx, input }) => {
     const posts = await prisma.post.findMany({
       where: { postStatus: PostStatus.PUBLISHED },

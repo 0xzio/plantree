@@ -41,15 +41,15 @@ export class Space {
   }
 
   get ethVolume() {
-    return this.raw.ethVolume
+    return BigInt(this.raw.ethVolume)
   }
 
-  get ethVolumeDetail() {
+  get ethVolumeDecimal() {
     return precision.toDecimal(this.ethVolume)
   }
 
   get ethVolumeFormatted() {
-    return this.ethVolumeDetail.toFixed(4)
+    return this.ethVolumeDecimal.toFixed(4)
   }
 
   get memberCount() {
@@ -114,7 +114,7 @@ export class Space {
   }
 
   getUsdVolume(ethPrice: number) {
-    const usdVolume = this.ethVolumeDetail * ethPrice
+    const usdVolume = this.ethVolumeDecimal * ethPrice
     return {
       usdVolume,
       usdVolumeFormatted: '$' + usdVolume.toFixed(2),

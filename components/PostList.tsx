@@ -117,7 +117,7 @@ export function PostList({ status }: PostListProps) {
   return (
     <div className="grid gap-4">
       {posts.map((post) => {
-        return <PostItem key={post.id} post={post} status={status} />
+        return <PostItem key={post.id} post={post as any} status={status} />
       })}
     </div>
   )
