@@ -56,7 +56,7 @@ export async function getSite(params: any) {
     [`site-${domain}`],
     {
       // revalidate: isProd ? 3600 * 24 : 10,
-      revalidate: 10,
+      revalidate: 60,
       tags: [`site-${domain}`],
     },
   )()
@@ -95,7 +95,8 @@ export async function getPosts(siteId: string) {
     },
     [`posts`],
     {
-      revalidate: isProd ? 3600 * 24 : 10,
+      // revalidate: isProd ? 3600 * 24 : 10,
+      revalidate: 60,
       tags: [`posts`],
     },
   )()
@@ -117,7 +118,8 @@ export async function getPost(slug: string) {
     },
     [`post-${slug}`],
     {
-      revalidate: 3600 * 24, // 15 minutes
+      // revalidate: 3600 * 24, // 15 minutes
+      revalidate: 60,
       tags: [`posts-${slug}`],
     },
   )()
@@ -171,13 +173,13 @@ export async function getSpace(spaceId: string) {
       const response = await ky
         .get(RESPACE_BASE_URI + `/api/get-space?address=${spaceId}`)
         .json<SpaceType>()
-      console.log('---=====>response:', response)
 
       return response
     },
     [`space-${spaceId}`],
     {
-      revalidate: isProd ? 3600 : 10,
+      // revalidate: isProd ? 3600 : 10,
+      revalidate: 60,
       tags: [`space-${spaceId}`],
     },
   )()

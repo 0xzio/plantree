@@ -114,8 +114,6 @@ export const authOptions: NextAuthOptions = {
 
           const account = await initUserByAddress(address.toLowerCase())
 
-          console.log('======user:', account)
-
           updateSubscriptions(account.userId, address as Address)
           return { ...account } as any
         } catch (e) {

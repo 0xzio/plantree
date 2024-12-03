@@ -32,6 +32,7 @@ export function PlanList({ className, align = 'left' }: Props) {
         )}
       >
         {plans.map((item, index) => {
+          if (!item.isActive) return null
           return <PlanItem key={index} plan={item} />
         })}
       </div>

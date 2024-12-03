@@ -31,7 +31,7 @@ export function Profile({}: Props) {
       <ProfileDialog />
       {!authenticated && <LoginButton />}
       {authenticated && (
-        <>
+        <div className="flex items-center gap-2">
           <Link
             href={
               site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
@@ -40,7 +40,7 @@ export function Profile({}: Props) {
             <Button size="sm">Dashboard</Button>
           </Link>
           <ProfilePopover />
-        </>
+        </div>
       )}
     </>
   )

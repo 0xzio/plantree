@@ -14,7 +14,8 @@ export function PostProvider({ children }: PropsWithChildren) {
 
   useEffect(() => {
     if (!params?.postId) return
-    if (params?.id && store.get(postAtom).id !== params?.id) {
+
+    if (params?.postId && store.get(postAtom)?.id !== params?.postId) {
       loadPost(params?.postId)
     }
   }, [params?.postId])

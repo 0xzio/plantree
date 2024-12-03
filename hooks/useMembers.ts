@@ -13,6 +13,7 @@ export function useMembers() {
       enabled: !!space.address,
     },
   })
+  console.log('>>>=======members:', members, space.address)
 
   return { members, ...rest }
 }

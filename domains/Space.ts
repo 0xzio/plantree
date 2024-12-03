@@ -110,7 +110,7 @@ export class Space {
   }
 
   isFounder = (account: Address) => {
-    return this.raw.founder.toLowerCase() === account.toLowerCase()
+    return this.raw.founder.toLowerCase() === account?.toLowerCase()
   }
 
   getUsdVolume(ethPrice: number) {
