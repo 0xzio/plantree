@@ -8,16 +8,17 @@ import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { format } from 'date-fns'
-import { Archive, Edit3Icon, ExternalLink } from 'lucide-react'
+import { Archive, Edit3Icon, ExternalLink, Trash2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { useSiteContext } from './SiteContext'
 
 interface PostItemProps {
+  status: PostStatus
   post: Post
 }
 
-export function PostItem({ post }: PostItemProps) {
+export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
   const { data } = useSession()
   const { subdomain } = useSiteContext()
@@ -30,7 +31,7 @@ export function PostItem({ post }: PostItemProps) {
           target={isPublished ? '_blank' : '_self'}
           href={
             isPublished
-              ? `${location.protocol}//${data?.domain.domain}.${ROOT_DOMAIN}`
+              ? `${location.protocol}//${data?.domain.domain}.${ROOT_DOMAIN}/posts/${post.slug}`
               : `/~/post/${post.id}`
           }
           className="inline-flex items-center hover:scale-105 transition-transform gap-2"
@@ -64,18 +65,35 @@ export function PostItem({ post }: PostItemProps) {
           </Button>
         </Link>
 
-        <Button
-          size="xs"
-          variant="ghost"
-          className="rounded-full text-xs h-7 text-red-500 gap-1 opacity-60"
-          onClick={async () => {
-            await api.post.archive.mutate(post.id)
-            refetch()
-          }}
-        >
-          <Archive size={14}></Archive>
-          <div>Archive</div>
-        </Button>
+        {status !== PostStatus.ARCHIVED && (
+          <Button
+            size="xs"
+            variant="ghost"
+            className="rounded-full text-xs h-7 gap-1 opacity-60"
+            onClick={async () => {
+              await api.post.archive.mutate(post.id)
+              refetch()
+            }}
+          >
+            <Archive size={14}></Archive>
+            <div>Archive</div>
+          </Button>
+        )}
+
+        {status === PostStatus.ARCHIVED && (
+          <Button
+            size="xs"
+            variant="ghost"
+            className="rounded-full text-xs h-7 text-red-500 gap-1 opacity-60"
+            onClick={async () => {
+              await api.post.delete.mutate(post.id)
+              refetch()
+            }}
+          >
+            <Trash2 size={14}></Trash2>
+            <div>Delete</div>
+          </Button>
+        )}
       </div>
     </div>
   )
@@ -84,6 +102,7 @@ export function PostItem({ post }: PostItemProps) {
 interface PostListProps {
   status: PostStatus
 }
+
 export function PostList({ status }: PostListProps) {
   const { data = [], isLoading } = usePosts()
 
@@ -98,7 +117,7 @@ export function PostList({ status }: PostListProps) {
   return (
     <div className="grid gap-4">
       {posts.map((post) => {
-        return <PostItem key={post.id} post={post} />
+        return <PostItem key={post.id} post={post} status={status} />
       })}
     </div>
   )

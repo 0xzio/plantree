@@ -23,6 +23,7 @@ export const NodesProvider = ({ children }: PropsWithChildren) => {
 
       if (!nodes?.length || isNodesBroken(nodes)) {
         const remoteNodes = await api.node.myNodes.query()
+
         if (remoteNodes.length) {
           await db.deleteNodeByUserId()
           for (const node of remoteNodes) {
@@ -52,12 +53,13 @@ export const NodesProvider = ({ children }: PropsWithChildren) => {
     }
   }, [data])
 
-  if (isLoading || !data || !nodes?.length)
+  if (isLoading || !data || !nodes?.length) {
     return (
       <div className="h-screen flex items-center justify-center">
         <LoadingDots />
       </div>
     )
+  }
 
   return <>{children}</>
 }

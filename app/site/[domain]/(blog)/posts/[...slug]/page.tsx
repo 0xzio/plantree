@@ -15,7 +15,8 @@ function getContent(post: Post) {
 }
 
 export const dynamic = 'force-static'
-export const revalidate = 3600 * 24
+// export const revalidate = 3600 * 24
+export const revalidate = 60
 
 export async function generateMetadata({
   params,
@@ -24,6 +25,7 @@ export async function generateMetadata({
   params: any
 }): Promise<Metadata> {
   const slug = decodeURI(params.slug.join('/'))
+
   const post = await getPost(slug)
 
   return {
@@ -48,8 +50,11 @@ export default async function Page({
   const posts = await getPosts(site.id)
   const post = await getPost(slug)
 
+  console.log('=====:slug:', slug, 'post:', post)
+
   const postIndex = posts.findIndex((p) => p.slug === slug)
-  if (postIndex === -1 || !post) {
+  // if (postIndex === -1 || !post) {
+  if (!post) {
     return notFound()
   }
 
