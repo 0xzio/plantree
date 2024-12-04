@@ -15,8 +15,7 @@ function getContent(post: Post) {
 }
 
 export const dynamic = 'force-static'
-// export const revalidate = 3600 * 24
-export const revalidate = 60
+export const revalidate = 3600 * 24
 
 export async function generateMetadata({
   params,

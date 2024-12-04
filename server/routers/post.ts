@@ -236,12 +236,9 @@ export const postRouter = router({
         },
       })
 
-      // revalidatePath('/(blog)/(home)', 'page')
-      // revalidatePath('/(blog)/posts', 'page')
-      // revalidatePath('/(blog)/posts/[...slug]', 'page')
-      // revalidatePath('/(blog)/posts/page/[page]', 'page')
-
       revalidateTag(`${post.siteId}-posts`)
+      revalidateTag(`posts-${post.slug}`)
+      revalidatePath(`/posts/${post.slug}`)
 
       // sync google
       // syncToGoogleDrive(ctx.token.uid, {
@@ -263,6 +260,9 @@ export const postRouter = router({
         where: { id: input },
         data: { postStatus: PostStatus.ARCHIVED },
       })
+
+      revalidateTag(`posts-${post.slug}`)
+      revalidatePath(`/posts/${post.slug}`)
 
       return post
     }),

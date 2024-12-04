@@ -29,36 +29,42 @@ export const commentRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const newComment = await prisma.comment.create({
-        data: {
-          content: input.content,
-          postId: input.postId,
-          userId: ctx.token.uid,
-          parentId: input.parentId || null,
+      return prisma.$transaction(
+        async (tx) => {
+          const newComment = await tx.comment.create({
+            data: {
+              content: input.content,
+              postId: input.postId,
+              userId: ctx.token.uid,
+              parentId: input.parentId || null,
+            },
+          })
+
+          if (input.parentId) {
+            await tx.comment.update({
+              where: { id: input.parentId },
+              data: {
+                replyCount: { increment: 1 },
+              },
+            })
+          } else {
+            const updatedPost = await tx.post.update({
+              where: { id: input.postId },
+              data: {
+                commentCount: { increment: 1 },
+              },
+            })
+
+            revalidatePath(`/posts/${updatedPost.slug}`)
+          }
+
+          return newComment
         },
-      })
-
-      if (input.parentId) {
-        await prisma.comment.update({
-          where: { id: input.parentId },
-          data: {
-            replyCount: { increment: 1 },
-          },
-        })
-      } else {
-        const updatedPost = await prisma.post.update({
-          where: { id: input.postId },
-          data: {
-            commentCount: { increment: 1 },
-          },
-        })
-
-        revalidatePath('/(blog)/(home)', 'page')
-        revalidatePath('/(blog)/posts', 'page')
-        revalidatePath(`/posts/${updatedPost.slug}`)
-      }
-
-      return newComment
+        {
+          maxWait: 5000, // default: 2000
+          timeout: 10000, // default: 5000
+        },
+      )
     }),
 
   listRepliesByCommentId: publicProcedure
@@ -75,11 +81,10 @@ export const commentRouter = router({
           },
         },
         orderBy: { createdAt: 'asc' },
-      });
+      })
 
-      return replies;
+      return replies
     }),
-
 
   // Update an existing comment
   update: protectedProcedure

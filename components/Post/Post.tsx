@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Post as PostType } from '@/hooks/usePost'
+import { Post as PostType, updatePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
 import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
@@ -24,6 +24,13 @@ export function Post({ post }: { post: PostType }) {
 
         try {
           await mutateAsync({
+            id: data.id,
+            title: value.title,
+            content: value.content,
+            description: value.description,
+          })
+
+          updatePost({
             id: data.id,
             title: value.title,
             content: value.content,
