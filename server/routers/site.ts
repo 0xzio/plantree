@@ -1,11 +1,7 @@
+import { editorDefaultValue } from '@/lib/constants'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import {
-  AuthType,
-  SiteMode,
-  StorageProvider,
-  SubdomainType,
-} from '@prisma/client'
+import { AuthType, SiteMode, StorageProvider, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { revalidatePath } from 'next/cache'
 import { z } from 'zod'
@@ -16,7 +12,9 @@ export const siteRouter = router({
     return prisma.site.findMany({
       include: {
         domains: true,
+        channels: true,
       },
+      orderBy: { createdAt: 'asc' },
     })
   }),
 
@@ -28,7 +26,7 @@ export const siteRouter = router({
     })
   }),
 
-  getSite: protectedProcedure
+  byId: protectedProcedure
     .input(z.object({ id: z.string() }))
     .query(async ({ ctx, input }) => {
       return prisma.site.findUniqueOrThrow({
@@ -72,8 +70,8 @@ export const siteRouter = router({
         description: z.string().optional(),
         about: z.string().optional(),
         themeName: z.string().optional(),
-        mode: z.nativeEnum(SiteMode).optional(),
         spaceId: z.string().optional(),
+        mode: z.nativeEnum(SiteMode).optional(),
         socials: z
           .object({
             farcaster: z.string().optional(),

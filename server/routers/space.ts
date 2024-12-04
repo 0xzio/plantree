@@ -91,6 +91,11 @@ export const spaceRouter = router({
               abi: spaceAbi,
               functionName: 'totalSupply',
             },
+            {
+              address: address as Address,
+              abi: spaceAbi,
+              functionName: 'owner',
+            },
           ],
           allowFailure: false,
         }),
@@ -120,6 +125,7 @@ export const spaceRouter = router({
         stakingRevenuePercent: stakingRevenuePercent.toString(),
         symbol: res1[3],
         totalSupply: res1[4].toString(),
+        owner: res1[5],
         ...spaceInfo,
         name: spaceInfo?.name || res1[2] || res2?.name,
       } as SpaceType

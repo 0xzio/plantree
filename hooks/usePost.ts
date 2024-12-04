@@ -61,6 +61,7 @@ export async function loadPost(postId: string) {
 export async function loadPostBySlug(slug: string) {
   store.set(postLoadingAtom, true)
   const post = await api.post.bySlug.query(slug)
-  store.set(postAtom, post!)
+  // TODO:
+  store.set(postAtom, post as any)
   store.set(postLoadingAtom, false)
 }

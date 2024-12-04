@@ -49,7 +49,7 @@ export const postRouter = router({
             },
           },
         },
-        orderBy: { createdAt: 'desc' },
+        orderBy: { publishedAt: 'desc' },
       })
 
       return posts
@@ -78,9 +78,6 @@ export const postRouter = router({
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const post = await prisma.post.findUnique({
-      include: {
-        postTags: { include: { tag: true } },
-      },
       where: { slug: input },
     })
     return post

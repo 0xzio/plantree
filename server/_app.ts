@@ -13,6 +13,7 @@ import { spaceRouter } from './routers/space'
 import { tagRouter } from './routers/tag'
 import { userRouter } from './routers/user'
 import { createCallerFactory, publicProcedure, router } from './trpc'
+import { messageRouter } from './routers/message'
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => 'yay!'),
@@ -24,6 +25,7 @@ export const appRouter = router({
   google: googleRouter,
   accessToken: accessTokenRouter,
   comment: commentRouter,
+  message: messageRouter,
   space: spaceRouter,
   rewards: rewardsRouter,
 })

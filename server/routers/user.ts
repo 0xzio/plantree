@@ -155,4 +155,21 @@ export const userRouter = router({
   ethPrice: publicProcedure.query(({ ctx }) => {
     return getEthPrice()
   }),
+  getUserInfoByUserId: publicProcedure
+    .input(
+      z.object({
+        userId: z.string(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      const user = await prisma.user.findUnique({
+        where: { id: input.userId },
+        select: {
+          id: true,
+          displayName: true,
+          image: true,
+        },
+      })
+      return user
+    }),
 })
