@@ -1,4 +1,3 @@
-import { editorDefaultValue } from '@/lib/constants'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'

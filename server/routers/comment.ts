@@ -24,7 +24,6 @@ export const commentRouter = router({
       z.object({
         postId: z.string(),
         content: z.string(),
-        userId: z.string(),
         parentId: z.string().nullable().optional(),
       }),
     )
@@ -36,11 +35,9 @@ export const commentRouter = router({
               content: input.content,
               postId: input.postId,
               userId: ctx.token.uid,
-              parentId: input.parentId || null,
+              parentId: input.parentId,
             },
           })
-
-          console.log('=====>>>>input:', input, 'newComment:', newComment)
 
           if (input.parentId) {
             await tx.comment.update({
@@ -58,6 +55,7 @@ export const commentRouter = router({
             })
 
             revalidatePath(`/posts/${updatedPost.slug}`)
+            revalidatePath(`/`)
           }
 
           return newComment

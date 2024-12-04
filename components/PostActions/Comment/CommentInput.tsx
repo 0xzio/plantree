@@ -3,7 +3,6 @@ import LoadingDots from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
-import { useAddress } from '@/hooks/useAddress'
 import { trpc } from '@/lib/trpc'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
@@ -32,7 +31,6 @@ export function CommentInput({
   refetchComments,
   onCancel,
 }: Props) {
-  const userID = useAddress()
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
 
@@ -55,7 +53,6 @@ export function CommentInput({
     try {
       await mutateAsync({
         postId,
-        userId: userID as string,
         content,
         parentId,
       })
