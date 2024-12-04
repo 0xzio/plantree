@@ -3,7 +3,7 @@ import { penTokenAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { useReadContract } from 'wagmi'
 
-export function useInkBalance() {
+export function usePenBalance() {
   const address = useAddress()
   return useReadContract({
     address: addressMap.PenToken,

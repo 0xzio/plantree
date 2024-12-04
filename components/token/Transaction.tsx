@@ -11,7 +11,7 @@ import { waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
 import { useAccount, useBalance, useWriteContract } from 'wagmi'
 import LoadingDots from '../icons/loading-dots'
-import { useInkBalance } from './hooks/useInkBalance'
+import { usePenBalance } from './hooks/usePenBalance'
 import { useQueryXYK, useXYK } from './hooks/useXYK'
 import { MintButton } from './MintButton'
 import { TokenInput } from './TokenInput'
@@ -35,7 +35,7 @@ export const Transaction = () => {
   const { isConnected } = useAccount()
   const { writeContractAsync } = useWriteContract()
   const eth = useQueryEthBalance()
-  const inkBalance = useInkBalance()
+  const inkBalance = usePenBalance()
 
   const onMint = async () => {
     setIsLoading(true)

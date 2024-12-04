@@ -1,7 +1,7 @@
 'use client'
 
 import { NumberInput } from '../NumberInput'
-import { InkBalance } from './InkBalance'
+import { PenBalance } from './PenBalance'
 
 interface Props {
   value: string
@@ -38,7 +38,7 @@ export const TokenOut = ({ value }: Props) => {
         <span className="text-lg font-semibold">PEN</span>
       </div>
       <div className="flex justify-end">
-        <InkBalance />
+        <PenBalance />
       </div>
     </div>
   )

@@ -3,7 +3,6 @@
 import { useEthBalance } from '@/hooks/useEthBalance'
 import { precision } from '@/lib/math'
 import { Skeleton } from '../ui/skeleton'
-import { useInkBalance } from './hooks/useInkBalance'
 
 export const EthBalance = () => {
   const { ethBalance } = useEthBalance()

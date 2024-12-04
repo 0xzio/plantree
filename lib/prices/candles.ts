@@ -1,3 +1,4 @@
+import { div, times } from '../math'
 import { Candle, Period, Trade } from '../types'
 import { getCompleteTrades } from './getTrades'
 
@@ -69,12 +70,18 @@ function populateCandleData(
 
   trades.forEach((trade) => {
     const tradeTime = Number(trade.timestamp)
-    const ethAmount = parseFloat(trade.ethAmount) // Convert ETH amount to proper value
-    const tokenAmount = parseFloat(trade.tokenAmount) // Convert token amount to proper value
+    const ethAmount = Number(trade.ethAmount) // Convert ETH amount to proper value
+    const tokenAmount = Number(trade.tokenAmount) // Convert token amount to proper value
+    console.log('=====trade.tokenAmount:', trade.tokenAmount)
 
     if (tokenAmount === 0) return // Skip if token amount is zero
 
-    const tokenPrice = ethAmount / tokenAmount // Calculate token price
+    // const tokenPrice = ethAmount / tokenAmount // Calculate token price
+    const price = times(div(trade.ethAmount, trade.tokenAmount), 3600)
+    console.log('=========price:', price.toString())
+
+    const tokenPrice = price.toNumber()
+
     lastPrice = tokenPrice // Update last price
 
     const candleIndex = Math.floor((tradeTime - startTimestamp) / secondsPeriod)

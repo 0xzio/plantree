@@ -2,10 +2,10 @@
 
 import { precision } from '@/lib/math'
 import { Skeleton } from '../ui/skeleton'
-import { useInkBalance } from './hooks/useInkBalance'
+import { usePenBalance } from './hooks/usePenBalance'
 
-export const InkBalance = () => {
-  const { isLoading, data } = useInkBalance()
+export const PenBalance = () => {
+  const { isLoading, data } = usePenBalance()
   if (isLoading) return <Skeleton></Skeleton>
   return (
     <div className="flex items-center gap-1">
