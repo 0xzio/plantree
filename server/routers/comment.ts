@@ -40,6 +40,8 @@ export const commentRouter = router({
             },
           })
 
+          console.log('=====>>>>input:', input, 'newComment:', newComment)
+
           if (input.parentId) {
             await tx.comment.update({
               where: { id: input.parentId },

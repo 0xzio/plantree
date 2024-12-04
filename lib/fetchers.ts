@@ -23,6 +23,8 @@ export async function getSite(params: any) {
     domain = domain.replace(`.${ROOT_DOMAIN}`, '')
   }
 
+  console.log('===domain:', domain)
+
   return await unstable_cache(
     async () => {
       const { siteId } = await prisma.domain.findUniqueOrThrow({
@@ -56,7 +58,7 @@ export async function getSite(params: any) {
     [`site-${domain}`],
     {
       // revalidate: isProd ? 3600 * 24 : 10,
-      revalidate: 60,
+      revalidate: 3600 * 24,
       tags: [`site-${domain}`],
     },
   )()

@@ -1,9 +1,15 @@
 import { editorDefaultValue } from '@/lib/constants'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import { AuthType, SiteMode, StorageProvider, SubdomainType } from '@prisma/client'
+import { revalidateSite } from '@/lib/revalidateSite'
+import {
+  AuthType,
+  SiteMode,
+  StorageProvider,
+  SubdomainType,
+} from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
@@ -105,13 +111,11 @@ export const siteRouter = router({
       const { id, ...data } = input
       const newSite = await prisma.site.update({
         where: { id },
+        include: { domains: true },
         data,
       })
 
-      revalidatePath('/', 'layout')
-      revalidatePath('/', 'page')
-      revalidatePath('/about/page', 'page')
-      revalidatePath('/~', 'layout')
+      revalidateSite(newSite.domains)
       return newSite
     }),
 
@@ -154,6 +158,11 @@ export const siteRouter = router({
           data: { domain: input.domain },
         })
       }
+
+      const domains = await prisma.domain.findMany({
+        where: { siteId: siteId },
+      })
+      revalidateSite(domains)
 
       return true
     }),
@@ -198,6 +207,11 @@ export const siteRouter = router({
       }
 
       const res = await addDomainToVercel(input.domain)
+
+      const domains = await prisma.domain.findMany({
+        where: { siteId: siteId },
+      })
+      revalidateSite(domains)
       return res
     }),
 })
