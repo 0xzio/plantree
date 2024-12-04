@@ -1,7 +1,7 @@
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { GateType, PostType, Prisma } from '@prisma/client'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
 import { syncToGoogleDrive } from '../lib/syncToGoogleDrive'
@@ -236,21 +236,22 @@ export const postRouter = router({
         },
       })
 
-      revalidatePath('/', 'layout')
       // revalidatePath('/(blog)/(home)', 'page')
-      revalidatePath('/(blog)/posts', 'page')
-      revalidatePath('/(blog)/posts/[...slug]', 'page')
-      revalidatePath('/(blog)/posts/page/[page]', 'page')
+      // revalidatePath('/(blog)/posts', 'page')
+      // revalidatePath('/(blog)/posts/[...slug]', 'page')
+      // revalidatePath('/(blog)/posts/page/[page]', 'page')
+
+      revalidateTag(`${post.siteId}-posts`)
 
       // sync google
-      syncToGoogleDrive(ctx.token.uid, {
-        ...newPost,
-        postStatus: PostStatus.PUBLISHED,
-        collectible,
-        creationId,
-        cid: res.cid,
-        gateType,
-      } as any)
+      // syncToGoogleDrive(ctx.token.uid, {
+      //   ...newPost,
+      //   postStatus: PostStatus.PUBLISHED,
+      //   collectible,
+      //   creationId,
+      //   cid: res.cid,
+      //   gateType,
+      // } as any)
 
       return newPost
     }),

@@ -93,11 +93,10 @@ export async function getPosts(siteId: string) {
         image: getUrl(post.image || ''),
       }))
     },
-    [`posts`],
+    [`${siteId}-posts`],
     {
-      // revalidate: isProd ? 3600 * 24 : 10,
-      revalidate: 60,
-      tags: [`posts`],
+      revalidate: isProd ? 3600 * 24 : 10,
+      tags: [`${siteId}-posts`],
     },
   )()
 }
