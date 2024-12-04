@@ -32,7 +32,6 @@ export const postRouter = router({
       const posts = await prisma.post.findMany({
         where: {
           siteId: input.siteId,
-          postStatus: PostStatus.PUBLISHED,
         },
         include: {
           postTags: { include: { tag: true } },
@@ -55,13 +54,38 @@ export const postRouter = router({
       return posts
     }),
 
-  publishedPosts: publicProcedure.query(async ({ ctx, input }) => {
-    const posts = await prisma.post.findMany({
-      where: { postStatus: PostStatus.PUBLISHED },
-    })
+  publishedPosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const posts = await prisma.post.findMany({
+        where: {
+          siteId: input.siteId,
+          postStatus: PostStatus.PUBLISHED,
+        },
+        include: {
+          postTags: { include: { tag: true } },
+          user: {
+            select: {
+              displayName: true,
+              image: true,
+              accounts: {
+                select: {
+                  providerAccountId: true,
+                  providerType: true,
+                },
+              },
+            },
+          },
+        },
+        orderBy: { publishedAt: 'desc' },
+      })
 
-    return posts
-  }),
+      return posts
+    }),
 
   byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const post = await prisma.post.findUniqueOrThrow({
