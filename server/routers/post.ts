@@ -8,20 +8,6 @@ import { syncToGoogleDrive } from '../lib/syncToGoogleDrive'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const postRouter = router({
-  list: protectedProcedure.query(async ({ ctx, input }) => {
-    const posts = await prisma.post.findMany({
-      where: {
-        //
-      },
-      include: {
-        postTags: { include: { tag: true } },
-      },
-      orderBy: { createdAt: 'desc' },
-    })
-
-    return posts
-  }),
-
   listSitePosts: protectedProcedure
     .input(
       z.object({
@@ -54,7 +40,7 @@ export const postRouter = router({
       return posts
     }),
 
-  publishedPosts: protectedProcedure
+  publishedPosts: publicProcedure
     .input(
       z.object({
         siteId: z.string(),
