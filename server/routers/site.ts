@@ -39,6 +39,22 @@ export const siteRouter = router({
       })
     }),
 
+  listSiteSubdomains: protectedProcedure
+    .input(z.object({ siteId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      return prisma.domain.findMany({
+        where: { siteId: input.siteId, isSubdomain: true },
+      })
+    }),
+
+  mySite: protectedProcedure.query(async ({ input, ctx }) => {
+    const site = await prisma.site.findFirstOrThrow({
+      where: { userId: ctx.token.uid },
+      include: { domains: true },
+    })
+    return site
+  }),
+
   bySubdomain: protectedProcedure
     .input(z.string())
     .query(async ({ input, ctx }) => {
@@ -118,7 +134,7 @@ export const siteRouter = router({
       return newSite
     }),
 
-  customSubdomain: protectedProcedure
+  addSubdomain: protectedProcedure
     .input(
       z.object({
         siteId: z.string(),
@@ -127,42 +143,39 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { siteId } = input
-
-      const domain = await prisma.domain.findUnique({
-        where: {
-          subdomainType: SubdomainType.Custom,
+      const newDomain = await prisma.domain.create({
+        data: {
           domain: input.domain,
           isSubdomain: true,
+          subdomainType: SubdomainType.Custom,
+          siteId,
         },
       })
-
-      if (!domain) {
-        await prisma.domain.create({
-          data: {
-            domain: input.domain,
-            isSubdomain: true,
-            siteId,
-          },
-        })
-      } else {
-        if (siteId !== domain.siteId) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Domain already exists.',
-          })
-        }
-
-        await prisma.domain.update({
-          where: { id: domain.id },
-          data: { domain: input.domain },
-        })
-      }
 
       const domains = await prisma.domain.findMany({
         where: { siteId: siteId },
       })
       revalidateSite(domains)
 
+      return newDomain
+    }),
+
+  deleteSubdomain: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        domainId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.domain.delete({
+        where: { id: input.domainId },
+      })
+
+      const domains = await prisma.domain.findMany({
+        where: { siteId: input.siteId },
+      })
+      revalidateSite(domains)
       return true
     }),
 

@@ -7,10 +7,10 @@ export function useSite() {
   const { data, ...rest } = useQuery({
     queryKey: ['site', session?.domain?.domain!],
     queryFn: async () => {
-      return api.site.bySubdomain.query(session?.domain?.domain!)
+      return api.site.mySite.query()
     },
 
-    enabled: !!session?.domain,
+    enabled: !!session,
   })
   return { site: data!, ...rest }
 }

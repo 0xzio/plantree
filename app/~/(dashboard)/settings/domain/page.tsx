@@ -7,6 +7,7 @@ import { getSiteCustomDomain } from '@/lib/getSiteDomain'
 import { CustomDomainForm } from './CustomDomainForm'
 import { DomainConfiguration } from './DomainConfiguration'
 import { SubdomainDomainForm } from './SubdomainDomainForm'
+import { SubdomainList } from './SubdomainList'
 
 export const dynamic = 'force-static'
 
@@ -25,6 +26,10 @@ export default function Page() {
   return (
     <div className="space-y-8">
       <SubdomainDomainForm site={site!} />
+      <div>
+        <div className="mt-2 mb-3 text-2xl font-bold">Subdomains</div>
+        <SubdomainList site={site!} />
+      </div>
       <Separator></Separator>
       <CustomDomainForm site={site!} />
       {customDomain && <DomainConfiguration domain={customDomain} />}

@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
@@ -19,11 +20,14 @@ import { getSiteSubdomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Site } from '@prisma/client'
+import { slug } from 'github-slugger'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
 const FormSchema = z.object({
-  domain: z.string(),
+  domain: z.string().min(2, {
+    message: 'Subdomain should be at least 2 characters long.',
+  }),
 })
 
 interface Props {
@@ -31,8 +35,11 @@ interface Props {
 }
 
 export function SubdomainDomainForm({ site }: Props) {
-  const { refetch } = useSite()
-  const { isPending, mutateAsync } = trpc.site.customSubdomain.useMutation()
+  const { isPending, mutateAsync } = trpc.site.addSubdomain.useMutation()
+
+  const { refetch } = trpc.site.listSiteSubdomains.useQuery({
+    siteId: site.id,
+  })
 
   const subdomain = getSiteSubdomain(site)
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -42,6 +49,14 @@ export function SubdomainDomainForm({ site }: Props) {
     resolver: zodResolver(FormSchema),
   })
 
+  const domain = form.watch('domain')
+
+  useEffect(() => {
+    if (domain !== slug(domain)) {
+      form.setValue('domain', slug(domain))
+    }
+  }, [domain, form])
+
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await mutateAsync({
@@ -49,7 +64,7 @@ export function SubdomainDomainForm({ site }: Props) {
         domain: data.domain,
       })
       refetch()
-      toast.success('Updated successfully!')
+      toast.success('Add subdomain successfully!')
     } catch (error) {
       console.log('========error:', error)
       const msg = extractErrorMessage(error)
@@ -60,7 +75,7 @@ export function SubdomainDomainForm({ site }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="text-2xl font-bold">Subdomain</div>
+        <div className="text-2xl font-bold">Add subdomain</div>
 
         <FormField
           control={form.control}
@@ -89,8 +104,8 @@ export function SubdomainDomainForm({ site }: Props) {
           )}
         />
 
-        <Button type="submit" className="w-24" disabled={isPending}>
-          {isPending ? <LoadingDots /> : 'Submit'}
+        <Button type="submit" className="w-32" disabled={isPending}>
+          {isPending ? <LoadingDots /> : 'Add subdomain'}
         </Button>
       </form>
     </Form>

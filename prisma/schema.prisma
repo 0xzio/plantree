@@ -376,6 +376,7 @@ model Cid {
 }
 
 enum SubdomainType {
+  None
   Custom
   EnsName
   FarcasterName
@@ -387,7 +388,7 @@ model Domain {
   id            String        @id @default(uuid()) @db.Uuid
   domain        String        @unique
   isSubdomain   Boolean       @default(true)
-  subdomainType SubdomainType @default(Custom)
+  subdomainType SubdomainType @default(None)
   disabled      Boolean       @default(false)
   site          Site          @relation(fields: [siteId], references: [id])
   siteId        String        @db.Uuid
