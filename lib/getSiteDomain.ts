@@ -49,8 +49,8 @@ function sortDomains(domains: Domain[]): Domain[] {
   ]
 
   return domains.sort((a, b) => {
-    const indexA = sortKeys.indexOf(a.subdomainType)
-    const indexB = sortKeys.indexOf(b.subdomainType)
+    const indexA = sortKeys.indexOf(a.subdomainType as any)
+    const indexB = sortKeys.indexOf(b.subdomainType as any)
 
     // If both types are found in sortKeys, sort by their indices
     if (indexA !== -1 && indexB !== -1) {

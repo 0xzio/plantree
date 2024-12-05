@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
@@ -23,7 +24,12 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const FormSchema = z.object({
-  domain: z.string(),
+  domain: z
+    .string()
+    .regex(
+      /^[a-zA-Z0-9]+([\-\.]{1}[a-zA-Z0-9]+)*\.[a-zA-Z]{2,6}$/,
+      'Invalid domain format',
+    ),
 })
 
 interface Props {
@@ -42,6 +48,14 @@ export function CustomDomainForm({ site }: Props) {
     },
     resolver: zodResolver(FormSchema),
   })
+
+  const domain = form.watch('domain')
+
+  useEffect(() => {
+    if (domain !== domain.toLowerCase()) {
+      form.setValue('domain', domain.toLowerCase())
+    }
+  }, [domain, form])
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
@@ -70,7 +84,7 @@ export function CustomDomainForm({ site }: Props) {
               <FormLabel>Custom domain</FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Pathname"
+                  placeholder=""
                   pattern="[a-zA-Z0-9\-\.]+"
                   maxLength={100}
                   {...field}

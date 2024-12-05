@@ -8,7 +8,6 @@ import {
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import { revalidatePath, revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
@@ -189,14 +188,28 @@ export const siteRouter = router({
     .mutation(async ({ ctx, input }) => {
       const { siteId } = input
 
-      const domain = await prisma.domain.findUnique({
+      const customDomain = await prisma.domain.findFirst({
         where: {
-          domain: input.domain,
           isSubdomain: false,
+          siteId: input.siteId,
         },
       })
 
-      if (!domain) {
+      if (customDomain) {
+        await prisma.domain.update({
+          where: { id: customDomain.id },
+          data: { domain: input.domain },
+        })
+
+        const res = await addDomainToVercel(input.domain)
+        const domains = await prisma.domain.findMany({
+          where: { siteId: siteId },
+        })
+        revalidateSite(domains)
+        return
+      }
+
+      try {
         await prisma.domain.create({
           data: {
             domain: input.domain,
@@ -204,26 +217,21 @@ export const siteRouter = router({
             siteId,
           },
         })
-      } else {
-        if (siteId !== domain.siteId) {
-          throw new TRPCError({
-            code: 'BAD_REQUEST',
-            message: 'Domain already exists.',
-          })
-        }
 
-        await prisma.domain.update({
-          where: { id: domain.id },
-          data: { domain: input.domain },
+        const res = await addDomainToVercel(input.domain)
+
+        const domains = await prisma.domain.findMany({
+          where: { siteId: siteId },
+        })
+        revalidateSite(domains)
+        return res
+      } catch (error) {
+        console.log('===error:', error)
+
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Domain is already taken',
         })
       }
-
-      const res = await addDomainToVercel(input.domain)
-
-      const domains = await prisma.domain.findMany({
-        where: { siteId: siteId },
-      })
-      revalidateSite(domains)
-      return res
     }),
 })

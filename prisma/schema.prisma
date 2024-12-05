@@ -393,6 +393,7 @@ model Domain {
   site          Site          @relation(fields: [siteId], references: [id])
   siteId        String        @db.Uuid
 
+  @@index([siteId])
   @@map("domain")
 }
 
