@@ -16,6 +16,10 @@ import {
 import { SpaceType } from './types'
 import { getUrl } from './utils'
 
+const REVALIDATE_TIME = process.env.REVALIDATE_TIME
+  ? Number(process.env.REVALIDATE_TIME)
+  : 3600
+
 export async function getSite(params: any) {
   let domain = decodeURIComponent(params.domain)
 
@@ -58,36 +62,10 @@ export async function getSite(params: any) {
     [`site-${domain}`],
     {
       // revalidate: isProd ? 3600 * 24 : 10,
-      revalidate: 3600 * 24,
+      revalidate: REVALIDATE_TIME,
       tags: [`site-${domain}`],
     },
   )()
-}
-
-function findManyPosts(siteId: string) {
-  return prisma.post.findMany({
-    include: {
-      postTags: { include: { tag: true } },
-      user: {
-        select: {
-          accounts: {
-            select: {
-              providerAccountId: true,
-              providerType: true,
-            },
-          },
-          email: true,
-          name: true,
-          image: true,
-        },
-      },
-    },
-    where: {
-      siteId,
-      postStatus: PostStatus.PUBLISHED,
-    },
-    orderBy: [{ publishedAt: 'desc' }],
-  })
 }
 
 export async function getPosts(siteId: string) {
@@ -99,6 +77,7 @@ export async function getPosts(siteId: string) {
           where: { id: siteId },
           select: { userId: true },
         })
+
         const post = await prisma.post.findUnique({
           where: { id: process.env.WELCOME_POST_ID },
         })
@@ -126,7 +105,7 @@ export async function getPosts(siteId: string) {
     },
     [`${siteId}-posts`],
     {
-      revalidate: isProd ? 3600 * 24 : 10,
+      revalidate: isProd ? REVALIDATE_TIME : 10,
       tags: [`${siteId}-posts`],
     },
   )()
@@ -150,7 +129,7 @@ export async function getPost(slug: string) {
     },
     [`post-${slug}`],
     {
-      revalidate: 3600 * 24, // 15 minutes
+      revalidate: REVALIDATE_TIME,
       tags: [`posts-${slug}`],
     },
   )()
@@ -163,7 +142,7 @@ export async function getTags() {
     },
     [`tags`],
     {
-      revalidate: 3600,
+      revalidate: REVALIDATE_TIME,
       tags: [`tags`],
     },
   )()
@@ -179,7 +158,7 @@ export async function getTagWithPost(name: string) {
     },
     [`tags-${name}`],
     {
-      revalidate: 3600,
+      revalidate: REVALIDATE_TIME,
       tags: [`tags-${name}`],
     },
   )()
@@ -243,4 +222,30 @@ export async function getSpaceIds() {
       tags: ['space-ids'],
     },
   )()
+}
+
+function findManyPosts(siteId: string) {
+  return prisma.post.findMany({
+    include: {
+      postTags: { include: { tag: true } },
+      user: {
+        select: {
+          accounts: {
+            select: {
+              providerAccountId: true,
+              providerType: true,
+            },
+          },
+          email: true,
+          name: true,
+          image: true,
+        },
+      },
+    },
+    where: {
+      siteId,
+      postStatus: PostStatus.PUBLISHED,
+    },
+    orderBy: [{ publishedAt: 'desc' }],
+  })
 }

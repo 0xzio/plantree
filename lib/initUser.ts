@@ -1,12 +1,36 @@
 import { editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser } from '@/lib/types'
-import { ProviderType, SubdomainType } from '@prisma/client'
+import {
+  PostStatus,
+  PostType,
+  ProviderType,
+  SubdomainType,
+} from '@prisma/client'
 import ky from 'ky'
 
 export function getAddress(account: AccountWithUser) {
   if (account.providerType !== ProviderType.WALLET) return ''
   return account.providerAccountId || ''
+}
+
+async function initPost(userId: string, siteId: string) {
+  const post = await prisma.post.findUnique({
+    where: { id: process.env.WELCOME_POST_ID },
+  })
+
+  if (post) {
+    await prisma.post.create({
+      data: {
+        userId,
+        siteId,
+        type: PostType.ARTICLE,
+        title: post.title,
+        content: post.content,
+        postStatus: PostStatus.PUBLISHED,
+      },
+    })
+  }
 }
 
 export async function initUserByAddress(address: string) {
@@ -75,6 +99,8 @@ export async function initUserByAddress(address: string) {
           },
         },
       })
+
+      await initPost(newUser.id, site.id)
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: address },
@@ -174,6 +200,8 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           },
         },
       })
+
+      await initPost(newUser.id, site.id)
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: info.openid },
@@ -333,6 +361,8 @@ export async function initUserByFarcasterId(fid: string) {
           },
         },
       })
+
+      await initPost(newUser.id, site.id)
 
       return tx.user.findUnique({
         where: { id: newUser.id },
