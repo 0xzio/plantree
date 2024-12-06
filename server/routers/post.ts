@@ -1,5 +1,6 @@
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { getUrl } from '@/lib/utils'
 import { GateType, PostType, Prisma } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
@@ -15,29 +16,37 @@ export const postRouter = router({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const posts = await prisma.post.findMany({
-        where: {
-          siteId: input.siteId,
-        },
-        include: {
-          postTags: { include: { tag: true } },
-          user: {
-            select: {
-              displayName: true,
-              image: true,
-              accounts: {
-                select: {
-                  providerAccountId: true,
-                  providerType: true,
-                },
-              },
-            },
-          },
-        },
-        orderBy: { publishedAt: 'desc' },
-      })
+      const { siteId } = input
+      let posts = await findSitePosts(siteId)
+      if (!posts.length) {
+        const { userId } = await prisma.site.findUniqueOrThrow({
+          where: { id: siteId },
+          select: { userId: true },
+        })
+        const post = await prisma.post.findUnique({
+          where: { id: process.env.WELCOME_POST_ID },
+        })
 
-      return posts
+        if (post) {
+          await prisma.post.create({
+            data: {
+              userId,
+              siteId,
+              type: PostType.ARTICLE,
+              title: post.title,
+              content: post.content,
+              postStatus: PostStatus.PUBLISHED,
+            },
+          })
+
+          posts = await findSitePosts(siteId)
+        }
+      }
+
+      return posts.map((post) => ({
+        ...post,
+        image: getUrl(post.image || ''),
+      }))
     }),
 
   publishedPosts: publicProcedure
@@ -47,30 +56,38 @@ export const postRouter = router({
       }),
     )
     .query(async ({ ctx, input }) => {
-      const posts = await prisma.post.findMany({
-        where: {
-          siteId: input.siteId,
-          postStatus: PostStatus.PUBLISHED,
-        },
-        include: {
-          postTags: { include: { tag: true } },
-          user: {
-            select: {
-              displayName: true,
-              image: true,
-              accounts: {
-                select: {
-                  providerAccountId: true,
-                  providerType: true,
-                },
-              },
-            },
-          },
-        },
-        orderBy: { publishedAt: 'desc' },
-      })
+      const { siteId } = input
+      let posts = await findSitePosts(siteId)
 
-      return posts
+      if (!posts.length) {
+        const { userId } = await prisma.site.findUniqueOrThrow({
+          where: { id: siteId },
+          select: { userId: true },
+        })
+        const post = await prisma.post.findUnique({
+          where: { id: process.env.WELCOME_POST_ID },
+        })
+
+        if (post) {
+          await prisma.post.create({
+            data: {
+              userId,
+              siteId,
+              type: PostType.ARTICLE,
+              title: post.title,
+              content: post.content,
+              postStatus: PostStatus.PUBLISHED,
+            },
+          })
+
+          posts = await findSitePosts(siteId)
+        }
+      }
+
+      return posts.map((post) => ({
+        ...post,
+        image: getUrl(post.image || ''),
+      }))
     }),
 
   byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
@@ -287,3 +304,25 @@ export const postRouter = router({
       return post
     }),
 })
+
+function findSitePosts(siteId: string) {
+  return prisma.post.findMany({
+    where: { siteId },
+    include: {
+      postTags: { include: { tag: true } },
+      user: {
+        select: {
+          displayName: true,
+          image: true,
+          accounts: {
+            select: {
+              providerAccountId: true,
+              providerType: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { publishedAt: 'desc' },
+  })
+}

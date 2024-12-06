@@ -112,7 +112,7 @@ export const ProfilePopover = memo(function ProfilePopover({
             className="cursor-pointer"
             onClick={() => {
               const path =
-                site.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+                site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
               if (location.host === ROOT_DOMAIN) {
                 push(path)
                 return

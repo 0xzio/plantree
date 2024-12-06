@@ -5,19 +5,13 @@ import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
-import {
-  // Inter as FontSans,
-  // Merienda,
-  Philosopher,
-  Poppins,
-  // Yeseva_One,
-} from 'next/font/google'
+import { Poppins, Roboto } from 'next/font/google'
 import { headers } from 'next/headers'
 import NextTopLoader from 'nextjs-toploader'
 import { Providers } from './providers'
 
-const poppins = Poppins({
-  weight: ['400', '500', '600', '700', '800', '900'],
+const roboto = Poppins({
+  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
   subsets: ['latin'],
   display: 'swap',
 })
@@ -61,12 +55,7 @@ export default async function RootLayout({
       <body
         className={cn(
           'min-h-screen bg-background antialiased',
-          // cal.variable,
-          // inter.variable,
-          // fontSans.variable,
-          // 'bg-zinc-50 dark:bg-zinc-900',
-          // 'bg-orange-50',
-          poppins.className,
+          roboto.className,
         )}
       >
         <NextTopLoader

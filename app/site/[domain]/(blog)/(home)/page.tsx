@@ -30,7 +30,6 @@ export default async function HomePage({
   // console.log('======site:', site)
 
   const posts = await getPosts(site.id)
-  // console.log('====posts:', posts)
 
   const { HomePage } = loadTheme(site.themeName)
 

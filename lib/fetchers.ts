@@ -1,5 +1,7 @@
 import prisma from '@/lib/prisma'
+import { post } from '@farcaster/auth-client'
 import { Site } from '@penxio/types'
+import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
 import ky from 'ky'
 import { unstable_cache } from 'next/cache'
@@ -62,32 +64,61 @@ export async function getSite(params: any) {
   )()
 }
 
-export async function getPosts(siteId: string) {
-  return await unstable_cache(
-    async () => {
-      const posts = await prisma.post.findMany({
-        include: {
-          postTags: { include: { tag: true } },
-          user: {
+function findManyPosts(siteId: string) {
+  return prisma.post.findMany({
+    include: {
+      postTags: { include: { tag: true } },
+      user: {
+        select: {
+          accounts: {
             select: {
-              accounts: {
-                select: {
-                  providerAccountId: true,
-                  providerType: true,
-                },
-              },
-              email: true,
-              name: true,
-              image: true,
+              providerAccountId: true,
+              providerType: true,
             },
           },
+          email: true,
+          name: true,
+          image: true,
         },
-        where: {
-          siteId,
-          postStatus: PostStatus.PUBLISHED,
-        },
-        orderBy: [{ publishedAt: 'desc' }],
-      })
+      },
+    },
+    where: {
+      siteId,
+      postStatus: PostStatus.PUBLISHED,
+    },
+    orderBy: [{ publishedAt: 'desc' }],
+  })
+}
+
+export async function getPosts(siteId: string) {
+  const posts = await unstable_cache(
+    async () => {
+      let posts = await findManyPosts(siteId)
+      if (!posts.length) {
+        const { userId } = await prisma.site.findUniqueOrThrow({
+          where: { id: siteId },
+          select: { userId: true },
+        })
+        const post = await prisma.post.findUnique({
+          where: { id: process.env.WELCOME_POST_ID },
+        })
+
+        if (post) {
+          await prisma.post.create({
+            data: {
+              userId,
+              siteId,
+              type: PostType.ARTICLE,
+              title: post.title,
+              content: post.content,
+              postStatus: PostStatus.PUBLISHED,
+            },
+          })
+
+          posts = await findManyPosts(siteId)
+        }
+      }
+
       return posts.map((post) => ({
         ...post,
         image: getUrl(post.image || ''),
@@ -99,6 +130,8 @@ export async function getPosts(siteId: string) {
       tags: [`${siteId}-posts`],
     },
   )()
+
+  return posts
 }
 
 export async function getPost(slug: string) {

@@ -4,7 +4,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { useAddress } from '@/hooks/useAddress'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { trpc } from '@/lib/trpc'
-import { cn } from '@/lib/utils'
+import { cn, isAddress } from '@/lib/utils'
 import { ChevronDown, Copy } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
@@ -37,11 +37,12 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
     const address = useAddress()
     const { data: session } = useSession()
     const shortAddress = address.slice(0, 6) + '...' + address.slice(-4)
-    const { data } = trpc.user.me.useQuery(undefined, {
-      enabled: !!session,
-    })
     const { copy } = useCopyToClipboard()
-    const ensName = data?.name
+    let username = session?.user?.name || ''
+
+    if (isAddress(username)) {
+      username = username.slice(0, 3) + '...' + username.slice(-4)
+    }
 
     return (
       <div
@@ -56,15 +57,15 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
         {(showEnsName || showAddress) && address && (
           <>
             <div>
-              {showEnsName && ensName && (
-                <div className="text-base">{ensName}</div>
+              {showEnsName && username && (
+                <div className="text-base">{username}</div>
               )}
               {showAddress && address && (
                 <div className="flex gap-2 items-center">
                   <div
                     className={cn(
                       'text-sm',
-                      showEnsName && ensName && 'text-xs text-foreground/60',
+                      showEnsName && username && 'text-xs text-foreground/60',
                     )}
                   >
                     {shortAddress}
@@ -84,7 +85,6 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
             </div>
           </>
         )}
-
         {showDropIcon && <ChevronDown size={14} />}
       </div>
     )

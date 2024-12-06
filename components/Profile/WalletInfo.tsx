@@ -37,7 +37,7 @@ export function WalletInfo() {
         <div className="text-sm text-foreground/60">$ETH</div>
         <div>
           {typeof data !== 'undefined' &&
-            `${precision.toDecimal(data.value).toFixed(5)}`}
+            `${precision.toDecimal(data.value).toFixed(5) || '0'}`}
         </div>
       </div>
 
@@ -45,7 +45,7 @@ export function WalletInfo() {
         <div className="text-sm text-foreground/60">$PEN</div>
         <div>
           {typeof data !== 'undefined' &&
-            `${precision.toDecimal(penBalance).toFixed(0)}`}
+            `${precision.toDecimal(penBalance).toFixed(0) || 0}`}
         </div>
       </div>
     </div>
