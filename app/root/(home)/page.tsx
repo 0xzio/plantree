@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Metadata } from 'next'
 import { LaunchButton } from './LaunchButton'
 import { SiteList } from './SiteList'
 
@@ -21,6 +22,19 @@ const frame = {
 
 export const dynamic = 'force-static'
 export const revalidate = 3600 * 24 * 365
+
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'PenX',
+    openGraph: {
+      title: 'PenX',
+      description: 'Build digital garden for creators',
+    },
+    other: {
+      'fc:frame': JSON.stringify(frame),
+    },
+  }
+}
 
 export default async function HomePage() {
   return (
