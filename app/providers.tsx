@@ -1,6 +1,7 @@
 'use client'
 
 import { Suspense } from 'react'
+import { FrameProvider } from '@/components/FrameProvider'
 import { GoogleOauthDialog } from '@/components/GoogleOauthDialog/GoogleOauthDialog'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
@@ -47,13 +48,15 @@ export function Providers({
         >
           <WagmiProvider config={wagmiConfig}>
             <QueryClientProvider client={queryClient}>
-              <RainbowKitSiweNextAuthProvider
-                getSiweMessageOptions={getSiweMessageOptions}
-              >
-                <RainbowKitProvider>
-                  <StoreProvider>{children}</StoreProvider>
-                </RainbowKitProvider>
-              </RainbowKitSiweNextAuthProvider>
+              <FrameProvider>
+                <RainbowKitSiweNextAuthProvider
+                  getSiweMessageOptions={getSiweMessageOptions}
+                >
+                  <RainbowKitProvider>
+                    <StoreProvider>{children}</StoreProvider>
+                  </RainbowKitProvider>
+                </RainbowKitSiweNextAuthProvider>
+              </FrameProvider>
             </QueryClientProvider>
           </WagmiProvider>
         </AuthKitProvider>
