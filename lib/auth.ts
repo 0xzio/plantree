@@ -117,7 +117,7 @@ export const authOptions: NextAuthOptions = {
           updateSubscriptions(account.userId, address as Address)
           return { ...account } as any
         } catch (e) {
-          // console.log('e======:', e)
+          console.log('wallet auth error======:', e)
           return null
         }
       },

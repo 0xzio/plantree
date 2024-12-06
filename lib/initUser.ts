@@ -14,25 +14,6 @@ export function getAddress(account: AccountWithUser) {
   return account.providerAccountId || ''
 }
 
-async function initPost(userId: string, siteId: string) {
-  const post = await prisma.post.findUnique({
-    where: { id: process.env.WELCOME_POST_ID },
-  })
-
-  if (post) {
-    await prisma.post.create({
-      data: {
-        userId,
-        siteId,
-        type: PostType.ARTICLE,
-        title: post.title,
-        content: post.content,
-        postStatus: PostStatus.PUBLISHED,
-      },
-    })
-  }
-}
-
 export async function initUserByAddress(address: string) {
   return prisma.$transaction(
     async (tx) => {
@@ -100,7 +81,22 @@ export async function initUserByAddress(address: string) {
         },
       })
 
-      await initPost(newUser.id, site.id)
+      const post = await tx.post.findUnique({
+        where: { id: process.env.WELCOME_POST_ID },
+      })
+
+      if (post) {
+        await tx.post.create({
+          data: {
+            userId: newUser.id,
+            siteId: site.id,
+            type: PostType.ARTICLE,
+            title: post.title,
+            content: post.content,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+      }
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: address },
@@ -201,7 +197,22 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         },
       })
 
-      await initPost(newUser.id, site.id)
+      const post = await tx.post.findUnique({
+        where: { id: process.env.WELCOME_POST_ID },
+      })
+
+      if (post) {
+        await tx.post.create({
+          data: {
+            userId: newUser.id,
+            siteId: site.id,
+            type: PostType.ARTICLE,
+            title: post.title,
+            content: post.content,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+      }
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: info.openid },
@@ -362,7 +373,22 @@ export async function initUserByFarcasterId(fid: string) {
         },
       })
 
-      await initPost(newUser.id, site.id)
+      const post = await tx.post.findUnique({
+        where: { id: process.env.WELCOME_POST_ID },
+      })
+
+      if (post) {
+        await tx.post.create({
+          data: {
+            userId: newUser.id,
+            siteId: site.id,
+            type: PostType.ARTICLE,
+            title: post.title,
+            content: post.content,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+      }
 
       return tx.user.findUnique({
         where: { id: newUser.id },
