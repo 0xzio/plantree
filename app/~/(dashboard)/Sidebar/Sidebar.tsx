@@ -16,7 +16,7 @@ interface SidebarProps {
   bordered?: boolean
 }
 export const Sidebar = ({ bordered = true }: SidebarProps) => {
-  const pathname = usePathname()
+  const pathname = usePathname()!
   const { site } = useSite()
   const { spaceId } = site
   const isBasicMode = site?.mode === SiteMode.BASIC
@@ -76,7 +76,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
 
         <Link href="/~/posts">
           <SidebarItem
-            isActive={pathname === '/~/posts'}
+            isActive={pathname.startsWith('/~/posts')}
             icon={<Feather size={18} />}
             label="Posts"
           >

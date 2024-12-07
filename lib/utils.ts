@@ -1,5 +1,7 @@
+import { ProviderType } from '@prisma/client'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { AccountWithUser } from './types'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -138,4 +140,9 @@ export function isIOS(): boolean {
 
 export function isMobile(): boolean {
   return isAndroid() || isIOS()
+}
+
+export function getAccountAddress(account: AccountWithUser) {
+  if (account.providerType !== ProviderType.WALLET) return ''
+  return account.providerAccountId || ''
 }

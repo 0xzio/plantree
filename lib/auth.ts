@@ -17,12 +17,12 @@ import {
   type SiweMessage,
 } from 'viem/siwe'
 import {
-  getAddress,
   initUserByAddress,
   initUserByFarcasterFrame,
   initUserByFarcasterInfo,
   initUserByGoogleInfo,
 } from './initUser'
+import { getAccountAddress } from './utils'
 
 export type UserData = {
   user: FarcasterUser
@@ -334,7 +334,7 @@ export const authOptions: NextAuthOptions = {
         // console.log('=====sessionUser:', sessionUser)
 
         token.uid = sessionAccount.userId
-        token.address = getAddress(sessionAccount)
+        token.address = getAccountAddress(sessionAccount)
         token.ensName = sessionAccount.user?.ensName as string
         token.name = sessionAccount.user.name as string
         token.domain = getSiteDomain(sessionAccount.user.sites[0])
@@ -382,7 +382,6 @@ export const authOptions: NextAuthOptions = {
       session.userId = token.uid as string
       session.address = token.address as string
       session.name = token.name as string
-      session.ensName = token.ensName as string
       session.domain = token.domain as any
       session.siteId = token.siteId as any
       session.subscriptions = token.subscriptions as any

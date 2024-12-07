@@ -9,11 +9,6 @@ import {
 } from '@prisma/client'
 import ky from 'ky'
 
-export function getAddress(account: AccountWithUser) {
-  if (account.providerType !== ProviderType.WALLET) return ''
-  return account.providerAccountId || ''
-}
-
 export async function initUserByAddress(address: string) {
   return prisma.$transaction(
     async (tx) => {

@@ -32,8 +32,8 @@ export function Providers({
 }) {
   return (
     <SessionProvider refetchInterval={0}>
-      <Toaster className="dark:hidden" />
-      <Toaster theme="dark" className="hidden dark:block" />
+      <Toaster className="dark:hidden" richColors />
+      <Toaster theme="dark" className="hidden dark:block" richColors />
       <Suspense>
         <GoogleOauthDialog />
       </Suspense>
