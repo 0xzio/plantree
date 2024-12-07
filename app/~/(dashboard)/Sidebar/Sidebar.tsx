@@ -7,6 +7,8 @@ import { Calendar, Feather, Settings } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
+import { LinkGoogleEntry } from './LinkGoogleEntry'
+import { LinkWalletEntry } from './LinkWalletEntry'
 import { NodesBox } from './NodesBox'
 import { SidebarItem } from './SidebarItem'
 import { SiteModeSelect } from './SiteModeSelect'
@@ -97,6 +99,8 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           />
         </Link>
         {!spaceId && <EnableWeb3Entry />}
+        <LinkGoogleEntry />
+        <LinkWalletEntry />
       </div>
 
       <div className="flex-1 z-10 overflow-auto px-2">
