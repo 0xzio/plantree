@@ -55,6 +55,7 @@ declare module 'next-auth' {
   interface Session {
     address: string
     name: string
+    picture: string
     userId: string
     ensName: string | null
     role: string
@@ -337,6 +338,7 @@ export const authOptions: NextAuthOptions = {
         token.address = getAccountAddress(sessionAccount)
         token.ensName = sessionAccount.user?.ensName as string
         token.name = sessionAccount.user.name as string
+        token.picture = sessionAccount.user.image as string
         token.domain = getSiteDomain(sessionAccount.user.sites[0])
         token.siteId = sessionAccount.user?.sites[0]?.id
 
@@ -382,6 +384,7 @@ export const authOptions: NextAuthOptions = {
       session.userId = token.uid as string
       session.address = token.address as string
       session.name = token.name as string
+      session.picture = token.picture as string
       session.domain = token.domain as any
       session.siteId = token.siteId as any
       session.subscriptions = token.subscriptions as any

@@ -63,6 +63,23 @@ export default function Page() {
             <CardDescription>Login with Google or Web3 Wallets</CardDescription>
           </CardHeader>
           <CardContent className="space-y-6">
+            <div className="space-y-1">
+              {/* <div className="text-foreground/40">Web2 login</div> */}
+              <GoogleOauthButton
+                variant="secondary"
+                size="lg"
+                className="w-full"
+              />
+            </div>
+            <div className="space-y-1">
+              {/* <div className="text-foreground/40">Wallet login</div> */}
+              <WalletConnectButton size="lg" className="w-full">
+                <span className="i-[token--ethm] w-6 h-5"></span>
+                <span>Wallet login </span>
+              </WalletConnectButton>
+            </div>
+            {/* <Separator /> */}
+
             <SignInButton
               // onStatusResponse={(res) => {
               //   alert(JSON.stringify(res))
@@ -75,23 +92,6 @@ export default function Page() {
               }}
               onSignOut={() => signOut()}
             />
-
-            <div className="space-y-1">
-              {/* <div className="text-foreground/40">Wallet login</div> */}
-              <WalletConnectButton size="lg" className="w-full">
-                <span className="i-[token--ethm] w-6 h-5"></span>
-                <span>Wallet login </span>
-              </WalletConnectButton>
-            </div>
-            {/* <Separator /> */}
-            <div className="space-y-1">
-              {/* <div className="text-foreground/40">Web2 login</div> */}
-              <GoogleOauthButton
-                variant="secondary"
-                size="lg"
-                className="w-full"
-              />
-            </div>
           </CardContent>
         </Card>
       </div>

@@ -57,7 +57,7 @@ export function GoogleOauthButton({
       {!loading && (
         <>
           <IconGoogle className="w-4 h-4" />
-          <div className="">{children || 'Google login (web2)'}</div>
+          <div className="">{children || 'Google login'}</div>
         </>
       )}
     </Button>

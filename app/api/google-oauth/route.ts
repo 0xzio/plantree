@@ -6,6 +6,7 @@ const clientSecret = process.env.GOOGLE_CLIENT_SECRET!
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
+
   const code = url.searchParams.get('code')
   const host = url.searchParams.get('state') as string
 
