@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Build digital garden for creators'
+export const alt = 'Next-generation blog tool'
 
 export const revalidate = 60
 
@@ -23,7 +23,7 @@ export default async function Image() {
         }}
       >
         <h1 tw="text-8xl -mt-6 leading-none">PenX</h1>
-        <div tw="text-3xl leading-none">Build digital garden for creators</div>
+        <div tw="text-3xl leading-none">Next-generation blog tool</div>
       </div>
     ),
     {

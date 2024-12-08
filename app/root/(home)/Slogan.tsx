@@ -17,12 +17,13 @@ export function Slogan() {
   return (
     <div className="space-y-6 text-center">
       <div className="text-6xl md:text-7xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
-        Build digital garden
-        <br /> for creators
+        Next-Generation
+        <br />
+        Blog Tool
       </div>
 
       <div className="text-xl text-foreground/60">
-        The best way to build individual blog. Design for super individual.
+        The new way to build individual blog.
       </div>
     </div>
   )
