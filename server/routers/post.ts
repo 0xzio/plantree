@@ -57,7 +57,7 @@ export const postRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId } = input
-      let posts = await findSitePosts(siteId)
+      let posts = await publishedSitePosts(siteId)
 
       if (!posts.length) {
         const { userId } = await prisma.site.findUniqueOrThrow({
@@ -80,7 +80,7 @@ export const postRouter = router({
             },
           })
 
-          posts = await findSitePosts(siteId)
+          posts = await publishedSitePosts(siteId)
         }
       }
 
@@ -308,6 +308,28 @@ export const postRouter = router({
 function findSitePosts(siteId: string) {
   return prisma.post.findMany({
     where: { siteId },
+    include: {
+      postTags: { include: { tag: true } },
+      user: {
+        select: {
+          displayName: true,
+          image: true,
+          accounts: {
+            select: {
+              providerAccountId: true,
+              providerType: true,
+            },
+          },
+        },
+      },
+    },
+    orderBy: { publishedAt: 'desc' },
+  })
+}
+
+function publishedSitePosts(siteId: string) {
+  return prisma.post.findMany({
+    where: { siteId, postStatus: PostStatus.PUBLISHED },
     include: {
       postTags: { include: { tag: true } },
       user: {

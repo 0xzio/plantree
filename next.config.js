@@ -41,6 +41,7 @@ const nextConfig = {
       { hostname: '*.respace.one' },
       { hostname: '*.penx.io' },
       { hostname: 'penx.io' },
+      { hostname: 'i.imgur.com' },
       { hostname: 'res.cloudinary.com' },
       { hostname: 'abs.twimg.com' },
       { hostname: 'pbs.twimg.com' },

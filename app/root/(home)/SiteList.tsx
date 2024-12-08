@@ -55,11 +55,9 @@ function SiteItem({ site }: { site: SiteWithDomains }) {
       )}
     >
       <div className="flex items-center gap-2">
-        <Image
+        <img
           src={getUrl(site.logo || '')}
           alt=""
-          width={64}
-          height={64}
           className="w-12 h-12 rounded-lg"
         />
 
