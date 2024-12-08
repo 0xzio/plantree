@@ -8,9 +8,11 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import { useSite } from '@/hooks/useSite'
+import { SITE_MODE } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
 import { SiteMode } from '@prisma/client'
+import { set } from 'idb-keyval'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 
@@ -34,6 +36,8 @@ export function SiteModeSelect() {
           id: site.id,
           mode: v as any,
         })
+
+        set(SITE_MODE, v as SiteMode)
       }}
       type="single"
     >
