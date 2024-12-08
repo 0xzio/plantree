@@ -7,11 +7,11 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 export function LinkGoogleEntry() {
-  const { data: accounts = [] } = useMyAccounts()
+  const { data: accounts = [], isLoading } = useMyAccounts()
   const hasGoogleAccount = accounts.some(
     (a) => a.providerType === ProviderType.GOOGLE,
   )
-  if (hasGoogleAccount) return null
+  if (hasGoogleAccount || isLoading) return null
 
   return (
     <Link

@@ -7,9 +7,9 @@ import { ArrowRight } from 'lucide-react'
 import Link from 'next/link'
 
 export function LinkWalletEntry() {
-  const { data: accounts = [] } = useMyAccounts()
+  const { data: accounts = [], isLoading } = useMyAccounts()
   const hasWallet = accounts.some((a) => a.providerType === ProviderType.WALLET)
-  if (hasWallet) return null
+  if (hasWallet || isLoading) return null
   return (
     <Link
       href="/~/settings/link-accounts"
