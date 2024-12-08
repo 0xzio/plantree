@@ -21,7 +21,7 @@ export function SiteList() {
               <Skeleton
                 key={i}
                 className={cn(
-                  'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all h-[96px]',
+                  'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all h-[96px] dark:bg-foreground/5',
                 )}
               ></Skeleton>
             ))}
@@ -50,7 +50,7 @@ function SiteItem({ site }: { site: SiteWithDomains }) {
       href={link}
       target="_blank"
       className={cn(
-        'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all',
+        'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all dark:bg-foreground/5',
         // spaces.length !== index + 1 && 'border-b border-neutral-100/90',
       )}
     >

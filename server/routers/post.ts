@@ -18,30 +18,6 @@ export const postRouter = router({
     .query(async ({ ctx, input }) => {
       const { siteId } = input
       let posts = await findSitePosts(siteId)
-      if (!posts.length) {
-        const { userId } = await prisma.site.findUniqueOrThrow({
-          where: { id: siteId },
-          select: { userId: true },
-        })
-        const post = await prisma.post.findUnique({
-          where: { id: process.env.WELCOME_POST_ID },
-        })
-
-        if (post) {
-          await prisma.post.create({
-            data: {
-              userId,
-              siteId,
-              type: PostType.ARTICLE,
-              title: post.title,
-              content: post.content,
-              postStatus: PostStatus.PUBLISHED,
-            },
-          })
-
-          posts = await findSitePosts(siteId)
-        }
-      }
 
       return posts.map((post) => ({
         ...post,
@@ -58,31 +34,6 @@ export const postRouter = router({
     .query(async ({ ctx, input }) => {
       const { siteId } = input
       let posts = await publishedSitePosts(siteId)
-
-      if (!posts.length) {
-        const { userId } = await prisma.site.findUniqueOrThrow({
-          where: { id: siteId },
-          select: { userId: true },
-        })
-        const post = await prisma.post.findUnique({
-          where: { id: process.env.WELCOME_POST_ID },
-        })
-
-        if (post) {
-          await prisma.post.create({
-            data: {
-              userId,
-              siteId,
-              type: PostType.ARTICLE,
-              title: post.title,
-              content: post.content,
-              postStatus: PostStatus.PUBLISHED,
-            },
-          })
-
-          posts = await publishedSitePosts(siteId)
-        }
-      }
 
       return posts.map((post) => ({
         ...post,

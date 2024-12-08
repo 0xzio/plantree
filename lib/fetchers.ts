@@ -72,32 +72,6 @@ export async function getPosts(siteId: string) {
   const posts = await unstable_cache(
     async () => {
       let posts = await findManyPosts(siteId)
-      if (!posts.length) {
-        const { userId } = await prisma.site.findUniqueOrThrow({
-          where: { id: siteId },
-          select: { userId: true },
-        })
-
-        const post = await prisma.post.findUnique({
-          where: { id: process.env.WELCOME_POST_ID },
-        })
-
-        if (post) {
-          await prisma.post.create({
-            data: {
-              userId,
-              siteId,
-              type: PostType.ARTICLE,
-              title: post.title,
-              content: post.content,
-              postStatus: PostStatus.PUBLISHED,
-            },
-          })
-
-          posts = await findManyPosts(siteId)
-        }
-      }
-
       return posts.map((post) => ({
         ...post,
         image: getUrl(post.image || ''),
