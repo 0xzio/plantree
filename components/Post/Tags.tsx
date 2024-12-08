@@ -34,6 +34,7 @@ function AllTags({ post }: { post: Post }) {
             if (some) return
             try {
               const postTag = await mutateAsync({
+                siteId: post.siteId,
                 postId: post.id,
                 tagId: item.id,
               })
@@ -105,6 +106,7 @@ export function Tags() {
                 if (e.key === 'Enter') {
                   try {
                     const postTag = await mutateAsync({
+                      siteId: post.siteId,
                       postId: post.id,
                       name: value,
                     })

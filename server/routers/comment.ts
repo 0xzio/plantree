@@ -23,6 +23,7 @@ export const commentRouter = router({
     .input(
       z.object({
         postId: z.string(),
+        siteId: z.string(),
         content: z.string(),
         parentId: z.string().nullable().optional(),
       }),
@@ -33,6 +34,7 @@ export const commentRouter = router({
           const newComment = await tx.comment.create({
             data: {
               content: input.content,
+              siteId: input.siteId,
               postId: input.postId,
               userId: ctx.token.uid,
               parentId: input.parentId,

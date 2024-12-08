@@ -2,6 +2,8 @@
 
 import LoadingDots from '@/components/icons/loading-dots'
 import { useSite } from '@/hooks/useSite'
+import { DeleteSiteCard } from './DeleteSiteCard'
+import { DeleteSiteDialog } from './DeleteSiteDialog/DeleteSiteDialog'
 import { GeneralSettingForm } from './GeneralSettingForm'
 
 export const dynamic = 'force-static'
@@ -16,5 +18,11 @@ export default function Page() {
       </div>
     )
   }
-  return <GeneralSettingForm site={site!} />
+  return (
+    <div className="space-y-6">
+      <GeneralSettingForm site={site!} />
+      <DeleteSiteDialog />
+      <DeleteSiteCard site={site!} />
+    </div>
+  )
 }

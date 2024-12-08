@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import {
@@ -41,6 +42,7 @@ const FormSchema = z.object({
 })
 
 export default function AccessTokenCreateForm({ refetch }: Props) {
+  const site = useSiteContext()
   const [isDialogOpen, setIsDialogOpen] = useState(false)
   const [generatedToken, setGeneratedToken] = useState('')
 
@@ -60,7 +62,11 @@ export default function AccessTokenCreateForm({ refetch }: Props) {
     let plainToken = AccessTokenUtils.generateToken()
     let tokenAfterHash = AccessTokenUtils.hashToken(plainToken)
     try {
-      await mutateAsync({ ...data, token: tokenAfterHash })
+      await mutateAsync({
+        ...data,
+        siteId: site.id,
+        token: tokenAfterHash,
+      })
       refetch()
       toast.success('Access token created successfully.')
       setGeneratedToken(plainToken) // Set the generated token

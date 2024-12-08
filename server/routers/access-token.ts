@@ -14,6 +14,7 @@ export const accessTokenRouter = router({
   create: protectedProcedure
     .input(
       z.object({
+        siteId: z.string(),
         token: z.string(),
         alias: z.string(),
         expiredAt: z.date().optional(),
@@ -22,6 +23,7 @@ export const accessTokenRouter = router({
     .mutation(async ({ ctx, input }) => {
       const record = await prisma.accessToken.create({
         data: {
+          siteId: input.siteId,
           token: input.token,
           alias: input.alias,
           userId: ctx.token.uid,

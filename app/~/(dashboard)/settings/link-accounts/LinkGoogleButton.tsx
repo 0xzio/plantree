@@ -21,8 +21,14 @@ export function LinkGoogleButton() {
   const { data } = useSession()
 
   useEffect(() => {
-    const errorMessage = Array.isArray(error) ? error.pop() : error
-    errorMessage && toast.error(errorMessage)
+    if (error === 'account-linked') {
+      toast.error(
+        'Link failed! This is google account is already linked to another account.',
+      )
+    } else {
+      const errorMessage = Array.isArray(error) ? error.pop() : error
+      errorMessage && toast.error(errorMessage)
+    }
   }, [error])
   return (
     <div>

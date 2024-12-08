@@ -234,4 +234,32 @@ export const siteRouter = router({
         })
       }
     }),
+
+  deleteSite: publicProcedure.mutation(async ({ ctx, input }) => {
+    const userId = ctx.token.uid
+    return prisma.$transaction(
+      async (tx) => {
+        const site = await tx.site.findFirst({ where: { userId } })
+        const siteId = site?.id
+        await tx.message.deleteMany({ where: { siteId } })
+        await tx.channel.deleteMany({ where: { siteId } })
+        await tx.node.deleteMany({ where: { userId } })
+        await tx.post.deleteMany({ where: { siteId } })
+        await tx.comment.deleteMany({ where: { userId } })
+        await tx.postTag.deleteMany({ where: { siteId } })
+        await tx.tag.deleteMany({ where: { siteId } })
+        await tx.contributor.deleteMany({ where: { siteId } })
+        await tx.domain.deleteMany({ where: { siteId } })
+        await tx.accessToken.deleteMany({ where: { siteId } })
+        await tx.site.delete({ where: { id: siteId } })
+        await tx.account.deleteMany({ where: { userId } })
+        await tx.user.delete({ where: { id: userId } })
+        return true
+      },
+      {
+        maxWait: 5000, // default: 2000
+        timeout: 10000, // default: 5000
+      },
+    )
+  }),
 })

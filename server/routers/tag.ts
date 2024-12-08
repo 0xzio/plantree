@@ -21,6 +21,7 @@ export const tagRouter = router({
     .input(
       z.object({
         postId: z.string(),
+        siteId: z.string(),
         name: z.string(),
       }),
     )
@@ -34,7 +35,11 @@ export const tagRouter = router({
 
           if (!tag) {
             tag = await tx.tag.create({
-              data: { name: tagName, userId: ctx.token.uid },
+              data: {
+                siteId: input.siteId,
+                name: tagName,
+                userId: ctx.token.uid,
+              },
             })
           }
 
@@ -51,6 +56,7 @@ export const tagRouter = router({
 
           const newPostTag = await tx.postTag.create({
             data: {
+              siteId: input.siteId,
               postId: input.postId,
               tagId: tag.id,
             },
@@ -73,6 +79,7 @@ export const tagRouter = router({
     .input(
       z.object({
         tagId: z.string(),
+        siteId: z.string(),
         postId: z.string(),
       }),
     )

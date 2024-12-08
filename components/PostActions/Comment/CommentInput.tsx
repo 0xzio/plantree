@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
@@ -31,6 +32,7 @@ export function CommentInput({
   refetchComments,
   onCancel,
 }: Props) {
+  const site = useSiteContext()
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
 
@@ -52,6 +54,7 @@ export function CommentInput({
 
     try {
       await mutateAsync({
+        siteId: site.id,
         postId,
         content,
         parentId,
