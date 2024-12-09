@@ -104,7 +104,7 @@ export function SubdomainDomainForm({ site }: Props) {
           )}
         />
 
-        <Button type="submit" className="w-32" disabled={isPending}>
+        <Button type="submit" className="w-36" disabled={isPending}>
           {isPending ? <LoadingDots /> : 'Add subdomain'}
         </Button>
       </form>
