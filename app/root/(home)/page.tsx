@@ -28,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
     title: 'PenX',
     openGraph: {
       title: 'PenX',
-      description: 'Next-generation blog tool',
+      description: 'Next generation blogging tools',
     },
     other: {
       'fc:frame': JSON.stringify(frame),

@@ -17,7 +17,7 @@ const roboto = Poppins({
 })
 
 const title = 'PenX'
-const description = 'Next-generation blog tool'
+const description = 'Next generation blogging tools'
 
 // const image = 'https://vercel.pub/thumbnail.png'
 
