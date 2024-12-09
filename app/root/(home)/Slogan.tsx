@@ -18,7 +18,7 @@ export function Slogan() {
     <div className="space-y-6 text-center">
       <div className="text-7xl md:text-8xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
         <div className="text-5xl md:text-6xl">Next Generation</div>
-        <div>Blogging Tools</div>
+        <div className="text-brand-500">Blogging Tools</div>
       </div>
 
       <div className="text-xl text-foreground/60">

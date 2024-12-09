@@ -16,7 +16,7 @@ const logoFont = Philosopher({
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col gap-4 container px-2 min-h-screen">
-      <div className="z-10  py-3 relative flex justify-between">
+      <div className="z-10 h-14 py-3 relative flex justify-between">
         <div className="flex items-center">
           <Link href="/" className="cursor-pointer flex items-center">
             <TextLogo />

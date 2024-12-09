@@ -1,6 +1,7 @@
 import { Suspense } from 'react'
 import { Metadata } from 'next'
 import { LaunchButton } from './LaunchButton'
+import { Screenshots } from './Screenshots'
 import { SiteList } from './SiteList'
 
 const appUrl = process.env.NEXT_PUBLIC_URL
@@ -39,6 +40,9 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage() {
   return (
     <div>
+      <div className="rounded-xl shadow-lg border border-foreground/5 w-full h-700 overflow-hidden mt-20">
+        <Screenshots />
+      </div>
       <div className="flex items-center justify-between mt-10 mb-6">
         <div className="text-2xl font-semibold">Sites</div>
         {/* <Suspense fallback={''}>
