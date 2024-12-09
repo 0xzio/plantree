@@ -12,7 +12,6 @@ import { UserAvatar } from '../UserAvatar'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string
-  showEnsName?: boolean
   showAddress?: boolean
   showDropIcon?: boolean
   image?: string
@@ -24,7 +23,6 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
   function ProfileAvatar(
     {
       className = '',
-      showEnsName,
       showAddress,
       showFullAddress,
       showCopy,
@@ -38,10 +36,10 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
     const { data: session } = useSession()
     const shortAddress = address.slice(0, 6) + '...' + address.slice(-4)
     const { copy } = useCopyToClipboard()
-    let username = session?.user?.name || ''
+    let name = session?.user?.name || ''
 
-    if (isAddress(username)) {
-      username = username.slice(0, 3) + '...' + username.slice(-4)
+    if (isAddress(name)) {
+      name = name.slice(0, 3) + '...' + name.slice(-4)
     }
 
     return (
@@ -51,21 +49,17 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
         {...rest}
       >
         <UserAvatar address={address} image={image} />
-        {!address && showEnsName && (
-          <div>{session?.user?.name || session?.user?.email}</div>
-        )}
-        {(showEnsName || showAddress) && address && (
+
+        {showAddress && address && (
           <>
             <div>
-              {showEnsName && username && (
-                <div className="text-base">{username}</div>
-              )}
+              {name && <div className="text-base">{name}</div>}
               {showAddress && address && (
                 <div className="flex gap-2 items-center">
                   <div
                     className={cn(
                       'text-sm',
-                      showEnsName && username && 'text-xs text-foreground/60',
+                      name && 'text-xs text-foreground/60',
                     )}
                   >
                     {shortAddress}

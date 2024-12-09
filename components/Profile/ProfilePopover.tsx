@@ -44,13 +44,11 @@ import { WalletInfo } from './WalletInfo'
 interface Props {
   className?: string
   showAddress?: boolean
-  showEnsName?: boolean
   showDropIcon?: boolean
 }
 
 export const ProfilePopover = memo(function ProfilePopover({
   showAddress,
-  showEnsName,
   showDropIcon = false,
   className = '',
 }: Props) {
@@ -67,7 +65,6 @@ export const ProfilePopover = memo(function ProfilePopover({
       <DropdownMenuTrigger asChild>
         <ProfileAvatar
           showAddress={showAddress}
-          showEnsName={showEnsName}
           showDropIcon={showDropIcon}
           image={data.user?.image || ''}
           className={cn('cursor-pointer', className)}
@@ -75,12 +72,7 @@ export const ProfilePopover = memo(function ProfilePopover({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="grid gap-2">
-          <ProfileAvatar
-            showAddress
-            showEnsName
-            showCopy
-            image={data.user?.image || ''}
-          />
+          <ProfileAvatar showAddress showCopy image={data.user?.image || ''} />
           {data.address && <WalletInfo />}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />

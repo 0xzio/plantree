@@ -70,7 +70,7 @@ export function Post({ post }: { post: PostType }) {
           />
         </div>
         <div className="mb-8 space-y-2">
-          <ProfileAvatar showEnsName showAddress />
+          <ProfileAvatar showAddress />
           {/* <Tags /> */}
         </div>
 

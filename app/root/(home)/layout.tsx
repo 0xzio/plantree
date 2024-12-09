@@ -33,7 +33,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
       </div>
       <div className="flex flex-col items-center justify-center gap-1">
         <Button size="lg" className="h-12 text-base px-8" asChild>
-          <Link href="/login">Create a blog</Link>
+          <Link href="/login">Start writing</Link>
         </Button>
       </div>
 

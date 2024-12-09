@@ -16,14 +16,13 @@ const poppins = Poppins({
 export function Slogan() {
   return (
     <div className="space-y-6 text-center">
-      <div className="text-6xl md:text-7xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
-        Next Generation
-        <br />
-        blogging Tools
+      <div className="text-7xl md:text-8xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
+        <div className="text-5xl md:text-6xl">Next Generation</div>
+        <div>Blogging Tools</div>
       </div>
 
       <div className="text-xl text-foreground/60">
-        The new way to build individual blog.
+        A new way to build individual blog.
       </div>
     </div>
   )
