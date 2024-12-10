@@ -2,6 +2,7 @@ import { editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser } from '@/lib/types'
 import {
+  CollaboratorRole,
   PostStatus,
   PostType,
   ProviderType,
@@ -62,9 +63,10 @@ export async function initUserByAddress(address: string) {
               },
             ],
           },
-          contributors: {
+          collaborators: {
             create: {
               userId: newUser.id,
+              role: CollaboratorRole.OWNER,
             },
           },
           channels: {
@@ -178,9 +180,10 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
               },
             ],
           },
-          contributors: {
+          collaborators: {
             create: {
               userId: newUser.id,
+              role: CollaboratorRole.OWNER,
             },
           },
           channels: {
@@ -354,9 +357,10 @@ export async function initUserByFarcasterId(fid: string) {
               },
             ],
           },
-          contributors: {
+          collaborators: {
             create: {
               userId: newUser.id,
+              role: CollaboratorRole.OWNER,
             },
           },
           channels: {

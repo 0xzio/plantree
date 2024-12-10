@@ -7,15 +7,15 @@ export const redisKeys = {
     return `publishedPosts`
   },
 
-  space(address: string) {
-    return `space:${address}`
+  site(siteId: string) {
+    return `site:${siteId}`
   },
 
   spaceLogo(address: string) {
     return `space:logo:${address}`
   },
 
-  mySpaces(address: string) {
-    return `spaces:${address}`
+  mySites(uid: string) {
+    return `spaces:${uid}`
   },
 }

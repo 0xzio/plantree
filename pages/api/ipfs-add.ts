@@ -25,7 +25,7 @@ export default async function handler(
 
   const address = req.query?.address as Address
   if (address) {
-    const key = redisKeys.space(address.toLowerCase())
+    const key = redisKeys.site(address.toLowerCase())
     await redis.del(key)
     await redis.del(redisKeys.spaceLogo(address.toLowerCase()))
   }

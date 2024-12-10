@@ -54,7 +54,7 @@ export const spaceRouter = router({
     .query(async ({ input }) => {
       const { chainId } = input
       const address = input.address.toLowerCase() as Address
-      const key = redisKeys.space(address)
+      const key = redisKeys.site(address)
       const ttl = 60 * 5 //  5 minutes
 
       const cachedSpace = await redis.get(key)

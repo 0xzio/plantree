@@ -1,5 +1,6 @@
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
+import { redisKeys } from '@/lib/redisKeys'
 import { revalidateSite } from '@/lib/revalidateSite'
 import {
   AuthType,
@@ -8,8 +9,11 @@ import {
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import Redis from 'ioredis'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
+
+const redis = new Redis(process.env.REDIS_URL!)
 
 export const siteRouter = router({
   list: publicProcedure.query(async () => {
@@ -22,12 +26,21 @@ export const siteRouter = router({
     })
   }),
 
-  mySites: publicProcedure.query(async () => {
-    return prisma.site.findMany({
-      include: {
-        channels: true,
+  mySites: publicProcedure.query(async ({ ctx }) => {
+    const userId = ctx.token.uid
+    const collaborators = await prisma.collaborator.findMany({
+      where: { userId },
+    })
+
+    const sites = await prisma.site.findMany({
+      where: {
+        id: {
+          in: [...collaborators.map((c) => c.siteId)],
+        },
       },
     })
+
+    return sites
   }),
 
   byId: protectedProcedure
