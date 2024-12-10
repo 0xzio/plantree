@@ -23,7 +23,7 @@ export function SettingNav({}: Props) {
 
   const linkClassName = (path: string) =>
     cn(
-      'inline-flex item-center justify-center py-1.5 border-b-2 -mb-[1px] border-transparent',
+      'inline-flex item-center justify-center py-1.5 border-b-2 -mb-[1px] border-transparent flex-shrink-0',
       path === pathname && 'border-foreground/40',
     )
 
