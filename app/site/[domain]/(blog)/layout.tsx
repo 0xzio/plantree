@@ -27,7 +27,7 @@ export default async function RootLayout({
       ConnectButton={Profile}
       Airdrop={Airdrop}
     >
-      <SiteProvider site={site}>{children}</SiteProvider>
+      <SiteProvider site={site as any}>{children}</SiteProvider>
     </SiteLayout>
   )
 }

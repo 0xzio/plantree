@@ -20,7 +20,6 @@ export const siteRouter = router({
     return prisma.site.findMany({
       include: {
         domains: true,
-        channels: true,
       },
       orderBy: { createdAt: 'asc' },
     })
@@ -38,6 +37,7 @@ export const siteRouter = router({
           in: [...collaborators.map((c) => c.siteId)],
         },
       },
+      include: { domains: true },
     })
 
     return sites
@@ -48,6 +48,7 @@ export const siteRouter = router({
     .query(async ({ ctx, input }) => {
       return prisma.site.findUniqueOrThrow({
         where: { id: input.id },
+        include: { domains: true },
       })
     }),
 
@@ -261,7 +262,7 @@ export const siteRouter = router({
         await tx.comment.deleteMany({ where: { userId } })
         await tx.postTag.deleteMany({ where: { siteId } })
         await tx.tag.deleteMany({ where: { siteId } })
-        await tx.contributor.deleteMany({ where: { siteId } })
+        await tx.collaborator.deleteMany({ where: { siteId } })
         await tx.domain.deleteMany({ where: { siteId } })
         await tx.accessToken.deleteMany({ where: { siteId } })
         await tx.site.delete({ where: { id: siteId } })

@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -28,12 +29,11 @@ const FormSchema = z.object({
   privyAppSecret: z.string().optional(),
 })
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function AuthTypeSettingForm({ site }: Props) {
+export function AuthTypeSettingForm({}: Props) {
   const { refetch } = useSite()
+  const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const authConfig = site.authConfig as any

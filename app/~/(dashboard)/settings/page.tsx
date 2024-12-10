@@ -9,20 +9,11 @@ import { GeneralSettingForm } from './GeneralSettingForm'
 export const dynamic = 'force-static'
 
 export default function Page() {
-  const { isLoading, site } = useSite()
-
-  if (isLoading) {
-    return (
-      <div>
-        <LoadingDots className="bg-foreground/60" />
-      </div>
-    )
-  }
   return (
     <div className="space-y-6">
-      <GeneralSettingForm site={site!} />
+      <GeneralSettingForm />
       <DeleteSiteDialog />
-      <DeleteSiteCard site={site!} />
+      <DeleteSiteCard />
     </div>
   )
 }

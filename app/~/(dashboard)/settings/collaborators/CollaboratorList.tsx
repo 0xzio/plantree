@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {
   Select,
@@ -34,7 +35,7 @@ import { isAddress } from 'viem'
 interface Props {}
 
 export default function CollaboratorList({}: Props) {
-  const { site } = useSite()
+  const site = useSiteContext()
   const { isLoading, data: collaborators = [], refetch } = useCollaborators()
 
   return (

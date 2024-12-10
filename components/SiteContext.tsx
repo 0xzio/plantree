@@ -7,19 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react'
-import { appEmitter } from '@/lib/app-emitter'
-import { isServer } from '@/lib/constants'
-import { runWorker } from '@/lib/worker'
-import { Site } from '@penxio/types'
-
-let inited = false
-if (!isServer) {
-  setTimeout(() => {
-    if (inited) return
-    inited = true
-    runWorker()
-  }, 2000)
-}
+import { Site } from '@prisma/client'
 
 export const SiteContext = createContext({} as Site)
 

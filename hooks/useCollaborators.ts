@@ -1,7 +1,7 @@
+import { useSiteContext } from '@/components/SiteContext'
 import { trpc } from '@/lib/trpc'
-import { useSite } from './useSite'
 
 export function useCollaborators() {
-  const { site } = useSite()
+  const site = useSiteContext()
   return trpc.collaborator.listSiteCollaborators.useQuery({ siteId: site.id })
 }

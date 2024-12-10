@@ -7,11 +7,12 @@ import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { ExternalLink } from 'lucide-react'
 import LoadingCircle from './icons/loading-circle'
+import { useSiteContext } from './SiteContext'
 
 export function SiteLink() {
-  const { site } = useSite()
+  const site = useSiteContext()
 
-  const { isSubdomain, domain } = getSiteDomain(site)
+  const { isSubdomain, domain } = getSiteDomain(site as any)
   const link = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   if (isSubdomain) {

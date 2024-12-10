@@ -21,8 +21,6 @@ interface PostItemProps {
 export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
   const { data } = useSession()
-  const { subdomain } = useSiteContext()
-
   const isPublished = post.postStatus === PostStatus.PUBLISHED
   return (
     <div className={cn('flex flex-col gap-2 py-[6px]')}>

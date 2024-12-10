@@ -1,6 +1,6 @@
 import { ProfilePopover } from '@/components/Profile/ProfilePopover'
+import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
-import { useSite } from '@/hooks/useSite'
 import { cn } from '@/lib/utils'
 import { SiteMode } from '@prisma/client'
 import { Calendar, Feather, Settings } from 'lucide-react'
@@ -20,7 +20,7 @@ interface SidebarProps {
 }
 export const Sidebar = ({ bordered = true }: SidebarProps) => {
   const pathname = usePathname()!
-  const { site } = useSite()
+  const site = useSiteContext()
   const { spaceId } = site
   const isBasicMode = site?.mode === SiteMode.BASIC
 
@@ -31,13 +31,8 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         bordered && 'border-r',
       )}
     >
-      <SitesPopover />
       <div className="px-4 flex items-center h-16">
-        <ProfilePopover
-          showAddress
-          showDropIcon
-          className="px-2 py-2 flex-1 -mx-2 rounded-lg hover:bg-foreground/5 transition-colors"
-        />
+        <SitesPopover />
       </div>
 
       <div className="flex flex-col gap-1 px-2">

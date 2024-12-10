@@ -7,41 +7,60 @@ import { NodesProvider } from '@/components/NodesProvider'
 import { SiteProvider } from '@/components/SiteContext'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
+import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
-import { SIDEBAR_WIDTH } from '@/lib/constants'
+import { CURRENT_SITE, isServer, SIDEBAR_WIDTH } from '@/lib/constants'
 import { cn } from '@/lib/utils'
+import { runWorker } from '@/lib/worker'
+import { Site } from '@prisma/client'
+import { useQuery } from '@tanstack/react-query'
+import { get } from 'idb-keyval'
 import { useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar/Sidebar'
 import { SidebarSheet } from './Sidebar/SidebarSheet'
 
+let inited = false
+if (!isServer) {
+  setTimeout(() => {
+    if (inited) return
+    inited = true
+    runWorker()
+  }, 2000)
+}
+
 export function DashboardLayout({ children }: { children: ReactNode }) {
   const { push } = useRouter()
   const [sidebarOpen, setSideBarOpen] = useState(true)
   useQueryEthPrice()
   useQueryEthBalance()
-  const { status, data: session } = useSession()
-  const { site } = useSite()
+  const { data: session } = useSession()
+
+  const { data: sites = [] } = useMySites()
+
+  const { data: site, isLoading } = useQuery({
+    queryKey: ['current_site'],
+    queryFn: async () => {
+      const siteId = await get(CURRENT_SITE)
+      const site = sites.find((s) => s.id === siteId)
+      return site || sites[0]
+    },
+    enabled: !!session && sites.length > 0,
+  })
 
   const pathname = usePathname()
   const isNode = pathname?.includes('/~/objects')
   const isPost = pathname?.includes('/~/post/')
   const isFullWidth = isNode || isPost
 
-  useEffect(() => {
-    if (status === 'loading') return
-    if (status == 'unauthenticated') {
-      push('/')
-    }
-  }, [status, push])
-
-  if (status === 'loading' || !session || !site)
+  if (!site || isLoading) {
     return (
       <div className="h-screen flex items-center justify-center">
         <LoadingDots className="bg-foreground/60"></LoadingDots>
       </div>
     )
+  }
 
   return (
     <SiteProvider site={site as any}>

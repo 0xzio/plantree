@@ -1,17 +1,16 @@
 import { useState } from 'react'
-
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useCollaborators } from '@/hooks/useCollaborators'
-import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { toast } from 'sonner'
 
 export default function AddCollaborator() {
   const [q, setQ] = useState('')
-  const { site } = useSite()
+  const site = useSiteContext()
   const { refetch } = useCollaborators()
   const { mutateAsync, isPending } =
     trpc.collaborator.addCollaborator.useMutation()

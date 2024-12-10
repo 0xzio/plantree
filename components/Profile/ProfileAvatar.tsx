@@ -12,7 +12,7 @@ import { UserAvatar } from '../UserAvatar'
 
 interface Props extends HTMLAttributes<HTMLDivElement> {
   className?: string
-  showAddress?: boolean
+  showName?: boolean
   showDropIcon?: boolean
   image?: string
   showFullAddress?: boolean
@@ -23,7 +23,7 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
   function ProfileAvatar(
     {
       className = '',
-      showAddress,
+      showName,
       showFullAddress,
       showCopy,
       showDropIcon,
@@ -50,11 +50,11 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
       >
         <UserAvatar address={address} image={image || session?.picture} />
 
-        {showAddress && address && (
+        {showName && (
           <>
             <div>
               {name && <div className="text-base">{name}</div>}
-              {showAddress && address && (
+              {showName && address && (
                 <div className="flex gap-2 items-center">
                   <div
                     className={cn(

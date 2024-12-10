@@ -2,7 +2,7 @@ import { spaceFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { SubdomainType } from '@prisma/client'
+import { CollaboratorRole, SubdomainType } from '@prisma/client'
 import { slug } from 'github-slugger'
 import { NextApiRequest, NextApiResponse } from 'next'
 import NextCors from 'nextjs-cors'
@@ -195,9 +195,10 @@ async function initUserByFarcasterUser(info: FarcasterUser) {
               },
             ],
           },
-          contributors: {
+          collaborators: {
             create: {
               userId: newUser.id,
+              role: CollaboratorRole.OWNER,
             },
           },
           channels: {

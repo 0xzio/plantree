@@ -1,6 +1,6 @@
 import { ProfilePopover } from '@/components/Profile/ProfilePopover'
+import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
-import { useSite } from '@/hooks/useSite'
 import { cn } from '@/lib/utils'
 import { Calendar, Feather, Menu, Settings } from 'lucide-react'
 import Link from 'next/link'
@@ -9,7 +9,7 @@ import { useSidebarSheet } from './Sidebar/useSidebarSheet'
 
 export const Navbar = () => {
   const pathname = usePathname()
-  const { site } = useSite()
+  const site = useSiteContext()
   const { spaceId } = site
   const { setIsOpen } = useSidebarSheet()
 

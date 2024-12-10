@@ -11,11 +11,9 @@ import {
 import { Site } from '@prisma/client'
 import { useDeleteSiteDialog } from './DeleteSiteDialog/useDeleteSiteDialog'
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function DeleteSiteCard({ site }: Props) {
+export function DeleteSiteCard({}: Props) {
   const { setIsOpen } = useDeleteSiteDialog()
   return (
     <Card>

@@ -148,7 +148,7 @@ export function MemberForm({ space }: Props) {
         />
 
         <div className="flex justify-between">
-          <ProfileAvatar showAddress />
+          <ProfileAvatar showName />
           <TokenBalance />
         </div>
 

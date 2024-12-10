@@ -18,7 +18,7 @@ export const SpaceProvider = ({
   children,
 }: PropsWithChildren<Props>) => {
   useEffect(() => {
-    window.__SITE__ = site
+    window.__SITE__ = site as any
   }, [site])
   return (
     <SpaceContext.Provider value={new Space(space)}>

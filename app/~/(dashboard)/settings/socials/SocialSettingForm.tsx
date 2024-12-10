@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import {
@@ -36,12 +37,11 @@ const FormSchema = z.object({
   medium: z.string().optional(),
 })
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function SocialSettingForm({ site }: Props) {
+export function SocialSettingForm({}: Props) {
   const { refetch } = useSite()
+  const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const social = (site.socials || {}) as Socials

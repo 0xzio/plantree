@@ -2,6 +2,7 @@
 
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -25,12 +26,11 @@ const FormSchema = z.object({
   spaceId: z.string().optional(),
 })
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function Web3SettingForm({ site }: Props) {
+export function Web3SettingForm({}: Props) {
   const { refetch } = useSite()
+  const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const form = useForm<z.infer<typeof FormSchema>>({

@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { FileUpload } from '@/components/FileUpload'
 import LoadingDots from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -33,12 +34,11 @@ const FormSchema = z.object({
   about: z.string(),
 })
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function GeneralSettingForm({ site }: Props) {
+export function GeneralSettingForm({}: Props) {
   const { refetch } = useSite()
+  const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const form = useForm<z.infer<typeof FormSchema>>({

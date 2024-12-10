@@ -1,4 +1,4 @@
-import { Site } from '@penxio/types'
+import { Site } from '@prisma/client'
 
 declare global {
   interface Window {

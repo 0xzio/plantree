@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import LoadingCircle from '@/components/icons/loading-circle'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { loadPost } from '@/hooks/usePost'
 import { useSite } from '@/hooks/useSite'
@@ -13,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 export function CreatePostButton() {
-  const { site } = useSite()
+  const site = useSiteContext()
   const { push } = useRouter()
   const [isLoading, setLoading] = useState(false)
   async function createPost() {

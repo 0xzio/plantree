@@ -1,5 +1,6 @@
 'use client'
 
+import { useSiteContext } from '@/components/SiteContext'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import {
   Tooltip,
@@ -7,7 +8,6 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
-import { useSite } from '@/hooks/useSite'
 import { SITE_MODE } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
@@ -17,7 +17,7 @@ import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 
 export function SiteModeSelect() {
-  const { site } = useSite()
+  const site = useSiteContext()
   const { data } = useSession()
   if (!site) return null
   return (
@@ -27,7 +27,7 @@ export function SiteModeSelect() {
       onValueChange={async (v) => {
         queryClient.setQueriesData(
           {
-            queryKey: ['site', data?.domain.domain],
+            queryKey: ['current_site'],
           },
           { ...site, mode: v as any },
         )

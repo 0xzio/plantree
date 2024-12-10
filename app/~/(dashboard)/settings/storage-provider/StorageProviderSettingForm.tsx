@@ -1,6 +1,7 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -26,12 +27,11 @@ const FormSchema = z.object({
   vercelBlobToken: z.string().optional(),
 })
 
-interface Props {
-  site: Site
-}
+interface Props {}
 
-export function StorageProviderSettingForm({ site }: Props) {
+export function StorageProviderSettingForm({}: Props) {
   const { refetch } = useSite()
+  const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
   const storageConfig = site.storageConfig as any
