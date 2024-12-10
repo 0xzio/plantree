@@ -49,8 +49,6 @@ export default async function Page({
   const posts = await getPosts(site.id)
   const post = await getPost(slug)
 
-  console.log('=====:slug:', slug, 'post:', post)
-
   const postIndex = posts.findIndex((p) => p.slug === slug)
   // if (postIndex === -1 || !post) {
   if (!post) {

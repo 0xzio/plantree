@@ -1,5 +1,6 @@
 import { Checkbox } from '@/components/ui/checkbox'
 import {
+  ELEMENT_A,
   ELEMENT_CODE_BLOCK,
   ELEMENT_CODE_LINE,
   ELEMENT_FILE_CAPTION,
@@ -28,7 +29,7 @@ export function SlateContent() {
       className="mt-4"
       renderLeaf={(props) => <Leaf {...props} />}
       renderElement={({ attributes, children, element }) => {
-        console.log('=======element.type:', element.type)
+        // console.log('=======element.type:', element.type)
 
         switch (element.type) {
           case ELEMENT_P:
@@ -104,6 +105,18 @@ export function SlateContent() {
             )
           case ELEMENT_FILE_CAPTION:
             return null as any
+
+          case ELEMENT_A:
+            return (
+              <a
+                href={(element as any).url}
+                target="_blank"
+                className="text-brand-500 no-underline hover:underline decoration-brand-500 underline-offset-4 cursor-pointer"
+                {...attributes}
+              >
+                {children}
+              </a>
+            )
 
           case ELEMENT_CODE_BLOCK:
             return (
