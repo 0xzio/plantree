@@ -1,12 +1,8 @@
-'use client'
-
-import { PlateEditor } from '@/components/editor/plate-editor'
-import { useSpaceContext } from '@/components/SpaceContext'
+import { AboutPage } from './AboutPage'
 
 export const dynamic = 'force-static'
+export const revalidate = 3600 * 24
 
 export default function Page() {
-  const space = useSpaceContext()
-
-  return <PlateEditor value={space.aboutJson} readonly className="px-0 py-0" />
+  return <AboutPage />
 }

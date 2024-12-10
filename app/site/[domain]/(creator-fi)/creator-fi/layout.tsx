@@ -1,8 +1,7 @@
-'use client'
-
 import { ReactNode } from 'react'
 
 export const dynamic = 'force-static'
+export const revalidate = 3600 * 24
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
