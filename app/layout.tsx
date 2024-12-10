@@ -52,12 +52,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" suppressHydrationWarning>
-      <body
-        className={cn(
-          'min-h-screen bg-background antialiased',
-          roboto.className,
-        )}
-      >
+      <body className={cn('min-h-screen bg-background antialiased font-sans')}>
         <NextTopLoader
           color="#000"
           // crawlSpeed={0.08}
