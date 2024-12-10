@@ -1,22 +1,27 @@
 import { useState } from 'react'
+
 import LoadingDots from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { useCollaborators } from '@/hooks/useCollaborators'
+import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { toast } from 'sonner'
 
-export default function AddContributor() {
+export default function AddCollaborator() {
   const [q, setQ] = useState('')
-  const { refetch } = trpc.user.contributors.useQuery()
-  const { mutateAsync, isPending } = trpc.user.addContributor.useMutation()
+  const { site } = useSite()
+  const { refetch } = useCollaborators()
+  const { mutateAsync, isPending } =
+    trpc.collaborator.addCollaborator.useMutation()
 
   const add = async () => {
     if (!q.trim()) return toast.error('Please enter a valid address or email')
     try {
-      await mutateAsync({ q })
+      await mutateAsync({ q, siteId: site.id })
       refetch()
-      toast.success('Add contributor successfully')
+      toast.success('Add collaborator successfully')
     } catch (error) {
       toast.error(extractErrorMessage(error))
     }
@@ -30,7 +35,7 @@ export default function AddContributor() {
           value={q}
           onChange={(e) => setQ(e.target.value)}
         />
-        <Button disabled={isPending || !q} onClick={add}>
+        <Button className="w-24" disabled={isPending || !q} onClick={add}>
           {isPending ? <LoadingDots /> : 'Add'}
         </Button>
       </div>

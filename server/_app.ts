@@ -3,8 +3,10 @@
  */
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { accessTokenRouter } from './routers/access-token'
+import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
 import { googleRouter } from './routers/google'
+import { messageRouter } from './routers/message'
 import { nodeRouter } from './routers/node'
 import { postRouter } from './routers/post'
 import { rewardsRouter } from './routers/rewards'
@@ -13,7 +15,6 @@ import { spaceRouter } from './routers/space'
 import { tagRouter } from './routers/tag'
 import { userRouter } from './routers/user'
 import { createCallerFactory, publicProcedure, router } from './trpc'
-import { messageRouter } from './routers/message'
 
 export const appRouter = router({
   healthCheck: publicProcedure.query(() => 'yay!'),
@@ -27,6 +28,7 @@ export const appRouter = router({
   comment: commentRouter,
   message: messageRouter,
   space: spaceRouter,
+  collaborator: collaboratorRouter,
   rewards: rewardsRouter,
 })
 

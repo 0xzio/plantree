@@ -28,19 +28,6 @@ export function StoreProvider(props: PropsWithChildren) {
     setLocalSession(session as any)
   }, [session])
 
-  // useEffect(() => {
-  //   if (status === 'loading') return
-
-  //   if (status == 'authenticated') {
-  //     if (
-  //       pathname === '/' &&
-  //       [UserRole.ADMIN, UserRole.AUTHOR].includes(session.role as any)
-  //     ) {
-  //       push('/~/objects/today')
-  //     }
-  //   }
-  // }, [status, session, push, pathname])
-
   return (
     <Provider store={store}>
       <JotaiNexus />

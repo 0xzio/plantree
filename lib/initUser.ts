@@ -156,6 +156,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
                 providerType: ProviderType.GOOGLE,
                 providerAccountId: info.openid,
                 providerInfo: info,
+                email: info.email,
               },
             ],
           },

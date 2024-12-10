@@ -12,6 +12,7 @@ import { LinkWalletEntry } from './LinkWalletEntry'
 import { NodesBox } from './NodesBox'
 import { SidebarItem } from './SidebarItem'
 import { SiteModeSelect } from './SiteModeSelect'
+import { SitesPopover } from './SitesPopover/SitesPopover'
 import { SyncBar } from './SyncBar/SyncBar'
 
 interface SidebarProps {
@@ -30,6 +31,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         bordered && 'border-r',
       )}
     >
+      <SitesPopover />
       <div className="px-4 flex items-center h-16">
         <ProfilePopover
           showAddress

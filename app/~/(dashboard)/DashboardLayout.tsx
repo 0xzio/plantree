@@ -60,7 +60,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
             <CreationDialog />
             <div
               className={cn(
-                !isFullWidth && 'mx-auto md:max-w-2xl pt-16 pb-20',
+                !isFullWidth && 'mx-auto md:max-w-3xl pt-16 pb-20',
                 isNode,
               )}
             >

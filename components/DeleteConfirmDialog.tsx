@@ -31,59 +31,62 @@ interface Props {
   tooltipContent?: string
 }
 
-export function DeleteConfirmDialog({
-  title,
-  content,
-  onConfirm,
-  tooltipContent,
-}: Props) {
-  const [isOpen, setIsOpen] = React.useState(false)
-  const [isLoading, setIsLoading] = React.useState(false)
+export const DeleteConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
+  function DeleteConfirmDialog(
+    { title, content, onConfirm, tooltipContent },
+    ref,
+  ) {
+    const [isOpen, setIsOpen] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
 
-  return (
-    <AlertDialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
-      <AlertDialogTrigger asChild>
-        <TooltipProvider delayDuration={50}>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Trash2
-                className="h-4 w-4 cursor-pointer text-destructive hover:text-destructive/90"
-                onClick={() => setIsOpen(true)}
-              />
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{tooltipContent}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-      </AlertDialogTrigger>
-      <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          <AlertDialogDescription>{content}</AlertDialogDescription>
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel className="w-24" onClick={() => setIsOpen(false)}>
-            Cancel
-          </AlertDialogCancel>
-          <Button
-            disabled={isLoading}
-            className="w-24"
-            onClick={async () => {
-              setIsLoading(true)
-              try {
-                await onConfirm()
-                setIsOpen(false)
-              } catch (error) {
-                toast.error(extractErrorMessage(error) || 'Failed to delete')
-              }
-              setIsLoading(false)
-            }}
-          >
-            {isLoading ? <LoadingDots /> : 'Continue'}
-          </Button>
-        </AlertDialogFooter>
-      </AlertDialogContent>
-    </AlertDialog>
-  )
-}
+    return (
+      <AlertDialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
+        <AlertDialogTrigger asChild>
+          <TooltipProvider delayDuration={50}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Trash2
+                  className="h-4 w-4 cursor-pointer text-destructive hover:text-destructive/90"
+                  onClick={() => setIsOpen(true)}
+                />
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{tooltipContent}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </AlertDialogTrigger>
+        <AlertDialogContent ref={ref}>
+          <AlertDialogHeader>
+            <AlertDialogTitle>{title}</AlertDialogTitle>
+            <AlertDialogDescription>{content}</AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel
+              className="w-24"
+              onClick={() => setIsOpen(false)}
+            >
+              Cancel
+            </AlertDialogCancel>
+            <Button
+              disabled={isLoading}
+              className="w-24"
+              onClick={async () => {
+                setIsLoading(true)
+                try {
+                  await onConfirm()
+                  setIsOpen(false)
+                } catch (error) {
+                  toast.error(extractErrorMessage(error) || 'Failed to delete')
+                }
+                setIsLoading(false)
+              }}
+            >
+              {isLoading ? <LoadingDots /> : 'Continue'}
+            </Button>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    )
+  },
+)

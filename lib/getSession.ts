@@ -1,4 +1,4 @@
-import { User, UserRole } from '@prisma/client'
+import { User } from '@prisma/client'
 import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth'
 import { SubscriptionInSession } from './types'
 
@@ -15,7 +15,6 @@ export async function getSession() {
     address: string
     chainId: string
     ensName: string
-    role: UserRole
     subscriptions: SubscriptionInSession[]
   } | null>
 }
