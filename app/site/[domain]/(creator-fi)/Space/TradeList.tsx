@@ -50,13 +50,7 @@ export function TradeList({}: Props) {
           </div>
           <div>
             <span className="font-bold">
-              {precision
-                .toDecimal(
-                  item.type === TradeType.BUY
-                    ? item.tokenAmount
-                    : item.ethAmount,
-                )
-                .toFixed(2)}{' '}
+              {precision.toDecimal(item.tokenAmount).toFixed(2)}
             </span>
             <span>{space.symbolName}</span>
           </div>
