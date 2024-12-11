@@ -21,6 +21,7 @@ export const siteRouter = router({
     return prisma.site.findMany({
       include: {
         domains: true,
+        channels: true,
       },
       orderBy: { createdAt: 'asc' },
     })
@@ -38,7 +39,7 @@ export const siteRouter = router({
           in: [...collaborators.map((c) => c.siteId)],
         },
       },
-      include: { domains: true },
+      include: { domains: true, channels: true },
     })
 
     return sites
