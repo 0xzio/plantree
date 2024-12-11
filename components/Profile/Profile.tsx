@@ -38,8 +38,10 @@ export function Profile({}: Props) {
           <Button
             size="sm"
             onClick={() => {
-              const path =
-                site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+              // const path =
+              //   site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+
+              const path = '/~/posts'
               if (location.host === ROOT_DOMAIN) {
                 push(path)
                 return

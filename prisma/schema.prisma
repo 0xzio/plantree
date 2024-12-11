@@ -132,7 +132,7 @@ model Account {
   providerType      ProviderType
   providerAccountId String       @unique @default("") @db.VarChar(255)
   providerInfo      Json?
-  email             String?      @unique @db.VarChar(255)
+  email             String?      @db.VarChar(255)
   refreshToken      String?      @db.VarChar(255)
   accessToken       String?      @db.VarChar(255)
   expiresAt         Int?
@@ -322,7 +322,7 @@ enum CollaboratorRole {
 
 model Collaborator {
   id        String           @id @default(uuid())
-  role      CollaboratorRole
+  role      CollaboratorRole @default(WRITE)
   createdAt DateTime         @default(now())
   updatedAt DateTime         @updatedAt
   siteId    String           @db.Uuid

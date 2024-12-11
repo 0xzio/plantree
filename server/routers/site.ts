@@ -4,6 +4,7 @@ import { redisKeys } from '@/lib/redisKeys'
 import { revalidateSite } from '@/lib/revalidateSite'
 import {
   AuthType,
+  CollaboratorRole,
   SiteMode,
   StorageProvider,
   SubdomainType,
