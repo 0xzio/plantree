@@ -23,7 +23,7 @@ import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
 import { CURRENT_SITE, ROOT_DOMAIN } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
-import { cn } from '@/lib/utils'
+import { cn, getUrl } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { AuthType, SiteMode } from '@prisma/client'
 import { set } from 'idb-keyval'
@@ -66,7 +66,7 @@ export const SitesPopover = memo(function ProfilePopover({
         <div className="flex items-center cursor-pointer w-full px-2 py-2 flex-1 -mx-2 rounded-lg hover:bg-foreground/5 transition-colors">
           <div className="flex items-center gap-1">
             <Avatar className="w-6 h-6">
-              <AvatarImage src={site.logo!} alt="" />
+              <AvatarImage src={getUrl(site.logo!)} alt="" />
               <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div>{site.name}</div>
@@ -95,7 +95,7 @@ export const SitesPopover = memo(function ProfilePopover({
             }}
           >
             <Avatar className="w-6 h-6">
-              <AvatarImage src={site.logo!} alt="" />
+              <AvatarImage src={getUrl(site.logo!)} alt="" />
               <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div>{site.name}</div>
