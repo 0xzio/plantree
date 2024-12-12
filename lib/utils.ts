@@ -1,6 +1,7 @@
 import { ProviderType } from '@prisma/client'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
+import { STATIC_URL } from './constants'
 import { AccountWithUser } from './types'
 
 export function cn(...inputs: ClassValue[]) {
@@ -104,8 +105,14 @@ export function isIPFSCID(str = '') {
 }
 
 export function getUrl(value = '') {
+  if (isIPFSCID(value)) {
+    return `/api/ipfs-image?cid=${value}`
+  }
+  if (value.startsWith('/images')) {
+    return `${STATIC_URL}${value}`
+  }
   // return isIPFSCID(str) ? `${IPFS_GATEWAY}/ipfs/${str}` : str
-  return isIPFSCID(value) ? `/api/ipfs-image?cid=${value}` : value
+  return value
 }
 
 export function isValidUUIDv4(uuid = ''): boolean {
