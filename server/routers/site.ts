@@ -12,6 +12,7 @@ import {
 import { TRPCError } from '@trpc/server'
 import Redis from 'ioredis'
 import { z } from 'zod'
+import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 const redis = new Redis(process.env.REDIS_URL!)
@@ -144,6 +145,10 @@ export const siteRouter = router({
         include: { domains: true },
         data,
       })
+
+      try {
+        await syncSiteToHub(newSite)
+      } catch (error) {}
 
       revalidateSite(newSite.domains)
       return newSite

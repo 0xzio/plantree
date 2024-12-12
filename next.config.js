@@ -22,6 +22,11 @@ const nextConfig = {
   },
   output: 'standalone',
   transpilePackages: [
+    'octokit',
+    '@octokit/oauth-app',
+    '@octokit/openapi-types',
+    '@octokit/core',
+    '@octokit/app',
     'react-tweet',
     'penx-theme-micro',
     'penx-theme-card',

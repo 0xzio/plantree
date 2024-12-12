@@ -5,6 +5,7 @@ import { GateType, PostType, Prisma } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
+import { syncPostToHub } from '../lib/syncPostToHub'
 import { syncToGoogleDrive } from '../lib/syncToGoogleDrive'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
@@ -187,20 +188,26 @@ export const postRouter = router({
       }
 
       const newPost = await prisma.post.findUnique({
-        include: { postTags: { include: { tag: true } } },
+        include: {
+          postTags: { include: { tag: true } },
+          comments: true,
+        },
         where: { id: post.id },
       })
 
-      const res = await fetch(IPFS_ADD_URL, {
-        method: 'POST',
-        body: JSON.stringify({
-          ...newPost,
-          postStatus: PostStatus.PUBLISHED,
-          collectible,
-          creationId,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      }).then((d) => d.json())
+      const [res] = await Promise.all([
+        fetch(IPFS_ADD_URL, {
+          method: 'POST',
+          body: JSON.stringify({
+            ...newPost,
+            postStatus: PostStatus.PUBLISHED,
+            collectible,
+            creationId,
+          }),
+          headers: { 'Content-Type': 'application/json' },
+        }).then((d) => d.json()),
+        syncPostToHub(newPost as any),
+      ])
 
       await prisma.post.update({
         where: { id: post.id },
