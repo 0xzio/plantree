@@ -115,6 +115,7 @@ model User {
   messages      Message[]
   sites         Site[]
   accounts      Account[]
+  Theme         Theme[]
 
   @@index([id])
   @@map("user")
@@ -425,4 +426,24 @@ model RewardRequest {
 
   @@index([userAddress])
   @@map("reward_request")
+}
+
+model Theme {
+  id                String   @id @default(uuid()) @db.Uuid
+  name              String   @unique @default("") @db.VarChar(100)
+  displayName       String   @default("") @db.VarChar(255)
+  manifest          String   @db.Text
+  readme            String?  @db.Text
+  logo              String?  @default("") @db.VarChar(2183)
+  installationCount Int      @default(0)
+  starCount         Int      @default(0)
+  commentCount      Int      @default(0)
+  user              User     @relation(fields: [userId], references: [id])
+  userId            String   @db.Uuid
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+
+  @@index([userId])
+  @@index([name])
+  @@map("theme")
 }

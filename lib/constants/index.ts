@@ -134,3 +134,9 @@ export const SUBGRAPH_URL =
   NETWORK === NetworkNames.BASE
     ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
     : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'
+
+export enum CliLoginStatus {
+  CANCELED = 'CANCELED',
+  CONFIRMED = 'CONFIRMED',
+  INIT = 'INIT',
+}

@@ -36,6 +36,6 @@ export async function GET(req: NextRequest) {
   console.log('User Profile:', userInfo.data)
 
   return NextResponse.redirect(
-    `${host}/api/link-google-account?uid=${uid}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token}&expiry_date=${tokens.expiry_date}&openid=${userInfo.data.id}&email=${userInfo.data.email}&name=${userInfo.data.name}&picture=${userInfo.data.picture}`,
+    `${host}/api/link-google-account?uid=${uid}&access_token=${tokens.access_token}&refresh_token=${tokens.refresh_token || ''}&expiry_date=${tokens.expiry_date}&openid=${userInfo.data.id}&email=${userInfo.data.email}&name=${userInfo.data.name}&picture=${userInfo.data.picture}`,
   )
 }

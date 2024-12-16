@@ -4,11 +4,14 @@ import * as micro from '@/themes/penx-theme-micro'
 import * as minimal from '@/themes/penx-theme-minimal'
 import * as photo from '@/themes/penx-theme-photo'
 
+const map: Record<string, any> = {
+  card,
+  garden,
+  micro,
+  minimal,
+  photo,
+}
+
 export function loadTheme(name = 'garden'): any {
-  if (name === 'garden') return garden
-  if (name === 'card') return card
-  if (name === 'micro') return micro
-  if (name === 'photo') return photo
-  if (name === 'minimal') return minimal
-  return garden
+  return map[name] || garden
 }
