@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
-import { AuthTokenClaims, PrivyClient } from '@privy-io/server-auth'
 import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import type * as trpcNext from '@trpc/server/adapters/next'
+import jwt from 'jsonwebtoken'
 import { getToken } from 'next-auth/jwt'
 
 interface CreateContextOptions {
@@ -63,5 +63,15 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
     req: req as any,
     secret: nextAuthSecret,
   })) as any
+
+  let authorization = req.headers.get('authorization')
+
+  if (!token?.uid && authorization) {
+    try {
+      const decoded = jwt.verify(authorization, nextAuthSecret) as any
+      token = { ...decoded, uid: decoded.sub }
+    } catch (error) {}
+  }
+
   return { token }
 }

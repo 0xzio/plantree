@@ -56,7 +56,7 @@ export class SyncService {
 
   setSharedParams() {
     const sharedParams = {
-      owner: 'penx-dao',
+      owner: 'penx-labs',
       repo: 'hub',
       headers: {
         'X-GitHub-Api-Version': '2022-11-28',

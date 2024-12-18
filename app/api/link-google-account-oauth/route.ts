@@ -11,8 +11,6 @@ export async function GET(req: NextRequest) {
 
   const redirectUri = `${process.env.NEXTAUTH_URL}/api/link-google-account-oauth`
 
-  console.log('==========redirectUri:', redirectUri)
-
   if (!code || !state) {
     return NextResponse.redirect('/error') // Handle error accordingly
   }
