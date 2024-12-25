@@ -21,6 +21,11 @@ export const Nav = () => {
     },
 
     {
+      text: 'Self-Hosted',
+      to: '/self-hosted',
+    },
+
+    {
       text: 'Tokenomics',
       to: '/tokenomics',
     },
@@ -33,11 +38,6 @@ export const Nav = () => {
     //   text: 'Rewards',
     //   to: '/rewards',
     // },
-    {
-      text: 'Self-Hosted',
-      isExternal: true,
-      to: 'https://docs.penx.io/deploy-in-10-minutes',
-    },
     // {
     //   text: 'Docs',
     //   isExternal: true,

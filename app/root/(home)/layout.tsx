@@ -32,9 +32,18 @@ export default async function HomePage({ children }: PropsWithChildren) {
           Local-First
         </Badge>
       </div>
-      <div className="flex flex-col items-center justify-center gap-1">
-        <Button size="lg" className="h-12 text-base px-8" asChild>
+      <div className="flex items-center justify-center gap-1">
+        <Button
+          size="lg"
+          className="h-12 text-base w-36"
+          asChild
+          variant="outline-solid"
+        >
           <Link href="/login">Start writing</Link>
+        </Button>
+
+        <Button size="lg" className="h-12 text-base w-36" asChild>
+          <Link href="/self-hosted">Deploy my own</Link>
         </Button>
       </div>
 
