@@ -7,6 +7,7 @@ import { cliRouter } from './routers/cli'
 import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
 import { googleRouter } from './routers/google'
+import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
 import { nodeRouter } from './routers/node'
 import { postRouter } from './routers/post'
@@ -22,6 +23,7 @@ export const appRouter = router({
   healthCheck: publicProcedure.query(() => 'yay!'),
   cli: cliRouter,
   site: siteRouter,
+  hostedSite: hostedSiteRouter,
   user: userRouter,
   post: postRouter,
   node: nodeRouter,

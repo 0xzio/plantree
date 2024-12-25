@@ -2,20 +2,22 @@
 
 import { useEffect } from 'react'
 import { useLoginDialog } from './LoginDialog/useLoginDialog'
-import { Button } from './ui/button'
+import { Button, ButtonProps } from './ui/button'
 
-export function LoginButton() {
+interface Props extends ButtonProps {}
+export function LoginButton({ ...rest }: Props) {
   const { setIsOpen } = useLoginDialog()
   return (
     <Button
       variant="secondary"
+      {...rest}
       onClick={() => {
         console.log('gogo.....')
 
         setIsOpen(true)
       }}
     >
-      Sign in
+      {rest.children ? rest.children : 'Sign in'}
     </Button>
   )
 }

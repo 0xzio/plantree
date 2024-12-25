@@ -37,6 +37,8 @@ export function GoogleOauthDialog() {
           redirect: false,
         })
 
+        console.log('=====result:', result)
+
         if (!result?.ok) {
           toast.error('Failed to sign in with Google. Please try again')
         }
@@ -44,6 +46,12 @@ export function GoogleOauthDialog() {
         console.log('>>>>>>>>>>>>erorr:', error)
         toast.error('Failed to sign in with Google. Please try again.')
       }
+
+      console.log(
+        '=====`${location.origin}/${location.pathname}`:',
+        `${location.origin}/${location.pathname}`,
+      )
+
       location.href = `${location.origin}/${location.pathname}`
     },
     [searchParams],

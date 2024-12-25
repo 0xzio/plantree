@@ -14,7 +14,6 @@ interface Props {}
 
 export function LoginDialog({}: Props) {
   const { isOpen, setIsOpen } = useLoginDialog()
-  console.log('x=====isOpen:', isOpen)
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>

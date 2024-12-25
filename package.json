@@ -120,6 +120,7 @@
     "array-move": "^4.0.0",
     "big.js": "^6.2.1",
     "class-variance-authority": "^0.7.0",
+    "cloudflare": "^3.5.0",
     "clsx": "^2.0.0",
     "cmdk": "^1.0.4",
     "crypto-js": "^4.2.0",

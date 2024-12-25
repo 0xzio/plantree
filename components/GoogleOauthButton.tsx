@@ -11,7 +11,7 @@ import {
 } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { useSession } from 'next-auth/react'
-import { useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 interface Props extends ButtonProps {
@@ -27,6 +27,7 @@ export function GoogleOauthButton({
   // Get error message added by next/auth in URL.
   const searchParams = useSearchParams()
   const error = searchParams?.get('error')
+  const pathname = usePathname()!
 
   useEffect(() => {
     const errorMessage = Array.isArray(error) ? error.pop() : error
@@ -42,7 +43,7 @@ export function GoogleOauthButton({
         setLoading(true)
         const redirectUri = GOOGLE_OAUTH_REDIRECT_URI
 
-        const state = `${location.protocol}//${location.host}`
+        const state = `${location.protocol}//${location.host}__${pathname}`
         const scope = 'openid email profile'
         const googleAuthUrl =
           `https://accounts.google.com/o/oauth2/v2/auth?response_type=code&redirect_uri=${redirectUri}` +
