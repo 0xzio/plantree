@@ -4,10 +4,10 @@ import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { SiteMode } from '@prisma/client'
 import { useSession } from 'next-auth/react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useAccount } from 'wagmi'
-import LoginButton from '../LoginButton'
+import { LoginButton } from '../LoginButton'
+import { LoginDialog } from '../LoginDialog/LoginDialog'
+import { useLoginDialog } from '../LoginDialog/useLoginDialog'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { ProfileDialog } from './ProfileDialog/ProfileDialog'
@@ -32,6 +32,7 @@ export function Profile({}: Props) {
   return (
     <>
       <ProfileDialog />
+      <LoginDialog />
       {!authenticated && <LoginButton />}
       {authenticated && (
         <div className="flex items-center gap-2">

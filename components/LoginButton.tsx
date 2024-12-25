@@ -1,12 +1,21 @@
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+'use client'
+
+import { useEffect } from 'react'
+import { useLoginDialog } from './LoginDialog/useLoginDialog'
 import { Button } from './ui/button'
 
-export default function LoginButton() {
-  const { push } = useRouter()
+export function LoginButton() {
+  const { setIsOpen } = useLoginDialog()
   return (
-    <Button asChild variant="secondary">
-      <Link href="/login">Sign in</Link>
+    <Button
+      variant="secondary"
+      onClick={() => {
+        console.log('gogo.....')
+
+        setIsOpen(true)
+      }}
+    >
+      Sign in
     </Button>
   )
 }

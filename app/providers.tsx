@@ -3,6 +3,7 @@
 import { Suspense } from 'react'
 import { FrameProvider } from '@/components/FrameProvider'
 import { GoogleOauthDialog } from '@/components/GoogleOauthDialog/GoogleOauthDialog'
+import { LoginDialog } from '@/components/LoginDialog/LoginDialog'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
 import { trpc, trpcClient } from '@/lib/trpc'
