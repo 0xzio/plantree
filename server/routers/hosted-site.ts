@@ -1,4 +1,3 @@
-import { join } from 'path'
 import { addDomainToVercel } from '@/lib/domains'
 import { decryptString, encryptString } from '@/lib/encryption'
 import { prisma } from '@/lib/prisma'
@@ -67,15 +66,6 @@ export const hostedSiteRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // console.log(
-      //   '=e>>>>>>>>>>>>>>',
-      //   encryptString(
-      //     '8mLWbPMuemR5dGSXHSe7HO6A2qhOD0uxLkpnFNvb',
-      //     process.env.CF_TOKEN_ENCRYPT_KEY!,
-      //   ),
-      // )
-      // return
-
       let apiToken = input.apiToken || ''
       if (!apiToken) {
         const user = await prisma.user.findUnique({
@@ -120,6 +110,47 @@ export const hostedSiteRouter = router({
           siteId: site.id,
           apiToken: apiToken,
           accountId,
+        },
+      })
+
+      return true
+    }),
+
+  redeploy: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const site = await prisma.hostedSite.findUniqueOrThrow({
+        where: { id: input.id },
+      })
+
+      const user = await prisma.user.findUnique({
+        where: { id: ctx.token.uid },
+      })
+
+      const apiToken = decryptString(
+        user?.cfApiToken || '',
+        process.env.CF_TOKEN_ENCRYPT_KEY!,
+      )
+
+      const accountId = await getAccountId(apiToken)
+
+      if (!accountId) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Invalid API token',
+        })
+      }
+
+      ky.post(`${process.env.DEPLOY_CI_HOST}/deploy-site`, {
+        json: {
+          siteId: site.id,
+          apiToken: apiToken,
+          accountId,
+          isRedeploy: true,
         },
       })
 

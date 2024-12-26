@@ -5,10 +5,12 @@ import LoadingDots from '@/components/icons/loading-dots'
 import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { HostedSite } from '@prisma/client'
 import { ExternalLink } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import { toast } from 'sonner'
 import { DeployNewSiteDialog } from './DeployNewSiteDialog/DeployNewSiteDialog'
 import { useDeployNewSiteDialog } from './DeployNewSiteDialog/useDeployNewSiteDialog'
 import { DeploySiteForm } from './DeploySiteForm'
@@ -86,6 +88,18 @@ function Content() {
 }
 
 function SiteItem({ site }: { site: HostedSite }) {
+  const { isPending, mutateAsync } = trpc.hostedSite.redeploy.useMutation()
+  const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
+
+  const redeploy = async () => {
+    try {
+      const res = await mutateAsync({ id: site.id })
+      refetch()
+      toast.success('Redeploy task created!')
+    } catch (error) {
+      toast.error(extractErrorMessage(error))
+    }
+  }
   return (
     <div
       key={site.id}
@@ -93,8 +107,18 @@ function SiteItem({ site }: { site: HostedSite }) {
     >
       <div className="flex items-center justify-between">
         <div className="text-lg font-bold">{site.name}</div>
-        <Button size="sm" variant="outline-solid">
-          Redeploy
+        <Button
+          size="sm"
+          variant="outline-solid"
+          className="w-24"
+          disabled={isPending}
+          onClick={redeploy}
+        >
+          {isPending ? (
+            <LoadingDots className="bg-foreground/60"></LoadingDots>
+          ) : (
+            'Redeploy'
+          )}
         </Button>
       </div>
       <PagesProjectInfo site={site}></PagesProjectInfo>
