@@ -14,6 +14,9 @@ export const hostedSiteRouter = router({
     const userId = ctx.token.uid
     const sites = await prisma.hostedSite.findMany({
       where: { userId },
+      orderBy: {
+        createdAt: 'desc',
+      },
     })
 
     return sites

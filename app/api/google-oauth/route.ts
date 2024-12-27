@@ -9,7 +9,7 @@ export async function GET(req: NextRequest) {
 
   const code = url.searchParams.get('code')
   const state = url.searchParams.get('state') || ''
-  const [host, pathname] = state.split('__')
+  const [host, pathname = ''] = state.split('__')
 
   const redirectUri = `${process.env.NEXTAUTH_URL}/api/google-oauth`
 
