@@ -52,7 +52,7 @@ export const DeploySiteForm = () => {
                 </label>
 
                 <a
-                  href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[%20%20{%20%20%20%20%22key%22:%20%22d1%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_r2%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_kv_storage%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22page%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22ai%22,%20%20%20%20%22type%22:%20%22read%22%20%20},%20%20{%20%20%20%22key%22:%22workers_scripts%22,%20%20%20%22type%22:%20%22edit%22%20%20}]&name=PenX"
+                  href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[%20%20{%20%20%20%20%22key%22:%20%22d1%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_r2%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_kv_storage%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22page%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22ai%22,%20%20%20%20%22type%22:%20%22read%22%20%20},%20%20{%20%20%20%22key%22:%22workers_scripts%22,%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22account_settings%22,%20%20%20%20%22type%22:%20%22read%22%20%20}%20%20]&name=PenX"
                   target="_blank"
                   className="text-sm text-foreground/60 flex items-center gap-1 hover:text-foreground/90 hover:scale-105 transition-all"
                 >
