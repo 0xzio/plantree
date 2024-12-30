@@ -9,6 +9,57 @@ import { z } from 'zod'
 import { pagesProject } from '../lib/page-project'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
+const verifyCfPermissionRequired = async (
+  account_id: string,
+  apiToken: string,
+): Promise<{ name: string; status: boolean }[]> => {
+  const client = new Cloudflare({
+    apiEmail: '',
+    apiToken: apiToken,
+  })
+
+  const cfPermissionRequired: { name: string; status: boolean }[] = [
+    { name: 'r2', status: true },
+    { name: 'd1', status: true },
+    { name: 'pages', status: true },
+    { name: 'kv', status: true },
+    // { name: 'workersAI', status: true },
+  ]
+
+  const [bucket, d1, projects, kv] = await Promise.all([
+    client.r2.buckets
+      .list({ account_id })
+      .catch((err) => ({ error: err, source: 'r2' })),
+    client.d1.database
+      .list({ account_id })
+      .catch((err) => ({ error: err, source: 'd1' })),
+    client.pages.projects
+      .list({ account_id })
+      .catch((err) => ({ error: err, source: 'pages' })),
+    client.kv.namespaces
+      .list({ account_id })
+      .catch((err) => ({ error: err, source: 'kv' })),
+    // client.workersAI.list({ account_id }).catch((err) => ({ error: err, source: 'workersAI' })),
+  ])
+
+  const errors = [bucket, d1, projects, kv].filter(
+    (result): result is { error: any; source: string } =>
+      result.error !== undefined,
+  )
+
+  if (errors.length > 0) {
+    errors.forEach((err) => {
+      // console.error(`Request ${err.source} failed:`, err.error)
+      const permission = cfPermissionRequired.find((p) => p.name === err.source)
+      if (permission) {
+        permission.status = false
+      }
+    })
+  }
+
+  return cfPermissionRequired
+}
+
 export const hostedSiteRouter = router({
   myHostedSites: protectedProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
@@ -86,15 +137,28 @@ export const hostedSiteRouter = router({
         accountId = await getAccountId(apiToken)
         if (!accountId) {
           return {
-            code: 403,
+            code: 401,
             message: 'Invalid API token',
           }
         }
       } catch (error) {
-        console.log('accountId', error)
+        return {
+          code: 401,
+          message: 'Invalid API token',
+        }
+      }
+
+      const permissionsRequired = await verifyCfPermissionRequired(
+        accountId,
+        apiToken,
+      )
+      if (
+        !permissionsRequired.every((permission) => permission.status === true)
+      ) {
         return {
           code: 403,
           message: 'Invalid API token',
+          permissionsRequired,
         }
       }
 

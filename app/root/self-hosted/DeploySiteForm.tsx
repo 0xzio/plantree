@@ -13,6 +13,9 @@ import { toast } from 'sonner'
 interface Props {}
 export const DeploySiteForm = () => {
   const [apiToken, setApiToken] = useState<string>('')
+  const [cfPermissionRequired, setCfPermissionRequired] = useState<
+    { name: string; status: boolean }[]
+  >([])
   const { isPending, mutateAsync } = trpc.hostedSite.deployNewSite.useMutation()
   const { data, status } = useSession()
   const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
@@ -24,8 +27,18 @@ export const DeploySiteForm = () => {
       if (res.code === 200) {
         refetch()
         toast.success('Deploy task created!')
-      } else if (res.code === 403) {
+        setCfPermissionRequired([
+          { name: 'r2', status: true },
+          { name: 'd1', status: true },
+          { name: 'pages', status: true },
+          { name: 'kv', status: true },
+        ])
+      } else if (res.code === 401) {
         toast.error(res.message)
+        setCfPermissionRequired([])
+      } else if (res.code === 403) {
+        toast.error('Missing cf permissions')
+        setCfPermissionRequired(res?.permissionsRequired || [])
       }
     } catch (error) {
       toast.error(extractErrorMessage(error))
@@ -83,6 +96,31 @@ export const DeploySiteForm = () => {
             >
               {isPending ? <LoadingDots className=""></LoadingDots> : 'Deploy'}
             </Button>
+
+            {cfPermissionRequired.length > 0 && (
+              <div className="space-y-2">
+                <h3 className="text-lg font-semibold">
+                  Checking the permissions provided by your API token:
+                </h3>
+                <ul className="space-y-1">
+                  {cfPermissionRequired.map((permission) => (
+                    <li
+                      key={permission.name}
+                      className="flex items-center gap-2 text-sm"
+                    >
+                      <span
+                        className={`${
+                          permission.status ? 'text-green-500' : 'text-red-500'
+                        }`}
+                      >
+                        {permission.status ? '✔' : '✘'}
+                      </span>
+                      <span>{permission.name}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
           </div>
         </div>
       </div>
