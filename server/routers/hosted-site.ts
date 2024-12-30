@@ -80,13 +80,22 @@ export const hostedSiteRouter = router({
           process.env.CF_TOKEN_ENCRYPT_KEY!,
         )
       }
-      const accountId = await getAccountId(apiToken)
 
-      if (!accountId) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
+      let accountId = ''
+      try {
+        accountId = await getAccountId(apiToken)
+        if (!accountId) {
+          return {
+            code: 403,
+            message: 'Invalid API token',
+          }
+        }
+      } catch (error) {
+        console.log('accountId', error)
+        return {
+          code: 403,
           message: 'Invalid API token',
-        })
+        }
       }
 
       await prisma.user.update({
@@ -116,7 +125,10 @@ export const hostedSiteRouter = router({
         },
       })
 
-      return true
+      return {
+        code: 200,
+        message: 'Deploy task created',
+      }
     }),
 
   redeploy: protectedProcedure

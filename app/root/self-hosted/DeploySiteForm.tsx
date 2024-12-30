@@ -21,8 +21,12 @@ export const DeploySiteForm = () => {
     if (!apiToken) return
     try {
       const res = await mutateAsync({ apiToken })
-      refetch()
-      toast.success('Deploy task created!')
+      if (res.code === 200) {
+        refetch()
+        toast.success('Deploy task created!')
+      } else if (res.code === 403) {
+        toast.error(res.message)
+      }
     } catch (error) {
       toast.error(extractErrorMessage(error))
     }
