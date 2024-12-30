@@ -42,10 +42,14 @@ const verifyCfPermissionRequired = async (
     // client.workersAI.list({ account_id }).catch((err) => ({ error: err, source: 'workersAI' })),
   ])
 
-  const errors = [bucket, d1, projects, kv].filter(
-    (result): result is { error: any; source: string } =>
-      result.error !== undefined,
-  )
+  // console.log('=======:bucket, d1, projects, kv:', bucket, d1, projects, kv)
+
+  const responses = [bucket, d1, projects, kv] as Array<{
+    error: any
+    source: string
+  }>
+
+  const errors = responses.filter((result) => result?.error !== undefined)
 
   if (errors.length > 0) {
     errors.forEach((err) => {
@@ -135,16 +139,17 @@ export const hostedSiteRouter = router({
       let accountId = ''
       try {
         accountId = await getAccountId(apiToken)
+
         if (!accountId) {
           return {
             code: 401,
-            message: 'Invalid API token',
+            message: 'Invalid API token or invalid permission',
           }
         }
       } catch (error) {
         return {
           code: 401,
-          message: 'Invalid API token',
+          message: 'Invalid API token or invalid permission',
         }
       }
 

@@ -10,7 +10,6 @@ import { ExternalLink } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 
-interface Props {}
 export const DeploySiteForm = () => {
   const [apiToken, setApiToken] = useState<string>('')
   const [cfPermissionRequired, setCfPermissionRequired] = useState<
@@ -99,9 +98,9 @@ export const DeploySiteForm = () => {
 
             {cfPermissionRequired.length > 0 && (
               <div className="space-y-2">
-                <h3 className="text-lg font-semibold">
+                <div className="text-foreground/60">
                   Checking the permissions provided by your API token:
-                </h3>
+                </div>
                 <ul className="space-y-1">
                   {cfPermissionRequired.map((permission) => (
                     <li

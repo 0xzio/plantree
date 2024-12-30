@@ -14,6 +14,7 @@ import { toast } from 'sonner'
 import { DeployNewSiteDialog } from './DeployNewSiteDialog/DeployNewSiteDialog'
 import { useDeployNewSiteDialog } from './DeployNewSiteDialog/useDeployNewSiteDialog'
 import { DeploySiteForm } from './DeploySiteForm'
+import { HostedSiteItem } from './HostedSiteItem'
 
 export function SelfHostedPage() {
   const { data, status } = useSession()
@@ -80,99 +81,9 @@ function Content() {
       </div>
       <div className="space-y-4">
         {data.map((site) => (
-          <SiteItem key={site.id} site={site} />
+          <HostedSiteItem key={site.id} site={site} />
         ))}
       </div>
-    </div>
-  )
-}
-
-function SiteItem({ site }: { site: HostedSite }) {
-  const { isPending, mutateAsync } = trpc.hostedSite.redeploy.useMutation()
-  const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
-
-  const redeploy = async () => {
-    try {
-      const res = await mutateAsync({ id: site.id })
-      refetch()
-      toast.success('Redeploy task created!')
-    } catch (error) {
-      toast.error(extractErrorMessage(error))
-    }
-  }
-  return (
-    <div
-      key={site.id}
-      className="border border-foreground/5 p-5 bg-background rounded-lg space-y-2"
-    >
-      <div className="flex items-center justify-between">
-        <div className="text-lg font-bold">{site.name}</div>
-        <Button
-          size="sm"
-          variant="outline-solid"
-          className="w-24"
-          disabled={isPending}
-          onClick={redeploy}
-        >
-          {isPending ? (
-            <LoadingDots className="bg-foreground/60"></LoadingDots>
-          ) : (
-            'Redeploy'
-          )}
-        </Button>
-      </div>
-      <PagesProjectInfo site={site}></PagesProjectInfo>
-    </div>
-  )
-}
-
-function PagesProjectInfo({ site }: { site: HostedSite }) {
-  const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
-  const { data, isLoading } = trpc.hostedSite.siteProjectInfo.useQuery(
-    {
-      siteId: site.id,
-    },
-    {
-      refetchInterval: 5 * 1000,
-    },
-  )
-
-  useEffect(() => {
-    if (!data) return
-    api.hostedSite.update
-      .mutate({
-        siteId: site.id,
-        domain: JSON.stringify(data.domains),
-      })
-      .then(() => {
-        // refetch()
-      })
-  }, [data, site, refetch])
-
-  if (isLoading) {
-    return <Skeleton className="h-6 w-64" />
-  }
-
-  if (typeof data === 'boolean' && data === false) {
-    return <div>Deploying, wait for a moment~</div>
-  }
-  return (
-    <div className="flex justify-between items-center">
-      <div className="text-foreground/60">
-        {data?.domains.map((domain) => (
-          <div key={domain}>
-            <a
-              href={`https://${domain}`}
-              target="_blank"
-              className="flex items-center gap-1"
-            >
-              {domain}
-              <ExternalLink size={16} />
-            </a>
-          </div>
-        ))}
-      </div>
-      {/* <Badge variant="secondary">Deploying</Badge> */}
     </div>
   )
 }

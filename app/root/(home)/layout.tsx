@@ -32,7 +32,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
           Local-First
         </Badge>
       </div>
-      <div className="flex items-center justify-center gap-1">
+      <div className="flex items-center justify-center gap-2">
         <Button
           size="lg"
           className="h-12 text-base w-36"
