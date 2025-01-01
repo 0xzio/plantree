@@ -51,6 +51,25 @@ export function SelfHostedPage() {
 function Content() {
   const { setIsOpen } = useDeployNewSiteDialog()
   const { isLoading, data = [] } = trpc.hostedSite.myHostedSites.useQuery()
+
+  useEffect(()=>{
+    if(data.length && data[0]?.domain){
+      try {
+        const deployUrlArr = JSON.parse(data[0]?.domain)
+        const deployUrl = deployUrlArr[0]
+        if(deployUrl){
+          console.log('%c=data-domain:','color:yellow',{
+            data,
+            deployUrlArr,
+            deployUrl
+          })
+        }
+      } catch (error) {
+        console.error('domain error',error)
+      }
+    }
+  },[data])
+
   if (isLoading) {
     return (
       <div className="h-[80vh] flex flex-col items-center justify-center">
@@ -66,6 +85,7 @@ function Content() {
       </div>
     )
   }
+
   return (
     <div className="max-w-2xl mx-auto mt-20">
       <div className="flex items-center justify-between mb-8">
