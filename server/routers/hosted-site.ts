@@ -3,6 +3,7 @@ import { decryptString, encryptString } from '@/lib/encryption'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
 import { TRPCError } from '@trpc/server'
+import axios from 'axios'
 import Cloudflare from 'cloudflare'
 import ky from 'ky'
 import { z } from 'zod'
@@ -257,6 +258,34 @@ export const hostedSiteRouter = router({
         },
       })
       return true
+    }),
+
+  checkSiteAvailability: protectedProcedure
+    .input(
+      z.object({
+        url: z.string(),
+        id: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const url = input.url
+      try {
+        const response = await axios.get(url, {
+          timeout: 5000,
+        })
+        return {
+          url,
+          id: input.id,
+          status: response.status === 200,
+        }
+      } catch (error) {
+        console.error('Site monitoring error:', error)
+        return {
+          url,
+          id: input.id,
+          status: false,
+        }
+      }
     }),
 })
 

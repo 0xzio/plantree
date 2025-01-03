@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import LoadingDots from '@/components/icons/loading-dots'
 import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
@@ -48,27 +48,53 @@ export function SelfHostedPage() {
   )
 }
 
+export enum SiteStatus {
+  PENDING = 1,
+  SUCCESS = 2,
+  FAILURE = 3,
+}
+
 function Content() {
   const { setIsOpen } = useDeployNewSiteDialog()
   const { isLoading, data = [] } = trpc.hostedSite.myHostedSites.useQuery()
+  const { mutateAsync } = trpc.hostedSite.checkSiteAvailability.useMutation()
+  const [siteStatusMap, setSiteStatusMap] = useState<Map<string, SiteStatus>>(
+    new Map(),
+  )
 
-  useEffect(()=>{
-    if(data.length && data[0]?.domain){
-      try {
-        const deployUrlArr = JSON.parse(data[0]?.domain)
-        const deployUrl = deployUrlArr[0]
-        if(deployUrl){
-          console.log('%c=data-domain:','color:yellow',{
-            data,
-            deployUrlArr,
-            deployUrl
-          })
-        }
-      } catch (error) {
-        console.error('domain error',error)
+  const checkSingleSite = async (site: HostedSite) => {
+    try {
+      const deployUrlArr = JSON.parse(site?.domain)
+      const deployUrl = deployUrlArr[0]
+      if (deployUrl) {
+        const res = await mutateAsync({
+          url: 'https://' + deployUrl,
+          id: site?.id,
+        })
+
+        setSiteStatusMap((prevMap) =>
+          new Map(prevMap).set(
+            res.id,
+            res.status ? SiteStatus.SUCCESS : SiteStatus.FAILURE,
+          ),
+        )
       }
+    } catch (error) {
+      console.error('domain error', error)
     }
-  },[data])
+  }
+
+  const checkAllSites = async (sites: HostedSite[]) => {
+    sites.forEach((site) => {
+      checkSingleSite(site)
+    })
+  }
+
+  useEffect(() => {
+    if (data.length) {
+      checkAllSites(data)
+    }
+  }, [data])
 
   if (isLoading) {
     return (
@@ -101,7 +127,11 @@ function Content() {
       </div>
       <div className="space-y-4">
         {data.map((site) => (
-          <HostedSiteItem key={site.id} site={site} />
+          <HostedSiteItem
+            key={site.id}
+            site={site}
+            status={siteStatusMap.get(site.id) || SiteStatus.PENDING}
+          />
         ))}
       </div>
     </div>

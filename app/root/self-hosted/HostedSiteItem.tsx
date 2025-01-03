@@ -10,8 +10,15 @@ import { api, trpc } from '@/lib/trpc'
 import { HostedSite } from '@prisma/client'
 import { Check, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
+import { SiteStatus } from './SelfHostedPage'
 
-export function HostedSiteItem({ site }: { site: HostedSite }) {
+export function HostedSiteItem({
+  site,
+  status,
+}: {
+  site: HostedSite
+  status: SiteStatus
+}) {
   const { isPending, mutateAsync } = trpc.hostedSite.redeploy.useMutation()
   const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
 
@@ -45,12 +52,18 @@ export function HostedSiteItem({ site }: { site: HostedSite }) {
           )}
         </Button>
       </div>
-      <PagesProjectInfo site={site}></PagesProjectInfo>
+      <PagesProjectInfo site={site} status={status}></PagesProjectInfo>
     </div>
   )
 }
 
-function PagesProjectInfo({ site }: { site: HostedSite }) {
+function PagesProjectInfo({
+  site,
+  status,
+}: {
+  site: HostedSite
+  status: SiteStatus
+}) {
   const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
 
   const { data, isLoading } = trpc.hostedSite.siteProjectInfo.useQuery(
@@ -97,6 +110,21 @@ function PagesProjectInfo({ site }: { site: HostedSite }) {
               </a>
             </div>
           ))}
+          {status === SiteStatus.PENDING && (
+            <div className="flex items-center text-yellow-500">
+              <span>Pending, please wait...</span>
+            </div>
+          )}
+          {status === SiteStatus.SUCCESS && (
+            <div className="flex items-center text-green-500">
+              <span>Success!</span>
+            </div>
+          )}
+          {status === SiteStatus.FAILURE && (
+            <div className="flex items-center text-red-500">
+              <span>Failed, please check the configuration.</span>
+            </div>
+          )}
         </div>
         {/* <Badge variant="secondary">Deploying</Badge> */}
       </div>
