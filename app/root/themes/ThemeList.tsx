@@ -29,7 +29,7 @@ export function ThemeList() {
             </div>
             <div className="space-y-2 p-4">
               <div className="text-xs text-foreground/50">
-                Install theme: npx penx install theme {item.name}
+                Install theme: npx penx theme install {item.name}
               </div>
               <h2 className="text-xl font-semibold">
                 {manifest.title || manifest.name}
