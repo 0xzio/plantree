@@ -7,9 +7,9 @@ export const isNavigator = typeof navigator !== 'undefined'
 
 export const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
 
-// export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
-export const GOOGLE_OAUTH_REDIRECT_URI =
-  'http://localhost:4000/api/google-oauth'
+export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
+// export const GOOGLE_OAUTH_REDIRECT_URI =
+//   'http://localhost:4000/api/google-oauth'
 
 export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
   'https://www.penx.io/api/link-google-account-oauth'
