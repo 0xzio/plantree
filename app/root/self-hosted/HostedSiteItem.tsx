@@ -4,23 +4,20 @@ import { useEffect } from 'react'
 import LoadingDots from '@/components/icons/loading-dots'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Skeleton } from '@/components/ui/skeleton'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { HostedSite } from '@prisma/client'
-import { Check, ExternalLink } from 'lucide-react'
+import { ArrowUp, Check, ExternalLink, X } from 'lucide-react'
 import { toast } from 'sonner'
-import { SiteStatus } from './SelfHostedPage'
+import { HostedSiteStatus } from './HostedSiteStatus'
+import { VersionInfo } from './VersionInfo'
 
-export function HostedSiteItem({
-  site,
-  status,
-}: {
-  site: HostedSite
-  status: SiteStatus
-}) {
+export function HostedSiteItem({ site }: { site: HostedSite }) {
   const { isPending, mutateAsync } = trpc.hostedSite.redeploy.useMutation()
   const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
+  const { data: accountId = '' } = trpc.hostedSite.cfAccountId.useQuery()
 
   const redeploy = async () => {
     try {
@@ -31,39 +28,53 @@ export function HostedSiteItem({
       toast.error(extractErrorMessage(error))
     }
   }
+
   return (
     <div
       key={site.id}
-      className="border border-foreground/5 p-5 bg-background rounded-lg space-y-2"
+      className="border border-foreground/5 p-5 bg-background rounded-lg flex justify-between"
     >
-      <div className="flex items-center justify-between">
+      <div className="">
         <div className="text-lg font-bold">{site.name}</div>
-        <Button
-          size="sm"
-          variant="outline-solid"
-          className="w-24"
-          disabled={isPending}
-          onClick={redeploy}
-        >
-          {isPending ? (
-            <LoadingDots className="bg-foreground/60"></LoadingDots>
-          ) : (
-            'Redeploy'
-          )}
-        </Button>
+        <PagesProjectInfo site={site}></PagesProjectInfo>
       </div>
-      <PagesProjectInfo site={site} status={status}></PagesProjectInfo>
+
+      <div className="flex flex-col justify-between flex-end gap-3">
+        <div className="ml-auto relative flex flex-col items-center justify-center gap-1">
+          <Button
+            size="default"
+            variant="outline-solid"
+            className="w-24"
+            disabled={isPending}
+            onClick={redeploy}
+          >
+            {isPending ? (
+              <LoadingDots className="bg-foreground/60"></LoadingDots>
+            ) : (
+              <div className="leading-none">
+                <div className="font-semibold">Redeploy</div>
+              </div>
+            )}
+          </Button>
+          <VersionInfo site={site} />
+        </div>
+
+        {accountId && (
+          <a
+            href={`https://dash.cloudflare.com/${accountId}/pages/view/penx-${site.id}`}
+            target="_blank"
+            className="text-xs flex gap-1"
+          >
+            <span>Manage on Cloudflare</span>
+            <ExternalLink className="text-foreground/50" size={12} />
+          </a>
+        )}
+      </div>
     </div>
   )
 }
 
-function PagesProjectInfo({
-  site,
-  status,
-}: {
-  site: HostedSite
-  status: SiteStatus
-}) {
+function PagesProjectInfo({ site }: { site: HostedSite }) {
   const { refetch } = trpc.hostedSite.myHostedSites.useQuery()
 
   const { data, isLoading } = trpc.hostedSite.siteProjectInfo.useQuery(
@@ -74,6 +85,15 @@ function PagesProjectInfo({
       refetchInterval: 5 * 1000,
     },
   )
+
+  const { isLoading: isStatusLoading, data: status } =
+    trpc.hostedSite.getDeployStatus.useQuery(
+      { url: data && data.domains[0] ? 'https://' + data.domains[0] : '' },
+      {
+        refetchInterval: 5 * 1000,
+        enabled: !!data,
+      },
+    )
 
   useEffect(() => {
     if (!data) return
@@ -88,14 +108,29 @@ function PagesProjectInfo({
   }, [data, site, refetch])
 
   if (isLoading) {
-    return <Skeleton className="h-6 w-64" />
+    return (
+      <div className="flex flex-col gap-1">
+        <Skeleton className="h-6 w-64" />
+        <Skeleton className="h-6 w-64" />
+      </div>
+    )
   }
 
   if (typeof data === 'boolean' && data === false) {
-    return <div>Deploying, wait for a moment~</div>
+    return (
+      <div className="text-yellow-500 flex items-center gap-1">
+        <div>Deploying, wait for a moment</div>
+        <LoadingDots className="bg-yellow-500/60" />
+      </div>
+    )
   }
+  const productionConfig = data?.deployment_configs?.production
+  const d1 = productionConfig?.d1_databases
+  const kv = productionConfig?.kv_namespaces
+  const r2 = productionConfig?.r2_buckets
+
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       <div className="flex justify-between items-center">
         <div className="text-foreground/60">
           {data?.domains.map((domain) => (
@@ -110,37 +145,34 @@ function PagesProjectInfo({
               </a>
             </div>
           ))}
-          {status === SiteStatus.PENDING && (
-            <div className="flex items-center text-yellow-500">
-              <span>Pending, please wait...</span>
-            </div>
-          )}
-          {status === SiteStatus.SUCCESS && (
-            <div className="flex items-center text-green-500">
-              <span>Success!</span>
-            </div>
-          )}
-          {status === SiteStatus.FAILURE && (
-            <div className="flex items-center text-red-500">
-              <span>Failed, please check the configuration.</span>
-            </div>
-          )}
         </div>
-        {/* <Badge variant="secondary">Deploying</Badge> */}
       </div>
-      <div className="flex gap-2 mt-3">
-        <Badge variant="secondary">
-          <Check size={16} className="text-green-500 mr-1" />
-          D1
-        </Badge>
-        <Badge variant="secondary">
-          <Check size={16} className="text-green-500 mr-1" />
-          R2
-        </Badge>
-        <Badge variant="secondary">
-          <Check size={16} className="text-green-500 mr-1" />
-          KV
-        </Badge>
+      <div className="flex items-center gap-2">
+        {d1 && (
+          <>
+            <div className="flex gap-2">
+              <Badge variant="secondary">
+                {!d1 && <X size={16} className="text-red-500 mr-1" />}
+                {d1 && <Check size={16} className="text-green-500 mr-1" />}
+                D1
+              </Badge>
+              <Badge variant="secondary">
+                {!kv && <X size={16} className="text-red-500 mr-1" />}
+                {kv && <Check size={16} className="text-green-500 mr-1" />}
+                KV
+              </Badge>
+              <Badge variant="secondary">
+                {!r2 && <X size={16} className="text-red-500 mr-1" />}
+                {r2 && <Check size={16} className="text-green-500 mr-1" />}
+                R2
+              </Badge>
+            </div>
+
+            <Separator orientation="vertical" className="h-5" />
+          </>
+        )}
+
+        <HostedSiteStatus isLoading={isStatusLoading} status={status} />
       </div>
     </div>
   )

@@ -44,7 +44,7 @@ export function Providers({
             // relay: 'https://relay.farcaster.xyz',
             rpcUrl: 'https://mainnet.optimism.io',
             domain: ROOT_DOMAIN,
-            siweUri: `https://${ROOT_DOMAIN}/login`,
+            siweUri: `https://${ROOT_DOMAIN}`,
           }}
         >
           <WagmiProvider config={wagmiConfig}>

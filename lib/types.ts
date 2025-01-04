@@ -247,3 +247,10 @@ export type Candle = {
   low: number
   high: number
 }
+
+export enum DeployStatus {
+  DEPLOYING = 'DEPLOYING',
+  SUCCESS = 'SUCCESS',
+  DOMAIN_PENDING = 'DOMAIN_PENDING',
+  FAIL = 'FAIL',
+}

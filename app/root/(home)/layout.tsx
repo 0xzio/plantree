@@ -1,9 +1,9 @@
 import { PropsWithChildren } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import Image from 'next/image'
 import Link from 'next/link'
 import { Slogan } from './Slogan'
+import { StartWritingButton } from './StartWritingButton'
 
 export const dynamic = 'force-static'
 export const revalidate = 3600 * 24 * 365
@@ -33,14 +33,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
         </Badge>
       </div>
       <div className="flex items-center justify-center gap-2">
-        <Button
-          size="lg"
-          className="h-12 text-base w-36"
-          asChild
-          variant="outline-solid"
-        >
-          <Link href="/login">Start writing</Link>
-        </Button>
+        <StartWritingButton />
 
         <Button size="lg" className="h-12 text-base w-36" asChild>
           <Link href="/self-hosted">Deploy my own</Link>

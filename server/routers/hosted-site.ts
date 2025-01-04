@@ -1,14 +1,13 @@
-import { addDomainToVercel } from '@/lib/domains'
 import { decryptString, encryptString } from '@/lib/encryption'
 import { prisma } from '@/lib/prisma'
+import { DeployStatus } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
 import { TRPCError } from '@trpc/server'
-import axios from 'axios'
 import Cloudflare from 'cloudflare'
 import ky from 'ky'
 import { z } from 'zod'
 import { pagesProject } from '../lib/page-project'
-import { protectedProcedure, publicProcedure, router } from '../trpc'
+import { protectedProcedure, router } from '../trpc'
 
 const verifyCfPermissionRequired = async (
   account_id: string,
@@ -20,17 +19,15 @@ const verifyCfPermissionRequired = async (
   })
 
   const cfPermissionRequired: { name: string; status: boolean }[] = [
-    { name: 'r2', status: true },
     { name: 'd1', status: true },
     { name: 'pages', status: true },
     { name: 'kv', status: true },
+    // { name: 'r2', status: true },
     // { name: 'workersAI', status: true },
   ]
 
-  const [bucket, d1, projects, kv] = await Promise.all([
-    client.r2.buckets
-      .list({ account_id })
-      .catch((err) => ({ error: err, source: 'r2' })),
+  // const [bucket, d1, projects, kv] = await Promise.all([
+  const [d1, projects, kv] = await Promise.all([
     client.d1.database
       .list({ account_id })
       .catch((err) => ({ error: err, source: 'd1' })),
@@ -40,12 +37,20 @@ const verifyCfPermissionRequired = async (
     client.kv.namespaces
       .list({ account_id })
       .catch((err) => ({ error: err, source: 'kv' })),
+    // client.r2.buckets
+    //   .list({ account_id })
+    //   .catch((err) => ({ error: err, source: 'r2' })),
     // client.workersAI.list({ account_id }).catch((err) => ({ error: err, source: 'workersAI' })),
   ])
 
   // console.log('=======:bucket, d1, projects, kv:', bucket, d1, projects, kv)
 
-  const responses = [bucket, d1, projects, kv] as Array<{
+  // const responses = [bucket, d1, projects, kv] as Array<{
+  //   error: any
+  //   source: string
+  // }>
+
+  const responses = [d1, projects, kv] as Array<{
     error: any
     source: string
   }>
@@ -76,6 +81,26 @@ export const hostedSiteRouter = router({
     })
 
     return sites
+  }),
+
+  cfAccountId: protectedProcedure.query(async ({ ctx, input }) => {
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.token.uid },
+    })
+
+    const cfApiToken = decryptString(
+      user?.cfApiToken!,
+      process.env.CF_TOKEN_ENCRYPT_KEY!,
+    )
+
+    return getAccountId(cfApiToken)
+  }),
+
+  penxVersion: protectedProcedure.query(async ({ ctx, input }) => {
+    const res = await fetch(
+      'https://raw.githubusercontent.com/penx-labs/penx/refs/heads/main/package.json',
+    ).then((r) => r.json())
+    return res?.version || ''
   }),
 
   siteProjectInfo: protectedProcedure
@@ -260,31 +285,28 @@ export const hostedSiteRouter = router({
       return true
     }),
 
-  checkSiteAvailability: protectedProcedure
+  getDeployStatus: protectedProcedure
     .input(
       z.object({
         url: z.string(),
-        id: z.string(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {
+    .query(async ({ ctx, input }) => {
       const url = input.url
+      if (!url) return DeployStatus.DEPLOYING
+
       try {
-        const response = await axios.get(url, {
+        const response = await ky.get(url, {
           timeout: 5000,
         })
-        return {
-          url,
-          id: input.id,
-          status: response.status === 200,
+
+        if (response.status === 200) {
+          return DeployStatus.SUCCESS
+        } else {
+          return DeployStatus.DOMAIN_PENDING
         }
       } catch (error) {
-        console.error('Site monitoring error:', error)
-        return {
-          url,
-          id: input.id,
-          status: false,
-        }
+        return DeployStatus.DOMAIN_PENDING
       }
     }),
 })

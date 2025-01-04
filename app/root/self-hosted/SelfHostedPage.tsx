@@ -1,16 +1,11 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import LoadingDots from '@/components/icons/loading-dots'
 import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { HostedSite } from '@prisma/client'
-import { ExternalLink } from 'lucide-react'
 import { useSession } from 'next-auth/react'
-import { toast } from 'sonner'
 import { DeployNewSiteDialog } from './DeployNewSiteDialog/DeployNewSiteDialog'
 import { useDeployNewSiteDialog } from './DeployNewSiteDialog/useDeployNewSiteDialog'
 import { DeploySiteForm } from './DeploySiteForm'
@@ -48,53 +43,9 @@ export function SelfHostedPage() {
   )
 }
 
-export enum SiteStatus {
-  PENDING = 1,
-  SUCCESS = 2,
-  FAILURE = 3,
-}
-
 function Content() {
   const { setIsOpen } = useDeployNewSiteDialog()
   const { isLoading, data = [] } = trpc.hostedSite.myHostedSites.useQuery()
-  const { mutateAsync } = trpc.hostedSite.checkSiteAvailability.useMutation()
-  const [siteStatusMap, setSiteStatusMap] = useState<Map<string, SiteStatus>>(
-    new Map(),
-  )
-
-  const checkSingleSite = async (site: HostedSite) => {
-    try {
-      const deployUrlArr = JSON.parse(site?.domain)
-      const deployUrl = deployUrlArr[0]
-      if (deployUrl) {
-        const res = await mutateAsync({
-          url: 'https://' + deployUrl,
-          id: site?.id,
-        })
-
-        setSiteStatusMap((prevMap) =>
-          new Map(prevMap).set(
-            res.id,
-            res.status ? SiteStatus.SUCCESS : SiteStatus.FAILURE,
-          ),
-        )
-      }
-    } catch (error) {
-      console.error('domain error', error)
-    }
-  }
-
-  const checkAllSites = async (sites: HostedSite[]) => {
-    sites.forEach((site) => {
-      checkSingleSite(site)
-    })
-  }
-
-  useEffect(() => {
-    if (data.length) {
-      checkAllSites(data)
-    }
-  }, [data])
 
   if (isLoading) {
     return (
@@ -113,7 +64,7 @@ function Content() {
   }
 
   return (
-    <div className="max-w-2xl mx-auto mt-20">
+    <div className="max-w-3xl mx-auto mt-20">
       <div className="flex items-center justify-between mb-8">
         <div className="text-3xl font-bold">My sites</div>
         <Button
@@ -127,11 +78,7 @@ function Content() {
       </div>
       <div className="space-y-4">
         {data.map((site) => (
-          <HostedSiteItem
-            key={site.id}
-            site={site}
-            status={siteStatusMap.get(site.id) || SiteStatus.PENDING}
-          />
+          <HostedSiteItem key={site.id} site={site} />
         ))}
       </div>
     </div>

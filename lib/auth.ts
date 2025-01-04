@@ -322,8 +322,8 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   pages: {
-    signIn: `/login`,
-    verifyRequest: `/login`,
+    signIn: `/`,
+    verifyRequest: `/`,
     error: '/error', // Error code passed in query string as ?error=
     newUser: '/',
   },
