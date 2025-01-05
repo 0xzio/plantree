@@ -14,7 +14,8 @@ export function VersionInfo({ site }: { site: HostedSite }) {
     return <Skeleton className="h-4 w-20" />
   }
 
-  const upgradable = compareVersions(site.version, penxVersion) < 0
+  const upgradable =
+    site.version && compareVersions(site.version, penxVersion) < 0
 
   return (
     <div className="flex items-center justify-center gap-1 h-4">
