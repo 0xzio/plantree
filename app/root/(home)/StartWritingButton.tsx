@@ -1,18 +1,33 @@
 'use client'
 
+import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
+import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export function StartWritingButton() {
+  const { data } = useSession()
+  const { setIsOpen } = useLoginDialog()
+  const { push } = useRouter()
   return (
-    <Button
-      size="lg"
-      className="h-12 text-base w-36"
-      variant="outline-solid"
-      onClick={() => {
-        //
-      }}
-    >
-      Start writing
-    </Button>
+    <div className="relative flex flex-col gap-1">
+      <Button
+        size="lg"
+        className="h-14 text-base w-52 relative overflow-hidden"
+        variant="outline-solid"
+        onClick={() => {
+          if (data) {
+            push('/~/posts')
+          } else {
+            setIsOpen(true)
+          }
+        }}
+      >
+        <div>Writing on PenX cloud</div>
+        <div className="absolute top-0 right-0 text-xs bg-yellow-500 px-1 py-[1px] rounded-bl-lg">
+          Beta now
+        </div>
+      </Button>
+    </div>
   )
 }

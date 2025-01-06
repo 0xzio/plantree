@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { DeployOwnButton } from './DeployOwnButton'
 import { Slogan } from './Slogan'
 import { StartWritingButton } from './StartWritingButton'
 
@@ -34,10 +35,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
       </div>
       <div className="flex items-center justify-center gap-2">
         <StartWritingButton />
-
-        <Button size="lg" className="h-12 text-base w-36" asChild>
-          <Link href="/self-hosted">Deploy my own</Link>
-        </Button>
+        <DeployOwnButton />
       </div>
 
       {children}

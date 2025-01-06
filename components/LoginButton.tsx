@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { useLoginDialog } from './LoginDialog/useLoginDialog'
 import { Button, ButtonProps } from './ui/button'
 
@@ -12,8 +11,6 @@ export function LoginButton({ ...rest }: Props) {
       variant="secondary"
       {...rest}
       onClick={() => {
-        console.log('gogo.....')
-
         setIsOpen(true)
       }}
     >
