@@ -27,8 +27,11 @@ export function SelfHostedPage() {
     return (
       <div className="h-[80vh] flex flex-col items-center justify-center gap-3">
         <h2 className="text-4xl font-bold">Deploy in 10 minutes</h2>
-        <div className="text-base text-foreground/60">
-          Deploy your own site to Cloudflare Pages in 10 minutes
+        <div className="text-base text-foreground/70">
+          Deploy your own site to Cloudflare Pages in 10 minutes.
+        </div>
+        <div className="text-sm text-foreground/50 -mt-1">
+          100% run on Cloudflare and deploy freely.
         </div>
         <LoginButton size="lg" variant="default">
           Sign in to deploy

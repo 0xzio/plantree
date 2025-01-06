@@ -33,7 +33,7 @@ export default async function HomePage({ children }: PropsWithChildren) {
           Local-First
         </Badge>
       </div>
-      <div className="flex items-center justify-center gap-2">
+      <div className="flex items-center justify-center gap-3">
         <StartWritingButton />
         <DeployOwnButton />
       </div>

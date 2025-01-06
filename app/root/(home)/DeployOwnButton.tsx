@@ -18,7 +18,7 @@ export function DeployOwnButton() {
     >
       <Link href="/self-hosted" className="overflow-hidden">
         <div>Deploy my own</div>
-        <div className="absolute top-0 right-0 text-xs bg-emerald-500 px-1 py-[1px] rounded-bl-lg">
+        <div className="absolute top-0 right-0 text-xs bg-emerald-500 px-1 py-[1px] rounded-bl-lg text-white">
           Recommend
         </div>
       </Link>

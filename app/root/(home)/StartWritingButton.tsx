@@ -24,7 +24,7 @@ export function StartWritingButton() {
         }}
       >
         <div>Writing on PenX cloud</div>
-        <div className="absolute top-0 right-0 text-xs bg-yellow-500 px-1 py-[1px] rounded-bl-lg">
+        <div className="absolute top-0 right-0 text-xs bg-yellow-500 px-1 py-[1px] rounded-bl-lg text-white">
           Beta now
         </div>
       </Button>
