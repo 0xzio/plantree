@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button'
 import { api, trpc } from '@/lib/trpc'
 import { HostedSite } from '@prisma/client'
 import { useSession } from 'next-auth/react'
+import { ApiTokenDialog } from './ApiTokenDialog/ApiTokenDialog'
+import { useApiTokenDialog } from './ApiTokenDialog/useApiTokenDialog'
 import { DeployNewSiteDialog } from './DeployNewSiteDialog/DeployNewSiteDialog'
 import { useDeployNewSiteDialog } from './DeployNewSiteDialog/useDeployNewSiteDialog'
 import { DeploySiteForm } from './DeploySiteForm'
@@ -37,6 +39,7 @@ export function SelfHostedPage() {
 
   return (
     <>
+      <ApiTokenDialog />
       <DeployNewSiteDialog />
       <Content />
     </>
@@ -45,6 +48,7 @@ export function SelfHostedPage() {
 
 function Content() {
   const { setIsOpen } = useDeployNewSiteDialog()
+  const { setIsOpen: openApiTokenDialog } = useApiTokenDialog()
   const { isLoading, data = [] } = trpc.hostedSite.myHostedSites.useQuery()
 
   if (isLoading) {
@@ -67,14 +71,26 @@ function Content() {
     <div className="max-w-3xl mx-auto mt-20">
       <div className="flex items-center justify-between mb-8">
         <div className="text-3xl font-bold">My sites</div>
-        <Button
-          size="lg"
-          onClick={() => {
-            setIsOpen(true)
-          }}
-        >
-          Deploy new site
-        </Button>
+        <div className="flex gap-2">
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => {
+              openApiTokenDialog(true)
+            }}
+          >
+            Update API token
+          </Button>
+
+          <Button
+            size="lg"
+            onClick={() => {
+              setIsOpen(true)
+            }}
+          >
+            Deploy new site
+          </Button>
+        </div>
       </div>
       <div className="space-y-4">
         {data.map((site) => (

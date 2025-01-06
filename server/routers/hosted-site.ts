@@ -285,6 +285,41 @@ export const hostedSiteRouter = router({
       return true
     }),
 
+  getCloudFlareApiToken: protectedProcedure.query(async ({ ctx, input }) => {
+    const user = await prisma.user.findUnique({
+      where: { id: ctx.token.uid },
+    })
+    if (!user?.cfApiToken) return ''
+
+    try {
+      return decryptString(
+        user?.cfApiToken || '',
+        process.env.CF_TOKEN_ENCRYPT_KEY!,
+      )
+    } catch (error) {
+      return ''
+    }
+  }),
+
+  updateCloudFlareApiToken: protectedProcedure
+    .input(
+      z.object({
+        apiToken: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.user.update({
+        where: { id: ctx.token.uid },
+        data: {
+          cfApiToken: encryptString(
+            input.apiToken,
+            process.env.CF_TOKEN_ENCRYPT_KEY!,
+          ),
+        },
+      })
+      return true
+    }),
+
   getDeployStatus: protectedProcedure
     .input(
       z.object({

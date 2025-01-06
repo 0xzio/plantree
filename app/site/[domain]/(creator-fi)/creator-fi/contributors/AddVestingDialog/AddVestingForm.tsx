@@ -1,5 +1,6 @@
 'use client'
 
+//
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
@@ -150,7 +151,11 @@ export function AddVestingForm() {
           className="w-full"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots className="bg-foreground/50" /> : <p>Add</p>}
+          {isLoading ? (
+            <LoadingDots className="bg-foreground/50" />
+          ) : (
+            <p>Add</p>
+          )}
         </Button>
       </form>
     </Form>
