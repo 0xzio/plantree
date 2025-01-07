@@ -25,6 +25,7 @@ import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useApiTokenDialog } from './useApiTokenDialog'
@@ -68,7 +69,7 @@ export function ApiTokenDialog({}: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
-      <DialogContent className="sm:max-w-[425px] grid gap-3">
+      <DialogContent className="sm:max-w-[500px] grid gap-3">
         <DialogHeader className="">
           <DialogTitle className="text-3xl font-bold">
             Update API token
@@ -85,7 +86,17 @@ export function ApiTokenDialog({}: Props) {
               name="apiToken"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>API token</FormLabel>
+                  <div className="flex items-center justify-between">
+                    <FormLabel>API token</FormLabel>
+                    <a
+                      href="https://dash.cloudflare.com/profile/api-tokens?permissionGroupKeys=[%20%20{%20%20%20%20%22key%22:%20%22d1%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_r2%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22workers_kv_storage%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22page%22,%20%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22ai%22,%20%20%20%20%22type%22:%20%22read%22%20%20},%20%20{%20%20%20%22key%22:%22workers_scripts%22,%20%20%20%22type%22:%20%22edit%22%20%20},%20%20{%20%20%20%20%22key%22:%20%22account_settings%22,%20%20%20%20%22type%22:%20%22read%22%20%20}%20%20]&name=PenX"
+                      target="_blank"
+                      className="text-sm text-foreground/60 flex items-center gap-1 hover:text-foreground/90 hover:scale-105 transition-all"
+                    >
+                      Create API Token
+                      <ExternalLink size={16}></ExternalLink>
+                    </a>
+                  </div>
                   <FormControl>
                     <Input placeholder="" {...field} className="w-full" />
                   </FormControl>
