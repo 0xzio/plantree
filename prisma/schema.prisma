@@ -86,6 +86,12 @@ model Site {
   postTags        PostTag[]
   accessTokens    AccessToken[]
   comments        Comment[]
+  pages           Page[]
+  blocks          Block[]
+  databases       Database[]
+  fields          Field[]
+  records         Record[]
+  views           View[]
 
   @@index([userId])
   @@map("site")
@@ -117,7 +123,16 @@ model User {
   sites         Site[]
   accounts      Account[]
   theme         Theme[]
-  hostedSite    HostedSite[]
+  hostedSites   HostedSite[]
+  assets        Asset[]
+  labels        Label[]
+  albums        Album[]
+  pages         Page[]
+  blocks        Block[]
+  databases     Database[]
+  fields        Field[]
+  records       Record[]
+  views         View[]
 
   @@index([id])
   @@map("user")
@@ -202,7 +217,7 @@ model Post {
   description   String        @default("") @db.VarChar(1000)
   content       String        @default("") @db.Text
   cid           String        @default("") @db.VarChar(100)
-  nodeId        String?       @unique @db.Uuid
+  pageId        String?       @unique @db.Uuid
   creationId    Int?          @db.Integer
   type          PostType      @default(ARTICLE)
   gateType      GateType      @default(FREE)
@@ -288,15 +303,6 @@ model PostTag {
 
   @@index([postId])
   @@map("post_tag")
-}
-
-model Asset {
-  id   String  @id @default(uuid()) @db.Uuid
-  url  String  @default("") @db.VarChar(2183)
-  cid  String  @default("") @db.VarChar(100)
-  type String? @db.VarChar(20)
-
-  @@map("asset")
 }
 
 model AccessToken {
@@ -464,4 +470,235 @@ model HostedSite {
 
   @@index([userId])
   @@map("hosted_site")
+}
+
+model Asset {
+  id            String       @id @default(uuid()) @db.Uuid
+  url           String       @default("") @db.VarChar(2183)
+  filename      String       @default("") @db.VarChar(2183)
+  title         String       @default("") @db.VarChar(2183)
+  description   String       @default("") @db.VarChar(500)
+  contentType   String       @default("") @db.VarChar(100)
+  isPublic      Boolean      @default(false)
+  isTrashed     Boolean      @default(false)
+  size          Int          @default(0) @db.Integer
+  props         Json?
+  sharingConfig Json?
+  createdAt     DateTime
+  updatedAt     DateTime     @updatedAt
+  uploadedAt    DateTime     @updatedAt
+  user          User         @relation(fields: [userId], references: [id])
+  userId        String       @db.Uuid
+  assetLabels   AssetLabel[]
+  assetAlbums   AssetAlbum[]
+
+  @@index([userId])
+  @@index([contentType])
+  @@map("asset")
+}
+
+model Label {
+  id         String @id @default(uuid()) @db.Uuid
+  name       String @default("") @db.VarChar(50)
+  color      String @default("") @db.VarChar(50)
+  title      String @default("") @db.VarChar(2183)
+  assetCount Int    @default(0) @db.Integer
+
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String       @db.Uuid
+  assetLabels AssetLabel[]
+
+  @@index([userId])
+  @@map("label")
+}
+
+model AssetLabel {
+  id        String   @id @default(uuid()) @db.Uuid
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  assetId   String   @db.Uuid
+  label     Label    @relation(fields: [labelId], references: [id])
+  labelId   String   @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("asset_label")
+}
+
+model Album {
+  id          String       @id @default(uuid()) @db.Uuid
+  name        String       @default("") @db.VarChar(50)
+  assetCount  Int          @default(0) @db.Integer
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  user        User         @relation(fields: [userId], references: [id])
+  userId      String       @db.Uuid
+  assetAlbums AssetAlbum[]
+
+  @@index([userId])
+  @@map("Album")
+}
+
+model AssetAlbum {
+  id        String   @id @default(uuid()) @db.Uuid
+  asset     Asset    @relation(fields: [assetId], references: [id])
+  assetId   String   @db.Uuid
+  album     Album    @relation(fields: [albumId], references: [id])
+  albumId   String   @db.Uuid
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("asset_album")
+}
+
+model Page {
+  id         String   @id @default(uuid()) @db.Uuid
+  slug       String   @unique @default(uuid())
+  parentId   String?  @unique @db.Uuid
+  parentType String?
+  title      String   @default("") @db.VarChar(500)
+  cover      String?  @db.VarChar(2183)
+  icon       String   @default("") @db.VarChar(50)
+  isTrashed  Boolean  @default(false)
+  isJournal  Boolean  @default(false)
+  children   Json?
+  props      Json?
+  date       String   @default("") @db.VarChar(20)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user       User     @relation(fields: [userId], references: [id])
+  userId     String   @db.Uuid
+  site       Site     @relation(fields: [siteId], references: [id])
+  siteId     String   @db.Uuid
+  blocks     Block?
+
+  @@index([userId])
+  @@index([siteId])
+  @@map("page")
+}
+
+model Block {
+  id          String  @id @default(uuid()) @db.Uuid
+  parentId    String? @unique @db.Uuid
+  type        String
+  isTrashed   Boolean @default(false)
+  isCollapsed Boolean @default(false)
+  content     Json?
+  children    Json?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  page      Page     @relation(fields: [pageId], references: [id])
+  pageId    String   @unique @db.Uuid
+  user      User     @relation(fields: [userId], references: [id])
+  userId    String   @db.Uuid
+  site      Site     @relation(fields: [siteId], references: [id])
+  siteId    String   @db.Uuid
+
+  @@index([userId])
+  @@index([pageId])
+  @@index([siteId])
+  @@map("block")
+}
+
+model Database {
+  id           String   @id @default(uuid()) @db.Uuid
+  name         String   @default("") @db.VarChar(50)
+  color        String   @default("") @db.VarChar(50)
+  parentId     String?  @unique @db.Uuid
+  parentType   String?
+  icon         String   @default("") @db.VarChar(50)
+  cover        String?  @db.VarChar(2183)
+  content      Json?
+  activeViewId String   @unique @db.Uuid
+  viewIds      Json?
+  props        Json?
+  children     Json?
+  isTrashed    Boolean  @default(false)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  user         User     @relation(fields: [userId], references: [id])
+  userId       String   @db.Uuid
+  site         Site     @relation(fields: [siteId], references: [id])
+  siteId       String   @db.Uuid
+  fields       Field[]
+  records      Record[]
+  views        View[]
+
+  @@index([userId])
+  @@index([siteId])
+  @@map("database")
+}
+
+model Field {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @db.Uuid
+  displayName String   @default("")
+  description String   @default("") @db.VarChar(500)
+  fieldType   String
+  config      Json?
+  options     Json
+  isPrimary   Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.Uuid
+  database    Database @relation(fields: [databaseId], references: [id])
+  databaseId  String   @db.Uuid
+  site        Site     @relation(fields: [siteId], references: [id])
+  siteId      String   @db.Uuid
+
+  @@index([databaseId])
+  @@index([userId])
+  @@index([siteId])
+  @@map("field")
+}
+
+model Record {
+  id         String    @id @default(uuid()) @db.Uuid
+  sort       Int       @default(0) @db.Integer
+  fields     Json
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+  user       User      @relation(fields: [userId], references: [id])
+  userId     String    @db.Uuid
+  database   Database  @relation(fields: [databaseId], references: [id])
+  databaseId String    @db.Uuid
+  site       Site      @relation(fields: [siteId], references: [id])
+  siteId     String    @db.Uuid
+
+  @@index([databaseId])
+  @@index([userId])
+  @@index([siteId])
+  @@map("record")
+}
+
+model View {
+  id              String   @id @default(uuid()) @db.Uuid
+  sort            Int      @default(0) @db.Integer
+  fields          Json?
+  name            String   @default("") @db.VarChar(50)
+  description     String   @default("") @db.VarChar(500)
+  viewType        String
+  viewFields      Json
+  sorts           Json?
+  groups          Json
+  filters         Json
+  kanbanFieldId   String   @db.Uuid // fieldId for kanban
+  kanbanOptionIds Json
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  user            User     @relation(fields: [userId], references: [id])
+  userId          String   @db.Uuid
+  database        Database @relation(fields: [databaseId], references: [id])
+  databaseId      String   @db.Uuid
+  site            Site     @relation(fields: [siteId], references: [id])
+  siteId          String   @db.Uuid
+
+  @@index([databaseId])
+  @@index([userId])
+  @@index([siteId])
+  @@map("view")
 }
