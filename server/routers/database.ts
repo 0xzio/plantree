@@ -1,0 +1,488 @@
+import { prisma } from '@/lib/prisma'
+import { FieldType, Option, ViewField, ViewType } from '@/lib/types'
+import { uniqueId } from '@/lib/unique-id'
+import { arrayMoveImmutable } from 'array-move'
+import { z } from 'zod'
+import { protectedProcedure, publicProcedure, router } from '../trpc'
+
+export const databaseRouter = router({
+  list: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return prisma.database.findMany({
+        where: {
+          siteId: input.siteId,
+        },
+        orderBy: {
+          updatedAt: 'desc',
+          createdAt: 'desc',
+        },
+      })
+    }),
+
+  byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return prisma.database.findFirstOrThrow({
+      include: {
+        views: true,
+        fields: true,
+        records: true,
+      },
+      where: { id: input },
+    })
+  }),
+
+  create: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        name: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const newDatabase = await prisma.database.create({
+        data: {
+          ...input,
+          userId: ctx.token.uid,
+        },
+      })
+
+      const firstField = await prisma.field.create({
+        data: {
+          databaseId: newDatabase.id,
+          fieldType: FieldType.TEXT,
+          name: uniqueId(),
+          displayName: 'Title',
+          isPrimary: true,
+          config: {},
+          options: [],
+          siteId: input.siteId,
+          userId: ctx.token.uid,
+        },
+      })
+
+      const secondField = await prisma.field.create({
+        data: {
+          databaseId: newDatabase.id,
+          fieldType: FieldType.SINGLE_SELECT,
+          name: uniqueId(),
+          displayName: 'Tag',
+          config: {},
+          options: [],
+          siteId: input.siteId,
+          userId: ctx.token.uid,
+        },
+      })
+
+      const newFields = [firstField, secondField]
+
+      const viewFields: ViewField[] = newFields.map((field) => ({
+        fieldId: field.id,
+        width: 160,
+        visible: true,
+      }))
+
+      const tableView = await prisma.view.create({
+        data: {
+          databaseId: newDatabase.id,
+          name: 'Table',
+          viewType: ViewType.TABLE,
+          viewFields,
+          sorts: [],
+          filters: [],
+          groups: [],
+          kanbanFieldId: '',
+          kanbanOptionIds: [],
+          siteId: input.siteId,
+          userId: ctx.token.uid,
+        },
+      })
+
+      const listView = await prisma.view.create({
+        data: {
+          databaseId: newDatabase.id,
+          name: 'Gallery',
+          viewType: ViewType.GALLERY,
+          viewFields,
+          sorts: [],
+          filters: [],
+          groups: [],
+          kanbanFieldId: '',
+          kanbanOptionIds: [],
+          siteId: input.siteId,
+          userId: ctx.token.uid,
+        },
+      })
+
+      await prisma.database.update({
+        where: { id: newDatabase.id },
+        data: {
+          activeViewId: tableView.id,
+          viewIds: [tableView.id, listView.id],
+        },
+      })
+
+      const recordFields = newFields.reduce(
+        (acc, field) => {
+          return {
+            ...acc,
+            [field.id]: '',
+          }
+        },
+        {} as Record<string, any>,
+      )
+
+      await prisma.record.createMany({
+        data: [
+          {
+            databaseId: newDatabase.id,
+            sort: 0,
+            fields: recordFields,
+            siteId: input.siteId,
+            userId: ctx.token.uid,
+          },
+          {
+            databaseId: newDatabase.id,
+            sort: 1,
+            fields: recordFields,
+            siteId: input.siteId,
+            userId: ctx.token.uid,
+          },
+        ],
+      })
+
+      return newDatabase
+    }),
+
+  addRecord: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+        siteId: z.string(),
+        databaseId: z.string(),
+        fields: z.record(z.unknown()),
+        sort: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.record.create({
+        data: {
+          userId: ctx.token.uid,
+          ...input,
+        },
+      })
+      return true
+    }),
+
+  addRefBlockRecord: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        databaseId: z.string(),
+        refBlockId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const fieldList = await prisma.field.findMany({
+        where: { databaseId: input.databaseId },
+      })
+
+      const count = await prisma.field.count({
+        where: { databaseId: input.databaseId },
+      })
+
+      const newFields = fieldList.reduce(
+        (acc, field) => {
+          return {
+            ...acc,
+            [field.id]: field.isPrimary
+              ? { refType: 'BLOCK', id: input.refBlockId }
+              : '',
+          }
+        },
+        {} as Record<string, any>,
+      )
+
+      const record = await prisma.record.create({
+        data: {
+          userId: ctx.token.uid,
+          siteId: input.siteId,
+          databaseId: input.databaseId,
+          sort: count + 1,
+          fields: newFields,
+        },
+      })
+
+      return record
+    }),
+
+  addField: protectedProcedure
+    .input(
+      z.object({
+        id: z.string().optional(),
+        siteId: z.string(),
+        databaseId: z.string(),
+        fieldType: z.string(),
+        name: z.string(),
+        displayName: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const field = await prisma.field.create({
+        data: {
+          ...input,
+          options: [],
+          config: {},
+          userId: ctx.token.uid,
+        },
+      })
+
+      const viewList = await prisma.view.findMany({
+        where: { databaseId: input.databaseId },
+      })
+
+      for (const view of viewList) {
+        await prisma.view.update({
+          where: { id: view.id },
+          data: {
+            viewFields: [
+              ...(view.viewFields as any),
+              {
+                fieldId: field.id,
+                width: 160,
+                visible: true,
+              },
+            ],
+          },
+        })
+      }
+
+      const recordList = await prisma.record.findMany({
+        where: { databaseId: input.databaseId },
+      })
+
+      for (const record of recordList) {
+        await prisma.record.update({
+          where: { id: record.id },
+          data: {
+            fields: {
+              ...(record.fields as any),
+              [field.id]: '',
+            },
+          },
+        })
+      }
+
+      return true
+    }),
+
+  updateField: protectedProcedure
+    .input(
+      z.object({
+        fieldId: z.string(),
+        displayName: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { fieldId, ...rest } = input
+      await prisma.field.update({
+        where: { id: fieldId },
+        data: rest,
+      })
+
+      return true
+    }),
+
+  sortViewFields: protectedProcedure
+    .input(
+      z.object({
+        viewId: z.string(),
+        fromIndex: z.number(),
+        toIndex: z.number(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const view = await prisma.view.findUniqueOrThrow({
+        where: { id: input.viewId },
+      })
+
+      await prisma.view.update({
+        where: { id: input.viewId },
+        data: {
+          viewFields: arrayMoveImmutable(
+            view?.viewFields as any as ViewField[],
+            input.fromIndex,
+            input.toIndex,
+          ),
+        },
+      })
+
+      return true
+    }),
+
+  updateRecord: protectedProcedure
+    .input(
+      z.object({
+        recordId: z.string(),
+        fields: z.record(z.unknown()),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.record.update({
+        where: { id: input.recordId },
+        data: { fields: input.fields },
+      })
+      return true
+    }),
+
+  deleteField: protectedProcedure
+    .input(
+      z.object({
+        databaseId: z.string(),
+        fieldId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const [viewList, recordList] = await Promise.all([
+        prisma.view.findMany({
+          where: { databaseId: input.databaseId },
+        }),
+        prisma.record.findMany({
+          where: { databaseId: input.databaseId },
+        }),
+
+        prisma.field.delete({
+          where: { id: input.fieldId },
+        }),
+      ])
+
+      for (const view of viewList) {
+        const viewFields = view.viewFields as any as ViewField[]
+
+        await prisma.view.update({
+          where: { id: view.id },
+          data: {
+            viewFields: viewFields.filter((i) => i.fieldId !== input.fieldId),
+          },
+        })
+      }
+
+      for (const record of recordList) {
+        const fields = record.fields as Record<string, any>
+        delete fields[input.fieldId]
+
+        await prisma.record.update({
+          where: { id: record.id },
+          data: { fields },
+        })
+      }
+
+      return true
+    }),
+
+  deleteRecord: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      await prisma.record.delete({ where: { id: input } })
+      return true
+    }),
+
+  updateViewField: protectedProcedure
+    .input(
+      z.object({
+        viewId: z.string(),
+        fieldId: z.string(),
+        width: z.number().optional(),
+        visible: z.boolean().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const view = await prisma.view.findUniqueOrThrow({
+        where: { id: input.viewId },
+      })
+
+      const viewFields = view!.viewFields as any as ViewField[]
+
+      for (const viewField of viewFields) {
+        if (viewField.fieldId === input.fieldId) {
+          if (input.width) viewField.width = input.width
+          if (typeof input.visible === 'boolean') {
+            viewField.visible = input.visible
+          }
+        }
+      }
+
+      await prisma.view.update({
+        where: { id: input.viewId },
+        data: { viewFields },
+      })
+
+      return true
+    }),
+
+  addOption: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        fieldId: z.string(),
+        name: z.string(),
+        color: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const field = await prisma.field.findUniqueOrThrow({
+        where: { id: input.fieldId },
+      })
+
+      const options = (field?.options as any as Option[]) || []
+
+      await prisma.field.update({
+        where: { id: input.fieldId },
+        data: {
+          options: [...options, input],
+        },
+      })
+
+      return true
+    }),
+
+  updateDatabase: protectedProcedure
+    .input(
+      z.object({
+        databaseId: z.string(),
+        name: z.string().optional(),
+        color: z.string().optional(),
+        cover: z.string().optional(),
+        icon: z.string().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { databaseId, ...rest } = input
+      await prisma.database.update({
+        where: { id: databaseId },
+        data: rest,
+      })
+      return true
+    }),
+
+  deleteDatabase: protectedProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      await prisma.record.deleteMany({
+        where: { databaseId: input },
+      })
+      await prisma.field.deleteMany({
+        where: { databaseId: input },
+      })
+      await prisma.view.deleteMany({
+        where: { databaseId: input },
+      })
+      await prisma.database.delete({
+        where: { id: input },
+      })
+      return true
+    }),
+})

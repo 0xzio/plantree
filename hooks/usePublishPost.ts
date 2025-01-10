@@ -92,7 +92,7 @@ export function usePublishPost() {
           siteId: id,
           type: post?.type || node.props?.objectType || PostType.ARTICLE,
           postId: post?.id,
-          nodeId: node?.id,
+          pageId: node?.id,
           gateType,
           collectible,
           creationId,

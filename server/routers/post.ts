@@ -6,7 +6,6 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
 import { syncPostToHub } from '../lib/syncPostToHub'
-import { syncToGoogleDrive } from '../lib/syncToGoogleDrive'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const postRouter = router({
@@ -125,7 +124,7 @@ export const postRouter = router({
       z.object({
         siteId: z.string(),
         postId: z.string().optional(),
-        nodeId: z.string().optional(),
+        pageId: z.string().optional(),
         creationId: z.number().optional(),
         type: z.nativeEnum(PostType),
         gateType: z.nativeEnum(GateType),
@@ -136,10 +135,10 @@ export const postRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.token.uid
-      const { nodeId, gateType, collectible, creationId } = input
+      const { pageId, gateType, collectible, creationId } = input
 
       let post = await prisma.post.findFirst({
-        where: { OR: [{ nodeId }, { id: input.postId }] },
+        where: { OR: [{ pageId }, { id: input.postId }] },
       })
 
       function getPostInfo() {
@@ -161,10 +160,10 @@ export const postRouter = router({
           data: {
             siteId: input.siteId,
             userId,
-            slug: input.nodeId,
+            slug: input.pageId,
             title: info.title,
             type: input.type,
-            nodeId: input.nodeId,
+            pageId: input.pageId,
             postStatus: PostStatus.PUBLISHED,
             image: input.image,
             gateType: input.gateType,

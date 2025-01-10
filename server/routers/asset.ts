@@ -1,0 +1,92 @@
+import { prisma } from '@/lib/prisma'
+import { z } from 'zod'
+import { protectedProcedure, router } from '../trpc'
+
+export const assetRouter = router({
+  list: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        pageNum: z.number().optional().default(1),
+        pageSize: z.number().optional().default(100),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { pageNum, pageSize } = input
+      const offset = (pageNum - 1) * pageSize
+      const list = await prisma.asset.findMany({
+        where: { isTrashed: false, siteId: input.siteId },
+        include: {
+          assetLabels: { include: { label: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+        take: pageSize,
+        skip: offset,
+      })
+
+      return list
+    }),
+
+  trashedAssets: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        pageNum: z.number().optional().default(1),
+        pageSize: z.number().optional().default(100),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { pageNum, pageSize } = input
+      const offset = (pageNum - 1) * pageSize
+      return prisma.asset.findMany({
+        where: { isTrashed: true, siteId: input.siteId },
+        include: {
+          assetLabels: { include: { label: true } },
+        },
+        orderBy: { createdAt: 'desc' },
+        take: pageSize,
+        skip: offset,
+      })
+    }),
+
+  trash: protectedProcedure
+    .input(
+      z.object({
+        assetId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.asset.update({
+        where: { id: input.assetId },
+        data: { isTrashed: true },
+      })
+      return true
+    }),
+
+  delete: protectedProcedure
+    .input(
+      z.object({
+        assetId: z.string(),
+        key: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.asset.delete({ where: { id: input.assetId } })
+      return true
+    }),
+
+  updatePublicStatus: protectedProcedure
+    .input(
+      z.object({
+        assetId: z.string(),
+        isPublic: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.asset.update({
+        where: { id: input.assetId },
+        data: { isPublic: input.isPublic },
+      })
+      return true
+    }),
+})

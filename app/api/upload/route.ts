@@ -42,12 +42,13 @@ export async function POST(req: Request) {
     token: storageConfig.vercelBlobToken,
   })
 
-  await prisma.asset.create({
-    data: {
-      url: result.url,
-      type: contentType,
-    },
-  })
+  // TODO:
+  // await prisma.asset.create({
+  //   data: {
+  //     url: result.url,
+  //     type: contentType,
+  //   },
+  // })
 
   return NextResponse.json(result)
 }
