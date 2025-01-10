@@ -17,10 +17,7 @@ export const databaseRouter = router({
         where: {
           siteId: input.siteId,
         },
-        orderBy: {
-          updatedAt: 'desc',
-          createdAt: 'desc',
-        },
+        orderBy: [{ updatedAt: 'desc' }, { createdAt: 'desc' }],
       })
     }),
 
@@ -43,118 +40,126 @@ export const databaseRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const newDatabase = await prisma.database.create({
-        data: {
-          ...input,
-          userId: ctx.token.uid,
+      return prisma.$transaction(
+        async (tx) => {
+          const newDatabase = await tx.database.create({
+            data: {
+              ...input,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const firstField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.TEXT,
+              name: uniqueId(),
+              displayName: 'Title',
+              isPrimary: true,
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const secondField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.SINGLE_SELECT,
+              name: uniqueId(),
+              displayName: 'Tag',
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const newFields = [firstField, secondField]
+
+          const viewFields: ViewField[] = newFields.map((field) => ({
+            fieldId: field.id,
+            width: 160,
+            visible: true,
+          }))
+
+          const tableView = await tx.view.create({
+            data: {
+              databaseId: newDatabase.id,
+              name: 'Table',
+              viewType: ViewType.TABLE,
+              viewFields,
+              sorts: [],
+              filters: [],
+              groups: [],
+              kanbanOptionIds: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          console.log('==dd==eere')
+
+          const listView = await tx.view.create({
+            data: {
+              databaseId: newDatabase.id,
+              name: 'Gallery',
+              viewType: ViewType.GALLERY,
+              viewFields,
+              sorts: [],
+              filters: [],
+              groups: [],
+              kanbanOptionIds: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          await tx.database.update({
+            where: { id: newDatabase.id },
+            data: {
+              activeViewId: tableView.id,
+              viewIds: [tableView.id, listView.id],
+            },
+          })
+
+          const recordFields = newFields.reduce(
+            (acc, field) => {
+              return {
+                ...acc,
+                [field.id]: '',
+              }
+            },
+            {} as Record<string, any>,
+          )
+
+          await tx.record.createMany({
+            data: [
+              {
+                databaseId: newDatabase.id,
+                sort: 0,
+                fields: recordFields,
+                siteId: input.siteId,
+                userId: ctx.token.uid,
+              },
+              {
+                databaseId: newDatabase.id,
+                sort: 1,
+                fields: recordFields,
+                siteId: input.siteId,
+                userId: ctx.token.uid,
+              },
+            ],
+          })
+
+          return newDatabase
         },
-      })
-
-      const firstField = await prisma.field.create({
-        data: {
-          databaseId: newDatabase.id,
-          fieldType: FieldType.TEXT,
-          name: uniqueId(),
-          displayName: 'Title',
-          isPrimary: true,
-          config: {},
-          options: [],
-          siteId: input.siteId,
-          userId: ctx.token.uid,
+        {
+          maxWait: 1000 * 60, // default: 2000
+          timeout: 1000 * 60, // default: 5000
         },
-      })
-
-      const secondField = await prisma.field.create({
-        data: {
-          databaseId: newDatabase.id,
-          fieldType: FieldType.SINGLE_SELECT,
-          name: uniqueId(),
-          displayName: 'Tag',
-          config: {},
-          options: [],
-          siteId: input.siteId,
-          userId: ctx.token.uid,
-        },
-      })
-
-      const newFields = [firstField, secondField]
-
-      const viewFields: ViewField[] = newFields.map((field) => ({
-        fieldId: field.id,
-        width: 160,
-        visible: true,
-      }))
-
-      const tableView = await prisma.view.create({
-        data: {
-          databaseId: newDatabase.id,
-          name: 'Table',
-          viewType: ViewType.TABLE,
-          viewFields,
-          sorts: [],
-          filters: [],
-          groups: [],
-          kanbanFieldId: '',
-          kanbanOptionIds: [],
-          siteId: input.siteId,
-          userId: ctx.token.uid,
-        },
-      })
-
-      const listView = await prisma.view.create({
-        data: {
-          databaseId: newDatabase.id,
-          name: 'Gallery',
-          viewType: ViewType.GALLERY,
-          viewFields,
-          sorts: [],
-          filters: [],
-          groups: [],
-          kanbanFieldId: '',
-          kanbanOptionIds: [],
-          siteId: input.siteId,
-          userId: ctx.token.uid,
-        },
-      })
-
-      await prisma.database.update({
-        where: { id: newDatabase.id },
-        data: {
-          activeViewId: tableView.id,
-          viewIds: [tableView.id, listView.id],
-        },
-      })
-
-      const recordFields = newFields.reduce(
-        (acc, field) => {
-          return {
-            ...acc,
-            [field.id]: '',
-          }
-        },
-        {} as Record<string, any>,
       )
-
-      await prisma.record.createMany({
-        data: [
-          {
-            databaseId: newDatabase.id,
-            sort: 0,
-            fields: recordFields,
-            siteId: input.siteId,
-            userId: ctx.token.uid,
-          },
-          {
-            databaseId: newDatabase.id,
-            sort: 1,
-            fields: recordFields,
-            siteId: input.siteId,
-            userId: ctx.token.uid,
-          },
-        ],
-      })
-
-      return newDatabase
     }),
 
   addRecord: protectedProcedure
@@ -231,52 +236,60 @@ export const databaseRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const field = await prisma.field.create({
-        data: {
-          ...input,
-          options: [],
-          config: {},
-          userId: ctx.token.uid,
-        },
-      })
-
-      const viewList = await prisma.view.findMany({
-        where: { databaseId: input.databaseId },
-      })
-
-      for (const view of viewList) {
-        await prisma.view.update({
-          where: { id: view.id },
-          data: {
-            viewFields: [
-              ...(view.viewFields as any),
-              {
-                fieldId: field.id,
-                width: 160,
-                visible: true,
-              },
-            ],
-          },
-        })
-      }
-
-      const recordList = await prisma.record.findMany({
-        where: { databaseId: input.databaseId },
-      })
-
-      for (const record of recordList) {
-        await prisma.record.update({
-          where: { id: record.id },
-          data: {
-            fields: {
-              ...(record.fields as any),
-              [field.id]: '',
+      return prisma.$transaction(
+        async (tx) => {
+          const field = await tx.field.create({
+            data: {
+              ...input,
+              options: [],
+              config: {},
+              userId: ctx.token.uid,
             },
-          },
-        })
-      }
+          })
 
-      return true
+          const viewList = await tx.view.findMany({
+            where: { databaseId: input.databaseId },
+          })
+
+          for (const view of viewList) {
+            await tx.view.update({
+              where: { id: view.id },
+              data: {
+                viewFields: [
+                  ...(view.viewFields as any),
+                  {
+                    fieldId: field.id,
+                    width: 160,
+                    visible: true,
+                  },
+                ],
+              },
+            })
+          }
+
+          const recordList = await tx.record.findMany({
+            where: { databaseId: input.databaseId },
+          })
+
+          for (const record of recordList) {
+            await tx.record.update({
+              where: { id: record.id },
+              data: {
+                fields: {
+                  ...(record.fields as any),
+                  [field.id]: '',
+                },
+              },
+            })
+          }
+
+          return true
+        },
+        {
+          maxWait: 1000 * 60, // default: 2000
+          timeout: 1000 * 60, // default: 5000
+        },
+      )
     }),
 
   updateField: protectedProcedure

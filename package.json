@@ -26,6 +26,7 @@
     "@farcaster/auth-kit": "^0.6.0",
     "@farcaster/frame-sdk": "^0.0.10",
     "@floating-ui/react": "^0.25.4",
+    "@fower/react": "^2.1.1",
     "@glideapps/glide-data-grid": "^6.0.3",
     "@hookform/resolvers": "^3.9.0",
     "@octokit/app": "^15.1.1",

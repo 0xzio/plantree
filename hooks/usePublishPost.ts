@@ -6,11 +6,8 @@ import { creationFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
-import { INode, IObjectNode, ObjectType } from '@/lib/model'
 import { revalidateMetadata } from '@/lib/revalidateTag'
-import { nodeToSlate } from '@/lib/serializer'
 import { api } from '@/lib/trpc'
-import { store } from '@/store'
 import { GateType, PostType } from '@prisma/client'
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
@@ -27,40 +24,14 @@ export function usePublishPost() {
   const wagmiConfig = useWagmiConfig()
   const { post: currentPost } = usePost()
 
-  function getContent(node: IObjectNode) {
-    if (currentPost) return currentPost.content
-
-    const nodes = store.node.getNodes()
-    const content = nodeToSlate({
-      node: node,
-      nodes,
-      isOutliner: false,
-      isOutlinerSpace: false,
-    })
-    return JSON.stringify(content)
-  }
-
-  function getImage(node: IObjectNode) {
-    if (!node) return ''
-    return node.props.objectType === ObjectType.IMAGE
-      ? node.props?.imageUrl
-      : node.props.coverUrl
-  }
-
   return {
     isLoading,
-    publishPost: async (
-      node: IObjectNode,
-      gateType: GateType,
-      collectible: boolean,
-    ) => {
+    publishPost: async (gateType: GateType, collectible: boolean) => {
       setLoading(true)
-
-      const content = getContent(node)
 
       // console.log('======>>>>>content:', content)
       // console.log('======>>>>>node:', node)
-      const post = currentPost || (await api.post.bySlug.query(node.id))
+      const post = currentPost
 
       let creationId: number | undefined
       try {
@@ -70,11 +41,7 @@ export function usePublishPost() {
             address: addressMap.CreationFactory,
             abi: creationFactoryAbi,
             functionName: 'create',
-            args: [
-              post?.slug || node?.id,
-              precision.token(0.0001024),
-              spaceId as Address,
-            ],
+            args: [post?.slug, precision.token(0.0001024), spaceId as Address],
           })
 
           await waitForTransactionReceipt(wagmiConfig, { hash })
@@ -90,25 +57,14 @@ export function usePublishPost() {
 
         await api.post.publish.mutate({
           siteId: id,
-          type: post?.type || node.props?.objectType || PostType.ARTICLE,
+          type: post?.type || PostType.ARTICLE,
           postId: post?.id,
-          pageId: node?.id,
           gateType,
           collectible,
           creationId,
-          image: getImage(node),
-          content: content,
+          image: '',
+          content: currentPost.content,
         })
-
-        if (node) {
-          await store.node.updateNode(node.id, {
-            props: {
-              ...node.props,
-              gateType,
-              collectible,
-            },
-          } as IObjectNode)
-        }
 
         setLoading(false)
         revalidateMetadata(`posts`)

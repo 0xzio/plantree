@@ -61,7 +61,7 @@ export const pageRouter = router({
           type: ELEMENT_P,
           props: {},
           children: [],
-          ...input,
+          siteId: input.siteId,
         },
       })
 

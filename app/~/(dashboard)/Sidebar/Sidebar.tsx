@@ -3,17 +3,23 @@ import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
 import { cn } from '@/lib/utils'
 import { SiteMode } from '@prisma/client'
-import { Calendar, Feather, Settings } from 'lucide-react'
+import {
+  Calendar,
+  Feather,
+  FileText,
+  ImageIcon,
+  Settings,
+  TableProperties,
+} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
-import { NodesBox } from './NodesBox'
+import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
 import { SiteModeSelect } from './SiteModeSelect'
 import { SitesPopover } from './SitesPopover/SitesPopover'
-import { SyncBar } from './SyncBar/SyncBar'
 
 interface SidebarProps {
   bordered?: boolean
@@ -34,6 +40,8 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       <div className="px-4 flex items-center h-16">
         <SitesPopover />
       </div>
+
+      <QuickSearchTrigger />
 
       <div className="flex flex-col gap-1 px-2">
         {!isBasicMode && (
@@ -60,32 +68,36 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
               }}
             /> */}
 
-        {/* <SidebarItem
-            icon={
-              <div gray500 inlineFlex brand500={isTagsActive}>
-                <Hash size={18} strokeWidth={1.5} />
-              </div>
-            }
-            label="Tags"
-            isActive={isTagsActive}
-            onClick={() => {
-              store.node.selectTagBox()
-            }}
-          /> */}
-
         <Link href="/~/posts">
           <SidebarItem
             isActive={pathname.startsWith('/~/posts')}
             icon={<Feather size={18} />}
             label="Posts"
-          >
-            {/* <Badge
-              className="text-xs font-normal h-6 bg-green-500/20 text-green-500"
-              variant="secondary"
-            >
-              Published
-            </Badge> */}
-          </SidebarItem>
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/assets">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/assets')}
+            icon={<ImageIcon size={18} />}
+            label="Gallery"
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/pages">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/pages')}
+            icon={<FileText size={18} />}
+            label="pages"
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/databases">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/databases')}
+            icon={<TableProperties size={18} />}
+            label="Databases"
+          ></SidebarItem>
         </Link>
 
         <Link href="/~/settings">
@@ -98,17 +110,6 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         {!spaceId && <EnableWeb3Entry />}
         <LinkGoogleEntry />
         <LinkWalletEntry />
-      </div>
-
-      <div className="flex-1 z-10 overflow-auto px-2">
-        {/* <FavoriteBox nodeList={nodeList} /> */}
-        {!isBasicMode && <NodesBox />}
-      </div>
-      <div>
-        <div className="mx-2 py-2 space-y-1">
-          <SiteModeSelect />
-        </div>
-        {!isBasicMode && <SyncBar />}
       </div>
     </div>
   )

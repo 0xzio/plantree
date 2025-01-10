@@ -1,7 +1,7 @@
 import { StorageProvider } from '@prisma/client'
 import { calculateSHA256FromFile } from './calculateSHA256FromFile'
 import { IPFS_GATEWAY, IPFS_UPLOAD_URL, STATIC_URL } from './constants'
-import { uploadToGoogleDrive } from './uploadToGoogleDrive'
+import { api } from './trpc'
 
 type UploadReturn = {
   contentDisposition?: string
@@ -11,45 +11,35 @@ type UploadReturn = {
   cid?: string
 }
 
-export async function uploadFile(
-  file: File,
-  isUploadToGoogleDrive: boolean = false,
-) {
+export async function uploadFile(file: File, isPublic = true) {
   const fileHash = await calculateSHA256FromFile(file)
   let data: UploadReturn = {}
   const site = window.__SITE__
 
-  if (site.storageProvider === StorageProvider.VERCEL_BLOB) {
-    data = await fetch(`/api/upload?fileHash=${fileHash}`, {
-      method: 'POST',
-      body: file,
-    }).then((res) => res.json())
-    return data as UploadReturn
-  } else {
-    const res = await fetch(`${STATIC_URL}/images/${fileHash}`, {
-      method: 'PUT',
-      body: file,
-    })
+  const res = await fetch(`${STATIC_URL}/${fileHash}`, {
+    method: 'PUT',
+    body: file,
+  })
 
-    if (res.ok) {
-      data = await res.json()
-      data = {
-        ...data,
-        url: `/images/${fileHash}`,
-      }
-    } else {
-      throw new Error('Failed to upload file')
+  if (res.ok) {
+    data = await res.json()
+    const url = `/${fileHash}`
+    data = {
+      ...data,
+      url,
     }
-  }
 
-  if (isUploadToGoogleDrive) {
-    setTimeout(async () => {
-      try {
-        await uploadToGoogleDrive(fileHash, file)
-      } catch (error) {
-        console.log('error uploading to Google Drive:', error)
-      }
-    }, 0)
+    await api.asset.create.mutate({
+      siteId: site.id,
+      url,
+      filename: file.name,
+      contentType: file.type,
+      size: file.size,
+      isPublic,
+      createdAt: file.lastModified ? new Date(file.lastModified) : new Date(),
+    })
+  } else {
+    throw new Error('Failed to upload file')
   }
 
   return data as UploadReturn

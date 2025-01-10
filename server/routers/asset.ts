@@ -49,6 +49,27 @@ export const assetRouter = router({
       })
     }),
 
+  create: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        url: z.string(),
+        filename: z.string(),
+        contentType: z.string(),
+        size: z.number(),
+        isPublic: z.boolean(),
+        createdAt: z.date(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return prisma.asset.create({
+        data: {
+          userId: ctx.token.uid,
+          ...input,
+        },
+      })
+    }),
+
   trash: protectedProcedure
     .input(
       z.object({

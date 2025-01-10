@@ -1,6 +1,7 @@
 import '@farcaster/auth-kit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import 'react-datepicker/dist/react-datepicker.css'
+import '@glideapps/glide-data-grid/dist/index.css'
 import '@/styles/globals.css'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { cn } from '@/lib/utils'
@@ -66,7 +67,10 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Providers cookies={cookies}>{children}</Providers>
+          <Providers cookies={cookies}>
+            {children}
+            <div id="portal" />
+          </Providers>
         </ThemeProvider>
 
         {process.env.NEXT_PUBLIC_UMAMIC_WEBSITE_ID && (

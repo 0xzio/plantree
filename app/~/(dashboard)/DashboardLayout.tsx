@@ -1,9 +1,9 @@
 'use client'
 
 import { ReactNode, useEffect, useState } from 'react'
+import { CommandPanel } from '@/components/CommandPanel/CommandPanel'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
 import LoadingDots from '@/components/icons/loading-dots'
-import { NodesProvider } from '@/components/NodesProvider'
 import { SiteProvider } from '@/components/SiteContext'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
@@ -12,11 +12,12 @@ import { useSite } from '@/hooks/useSite'
 import { CURRENT_SITE, isServer, SIDEBAR_WIDTH } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { runWorker } from '@/lib/worker'
+import { setConfig } from '@fower/react'
 import { Site } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import { get } from 'idb-keyval'
 import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar/Sidebar'
 import { SidebarSheet } from './Sidebar/SidebarSheet'
@@ -30,13 +31,17 @@ if (!isServer) {
   }, 2000)
 }
 
+setConfig({
+  inline: false,
+  prefix: 'penx-',
+})
+
 export function DashboardLayout({ children }: { children: ReactNode }) {
   const { push } = useRouter()
   const [sidebarOpen, setSideBarOpen] = useState(true)
   useQueryEthPrice()
   useQueryEthBalance()
   const { data: session } = useSession()
-
   const { data: sites = [] } = useMySites()
 
   const { data: site, isLoading } = useQuery({
@@ -49,10 +54,11 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     enabled: !!session && sites.length > 0,
   })
 
-  const pathname = usePathname()
-  const isNode = pathname?.includes('/~/objects')
+  const pathname = usePathname()!
   const isPost = pathname?.includes('/~/post/')
-  const isFullWidth = isNode || isPost
+  const isAssets = pathname?.includes('/~/assets')
+  const params = useSearchParams()!
+  const isFullWidth = isPost || isAssets || !!params.get('id')
 
   if (!site || isLoading) {
     return (
@@ -67,6 +73,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
       <div className="h-screen flex fixed top-0 left-0 bottom-0 right-0">
         <SidebarSheet />
         <Navbar></Navbar>
+        <CommandPanel />
         <div
           className={cn('h-screen sticky top-0 hidden md:flex')}
           style={{ width: SIDEBAR_WIDTH }}
@@ -74,18 +81,13 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           <Sidebar />
         </div>
         <div className="flex-1 pb-40 h-screen overflow-auto">
-          <NodesProvider>
-            {/* <NavbarWrapper /> */}
-            <CreationDialog />
-            <div
-              className={cn(
-                !isFullWidth && 'mx-auto md:max-w-3xl pt-16 pb-20',
-                isNode,
-              )}
-            >
-              {children}
-            </div>
-          </NodesProvider>
+          {/* <NavbarWrapper /> */}
+          <CreationDialog />
+          <div
+            className={cn(!isFullWidth && 'mx-auto md:max-w-3xl pt-16 pb-20')}
+          >
+            {children}
+          </div>
         </div>
       </div>
     </SiteProvider>

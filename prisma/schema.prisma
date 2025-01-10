@@ -580,7 +580,7 @@ model Page {
   userId     String   @db.Uuid
   site       Site     @relation(fields: [siteId], references: [id])
   siteId     String   @db.Uuid
-  blocks     Block?
+  blocks     Block[]
 
   @@index([userId])
   @@index([siteId])
@@ -686,8 +686,6 @@ model Record {
 
 model View {
   id              String   @id @default(uuid()) @db.Uuid
-  sort            Int      @default(0) @db.Integer
-  fields          Json?
   name            String   @default("") @db.VarChar(50)
   description     String   @default("") @db.VarChar(500)
   viewType        String
@@ -695,7 +693,7 @@ model View {
   sorts           Json?
   groups          Json
   filters         Json
-  kanbanFieldId   String   @db.Uuid // fieldId for kanban
+  kanbanFieldId   String?  @db.Uuid // fieldId for kanban
   kanbanOptionIds Json
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
