@@ -136,7 +136,7 @@ model User {
   fields        Field[]
   records       Record[]
   views         View[]
-  Subscription  Subscription[]
+  subscription  Subscription[]
 
   @@index([id])
   @@map("user")
@@ -178,8 +178,8 @@ model Subscription {
   id        String             @id @default(uuid()) @db.Uuid
   planId    String             @default("") @db.VarChar(100)
   status    SubscriptionStatus
-  startedAt DateTime?
-  endedAt   DateTime?
+  startedAt DateTime
+  endedAt   DateTime
   createdAt DateTime           @default(now())
   updatedAt DateTime           @updatedAt
   user      User               @relation(fields: [userId], references: [id])

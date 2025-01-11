@@ -18,6 +18,7 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
+              subscription: true,
               sites: {
                 include: {
                   domains: true,
@@ -100,6 +101,7 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
+              subscription: true,
               sites: {
                 include: {
                   domains: true,
@@ -132,6 +134,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
+              subscription: true,
               sites: {
                 include: {
                   domains: true,
@@ -218,6 +221,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
+              subscription: true,
               sites: {
                 include: {
                   domains: true,
@@ -291,6 +295,7 @@ export async function initUserByFarcasterId(fid: string) {
         include: {
           user: {
             include: {
+              subscription: true,
               sites: {
                 include: {
                   domains: true,
@@ -390,12 +395,17 @@ export async function initUserByFarcasterId(fid: string) {
         })
       }
 
-      return tx.user.findUnique({
-        where: { id: newUser.id },
+      return tx.account.findUniqueOrThrow({
+        where: { providerAccountId: fid },
         include: {
-          sites: {
+          user: {
             include: {
-              domains: true,
+              subscription: true,
+              sites: {
+                include: {
+                  domains: true,
+                },
+              },
             },
           },
         },

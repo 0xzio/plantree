@@ -5,6 +5,7 @@ import { getSiteDomain, UserWithDomains } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser, SubscriptionInSession } from '@/lib/types'
 import { createAppClient, viemConnector } from '@farcaster/auth-client'
+import { Subscription } from '@prisma/client'
 import { PrivyClient } from '@privy-io/server-auth'
 import jwt from 'jsonwebtoken'
 import ky from 'ky'
@@ -61,6 +62,7 @@ declare module 'next-auth' {
     role: string
     siteId: string
     accessToken: string
+    subscriptionEndedAt: Date | null
     domain: {
       domain: string
       isSubdomain: boolean
@@ -332,7 +334,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user, profile, trigger, session }) {
       if (user) {
         const sessionAccount = user as AccountWithUser
-        // console.log('=====sessionUser:', sessionUser)
+        console.log('=====sessionUser:', sessionAccount)
 
         token.uid = sessionAccount.userId
         token.address = getAccountAddress(sessionAccount)
@@ -341,6 +343,9 @@ export const authOptions: NextAuthOptions = {
         token.picture = sessionAccount.user.image as string
         token.domain = getSiteDomain(sessionAccount.user.sites[0])
         token.siteId = sessionAccount.user?.sites[0]?.id
+        token.subscriptionEndedAt = getSubscriptionEndedAt(
+          sessionAccount.user.subscriptions,
+        )
 
         token.accessToken = jwt.sign(
           {
@@ -362,18 +367,24 @@ export const authOptions: NextAuthOptions = {
           : []
       }
       if (trigger === 'update') {
-        const subscriptions = await updateSubscriptions(
-          token.uid as string,
-          session.address as any,
-        )
+        const subscription = await prisma.subscription.findFirst({
+          where: { userId: token.uid as string },
+        })
+        if (subscription) {
+          token.subscriptionEndedAt = subscription.endedAt
+        }
 
-        token.subscriptions = Array.isArray(subscriptions)
-          ? subscriptions.map((i: any) => ({
-              planId: i.planId,
-              startTime: Number(i.startTime),
-              duration: Number(i.duration),
-            }))
-          : []
+        // const subscriptions = await updateSubscriptions(
+        //   token.uid as string,
+        //   session.address as any,
+        // )
+        // token.subscriptions = Array.isArray(subscriptions)
+        //   ? subscriptions.map((i: any) => ({
+        //       planId: i.planId,
+        //       startTime: Number(i.startTime),
+        //       duration: Number(i.duration),
+        //     }))
+        //   : []
       }
 
       // console.log('jwt token========:', token)
@@ -389,6 +400,7 @@ export const authOptions: NextAuthOptions = {
       session.siteId = token.siteId as any
       session.subscriptions = token.subscriptions as any
       session.accessToken = token.accessToken as string
+      session.subscriptionEndedAt = token.subscriptionEndedAt as any
 
       return session
     },
@@ -427,4 +439,10 @@ async function updateSubscriptions(userId: string, address: Address) {
     console.log('====== updateSubscriptions=error:', error)
     return []
   }
+}
+
+function getSubscriptionEndedAt(subscriptions: Subscription[] = []) {
+  if (!subscriptions?.length) return null
+  const [subscription] = subscriptions
+  return subscription.endedAt
 }

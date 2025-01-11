@@ -3,18 +3,23 @@
 import { useState } from 'react'
 import LoadingCircle from '@/components/icons/loading-circle'
 import { useSiteContext } from '@/components/SiteContext'
+import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
 import { Button } from '@/components/ui/button'
 import { useDatabases } from '@/hooks/useDatabases'
+import { useIsMember } from '@/hooks/useIsMember'
 import { api } from '@/lib/trpc'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 export function CreateDatabaseButton() {
+  const isMember = useIsMember()
+  const { setIsOpen } = useSubscriptionDialog()
   const { push } = useRouter()
   const site = useSiteContext()
   const { refetch } = useDatabases()
   const [isLoading, setLoading] = useState(false)
   async function createDatabase() {
+    if (!isMember) return setIsOpen(true)
     setLoading(true)
     try {
       const database = await api.database.create.mutate({

@@ -1,4 +1,4 @@
-import { Account, Domain, Site, User } from '@prisma/client'
+import { Account, Domain, Site, Subscription, User } from '@prisma/client'
 import { Address } from 'viem'
 
 export type App = {
@@ -235,6 +235,7 @@ export type SiteWithDomain = Site & {
 export type AccountWithUser = Account & {
   user: User & {
     sites: SiteWithDomain[]
+    subscriptions: Subscription[]
   }
 }
 

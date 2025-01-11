@@ -5,6 +5,7 @@ import { CommandPanel } from '@/components/CommandPanel/CommandPanel'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
 import LoadingDots from '@/components/icons/loading-dots'
 import { SiteProvider } from '@/components/SiteContext'
+import { SubscriptionDialog } from '@/components/SubscriptionDialog/SubscriptionDialog'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
 import { useMySites } from '@/hooks/useMySites'
@@ -74,6 +75,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <SidebarSheet />
         <Navbar></Navbar>
         <CommandPanel />
+        <SubscriptionDialog />
         <div
           className={cn('h-screen sticky top-0 hidden md:flex')}
           style={{ width: SIDEBAR_WIDTH }}
