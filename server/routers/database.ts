@@ -99,8 +99,6 @@ export const databaseRouter = router({
             },
           })
 
-          console.log('==dd==eere')
-
           const listView = await tx.view.create({
             data: {
               databaseId: newDatabase.id,

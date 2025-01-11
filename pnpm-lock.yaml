@@ -47,6 +47,9 @@ importers:
       '@floating-ui/react':
         specifier: ^0.25.4
         version: 0.25.4(react-dom@18.2.0(react@18.2.0))(react@18.2.0)
+      '@fower/color-helper':
+        specifier: ^2.1.1
+        version: 2.1.1
       '@fower/react':
         specifier: ^2.1.1
         version: 2.1.1
