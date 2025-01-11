@@ -21,26 +21,26 @@ export async function uploadFile(file: File, isPublic = true) {
     body: file,
   })
 
-  if (res.ok) {
-    data = await res.json()
-    const url = `/${fileHash}`
-    data = {
-      ...data,
-      url,
-    }
-
-    await api.asset.create.mutate({
-      siteId: site.id,
-      url,
-      filename: file.name,
-      contentType: file.type,
-      size: file.size,
-      isPublic,
-      createdAt: file.lastModified ? new Date(file.lastModified) : new Date(),
-    })
-  } else {
+  if (!res.ok) {
     throw new Error('Failed to upload file')
   }
+
+  data = await res.json()
+  const url = `/${fileHash}`
+  data = {
+    ...data,
+    url,
+  }
+
+  await api.asset.create.mutate({
+    siteId: site.id,
+    url,
+    filename: file.name,
+    contentType: file.type,
+    size: file.size,
+    isPublic,
+    createdAt: file.lastModified ? new Date(file.lastModified) : new Date(),
+  })
 
   return data as UploadReturn
 }

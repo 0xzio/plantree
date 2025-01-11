@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -62,6 +63,16 @@ export const assetRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const asset = await prisma.asset.findFirst({
+        where: { url: input.url },
+      })
+
+      if (asset) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Asset already exists',
+        })
+      }
       return prisma.asset.create({
         data: {
           userId: ctx.token.uid,

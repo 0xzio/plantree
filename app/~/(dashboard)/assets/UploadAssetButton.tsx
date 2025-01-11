@@ -5,6 +5,7 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { useAssets } from '@/hooks/useAssets'
 import { calculateSHA256FromFile } from '@/lib/encryption'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { localDB } from '@/lib/local-db'
 import { trpc } from '@/lib/trpc'
 import { uniqueId } from '@/lib/unique-id'
@@ -34,19 +35,18 @@ export const UploadAssetButton = ({ className, ...rest }: Props) => {
     formData.append('file', file)
     formData.append('from', 'ASSET')
 
-    const res = await fetch(`/asset/${fileHash}`, {
-      method: 'PUT',
-      body: formData,
-    })
     try {
-      uploadFile(file, false)
+      await uploadFile(file, false)
 
       toast.success('Image uploaded successfully!')
 
       await localDB.addFile(fileHash, file)
       await refetch()
     } catch (error) {
-      toast.error('Upload image failed')
+      console.log('=====error:', error)
+
+      const msg = extractErrorMessage(error)
+      toast.error(msg || 'Upload image failed')
     }
 
     setUploading(false)
