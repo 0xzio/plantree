@@ -1,5 +1,5 @@
-import { Button } from '@/components/ui/button'
 import { Check } from 'lucide-react'
+import { BecomeMemberButton } from './BecomeMemberButton'
 
 export function PricingCard() {
   return (
@@ -18,9 +18,7 @@ export function PricingCard() {
         <BenefitItem text="One-to-One support in discord" />
       </div>
       <div className="text-center mt-4">
-        <Button size="lg" className="rounded-full px-8 h-12 font-bold">
-          Become a member
-        </Button>
+        <BecomeMemberButton />
       </div>
     </div>
   )
