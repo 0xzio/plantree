@@ -7,6 +7,7 @@ import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscr
 import { Button } from '@/components/ui/button'
 import { useDatabases } from '@/hooks/useDatabases'
 import { useIsMember } from '@/hooks/useIsMember'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
@@ -29,7 +30,8 @@ export function CreatePageButton() {
       push(`/~/page?id=${page.id}`)
       refetch()
     } catch (error) {
-      toast.error('Failed to create page')
+      const msg = extractErrorMessage(error)
+      toast.error(msg || 'Failed to create page')
     }
     setLoading(false)
   }

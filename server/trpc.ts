@@ -66,7 +66,7 @@ export const protectedProcedure = t.procedure.use(
     }
 
     if (
-      isMember() &&
+      !isMember() &&
       [
         'page.create',
         'database.create',

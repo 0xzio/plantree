@@ -13,8 +13,10 @@ export default function Layout({ children }: { children: ReactNode }) {
         <div className="text-3xl font-bold">Settings</div>
         <SiteLink />
       </div>
-      <SettingNav />
-      {children}
+      <div className="flex flex-col md:flex-row gap-6">
+        <SettingNav />
+        <div className="flex-1">{children}</div>
+      </div>
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { useIsMember } from '@/hooks/useIsMember'
 import { loadPost } from '@/hooks/usePost'
 import { useSite } from '@/hooks/useSite'
 import { editorDefaultValue } from '@/lib/constants'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { PostType } from '@prisma/client'
 import { Pen } from 'lucide-react'
@@ -36,7 +37,8 @@ export function CreatePostButton() {
       await loadPost(post.id)
       push(`/~/post/${post.id}`)
     } catch (error) {
-      toast.error('Failed to create post')
+      const msg = extractErrorMessage(error)
+      toast.error(msg || 'Failed to create post')
     }
     setLoading(false)
   }

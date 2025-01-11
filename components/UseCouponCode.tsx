@@ -4,10 +4,10 @@ import { useState } from 'react'
 import { trpc } from '@/lib/trpc'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
-import LoadingDots from '../icons/loading-dots'
-import { Button } from '../ui/button'
-import { Input } from '../ui/input'
-import { useSubscriptionDialog } from './useSubscriptionDialog'
+import LoadingDots from './icons/loading-dots'
+import { Button } from './ui/button'
+import { Input } from './ui/input'
+import { useSubscriptionDialog } from './SubscriptionDialog/useSubscriptionDialog'
 
 export function UseCouponCode() {
   const [couponCode, setCouponCode] = useState('')

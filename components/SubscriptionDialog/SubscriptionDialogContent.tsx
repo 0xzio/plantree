@@ -25,7 +25,7 @@ import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
-import { UseCouponCode } from './UseCouponCode'
+import { UseCouponCode } from '../UseCouponCode'
 import { useSubscriptionDialog } from './useSubscriptionDialog'
 
 export function SubscriptionDialogContent() {
