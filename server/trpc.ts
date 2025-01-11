@@ -59,6 +59,30 @@ export const protectedProcedure = t.procedure.use(
       })
     }
 
+    const isMember = () => {
+      if (!ctx.token.subscriptionEndedAt) return false
+      const endedAt = new Date(ctx.token.subscriptionEndedAt).getTime()
+      return endedAt > Date.now()
+    }
+
+    if (
+      isMember() &&
+      [
+        'page.create',
+        'database.create',
+        'asset.create',
+        'post.create',
+      ].includes(path)
+    ) {
+      throw new TRPCError({
+        code: 'UNAUTHORIZED',
+        message:
+          'You are not a member. Please upgrade your subscription to continue.',
+      })
+    }
+
+    // console.log('=====ctx.token:', ctx.token, 'path:', path)
+
     return next({
       ctx: { token: ctx.token },
     })
