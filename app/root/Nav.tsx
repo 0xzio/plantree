@@ -34,6 +34,10 @@ export const Nav = () => {
       text: 'Sponsor',
       to: '/sponsor',
     },
+    {
+      text: 'Pricing',
+      to: '/pricing',
+    },
     // {
     //   text: 'Rewards',
     //   to: '/rewards',
