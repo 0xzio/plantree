@@ -1,5 +1,6 @@
 export interface IBlock {
   id: string
+  siteId: string
   pageId: string
   parentId: string
   type: string

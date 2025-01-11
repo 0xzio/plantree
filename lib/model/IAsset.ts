@@ -9,6 +9,7 @@ export interface IAsset {
   isTrashed: boolean
   size: number
   userId: string
+  siteId: string
   sharingConfig: any
   props: any
   createdAt: Date

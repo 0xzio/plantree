@@ -22,7 +22,9 @@ export function useDatabases() {
   return useQuery({
     queryKey: ['databases'],
     queryFn: async () => {
-      const databases = await localDB.database.toArray()
+      const databases = await localDB.database
+        .where({ siteId: site.id })
+        .toArray()
       const localDatabases = databases.sort((a, b) => {
         const updatedAtDiff = b.updatedAt.getTime() - a.updatedAt.getTime()
         if (updatedAtDiff === 0) {

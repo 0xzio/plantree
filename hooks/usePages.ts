@@ -22,7 +22,7 @@ export function usePages() {
   return useQuery({
     queryKey: ['pages'],
     queryFn: async () => {
-      const pages = await localDB.page.toArray()
+      const pages = await localDB.page.where({ siteId: site.id }).toArray()
       const localPages = pages.sort(
         (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
       )

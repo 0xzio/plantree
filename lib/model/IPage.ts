@@ -3,6 +3,7 @@ import { IBlock } from './IBlock'
 export interface IPage {
   id: string
   userId: string
+  siteId: string
   parentId: string
   parentType: string
   title: string

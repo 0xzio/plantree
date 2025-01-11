@@ -15,13 +15,13 @@ class LocalDB extends Dexie {
 
   constructor() {
     super('penx-local')
-    this.version(5).stores({
+    this.version(6).stores({
       // Primary key and indexed props
       file: 'id, hash',
-      asset: 'id, url, isPublic, isTrashed',
-      page: 'id, userId, parentId, isJournal',
-      database: 'id, userId, parentId',
-      block: 'id, userId, parentId, pageId, type',
+      asset: 'id, siteId, url, isPublic, isTrashed',
+      page: 'id, siteId, userId, parentId, isJournal',
+      database: 'id, siteId, userId, parentId',
+      block: 'id, siteId, userId, parentId, pageId, type',
     })
   }
 

@@ -51,11 +51,16 @@ export const collaboratorRouter = router({
         where: {
           accounts: {
             some: {
-              OR: [{ email: input.q }, { providerAccountId: input.q }],
+              OR: [
+                { email: input.q },
+                { providerAccountId: input.q.toLowerCase() },
+              ],
             },
           },
         },
       })
+
+      console.log('======user:', user)
 
       if (!user) {
         throw new TRPCError({

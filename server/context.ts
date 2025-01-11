@@ -19,6 +19,7 @@ type Token = {
   exp: number
   jti: string
   accessToken: string
+  subscriptionEndedAt: string | null
 }
 
 let secret = ''

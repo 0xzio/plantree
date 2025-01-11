@@ -24,7 +24,7 @@ export function useAssets() {
   return useQuery({
     queryKey: ['assets'],
     queryFn: async () => {
-      const assets = await localDB.asset.toArray()
+      const assets = await localDB.asset.where({ siteId: site.id }).toArray()
       const localAssets = assets.sort(
         (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
       )
