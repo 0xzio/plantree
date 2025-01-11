@@ -3,7 +3,7 @@ import { BecomeMemberButton } from './BecomeMemberButton'
 
 export function PricingCard() {
   return (
-    <div className=" mx-auto space-y-8 bg-background rounded-2xl px-10 py-8 md:w-[500px] shadow">
+    <div className=" mx-auto space-y-8 bg-background rounded-2xl px-10 py-8 md:w-[500px] shadow dark:border">
       <div className="flex flex-col items-center justify-center gap-2">
         <div className="text-xl">Pro</div>
         <div className="flex items-center gap-1">

@@ -194,7 +194,7 @@ model Coupon {
   planId    String   @default("") @db.VarChar(100)
   code      String   @unique @default("") @db.VarChar(100)
   isUsed    Boolean  @default(false)
-  duration  Int?     @db.Integer
+  duration  Int      @db.Integer
   createdAt DateTime @default(now())
 
   @@map("coupon")

@@ -8,6 +8,7 @@ import { blockRouter } from './routers/block'
 import { cliRouter } from './routers/cli'
 import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
+import { couponRouter } from './routers/coupon'
 import { databaseRouter } from './routers/database'
 import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
@@ -44,6 +45,7 @@ export const appRouter = router({
   database: databaseRouter,
   page: pageRouter,
   block: blockRouter,
+  coupon: couponRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

@@ -1,16 +1,17 @@
-import { ProfilePopover } from '@/components/Profile/ProfilePopover'
 import { useSiteContext } from '@/components/SiteContext'
-import { Badge } from '@/components/ui/badge'
+import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { cn } from '@/lib/utils'
 import { SiteMode } from '@prisma/client'
 import {
   Calendar,
   Feather,
   FileText,
+  Gift,
   ImageIcon,
   Settings,
   TableProperties,
 } from 'lucide-react'
+import { useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
@@ -25,6 +26,7 @@ interface SidebarProps {
   bordered?: boolean
 }
 export const Sidebar = ({ bordered = true }: SidebarProps) => {
+  const { data } = useSession()
   const pathname = usePathname()!
   const site = useSiteContext()
   const { spaceId } = site
@@ -107,6 +109,17 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             label="Settings"
           />
         </Link>
+
+        {isSuperAdmin(data?.userId) && (
+          <Link href="/~/coupons">
+            <SidebarItem
+              isActive={pathname === '/~/coupons'}
+              icon={<Gift size={18} />}
+              label="Coupons"
+            />
+          </Link>
+        )}
+
         {!spaceId && <EnableWeb3Entry />}
         <LinkGoogleEntry />
         <LinkWalletEntry />
