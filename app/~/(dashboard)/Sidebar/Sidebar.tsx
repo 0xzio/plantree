@@ -46,16 +46,6 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       <QuickSearchTrigger />
 
       <div className="flex flex-col gap-1 px-2">
-        {!isBasicMode && (
-          <Link href="/~/objects/today">
-            <SidebarItem
-              isActive={pathname === '/~/objects/today'}
-              icon={<Calendar size={18} />}
-              label="Today"
-            />
-          </Link>
-        )}
-
         {/* <SidebarItem
               icon={
                 <CircleCheck
