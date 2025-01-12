@@ -108,9 +108,11 @@ export function getUrl(value = '') {
   if (isIPFSCID(value)) {
     return `/api/ipfs-image?cid=${value}`
   }
-  if (value.startsWith('/images')) {
+
+  if (value.startsWith('/')) {
     return `${STATIC_URL}${value}`
   }
+
   // return isIPFSCID(str) ? `${IPFS_GATEWAY}/ipfs/${str}` : str
   return value
 }
