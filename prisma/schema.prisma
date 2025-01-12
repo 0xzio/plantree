@@ -747,7 +747,8 @@ model View {
 model Extension {
   id                String   @id @default(uuid()) @db.Uuid
   userId            String
-  uniqueId          String   @unique
+  name              String   @unique
+  title             String   @db.Text
   manifest          String   @db.Text
   readme            String   @db.Text
   logo              String
@@ -758,6 +759,6 @@ model Extension {
   updatedAt         DateTime @updatedAt
 
   @@index([userId])
-  @@index([uniqueId])
+  @@index([name])
   @@map("extension")
 }
