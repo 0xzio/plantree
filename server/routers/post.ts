@@ -153,6 +153,7 @@ export const postRouter = router({
           content: JSON.stringify(nodes),
         }
       }
+
       const info = getPostInfo()
 
       if (!post) {
@@ -194,19 +195,24 @@ export const postRouter = router({
         where: { id: post.id },
       })
 
-      const [res] = await Promise.all([
-        fetch(IPFS_ADD_URL, {
-          method: 'POST',
-          body: JSON.stringify({
-            ...newPost,
-            postStatus: PostStatus.PUBLISHED,
-            collectible,
-            creationId,
-          }),
-          headers: { 'Content-Type': 'application/json' },
-        }).then((d) => d.json()),
-        syncPostToHub(newPost as any),
-      ])
+      // TODO: handle ipfs
+      // try {
+
+      //   const [res] = await Promise.all([
+      //     fetch(IPFS_ADD_URL, {
+      //       method: 'POST',
+      //       body: JSON.stringify({
+      //         ...newPost,
+      //         postStatus: PostStatus.PUBLISHED,
+      //         collectible,
+      //         creationId,
+      //       }),
+      //       headers: { 'Content-Type': 'application/json' },
+      //     }).then((d) => d.json()),
+      //     syncPostToHub(newPost as any),
+      //   ])
+      // } catch (error) {
+      // }
 
       await prisma.post.update({
         where: { id: post.id },
@@ -214,7 +220,8 @@ export const postRouter = router({
           postStatus: PostStatus.PUBLISHED,
           collectible,
           creationId,
-          cid: res.cid,
+          // cid: res.cid,
+          cid: '',
           publishedAt: new Date(),
           gateType,
         },
