@@ -19,6 +19,10 @@ export const Nav = () => {
       text: 'Themes',
       to: '/themes',
     },
+    {
+      text: 'Marketplace',
+      to: '/marketplace',
+    },
 
     {
       text: 'Self-Hosted',

@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { getTokenByInstallationId } from '../lib/getTokenByInstallationId'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
-const ALL_EXTENSIONS_KEY = 'extensions:all'
+const ALL_EXTENSIONS_KEY = 'theme:all'
 
 const redis = new Redis(process.env.REDIS_URL!)
 

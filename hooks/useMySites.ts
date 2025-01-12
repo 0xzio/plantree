@@ -1,5 +1,9 @@
 import { trpc } from '@/lib/trpc'
+import { useSession } from 'next-auth/react'
 
 export function useMySites() {
-  return trpc.site.mySites.useQuery()
+  const { data } = useSession()
+  return trpc.site.mySites.useQuery(undefined, {
+    enabled: !!data,
+  })
 }
