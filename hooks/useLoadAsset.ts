@@ -1,3 +1,4 @@
+import { STATIC_URL } from '@/lib/constants'
 import { localDB } from '@/lib/local-db'
 import { Asset } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
@@ -8,15 +9,15 @@ export function useLoadAsset(asset: Asset) {
   const { data, isLoading, ...rest } = useQuery({
     queryKey: ['asset', asset.url],
     queryFn: async () => {
-      let url = `/asset/${asset.url}`
+      let url = `${STATIC_URL}${asset.url}`
 
       const res = await localDB.file.where({ hash }).first()
 
       try {
         if (res) {
-          url = URL.createObjectURL(res?.file!)
+          // url = URL.createObjectURL(res?.file!)
         } else {
-          const blob = await fetch(`/asset/${asset.url}`).then((res) =>
+          const blob = await fetch(`${STATIC_URL}${asset.url}`).then((res) =>
             res.blob(),
           )
           url = URL.createObjectURL(blob)

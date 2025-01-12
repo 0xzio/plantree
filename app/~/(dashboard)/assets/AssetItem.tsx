@@ -1,9 +1,9 @@
 'use client'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { placeholderBlurhash } from '@/lib/constants'
 import { Asset } from '@/hooks/useAssets'
 import { useLoadAsset } from '@/hooks/useLoadAsset'
+import { placeholderBlurhash } from '@/lib/constants'
 import Image from 'next/image'
 import { useAssetDialog } from './AssetDialog/useAssetDialog'
 
@@ -14,6 +14,7 @@ interface AssetItemProps {
 export function AssetItem({ asset }: AssetItemProps) {
   const { setState } = useAssetDialog()
   const { url, isLoading } = useLoadAsset(asset)
+  console.log('url=======:', url)
 
   if (isLoading) {
     return (

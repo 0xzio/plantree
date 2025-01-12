@@ -11,7 +11,7 @@ import {
 import { Switch } from '@/components/ui/switch'
 import { useAssets } from '@/hooks/useAssets'
 import { useLoadAsset } from '@/hooks/useLoadAsset'
-import { placeholderBlurhash } from '@/lib/constants'
+import { placeholderBlurhash, STATIC_URL } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { Asset } from '@prisma/client'
@@ -32,7 +32,8 @@ export function AssetDialog({}: Props) {
 
   if (!asset) return null
 
-  const url = `${location.protocol}//${location.host}/asset/${asset.url}`
+  const url = `${STATIC_URL}${asset.url}`
+
   const name = asset.title || asset.filename
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
@@ -99,6 +100,8 @@ interface AssetImageProps {
 }
 function AssetImage({ asset }: AssetImageProps) {
   const { isLoading, url } = useLoadAsset(asset)
+  console.log('======url:', url)
+
   if (isLoading) return null
   return (
     <img

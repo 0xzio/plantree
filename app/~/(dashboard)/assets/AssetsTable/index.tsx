@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react'
-import { useTheme } from 'next-themes'
 import { cellRenderers } from '@/components/cells'
 import { FileCell } from '@/components/cells/file-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
-import { getDataEditorTheme } from '@/lib/getDataEditorTheme'
 import { Asset } from '@/hooks/useAssets'
+import { STATIC_URL } from '@/lib/constants'
+import { getDataEditorTheme } from '@/lib/getDataEditorTheme'
 import DataEditor, {
   DataEditorProps,
   DataEditorRef,
@@ -14,6 +14,7 @@ import DataEditor, {
   Item,
   type GridColumn,
 } from '@glideapps/glide-data-grid'
+import { useTheme } from 'next-themes'
 
 const defaultProps: Partial<DataEditorProps> = {
   smoothScrollX: true,
@@ -80,7 +81,7 @@ export function AssetsTable({ assets }: AssetsTableProps) {
     (cell: Item): GridCell => {
       const [col, row] = cell
       const asset = assets[row]
-      const url = `/asset/${asset.url}`
+      const url = `${STATIC_URL}${asset.url}`
 
       if (col === 0) {
         return {
