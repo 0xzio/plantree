@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { nanoid } from 'nanoid'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -15,8 +16,7 @@ export const accessTokenRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        token: z.string(),
-        alias: z.string(),
+        title: z.string(),
         expiredAt: z.date().optional(),
       }),
     )
@@ -24,9 +24,9 @@ export const accessTokenRouter = router({
       const record = await prisma.accessToken.create({
         data: {
           siteId: input.siteId,
-          token: input.token,
-          alias: input.alias,
+          title: input.title,
           userId: ctx.token.uid,
+          token: nanoid(36),
           expiredAt: input.expiredAt,
         },
       })

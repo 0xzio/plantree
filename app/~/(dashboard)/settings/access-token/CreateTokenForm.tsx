@@ -1,7 +1,7 @@
 'use client'
 
-import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import LoadingDots from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
@@ -22,55 +22,44 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import AccessTokenUtils from '@/lib/accessTokenUtils'
+import { useAccessTokens } from '@/hooks/useAccessTokens'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import AccessTokenShowDialog from './AccessTokenShowDialog'
-
-interface Props {
-  refetch: () => any
-}
 
 const FormSchema = z.object({
-  alias: z.string().min(2, {
-    message: 'Alias must be at least 2 characters long.',
+  title: z.string().min(2, {
+    message: 'Title must be at least 2 characters long.',
   }),
   expiredAt: z.union([z.date(), z.undefined()]).optional(),
 })
 
-export default function AccessTokenCreateForm({ refetch }: Props) {
+export function CreateTokenForm() {
+  const { refetch } = useAccessTokens()
   const site = useSiteContext()
-  const [isDialogOpen, setIsDialogOpen] = useState(false)
-  const [generatedToken, setGeneratedToken] = useState('')
-
-  const { mutateAsync } = trpc.accessToken.create.useMutation()
+  const { mutateAsync, isPending } = trpc.accessToken.create.useMutation()
 
   const now = new Date()
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      alias: '',
+      title: '',
       expiredAt: new Date(now.setDate(now.getDate() + 7)),
     },
   })
   const expiredAtValue = form.watch('expiredAt')
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    let plainToken = AccessTokenUtils.generateToken()
-    let tokenAfterHash = AccessTokenUtils.hashToken(plainToken)
     try {
       await mutateAsync({
         ...data,
         siteId: site.id,
-        token: tokenAfterHash,
       })
       refetch()
       toast.success('Access token created successfully.')
-      setGeneratedToken(plainToken) // Set the generated token
-      setIsDialogOpen(true)
+      form.reset()
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg)
@@ -81,7 +70,7 @@ export default function AccessTokenCreateForm({ refetch }: Props) {
     <div>
       <Card>
         <CardHeader>
-          <CardTitle>Create a New Access Token</CardTitle>
+          <CardTitle>Create a new access token</CardTitle>
         </CardHeader>
 
         <CardContent>
@@ -89,12 +78,12 @@ export default function AccessTokenCreateForm({ refetch }: Props) {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
               <FormField
                 control={form.control}
-                name="alias"
+                name="title"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Token Alias</FormLabel>
+                    <FormLabel>Token name</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter token alias" {...field} />
+                      <Input placeholder="Enter token name" {...field} />
                     </FormControl>
                     <FormDescription>
                       This helps to identify and differentiate your tokens.
@@ -109,9 +98,9 @@ export default function AccessTokenCreateForm({ refetch }: Props) {
                 name="expiredAt"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Usage Period</FormLabel>
+                    <FormLabel>Usage period</FormLabel>
                     <Select
-                      defaultValue="1w"
+                      defaultValue="no-expiry"
                       onValueChange={(value) => {
                         const now = new Date()
                         let expirationDate
@@ -163,17 +152,17 @@ export default function AccessTokenCreateForm({ refetch }: Props) {
                 )}
               />
 
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={isPending} className="w-44">
+                {isPending ? (
+                  <LoadingDots className="bg-background" />
+                ) : (
+                  'Create access token'
+                )}
+              </Button>
             </form>
           </Form>
         </CardContent>
       </Card>
-
-      <AccessTokenShowDialog
-        accessToken={generatedToken}
-        isOpen={isDialogOpen}
-        onOpenChange={setIsDialogOpen}
-      />
     </div>
   )
 }

@@ -6,6 +6,7 @@ import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
 import { getEthPrice } from '../lib/getEthPrice'
+import { getMe } from '../lib/getMe'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const userRouter = router({
@@ -81,6 +82,22 @@ export const userRouter = router({
       where: { userId: ctx.token.uid },
     })
   }),
+
+  loginByPersonalToken: publicProcedure
+    .input(z.string())
+    .mutation(async ({ ctx, input }) => {
+      const token = await prisma.accessToken.findUnique({
+        where: { token: input },
+      })
+      if (!token) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Invalid personal token',
+        })
+      }
+
+      return getMe(ctx.token.uid, true)
+    }),
 
   linkWallet: publicProcedure
     .input(
