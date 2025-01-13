@@ -96,7 +96,7 @@ export const userRouter = router({
         })
       }
 
-      return getMe(ctx.token.uid, true)
+      return getMe(token.userId, true)
     }),
 
   linkWallet: publicProcedure
