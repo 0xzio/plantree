@@ -64,21 +64,27 @@ export const assetRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const asset = await prisma.asset.findFirst({
-        where: { url: input.url },
+        where: {
+          siteId: input.siteId,
+          url: input.url,
+        },
       })
 
       if (asset) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'Asset already exists',
-        })
+        // throw new TRPCError({
+        //   code: 'BAD_REQUEST',
+        //   message: 'Asset already exists',
+        // })
+        return true
       }
-      return prisma.asset.create({
+
+      await prisma.asset.create({
         data: {
           userId: ctx.token.uid,
           ...input,
         },
       })
+      return true
     }),
 
   trash: protectedProcedure
