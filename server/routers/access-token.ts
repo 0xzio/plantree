@@ -4,13 +4,20 @@ import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
 export const accessTokenRouter = router({
-  list: protectedProcedure.query(async ({ ctx, input }) => {
-    return prisma.accessToken.findMany({
-      orderBy: {
-        createdAt: 'desc',
-      },
-    })
-  }),
+  list: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return prisma.accessToken.findMany({
+        where: { siteId: input.siteId },
+        orderBy: {
+          createdAt: 'desc',
+        },
+      })
+    }),
 
   create: protectedProcedure
     .input(

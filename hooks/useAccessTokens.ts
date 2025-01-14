@@ -1,5 +1,7 @@
+import { useSiteContext } from '@/components/SiteContext'
 import { trpc } from '@/lib/trpc'
 
 export function useAccessTokens() {
-  return trpc.accessToken.list.useQuery()
+  const site = useSiteContext()
+  return trpc.accessToken.list.useQuery({ siteId: site.id })
 }
