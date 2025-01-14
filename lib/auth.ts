@@ -117,7 +117,7 @@ export const authOptions: NextAuthOptions = {
 
           const account = await initUserByAddress(address.toLowerCase())
 
-          updateSubscriptions(account.userId, address as Address)
+          // updateSubscriptions(account.userId, address as Address)
           return { ...account } as any
         } catch (e) {
           console.log('wallet auth error======:', e)
@@ -166,7 +166,7 @@ export const authOptions: NextAuthOptions = {
             const t2 = Date.now()
             console.log('t2-t1=======>', t2 - t1)
             // console.log('=====user:', user)
-            updateSubscriptions(account.userId, address as Address)
+            // updateSubscriptions(account.userId, address as Address)
             return account
           } catch (error) {
             console.log('====authorize=error:', error)
@@ -421,17 +421,18 @@ async function updateSubscriptions(userId: string, address: Address) {
       args: [0, address],
     })
 
+    // TODO:
     await prisma.user.update({
       where: { id: userId },
       data: {
-        subscriptions: [
-          {
-            ...subscription,
-            startTime: Number(subscription.startTime),
-            duration: Number(subscription.duration),
-            amount: subscription.amount.toString(),
-          },
-        ],
+        // subscriptions: [
+        //   {
+        //     ...subscription,
+        //     startTime: Number(subscription.startTime),
+        //     duration: Number(subscription.duration),
+        //     amount: subscription.amount.toString(),
+        //   },
+        // ],
       },
     })
     return [subscription]

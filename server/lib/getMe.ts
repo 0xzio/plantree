@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { Site, User } from '@prisma/client'
+import { Site, Subscription, User } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import jwt from 'jsonwebtoken'
 
@@ -8,9 +8,16 @@ type Me = User & {
   site: Site
 }
 
+function getSubscriptionEndedAt(subscriptions: Subscription[] = []) {
+  if (!subscriptions?.length) return null
+  const [subscription] = subscriptions
+  return subscription.endedAt
+}
+
 export async function getMe(userId: string, needToken = false) {
   let user = await prisma.user.findUnique({
     where: { id: userId },
+    include: { subscriptions: true },
   })
 
   if (!user) new TRPCError({ code: 'NOT_FOUND' })
@@ -21,19 +28,19 @@ export async function getMe(userId: string, needToken = false) {
 
   return {
     ...user,
-    ...generateToken(userId, needToken),
+
+    token: jwt.sign(
+      {
+        sub: userId,
+        subscriptionEndedAt: getSubscriptionEndedAt(user?.subscriptions),
+      },
+      process.env.NEXTAUTH_SECRET!,
+      {
+        expiresIn: '365d',
+      },
+    ),
     site,
   } as Me
 
   // await redis.set(redisKey, JSON.stringify(user))
-}
-
-function generateToken(userId: string, needToken = false) {
-  if (!needToken) return {}
-
-  return {
-    token: jwt.sign({ sub: userId }, process.env.NEXTAUTH_SECRET!, {
-      expiresIn: '365d',
-    }),
-  }
 }

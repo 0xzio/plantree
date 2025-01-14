@@ -18,7 +18,7 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -101,7 +101,7 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -134,7 +134,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -221,7 +221,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -295,7 +295,7 @@ export async function initUserByFarcasterId(fid: string) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -400,7 +400,7 @@ export async function initUserByFarcasterId(fid: string) {
         include: {
           user: {
             include: {
-              subscription: true,
+              subscriptions: true,
               sites: {
                 include: {
                   domains: true,

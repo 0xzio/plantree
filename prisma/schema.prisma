@@ -114,7 +114,6 @@ model User {
   cover         String?        @db.VarChar(2183)
   bio           String         @default("") @db.VarChar(5000)
   about         String         @default("")
-  subscriptions Json?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
   posts         Post[]
@@ -136,7 +135,7 @@ model User {
   fields        Field[]
   records       Record[]
   views         View[]
-  subscription  Subscription[]
+  subscriptions Subscription[]
 
   @@index([id])
   @@map("user")
