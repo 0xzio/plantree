@@ -7,6 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { STATIC_URL } from '@/lib/constants'
 import { Site } from '@prisma/client'
 
 export const SiteContext = createContext({} as Site)
@@ -24,5 +25,16 @@ export const SiteProvider = ({ site, children }: PropsWithChildren<Props>) => {
 }
 
 export function useSiteContext() {
-  return useContext(SiteContext)
+  const site = useContext(SiteContext)
+  function formatLogo() {
+    if (!site.logo) return ''
+    if (site.logo.startsWith('/')) {
+      return `${STATIC_URL}${site.logo}`
+    }
+    return site.logo
+  }
+  return {
+    ...site,
+    logo: formatLogo(),
+  }
 }

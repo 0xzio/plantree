@@ -21,11 +21,12 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
     if (e.target.files?.length) {
       setLoading(true)
       const file = e.target.files[0]
-      const src = URL.createObjectURL(file)
-      onChange?.(src)
+      // const src = URL.createObjectURL(file)
+      // onChange?.(src)
 
       try {
         const data = await uploadFile(file)
+        console.log('==========data:', data)
         toast.success('Image uploaded successfully!')
         onChange?.(data.url!)
       } catch (error) {
