@@ -1,10 +1,11 @@
 import { prisma } from '@/lib/prisma'
-import { User } from '@prisma/client'
+import { Site, User } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import jwt from 'jsonwebtoken'
 
 type Me = User & {
   token?: string
+  site: Site
 }
 
 export async function getMe(userId: string, needToken = false) {
@@ -14,9 +15,14 @@ export async function getMe(userId: string, needToken = false) {
 
   if (!user) new TRPCError({ code: 'NOT_FOUND' })
 
+  const site = await prisma.site.findFirst({
+    where: { userId: user?.id },
+  })
+
   return {
     ...user,
     ...generateToken(userId, needToken),
+    site,
   } as Me
 
   // await redis.set(redisKey, JSON.stringify(user))
