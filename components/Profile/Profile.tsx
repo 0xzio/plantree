@@ -2,7 +2,6 @@
 
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
-import { SiteMode } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { LoginButton } from '../LoginButton'
