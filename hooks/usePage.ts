@@ -28,8 +28,6 @@ export async function loadPage(input: {
 }) {
   store.set(pageLoadingAtom, true)
   const page = await api.page.getPage.query(input)
-  console.log('=====>>>>>page:', page)
-
   store.set(pageAtom, page)
   store.set(pageLoadingAtom, false)
 }

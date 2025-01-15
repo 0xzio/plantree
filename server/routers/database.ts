@@ -1,3 +1,4 @@
+import { getRandomColorName } from '@/lib/color-helper'
 import { prisma } from '@/lib/prisma'
 import { FieldType, Option, ViewField, ViewType } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
@@ -46,6 +47,7 @@ export const databaseRouter = router({
             data: {
               ...input,
               userId: ctx.token.uid,
+              color: getRandomColorName(),
             },
           })
 
