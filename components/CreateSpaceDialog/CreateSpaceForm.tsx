@@ -193,7 +193,7 @@ export function CreateSpaceForm() {
       await refetch()
 
       // push(`/~/objects/today`)
-      push(`/~/posts`)
+      push('/~/page?id=today')
 
       // revalidatePath('/space/[id]', 'page')
       // revalidatePath('/', 'layout')

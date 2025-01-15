@@ -100,8 +100,7 @@ export const ProfilePopover = memo(function ProfilePopover({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              const path = '/~/posts'
-              // site?.mode === SiteMode.BASIC ? '/~/posts' : '/~/objects/today'
+              const path = '/~/page?id=today'
               if (location.host === ROOT_DOMAIN) {
                 push(path)
                 return

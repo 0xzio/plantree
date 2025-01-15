@@ -91,7 +91,7 @@ export const SitesPopover = memo(function ProfilePopover({
                 site,
               )
               await set(CURRENT_SITE, site.id)
-              push('/~/posts')
+              push('/~/page?id=today')
             }}
           >
             <Avatar className="w-6 h-6">
