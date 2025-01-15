@@ -144,7 +144,6 @@
     "immer": "^10.1.1",
     "ioredis": "^5.4.1",
     "is-hotkey": "^0.2.0",
-    "jotai": "~2.8.4",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
     "kubo-rpc-client": "^5.0.1",
@@ -256,6 +255,9 @@
     "tailwindcss": "^3.4.14",
     "tailwindcss-animate": "^1.0.7",
     "typescript": "^5.2.2"
+  },
+  "peerDependencies": {
+    "jotai": "~2.8.4"
   },
   "packageManager": "pnpm@9.12.2"
 }

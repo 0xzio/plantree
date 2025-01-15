@@ -334,7 +334,7 @@ export const authOptions: NextAuthOptions = {
     async jwt({ token, account, user, profile, trigger, session }) {
       if (user) {
         const sessionAccount = user as AccountWithUser
-        console.log('=====sessionUser:', sessionAccount)
+        // console.log('=====sessionUser:', sessionAccount)
 
         token.uid = sessionAccount.userId
         token.address = getAccountAddress(sessionAccount)

@@ -7,8 +7,11 @@ import {
   PostType,
   ProviderType,
   SubdomainType,
+  SubscriptionStatus,
 } from '@prisma/client'
 import ky from 'ky'
+
+const ONE_MONTH = 60 * 60 * 24 * 30
 
 export async function initUserByAddress(address: string) {
   return prisma.$transaction(
@@ -40,6 +43,16 @@ export async function initUserByAddress(address: string) {
               {
                 providerType: ProviderType.WALLET,
                 providerAccountId: address,
+              },
+            ],
+          },
+          subscriptions: {
+            create: [
+              {
+                planId: '1',
+                status: SubscriptionStatus.ACTIVE,
+                startedAt: new Date(),
+                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
               },
             ],
           },
@@ -160,6 +173,16 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
                 providerAccountId: info.openid,
                 providerInfo: info,
                 email: info.email,
+              },
+            ],
+          },
+          subscriptions: {
+            create: [
+              {
+                planId: '1',
+                status: SubscriptionStatus.ACTIVE,
+                startedAt: new Date(),
+                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
               },
             ],
           },
@@ -327,6 +350,16 @@ export async function initUserByFarcasterId(fid: string) {
                 providerType: ProviderType.FARCASTER,
                 providerAccountId: fid,
                 providerInfo: fcUser,
+              },
+            ],
+          },
+          subscriptions: {
+            create: [
+              {
+                planId: '1',
+                status: SubscriptionStatus.ACTIVE,
+                startedAt: new Date(),
+                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
               },
             ],
           },
