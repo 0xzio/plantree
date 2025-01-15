@@ -28,7 +28,6 @@ import {
 import { uniqueId } from '@/lib/unique-id'
 import { RouterInputs, RouterOutputs } from '@/server/_app'
 import { Field, Record as Row, View } from '@prisma/client'
-import { useQuery } from '@tanstack/react-query'
 import { arrayMoveImmutable } from 'array-move'
 import { produce } from 'immer'
 import { useSession } from 'next-auth/react'

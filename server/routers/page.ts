@@ -1,8 +1,9 @@
-import { editorDefaultValue, ELEMENT_P } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
 import { Page } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { createPage } from '../lib/createPage'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 interface SlateElement {
@@ -19,7 +20,7 @@ export const pageRouter = router({
     )
     .query(async ({ ctx, input }) => {
       return prisma.page.findMany({
-        where: { siteId: input.siteId },
+        where: { siteId: input.siteId, isJournal: false },
         orderBy: { createdAt: 'desc' },
       })
     }),
@@ -35,6 +36,51 @@ export const pageRouter = router({
     return page
   }),
 
+  getPage: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        pageId: z.string().optional(),
+        date: z.string().optional(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const { pageId = '', date = '' } = input
+      if (!pageId && !date) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Either pageId or date is required.',
+        })
+      }
+
+      if (pageId) {
+        return prisma.page.findUniqueOrThrow({
+          include: { blocks: true },
+          where: { id: pageId },
+        })
+      } else {
+        const page = await prisma.page.findFirst({
+          include: { blocks: true },
+          where: { siteId: input.siteId, date },
+        })
+
+        if (page) return page
+
+        const { id } = await createPage({
+          userId: ctx.token.uid,
+          siteId: input.siteId,
+          date,
+          title: '',
+          isJournal: true,
+        })
+
+        return prisma.page.findUniqueOrThrow({
+          include: { blocks: true },
+          where: { id },
+        })
+      }
+    }),
+
   create: protectedProcedure
     .input(
       z.object({
@@ -43,35 +89,11 @@ export const pageRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const newPage = await prisma.page.create({
-        data: {
-          userId: ctx.token.uid,
-          props: {},
-          children: [],
-          ...input,
-        },
+      return createPage({
+        userId: ctx.token.uid,
+        siteId: input.siteId,
+        title: '',
       })
-
-      const newBlock = await prisma.block.create({
-        data: {
-          userId: ctx.token.uid,
-          pageId: newPage.id,
-          parentId: newPage.id,
-          content: editorDefaultValue[0],
-          type: ELEMENT_P,
-          props: {},
-          children: [],
-          siteId: input.siteId,
-        },
-      })
-
-      await prisma.page.update({
-        where: { id: newPage.id },
-        data: { children: [newBlock.id] },
-      })
-
-      newPage.children = [newBlock.id]
-      return newPage
     }),
 
   update: protectedProcedure

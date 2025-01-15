@@ -1,9 +1,11 @@
+import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
-import { cn } from '@/lib/utils'
+import { cn, isValidUUIDv4 } from '@/lib/utils'
 import { SiteMode } from '@prisma/client'
 import {
   Calendar,
+  CalendarDays,
   Feather,
   FileText,
   Gift,
@@ -13,7 +15,7 @@ import {
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
@@ -30,7 +32,14 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
   const pathname = usePathname()!
   const site = useSiteContext()
   const { spaceId } = site
-  const isBasicMode = site?.mode === SiteMode.BASIC
+  const params = useSearchParams()
+  const id = params?.get('id') || ''
+
+  const isJournalActive = useMemo(() => {
+    if (!pathname.startsWith('/~/page')) return false
+    if (!id) return false
+    return !isValidUUIDv4(id)
+  }, [pathname, id])
 
   return (
     <div
@@ -59,6 +68,14 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
                 store.router.routeTo('TODOS')
               }}
             /> */}
+
+        <Link href="/~/page?id=today">
+          <SidebarItem
+            isActive={isJournalActive}
+            icon={<CalendarDays size={18} />}
+            label="Today"
+          ></SidebarItem>
+        </Link>
 
         <Link href="/~/posts">
           <SidebarItem

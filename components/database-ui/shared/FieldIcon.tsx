@@ -1,5 +1,6 @@
 'use client'
 
+import { FieldType } from '@/lib/types'
 import {
   CalendarDays,
   CheckCircle2,
@@ -10,7 +11,6 @@ import {
   ListChecks,
   Text,
 } from 'lucide-react'
-import { FieldType } from '@/lib/types'
 
 interface Props {
   index?: number

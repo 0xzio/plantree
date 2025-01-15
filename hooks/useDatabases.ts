@@ -1,7 +1,7 @@
 import isEqual from 'react-fast-compare'
 import { useSiteContext } from '@/components/SiteContext'
 import { localDB } from '@/lib//local-db'
-import { queryClient } from '@/lib//queryClient'
+import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
 import { Database } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'

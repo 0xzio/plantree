@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { toast } from 'sonner'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import {
@@ -13,9 +12,10 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useDatabases } from '@/hooks/useDatabases'
 import { usePages } from '@/hooks/usePages'
+import { localDB } from '@/lib/local-db'
 import { api } from '@/lib/trpc'
+import { toast } from 'sonner'
 import { useDeletePageDialog } from './useDeleteDatabaseDialog'
 
 interface Props {}
@@ -29,6 +29,7 @@ export function DeletePageDialog({}: Props) {
     setLoading(true)
     try {
       await api.page.delete.mutate({ pageId })
+      await localDB.page.delete(pageId)
       await refetch()
       toast.success('Page deleted successfully')
       setIsOpen(false)
