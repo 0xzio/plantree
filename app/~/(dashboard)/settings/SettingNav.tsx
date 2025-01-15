@@ -31,7 +31,7 @@ export function SettingNav({}: Props) {
     )
 
   return (
-    <div className="flex flex-row md:flex-col border-b gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
+    <div className="flex flex-row md:flex-col md:border-b gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
       <Link href={Paths.general} className={linkClassName(Paths.general)}>
         General
       </Link>

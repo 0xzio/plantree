@@ -14,53 +14,37 @@ export const JournalShortcut = forwardRef<HTMLDivElement, Props>(
     const { push } = useRouter()
 
     return (
-      <Box ref={ref} textXS fontNormal toCenterY {...rest}>
-        <Box
-          bgGray100
-          px2
-          py-6
-          roundedFull
-          bgGray200--hover
-          transitionColors
-          cursorPointer
+      <div ref={ref} className="text-xs flex items-center" {...rest}>
+        <div
+          className="bg-foreground/5 px-2 py-[6px] rounded-full hover:bg-foreground/10 transition-colors cursor-pointer"
           onClick={() => {
             const dateStr = format(new Date(), 'yyyy-MM-dd')
             push(`/~/page?id=${dateStr}`)
           }}
         >
           Today
-        </Box>
-        <Box toCenterY gap2 ml2>
-          <Box
-            bgGray100
-            circle5
-            toCenter
-            bgGray200--hover
-            transitionColors
-            cursorPointer
+        </div>
+        <div className="flex items-center gap-2 ml-2">
+          <div
+            className="bg-foreground/5 px-2 py-[6px] rounded-full hover:bg-foreground/10 transition-colors cursor-pointer"
             onClick={() => {
               const dateStr = format(subDays(currentDate, 1), 'yyyy-MM-dd')
               push(`/~/page?id=${dateStr}`)
             }}
           >
             <ChevronLeft size={16} />
-          </Box>
-          <Box
-            bgGray100
-            circle5
-            toCenter
-            bgGray200--hover
-            transitionColors
-            cursorPointer
+          </div>
+          <div
+            className="bg-foreground/5 px-2 py-[6px] rounded-full hover:bg-foreground/10 transition-colors cursor-pointer"
             onClick={() => {
               const dateStr = format(addDays(currentDate, 1), 'yyyy-MM-dd')
               push(`/~/page?id=${dateStr}`)
             }}
           >
             <ChevronRight size={16} />
-          </Box>
-        </Box>
-      </Box>
+          </div>
+        </div>
+      </div>
     )
   },
 )

@@ -4,7 +4,6 @@ import LoadingDots from '@/components/icons/loading-dots'
 import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
 import { api, trpc } from '@/lib/trpc'
-import { HostedSite } from '@prisma/client'
 import { useSession } from 'next-auth/react'
 import { ApiTokenDialog } from './ApiTokenDialog/ApiTokenDialog'
 import { useApiTokenDialog } from './ApiTokenDialog/useApiTokenDialog'
@@ -73,7 +72,20 @@ function Content() {
   return (
     <div className="max-w-3xl mx-auto mt-20">
       <div className="flex items-center justify-between mb-8">
-        <div className="text-3xl font-bold">My sites</div>
+        <div className="space-y-1">
+          <div className="text-3xl font-bold">My sites</div>
+          <div className="text-sm">
+            Read the deployment guide:{' '}
+            <a
+              className="text-brand-500"
+              href="https://blog.penx.me/posts/39252f1c-1ee4-4da4-977a-43ee47ea1d24"
+              target="_blank"
+            >
+              Deploy PenX with One-click tools
+            </a>
+            .
+          </div>
+        </div>
         <div className="flex gap-2">
           <Button
             variant="outline"
@@ -103,4 +115,3 @@ function Content() {
     </div>
   )
 }
-
