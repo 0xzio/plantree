@@ -18,7 +18,7 @@ export function useSites() {
   // })
 
   // return res
-  return trpc.site.list.useQuery({
+  return trpc.site.listWithPagination.useQuery({
     pageNum: 1,
     pageSize: 12,
   })
