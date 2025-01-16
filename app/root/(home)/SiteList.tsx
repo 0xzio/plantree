@@ -10,8 +10,9 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export function SiteList() {
-  const { isLoading, data: sites = [] } = useSites()
-  if (isLoading)
+  const { isLoading, data } = useSites()
+
+  if (isLoading || !data)
     return (
       <div>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-lg">
@@ -31,9 +32,7 @@ export function SiteList() {
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-lg">
-      {sites.map((site) => (
-        <SiteItem key={site.id} site={site} />
-      ))}
+      {data?.sites.map((site) => <SiteItem key={site.id} site={site} />)}
     </div>
   )
 }

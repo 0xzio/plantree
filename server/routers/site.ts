@@ -18,15 +18,31 @@ import { protectedProcedure, publicProcedure, router } from '../trpc'
 const redis = new Redis(process.env.REDIS_URL!)
 
 export const siteRouter = router({
-  list: publicProcedure.query(async () => {
-    return prisma.site.findMany({
-      include: {
-        domains: true,
-        channels: true,
-      },
-      orderBy: { createdAt: 'asc' },
-    })
-  }),
+  list: publicProcedure
+    .input(
+      z.object({
+        pageNum: z.number().optional().default(1),
+        pageSize: z.number().optional().default(100),
+      }),
+    )
+    .query(async ({ input }) => {
+      const { pageNum, pageSize } = input
+      const offset = (pageNum - 1) * pageSize
+      const list = await prisma.site.findMany({
+        include: {
+          domains: true,
+          channels: true,
+        },
+        orderBy: { createdAt: 'desc' },
+        take: pageSize,
+        skip: offset,
+      })
+
+      return {
+        sites: list,
+        count: await prisma.site.count(),
+      }
+    }),
 
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
