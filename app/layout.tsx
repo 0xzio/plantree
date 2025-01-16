@@ -77,7 +77,7 @@ export default async function RootLayout({
           <script
             async
             defer
-            src="https://umamic.penx.io/script.js"
+            src="https://stats.penx.io/script.js"
             data-website-id={process.env.NEXT_PUBLIC_UMAMIC_WEBSITE_ID}
           ></script>
         )}
