@@ -58,8 +58,9 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const pathname = usePathname()!
   const isPost = pathname?.includes('/~/post/')
   const isAssets = pathname?.includes('/~/assets')
+  const isSettings = pathname?.includes('/~/settings')
   const params = useSearchParams()!
-  const isFullWidth = isPost || isAssets || !!params.get('id')
+  const isFullWidth = isPost || isAssets || isSettings || !!params.get('id')
 
   if (!site || isLoading) {
     return (

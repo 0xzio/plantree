@@ -8,10 +8,12 @@ export const dynamic = 'force-static'
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className="flex flex-col gap-8 p-3 md:p-0">
+    <div className="flex flex-col gap-8 md:max-w-4xl md:mx-auto pt-16 px-4">
       <div className="flex-col md:flex-row flex md:items-center gap-2">
         <div className="text-3xl font-bold">Settings</div>
-        <SiteLink />
+        <div className="hidden sm:block">
+          <SiteLink />
+        </div>
       </div>
       <div className="flex flex-col md:flex-row gap-6">
         <SettingNav />
