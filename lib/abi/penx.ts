@@ -3362,6 +3362,32 @@ export const memberAbi = [
     anonymous: false,
     inputs: [
       {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'DistributeAllSubscriptions',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'DistributeSubscriptionByAccounts',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
         name: 'previousOwner',
         internalType: 'address',
         type: 'address',
@@ -3492,7 +3518,24 @@ export const memberAbi = [
   {
     type: 'function',
     inputs: [],
-    name: 'distributeSubscriptions',
+    name: 'distributeAllSubscriptions',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'id', internalType: 'bytes32', type: 'bytes32' }],
+    name: 'distributeSingleSubscription',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+      { name: 'accounts', internalType: 'address[]', type: 'address[]' },
+    ],
+    name: 'distributeSubscriptionByAccounts',
     outputs: [],
     stateMutability: 'nonpayable',
   },

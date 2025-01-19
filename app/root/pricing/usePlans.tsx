@@ -11,6 +11,12 @@ export function usePlans() {
     functionName: 'getPlans',
   })
 
+  // const { data: rr } = useReadContract({
+  //   address: addressMap.Member,
+  //   abi: memberAbi,
+  //   functionName: 'revenue',
+  // })
+
   return {
     data,
     isLoading,
