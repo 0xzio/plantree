@@ -32,7 +32,7 @@ export const couponRouter = router({
         .map((_, index) => {
           return prisma.coupon.create({
             data: {
-              planId: '1',
+              planId: '0',
               code: uniqueId(),
               duration: ONE_MONTH * input.months,
             },
@@ -82,7 +82,7 @@ export const couponRouter = router({
         await prisma.subscription.update({
           where: { id: subscription.id },
           data: {
-            planId: '1',
+            planId: '0',
             status: SubscriptionStatus.ACTIVE,
             startedAt,
             endedAt: new Date(endedAt),
@@ -95,7 +95,7 @@ export const couponRouter = router({
 
         await prisma.subscription.create({
           data: {
-            planId: '1',
+            planId: '0',
             status: SubscriptionStatus.ACTIVE,
             startedAt,
             endedAt: new Date(endedAt),

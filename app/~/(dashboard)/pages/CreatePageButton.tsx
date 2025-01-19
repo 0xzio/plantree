@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import LoadingCircle from '@/components/icons/loading-circle'
 import { useSiteContext } from '@/components/SiteContext'
-import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
+import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Button } from '@/components/ui/button'
 import { useDatabases } from '@/hooks/useDatabases'
 import { useIsMember } from '@/hooks/useIsMember'
@@ -14,7 +14,7 @@ import { toast } from 'sonner'
 
 export function CreatePageButton() {
   const isMember = useIsMember()
-  const { setIsOpen } = useSubscriptionDialog()
+  const { setIsOpen } = useSubscriptionGuideDialog()
   const { push } = useRouter()
   const { refetch } = useDatabases()
   const [isLoading, setLoading] = useState(false)

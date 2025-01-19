@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import LoadingCircle from '@/components/icons/loading-circle'
 import { useSiteContext } from '@/components/SiteContext'
-import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
+import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Button } from '@/components/ui/button'
 import { useIsMember } from '@/hooks/useIsMember'
 import { loadPost } from '@/hooks/usePost'
@@ -21,7 +21,7 @@ export function CreatePostButton() {
   const { push } = useRouter()
   const [isLoading, setLoading] = useState(false)
   const isMember = useIsMember()
-  const { setIsOpen } = useSubscriptionDialog()
+  const { setIsOpen } = useSubscriptionGuideDialog()
 
   async function createPost() {
     if (!isMember) return setIsOpen(true)

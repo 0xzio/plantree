@@ -1,7 +1,7 @@
 import { useSpaceContext } from '@/components/SpaceContext'
 import { Plan, PlanInfo } from '@/domains/Plan'
 import { spaceAbi } from '@/lib/abi'
-import { IPFS_GATEWAY } from '@/lib/constants'
+import { IPFS_GATEWAY, STATIC_URL } from '@/lib/constants'
 import { isIPFSCID } from '@/lib/utils'
 import { wagmiConfig } from '@/lib/wagmi'
 import { useQuery } from '@tanstack/react-query'
@@ -29,13 +29,23 @@ export function usePlans() {
         allowFailure: false,
       })
 
-      const planInfos = await Promise.all(
-        plansRes
-          .filter((plan) => isIPFSCID(plan.uri))
-          .map((plan) =>
-            ky.get(`${IPFS_GATEWAY}/ipfs/${plan.uri}`).json<PlanInfo>(),
-          ),
-      )
+      const getPlanInfos = async () => {
+        return Promise.all(
+          plansRes.map((plan) => {
+            if (isIPFSCID(plan.uri)) {
+              // return ky.get(`${IPFS_GATEWAY}/ipfs/${plan.uri}`).json<PlanInfo>()
+              return { name: '', benefits: '' }
+            } else {
+              if (!plan.uri) {
+                return { name: '', benefits: '' }
+              }
+              return ky.get(`${STATIC_URL}/${plan.uri}`).json<PlanInfo>()
+            }
+          }),
+        )
+      }
+
+      const planInfos = await getPlanInfos()
 
       const plans: Plan[] = plansRes.map(
         (item, index) =>

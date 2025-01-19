@@ -7,7 +7,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { SubscriptionDialogContent } from './SubscriptionDialogContent'
+import { SubscriptionForm } from './SubscriptionForm'
+import { SubscriptionPrice } from './SubscriptionPrice'
 import { useSubscriptionDialog } from './useSubscriptionDialog'
 
 interface Props {}
@@ -17,15 +18,16 @@ export function SubscriptionDialog({}: Props) {
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
-      <DialogContent className="sm:max-w-[600px] grid gap-4">
+      <DialogContent className="sm:max-w-[425px] grid gap-4">
         <DialogHeader>
-          <DialogTitle className="">Subscribe to PenX</DialogTitle>
+          <DialogTitle>Subscription</DialogTitle>
           <DialogDescription>
             Subscribe to Penx to support us in building the best product and
-            enjoy the features:
+            enjoy the features.
           </DialogDescription>
         </DialogHeader>
-        <SubscriptionDialogContent />
+        <SubscriptionPrice />
+        <SubscriptionForm />
       </DialogContent>
     </Dialog>
   )

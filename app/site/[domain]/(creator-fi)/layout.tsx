@@ -1,7 +1,5 @@
 import { SpaceProvider } from '@/components/SpaceContext'
 import { getSite, getSpace } from '@/lib/fetchers'
-import { StoreProvider } from '@/store'
-import { Toaster } from 'sonner'
 import { CreatorFiLayout } from './CreatorFiLayout'
 
 export default async function Layout({
@@ -18,11 +16,7 @@ export default async function Layout({
   return (
     <div className="min-h-screen bg-foreground/5">
       <SpaceProvider space={space} site={site}>
-        <StoreProvider>
-          <Toaster className="dark:hidden" />
-          <Toaster theme="dark" className="hidden dark:block" />
-          <CreatorFiLayout>{children}</CreatorFiLayout>
-        </StoreProvider>
+        <CreatorFiLayout>{children}</CreatorFiLayout>
       </SpaceProvider>
     </div>
   )

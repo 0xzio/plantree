@@ -72,13 +72,11 @@ export function GeneralSettingForm({}: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex flex-col items-center justify-center gap-3">
-          <FormField
-            control={form.control}
-            name="logo"
-            render={({ field }) => <FileUpload {...field} />}
-          />
-        </div>
+        <FormField
+          control={form.control}
+          name="logo"
+          render={({ field }) => <FileUpload {...field} />}
+        />
 
         <FormField
           control={form.control}

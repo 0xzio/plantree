@@ -1,5 +1,4 @@
-import { NETWORK, NetworkNames } from './constants';
-
+import { NETWORK, NetworkNames } from './constants'
 
 const baseSepoliaAddress = {
   SpaceFactory: '0x2728B1E9cEf2d2278EB7C951a553D0E5a6aE45d0',
@@ -7,7 +6,8 @@ const baseSepoliaAddress = {
   PenToken: '0x114E58DcEea1C5a8B2fa03eC6AC0c236A5F6cD92',
   Tip: '0x7928C53d2D85ac25326b54D7C0E40c7458938E33',
   DailyClaim: '0x05970db4279700106C170a8d8503c97C80e05eD6',
-  TokenVesting: '0xD99DfE0013b742E4bD3dE0d6e94a9f7Eb24b93BC'
+  TokenVesting: '0xD99DfE0013b742E4bD3dE0d6e94a9f7Eb24b93BC',
+  Member: '0x96aC05B6f91d91121Af20CF73a858243834e1cD4',
 }
 
 const baseAddress = {
@@ -16,7 +16,8 @@ const baseAddress = {
   PenToken: '0x0708eA842bd28c8C1eAD1Ca3c1a62e83EE433cd7',
   Tip: '0xa83D1edb468C872FF997C4C0c7F1471ad0B3526B',
   DailyClaim: '0x65DEdAb13f58EF2255aD0e6BA5FBa95f827eF955',
-  TokenVesting: '0x19a957098a9d273B8EA3dF26f8f8aFF81FCfdFd2'
+  TokenVesting: '0x19a957098a9d273B8EA3dF26f8f8aFF81FCfdFd2',
+  Member: '0x23Cd8135A81db145862b46534579F718A9f69708',
 }
 
 export const addressMap: Record<keyof typeof baseSepoliaAddress, any> =

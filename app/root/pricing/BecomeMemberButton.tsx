@@ -3,10 +3,12 @@
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
 import { useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 export function BecomeMemberButton() {
   const { setIsOpen } = useLoginDialog()
   const { data } = useSession()
+  const { push } = useRouter()
 
   return (
     <Button
@@ -16,8 +18,7 @@ export function BecomeMemberButton() {
         if (!data) {
           setIsOpen(true)
         } else {
-          // TODO:
-          // Redirect to checkout page
+          push('/~/settings/subscription')
         }
       }}
     >

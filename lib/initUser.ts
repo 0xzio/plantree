@@ -11,7 +11,7 @@ import {
 } from '@prisma/client'
 import ky from 'ky'
 
-const ONE_MONTH = 60 * 60 * 24 * 30
+const SEVEN_DAYS = 60 * 60 * 24 * 7
 
 export async function initUserByAddress(address: string) {
   return prisma.$transaction(
@@ -49,10 +49,10 @@ export async function initUserByAddress(address: string) {
           subscriptions: {
             create: [
               {
-                planId: '1',
+                planId: '0',
                 status: SubscriptionStatus.ACTIVE,
                 startedAt: new Date(),
-                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
+                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -179,10 +179,10 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           subscriptions: {
             create: [
               {
-                planId: '1',
+                planId: '0',
                 status: SubscriptionStatus.ACTIVE,
                 startedAt: new Date(),
-                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
+                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -356,10 +356,10 @@ export async function initUserByFarcasterId(fid: string) {
           subscriptions: {
             create: [
               {
-                planId: '1',
+                planId: '0',
                 status: SubscriptionStatus.ACTIVE,
                 startedAt: new Date(),
-                endedAt: new Date(Date.now() + ONE_MONTH * 1000),
+                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },

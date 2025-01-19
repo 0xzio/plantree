@@ -16,6 +16,7 @@ import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
 import { nodeRouter } from './routers/node'
 import { pageRouter } from './routers/page'
+import { planRouter } from './routers/plan'
 import { postRouter } from './routers/post'
 import { rewardsRouter } from './routers/rewards'
 import { siteRouter } from './routers/site'
@@ -48,6 +49,7 @@ export const appRouter = router({
   block: blockRouter,
   coupon: couponRouter,
   extension: extensionRouter,
+  plan: planRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

@@ -3286,6 +3286,366 @@ export const mathAbi = [
 ] as const
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// Member
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const memberAbi = [
+  {
+    type: 'constructor',
+    inputs: [
+      { name: '_penx', internalType: 'contract PenToken', type: 'address' },
+    ],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'target', internalType: 'address', type: 'address' }],
+    name: 'AddressEmptyCode',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'AddressInsufficientBalance',
+  },
+  { type: 'error', inputs: [], name: 'AmountIsZero' },
+  { type: 'error', inputs: [], name: 'FailedInnerCall' },
+  { type: 'error', inputs: [], name: 'InvalidAddress' },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'requestAmount', internalType: 'uint256', type: 'uint256' },
+      { name: 'remainingAmount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'InvalidCancelAmount',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'planId', internalType: 'uint8', type: 'uint8' }],
+    name: 'InvalidPlanId',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'planPrice', internalType: 'uint256', type: 'uint256' }],
+    name: 'InvalidPlanPrice',
+  },
+  {
+    type: 'error',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'NoSubscribeToPlan',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'owner', internalType: 'address', type: 'address' }],
+    name: 'OwnableInvalidOwner',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'OwnableUnauthorizedAccount',
+  },
+  {
+    type: 'error',
+    inputs: [{ name: 'planId', internalType: 'uint8', type: 'uint8' }],
+    name: 'PlanIsNotActive',
+  },
+  { type: 'error', inputs: [], name: 'ReentrancyGuardReentrantCall' },
+  {
+    type: 'error',
+    inputs: [{ name: 'token', internalType: 'address', type: 'address' }],
+    name: 'SafeERC20FailedOperation',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'previousOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'newOwner',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+    ],
+    name: 'OwnershipTransferred',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint8', type: 'uint8', indexed: true },
+      { name: 'uri', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'price',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      { name: 'isActive', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'PlanCreated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      { name: 'id', internalType: 'uint8', type: 'uint8', indexed: true },
+      { name: 'uri', internalType: 'string', type: 'string', indexed: false },
+      {
+        name: 'price',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      { name: 'isActive', internalType: 'bool', type: 'bool', indexed: false },
+    ],
+    name: 'PlanUpdated',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'RevenueWithdrawn',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'planId', internalType: 'uint8', type: 'uint8', indexed: true },
+      {
+        name: 'startTime',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'amount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+      {
+        name: 'increasingDuration',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Subscribed',
+  },
+  {
+    type: 'event',
+    anonymous: false,
+    inputs: [
+      {
+        name: 'account',
+        internalType: 'address',
+        type: 'address',
+        indexed: true,
+      },
+      { name: 'planId', internalType: 'uint8', type: 'uint8', indexed: true },
+      {
+        name: 'refundAmount',
+        internalType: 'uint256',
+        type: 'uint256',
+        indexed: false,
+      },
+    ],
+    name: 'Unsubscribed',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'uri', internalType: 'string', type: 'string' },
+      { name: 'price', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'createPlan',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'distributeSubscriptions',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+      { name: 'account', internalType: 'address', type: 'address' },
+    ],
+    name: 'generateSubscriptionId',
+    outputs: [{ name: '', internalType: 'bytes32', type: 'bytes32' }],
+    stateMutability: 'pure',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getPlans',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Member.Plan[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'uri', internalType: 'string', type: 'string' },
+          { name: 'price', internalType: 'uint256', type: 'uint256' },
+          { name: 'isActive', internalType: 'bool', type: 'bool' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'account', internalType: 'address', type: 'address' },
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+    ],
+    name: 'getSubscription',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Member.Subscription',
+        type: 'tuple',
+        components: [
+          { name: 'planId', internalType: 'uint8', type: 'uint8' },
+          { name: 'uri', internalType: 'string', type: 'string' },
+          { name: 'account', internalType: 'address', type: 'address' },
+          { name: 'startTime', internalType: 'uint256', type: 'uint256' },
+          { name: 'duration', internalType: 'uint256', type: 'uint256' },
+          { name: 'amount', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'getSubscriptions',
+    outputs: [
+      {
+        name: '',
+        internalType: 'struct Member.Subscription[]',
+        type: 'tuple[]',
+        components: [
+          { name: 'planId', internalType: 'uint8', type: 'uint8' },
+          { name: 'uri', internalType: 'string', type: 'string' },
+          { name: 'account', internalType: 'address', type: 'address' },
+          { name: 'startTime', internalType: 'uint256', type: 'uint256' },
+          { name: 'duration', internalType: 'uint256', type: 'uint256' },
+          { name: 'amount', internalType: 'uint256', type: 'uint256' },
+        ],
+      },
+    ],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'owner',
+    outputs: [{ name: '', internalType: 'address', type: 'address' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'planIndex',
+    outputs: [{ name: '', internalType: 'uint8', type: 'uint8' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'renounceOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [],
+    name: 'revenue',
+    outputs: [{ name: '', internalType: 'uint256', type: 'uint256' }],
+    stateMutability: 'view',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+      { name: 'tokenAmount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'subscribe',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'newOwner', internalType: 'address', type: 'address' }],
+    name: 'transferOwnership',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+      { name: 'tokenAmount', internalType: 'uint256', type: 'uint256' },
+    ],
+    name: 'unsubscribe',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [
+      { name: 'planId', internalType: 'uint8', type: 'uint8' },
+      { name: 'uri', internalType: 'string', type: 'string' },
+      { name: 'price', internalType: 'uint256', type: 'uint256' },
+      { name: 'isActive', internalType: 'bool', type: 'bool' },
+    ],
+    name: 'updatePlan',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+  {
+    type: 'function',
+    inputs: [{ name: 'account', internalType: 'address', type: 'address' }],
+    name: 'withdrawRevenue',
+    outputs: [],
+    stateMutability: 'nonpayable',
+  },
+] as const
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 // MockSpace
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 

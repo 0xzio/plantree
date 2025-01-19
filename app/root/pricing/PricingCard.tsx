@@ -1,15 +1,13 @@
 import { Check } from 'lucide-react'
 import { BecomeMemberButton } from './BecomeMemberButton'
+import { SubscriptionPrice } from './SubscriptionPrice'
 
 export function PricingCard() {
   return (
     <div className=" mx-auto space-y-8 bg-background rounded-2xl px-10 py-8 md:w-[500px] shadow dark:border">
       <div className="flex flex-col items-center justify-center gap-2">
         <div className="text-xl">Pro</div>
-        <div className="flex items-center gap-1">
-          <span className="text-4xl font-bold">200 $PEN</span>
-          <span className="text-xl text-foreground/60 -mb-2"> / month</span>
-        </div>
+        <SubscriptionPrice />
       </div>
       <div className="space-y-3">
         <BenefitItem text="Cloud Sync" />

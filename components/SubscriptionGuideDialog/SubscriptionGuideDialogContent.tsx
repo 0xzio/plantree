@@ -1,36 +1,14 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
-import { SignInButton } from '@/components/facaster-auth'
-import { GoogleOauthButton } from '@/components/GoogleOauthButton'
-import { TextLogo } from '@/components/TextLogo'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import { WalletConnectButton } from '@/components/WalletConnectButton'
-import {
-  AuthKitProvider,
-  SignInButton as FSignInButton,
-  QRCode,
-  StatusAPIResponse,
-  useProfile,
-  useSignIn,
-} from '@farcaster/auth-kit'
 import { Check } from 'lucide-react'
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
-import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
 import { Button } from '../ui/button'
-import { Input } from '../ui/input'
 import { UseCouponCode } from '../UseCouponCode'
-import { useSubscriptionDialog } from './useSubscriptionDialog'
+import { useSubscriptionGuideDialog } from './useSubscriptionGuideDialog'
 
-export function SubscriptionDialogContent() {
-  const { setIsOpen } = useSubscriptionDialog()
-
+export function SubscriptionGuideDialogContent() {
+  const { setIsOpen } = useSubscriptionGuideDialog()
+  const { push } = useRouter()
   return (
     <div className="flex flex-col gap-3">
       <div className="space-y-2">
@@ -45,7 +23,8 @@ export function SubscriptionDialogContent() {
           size="lg"
           className="px-8 h-12 font-bold"
           onClick={() => {
-            toast.info('coming soon....')
+            push('/~/settings/subscription')
+            setIsOpen(false)
           }}
         >
           Become a member

@@ -2,7 +2,7 @@
 
 import { useRef, useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
-import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
+import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Button } from '@/components/ui/button'
 import { useAssets } from '@/hooks/useAssets'
 import { useIsMember } from '@/hooks/useIsMember'
@@ -23,7 +23,7 @@ interface Props {
 export const UploadAssetButton = ({ className, ...rest }: Props) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null)
   const isMember = useIsMember()
-  const { setIsOpen } = useSubscriptionDialog()
+  const { setIsOpen } = useSubscriptionGuideDialog()
 
   const handleClick = () => {
     hiddenFileInput.current?.click?.()

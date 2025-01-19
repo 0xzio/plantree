@@ -155,3 +155,17 @@ export function getAccountAddress(account: AccountWithUser) {
   if (account.providerType !== ProviderType.WALLET) return ''
   return account.providerAccountId || ''
 }
+
+export function toReadableTime(duration: number) {
+  const seconds = Number(duration)
+  const secondsInAnHour = 3600
+  const SECONDS_PER_DAY = 86400
+  const secondsInADay = SECONDS_PER_DAY
+  if (seconds < secondsInADay) {
+    const hours = seconds / secondsInAnHour
+    return `${toFloorFixed(hours, 2)} hours`
+  } else {
+    const days = seconds / secondsInADay
+    return `${toFloorFixed(days, 2)} days`
+  }
+}

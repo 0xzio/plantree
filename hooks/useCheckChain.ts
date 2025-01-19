@@ -6,6 +6,7 @@ export function useCheckChain() {
   return async () => {
     const account = getAccount(wagmiConfig)
     const chains = getChains(wagmiConfig)
+
     const isSupported = chains.some((chain) => chain.id === account.chainId)
 
     if (!isSupported) {
