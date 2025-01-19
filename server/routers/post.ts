@@ -227,6 +227,15 @@ export const postRouter = router({
         },
       })
 
+      const publishedCount = await prisma.post.count({
+        where: { siteId: input.siteId, postStatus: PostStatus.PUBLISHED },
+      })
+
+      await prisma.site.update({
+        where: { id: input.siteId },
+        data: { postCount: publishedCount },
+      })
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)

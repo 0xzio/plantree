@@ -40,6 +40,9 @@ export const siteRouter = router({
       const { pageNum, pageSize } = input
       const offset = (pageNum - 1) * pageSize
       const list = await prisma.site.findMany({
+        where: {
+          postCount: { gte: 2 },
+        },
         include: {
           domains: true,
           channels: true,
@@ -51,7 +54,11 @@ export const siteRouter = router({
 
       return {
         sites: list,
-        count: await prisma.site.count(),
+        count: await prisma.site.count({
+          where: {
+            postCount: { gte: 2 },
+          },
+        }),
       }
     }),
 
