@@ -1,4 +1,5 @@
 import { PropsWithChildren } from 'react'
+import { SocialNav } from '@/components/SocialNav'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
@@ -12,6 +13,7 @@ export const revalidate = 3600 * 24 * 365
 export default async function HomePage({ children }: PropsWithChildren) {
   return (
     <div className="flex flex-col justify-center pt-5 md:pt-32 gap-4 relative pb-20">
+      <SocialNav />
       <Slogan></Slogan>
       <div className="flex gap-2 justify-center mb-4 mx-8 sm:mx-0 flex-wrap">
         <Badge size="lg" variant="feature">
