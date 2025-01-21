@@ -12,6 +12,7 @@ import {
   ImageIcon,
   Settings,
   TableProperties,
+  Users,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Link from 'next/link'
@@ -106,6 +107,14 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             isActive={pathname.startsWith('/~/databases')}
             icon={<TableProperties size={18} />}
             label="Databases"
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/subscribers">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/subscribers')}
+            icon={<Users size={18} />}
+            label="Subscribers"
           ></SidebarItem>
         </Link>
 

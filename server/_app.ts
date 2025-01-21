@@ -21,6 +21,7 @@ import { postRouter } from './routers/post'
 import { rewardsRouter } from './routers/rewards'
 import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
+import { subscriberRouter } from './routers/subscriber'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { userRouter } from './routers/user'
@@ -50,6 +51,7 @@ export const appRouter = router({
   coupon: couponRouter,
   extension: extensionRouter,
   plan: planRouter,
+  subscriber: subscriberRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)
