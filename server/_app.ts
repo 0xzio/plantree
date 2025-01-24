@@ -25,6 +25,8 @@ import { subscriberRouter } from './routers/subscriber'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { userRouter } from './routers/user'
+import { deliveryRouter } from './routers/delivery'
+import { newsletterRouter } from './routers/newsletter'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
 export const appRouter = router({
@@ -52,6 +54,8 @@ export const appRouter = router({
   extension: extensionRouter,
   plan: planRouter,
   subscriber: subscriberRouter,
+  delivery: deliveryRouter,
+  newsletter: newsletterRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

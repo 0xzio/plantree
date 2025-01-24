@@ -97,6 +97,7 @@ model Site {
   labels          Label[]
   subscribers     Subscriber[]
   deliveries      Delivery[]
+  newsletters     Newsletter[]
 
   @@index([userId])
   @@map("site")
@@ -139,6 +140,7 @@ model User {
   views         View[]
   subscriptions Subscription[]
   subscribers   Subscriber[]
+  newsletters   Newsletter[]
 
   @@index([id])
   @@map("user")
@@ -277,6 +279,7 @@ model Post {
   siteId   String    @db.Uuid
   comments Comment[]
   postTags PostTag[]
+  newsletters Newsletter[]
 
   @@index([userId])
   @@index([postStatus])
@@ -766,39 +769,96 @@ model Extension {
   @@map("extension")
 }
 
-// Newsletter subscriber
-model Subscriber {
-  id           String     @id @default(uuid()) @db.Uuid
-  email        String?    @unique @db.VarChar(255)
-  active       Boolean    @default(true)
-  unsubscribed Boolean    @default(false)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  user         User       @relation(fields: [userId], references: [id])
-  userId       String     @db.Uuid
-  siteId       String     @db.Uuid
-  site         Site       @relation(fields: [siteId], references: [id])
-  deliveries   Delivery[]
+// ========= Newsletter =========
 
-  @@index([siteId])
-  @@map("subscriber")
+enum NewsletterStatus {
+  DRAFT       // Initial state when created
+  SENDING     // Currently being sent
+  SENT        // Successfully sent to all subscribers
+  FAILED      // Failed to send
+  SCHEDULED   // Scheduled for future sending
+}
+
+enum SubscriberStatus {
+  ACTIVE       // Subscriber is active and receiving emails
+  UNSUBSCRIBED // Subscriber has opted out
+  BOUNCED      // Emails are bouncing
+  COMPLAINED   // Marked as spam
 }
 
 enum DeliveryStatus {
-  INIT
-  DELIVERED
+  PENDING     // Waiting to be sent
+  SENDING     // In the process of sending
+  SENT        // Successfully delivered
+  FAILED      // Failed to deliver
+  BOUNCED     // Email bounced
+  COMPLAINED  // Marked as spam
+}
+
+model Newsletter {
+  id          String           @id @default(uuid()) @db.Uuid
+  title       String           @db.VarChar(255)     
+  subject     String           @db.VarChar(255)     
+  content     String           @db.Text             
+  status      NewsletterStatus @default(DRAFT)      
+  postId      String?          @db.Uuid
+  creator     User             @relation(fields: [creatorId], references: [id])
+  creatorId   String           @db.Uuid            
+  scheduledAt DateTime?        // When to send if scheduled
+  sentAt      DateTime?        // When it was actually sent
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  site        Site             @relation(fields: [siteId], references: [id])
+  siteId      String           @db.Uuid
+  post        Post?            @relation(fields: [postId], references: [id])
+  deliveries  Delivery[]
+
+  @@index([creatorId])
+  @@index([siteId])
+  @@index([postId])
+  @@index([status])
+  @@map("newsletter")
+}
+
+// Newsletter subscriber
+model Subscriber {
+  id           String             @id @default(uuid()) @db.Uuid
+  email        String?            @unique @db.VarChar(255)
+  status       SubscriberStatus   @default(ACTIVE)         
+  source       String?            @db.VarChar(100)          // Where they subscribed from
+  createdAt    DateTime           @default(now())
+  updatedAt    DateTime           @updatedAt
+  user         User               @relation(fields: [userId], references: [id])
+  userId       String             @db.Uuid
+  siteId       String             @db.Uuid
+  site         Site               @relation(fields: [siteId], references: [id])
+  deliveries   Delivery[]
+
+  @@index([siteId])
+  @@index([email])
+  @@index([status])
+  @@map("subscriber")
 }
 
 model Delivery {
-  id           String     @id @default(uuid()) @db.Uuid
-  delivered    Boolean    @default(false)
-  createdAt    DateTime   @default(now())
-  updatedAt    DateTime   @updatedAt
-  subscriber   Subscriber @relation(fields: [subscriberId], references: [id])
-  subscriberId String     @db.Uuid
-  siteId       String     @db.Uuid
-  site         Site       @relation(fields: [siteId], references: [id])
+  id           String         @id @default(uuid()) @db.Uuid
+  status       DeliveryStatus @default(PENDING)
+  errorMessage String?        @db.Text                     
+  messageId    String?        @db.VarChar(255)        
+  provider     String?        @db.VarChar(50)             
+  sentAt       DateTime?      // When the delivery was completed
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  subscriber   Subscriber     @relation(fields: [subscriberId], references: [id])
+  subscriberId String         @db.Uuid
+  newsletter   Newsletter     @relation(fields: [newsletterId], references: [id])
+  newsletterId String         @db.Uuid
+  siteId       String         @db.Uuid
+  site         Site           @relation(fields: [siteId], references: [id])
 
   @@index([siteId])
+  @@index([subscriberId])
+  @@index([newsletterId])
+  @@index([status])
   @@map("delivery")
 }
