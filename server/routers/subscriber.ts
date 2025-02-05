@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -19,15 +20,38 @@ export const subscriberRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        email: z.string(),
+        emails: z.array(z.string()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.subscriber.create({
-        data: {
-          ...input,
-          userId: ctx.token.uid,
+      return prisma.$transaction(
+        async (tx) => {
+          for (const email of input.emails) {
+            try {
+              await prisma.subscriber.create({
+                data: {
+                  siteId: input.siteId,
+                  email,
+                  userId: ctx.token.uid,
+                },
+              })
+            } catch (error: any) {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message:
+                  error.code === 'P2002'
+                    ? `Email "${email}" already exists`
+                    : error.message,
+              })
+            }
+          }
+
+          return true
         },
-      })
+        {
+          maxWait: 1000 * 60, // default: 2000
+          timeout: 1000 * 60, // default: 5000
+        },
+      )
     }),
 })

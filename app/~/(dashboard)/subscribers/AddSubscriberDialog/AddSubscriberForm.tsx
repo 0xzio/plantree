@@ -3,7 +3,7 @@
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import LoadingDots from '@/components/icons/loading-dots'
-import { useSpaceContext } from '@/components/SpaceContext'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -15,11 +15,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useCheckChain } from '@/hooks/useCheckChain'
-import { useEthPrice } from '@/hooks/useEthPrice'
-import { usePlans } from '@/hooks/usePlans'
-import { useWagmiConfig } from '@/hooks/useWagmiConfig'
+import { useSubscribers } from '@/hooks/useSubscribers'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -32,9 +30,8 @@ const FormSchema = z.object({
 export function AddSubscriberForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useAddSubscriberDialog()
-  const { ethPrice } = useEthPrice()
-  const checkChain = useCheckChain()
-  const { refetch } = usePlans()
+  const site = useSiteContext()
+  const { refetch } = useSubscribers()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -46,10 +43,17 @@ export function AddSubscriberForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
-      await checkChain()
+      const emails = data.emails
+        .split(',')
+        .map((email) => email.trim())
+        .filter(Boolean)
 
+      await api.subscriber.create.mutate({
+        siteId: site.id,
+        emails,
+      })
+      await refetch()
       setIsOpen(false)
-      refetch()
       toast.success('Add subscribers successfully!')
     } catch (error) {
       const msg = extractErrorMessage(error)
@@ -81,7 +85,7 @@ export function AddSubscriberForm() {
         <Button
           type="submit"
           className="w-full"
-          disabled={isLoading || !form.formState.isValid || !ethPrice}
+          disabled={isLoading || !form.formState.isValid}
         >
           {isLoading ? <LoadingDots /> : <p>Add</p>}
         </Button>
