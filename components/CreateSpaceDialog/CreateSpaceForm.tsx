@@ -21,6 +21,7 @@ import { addressMap } from '@/lib/address'
 import { appEmitter } from '@/lib/app-emitter'
 import { checkChain } from '@/lib/checkChain'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { getDashboardPath } from '@/lib/getDashboardPath'
 import { revalidatePath } from '@/lib/revalidatePath'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api } from '@/lib/trpc'
@@ -193,7 +194,7 @@ export function CreateSpaceForm() {
       await refetch()
 
       // push(`/~/objects/today`)
-      push('/~/page?id=today')
+      push(getDashboardPath(site))
 
       // revalidatePath('/space/[id]', 'page')
       // revalidatePath('/', 'layout')

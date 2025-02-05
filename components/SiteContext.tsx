@@ -10,6 +10,13 @@ import {
 import { STATIC_URL } from '@/lib/constants'
 import { Site } from '@prisma/client'
 
+interface Features {
+  journal: boolean
+  gallery: boolean
+  page: boolean
+  database: boolean
+}
+
 export const SiteContext = createContext({} as Site)
 
 interface Props {
@@ -33,6 +40,11 @@ export function useSiteContext() {
     }
     return site.logo
   }
+
+  const { features } = (site.config || {}) as any as {
+    features: Features
+  }
+
   return {
     ...site,
     logo: formatLogo(),

@@ -22,6 +22,7 @@ import {
 import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
 import { CURRENT_SITE, ROOT_DOMAIN } from '@/lib/constants'
+import { getDashboardPath } from '@/lib/getDashboardPath'
 import { queryClient } from '@/lib/queryClient'
 import { cn, getUrl } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
@@ -91,7 +92,7 @@ export const SitesPopover = memo(function ProfilePopover({
                 site,
               )
               await set(CURRENT_SITE, site.id)
-              push('/~/page?id=today')
+              push(getDashboardPath(site))
             }}
           >
             <Avatar className="w-6 h-6">

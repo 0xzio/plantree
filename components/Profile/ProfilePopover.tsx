@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
+import { getDashboardPath } from '@/lib/getDashboardPath'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { AuthType, SiteMode } from '@prisma/client'
@@ -100,7 +101,7 @@ export const ProfilePopover = memo(function ProfilePopover({
           <DropdownMenuItem
             className="cursor-pointer"
             onClick={() => {
-              const path = '/~/page?id=today'
+              const path = getDashboardPath(site)
               if (location.host === ROOT_DOMAIN) {
                 push(path)
                 return

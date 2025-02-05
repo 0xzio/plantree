@@ -10,6 +10,7 @@ import {
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { config } from 'googleapis/build/src/apis/config'
 import Redis from 'ioredis'
 import { z } from 'zod'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
@@ -186,6 +187,36 @@ export const siteRouter = router({
 
       revalidateSite(newSite.domains)
       return newSite
+    }),
+
+  enableFeatures: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        journal: z.boolean(),
+        gallery: z.boolean(),
+        page: z.boolean(),
+        database: z.boolean(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { siteId, ...features } = input
+      console.log('=====features:', features)
+
+      let site = await prisma.site.findUniqueOrThrow({
+        where: { id: siteId },
+      })
+      site = await prisma.site.update({
+        where: { id: siteId },
+        data: {
+          config: {
+            ...config,
+            features,
+          },
+        },
+      })
+
+      return site
     }),
 
   addSubdomain: protectedProcedure

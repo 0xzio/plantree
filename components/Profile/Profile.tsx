@@ -2,6 +2,7 @@
 
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
+import { getDashboardPath } from '@/lib/getDashboardPath'
 import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
 import { LoginButton } from '../LoginButton'
@@ -38,7 +39,7 @@ export function Profile({}: Props) {
           <Button
             size="sm"
             onClick={() => {
-              const path = '/~/page?id=today'
+              const path = getDashboardPath(site)
 
               if (location.host === ROOT_DOMAIN) {
                 push(path)

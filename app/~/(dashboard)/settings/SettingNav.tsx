@@ -13,6 +13,7 @@ export function SettingNav({}: Props) {
     general: '/~/settings',
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
+    features: '/~/settings/features',
     socials: '/~/settings/socials',
     domain: '/~/settings/domain',
     authType: '/~/settings/auth-type',
@@ -34,6 +35,9 @@ export function SettingNav({}: Props) {
     <div className="flex flex-row md:flex-col border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
       <Link href={Paths.general} className={linkClassName(Paths.general)}>
         General
+      </Link>
+      <Link href={Paths.features} className={linkClassName(Paths.features)}>
+        Features
       </Link>
 
       <Link href={Paths.appearance} className={linkClassName(Paths.appearance)}>
