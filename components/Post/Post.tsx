@@ -16,6 +16,7 @@ export function Post({ post }: { post: PostType }) {
   const [data, setData] = useState<PostType>(post)
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
+  console.log('=====data:', data)
 
   const debounced = useDebouncedCallback(
     async (value: PostType) => {
@@ -52,7 +53,7 @@ export function Post({ post }: { post: PostType }) {
     <div className="w-full h-full">
       <div className="relative min-h-[500px] max-w-screen-lg p-12 px-8 mx-auto z-0">
         <div className="mb-5 flex flex-col space-y-3 ">
-          {/* <CoverUpload post={data} /> */}
+          <CoverUpload post={data} />
           <TextareaAutosize
             placeholder="Title"
             defaultValue={data?.title || ''}

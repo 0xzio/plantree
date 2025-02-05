@@ -111,6 +111,7 @@ export const postRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, image } = input
+
       const post = await prisma.post.update({
         where: { id },
         data: { image },

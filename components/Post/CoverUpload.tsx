@@ -27,8 +27,8 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
 
         try {
           const data = await uploadFile(file)
-
           const uri = data.url || data.cid || ''
+
           await api.post.updateCover.mutate({
             id: post.id,
             image: uri,
