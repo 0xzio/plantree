@@ -26,7 +26,11 @@ export function usePublishPost() {
 
   return {
     isLoading,
-    publishPost: async (gateType: GateType, collectible: boolean) => {
+    publishPost: async (
+      gateType: GateType,
+      collectible: boolean,
+      delivered: boolean,
+    ) => {
       setLoading(true)
 
       // console.log('======>>>>>content:', content)
@@ -62,6 +66,7 @@ export function usePublishPost() {
           gateType,
           collectible,
           creationId,
+          delivered,
           image: '',
           content: currentPost.content,
         })

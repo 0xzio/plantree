@@ -129,6 +129,7 @@ export const postRouter = router({
         type: z.nativeEnum(PostType),
         gateType: z.nativeEnum(GateType),
         collectible: z.boolean(),
+        delivered: z.boolean(),
         image: z.string().optional(),
         content: z.string(),
       }),

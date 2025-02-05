@@ -56,10 +56,10 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
   const { spaceId } = useSiteContext()
   const { nodeId } = useParams()!
   const pathname = usePathname()
-  const isToday = pathname?.startsWith('/~/objects/today')
 
   const [gateType, setGateType] = useState<GateType>(GateType.FREE)
   const [collectible, setCollectible] = useState(post?.collectible || false)
+  const [delivered, setDelivered] = useState(post?.delivered || false)
   const { isLoading, publishPost } = usePublishPost()
 
   if (!post) return null
@@ -98,6 +98,24 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
         </div>
       </div>
 
+      {!post.delivered && (
+        <div>
+          <div className="flex items-center justify-between">
+            <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+            <Switch
+              id="post-delivered"
+              checked={delivered}
+              onCheckedChange={(value) => {
+                setDelivered(value)
+              }}
+            />
+          </div>
+          <div className="text-foreground/60 text-xs">
+            Send your newsletter to subscribers.
+          </div>
+        </div>
+      )}
+
       <div className="flex gap-2 justify-center">
         <PopoverClose asChild>
           <Button variant="secondary" className="w-full">
@@ -107,7 +125,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
         <Button
           className="w-full"
           onClick={async () => {
-            await publishPost(gateType, collectible)
+            await publishPost(gateType, collectible, delivered)
             // updatePostPublishStatus()
             setOpen(false)
           }}
