@@ -1,7 +1,8 @@
 import { prisma } from '@/lib/prisma'
+import { SubscriberStatus } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
-import { SubscriberStatus } from '@prisma/client'
 
 export const subscriberRouter = router({
   list: protectedProcedure
@@ -15,11 +16,11 @@ export const subscriberRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId, status, cursor, limit } = input
-      
+
       return prisma.subscriber.findMany({
-        where: { 
+        where: {
           siteId,
-          ...(status && { status })
+          ...(status && { status }),
         },
         take: limit,
         ...(cursor && { skip: 1, cursor: { id: cursor } }),
@@ -38,7 +39,7 @@ export const subscriberRouter = router({
       return prisma.subscriber.count({
         where: {
           siteId: input.siteId,
-          ...(input.status && { status: input.status })
+          ...(input.status && { status: input.status }),
         },
       })
     }),
@@ -47,18 +48,39 @@ export const subscriberRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        email: z.string().email(),
-        source: z.string().optional(),
+        emails: z.array(z.string()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.subscriber.create({
-        data: {
-          ...input,
-          userId: ctx.token.uid,
-          status: 'ACTIVE',
+      return prisma.$transaction(
+        async (tx) => {
+          for (const email of input.emails) {
+            try {
+              await prisma.subscriber.create({
+                data: {
+                  siteId: input.siteId,
+                  email,
+                  userId: ctx.token.uid,
+                },
+              })
+            } catch (error: any) {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message:
+                  error.code === 'P2002'
+                    ? `Email "${email}" already exists`
+                    : error.message,
+              })
+            }
+          }
+
+          return true
         },
-      })
+        {
+          maxWait: 1000 * 60, // default: 2000
+          timeout: 1000 * 60, // default: 5000
+        },
+      )
     }),
 
   updateStatus: protectedProcedure
@@ -109,14 +131,16 @@ export const subscriberRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        subscribers: z.array(z.object({
-          email: z.string().email(),
-        })),
+        subscribers: z.array(
+          z.object({
+            email: z.string().email(),
+          }),
+        ),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       return prisma.subscriber.createMany({
-        data: input.subscribers.map(sub => ({
+        data: input.subscribers.map((sub) => ({
           email: sub.email,
           siteId: input.siteId,
           userId: ctx.token.uid,
