@@ -1,5 +1,6 @@
 'use client'
 
+import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -11,11 +12,13 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { useSubscribers } from '@/hooks/useSubscribers'
+import { api } from '@/lib/trpc'
 import { format } from 'date-fns'
+import { Trash2 } from 'lucide-react'
 import { AddSubscriberDialog } from './AddSubscriberDialog/AddSubscriberDialog'
 
 export function SubscriberList() {
-  const { data = [], isLoading } = useSubscribers()
+  const { data = [], isLoading, refetch } = useSubscribers()
 
   if (isLoading) {
     return (
@@ -37,6 +40,7 @@ export function SubscriberList() {
           <TableRow>
             <TableHead>Email</TableHead>
             <TableHead>Date subscribed</TableHead>
+            <TableHead>Operation</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -44,6 +48,19 @@ export function SubscriberList() {
             <TableRow key={index}>
               <TableCell>{item.email}</TableCell>
               <TableCell>{format(item.createdAt, 'yyyy/MM/dd')}</TableCell>
+              <TableCell>
+                <DeleteConfirmDialog
+                  title="Delete subscriber"
+                  content="Are you sure you want to delete this subscriber?"
+                  tooltipContent="delete subscriber"
+                  onConfirm={async () => {
+                    await api.subscriber.delete.mutate({
+                      id: item.id,
+                    })
+                    await refetch()
+                  }}
+                />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
