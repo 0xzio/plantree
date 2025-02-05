@@ -54,7 +54,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
     const { features } = (site.config || {}) as any as {
       features: Features
     }
-    return features[feature] || false
+    return features?.[feature] || false
   }
 
   return (

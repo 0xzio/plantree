@@ -51,10 +51,10 @@ export function FeaturesSettingForm({ site }: Props) {
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
-      journal: features.journal || false,
-      gallery: features.gallery || false,
-      page: features.page || false,
-      database: features.database || false,
+      journal: features?.journal || false,
+      gallery: features?.gallery || false,
+      page: features?.page || false,
+      database: features?.database || false,
     },
     resolver: zodResolver(FormSchema),
   })
