@@ -57,22 +57,32 @@ export function Post({ post }: { post: PostType }) {
         <div className="mb-5 flex flex-col space-y-3 ">
           <CoverUpload post={data} />
           <TextareaAutosize
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
             placeholder="Title"
             defaultValue={data?.title || ''}
             autoFocus
             onChange={(e) => {
               setData({ ...data, title: e.target.value })
             }}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+              }
+            }}
           />
           <TextareaAutosize
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
             placeholder="Description"
             defaultValue={post?.description || ''}
             onChange={(e) => setData({ ...data, description: e.target.value })}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+              }
+            }}
           />
         </div>
-        <div className="mb-4 space-y-2">
+        <div className="space-y-2">
           <ProfileAvatar showName />
           <Tags />
         </div>

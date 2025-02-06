@@ -126,7 +126,23 @@ export async function getTagWithPost(name: string) {
   return await unstable_cache(
     async () => {
       return prisma.tag.findFirst({
-        include: { postTags: { include: { post: true } } },
+        include: {
+          postTags: {
+            include: {
+              post: {
+                include: {
+                  user: {
+                    select: {
+                      email: true,
+                      name: true,
+                      image: true,
+                    },
+                  },
+                },
+              },
+            },
+          },
+        },
         where: { name },
       })
     },

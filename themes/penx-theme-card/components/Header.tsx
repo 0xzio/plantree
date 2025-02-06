@@ -1,7 +1,7 @@
 import { ReactNode, Suspense } from 'react'
-import { Merienda } from 'next/font/google'
 import { Site } from '@penxio/types'
 import { cn } from '@penxio/utils'
+import { Merienda } from 'next/font/google'
 import Link from './Link'
 
 const merienda = Merienda({
@@ -13,7 +13,7 @@ const merienda = Merienda({
 const headerNavLinks = [
   { href: '/', title: 'Home' },
   { href: '/posts', title: 'Blog' },
-  // { href: '/tags', title: 'Tags' },
+  { href: '/tags', title: 'Tags' },
   { href: '/about', title: 'About' },
   { href: '/membership', title: 'Membership', isMembership: true },
 ]
@@ -83,7 +83,7 @@ export const Header = ({
               <Link
                 key={link.title}
                 href={link.href}
-                className="font-medium  hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90"
+                className="font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90"
               >
                 {link.title}
               </Link>

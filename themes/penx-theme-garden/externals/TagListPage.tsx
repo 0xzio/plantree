@@ -8,7 +8,7 @@ interface Props {
 
 export function TagListPage({ tags }: Props) {
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col justify-center items-center mx-auto max-w-3xl">
       <PageTitle>Tags</PageTitle>
       <div className="grid gap-y-3">
         {tags.length === 0 && 'No tags found.'}

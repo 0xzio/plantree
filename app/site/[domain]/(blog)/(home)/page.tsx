@@ -27,8 +27,6 @@ export default async function HomePage({
   params: { domain: string }
 }) {
   const site = await getSite(params)
-  // console.log('======site:', site)
-
   const posts = await getPosts(site.id)
 
   const { HomePage } = loadTheme(site.themeName)

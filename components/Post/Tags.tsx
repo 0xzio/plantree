@@ -28,31 +28,29 @@ export function Tags() {
 
   return (
     <div className="flex items-center gap-2">
-      <div className="flex gap-2">
-        {post.postTags.map((item) => (
-          <Badge
-            variant="secondary"
-            key={item.id}
-            className="rounded-full relative gap-1 text-xs"
-            onClick={async () => {
-              try {
-                removePostTag(item)
-                await deletePostTag(item.id)
-              } catch (error) {
-                toast.error(extractErrorMessage(error))
-              }
-            }}
-          >
-            <div>{item.tag.name}</div>
-            <div className="inline-flex w-5 h-5 rounded-full hover:bg-foreground/50 hover:text-background items-center justify-center transition-colors cursor-pointer">
-              <XIcon size={14} />
-            </div>
-          </Badge>
-        ))}
-      </div>
+      {post.postTags.map((item) => (
+        <Badge
+          variant="secondary"
+          key={item.id}
+          className="rounded-full relative gap-1 text-xs"
+          onClick={async () => {
+            try {
+              removePostTag(item)
+              await deletePostTag(item.id)
+            } catch (error) {
+              toast.error(extractErrorMessage(error))
+            }
+          }}
+        >
+          <div>{item.tag.name}</div>
+          <div className="inline-flex w-5 h-5 rounded-full hover:bg-foreground/50 hover:text-background items-center justify-center transition-colors cursor-pointer">
+            <XIcon size={14} />
+          </div>
+        </Badge>
+      ))}
 
       <Popover open={isOpen} onOpenChange={setIsOpen} modal>
-        <PopoverTrigger asChild>
+        <PopoverTrigger asChild className="gap-0">
           <Button
             size="xs"
             variant="outline"

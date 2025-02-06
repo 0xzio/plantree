@@ -14,7 +14,7 @@ const lobster = Lobster({
 const headerNavLinks = [
   { href: '/', title: 'Home' },
   // { href: '/posts', title: 'Blog' },
-  // { href: '/tags', title: 'Tags' },
+  { href: '/tags', title: 'Tags' },
   { href: '/about', title: 'About' },
   { href: '/creator-fi', title: 'CreatorFi' },
   { href: '/membership', title: 'Membership', isMembership: true },
