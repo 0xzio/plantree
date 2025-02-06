@@ -1,16 +1,9 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback } from 'react'
 import { SignInButton } from '@/components/facaster-auth'
 import { GoogleOauthButton } from '@/components/GoogleOauthButton'
 import { TextLogo } from '@/components/TextLogo'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
 import {
   AuthKitProvider,
@@ -22,6 +15,7 @@ import {
 } from '@farcaster/auth-kit'
 import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
 import { toast } from 'sonner'
+import { LoginForm } from './LoginForm'
 import { useLoginDialog } from './useLoginDialog'
 
 export function LoginDialogContent() {
@@ -53,13 +47,18 @@ export function LoginDialogContent() {
     <div className="flex flex-col gap-3">
       <div className="space-y-1">
         {/* <div className="text-foreground/40">Web2 login</div> */}
-        <GoogleOauthButton variant="secondary" size="lg" className="w-full" />
+        <GoogleOauthButton
+          variant="outline"
+          size="lg"
+          className="w-full border-foreground"
+        />
       </div>
       <div className="space-y-1">
         {/* <div className="text-foreground/40">Wallet login</div> */}
         <WalletConnectButton
+          variant="outline"
           size="lg"
-          className="w-full"
+          className="w-full border-foreground"
           onClick={() => {
             setIsOpen(false)
           }}
@@ -82,6 +81,8 @@ export function LoginDialogContent() {
         }}
         onSignOut={() => signOut()}
       />
+      <div className="text-center text-foreground/40">or</div>
+      <LoginForm />
     </div>
   )
 }

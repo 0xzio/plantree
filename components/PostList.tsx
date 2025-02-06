@@ -59,7 +59,7 @@ export function PostItem({ post, status }: PostItemProps) {
   function getPostType() {
     if (post.type === PostType.NOTE) {
       return (
-        <Badge variant="secondary" size="sm" className="h-6">
+        <Badge variant="secondary" size="sm" className="h-6 text-xs">
           Note
         </Badge>
       )

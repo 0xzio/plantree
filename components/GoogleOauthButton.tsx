@@ -54,7 +54,7 @@ export function GoogleOauthButton({
       }}
       {...rest}
     >
-      {loading && <LoadingDots className="bg-foreground/50" />}
+      {loading && <LoadingDots className="bg-foreground" />}
       {!loading && (
         <>
           <IconGoogle className="w-4 h-4" />

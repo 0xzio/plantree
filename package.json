@@ -121,6 +121,7 @@
     "ai": "^3.4.33",
     "array-move": "^4.0.0",
     "axios": "^1.7.9",
+    "bcrypt-edge": "^0.1.0",
     "big.js": "^6.2.1",
     "class-variance-authority": "^0.7.0",
     "cloudflare": "^3.5.0",

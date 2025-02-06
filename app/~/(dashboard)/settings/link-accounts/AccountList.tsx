@@ -11,6 +11,7 @@ import { trpc } from '@/lib/trpc'
 import { shortenAddress } from '@/lib/utils'
 import { Account, ProviderType } from '@prisma/client'
 import { AvatarImage } from '@radix-ui/react-avatar'
+import { KeyIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
 function AccountItem({ account }: { account: Account }) {
@@ -70,6 +71,26 @@ function AccountItem({ account }: { account: Account }) {
             <AvatarFallback>{info?.name?.slice(0, 1)}</AvatarFallback>
           </Avatar>
           <div className="">{shortenAddress(account.providerAccountId)}</div>
+        </div>
+        {removeButton}
+      </div>
+    )
+  }
+  if (account.providerType === ProviderType.PASSWORD) {
+    return (
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Badge variant="secondary" className="gap-1">
+            <KeyIcon size={14} />
+            <span>Password</span>
+          </Badge>
+          <Avatar className="w-6 h-6">
+            <AvatarImage src={info?.picture} />
+            <AvatarFallback>
+              {account.providerAccountId?.slice(0, 1)}
+            </AvatarFallback>
+          </Avatar>
+          <div className="">{account.providerAccountId}/---</div>
         </div>
         {removeButton}
       </div>

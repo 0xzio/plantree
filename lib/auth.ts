@@ -5,10 +5,10 @@ import { getSiteDomain, UserWithDomains } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser, SubscriptionInSession } from '@/lib/types'
 import { createAppClient, viemConnector } from '@farcaster/auth-client'
-import { Subscription } from '@prisma/client'
+import { ProviderType, Subscription } from '@prisma/client'
 import { PrivyClient } from '@privy-io/server-auth'
+import { compareSync } from 'bcrypt-edge'
 import jwt from 'jsonwebtoken'
-import ky from 'ky'
 import NextAuth, { type NextAuthOptions } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { Address } from 'viem'
@@ -316,6 +316,63 @@ export const authOptions: NextAuthOptions = {
           }
           const user = await initUserByFarcasterFrame(credentials)
           return user
+        } catch (e) {
+          console.log('=======>>>>e:', e)
+          return null
+        }
+      },
+    }),
+
+    CredentialsProvider({
+      id: 'password',
+      name: 'PenX password login',
+      credentials: {
+        username: {
+          label: 'username',
+          type: 'text',
+          placeholder: '',
+        },
+        password: {
+          label: 'Password',
+          type: 'text',
+          placeholder: '',
+        },
+      },
+      async authorize(credentials) {
+        try {
+          if (!credentials?.username || !credentials?.password) {
+            throw new Error('Login fail')
+          }
+          const account = await prisma.account.findFirst({
+            where: {
+              providerType: ProviderType.PASSWORD,
+              providerAccountId: credentials.username,
+            },
+            include: {
+              user: {
+                include: {
+                  subscriptions: true,
+                  sites: {
+                    include: {
+                      domains: true,
+                    },
+                  },
+                },
+              },
+            },
+          })
+
+          if (!account) {
+            throw new Error('INVALID_USERNAME')
+          }
+
+          const match = compareSync(
+            credentials.password,
+            account.accessToken || '',
+          )
+          if (!match) throw new Error('INVALID_PASSWORD')
+
+          return account
         } catch (e) {
           console.log('=======>>>>e:', e)
           return null

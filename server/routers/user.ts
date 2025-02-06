@@ -2,6 +2,7 @@ import { NETWORK, NetworkNames } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { genSaltSync, hashSync } from 'bcrypt-edge'
 import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
@@ -146,6 +147,35 @@ export const userRouter = router({
       })
     }),
 
+  linkPassword: publicProcedure
+    .input(
+      z.object({
+        username: z.string(),
+        password: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const account = await prisma.account.findFirst({
+        where: { providerAccountId: input.username },
+      })
+
+      if (account) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'This username already existed',
+        })
+      }
+
+      await prisma.account.create({
+        data: {
+          userId: ctx.token.uid,
+          providerType: ProviderType.PASSWORD,
+          providerAccountId: input.username,
+          accessToken: await hashPassword(input.password),
+        },
+      })
+    }),
+
   disconnectAccount: publicProcedure
     .input(
       z.object({
@@ -181,3 +211,8 @@ export const userRouter = router({
       return true
     }),
 })
+
+async function hashPassword(password: string) {
+  const salt = genSaltSync(10)
+  return hashSync(password, salt)
+}

@@ -332,6 +332,9 @@ importers:
       axios:
         specifier: ^1.7.9
         version: 1.7.9
+      bcrypt-edge:
+        specifier: ^0.1.0
+        version: 0.1.0
       big.js:
         specifier: ^6.2.1
         version: 6.2.2
@@ -4472,6 +4475,9 @@ packages:
 
   base64-js@1.5.1:
     resolution: {integrity: sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==}
+
+  bcrypt-edge@0.1.0:
+    resolution: {integrity: sha512-kTmsr8pHBxW6PwTc+jjAXw6eaHnxWaG5m058bYNftGZQEpG3ZwQrRip9f9RSFvUqLs50unwXdr/YrBIc1jbQsA==}
 
   before-after-hook@3.0.2:
     resolution: {integrity: sha512-Nik3Sc0ncrMK4UUdXQmAnRtzmNQTAAXmXIopizwZ1W1t8QmfJj+zL4OA2I7XPTPW5z5TDqv4hRo/JzouDJnX3A==}
@@ -14331,6 +14337,8 @@ snapshots:
       safe-buffer: 5.2.1
 
   base64-js@1.5.1: {}
+
+  bcrypt-edge@0.1.0: {}
 
   before-after-hook@3.0.2: {}
 
