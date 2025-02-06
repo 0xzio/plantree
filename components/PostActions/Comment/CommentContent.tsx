@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { UserAvatar } from '@/components/UserAvatar'
 import { trpc } from '@/lib/trpc'
 import { User } from '@prisma/client'

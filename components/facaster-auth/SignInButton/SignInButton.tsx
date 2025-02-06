@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { isMobile } from '@/lib/utils'
 import { AuthClientError, StatusAPIResponse } from '@farcaster/auth-client'
 import { useSignIn, UseSignInArgs } from '@farcaster/auth-kit'

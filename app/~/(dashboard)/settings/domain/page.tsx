@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Separator } from '@/components/ui/separator'
 import { useSite } from '@/hooks/useSite'
 import { getSiteCustomDomain } from '@/lib/getSiteDomain'

@@ -2,26 +2,27 @@
 
 import { useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Post as PostType, updatePost } from '@/hooks/usePost'
+import { Post as IPost, updatePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
 import { useSiteTags } from '@/hooks/useSiteTags'
 import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
+import { PostType } from '@prisma/client'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
 import { ProfileAvatar } from '../Profile/ProfileAvatar'
 import { CoverUpload } from './CoverUpload'
 import { Tags } from './Tags'
 
-export function Post({ post }: { post: PostType }) {
-  const [data, setData] = useState<PostType>(post)
+export function Post({ post }: { post: IPost }) {
+  const [data, setData] = useState<IPost>(post)
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
 
   useSiteTags()
 
   const debounced = useDebouncedCallback(
-    async (value: PostType) => {
+    async (value: IPost) => {
       if (data.content !== post.content || data.title !== post.title) {
         setPostSaving(true)
 
@@ -54,34 +55,38 @@ export function Post({ post }: { post: PostType }) {
   return (
     <div className="w-full h-full">
       <div className="relative min-h-[500px] max-w-screen-lg p-12 px-8 mx-auto z-0">
-        <div className="mb-5 flex flex-col space-y-3 ">
-          <CoverUpload post={data} />
-          <TextareaAutosize
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
-            placeholder="Title"
-            defaultValue={data?.title || ''}
-            autoFocus
-            onChange={(e) => {
-              setData({ ...data, title: e.target.value })
-            }}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
+        {post.type === PostType.ARTICLE && (
+          <div className="mb-5 flex flex-col space-y-3 ">
+            <CoverUpload post={data} />
+            <TextareaAutosize
+              className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
+              placeholder="Title"
+              defaultValue={data?.title || ''}
+              autoFocus
+              onChange={(e) => {
+                setData({ ...data, title: e.target.value })
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                }
+              }}
+            />
+            <TextareaAutosize
+              className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
+              placeholder="Description"
+              defaultValue={post?.description || ''}
+              onChange={(e) =>
+                setData({ ...data, description: e.target.value })
               }
-            }}
-          />
-          <TextareaAutosize
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
-            placeholder="Description"
-            defaultValue={post?.description || ''}
-            onChange={(e) => setData({ ...data, description: e.target.value })}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                e.preventDefault()
-              }
-            }}
-          />
-        </div>
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault()
+                }
+              }}
+            />
+          </div>
+        )}
         <div className="space-y-2">
           <ProfileAvatar showName />
           <Tags />

@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { useMyAccounts } from '@/hooks/useMyAccounts'
 import { trpc } from '@/lib/trpc'
 import { ProviderType } from '@prisma/client'

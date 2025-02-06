@@ -1,7 +1,7 @@
 'use client'
 
 import { Dispatch, useEffect, useState } from 'react'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,

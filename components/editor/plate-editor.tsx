@@ -1,10 +1,13 @@
 'use client'
 
-import React, { useRef } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
 import { SettingsDialog } from '@/components/editor/use-chat'
-import { useCreateEditor } from '@/components/editor/use-create-editor'
+import {
+  PlateEditorType,
+  useCreateEditor,
+} from '@/components/editor/use-create-editor'
 import { CommentsPopover } from '@/components/plate-ui/comments-popover'
 import { CursorOverlay } from '@/components/plate-ui/cursor-overlay'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
@@ -21,6 +24,9 @@ interface Props {
   value: any
   className?: string
   showAddButton?: boolean
+  draggable?: boolean
+  placeholder?: string
+  onInit?: (editor: PlateEditorType) => void
   onChange?: (value: any) => void
 }
 
@@ -30,9 +36,16 @@ export function PlateEditor({
   className,
   showAddButton = false,
   readonly = false,
+  draggable = true,
+  placeholder,
+  onInit,
 }: Props) {
   const containerRef = useRef(null)
-  const editor = useCreateEditor(value)
+  const editor = useCreateEditor(value, draggable, placeholder)
+
+  useEffect(() => {
+    onInit?.(editor)
+  }, [])
 
   return (
     <DndProvider backend={HTML5Backend}>

@@ -72,10 +72,17 @@ export async function getPosts(siteId: string) {
   const posts = await unstable_cache(
     async () => {
       let posts = await findManyPosts(siteId)
-      return posts.map((post) => ({
-        ...post,
-        image: getUrl(post.image || ''),
-      }))
+      return posts.map((post) => {
+        let content = post.content
+        if (post.type === PostType.IMAGE || post.type === PostType.VIDEO) {
+          content = getUrl(post.content)
+        }
+        return {
+          ...post,
+          image: getUrl(post.image || ''),
+          content,
+        }
+      })
     },
     [`${siteId}-posts`],
     {

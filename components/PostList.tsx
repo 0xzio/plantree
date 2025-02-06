@@ -6,11 +6,14 @@ import { Post } from '@/hooks/usePost'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { api } from '@/lib/trpc'
-import { cn } from '@/lib/utils'
+import { cn, getUrl } from '@/lib/utils'
+import { PostType } from '@prisma/client'
 import { format } from 'date-fns'
 import { Archive, Edit3Icon, ExternalLink, Trash2 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import Image from 'next/image'
 import Link from 'next/link'
+import { PlateEditor } from './editor/plate-editor'
 import { useSiteContext } from './SiteContext'
 
 interface PostItemProps {
@@ -22,6 +25,48 @@ export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
   const { data } = useSession()
   const isPublished = post.postStatus === PostStatus.PUBLISHED
+
+  function getContent() {
+    if (post.type === PostType.NOTE) {
+      return (
+        <div className="flex-1">
+          <PlateEditor
+            value={JSON.parse(post.content)}
+            readonly
+            className="px-0 py-0"
+          />
+        </div>
+      )
+    }
+
+    if (post.type === PostType.IMAGE) {
+      return (
+        <div className="flex flex-col gap-1">
+          <div className="text-base font-bold">{post.title || 'Untitled'}</div>
+          <Image
+            src={getUrl(post.content)}
+            alt=""
+            width={300}
+            height={300}
+            className="w-64 h-64 rounded-lg"
+          />
+        </div>
+      )
+    }
+    return <div className="text-base font-bold">{post.title || 'Untitled'}</div>
+  }
+
+  function getPostType() {
+    if (post.type === PostType.NOTE) {
+      return (
+        <Badge variant="secondary" size="sm" className="h-6">
+          Note
+        </Badge>
+      )
+    }
+    return null
+  }
+
   return (
     <div className={cn('flex flex-col gap-2 py-[6px]')}>
       <div>
@@ -34,8 +79,9 @@ export function PostItem({ post, status }: PostItemProps) {
           }
           className="inline-flex items-center hover:scale-105 transition-transform gap-2"
         >
-          <div className="text-base font-bold">{post.title || 'Untitled'}</div>
-          {isPublished && (
+          {getPostType()}
+          {getContent()}
+          {isPublished && post.type === PostType.ARTICLE && (
             <ExternalLink size={14} className="text-foreground/40" />
           )}
         </Link>
@@ -51,7 +97,6 @@ export function PostItem({ post, status }: PostItemProps) {
         <div className="text-sm text-foreground/50">
           <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
         </div>
-        {/* <Link href={`/~/objects/${post.nodeId}`}> */}
         <Link href={`/~/post/${post.id}`}>
           <Button
             size="xs"

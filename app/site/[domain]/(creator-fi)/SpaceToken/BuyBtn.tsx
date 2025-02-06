@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useTrades } from '@/hooks/useTrades'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import { WalletConnectButton } from '@/components/WalletConnectButton'

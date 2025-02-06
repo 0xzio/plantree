@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
 import { api, trpc } from '@/lib/trpc'

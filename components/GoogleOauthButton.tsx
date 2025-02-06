@@ -2,7 +2,7 @@
 
 import { PropsWithChildren, useEffect, useState } from 'react'
 import { IconGoogle } from '@/components/icons/IconGoogle'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button, ButtonProps } from '@/components/ui/button'
 import {
   GOOGLE_CLIENT_ID,

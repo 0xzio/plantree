@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Skeleton } from '@/components/ui/skeleton'
 import { DeployStatus } from '@/lib/types'
 

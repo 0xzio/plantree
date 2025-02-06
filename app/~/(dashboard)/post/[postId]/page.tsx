@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { ImageCreation } from '@/components/Post/ImageCreation'
 import { Post } from '@/components/Post/Post'
 import { usePost } from '@/hooks/usePost'

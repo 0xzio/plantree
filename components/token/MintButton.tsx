@@ -1,7 +1,7 @@
 'use client'
 
 import { PropsWithChildren } from 'react'
-import LoadingDots from '../icons/loading-dots'
+import { LoadingDots } from '../icons/loading-dots'
 import { Button } from '../ui/button'
 import { WalletConnectButton } from '../WalletConnectButton'
 

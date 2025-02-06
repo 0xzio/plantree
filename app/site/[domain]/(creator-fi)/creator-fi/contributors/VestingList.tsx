@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSpaceContext } from '@/components/SpaceContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'

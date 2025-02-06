@@ -3,7 +3,7 @@
 import { ReactNode, useEffect, useState } from 'react'
 import { CommandPanel } from '@/components/CommandPanel/CommandPanel'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { SiteProvider } from '@/components/SiteContext'
 import { SubscriptionDialog } from '@/components/SubscriptionDialog/SubscriptionDialog'
 import { SubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/SubscriptionGuideDialog'

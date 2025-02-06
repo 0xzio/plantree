@@ -1,5 +1,6 @@
 'use client'
 
+import { PlateEditor } from '@/components/editor/plate-editor'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { isAddress } from '@/lib/utils'
 import { Post, PostType, User } from '@penxio/types'
@@ -43,12 +44,20 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
   const getContent = () => {
     if (post.type === PostType.IMAGE) {
       return (
-        <img src={post.image!} alt="" className="w-full h-auto rounded-lg" />
+        <img src={post.content} alt="" className="w-full h-auto rounded-lg" />
       )
     }
 
     if (post.type === PostType.NOTE) {
-      return <div className="text-foreground/80">{post.title}</div>
+      return (
+        <div className="text-foreground/80">
+          <PlateEditor
+            value={JSON.parse(post.content)}
+            readonly
+            className="px-0 py-0"
+          />
+        </div>
+      )
     }
 
     const nodes: any[] =

@@ -1,6 +1,6 @@
 'use client'
 
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { SiteWithDomains } from '@/lib/getSiteDomain'

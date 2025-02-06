@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {

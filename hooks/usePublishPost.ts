@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useCheckChain } from '@/hooks/useCheckChain'
-import { Post, usePost } from '@/hooks/usePost'
+import { Post, postAtom, usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { creationFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
@@ -8,6 +8,7 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api } from '@/lib/trpc'
+import { store } from '@/store'
 import { GateType, PostType } from '@prisma/client'
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
@@ -22,7 +23,6 @@ export function usePublishPost() {
   const checkChain = useCheckChain()
   const { writeContractAsync } = useWriteContract()
   const wagmiConfig = useWagmiConfig()
-  const { post: currentPost } = usePost()
 
   return {
     isLoading,
@@ -30,12 +30,10 @@ export function usePublishPost() {
       gateType: GateType,
       collectible: boolean,
       delivered: boolean,
+      currentPost?: Post,
     ) => {
       setLoading(true)
-
-      // console.log('======>>>>>content:', content)
-      // console.log('======>>>>>node:', node)
-      const post = currentPost
+      const post = currentPost || store.get(postAtom)
 
       let creationId: number | undefined
       try {
@@ -68,7 +66,7 @@ export function usePublishPost() {
           creationId,
           delivered,
           image: '',
-          content: currentPost.content,
+          content: post.content,
         })
 
         setLoading(false)

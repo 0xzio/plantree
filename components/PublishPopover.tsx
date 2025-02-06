@@ -10,7 +10,7 @@ import { store } from '@/store'
 import { GateType } from '@prisma/client'
 import { PopoverClose } from '@radix-ui/react-popover'
 import { useParams, usePathname } from 'next/navigation'
-import LoadingDots from './icons/loading-dots'
+import { LoadingDots } from './icons/loading-dots'
 import { useSiteContext } from './SiteContext'
 import { Button } from './ui/button'
 import { Label } from './ui/label'
@@ -54,8 +54,6 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
   const { site } = useSite()
   const { post } = usePost()
   const { spaceId } = useSiteContext()
-  const { nodeId } = useParams()!
-  const pathname = usePathname()
 
   const [gateType, setGateType] = useState<GateType>(GateType.FREE)
   const [collectible, setCollectible] = useState(post?.collectible || false)

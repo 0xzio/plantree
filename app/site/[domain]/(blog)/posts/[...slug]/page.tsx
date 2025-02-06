@@ -10,8 +10,12 @@ import readingTime from 'reading-time'
 import { PaidContent } from './PaidContent'
 
 function getContent(post: Post) {
-  const content = JSON.parse(post.content || '[]')
-  return content
+  try {
+    const content = JSON.parse(post.content || '[]')
+    return content
+  } catch (error) {
+    return post.content
+  }
 }
 
 export const dynamic = 'force-static'

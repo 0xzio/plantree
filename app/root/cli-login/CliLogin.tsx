@@ -1,7 +1,7 @@
 'use client'
 
 import React from 'react'
-import LoadingDots from '@/components/icons/loading-dots'
+import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { trpc } from '@/lib/trpc'
 import { useConnectModal } from '@rainbow-me/rainbowkit'

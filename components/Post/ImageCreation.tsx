@@ -37,26 +37,33 @@ export function ImageCreation({ post }: { post: Post }) {
     <div className="w-full">
       <div className="relative min-h-[500px] max-w-screen-lg p-12 px-8 mx-auto z-0 md:w-[800px] sm:w-full">
         <div className="mb-5 flex flex-col space-y-3 pb-5">
-          <input
-            type="text"
+          <TextareaAutosize
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
             placeholder="Title"
-            defaultValue={post?.title || ''}
+            defaultValue={data?.title || ''}
             autoFocus
             onChange={(e) => {
               setData({ ...data, title: e.target.value })
             }}
-            className="dark:placeholder-text-600 border-none px-0 font-cal text-4xl placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white disabled:bg-transparent"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+              }
+            }}
           />
           <TextareaAutosize
+            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
             placeholder="Description"
             defaultValue={post?.description || ''}
             onChange={(e) => setData({ ...data, description: e.target.value })}
-            className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 dark:bg-black dark:text-white"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+              }
+            }}
           />
         </div>
-        <div className="mb-8">
-          <ProfileAvatar showName />
-        </div>
+        <div className="mb-8">{/* <ProfileAvatar showName /> */}</div>
 
         <ImageCreationUpload post={data} />
       </div>
