@@ -1,8 +1,8 @@
-import { PlateEditor } from '@/components/editor/plate-editor'
 import { cn } from '@/lib/utils'
 import { Post } from '@penxio/types'
 import { formatDate } from '@penxio/utils'
 import { PostType } from '@prisma/client'
+import { Node } from 'slate'
 import Image from './Image'
 import Link from './Link'
 import Tag from './Tag'
@@ -27,15 +27,27 @@ export function PostItem({ post }: PostItemProps) {
       )
     }
 
+    const getTextFromChildren = (children: any[]) => {
+      return children.reduce((acc: string, child: any) => {
+        return acc + Node.string(child)
+      }, '')
+    }
+
+    const text = JSON.parse(post.content)
+      .map((element: any) => {
+        if (Array.isArray(element.children)) {
+          return getTextFromChildren(element.children)
+        } else {
+          return Node.string(element)
+        }
+      })
+      .join('')
+
     if (post.type === PostType.NOTE) {
       return (
-        <div className="text-foreground/80 p-4 border border-foreground/5 h-full">
-          <PlateEditor
-            value={JSON.parse(post.content)}
-            readonly
-            className="px-0 py-0"
-          />
-        </div>
+        <span className="text-foreground/80 p-4 border border-foreground/5 h-full block">
+          {text}
+        </span>
       )
     }
 
@@ -52,13 +64,9 @@ export function PostItem({ post }: PostItemProps) {
     }
 
     return (
-      <div className="text-foreground/80 p-4 border border-foreground/5 h-full">
-        <PlateEditor
-          value={JSON.parse(post.content)}
-          readonly
-          className="px-0 py-0"
-        />
-      </div>
+      <span className="text-foreground/80 p-4 border border-foreground/5 h-full block">
+        {text}
+      </span>
     )
   }
 

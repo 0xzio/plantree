@@ -38,7 +38,10 @@ export async function getSite(params: any) {
 
       const site = await prisma.site.findUniqueOrThrow({
         where: { id: siteId },
-        include: { user: true },
+        include: {
+          user: true,
+          channels: true,
+        },
       })
 
       function getAbout() {

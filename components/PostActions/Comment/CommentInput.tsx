@@ -79,7 +79,7 @@ export function CommentInput({
         maxLength={maxCharacters}
         className="w-full"
       />
-      <div className="flex items-center justify-between text-sm mt-2 text-gray-500">
+      <div className="flex items-center justify-between text-sm mt-2 text-foreground/50">
         <div>
           <span>
             {content.length}/{maxCharacters} characters

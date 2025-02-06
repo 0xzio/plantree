@@ -8,7 +8,11 @@ import {
   useState,
 } from 'react'
 import { STATIC_URL } from '@/lib/constants'
-import { Site } from '@prisma/client'
+import { Channel, Site } from '@prisma/client'
+
+type SiteType = Site & {
+  channels: Channel[]
+}
 
 interface Features {
   journal: boolean
@@ -17,10 +21,10 @@ interface Features {
   database: boolean
 }
 
-export const SiteContext = createContext({} as Site)
+export const SiteContext = createContext({} as SiteType)
 
 interface Props {
-  site: Site
+  site: SiteType
 }
 
 export const SiteProvider = ({ site, children }: PropsWithChildren<Props>) => {
@@ -39,10 +43,6 @@ export function useSiteContext() {
       return `${STATIC_URL}${site.logo}`
     }
     return site.logo
-  }
-
-  const { features } = (site.config || {}) as any as {
-    features: Features
   }
 
   return {

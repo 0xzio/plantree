@@ -81,7 +81,7 @@ export function CommentContent({ postId }: Props) {
                     address={comment.user.email as string}
                     className="h-8 w-8"
                   />
-                  <p className="ml-1 text-sm text-gray-600">
+                  <p className="ml-1 text-sm text-foreground/60">
                     {comment.user?.displayName}
                   </p>
                 </div>
@@ -128,19 +128,21 @@ export function CommentContent({ postId }: Props) {
                             address={reply.user.image as string}
                             className="h-6 w-6"
                           />
-                          <p className="ml-2 text-sm text-gray-600 font-bold">
+                          <p className="ml-2 text-sm text-foreground/60 font-bold">
                             {reply.user?.displayName}
                           </p>
                           {reply.parent?.user && (
-                            <p className="ml-2 text-sm text-gray-400">
+                            <p className="ml-2 text-sm text-foreground/40">
                               replied to &nbsp;
-                              <span className="font-bold text-gray-500">
+                              <span className="font-bold text-foreground/60">
                                 {reply.user?.displayName}
                               </span>
                             </p>
                           )}
                         </div>
-                        <p className="ml-2 text-gray-700">{reply.content}</p>
+                        <p className="ml-2 text-foreground/70">
+                          {reply.content}
+                        </p>
 
                         <div className="flex justify-end">
                           <button
@@ -170,7 +172,7 @@ export function CommentContent({ postId }: Props) {
               </div>
             ))
           ) : (
-            <p className="text-gray-400">No comments yet.</p>
+            <p className="text-foreground/40">No comments yet.</p>
           )}
         </div>
       </div>

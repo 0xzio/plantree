@@ -68,6 +68,10 @@ export class Subscription {
     }
   }
 
+  get isMember() {
+    return this.remainDuration > 0
+  }
+
   getAmountByDays(days: number | string) {
     const seconds = BigInt(
       parseInt((Number(days) * SECONDS_PER_DAY).toString()),

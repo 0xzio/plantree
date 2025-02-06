@@ -1,4 +1,5 @@
 import { Airdrop } from '@/components/Airdrop/Airdrop'
+import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SiteProvider } from '@/components/SiteContext'
@@ -27,7 +28,10 @@ export default async function RootLayout({
       ConnectButton={Profile}
       Airdrop={Airdrop}
     >
-      <SiteProvider site={site as any}>{children}</SiteProvider>
+      <SiteProvider site={site as any}>
+        {children}
+        <ChatSheet />
+      </SiteProvider>
     </SiteLayout>
   )
 }
