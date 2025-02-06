@@ -31,9 +31,6 @@ export default async function HomePage({ children }: PropsWithChildren) {
         <Badge size="lg" variant="feature">
           Modern
         </Badge>
-        <Badge size="lg" variant="feature">
-          Local-First
-        </Badge>
       </div>
       <div className="flex items-center justify-center gap-3">
         <StartWritingButton />

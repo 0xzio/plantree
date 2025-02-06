@@ -71,20 +71,6 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       <QuickSearchTrigger />
 
       <div className="flex flex-col gap-1 px-2">
-        {/* <SidebarItem
-              icon={
-                <CircleCheck
-                  size={18}
-                  stroke={isTodosActive ? 'brand500' : 'gray500'}
-                />
-              }
-              label="Tasks"
-              isActive={isTodosActive}
-              onClick={() => {
-                store.router.routeTo('TODOS')
-              }}
-            /> */}
-
         {isFeatureActive('journal') && (
           <Link href="/~/page?id=today">
             <SidebarItem

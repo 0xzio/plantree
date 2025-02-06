@@ -10,7 +10,6 @@ import {
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import { config } from 'googleapis/build/src/apis/config'
 import Redis from 'ioredis'
 import { z } from 'zod'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
@@ -201,7 +200,6 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { siteId, ...features } = input
-      console.log('=====features:', features)
 
       let site = await prisma.site.findUniqueOrThrow({
         where: { id: siteId },
@@ -210,7 +208,7 @@ export const siteRouter = router({
         where: { id: siteId },
         data: {
           config: {
-            ...config,
+            ...(site.config as any),
             features,
           },
         },

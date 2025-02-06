@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import { Post as PostType, updatePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
+import { useSiteTags } from '@/hooks/useSiteTags'
 import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
 import { useDebouncedCallback } from 'use-debounce'
@@ -16,7 +17,8 @@ export function Post({ post }: { post: PostType }) {
   const [data, setData] = useState<PostType>(post)
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
-  console.log('=====data:', data)
+
+  useSiteTags()
 
   const debounced = useDebouncedCallback(
     async (value: PostType) => {
@@ -72,7 +74,7 @@ export function Post({ post }: { post: PostType }) {
         </div>
         <div className="mb-4 space-y-2">
           <ProfileAvatar showName />
-          {/* <Tags /> */}
+          <Tags />
         </div>
 
         <PlateEditor

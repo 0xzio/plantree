@@ -17,6 +17,19 @@ export const tagRouter = router({
     return tags
   }),
 
+  listSiteTags: publicProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      const tags = await prisma.tag.findMany({
+        where: { siteId: input.siteId },
+      })
+      return tags
+    }),
+
   create: protectedProcedure
     .input(
       z.object({
