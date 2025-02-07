@@ -23,7 +23,7 @@ export function PostList({
 
   return (
     <div className="">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
+      <div className="grid gap-2">
         {displayPosts.map((post, index) => {
           return <PostItem key={post.slug} post={post} />
         })}

@@ -37,6 +37,7 @@ export async function generateMetadata({
   }
 }
 
+// TODO:
 export async function generateStaticParams(params: any) {
   const site = await prisma.site.findFirst()
   const posts = site ? await getPosts(site.id) : []

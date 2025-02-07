@@ -340,8 +340,8 @@ model Tag {
   User     User?     @relation(fields: [userId], references: [id])
   userId   String?   @db.Uuid
   postTags PostTag[]
-  Site     Site?     @relation(fields: [siteId], references: [id])
-  siteId   String?   @db.Uuid
+  Site     Site      @relation(fields: [siteId], references: [id])
+  siteId   String    @db.Uuid
 
   @@index(name)
   @@index(hidden)

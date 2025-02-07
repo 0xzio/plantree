@@ -41,18 +41,22 @@ export const MostPopular = ({ posts }: Props) => {
               </div>
             </div>
 
-            <div className="max-w-[80px] justify-between">
-              <Image
-                src={post.image || ''}
-                className="w-full h-auto rounded"
-                style={{
-                  aspectRatio: '1.5/1',
-                }}
-                width={400}
-                height={400}
-                alt=""
-              />
-            </div>
+            {post.image && (
+              <div className="max-w-[80px] justify-between">
+                <Link href={`/posts/${post.slug}`}>
+                  <Image
+                    src={post.image || ''}
+                    className="w-full h-auto rounded"
+                    style={{
+                      aspectRatio: '1.5/1',
+                    }}
+                    width={400}
+                    height={400}
+                    alt=""
+                  />
+                </Link>
+              </div>
+            )}
           </div>
         ))}
       </div>

@@ -147,6 +147,7 @@ export const protectedProcedure = t.procedure.use(
         'post.delete',
         'post.addAuthor',
         'post.deleteAuthor',
+        'post.updatePublishedPost',
         'subscriber.list',
         'subscriber.count',
         'subscriber.create',

@@ -289,6 +289,30 @@ export const postRouter = router({
       return newPost
     }),
 
+  updatePublishedPost: protectedProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+        featured: z.boolean().optional(),
+        isPopular: z.boolean().optional(),
+        publishedAt: z.date().optional(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { postId, ...data } = input
+
+      const post = await prisma.post.update({
+        where: { id: postId },
+        data,
+      })
+
+      revalidateTag(`${post.siteId}-posts`)
+      revalidateTag(`posts-${post.slug}`)
+      revalidatePath(`/posts/${post.slug}`)
+
+      return post
+    }),
+
   archive: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {

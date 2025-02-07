@@ -22,6 +22,7 @@ export function Tags() {
   const [isOpen, setIsOpen] = useState(false)
   const { post } = usePost()
   const { data: tags = [], refetch } = useSiteTags()
+
   const { mutateAsync } = trpc.tag.create.useMutation()
   const { mutateAsync: deletePostTag } = trpc.tag.deletePostTag.useMutation()
   const { mutateAsync: addTag } = trpc.tag.add.useMutation()

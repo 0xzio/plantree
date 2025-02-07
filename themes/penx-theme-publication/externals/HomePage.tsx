@@ -13,26 +13,23 @@ interface Props {
 
 export function HomePage({ posts = [], site }: Props) {
   return (
-    <div className="mt-12 flex gap-20">
+    <div className="mt-12 flex flex-col gap-20 md:flex-row">
       <div className="flex-1">
-        <div className="">
-          {posts.length > 0 && <FeaturedPost post={posts[0]} />}
+        {posts.length > 0 && <FeaturedPost post={posts[0]} />}
 
-          <div className="grid gap-2">
-            {!posts.length && 'No posts found.'}
-            {posts.slice(0, POSTS_PER_PAGE).map((post, index) => {
-              return (
-                <PostItem
-                  key={post.slug}
-                  post={post}
-                  className={cn(
-                    posts.length - 1 !== index &&
-                      'border-b border-foreground/10',
-                  )}
-                />
-              )
-            })}
-          </div>
+        <div className="grid gap-2">
+          {!posts.length && 'No posts found.'}
+          {posts.slice(0, POSTS_PER_PAGE).map((post, index) => {
+            return (
+              <PostItem
+                key={post.slug}
+                post={post}
+                className={cn(
+                  posts.length - 1 !== index && 'border-b border-foreground/10',
+                )}
+              />
+            )
+          })}
         </div>
       </div>
 

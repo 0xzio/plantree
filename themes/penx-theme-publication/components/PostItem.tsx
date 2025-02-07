@@ -90,18 +90,23 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
         {getContent()}
         <PostActions post={post} receivers={receivers} />
       </div>
-      <div className="max-w-[160px]">
-        <Image
-          src={post.image || ''}
-          className="w-full h-auto rounded"
-          style={{
-            aspectRatio: '1.5/1',
-          }}
-          width={400}
-          height={400}
-          alt=""
-        />
-      </div>
+
+      {post.image && (
+        <div className="max-w-[160px]">
+          <Link href={`/posts/${post.slug}`}>
+            <Image
+              src={post.image || ''}
+              className="w-full h-auto rounded"
+              style={{
+                aspectRatio: '1.5/1',
+              }}
+              width={400}
+              height={400}
+              alt=""
+            />
+          </Link>
+        </div>
+      )}
     </div>
   )
 }

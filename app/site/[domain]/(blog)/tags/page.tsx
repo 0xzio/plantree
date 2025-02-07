@@ -18,7 +18,8 @@ export async function generateMetadata({
 }
 
 export default async function Page({ params }: { params: { domain: string } }) {
-  const [tags, site] = await Promise.all([getTags(), getSite(params)])
+  const site = await getSite(params)
+  const tags = await getTags(site.id)
   const { TagListPage } = loadTheme(site.themeName)
 
   if (!TagListPage) {

@@ -2,13 +2,12 @@ import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { TRPCError } from '@trpc/server'
 import { slug } from 'github-slugger'
-import { revalidatePath } from 'next/cache'
+import { revalidatePath, revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
-function revalidate() {
-  revalidatePath('/tags')
-  revalidatePath('/(blogs)/tags/[tag]', 'page')
+function revalidate(siteId: string) {
+  revalidateTag(`${siteId}-tags`)
 }
 
 export const tagRouter = router({
@@ -43,7 +42,7 @@ export const tagRouter = router({
         async (tx) => {
           const tagName = slug(input.name)
           let tag = await tx.tag.findFirst({
-            where: { name: tagName },
+            where: { name: tagName, siteId: input.siteId },
           })
 
           if (!tag) {
@@ -74,7 +73,7 @@ export const tagRouter = router({
               tagId: tag.id,
             },
           })
-          revalidate()
+          revalidate(tag.siteId)
 
           return tx.postTag.findUniqueOrThrow({
             include: { tag: true },
@@ -99,14 +98,12 @@ export const tagRouter = router({
     .mutation(async ({ input }) => {
       const postTag = await prisma.postTag.create({
         data: { ...input },
-      })
-
-      revalidate()
-
-      return prisma.postTag.findUniqueOrThrow({
         include: { tag: true },
-        where: { id: postTag.id },
       })
+
+      revalidate(postTag.siteId)
+      revalidateTag(`${postTag.siteId}-tags-${postTag.tag.name}`)
+      return postTag
     }),
 
   deleteTag: protectedProcedure
@@ -118,6 +115,9 @@ export const tagRouter = router({
     .mutation(async ({ input }) => {
       return prisma.$transaction(
         async (tx) => {
+          const tag = await tx.tag.findUniqueOrThrow({
+            where: { id: input.tagId },
+          })
           await tx.postTag.deleteMany({
             where: { tagId: input.tagId },
           })
@@ -126,7 +126,8 @@ export const tagRouter = router({
             where: { id: input.tagId },
           })
 
-          revalidate()
+          revalidate(tag.siteId)
+          revalidateTag(`${tag.siteId}-tags-${tag.name}`)
           return true
         },
         {
@@ -139,11 +140,13 @@ export const tagRouter = router({
   deletePostTag: protectedProcedure
     .input(z.string())
     .mutation(async ({ input }) => {
-      const post = await prisma.postTag.delete({
+      const postTag = await prisma.postTag.delete({
         where: { id: input },
+        include: { tag: true },
       })
 
-      revalidate()
-      return post
+      revalidate(postTag.siteId)
+      revalidateTag(`${postTag.siteId}-tags-${postTag.tag.name}`)
+      return postTag
     }),
 })

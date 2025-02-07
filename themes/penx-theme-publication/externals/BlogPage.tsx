@@ -17,7 +17,7 @@ export function BlogPage({
   initialDisplayPosts,
 }: Props) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 mx-auto max-w-2xl">
       <PageTitle className="text-center">Blog</PageTitle>
       <PostList
         posts={posts}
