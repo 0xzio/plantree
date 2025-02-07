@@ -42,7 +42,7 @@ export function Chat() {
     )
   }
 
-  console.log('=======data:', data, 'subs:', subs)
+  // console.log('=======data:', data, 'subs:', subs)
 
   const subscription = new Subscription(data!)
 
