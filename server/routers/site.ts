@@ -324,6 +324,14 @@ export const siteRouter = router({
     return prisma.$transaction(
       async (tx) => {
         const site = await tx.site.findFirst({ where: { userId } })
+
+        if (site?.userId !== ctx.token.uid) {
+          throw new TRPCError({
+            code: 'UNAUTHORIZED',
+            message: 'No permission to delete site',
+          })
+        }
+
         const siteId = site?.id
         await tx.message.deleteMany({ where: { siteId } })
         await tx.channel.deleteMany({ where: { siteId } })

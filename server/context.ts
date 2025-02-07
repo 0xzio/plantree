@@ -48,6 +48,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
 
 export type Context = Awaited<ReturnType<typeof createContextInner>> & {
   token: Token
+  activeSiteId: string
 }
 
 /**
@@ -74,5 +75,8 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
     } catch (error) {}
   }
 
-  return { token }
+  return {
+    token,
+    activeSiteId: req.headers.get('X-ACTIVE-SITE-ID'),
+  }
 }

@@ -43,7 +43,7 @@ export const collaboratorRouter = router({
       if (!ops.includes(admin.role)) {
         throw new TRPCError({
           code: 'BAD_GATEWAY',
-          message: 'On permission to add collaborator',
+          message: 'No permission to add collaborator',
         })
       }
 
@@ -59,8 +59,6 @@ export const collaboratorRouter = router({
           },
         },
       })
-
-      console.log('======user:', user)
 
       if (!user) {
         throw new TRPCError({
@@ -111,7 +109,7 @@ export const collaboratorRouter = router({
       if (!ops.includes(admin.role)) {
         throw new TRPCError({
           code: 'BAD_GATEWAY',
-          message: 'On permission to add collaborator',
+          message: 'No permission to add collaborator',
         })
       }
 
@@ -142,7 +140,7 @@ export const collaboratorRouter = router({
       if (!ops.includes(admin.role)) {
         throw new TRPCError({
           code: 'BAD_GATEWAY',
-          message: 'On permission to add collaborator',
+          message: 'No permission to add collaborator',
         })
       }
 

@@ -8,6 +8,8 @@
  * @link https://trpc.io/docs/v11/procedures
  */
 
+import { prisma } from '@/lib/prisma'
+import { CollaboratorRole } from '@prisma/client'
 import { initTRPC, TRPCError } from '@trpc/server'
 import superjson from 'superjson'
 import type { Context } from './context'
@@ -83,8 +85,100 @@ export const protectedProcedure = t.procedure.use(
 
     // console.log('=====ctx.token:', ctx.token, 'path:', path)
 
+    const activeSiteId = ctx.activeSiteId || ''
+    const userId = ctx.token.uid || ''
+
+    if (
+      [
+        'site.mySites',
+        'site.byId',
+        'site.listSiteSubdomains',
+        'site.mySite',
+        'site.bySubdomain',
+        'site.updateSite',
+        'site.enableFeatures',
+        'site.addSubdomain',
+        'site.deleteSubdomain',
+        'site.customDomain',
+        'site.deleteSite',
+        'accessToken.create',
+        'accessToken.delete',
+        'asset.list',
+        'asset.trashedAssets',
+        'asset.create',
+        'asset.trash',
+        'asset.delete',
+        'asset.updatePublicStatus',
+        'collaborator.listSiteCollaborators',
+        'collaborator.addCollaborator',
+        'collaborator.updateCollaborator',
+        'collaborator.deleteCollaborator',
+        'database.list',
+        'database.byId',
+        'database.create',
+        'database.addRecord',
+        'database.addRefBlockRecord',
+        'database.addField',
+        'database.updateField',
+        'database.sortViewFields',
+        'database.updateRecord',
+        'database.deleteField',
+        'database.deleteRecord',
+        'database.updateViewField',
+        'database.addOption',
+        'database.updateDatabase',
+        'database.deleteDatabase',
+        'page.list',
+        'page.byId',
+        'page.getPage',
+        'page.create',
+        'page.update',
+        'page.delete',
+        'plan.subscribe',
+        'post.listSitePosts',
+        'post.byId',
+        'post.bySlug',
+        'post.create',
+        'post.update',
+        'post.updateCover',
+        'post.publish',
+        'post.archive',
+        'post.delete',
+        'subscriber.list',
+        'subscriber.count',
+        'subscriber.create',
+        'subscriber.updateStatus',
+        'subscriber.delete',
+        'subscriber.addSubscriber',
+        'subscriber.importSubscribers',
+        'delivery.list',
+        'delivery.updateStatus',
+      ].includes(path)
+    ) {
+      // TODO: improve performance by caching the result of this query
+      const collaborator = await prisma.collaborator.findFirst({
+        where: { userId, siteId: activeSiteId },
+      })
+
+      const roles = [
+        CollaboratorRole.ADMIN,
+        CollaboratorRole.OWNER,
+        CollaboratorRole.WRITE,
+      ] as CollaboratorRole[]
+
+      if (!collaborator || !roles.includes(collaborator.role)) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'No permission to access this resource',
+        })
+      }
+    }
+
     return next({
-      ctx: { token: ctx.token },
+      ctx: {
+        token: ctx.token,
+        activeSiteId,
+      },
     })
   },
 )

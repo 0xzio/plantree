@@ -5,6 +5,7 @@ import { GateType, PostType, Prisma } from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
+import { checkSitePermission } from '../lib/checkSitePermission'
 import { syncPostToHub } from '../lib/syncPostToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
