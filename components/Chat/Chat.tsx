@@ -42,22 +42,26 @@ export function Chat() {
     )
   }
 
-  // console.log('=======data:', data, 'subs:', subs)
+  const tipJSX = (
+    <div className="h-[60vh] flex flex-col gap-2 items-center justify-center">
+      <div className="px-10 text-center text-foreground/60">
+        You need to purchase a Site Token to subscribe for member-only chat
+        access.
+      </div>
+      <Link href="/membership" target="_blank">
+        <Button>Be a member</Button>
+      </Link>
+    </div>
+  )
+
+  console.log('=======data:', data, 'subs:', subs)
+  if (!data) return tipJSX
 
   const subscription = new Subscription(data!)
+  console.log('=======subscription:', subscription)
 
   if (!subscription.isMember) {
-    return (
-      <div className="h-[60vh] flex flex-col gap-2 items-center justify-center">
-        <div className="px-10 text-center text-foreground/60">
-          You need to purchase a Site Token to subscribe for member-only chat
-          access.
-        </div>
-        <Link href="/membership" target="_blank">
-          <Button>Be a member</Button>
-        </Link>
-      </div>
-    )
+    return tipJSX
   }
 
   return (

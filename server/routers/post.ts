@@ -46,6 +46,18 @@ export const postRouter = router({
     const post = await prisma.post.findUniqueOrThrow({
       include: {
         postTags: { include: { tag: true } },
+        authors: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                image: true,
+                displayName: true,
+                ensName: true,
+              },
+            },
+          },
+        },
       },
       where: { id: input },
     })
@@ -58,6 +70,20 @@ export const postRouter = router({
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     const post = await prisma.post.findUnique({
       where: { slug: input },
+      include: {
+        authors: {
+          include: {
+            user: {
+              select: {
+                name: true,
+                image: true,
+                displayName: true,
+                ensName: true,
+              },
+            },
+          },
+        },
+      },
     })
     return post
   }),
@@ -76,6 +102,13 @@ export const postRouter = router({
         data: {
           userId: ctx.token.uid,
           ...input,
+          authors: {
+            create: [
+              {
+                userId: ctx.token.uid,
+              },
+            ],
+          },
         },
       })
     }),
@@ -278,6 +311,43 @@ export const postRouter = router({
       })
 
       return post
+    }),
+
+  addAuthor: protectedProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+        userId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const author = await prisma.author.create({
+        data: input,
+        include: {
+          user: {
+            select: {
+              name: true,
+              image: true,
+              displayName: true,
+              ensName: true,
+            },
+          },
+        },
+      })
+      return author
+    }),
+
+  deleteAuthor: protectedProcedure
+    .input(
+      z.object({
+        authorId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      await prisma.author.delete({
+        where: { id: input.authorId },
+      })
+      return true
     }),
 })
 

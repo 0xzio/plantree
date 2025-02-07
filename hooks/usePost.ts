@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { PostStatus } from '@/lib/constants'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api, trpc } from '@/lib/trpc'

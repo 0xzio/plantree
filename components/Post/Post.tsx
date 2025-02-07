@@ -4,13 +4,14 @@ import { useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import { Post as IPost, updatePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
+import { useSiteCollaborators } from '@/hooks/useSiteCollaborators'
 import { useSiteTags } from '@/hooks/useSiteTags'
 import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
 import { PostType } from '@prisma/client'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
-import { ProfileAvatar } from '../Profile/ProfileAvatar'
+import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
 import { Tags } from './Tags'
 
@@ -20,6 +21,7 @@ export function Post({ post }: { post: IPost }) {
   const { setPostSaving } = usePostSaving()
 
   useSiteTags()
+  useSiteCollaborators()
 
   const debounced = useDebouncedCallback(
     async (value: IPost) => {
@@ -87,8 +89,8 @@ export function Post({ post }: { post: IPost }) {
             />
           </div>
         )}
-        <div className="space-y-2">
-          <ProfileAvatar showName />
+        <div className="flex items-center justify-between">
+          <Authors post={post} />
           <Tags />
         </div>
 

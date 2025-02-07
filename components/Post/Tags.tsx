@@ -104,7 +104,11 @@ export function Tags() {
                       const some = post.postTags.some(
                         (postTag) => postTag.tag.id === item.id,
                       )
-                      if (some) return
+                      if (some) {
+                        setIsOpen(false)
+                        setSearch('')
+                        return
+                      }
                       try {
                         const postTag = await addTag({
                           siteId: post.siteId,
