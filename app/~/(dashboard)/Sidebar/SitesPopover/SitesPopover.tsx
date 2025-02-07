@@ -1,6 +1,6 @@
 'use client'
 
-import { memo } from 'react'
+import { memo, useCallback, useEffect } from 'react'
 import { ProfileAvatar } from '@/components/Profile/ProfileAvatar'
 import { useSiteContext } from '@/components/SiteContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -27,7 +27,7 @@ import { queryClient } from '@/lib/queryClient'
 import { cn, getUrl } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { AuthType, SiteMode } from '@prisma/client'
-import { set } from 'idb-keyval'
+import { get, set } from 'idb-keyval'
 import {
   ChevronDown,
   DatabaseBackup,
@@ -58,6 +58,18 @@ export const SitesPopover = memo(function ProfilePopover({
   const pathname = usePathname()
   const { data: sites = [] } = useMySites()
   const site = useSiteContext()
+
+  const initSiteId = useCallback(async () => {
+    const siteId = await get(CURRENT_SITE)
+    if (!siteId) {
+      await set(CURRENT_SITE, sites[0].id)
+    }
+  }, [sites])
+
+  useEffect(() => {
+    if (!sites?.length) return
+    initSiteId()
+  }, [sites, initSiteId])
 
   if (!data) return <div></div>
 

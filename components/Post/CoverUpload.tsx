@@ -29,10 +29,13 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
           const data = await uploadFile(file)
           const uri = data.url || data.cid || ''
 
+          // console.log('===========uri:', uri)
+
           await api.post.updateCover.mutate({
             id: post.id,
             image: uri,
           })
+
           setValue(
             isIPFSCID(uri)
               ? `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${uri}`

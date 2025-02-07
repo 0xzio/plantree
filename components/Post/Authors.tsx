@@ -21,8 +21,7 @@ import { CommandGroup, CommandInput, CommandItem } from './command-components'
 export function Authors({ post }: { post: Post }) {
   const [search, setSearch] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const { data: collaborators = [], refetch } = useSiteCollaborators()
-  const { mutateAsync } = trpc.tag.create.useMutation()
+  const { data: collaborators = [] } = useSiteCollaborators()
   const { mutateAsync: deleteAuthor, isPending } =
     trpc.post.deleteAuthor.useMutation()
 
@@ -31,7 +30,7 @@ export function Authors({ post }: { post: Post }) {
       {post.authors.map((item) => (
         <div
           key={item.id}
-          className="flex items-center gap-1 border border-foreground/10 rounded-full h-9 px-1"
+          className="flex items-center gap-1 border border-foreground/10 rounded-full h-9 pl-1 pr-2"
         >
           <UserAvatar
             key={item.id}

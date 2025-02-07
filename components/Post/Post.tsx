@@ -19,6 +19,7 @@ export function Post({ post }: { post: IPost }) {
   const [data, setData] = useState<IPost>(post)
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
+  // console.log('post==============:', post)
 
   useSiteTags()
   useSiteCollaborators()

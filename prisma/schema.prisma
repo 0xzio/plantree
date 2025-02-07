@@ -271,6 +271,7 @@ model Post {
   featured      Boolean       @default(false)
   collectible   Boolean       @default(false)
   delivered     Boolean       @default(false)
+  isPopular     Boolean       @default(false)
   publishedAt   DateTime?
   archivedAt    DateTime?
   createdAt     DateTime      @default(now())
