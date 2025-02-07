@@ -66,12 +66,12 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
 
     return (
       <Link href={`/posts/${slug}`} className="space-y-2">
-        <div className="text-2xl font-bold hover:scale-105 transition-all origin-left">
+        <span className="text-2xl font-bold hover:scale-105 transition-all origin-left block">
           {post.title}
-        </div>
-        <div className="text-foreground/80 hover:text-foreground transition-all hover:scale-105 break-words break-all">
+        </span>
+        <span className="text-foreground/80 hover:text-foreground transition-all hover:scale-105 break-words break-all block">
           {str?.slice(0, 260)}...
-        </div>
+        </span>
       </Link>
     )
   }

@@ -54,7 +54,7 @@ export const ImageCreationUpload = forwardRef<HTMLDivElement, Props>(
     if (value) {
       return (
         <div className="w-full h-auto relative">
-          <Image
+          <img
             src={getUrl(value)}
             width={1000}
             height={1000}
