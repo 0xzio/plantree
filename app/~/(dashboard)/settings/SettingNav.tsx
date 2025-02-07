@@ -16,6 +16,7 @@ export function SettingNav({}: Props) {
     features: '/~/settings/features',
     socials: '/~/settings/socials',
     domain: '/~/settings/domain',
+    tags: '/~/settings/tags',
     authType: '/~/settings/auth-type',
     web3: '/~/settings/web3',
     subscription: '/~/settings/subscription',
@@ -61,6 +62,10 @@ export function SettingNav({}: Props) {
         className={linkClassName(Paths.subscription)}
       >
         Plan & Subscription
+      </Link>
+
+      <Link href={Paths.tags} className={linkClassName(Paths.tags)}>
+        Tags
       </Link>
 
       <Link href={Paths.domain} className={linkClassName(Paths.domain)}>

@@ -109,6 +109,33 @@ export const tagRouter = router({
       })
     }),
 
+  deleteTag: protectedProcedure
+    .input(
+      z.object({
+        tagId: z.string(),
+      }),
+    )
+    .mutation(async ({ input }) => {
+      return prisma.$transaction(
+        async (tx) => {
+          await tx.postTag.deleteMany({
+            where: { tagId: input.tagId },
+          })
+
+          await tx.tag.delete({
+            where: { id: input.tagId },
+          })
+
+          revalidate()
+          return true
+        },
+        {
+          maxWait: 5000, // default: 2000
+          timeout: 10000, // default: 5000
+        },
+      )
+    }),
+
   deletePostTag: protectedProcedure
     .input(z.string())
     .mutation(async ({ input }) => {
