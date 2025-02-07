@@ -30,7 +30,7 @@ export default async function RootLayout({
     >
       <SiteProvider site={site as any}>
         {children}
-        <ChatSheet />
+        {site.spaceId && <ChatSheet />}
       </SiteProvider>
     </SiteLayout>
   )

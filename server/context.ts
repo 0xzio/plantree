@@ -77,6 +77,6 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
 
   return {
     token,
-    activeSiteId: req.headers.get('X-ACTIVE-SITE-ID'),
+    activeSiteId: req.headers.get('X-ACTIVE-SITE-ID') || '',
   }
 }
