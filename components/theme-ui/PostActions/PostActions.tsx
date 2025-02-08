@@ -10,10 +10,10 @@ import { TipTokenButton } from './TipToken/TipTokenButton'
 
 interface Props {
   post: Post
-  receivers: string[]
+  receivers?: string[]
 }
 
-export function PostActions({ post, receivers }: Props) {
+export function PostActions({ post, receivers = [] }: Props) {
   return (
     <div className="flex items-center justify-between text-sm">
       <div className="flex items-end gap-4">

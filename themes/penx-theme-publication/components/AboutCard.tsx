@@ -1,6 +1,6 @@
 'use client'
 
-import { ContentRender } from '@/components/ContentRender/ContentRender'
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
 import { Button } from '@/components/ui/button'
 import { Post, Site } from '@/lib/theme.types'
 import { useConnectModal } from '@rainbow-me/rainbowkit'

@@ -1,5 +1,3 @@
-import { ContentRender } from '@/components/ContentRender/ContentRender'
-import { PostActions } from '@/components/PostActions/PostActions'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import prisma from '@/lib/prisma'
@@ -82,8 +80,6 @@ export default async function Page({
           readable
           next={next}
           prev={prev}
-          PostActions={PostActions}
-          ContentRender={ContentRender}
         />
       </>
     )

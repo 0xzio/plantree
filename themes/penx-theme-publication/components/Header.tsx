@@ -1,4 +1,5 @@
-import { ReactNode, Suspense } from 'react'
+import { Profile } from '@/components/Profile/Profile'
+import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 import { Merienda } from 'next/font/google'
@@ -23,21 +24,9 @@ const headerNavLinksRight = [{ href: '/creator-fi', title: 'CreatorFi' }]
 
 interface Props {
   site: Site
-  Logo: () => ReactNode
-  ModeToggle: () => ReactNode
-  MobileNav: () => ReactNode
-  ConnectButton: () => ReactNode
-  Airdrop: () => ReactNode
 }
 
-export const Header = ({
-  site,
-  Logo,
-  ModeToggle,
-  MobileNav,
-  ConnectButton,
-  Airdrop,
-}: Props) => {
+export const Header = ({ site }: Props) => {
   return (
     <header className="z-40">
       <div
@@ -77,19 +66,10 @@ export const Header = ({
             })}
           </div>
 
-          {MobileNav && <MobileNav />}
-
-          {Airdrop && (
-            <div className="flex items-center">
-              <Airdrop />
-            </div>
-          )}
-
-          {ConnectButton && (
-            <Suspense fallback={<div></div>}>
-              <ConnectButton />
-            </Suspense>
-          )}
+          <div className="flex items-center">
+            <Airdrop />
+          </div>
+          <Profile></Profile>
         </div>
       </div>
       <Nav site={site} />

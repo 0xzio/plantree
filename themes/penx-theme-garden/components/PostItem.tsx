@@ -1,6 +1,7 @@
 'use client'
 
 import { PlateEditor } from '@/components/editor/plate-editor'
+import { PostActions } from '@/components/theme-ui/PostActions/PostActions'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Post, User } from '@/lib/theme.types'
 import { isAddress } from '@/lib/utils'
@@ -13,15 +14,9 @@ import { Node } from 'slate'
 interface PostItemProps {
   post: Post
   receivers?: string[]
-  ContentRender?: (props: { content: any[]; className?: string }) => JSX.Element
-  PostActions?: (props: {
-    post: Post
-    receivers?: string[]
-    className?: string
-  }) => JSX.Element
 }
 
-export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
+export function PostItem({ post, receivers = [] }: PostItemProps) {
   const { slug, title } = post
 
   const name = getUserName(post.user)
@@ -113,7 +108,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
 
       {getContent()}
 
-      {PostActions && <PostActions post={post} receivers={receivers} />}
+      <PostActions post={post} receivers={receivers} />
     </div>
   )
 }

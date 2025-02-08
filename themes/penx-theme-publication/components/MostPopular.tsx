@@ -1,4 +1,4 @@
-import { ContentRender } from '@/components/ContentRender/ContentRender'
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
 import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { format } from 'date-fns'

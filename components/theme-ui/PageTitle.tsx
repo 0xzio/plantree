@@ -1,12 +1,12 @@
 import { ReactNode } from 'react'
-import { cn } from '@penxio/utils'
+import { cn } from '@/lib/utils'
 
 interface Props {
   children: ReactNode
   className?: string
 }
 
-export default function PageTitle({ children, className }: Props) {
+export function PageTitle({ children, className }: Props) {
   return (
     <h1
       className={cn(

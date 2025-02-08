@@ -1,11 +1,11 @@
 'use client'
 
 import { Dispatch, SetStateAction } from 'react'
+import { useSiteContext } from '@/components/SiteContext'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCreations } from '@/hooks/useCreations'
 import { Post } from '@/lib/theme.types'
 import { Bookmark } from 'lucide-react'
-import { useSiteContext } from '../../SiteContext'
 
 interface Props {
   post: Post

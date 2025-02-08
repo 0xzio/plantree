@@ -1,7 +1,7 @@
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
 import Link from '../components/Link'
-import PageTitle from '../components/PageTitle'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostItem } from '../components/PostItem'
 
 interface Props {

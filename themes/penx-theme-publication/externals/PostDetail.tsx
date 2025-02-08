@@ -1,10 +1,12 @@
 import { ReactNode } from 'react'
-import { ExternalLink } from 'lucide-react'
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
+import { PostActions } from '@/components/theme-ui/PostActions'
 import { Post } from '@/lib/theme.types'
 import { formatDate } from '@penxio/utils'
+import { ExternalLink } from 'lucide-react'
 import Image from '../components/Image'
 import Link from '../components/Link'
-import PageTitle from '../components/PageTitle'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import SectionContainer from '../components/SectionContainer'
 
 interface LayoutProps {
@@ -13,18 +15,9 @@ interface LayoutProps {
   className?: string
   next?: Post
   prev?: Post
-  PostActions?: (props: { post: Post; className?: string }) => JSX.Element
-  ContentRender?: (props: { content: any; className?: string }) => JSX.Element
 }
 
-export function PostDetail({
-  post,
-  PostActions,
-  className,
-  ContentRender,
-  next,
-  prev,
-}: LayoutProps) {
+export function PostDetail({ post, className, next, prev }: LayoutProps) {
   return (
     <SectionContainer className={className}>
       <article className="mt-20 mx-auto w-full lg:max-w-3xl">
@@ -42,7 +35,7 @@ export function PostDetail({
             </dl>
           </div>
 
-          {PostActions && <PostActions post={post} />}
+          <PostActions post={post} />
         </header>
 
         {!!post.image && (
@@ -57,7 +50,7 @@ export function PostDetail({
 
         <div className="grid-rows-[auto_1fr]">
           <div className="prose max-w-none pb-8 dark:prose-invert">
-            {ContentRender && <ContentRender content={post.content} />}
+            <ContentRender content={post.content} />
           </div>
 
           {post.cid && (

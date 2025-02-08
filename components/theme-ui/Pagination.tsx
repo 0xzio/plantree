@@ -1,8 +1,7 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 'use client'
 
 import { usePathname } from 'next/navigation'
-import Link from './Link'
+import Link from 'next/link'
 
 interface PaginationProps {
   totalPages: number

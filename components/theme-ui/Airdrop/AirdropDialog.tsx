@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { LoadingDots } from '@/components/icons/loading-dots'
+import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
@@ -9,6 +11,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { Skeleton } from '@/components/ui/skeleton'
+import { WalletConnectButton } from '@/components/WalletConnectButton'
 import { useDailyClaimCap } from '@/hooks/useDailyClaimCap'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { dailyClaimAbi } from '@/lib/abi'
@@ -19,10 +23,6 @@ import { useSession } from 'next-auth/react'
 import pRetry, { AbortError } from 'p-retry'
 import { toast } from 'sonner'
 import { useAccount, useReadContract, useWriteContract } from 'wagmi'
-import { LoadingDots } from '../icons/loading-dots'
-import { Button } from '../ui/button'
-import { Skeleton } from '../ui/skeleton'
-import { WalletConnectButton } from '../WalletConnectButton'
 import { AirdropButton } from './AirdropButton'
 
 interface Props {}

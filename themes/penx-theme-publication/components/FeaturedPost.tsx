@@ -1,4 +1,4 @@
-import { PostActions } from '@/components/PostActions/PostActions'
+import { PostActions } from '@/components/theme-ui/PostActions'
 import { Post } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import Image from 'next/image'
@@ -28,7 +28,7 @@ export default function FeaturedPost({ post }: Props) {
           {formatDate(post.updatedAt)}
         </time>
       </div>
-      <PostActions post={post} receivers={[]} />
+      <PostActions post={post} />
     </div>
   )
 }

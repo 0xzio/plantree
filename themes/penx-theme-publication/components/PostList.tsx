@@ -1,6 +1,6 @@
-import { cn } from '@/lib/utils'
+import { Pagination } from '@/components/theme-ui/Pagination'
 import { Post } from '@/lib/theme.types'
-import { Pagination } from './Pagination'
+import { cn } from '@/lib/utils'
 import { PostItem } from './PostItem'
 
 interface PaginationProps {
