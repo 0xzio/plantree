@@ -4,7 +4,6 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { usePost } from '@/hooks/usePost'
 import { usePublishPost } from '@/hooks/usePublishPost'
 import { useSite } from '@/hooks/useSite'
-import { IObjectNode, Node } from '@/lib/model'
 import { cn } from '@/lib/utils'
 import { store } from '@/store'
 import { GateType } from '@prisma/client'
@@ -21,7 +20,7 @@ interface Props {
   className?: string
 }
 
-export function PublishPopover({ className }: Props) {
+export function PublishPostPopover({ className }: Props) {
   const [isOpen, setOpen] = useState(false)
 
   return (

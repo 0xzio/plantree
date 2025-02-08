@@ -28,6 +28,19 @@ export interface Socials {
   [key: string]: string
 }
 
+export enum NavLinkType {
+  PAGE = 'PAGE',
+  BUILTIN = 'BUILTIN',
+  TAG = 'TAG',
+}
+
+export type NavLink = {
+  title: string
+  pathname: string
+  type: NavLinkType
+  visible: boolean
+}
+
 export type Site = {
   id: string
   name: string
@@ -51,6 +64,7 @@ export type Site = {
   socials: Socials
   config: Record<string, any>
   themeConfig: Record<string, any>
+  navLinks: NavLink[]
   subdomain: string | null
   customDomain: string | null
   memberCount: number

@@ -22,23 +22,24 @@ export function usePages() {
   return useQuery({
     queryKey: ['pages'],
     queryFn: async () => {
-      const pages = await localDB.page.where({ siteId: site.id }).toArray()
-      const localPages = pages.sort(
-        (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
-      )
+      // const pages = await localDB.page.where({ siteId: site.id }).toArray()
+      // const localPages = pages.sort(
+      //   (a, b) => b.updatedAt.getTime() - a.updatedAt.getTime(),
+      // )
 
-      setTimeout(async () => {
-        const remotePages = await api.page.list.query({ siteId: site.id })
-        const isEqual = equal(remotePages, localPages)
-        // console.log('===isEqual:', isEqual)
+      // setTimeout(async () => {
+      //   const remotePages = await api.page.list.query({ siteId: site.id })
+      //   const isEqual = equal(remotePages, localPages)
+      //   // console.log('===isEqual:', isEqual)
 
-        if (isEqual) return
-        queryClient.setQueriesData({ queryKey: ['pages'] }, remotePages)
-        await localDB.page.clear()
-        await localDB.page.bulkAdd(remotePages as any)
-      }, 0)
+      //   if (isEqual) return
+      //   queryClient.setQueriesData({ queryKey: ['pages'] }, remotePages)
+      //   await localDB.page.clear()
+      //   await localDB.page.bulkAdd(remotePages as any)
+      // }, 0)
 
-      return localPages as any as Page[]
+      // return localPages as any as Page[]
+      return await api.page.list.query({ siteId: site.id })
     },
   })
 }

@@ -1,9 +1,11 @@
 'use client'
 
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { useSite } from '@/hooks/useSite'
 import { trpc } from '@/lib/trpc'
-import { AppearanceSettingForm } from './AppearanceSettingForm'
+import { NavList } from './NavList'
+import { ThemeSettingForm } from './ThemeSettingForm'
 
 export const dynamic = 'force-static'
 
@@ -17,9 +19,26 @@ export default function Page() {
       </div>
     )
   }
+
   return (
-    <div>
-      <AppearanceSettingForm site={site!} />
+    <div className="grid gap-4">
+      <Card>
+        <CardHeader>
+          <CardTitle>Theme settings</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <ThemeSettingForm site={site!} />
+        </CardContent>
+      </Card>
+
+      <Card>
+        <CardHeader>
+          <CardTitle>Navigation bar links</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <NavList site={site} />
+        </CardContent>
+      </Card>
     </div>
   )
 }

@@ -1,5 +1,6 @@
 export * from './SiteLayout'
 export * from './PostDetail'
+export * from './PageDetail'
 export * from './AboutPage'
 export * from './HomePage'
 export * from './TagDetailPage'

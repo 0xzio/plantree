@@ -10,7 +10,7 @@ export default function SectionContainer({ children, className }: Props) {
   return (
     <section
       className={cn(
-        'mx-auto px-4 sm:px-6 xl:px-0 min-h-screen flex flex-col',
+        'mx-auto px-4 sm:px-6 xl:px-0 w-full flex flex-col h-screen',
         className,
       )}
     >
