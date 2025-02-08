@@ -58,6 +58,7 @@ export function Chat() {
   if (!data) return tipJSX
 
   const subscription = new Subscription(data!)
+  console.log('=======subscription:', subscription)
 
   if (!subscription.isMember) {
     return tipJSX

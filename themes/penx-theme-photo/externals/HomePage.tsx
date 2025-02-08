@@ -1,5 +1,6 @@
-import { Post, PostType, Site } from '@penxio/types'
+import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
+import { PostType } from '@prisma/client'
 import { Lobster, Merienda } from 'next/font/google'
 import { PostItem } from '../components/PostItem'
 
@@ -40,14 +41,7 @@ export function HomePage({ posts = [], site, PostActions }: Props) {
       </div>
       <div className="flex flex-col gap-12">
         {creations.map((post) => {
-          return (
-            <PostItem
-              key={post.slug}
-              post={post}
-              PostActions={PostActions}
-              receivers={receivers}
-            />
-          )
+          return <PostItem key={post.slug} post={post} receivers={receivers} />
         })}
       </div>
     </div>

@@ -1,4 +1,4 @@
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import mitt from 'mitt'
 
 export type AppEvent = {

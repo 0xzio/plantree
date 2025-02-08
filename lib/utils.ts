@@ -170,7 +170,14 @@ export function toReadableTime(duration: number) {
   }
 }
 
-function validateEmail(email: string) {
+export function validateEmail(email: string) {
   const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
   return regex.test(email)
+}
+
+export function formatUsername(name = '') {
+  if (isAddress(name)) {
+      return shortenAddress(name, 2, 3)
+  }
+  return name
 }

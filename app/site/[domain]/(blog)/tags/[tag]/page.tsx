@@ -1,5 +1,6 @@
 import { getSite, getTags, getTagWithPost } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import prisma from '@/lib/prisma'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -17,8 +18,10 @@ export async function generateMetadata({
   }
 }
 
-export const generateStaticParams = async () => {
-  const tags = await getTags()
+// TODO:
+export const generateStaticParams = async (params: any) => {
+  const site = await prisma.site.findFirst()
+  const tags = site ? await getTags(site.id) : []
   const paths = tags.map((tag) => ({
     tag: encodeURI(tag.name),
   }))
@@ -32,10 +35,10 @@ export default async function TagPage({
 }) {
   const tagName = decodeURI(params.tag)
 
-  const [tagWithPosts, tags, site] = await Promise.all([
-    getTagWithPost(tagName),
-    getTags(),
-    getSite(params),
+  const site = await getSite(params)
+  const [tagWithPosts, tags] = await Promise.all([
+    getTagWithPost(site.id, tagName),
+    getTags(site.id),
   ])
 
   const posts = tagWithPosts?.postTags.map((postTag) => postTag.post) || []

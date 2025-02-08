@@ -1,5 +1,6 @@
-import { ReactNode, Suspense } from 'react'
-import { Site } from '@penxio/types'
+import { Profile } from '@/components/Profile/Profile'
+import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 import { Lobster } from 'next/font/google'
 import Link from './Link'
@@ -22,14 +23,9 @@ const headerNavLinks = [
 
 interface Props {
   site: Site
-  Logo: () => ReactNode
-  ModeToggle: () => ReactNode
-  MobileNav: () => ReactNode
-  ConnectButton: () => ReactNode
-  Airdrop: () => ReactNode
 }
 
-export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
+export const Header = ({ site }: Props) => {
   return (
     <header className="">
       <div className="flex items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm">
@@ -89,17 +85,10 @@ export const Header = ({ site, Airdrop, ConnectButton }: Props) => {
           >
             About
           </Link>
-          {Airdrop && (
-            <div className="flex items-center">
-              <Airdrop />
-            </div>
-          )}
-
-          {!!ConnectButton && (
-            <Suspense fallback={<div></div>}>
-              <ConnectButton />
-            </Suspense>
-          )}
+          <div className="flex items-center">
+            <Airdrop />
+          </div>
+          <Profile></Profile>
         </div>
       </div>
       <PostTypeNav className="flex md:hidden" />

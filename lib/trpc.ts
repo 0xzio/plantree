@@ -12,7 +12,6 @@ const link = httpBatchLink({
   transformer: superjson,
   async headers() {
     const siteId = await get(CURRENT_SITE)
-    console.log('=active======siteId:', siteId)
     if (siteId) {
       return {
         'X-ACTIVE-SITE-ID': siteId,

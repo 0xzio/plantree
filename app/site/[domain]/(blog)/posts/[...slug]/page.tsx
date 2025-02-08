@@ -1,5 +1,3 @@
-import { ContentRender } from '@/components/ContentRender/ContentRender'
-import { PostActions } from '@/components/PostActions/PostActions'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import prisma from '@/lib/prisma'
@@ -37,6 +35,7 @@ export async function generateMetadata({
   }
 }
 
+// TODO:
 export async function generateStaticParams(params: any) {
   const site = await prisma.site.findFirst()
   const posts = site ? await getPosts(site.id) : []
@@ -81,8 +80,6 @@ export default async function Page({
           readable
           next={next}
           prev={prev}
-          PostActions={PostActions}
-          ContentRender={ContentRender}
         />
       </>
     )

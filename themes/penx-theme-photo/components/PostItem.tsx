@@ -1,19 +1,15 @@
+import { PostActions } from '@/components/theme-ui/PostActions'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Post, User } from '@/lib/theme.types'
 import { isAddress } from '@/lib/utils'
-import { Post, User } from '@penxio/types'
 import { cn, formatDate } from '@penxio/utils'
 
 interface PostItemProps {
   post: Post
   receivers?: string[]
-  PostActions?: (props: {
-    post: Post
-    receivers?: string[]
-    className?: string
-  }) => JSX.Element
 }
 
-export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
+export function PostItem({ post, receivers = [] }: PostItemProps) {
   const { slug, title } = post
   const name = getUserName(post.user)
 
@@ -54,8 +50,7 @@ export function PostItem({ post, PostActions, receivers = [] }: PostItemProps) {
       {/* <Link key={slug} href={`/posts/${slug}`} className="flex"></Link> */}
 
       <img src={post.image!} alt="" className="w-full h-auto rounded-lg" />
-
-      {PostActions && <PostActions post={post} receivers={receivers} />}
+      <PostActions post={post} receivers={receivers} />
     </div>
   )
 }

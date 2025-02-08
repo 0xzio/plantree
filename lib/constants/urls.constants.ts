@@ -1,0 +1,60 @@
+export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
+// export const GOOGLE_OAUTH_REDIRECT_URI =
+//   'http://localhost:4000/api/google-oauth'
+
+export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
+  'https://www.penx.io/api/link-google-account-oauth'
+
+export const STATIC_URL = 'https://static.penx.me'
+
+// export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
+export const IPFS_UPLOAD_URL = '/api/ipfs-upload'
+export const IPFS_ADD_URL = 'https://penx.io/api/ipfs-add'
+// export const IPFS_ADD_URL = 'http://localhost:4000/api/ipfs-add'
+export const IPFS_GATEWAY = 'https://ipfs-gateway.spaceprotocol.xyz'
+
+export const GOOGLE_DRIVE_OAUTH_REDIRECT_URI =
+  'https://www.penx.io/api/google-drive-oauth'
+
+export const REFRESH_GOOGLE_DRIVE_OAUTH_TOKEN_URL =
+  'https://www.penx.io/api/refresh-google-drive-token'
+
+export enum NetworkNames {
+  ARB_SEPOLIA = 'ARB_SEPOLIA',
+  BASE_SEPOLIA = 'BASE_SEPOLIA',
+  BASE = 'BASE',
+}
+
+export const NETWORK =
+  (process.env.NEXT_PUBLIC_NETWORK as NetworkNames) || NetworkNames.BASE
+
+export const RESPACE_BASE_URI =
+  NETWORK === NetworkNames.BASE
+    ? 'https://www.respace.one'
+    : // : 'http://localhost:5000'
+      'https://sepolia.respace.one'
+
+export const RESPACE_SUBGRAPH_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
+    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'
+
+export const PENX_SUBGRAPH_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/3xiEYVz3SuQ1rnTiwfwfuuHnxkh4EYM9RXqaErDwMUZE'
+    : 'https://api.studio.thegraph.com/query/88544/creation-sepolia/version/latest'
+
+export const ALLOCATION_CAP_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://penx.io/api/allocation-cap'
+    : 'https://sepolia.penx.io/api/allocation-cap'
+
+export const DAILY_CLAIM_CAP_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://penx.io/api/daily-claim-cap'
+    : 'https://sepolia.penx.io/api/daily-claim-cap'
+
+export const SUBGRAPH_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
+    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'

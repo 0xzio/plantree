@@ -65,7 +65,6 @@ export function usePublishPost() {
           collectible,
           creationId,
           delivered,
-          image: '',
           content: post.content,
         })
 

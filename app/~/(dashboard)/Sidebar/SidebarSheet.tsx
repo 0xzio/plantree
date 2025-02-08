@@ -12,7 +12,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from '@/components/ui/sheet'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { Sidebar } from './Sidebar'
 import { useSidebarSheet } from './useSidebarSheet'
 

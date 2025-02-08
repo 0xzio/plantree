@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect } from 'react'
 import { PostStatus } from '@/lib/constants'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api, trpc } from '@/lib/trpc'
@@ -36,8 +35,8 @@ export function addPostTag(postTag: PostTagWithTag) {
     ...post,
     postTags: [...post.postTags, postTag as any],
   })
-  revalidateMetadata(`posts`)
-  revalidateMetadata(`tag-${postTag.tag.name}`)
+  revalidateMetadata(`${postTag.siteId}-posts`)
+  revalidateMetadata(`${postTag.siteId}-tag-${postTag.tag.name}`)
 }
 
 export function removePostTag(postTag: PostTagWithTag) {
@@ -47,8 +46,8 @@ export function removePostTag(postTag: PostTagWithTag) {
     ...post,
     postTags: newTags,
   })
-  revalidateMetadata(`posts`)
-  revalidateMetadata(`tag-${postTag.tag.name}`)
+  revalidateMetadata(`${postTag.siteId}-posts`)
+  revalidateMetadata(`${postTag.siteId}-tag-${postTag.tag.name}`)
 }
 
 export async function loadPost(postId: string) {

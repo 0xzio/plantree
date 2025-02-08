@@ -1,20 +1,35 @@
 'use client'
 
+import { useState } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { Switch } from '@/components/ui/switch'
 import { Post } from '@/hooks/usePost'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { cn, getUrl } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import { format } from 'date-fns'
-import { Archive, Edit3Icon, ExternalLink, Trash2 } from 'lucide-react'
+import {
+  Archive,
+  CalendarIcon,
+  Edit3Icon,
+  ExternalLink,
+  Trash2,
+} from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { toast } from 'sonner'
 import { PlateEditor } from './editor/plate-editor'
-import { useSiteContext } from './SiteContext'
 
 interface PostItemProps {
   status: PostStatus
@@ -25,6 +40,8 @@ export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
   const { data } = useSession()
   const isPublished = post.postStatus === PostStatus.PUBLISHED
+  const [date, setDate] = useState<Date>(post.publishedAt || new Date())
+  const [open, setOpen] = useState(false)
 
   function getContent() {
     if (post.type === PostType.NOTE) {
@@ -94,9 +111,11 @@ export function PostItem({ post, status }: PostItemProps) {
         ))}
       </div>
       <div className="flex items-center gap-2">
-        <div className="text-sm text-foreground/50">
-          <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
-        </div>
+        {post.postStatus !== PostStatus.PUBLISHED && (
+          <div className="text-sm text-foreground/50">
+            <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
+          </div>
+        )}
         <Link href={`/~/post/${post.id}`}>
           <Button
             size="xs"
@@ -136,6 +155,89 @@ export function PostItem({ post, status }: PostItemProps) {
             <Trash2 size={14}></Trash2>
             <div>Delete</div>
           </Button>
+        )}
+        {status === PostStatus.PUBLISHED && (
+          <div className="text-xs text-foreground/50 flex gap-6">
+            <div className="flex items-center gap-1">
+              <Switch
+                size="sm"
+                defaultChecked={post.featured}
+                onCheckedChange={async (value) => {
+                  try {
+                    await api.post.updatePublishedPost.mutate({
+                      postId: post.id,
+                      featured: value,
+                    })
+                    toast.success('Update successfully!')
+                  } catch (error) {
+                    toast.error(extractErrorMessage(error))
+                  }
+                }}
+              />
+              <div>Featured</div>
+            </div>
+
+            <div className="flex items-center gap-1">
+              <Switch
+                size="sm"
+                defaultChecked={post.isPopular}
+                onCheckedChange={async (value) => {
+                  try {
+                    await api.post.updatePublishedPost.mutate({
+                      postId: post.id,
+                      isPopular: value,
+                    })
+                    toast.success('Update successfully!')
+                  } catch (error) {
+                    toast.error(extractErrorMessage(error))
+                  }
+                }}
+              />
+              <div>Popular</div>
+            </div>
+            <Popover open={open} onOpenChange={setOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="ghost"
+                  className={cn(
+                    'h-8 justify-start text-xs px-2 rounded-md flex gap-1',
+                    !date && 'text-muted-foreground',
+                  )}
+                  onClick={() => setOpen(!open)}
+                >
+                  <CalendarIcon size={14} />
+                  {date ? (
+                    <span>{format(date, 'PPP')}</span>
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0" align="start">
+                <Calendar
+                  mode="single"
+                  selected={date}
+                  onSelect={async (d) => {
+                    setOpen(false)
+
+                    if (d) {
+                      setDate(d!)
+                      try {
+                        await api.post.updatePublishedPost.mutate({
+                          postId: post.id,
+                          publishedAt: d,
+                        })
+                        toast.success('Update publish date successfully!')
+                      } catch (error) {
+                        toast.error(extractErrorMessage(error))
+                      }
+                    }
+                  }}
+                  initialFocus
+                />
+              </PopoverContent>
+            </Popover>
+          </div>
         )}
       </div>
     </div>

@@ -87,6 +87,7 @@ export const protectedProcedure = t.procedure.use(
 
     const activeSiteId = ctx.activeSiteId || ''
     const userId = ctx.token.uid || ''
+    // console.log('=====activeSiteId:', activeSiteId, 'userId:', userId)
 
     if (
       [
@@ -144,6 +145,9 @@ export const protectedProcedure = t.procedure.use(
         'post.publish',
         'post.archive',
         'post.delete',
+        'post.addAuthor',
+        'post.deleteAuthor',
+        'post.updatePublishedPost',
         'subscriber.list',
         'subscriber.count',
         'subscriber.create',

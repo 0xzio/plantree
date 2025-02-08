@@ -1,5 +1,6 @@
-import { ReactNode, Suspense } from 'react'
-import { Site } from '@penxio/types'
+import { Profile } from '@/components/Profile/Profile'
+import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 import { Merienda } from 'next/font/google'
 import Link from './Link'
@@ -22,21 +23,9 @@ const headerNavLinksRight = [{ href: '/creator-fi', title: 'CreatorFi' }]
 
 interface Props {
   site: Site
-  Logo: () => ReactNode
-  ModeToggle: () => ReactNode
-  MobileNav: () => ReactNode
-  ConnectButton: () => ReactNode
-  Airdrop: () => ReactNode
 }
 
-export const Header = ({
-  site,
-  Logo,
-  ModeToggle,
-  MobileNav,
-  ConnectButton,
-  Airdrop,
-}: Props) => {
+export const Header = ({ site }: Props) => {
   return (
     <header className={cn('flex items-center w-full py-4 h-16 z-40')}>
       <div className="flex-1 no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
@@ -91,19 +80,11 @@ export const Header = ({
           })}
         </div>
 
-        {MobileNav && <MobileNav />}
+        <div className="flex items-center">
+          <Airdrop />
+        </div>
 
-        {Airdrop && (
-          <div className="flex items-center">
-            <Airdrop />
-          </div>
-        )}
-
-        {ConnectButton && (
-          <Suspense fallback={<div></div>}>
-            <ConnectButton />
-          </Suspense>
-        )}
+        <Profile></Profile>
       </div>
     </header>
   )

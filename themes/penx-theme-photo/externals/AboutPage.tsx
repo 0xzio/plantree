@@ -1,7 +1,6 @@
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import Image from '../components/Image'
-import PageTitle from '../components/PageTitle'
-import SocialIcon from '../components/social-icons'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 
 interface Props {
   site: Site

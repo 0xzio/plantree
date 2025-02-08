@@ -17,7 +17,7 @@ export const FrameProvider = ({ children }: PropsWithChildren<Props>) => {
 
         await sdk.actions.ready()
 
-        return context
+        return context || (null as any)
       } catch (error) {
         console.log('error:', error)
         return undefined as any

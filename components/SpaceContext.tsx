@@ -3,7 +3,7 @@
 import { createContext, PropsWithChildren, useContext, useEffect } from 'react'
 import { Space } from '@/domains/Space'
 import { SpaceType } from '@/lib/types'
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 
 export const SpaceContext = createContext({} as Space)
 
