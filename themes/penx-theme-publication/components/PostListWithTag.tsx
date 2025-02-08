@@ -1,8 +1,7 @@
-import { Post, Tag } from '@penxio/types';
-import PageTitle from './PageTitle';
-import { PostList } from './PostList';
-import { TagList } from './TagList';
-
+import { Post, Tag } from '@/lib/theme.types'
+import PageTitle from './PageTitle'
+import { PostList } from './PostList'
+import { TagList } from './TagList'
 
 interface PaginationProps {
   totalPages: number
@@ -26,7 +25,7 @@ export function PostListWithTag({
 
   return (
     <div className="flex flex-col mx-auto max-w-2xl">
-      <PageTitle>Tags</PageTitle>
+      <PageTitle className="text-center">Tags</PageTitle>
       <TagList tags={tags} />
       <div className="mt-10">
         <PostList posts={displayPosts} />

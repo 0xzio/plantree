@@ -2,9 +2,10 @@
 
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Post, User } from '@/lib/theme.types'
 import { isAddress } from '@/lib/utils'
-import { Post, PostType, User } from '@penxio/types'
 import { cn, formatDate } from '@penxio/utils'
+import { PostType } from '@prisma/client'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 import { Node } from 'slate'

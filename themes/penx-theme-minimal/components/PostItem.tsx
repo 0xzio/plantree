@@ -1,5 +1,5 @@
 import { PlateEditor } from '@/components/editor/plate-editor'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { formatDate } from '@penxio/utils'
 import { PostType } from '@prisma/client'
 import Image from 'next/image'

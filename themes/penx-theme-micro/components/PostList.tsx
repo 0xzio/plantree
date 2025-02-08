@@ -1,4 +1,4 @@
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { Pagination } from './Pagination'
 import { PostItem } from './PostItem'
 

@@ -1,5 +1,5 @@
 import { ReactNode, Suspense } from 'react'
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 import Link from './Link'
 

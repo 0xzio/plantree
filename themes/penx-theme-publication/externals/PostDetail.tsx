@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 import { ExternalLink } from 'lucide-react'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { formatDate } from '@penxio/utils'
 import Image from '../components/Image'
 import Link from '../components/Link'

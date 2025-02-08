@@ -1,6 +1,6 @@
 'use client'
 
-import { Tag } from '@penxio/types'
+import { Tag } from '@/lib/theme.types'
 import { slug } from 'github-slugger'
 import { usePathname } from 'next/navigation'
 import Link from './Link'

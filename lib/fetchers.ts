@@ -1,8 +1,9 @@
 import prisma from '@/lib/prisma'
+import { Site } from '@/lib/theme.types'
 import { post } from '@farcaster/auth-client'
-import { Site } from '@penxio/types'
 import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
+import { produce } from 'immer'
 import ky from 'ky'
 import { unstable_cache } from 'next/cache'
 import {
@@ -137,7 +138,7 @@ export async function getTags(siteId: string) {
 export async function getTagWithPost(siteId: string, name: string) {
   return await unstable_cache(
     async () => {
-      return prisma.tag.findFirst({
+      const tag = await prisma.tag.findFirstOrThrow({
         include: {
           postTags: {
             include: {
@@ -156,6 +157,19 @@ export async function getTagWithPost(siteId: string, name: string) {
           },
         },
         where: { name, siteId },
+      })
+
+      return produce(tag, (draft) => {
+        draft.postTags = draft.postTags.map((postTag) => {
+          const post = postTag.post
+          let content = post.content
+          if (post.type === PostType.IMAGE || post.type === PostType.VIDEO) {
+            content = getUrl(post.content)
+          }
+          postTag.post.image = getUrl(post.image || '')
+          postTag.post.content = content
+          return postTag
+        })
       })
     },
     [`${siteId}-tags-${name}`],

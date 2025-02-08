@@ -1,5 +1,5 @@
 import { isAddress } from '@/lib/utils'
-import { User } from '@penxio/types'
+import { User } from '@/lib/theme.types'
 
 export function getUserName(user: User) {
   const { displayName = '', name } = user

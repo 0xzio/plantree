@@ -3,7 +3,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import { Skeleton } from '@/components/ui/skeleton'
 import { useCreations } from '@/hooks/useCreations'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { Bookmark } from 'lucide-react'
 import { useSiteContext } from '../../SiteContext'
 

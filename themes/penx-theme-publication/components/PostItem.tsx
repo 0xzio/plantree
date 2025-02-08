@@ -2,8 +2,9 @@
 
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { PostActions } from '@/components/PostActions/PostActions'
-import { Post, PostType, User } from '@penxio/types'
+import { Post, User } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
+import { PostType } from '@prisma/client'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
@@ -23,6 +24,8 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
   const name = getUserName(post.user)
   const params = useSearchParams()!
   const type = params.get('type')
+
+  console.log('========post:', post)
 
   if (type === 'photos' && post.type !== PostType.IMAGE) return null
   if (type === 'notes' && post.type !== PostType.NOTE) return null

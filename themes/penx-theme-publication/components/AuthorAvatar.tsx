@@ -1,5 +1,5 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 
 interface Props {

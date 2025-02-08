@@ -1,4 +1,4 @@
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import Image from '../components/Image'
 import PageTitle from '../components/PageTitle'
 

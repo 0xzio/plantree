@@ -1,9 +1,8 @@
-import { Post, Site } from '@penxio/types'
+import { POSTS_PER_PAGE } from '@/lib/constants'
+import { Post, Site } from '@/lib/theme.types'
 import Link from '../components/Link'
 import PageTitle from '../components/PageTitle'
 import { PostItem } from '../components/PostItem'
-
-const POSTS_PER_PAGE = Number(process.env.NEXT_PUBLIC_POSTS_PER_PAGE || 10)
 
 interface Props {
   site: Site

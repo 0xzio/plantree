@@ -1,5 +1,5 @@
 import { ContentRender } from '@/components/ContentRender/ContentRender'
-import { Post, Site } from '@penxio/types'
+import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { format } from 'date-fns'
 import Image from 'next/image'

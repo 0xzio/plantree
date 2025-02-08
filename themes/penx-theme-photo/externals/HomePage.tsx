@@ -1,5 +1,6 @@
-import { Post, PostType, Site } from '@penxio/types'
+import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
+import { PostType } from '@prisma/client'
 import { Lobster, Merienda } from 'next/font/google'
 import { PostItem } from '../components/PostItem'
 

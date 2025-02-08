@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import SocialIcon from './social-icons'
 
 interface Props {

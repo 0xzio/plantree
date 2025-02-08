@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import { Footer } from '../components/Footer'
 import { Header } from '../components/Header'
 import SectionContainer from '../components/SectionContainer'

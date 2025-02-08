@@ -1,4 +1,4 @@
-import { Site } from '@penxio/types'
+import { Site } from '@/lib/theme.types'
 import { cn } from '@penxio/utils'
 import { Merienda } from 'next/font/google'
 import Link from './Link'

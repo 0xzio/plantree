@@ -1,4 +1,4 @@
-import { Post, Site } from '@penxio/types'
+import { Post, Site } from '@/lib/theme.types'
 import { AboutCard } from './AboutCard'
 import { MostPopular } from './MostPopular'
 

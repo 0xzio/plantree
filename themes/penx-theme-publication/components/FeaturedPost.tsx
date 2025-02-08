@@ -1,5 +1,5 @@
 import { PostActions } from '@/components/PostActions/PostActions'
-import { Post } from '@penxio/types'
+import { Post } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import Image from 'next/image'
 import Link from 'next/link'

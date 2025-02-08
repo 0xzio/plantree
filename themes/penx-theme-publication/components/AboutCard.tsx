@@ -2,7 +2,7 @@
 
 import { ContentRender } from '@/components/ContentRender/ContentRender'
 import { Button } from '@/components/ui/button'
-import { Post, Site } from '@penxio/types'
+import { Post, Site } from '@/lib/theme.types'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { format } from 'date-fns'
 import { useSession } from 'next-auth/react'

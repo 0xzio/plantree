@@ -35,7 +35,6 @@
     "@octokit/core": "^6.1.2",
     "@octokit/oauth-app": "^7.1.3",
     "@octokit/openapi-types": "^22.2.0",
-    "@penxio/types": "^0.0.8",
     "@penxio/utils": "^0.0.8",
     "@prisma/client": "^5.22.0",
     "@privy-io/server-auth": "^1.15.0",
