@@ -84,7 +84,7 @@ export function ThemeSettingForm({ site }: Props) {
                   <SelectItem value="publication">Publication</SelectItem>
                   <SelectItem value="micro">Micro</SelectItem>
                   <SelectItem value="card">Card</SelectItem>
-                  <SelectItem value="photo">Photo</SelectItem>
+                  {/* <SelectItem value="photo">Photo</SelectItem> */}
                 </SelectContent>
               </Select>
               <FormMessage />

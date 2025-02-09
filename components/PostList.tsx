@@ -56,7 +56,7 @@ export function PostItem({ post, status }: PostItemProps) {
       )
     }
 
-    if (post.type === PostType.IMAGE) {
+    if (post.type === PostType.IMAGE && post.content.startsWith('/')) {
       return (
         <div className="flex flex-col gap-1">
           <div className="text-base font-bold">{post.title || 'Untitled'}</div>
@@ -70,6 +70,7 @@ export function PostItem({ post, status }: PostItemProps) {
         </div>
       )
     }
+
     return <div className="text-base font-bold">{post.title || 'Untitled'}</div>
   }
 
