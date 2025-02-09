@@ -24,11 +24,11 @@ export async function generateMetadata({
   }
 }
 
-// TODO:
 export async function generateStaticParams(params: any) {
   const site = await prisma.site.findFirst()
-  const pages = site ? await getPosts(site.id) : []
-  return pages.map((item) => ({ slug: [item.slug] }))
+  // const pages = site ? await getPosts(site.id) : []
+  // return pages.map((item) => ({ slug: [item.slug] }))
+  return []
 }
 
 export default async function Page({

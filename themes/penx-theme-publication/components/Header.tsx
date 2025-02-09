@@ -12,14 +12,6 @@ const merienda = Merienda({
   display: 'swap',
 })
 
-const headerNavLinks = [
-  { href: '/', title: 'Home' },
-  { href: '/posts', title: 'Blog' },
-  { href: '/tags', title: 'Tags' },
-  { href: '/about', title: 'About' },
-  { href: '/membership', title: 'Membership', isMembership: true },
-]
-
 const headerNavLinksRight = [{ href: '/creator-fi', title: 'CreatorFi' }]
 
 interface Props {

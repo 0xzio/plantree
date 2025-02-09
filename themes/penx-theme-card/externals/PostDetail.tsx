@@ -7,7 +7,6 @@ import { formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Image from '../components/Image'
 import Link from '../components/Link'
-import SectionContainer from '../components/SectionContainer'
 
 interface LayoutProps {
   post: Post
