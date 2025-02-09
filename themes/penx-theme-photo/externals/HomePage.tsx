@@ -13,11 +13,9 @@ const merienda = Lobster({
 interface Props {
   site: Site
   posts: Post[]
-  ContentRender: (props: { content: any[]; className?: string }) => JSX.Element
-  PostActions?: (props: { post: Post; className?: string }) => JSX.Element
 }
 
-export function HomePage({ posts = [], site, PostActions }: Props) {
+export function HomePage({ posts = [], site }: Props) {
   const creations = posts.filter((post) => post.type === PostType.IMAGE)
 
   const addresses = posts.reduce((acc, { user }) => {

@@ -110,7 +110,7 @@ export function PostItem({ post, status }: PostItemProps) {
           </Badge>
         ))}
       </div>
-      <div className="flex items-center gap-2">
+      <div className="flex items-center gap-2 flex-wrap">
         {post.postStatus !== PostStatus.PUBLISHED && (
           <div className="text-sm text-foreground/50">
             <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>

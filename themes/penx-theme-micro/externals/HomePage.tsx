@@ -1,16 +1,16 @@
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
 import Link from '../components/Link'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
   site: Site
   posts: Post[]
-  ContentRender: (props: { content: any[]; className?: string }) => JSX.Element
 }
 
-export function HomePage({ posts = [], site, ContentRender }: Props) {
+export function HomePage({ posts = [], site }: Props) {
   return (
     <div className="">
       <div className="prose max-w-none mb-10 text-foreground/70">

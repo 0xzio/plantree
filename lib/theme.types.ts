@@ -32,6 +32,7 @@ export enum NavLinkType {
   PAGE = 'PAGE',
   BUILTIN = 'BUILTIN',
   TAG = 'TAG',
+  CUSTOM = 'CUSTOM',
 }
 
 export type NavLink = {

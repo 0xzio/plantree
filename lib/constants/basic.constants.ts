@@ -94,7 +94,7 @@ export const defaultNavLinks: NavLink[] = [
   },
   {
     title: 'Posts',
-    pathname: '/',
+    pathname: '/posts',
     type: NavLinkType.BUILTIN,
     visible: true,
   },

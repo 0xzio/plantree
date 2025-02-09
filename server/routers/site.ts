@@ -143,6 +143,16 @@ export const siteRouter = router({
         themeName: z.string().optional(),
         spaceId: z.string().optional(),
         mode: z.nativeEnum(SiteMode).optional(),
+        navLinks: z
+          .array(
+            z.object({
+              title: z.string().optional(),
+              pathname: z.string().optional(),
+              type: z.string().optional(),
+              visible: z.boolean().optional(),
+            }),
+          )
+          .optional(),
         socials: z
           .object({
             farcaster: z.string().optional(),

@@ -68,8 +68,8 @@ export const postRouter = router({
   }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const post = await prisma.post.findUnique({
-      where: { slug: input },
+    const post = await prisma.post.findFirstOrThrow({
+      where: { slug: input, siteId: ctx.activeSiteId },
       include: {
         authors: {
           include: {

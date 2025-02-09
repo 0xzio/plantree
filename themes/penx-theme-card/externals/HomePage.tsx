@@ -1,3 +1,4 @@
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
 import Image from '../components/Image'
@@ -7,10 +8,9 @@ import { PostItem } from '../components/PostItem'
 interface Props {
   site: Site
   posts: Post[]
-  ContentRender: (props: { content: any[]; className?: string }) => JSX.Element
 }
 
-export function HomePage({ posts = [], site, ContentRender }: Props) {
+export function HomePage({ posts = [], site }: Props) {
   return (
     <div className="mt-12">
       <div className="max-w-none mb-10 hover:text-foreground text-foreground/80">
