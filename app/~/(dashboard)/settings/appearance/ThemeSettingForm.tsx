@@ -37,7 +37,7 @@ interface Props {
   site: Site
 }
 
-export function AppearanceSettingForm({ site }: Props) {
+export function ThemeSettingForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 

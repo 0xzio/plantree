@@ -18,7 +18,7 @@ interface Props {
   className?: string
 }
 
-export function PublishPopover({ className }: Props) {
+export function PublishPostPopover({ className }: Props) {
   const [isOpen, setOpen] = useState(false)
 
   return (

@@ -98,11 +98,11 @@ export async function getPosts(siteId: string) {
   return posts
 }
 
-export async function getPost(slug: string) {
+export async function getPost(siteId: string, slug: string) {
   return await unstable_cache(
     async () => {
       const post = await prisma.post.findFirst({
-        where: { slug },
+        where: { slug, siteId },
       })
 
       if (!post) return null
@@ -112,10 +112,10 @@ export async function getPost(slug: string) {
         image: getUrl(post.image || ''),
       }
     },
-    [`post-${slug}`],
+    [`${siteId}-post-${slug}`],
     {
       revalidate: REVALIDATE_TIME,
-      tags: [`posts-${slug}`],
+      tags: [`${siteId}-post-${slug}`],
     },
   )()
 }
@@ -236,6 +236,26 @@ export async function getSpaceIds() {
     {
       revalidate: 60 * 60 * 24 * 365,
       tags: ['space-ids'],
+    },
+  )()
+}
+
+export async function getPage(siteId: string, slug: string) {
+  return await unstable_cache(
+    async () => {
+      const page = await prisma.page.findFirst({
+        where: { slug, siteId },
+        include: { blocks: true },
+      })
+
+      if (!page) return null
+
+      return page
+    },
+    [`${siteId}-page-${slug}`],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: [`${siteId}-page-${slug}`],
     },
   )()
 }

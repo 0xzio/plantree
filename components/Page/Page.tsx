@@ -55,7 +55,7 @@ export function Page() {
       try {
         await mutateAsync({
           pageId: data.id,
-          title: value.title || '',
+          title: (value.title || '').trim(),
           elements: JSON.stringify(value.elements || content),
         })
       } catch (error) {

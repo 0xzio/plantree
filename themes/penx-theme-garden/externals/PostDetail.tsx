@@ -1,11 +1,11 @@
 import { ReactNode } from 'react'
 import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { Post } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
 import SectionContainer from '../components/SectionContainer'
 
 interface LayoutProps {
@@ -18,7 +18,9 @@ interface LayoutProps {
 
 export function PostDetail({ post, next, prev, className }: LayoutProps) {
   return (
-    <SectionContainer className={cn('lg:max-w-3xl mx-auto px-0', className)}>
+    // <SectionContainer className={cn('lg:max-w-3xl mx-auto px-0', className)}></SectionContainer>
+
+    <div>
       <header className="space-y-4 pb-4">
         <PageTitle className="mb-0">{post.title}</PageTitle>
         <div className="flex items-center justify-between">
@@ -81,6 +83,6 @@ export function PostDetail({ post, next, prev, className }: LayoutProps) {
           </div>
         </footer>
       </div>
-    </SectionContainer>
+    </div>
   )
 }

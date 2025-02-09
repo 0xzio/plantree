@@ -1,13 +1,13 @@
+import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { Site } from '@/lib/theme.types'
 import Image from '../components/Image'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
 
 interface Props {
   site: Site
-  ContentRender: (props: { content: any[]; className?: string }) => JSX.Element
 }
 
-export function AboutPage({ site, ContentRender }: Props) {
+export function AboutPage({ site }: Props) {
   return (
     <>
       <div className="">

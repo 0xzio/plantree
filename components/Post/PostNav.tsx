@@ -4,7 +4,7 @@ import { usePostSaving } from '@/hooks/usePostSaving'
 import { cn } from '@/lib/utils'
 import { ChevronLeft } from 'lucide-react'
 import Link from 'next/link'
-import { PublishPopover } from '../PublishPopover'
+import { PublishPostPopover } from '../PublishPostPopover'
 
 interface PostHeaderProps {
   className?: string
@@ -29,7 +29,7 @@ export function PostNav({ className }: PostHeaderProps) {
         <div className="rounded-lg bg-accent px-2 py-1 text-sm text-stone-400  dark:text-stone-500">
           {isPostSaving ? 'Saving...' : 'Saved'}
         </div>
-        <PublishPopover className="" />
+        <PublishPostPopover className="" />
       </div>
     </div>
   )

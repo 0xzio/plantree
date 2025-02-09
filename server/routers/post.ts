@@ -76,8 +76,8 @@ export const postRouter = router({
   }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const post = await prisma.post.findUnique({
-      where: { slug: input },
+    const post = await prisma.post.findFirstOrThrow({
+      where: { slug: input, siteId: ctx.activeSiteId },
       include: {
         authors: {
           include: {
@@ -278,7 +278,7 @@ export const postRouter = router({
       })
 
       revalidateTag(`${post.siteId}-posts`)
-      revalidateTag(`posts-${post.slug}`)
+      revalidateTag(`${post.siteId}-post-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
       return newPost

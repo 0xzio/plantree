@@ -137,6 +137,7 @@ export const protectedProcedure = t.procedure.use(
         'page.delete',
         'plan.subscribe',
         'post.listSitePosts',
+        'post.publish',
         'post.byId',
         'post.bySlug',
         'post.create',

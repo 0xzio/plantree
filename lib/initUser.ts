@@ -1,4 +1,4 @@
-import { editorDefaultValue } from '@/lib/constants'
+import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser } from '@/lib/types'
 import {
@@ -69,6 +69,7 @@ export async function initUserByAddress(address: string) {
           about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
           themeName: 'garden',
+          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -199,6 +200,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           about: JSON.stringify(editorDefaultValue),
           logo: info.picture,
           themeName: 'garden',
+          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -388,6 +390,7 @@ export async function initUserByFarcasterId(fid: string) {
           about: JSON.stringify(editorDefaultValue),
           logo: newUser.image,
           themeName: 'garden',
+          navLinks: defaultNavLinks,
           domains: {
             create: [
               {

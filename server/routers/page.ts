@@ -1,7 +1,9 @@
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
-import { Page } from '@prisma/client'
+import { Page, PageStatus } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { slug } from 'github-slugger'
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { createPage } from '../lib/createPage'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
@@ -185,6 +187,34 @@ export const pageRouter = router({
       await prisma.block.deleteMany({ where: { pageId: input.pageId } })
       await prisma.page.delete({ where: { id: input.pageId } })
       return true
+    }),
+
+  publish: protectedProcedure
+    .input(
+      z.object({
+        pageId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { pageId } = input
+      let page = await prisma.page.findUniqueOrThrow({
+        where: { id: pageId },
+      })
+
+      await prisma.page.update({
+        where: { id: pageId },
+        data: {
+          status: PageStatus.PUBLISHED,
+          publishedAt: new Date(),
+          slug: slug(page.title || page.id),
+        },
+      })
+
+      revalidateTag(`${page.siteId}-page-${page.slug}`)
+      // revalidateTag(`${post.siteId}-posts`)
+      // revalidatePath(`/posts/${post.slug}`)
+
+      return page
     }),
 })
 

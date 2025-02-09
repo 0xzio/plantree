@@ -25,13 +25,12 @@ export async function generateMetadata({
 }: {
   params: any
 }): Promise<Metadata> {
+  const site = await getSite(params)
   const slug = decodeURI(params.slug.join('/'))
-
-  const post = await getPost(slug)
-
+  const page = await getPost(site.id, slug)
   return {
-    title: post?.title,
-    description: post?.description,
+    title: page?.title,
+    description: page?.description,
   }
 }
 
@@ -50,7 +49,7 @@ export default async function Page({
   const slug = decodeURI(params.slug.join('/'))
   const site = await getSite(params)
   const posts = await getPosts(site.id)
-  const post = await getPost(slug)
+  const post = await getPost(site.id, slug)
 
   const postIndex = posts.findIndex((p) => p.slug === slug)
   // if (postIndex === -1 || !post) {

@@ -30,17 +30,16 @@ export const Header = ({ site }: Props) => {
   return (
     <header className="z-40">
       <div
-        className={cn('flex justify-center items-center w-full py-4 h-16 px-4')}
+        className={cn(
+          'flex justify-center items-center w-full py-4 h-16 px-0 sm:px-4',
+        )}
       >
-        <div className="flex-1"></div>
-        <div className="flex-1 flex items-center justify-center">
+        <div className="flex-1 hidden md:block"></div>
+        <div className="flex-1 flex items-center justify-start md:justify-center">
           <Link href="/" aria-label={site.name}>
             <div className="flex items-center justify-between">
               <div
-                className={cn(
-                  'hidden h-6 text-2xl font-semibold sm:block',
-                  merienda.className,
-                )}
+                className={cn('h-6 text-2xl font-semibold', merienda.className)}
               >
                 {site.name}
               </div>
