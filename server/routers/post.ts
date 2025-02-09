@@ -1,5 +1,6 @@
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { renderSlateToHtml } from '@/lib/slate-to-html'
 import { getUrl } from '@/lib/utils'
 import {
   DeliveryStatus,
@@ -198,6 +199,7 @@ export const postRouter = router({
       }
 
       const info = getPostInfo()
+      let shouldCreateNewsletter = false
 
       if (!post) {
         post = await prisma.post.create({
@@ -216,7 +218,9 @@ export const postRouter = router({
             delivered: input.delivered,
           },
         })
+        shouldCreateNewsletter = input.delivered
       } else {
+        const wasDelivered = post.delivered
         post = await prisma.post.update({
           where: { id: post.id },
           data: {
@@ -227,19 +231,18 @@ export const postRouter = router({
             gateType: input.gateType,
             collectible: input.collectible,
             content: info.content,
-            delivered: post.delivered ? post.delivered : input.delivered,
+            delivered: wasDelivered ? wasDelivered : input.delivered,
           },
         })
+        shouldCreateNewsletter = input.delivered && !wasDelivered
       }
 
-      // Create newsletter if delivered is true and post is not delivered
-      if (input.delivered && !post.delivered) {
+      if (shouldCreateNewsletter) {
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
           title: info.title || '',
-          // TODO: render content to html
-          content: info.content,
+          content: renderSlateToHtml(JSON.parse(info.content)),
           creatorId: ctx.token.uid,
         })
       }
@@ -453,7 +456,7 @@ async function createNewsletterWithDelivery(params: {
         siteId,
         postId,
         title,
-        subject: 'Post',
+        subject: 'POST',
         content,
         status: NewsletterStatus.SENDING,
         creatorId,
