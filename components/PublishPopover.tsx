@@ -4,12 +4,9 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { usePost } from '@/hooks/usePost'
 import { usePublishPost } from '@/hooks/usePublishPost'
 import { useSite } from '@/hooks/useSite'
-import { IObjectNode, Node } from '@/lib/model'
 import { cn } from '@/lib/utils'
-import { store } from '@/store'
 import { GateType } from '@prisma/client'
 import { PopoverClose } from '@radix-ui/react-popover'
-import { useParams, usePathname } from 'next/navigation'
 import { LoadingDots } from './icons/loading-dots'
 import { useSiteContext } from './SiteContext'
 import { Button } from './ui/button'
@@ -96,10 +93,12 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
         </div>
       </div>
 
-      {!post.delivered && (
-        <div>
-          <div className="flex items-center justify-between">
-            <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+      <div>
+        <div className="flex items-center justify-between">
+          <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+          {post.delivered ? (
+            <div className="text-sm text-muted-foreground">Already sent</div>
+          ) : (
             <Switch
               id="post-delivered"
               checked={delivered}
@@ -107,12 +106,14 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
                 setDelivered(value)
               }}
             />
-          </div>
-          <div className="text-foreground/60 text-xs">
-            Send your newsletter to subscribers.
-          </div>
+          )}
         </div>
-      )}
+        <div className="text-foreground/60 text-xs">
+          {post.delivered
+            ? 'This newsletter has been sent to subscribers.'
+            : 'Send your newsletter to subscribers.'}
+        </div>
+      </div>
 
       <div className="flex gap-2 justify-center">
         <PopoverClose asChild>

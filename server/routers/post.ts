@@ -1,7 +1,14 @@
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getUrl } from '@/lib/utils'
-import { GateType, PostType, Prisma } from '@prisma/client'
+import {
+  DeliveryStatus,
+  GateType,
+  NewsletterStatus,
+  PostType,
+  Prisma,
+  SubscriberStatus,
+} from '@prisma/client'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
@@ -206,6 +213,7 @@ export const postRouter = router({
             gateType: input.gateType,
             collectible: input.collectible,
             content: info.content,
+            delivered: input.delivered,
           },
         })
       } else {
@@ -219,7 +227,20 @@ export const postRouter = router({
             gateType: input.gateType,
             collectible: input.collectible,
             content: info.content,
+            delivered: post.delivered ? post.delivered : input.delivered,
           },
+        })
+      }
+
+      // Create newsletter if delivered is true and post is not delivered
+      if (input.delivered && !post.delivered) {
+        await createNewsletterWithDelivery({
+          siteId: input.siteId,
+          postId: post.id,
+          title: info.title || '',
+          // TODO: render content to html
+          content: info.content,
+          creatorId: ctx.token.uid,
         })
       }
 
@@ -230,25 +251,6 @@ export const postRouter = router({
         },
         where: { id: post.id },
       })
-
-      // TODO: handle ipfs
-      // try {
-
-      //   const [res] = await Promise.all([
-      //     fetch(IPFS_ADD_URL, {
-      //       method: 'POST',
-      //       body: JSON.stringify({
-      //         ...newPost,
-      //         postStatus: PostStatus.PUBLISHED,
-      //         collectible,
-      //         creationId,
-      //       }),
-      //       headers: { 'Content-Type': 'application/json' },
-      //     }).then((d) => d.json()),
-      //     syncPostToHub(newPost as any),
-      //   ])
-      // } catch (error) {
-      // }
 
       await prisma.post.update({
         where: { id: post.id },
@@ -275,16 +277,6 @@ export const postRouter = router({
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
-
-      // sync google
-      // syncToGoogleDrive(ctx.token.uid, {
-      //   ...newPost,
-      //   postStatus: PostStatus.PUBLISHED,
-      //   collectible,
-      //   creationId,
-      //   cid: res.cid,
-      //   gateType,
-      // } as any)
 
       return newPost
     }),
@@ -416,5 +408,78 @@ function publishedSitePosts(siteId: string) {
       },
     },
     orderBy: { publishedAt: 'desc' },
+  })
+}
+
+/**
+ * Creates a newsletter and its associated delivery records for a post
+ *
+ * @param params - Parameters for creating the newsletter
+ * @param params.siteId - The ID of the site
+ * @param params.postId - The ID of the post to create newsletter for
+ * @param params.title - The title of the newsletter
+ * @param params.content - The content of the newsletter
+ * @param params.creatorId - The ID of the user creating the newsletter
+ *
+ * @returns The created or existing newsletter
+ *
+ * @remarks
+ * - If a newsletter already exists for the given post, returns the existing one
+ * - Creates delivery records for all active subscribers of the site
+ * - Uses a transaction to ensure data consistency
+ */
+async function createNewsletterWithDelivery(params: {
+  siteId: string
+  postId: string
+  title: string
+  content: string
+  creatorId: string
+}) {
+  const { siteId, postId, title, content, creatorId } = params
+
+  // Check if newsletter already exists for this post
+  const existingNewsletter = await prisma.newsletter.findFirst({
+    where: { postId },
+  })
+
+  if (existingNewsletter) {
+    return existingNewsletter
+  }
+
+  return prisma.$transaction(async (tx) => {
+    // Create Newsletter record
+    const newsletter = await tx.newsletter.create({
+      data: {
+        siteId,
+        postId,
+        title,
+        subject: 'Post',
+        content,
+        status: NewsletterStatus.SENDING,
+        creatorId,
+      },
+    })
+
+    // Get active subscribers
+    const subscribers = await tx.subscriber.findMany({
+      where: {
+        siteId,
+        status: SubscriberStatus.ACTIVE,
+      },
+    })
+
+    if (subscribers.length > 0) {
+      // Create Delivery records
+      await tx.delivery.createMany({
+        data: subscribers.map((subscriber) => ({
+          siteId,
+          newsletterId: newsletter.id,
+          subscriberId: subscriber.id,
+          status: DeliveryStatus.PENDING,
+        })),
+      })
+    }
+
+    return newsletter
   })
 }
