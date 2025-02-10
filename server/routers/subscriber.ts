@@ -104,8 +104,16 @@ export const subscriberRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.subscriber.delete({
-        where: { id: input.id },
+      return prisma.$transaction(async (tx) => {
+        // 1. Delete all related deliveries first
+        await tx.delivery.deleteMany({
+          where: { subscriberId: input.id },
+        })
+
+        // 2. Delete the subscriber
+        return tx.subscriber.delete({
+          where: { id: input.id },
+        })
       })
     }),
 
