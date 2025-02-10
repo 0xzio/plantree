@@ -11,10 +11,10 @@ const link = httpBatchLink({
   url: `/api/trpc`,
   transformer: superjson,
   async headers() {
-    const siteId = await get(CURRENT_SITE)
-    if (siteId) {
+    const site = await get(CURRENT_SITE)
+    if (site?.id) {
       return {
-        'X-ACTIVE-SITE-ID': siteId,
+        'X-ACTIVE-SITE-ID': site?.id,
       }
     } else {
       return {}

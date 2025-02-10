@@ -18,8 +18,8 @@ export function useSite() {
   } = useQuery({
     queryKey: ['current_site'],
     queryFn: async () => {
-      const siteId = await get(CURRENT_SITE)
-      const site = sites.find((s) => s.id === siteId)
+      const currentSite = await get(CURRENT_SITE)
+      const site = sites.find((s) => s.id === currentSite?.id)
       return site || sites[0]
     },
     enabled: !!session && sites.length > 0,

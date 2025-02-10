@@ -113,6 +113,7 @@ export const postRouter = router({
           authors: {
             create: [
               {
+                siteId: ctx.activeSiteId,
                 userId: ctx.token.uid,
               },
             ],
@@ -341,7 +342,10 @@ export const postRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const author = await prisma.author.create({
-        data: input,
+        data: {
+          siteId: ctx.activeSiteId,
+          ...input,
+        },
         include: {
           user: {
             select: {

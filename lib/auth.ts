@@ -204,6 +204,8 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
+        // console.log('=======google:', credentials)
+
         try {
           if (!credentials?.email || !credentials?.openid) {
             throw new Error('Login fail')
@@ -212,7 +214,7 @@ export const authOptions: NextAuthOptions = {
           const account = await initUserByGoogleInfo(credentials)
           return account
         } catch (e) {
-          console.log('=======>>>>e:', e)
+          console.log('=======>>>>e1:', e)
           return null
         }
       },

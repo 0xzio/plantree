@@ -60,11 +60,17 @@ export const SitesPopover = memo(function ProfilePopover({
   const site = useSiteContext()
 
   const initSiteId = useCallback(async () => {
-    const siteId = await get(CURRENT_SITE)
-    if (!siteId) {
-      await set(CURRENT_SITE, sites[0].id)
+    const site = await get(CURRENT_SITE)
+    if (!site) {
+      await set(CURRENT_SITE, sites[0])
+    } else {
+      if (data?.userId === site.userId) {
+        await set(CURRENT_SITE, site)
+      } else {
+        await set(CURRENT_SITE, sites[0])
+      }
     }
-  }, [sites])
+  }, [sites, data])
 
   useEffect(() => {
     if (!sites?.length) return
@@ -103,7 +109,7 @@ export const SitesPopover = memo(function ProfilePopover({
                 },
                 site,
               )
-              await set(CURRENT_SITE, site.id)
+              await set(CURRENT_SITE, site)
               push(getDashboardPath(site))
             }}
           >
