@@ -75,7 +75,12 @@ export function GeneralSettingForm({}: Props) {
         <FormField
           control={form.control}
           name="logo"
-          render={({ field }) => <FileUpload {...field} />}
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Site logo</FormLabel>
+              <FileUpload {...field} />
+            </FormItem>
+          )}
         />
 
         <FormField
@@ -83,9 +88,9 @@ export function GeneralSettingForm({}: Props) {
           name="name"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Site name</FormLabel>
               <FormDescription>
-                This is your public display name.
+                This is your public display site name.
               </FormDescription>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />
@@ -100,8 +105,12 @@ export function GeneralSettingForm({}: Props) {
           name="description"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Bio</FormLabel>
-              <FormDescription>A brief your introduction.</FormDescription>
+              <FormLabel>Site description</FormLabel>
+              <FormDescription>
+                A short description, used in your theme, meta data and search
+                results
+              </FormDescription>
+
               <FormControl>
                 <Textarea placeholder="" {...field} className="w-full" />
               </FormControl>
@@ -116,7 +125,11 @@ export function GeneralSettingForm({}: Props) {
           render={({ field }) => {
             return (
               <FormItem className="w-full h-full">
-                <FormLabel>About</FormLabel>
+                <FormLabel>About site</FormLabel>
+
+                <FormDescription>
+                  About this site, used in about page. results
+                </FormDescription>
                 <FormControl>
                   <div className="h-[360px]  border border-foreground/20 rounded-lg overflow-auto prose-neutral prose-p:leading-none">
                     <PlateEditor
