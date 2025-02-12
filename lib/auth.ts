@@ -426,6 +426,11 @@ export const authOptions: NextAuthOptions = {
           : []
       }
       if (trigger === 'update') {
+        if (session.type === 'UPDATE_PROFILE') {
+          if (session.displayName) token.name = session.displayName
+          if (session.image) token.picture = session.image
+        }
+
         const subscription = await prisma.subscription.findFirst({
           where: { userId: token.uid as string },
         })

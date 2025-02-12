@@ -55,9 +55,10 @@ export const SitesPopover = memo(function ProfilePopover({
   const { data } = useSession()
   const { push } = useRouter()
   const sigInState = useSignIn({})
-  const pathname = usePathname()
   const { data: sites = [] } = useMySites()
   const site = useSiteContext()
+
+  console.log('======site:', site)
 
   const initSiteId = useCallback(async () => {
     const site = await get(CURRENT_SITE)

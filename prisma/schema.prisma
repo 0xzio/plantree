@@ -862,7 +862,7 @@ model Newsletter {
 // Newsletter subscriber
 model Subscriber {
   id         String           @id @default(uuid()) @db.Uuid
-  email      String?          @unique @db.VarChar(255)
+  email      String?          @db.VarChar(255)
   status     SubscriberStatus @default(ACTIVE)
   source     String?          @db.VarChar(100) // Where they subscribed from
   createdAt  DateTime         @default(now())

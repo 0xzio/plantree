@@ -19,33 +19,30 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
-import { store } from '@/store'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter, useSearchParams } from 'next/navigation'
+import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { useAccount, useWriteContract } from 'wagmi'
 import { z } from 'zod'
-import { useProfileDialog } from './useProfileDialog'
 
 const FormSchema = z.object({
   image: z.string(),
-  name: z.string().min(1, {
-    message: 'Name must be at least 1 characters.',
+  displayName: z.string().min(1, {
+    message: 'Display name must be at least 1 characters.',
   }),
   bio: z.string(),
 })
 
-export function ProfileDialogForm() {
-  const { address = '' } = useAccount()
+export function ProfileSettingForm() {
   const { isPending, mutateAsync } = trpc.user.updateProfile.useMutation()
-  const { setIsOpen } = useProfileDialog()
   const { data, refetch } = trpc.user.me.useQuery()
+  const { update } = useSession()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
       image: '',
-      name: '',
+      displayName: '',
       bio: '',
     },
   })
@@ -54,7 +51,7 @@ export function ProfileDialogForm() {
     if (!data) return
     form.reset({
       image: data.image || '',
-      name: data.name || '',
+      displayName: data.displayName || '',
       bio: data.bio || '',
     })
   }, [data, form])
@@ -63,7 +60,10 @@ export function ProfileDialogForm() {
     try {
       await mutateAsync(data)
       refetch()
-      setIsOpen(false)
+      update({
+        type: 'UPDATE_PROFILE',
+        ...data,
+      })
       toast.success('Profile updated successfully!')
     } catch (error) {
       console.log('========error:', error)
@@ -75,20 +75,17 @@ export function ProfileDialogForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="flex flex-col items-center justify-center gap-3">
+        <div className="flex flex-col justify-center gap-3">
           <FormField
             control={form.control}
             name="image"
             render={({ field }) => <FileUpload {...field} />}
           />
-          <Badge variant="secondary" className="font-semibold">
-            {address}
-          </Badge>
         </div>
 
         <FormField
           control={form.control}
-          name="name"
+          name="displayName"
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>Name</FormLabel>
@@ -118,9 +115,11 @@ export function ProfileDialogForm() {
           )}
         />
 
-        <Button size="lg" type="submit" className="w-full">
-          {isPending ? <LoadingDots /> : <p>Save</p>}
-        </Button>
+        <div>
+          <Button size="lg" type="submit" className="w-32">
+            {isPending ? <LoadingDots /> : <p>Save</p>}
+          </Button>
+        </div>
       </form>
     </Form>
   )

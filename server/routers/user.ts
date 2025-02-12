@@ -43,7 +43,8 @@ export const userRouter = router({
     .input(
       z.object({
         image: z.string(),
-        name: z.string(),
+        name: z.string().optional(),
+        displayName: z.string().optional(),
         bio: z.string().optional(),
       }),
     )
