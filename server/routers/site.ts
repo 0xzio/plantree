@@ -1,7 +1,8 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import { redisKeys } from '@/lib/redisKeys'
 import { revalidateSite } from '@/lib/revalidateSite'
+import { MySite } from '@/lib/types'
 import {
   AuthType,
   CollaboratorRole,
@@ -14,8 +15,6 @@ import Redis from 'ioredis'
 import { z } from 'zod'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
-
-const redis = new Redis(process.env.REDIS_URL!)
 
 export const siteRouter = router({
   list: publicProcedure.query(async () => {
@@ -64,6 +63,10 @@ export const siteRouter = router({
 
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
+
+    const cachedMySites = await cacheHelper.getCachedMySites(userId)
+    if (cachedMySites) return cachedMySites
+
     const collaborators = await prisma.collaborator.findMany({
       where: { userId },
     })
@@ -77,7 +80,8 @@ export const siteRouter = router({
       include: { domains: true, channels: true },
     })
 
-    return sites
+    await cacheHelper.updateCachedMySites(userId, sites)
+    return sites as MySite[]
   }),
 
   byId: protectedProcedure
@@ -195,6 +199,8 @@ export const siteRouter = router({
       } catch (error) {}
 
       revalidateSite(newSite.domains)
+
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return newSite
     }),
 
@@ -250,6 +256,8 @@ export const siteRouter = router({
       })
       revalidateSite(domains)
 
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+
       return newDomain
     }),
 
@@ -269,6 +277,7 @@ export const siteRouter = router({
         where: { siteId: input.siteId },
       })
       revalidateSite(domains)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return true
     }),
 
@@ -318,6 +327,7 @@ export const siteRouter = router({
           where: { siteId: siteId },
         })
         revalidateSite(domains)
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         return res
       } catch (error) {
         console.log('===error:', error)
@@ -373,6 +383,8 @@ export const siteRouter = router({
         await tx.subscription.deleteMany({ where: { userId } })
         await tx.account.deleteMany({ where: { userId } })
         await tx.user.delete({ where: { id: userId } })
+
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         return true
       },
       {

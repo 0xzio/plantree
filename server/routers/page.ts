@@ -1,3 +1,4 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
 import { Page, PageStatus } from '@prisma/client'
@@ -21,10 +22,13 @@ export const pageRouter = router({
       }),
     )
     .query(async ({ ctx, input }) => {
-      return prisma.page.findMany({
+      const cachedPages = await cacheHelper.getCachedSitePages(input.siteId)
+      if (cachedPages) return cachedPages
+      const pages = await prisma.page.findMany({
         where: { siteId: input.siteId, isJournal: false },
         orderBy: { createdAt: 'desc' },
       })
+      return pages
     }),
 
   byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
@@ -91,11 +95,13 @@ export const pageRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return createPage({
+      const page = await createPage({
         userId: ctx.token.uid,
         siteId: input.siteId,
         title: '',
       })
+      await cacheHelper.updateCachedSitePages(input.siteId, null)
+      return page
     }),
 
   update: protectedProcedure
@@ -173,7 +179,7 @@ export const pageRouter = router({
 
       await Promise.all(updatedPromises)
       await cleanDeletedBlocks(page)
-
+      await cacheHelper.updateCachedSitePages(page.siteId, null)
       return page
     }),
 
@@ -184,8 +190,12 @@ export const pageRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const page = await prisma.page.findUniqueOrThrow({
+        where: { id: input.pageId },
+      })
       await prisma.block.deleteMany({ where: { pageId: input.pageId } })
       await prisma.page.delete({ where: { id: input.pageId } })
+      await cacheHelper.updateCachedSitePages(page.siteId, null)
       return true
     }),
 
@@ -209,6 +219,8 @@ export const pageRouter = router({
           slug: slug(page.title || page.id),
         },
       })
+
+      await cacheHelper.updateCachedSitePages(page.siteId, null)
 
       revalidateTag(`${page.siteId}-page-${page.slug}`)
       // revalidateTag(`${post.siteId}-posts`)

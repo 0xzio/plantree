@@ -46,11 +46,11 @@ export const Nav = () => {
     //   text: 'Rewards',
     //   to: '/rewards',
     // },
-    {
-      text: 'Download',
-      isExternal: true,
-      to: 'https://github.com/penx-labs/penx-desktop/releases',
-    },
+    // {
+    //   text: 'Download',
+    //   isExternal: true,
+    //   to: 'https://github.com/penx-labs/penx-desktop/releases',
+    // },
   ]
 
   return (

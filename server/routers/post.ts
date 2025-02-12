@@ -1,6 +1,9 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
+import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
 import {
   DeliveryStatus,
@@ -26,12 +29,20 @@ export const postRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId } = input
+
+      const cachedMySites = await cacheHelper.getCachedSitePosts(siteId)
+      if (cachedMySites) return cachedMySites
+
       let posts = await findSitePosts(siteId)
 
-      return posts.map((post) => ({
+      const sitePosts = posts.map((post) => ({
         ...post,
         image: getUrl(post.image || ''),
       }))
+
+      await cacheHelper.updateCachedSitePosts(siteId, posts)
+
+      return sitePosts as SitePost[]
     }),
 
   publishedPosts: publicProcedure
@@ -106,7 +117,7 @@ export const postRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.post.create({
+      const post = await prisma.post.create({
         data: {
           userId: ctx.token.uid,
           ...input,
@@ -120,6 +131,9 @@ export const postRouter = router({
           },
         },
       })
+
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      return post
     }),
 
   update: protectedProcedure
@@ -142,6 +156,7 @@ export const postRouter = router({
         },
       })
 
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
       return post
     }),
 
@@ -278,6 +293,8 @@ export const postRouter = router({
         data: { postCount: publishedCount },
       })
 
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
@@ -302,6 +319,8 @@ export const postRouter = router({
         data,
       })
 
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
@@ -317,6 +336,8 @@ export const postRouter = router({
         data: { postStatus: PostStatus.ARCHIVED },
       })
 
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
@@ -329,6 +350,8 @@ export const postRouter = router({
       const post = await prisma.post.delete({
         where: { id: input },
       })
+
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       return post
     }),

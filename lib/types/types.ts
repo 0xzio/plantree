@@ -1,4 +1,15 @@
-import { Account, Domain, Site, Subscription, User } from '@prisma/client'
+import {
+  Account,
+  Channel,
+  Domain,
+  Post,
+  PostTag,
+  ProviderType,
+  Site,
+  Subscription,
+  Tag,
+  User,
+} from '@prisma/client'
 import { Address } from 'viem'
 
 export type App = {
@@ -254,4 +265,21 @@ export enum DeployStatus {
   SUCCESS = 'SUCCESS',
   DOMAIN_PENDING = 'DOMAIN_PENDING',
   FAIL = 'FAIL',
+}
+
+export type MySite = Site & {
+  channels: Channel[]
+  domains: Domain[]
+}
+
+export type SitePost = Post & {
+  postTags: Array<PostTag & { tag: Tag }>
+  user: {
+    displayName: string | null
+    image: string | null
+    accounts: Array<{
+      providerAccountId: string
+      providerType: ProviderType
+    }>
+  }
 }

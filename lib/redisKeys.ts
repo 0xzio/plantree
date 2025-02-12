@@ -1,6 +1,10 @@
 export const redisKeys = {
-  posts() {
-    return `posts`
+  sitePosts(siteId: string) {
+    return `site-posts:${siteId}`
+  },
+
+  sitePages(siteId: string) {
+    return `site-pages:${siteId}`
   },
 
   publishedPosts() {
@@ -16,6 +20,6 @@ export const redisKeys = {
   },
 
   mySites(uid: string) {
-    return `spaces:${uid}`
+    return `sites:${uid}`
   },
 }
