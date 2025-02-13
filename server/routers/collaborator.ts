@@ -1,11 +1,8 @@
-import { NETWORK, NetworkNames } from '@/lib/constants'
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { CollaboratorRole, ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import { createPublicClient, http } from 'viem'
-import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
-import { getEthPrice } from '../lib/getEthPrice'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const collaboratorRouter = router({
@@ -77,6 +74,8 @@ export const collaboratorRouter = router({
           message: 'User is a contributor already!',
         })
       }
+
+      await cacheHelper.updateCachedMySites(user.id, null)
 
       return prisma.collaborator.create({
         data: {
@@ -151,8 +150,11 @@ export const collaboratorRouter = router({
         })
       }
 
-      return prisma.collaborator.delete({
+      const collaborator = await prisma.collaborator.delete({
         where: { id: input.collaboratorId },
       })
+
+      await cacheHelper.updateCachedMySites(collaborator.userId, null)
+      return true
     }),
 })
