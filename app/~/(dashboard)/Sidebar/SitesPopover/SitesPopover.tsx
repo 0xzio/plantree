@@ -58,8 +58,6 @@ export const SitesPopover = memo(function ProfilePopover({
   const { data: sites = [] } = useMySites()
   const site = useSiteContext()
 
-  console.log('======site:', site)
-
   const initSiteId = useCallback(async () => {
     const site = await get(CURRENT_SITE)
     if (!site) {

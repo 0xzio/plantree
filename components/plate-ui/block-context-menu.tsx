@@ -1,23 +1,21 @@
-'use client';
+'use client'
 
-import { useCallback, useState } from 'react';
-
-import { AIChatPlugin } from '@udecode/plate-ai/react';
-import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { unsetNodes } from '@udecode/plate-common';
+import { useCallback, useState } from 'react'
+import { AIChatPlugin } from '@udecode/plate-ai/react'
+import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
+import { unsetNodes } from '@udecode/plate-common'
 import {
-  ParagraphPlugin,
   focusEditor,
+  ParagraphPlugin,
   useEditorPlugin,
-} from '@udecode/plate-common/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { IndentListPlugin } from '@udecode/plate-indent-list/react';
+} from '@udecode/plate-common/react'
+import { HEADING_KEYS } from '@udecode/plate-heading'
+import { IndentListPlugin } from '@udecode/plate-indent-list/react'
 import {
   BLOCK_CONTEXT_MENU_ID,
   BlockMenuPlugin,
   BlockSelectionPlugin,
-} from '@udecode/plate-selection/react';
-
+} from '@udecode/plate-selection/react'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -27,13 +25,13 @@ import {
   ContextMenuSubContent,
   ContextMenuSubTrigger,
   ContextMenuTrigger,
-} from './context-menu';
+} from './context-menu'
 
-type Value = 'askAI' | null;
+type Value = 'askAI' | null
 
 export function BlockContextMenu({ children }: { children: React.ReactNode }) {
-  const { api, editor } = useEditorPlugin(BlockMenuPlugin);
-  const [value, setValue] = useState<Value>(null);
+  const { api, editor } = useEditorPlugin(BlockMenuPlugin)
+  const [value, setValue] = useState<Value>(null)
 
   const handleTurnInto = useCallback(
     (type: string) => {
@@ -42,39 +40,39 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
         .blockSelection.getNodes()
         .forEach(([node, path]) => {
           if (node[IndentListPlugin.key]) {
-            unsetNodes(editor, [IndentListPlugin.key, 'indent'], { at: path });
+            unsetNodes(editor, [IndentListPlugin.key, 'indent'], { at: path })
           }
 
-          editor.tf.toggle.block({ type }, { at: path });
-        });
+          editor.tf.toggle.block({ type }, { at: path })
+        })
     },
-    [editor]
-  );
+    [editor],
+  )
 
   const handleAlign = useCallback(
     (align: 'center' | 'left' | 'right') => {
       editor
         .getTransforms(BlockSelectionPlugin)
-        .blockSelection.setNodes({ align });
+        .blockSelection.setNodes({ align })
     },
-    [editor]
-  );
+    [editor],
+  )
 
   return (
     <ContextMenu modal={false}>
       <ContextMenuTrigger
         asChild
         onContextMenu={(event) => {
-          const dataset = (event.target as HTMLElement).dataset;
+          const dataset = (event.target as HTMLElement).dataset
 
-          const disabled = dataset?.slateEditor === 'true';
+          const disabled = dataset?.slateEditor === 'true'
 
-          if (disabled) return event.preventDefault();
+          if (disabled) return event.preventDefault()
 
           api.blockMenu.show(BLOCK_CONTEXT_MENU_ID, {
             x: event.clientX,
             y: event.clientY,
-          });
+          })
         }}
       >
         <div className="w-full">{children}</div>
@@ -82,19 +80,19 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
       <ContextMenuContent
         className="w-64"
         onCloseAutoFocus={(e) => {
-          e.preventDefault();
+          e.preventDefault()
 
           if (value === 'askAI') {
-            editor.getApi(AIChatPlugin).aiChat.show();
+            editor.getApi(AIChatPlugin).aiChat.show()
           }
 
-          setValue(null);
+          setValue(null)
         }}
       >
         <ContextMenuGroup>
           <ContextMenuItem
             onClick={() => {
-              setValue('askAI');
+              setValue('askAI')
             }}
           >
             Ask AI
@@ -103,8 +101,8 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
             onClick={() => {
               editor
                 .getTransforms(BlockSelectionPlugin)
-                .blockSelection.removeNodes();
-              focusEditor(editor);
+                .blockSelection.removeNodes()
+              focusEditor(editor)
             }}
           >
             Delete
@@ -114,8 +112,8 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
               editor
                 .getTransforms(BlockSelectionPlugin)
                 .blockSelection.duplicate(
-                  editor.getApi(BlockSelectionPlugin).blockSelection.getNodes()
-                );
+                  editor.getApi(BlockSelectionPlugin).blockSelection.getNodes(),
+                )
             }}
           >
             Duplicate
@@ -184,5 +182,5 @@ export function BlockContextMenu({ children }: { children: React.ReactNode }) {
         </ContextMenuGroup>
       </ContextMenuContent>
     </ContextMenu>
-  );
+  )
 }

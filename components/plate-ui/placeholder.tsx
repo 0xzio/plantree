@@ -44,13 +44,23 @@ export const withPlaceholders = (
       key: ParagraphPlugin.key,
       hideOnBlur: true,
       placeholder,
-      query: {
-        maxLevel: 1,
-      },
+      // query: {
+      //   maxLevel: 1,
+      // },
     },
     {
       key: HEADING_KEYS.h1,
       hideOnBlur: false,
-      placeholder: 'Untitled',
+      placeholder: 'Heading 1',
+    },
+    {
+      key: HEADING_KEYS.h2,
+      hideOnBlur: false,
+      placeholder: 'Heading 2',
+    },
+    {
+      key: HEADING_KEYS.h3,
+      hideOnBlur: false,
+      placeholder: 'Heading 3',
     },
   ])
