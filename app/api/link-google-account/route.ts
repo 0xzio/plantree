@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 
   if (!access_token || !refresh_token || !expiry_date || !userId) {
     return NextResponse.redirect(
-      new URL('/~/settings/link-accounts?error=account-linked', req.url),
+      new URL('/~/settings/link-accounts?error=link-fail', req.url),
     )
   }
 
@@ -24,9 +24,14 @@ export async function GET(req: NextRequest) {
     where: { providerAccountId: openid! },
   })
 
+  console.log('=======account:', account)
+
   if (account) {
     return NextResponse.redirect(
-      new URL('/~/settings/link-accounts?error=account-linked', req.url),
+      new URL(
+        `/~/settings/link-accounts?error=account-linked&openid=${openid}`,
+        req.url,
+      ),
     )
   }
   await prisma.account.create({

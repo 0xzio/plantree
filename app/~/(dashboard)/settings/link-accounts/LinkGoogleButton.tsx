@@ -25,6 +25,8 @@ export function LinkGoogleButton() {
       toast.error(
         'Link failed! This is google account is already linked to another account.',
       )
+    } else if (error === 'link-fail') {
+      toast.error('Link failed! Fail to fetch google user info.')
     } else {
       const errorMessage = Array.isArray(error) ? error.pop() : error
       errorMessage && toast.error(errorMessage)
