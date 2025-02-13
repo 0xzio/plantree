@@ -11,6 +11,7 @@ import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
 import { ParagraphPlugin, type PlateEditor } from '@udecode/plate-common/react'
 import { DatePlugin } from '@udecode/plate-date/react'
+import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { TocPlugin } from '@udecode/plate-heading/react'
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list'
@@ -148,6 +149,12 @@ const groups: Group[] = [
         label: 'Table',
         value: TablePlugin.key,
       },
+
+      // {
+      //   icon: <Table />,
+      //   label: 'Excalidraw',
+      //   value: ExcalidrawPlugin.key,
+      // },
       {
         icon: <Quote />,
         keywords: ['citation', 'blockquote', 'quote', '>'],
