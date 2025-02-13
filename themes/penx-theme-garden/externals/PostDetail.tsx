@@ -6,7 +6,6 @@ import { Post } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
-import SectionContainer from '../components/SectionContainer'
 
 interface LayoutProps {
   post: Post
@@ -18,9 +17,7 @@ interface LayoutProps {
 
 export function PostDetail({ post, next, prev, className }: LayoutProps) {
   return (
-    // <SectionContainer className={cn('lg:max-w-3xl mx-auto px-0', className)}></SectionContainer>
-
-    <div>
+    <article className={cn('mt-20 mx-auto w-full lg:max-w-3xl', className)}>
       <header className="space-y-4 pb-4">
         <PageTitle className="mb-0">{post.title}</PageTitle>
         <div className="flex items-center justify-between">
@@ -83,6 +80,6 @@ export function PostDetail({ post, next, prev, className }: LayoutProps) {
           </div>
         </footer>
       </div>
-    </div>
+    </article>
   )
 }

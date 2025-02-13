@@ -7,6 +7,7 @@ import { produce } from 'immer'
 import ky from 'ky'
 import { unstable_cache } from 'next/cache'
 import {
+  defaultNavLinks,
   editorDefaultValue,
   isProd,
   PostStatus,
@@ -61,6 +62,7 @@ export async function getSite(params: any) {
         logo: getUrl(site.logo || ''),
         image: getUrl(site.image || ''),
         about: getAbout(),
+        navLinks: site.navLinks || defaultNavLinks,
       } as any as Site
     },
     [`site-${domain}`],

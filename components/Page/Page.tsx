@@ -109,8 +109,7 @@ export function Page() {
           showAddButton
           value={content}
           onChange={(v) => {
-            console.log('=======v:', v)
-
+            // console.log('=======v:', v)
             setData({ ...data, elements: v })
             debounced({ ...data, elements: v })
           }}
