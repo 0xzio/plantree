@@ -1,6 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { getEmailTpl } from '@/lib/getEmailTpl'
+import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
@@ -255,6 +256,11 @@ export const postRouter = router({
       }
 
       if (shouldCreateNewsletter) {
+        const site = await prisma.site.findUniqueOrThrow({
+          where: { id: input.siteId },
+          include: { domains: true },
+        })
+        const domain = getSiteDomain(site) || site.domains[0]
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
@@ -263,6 +269,7 @@ export const postRouter = router({
           content: getEmailTpl(
             info.title || '',
             renderSlateToHtml(JSON.parse(info.content)),
+            `https://${domain.domain}.penx.io/posts/${post.slug}`,
             post.image ? getUrl(post.image) : '',
           ),
           creatorId: ctx.token.uid,

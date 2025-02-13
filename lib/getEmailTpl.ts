@@ -1,6 +1,7 @@
 export function getEmailTpl(
   title: string,
   content: string,
+  url: string,
   cover = '',
 ): string {
   let coverImage = ``
@@ -107,7 +108,7 @@ export function getEmailTpl(
                             <p
                               style="font-size:16px;line-height:24px;margin:16px 0;color:rgb(107,114,128)">${content}</p>
                             <a
-                              href="https://react.email"
+                              href="${url}"
                               style="line-height:100%;text-decoration:none;display:inline-block;max-width:100%;mso-padding-alt:0px;margin-top:16px;border-radius:8px;background-color:rgb(79,70,229);padding-left:40px;padding-right:40px;padding-top:12px;padding-bottom:12px;font-weight:600;color:rgb(255,255,255);padding:12px 40px 12px 40px"
                               target="_blank"
                               ><span
