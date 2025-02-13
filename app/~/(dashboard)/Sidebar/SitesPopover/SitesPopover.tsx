@@ -43,7 +43,6 @@ import {
 } from 'lucide-react'
 import { signOut, useSession } from 'next-auth/react'
 import { usePathname, useRouter } from 'next/navigation'
-import { useAccount } from 'wagmi'
 
 interface Props {
   className?: string

@@ -49,8 +49,8 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const { data: site, isLoading } = useQuery({
     queryKey: ['current_site'],
     queryFn: async () => {
-      const siteId = await get(CURRENT_SITE)
-      const site = sites.find((s) => s.id === siteId)
+      const currentSite = await get(CURRENT_SITE)
+      const site = sites.find((s) => s.id === currentSite?.id)
       return site || sites[0]
     },
     enabled: !!session && sites.length > 0,
@@ -89,7 +89,9 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           {/* <NavbarWrapper /> */}
           <CreationDialog />
           <div
-            className={cn(!isFullWidth && 'mx-auto md:max-w-3xl pt-16 pb-20')}
+            className={cn(
+              !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
+            )}
           >
             {children}
           </div>

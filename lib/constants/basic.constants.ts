@@ -111,27 +111,3 @@ export const defaultNavLinks: NavLink[] = [
     visible: true,
   },
 ]
-
-const reservedDomains = [
-  'admin',
-  'api',
-  'graphql',
-  'cdn',
-  'next',
-  'docs',
-  'help',
-  'blog',
-  'creator-fi',
-  'help',
-  'news',
-  'status',
-  'support',
-  'app',
-  'community',
-  'profile',
-  'settings',
-  'articles',
-  'images',
-  'videos',
-  'podcasts',
-]
