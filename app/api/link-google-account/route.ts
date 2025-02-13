@@ -14,7 +14,7 @@ export async function GET(req: NextRequest) {
   const picture = url.searchParams.get('picture')
   const email = url.searchParams.get('email')
 
-  if (!access_token || !refresh_token || !expiry_date || !userId) {
+  if (!access_token || !expiry_date || !userId) {
     return NextResponse.redirect(
       new URL('/~/settings/link-accounts?error=link-fail', req.url),
     )

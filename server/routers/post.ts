@@ -1,5 +1,6 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import { getEmailTpl } from '@/lib/getEmailTpl'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
@@ -258,7 +259,12 @@ export const postRouter = router({
           siteId: input.siteId,
           postId: post.id,
           title: info.title || '',
-          content: renderSlateToHtml(JSON.parse(info.content)),
+          // content: renderSlateToHtml(JSON.parse(info.content)),
+          content: getEmailTpl(
+            info.title || '',
+            renderSlateToHtml(JSON.parse(info.content)),
+            post.image ? getUrl(post.image) : '',
+          ),
           creatorId: ctx.token.uid,
         })
       }
