@@ -13,6 +13,7 @@ import {
 import { TRPCError } from '@trpc/server'
 import Redis from 'ioredis'
 import { z } from 'zod'
+import { reservedDomains } from '../lib/constants'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
@@ -242,6 +243,13 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { siteId } = input
+      if (reservedDomains.includes(input.domain)) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `"${input.domain}" is reserved and cannot be used.`,
+        })
+      }
+
       const newDomain = await prisma.domain.create({
         data: {
           domain: input.domain,
