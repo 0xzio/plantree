@@ -1,13 +1,15 @@
 import { ReactNode } from 'react'
 import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
+import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
-import { Post } from '@/lib/theme.types'
+import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
 
 interface LayoutProps {
+  site: Site
   post: Post
   children: ReactNode
   className?: string
@@ -16,6 +18,7 @@ interface LayoutProps {
 }
 
 export function PostDetail({
+  site,
   post,
   next,
   prev,
@@ -41,6 +44,7 @@ export function PostDetail({
       <div className="grid-rows-[auto_1fr]">
         <div className="prose max-w-none pb-8 dark:prose-invert">
           <ContentRender content={post.content} />
+          <SubscribeNewsletterCard site={site} />
         </div>
 
         {post.cid && (

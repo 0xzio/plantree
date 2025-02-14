@@ -1,5 +1,6 @@
 'use client'
 
+import { Site } from '@/lib/theme.types'
 import { SubscriptionInSession } from '@/lib/types'
 import { cn } from '@/lib/utils'
 import { Post } from '@prisma/client'
@@ -33,13 +34,14 @@ function checkMembership(subscriptions: SubscriptionInSession[]) {
 }
 
 interface Props {
+  site: Site
   postId: string
   post: Post
   prev: Post
   next: Post
 }
 
-export function PaidContent({ postId, post, next, prev }: Props) {
+export function PaidContent({ site, postId, post, next, prev }: Props) {
   const { data: session, status } = useSession()
 
   if (status === 'loading') return null
@@ -49,6 +51,7 @@ export function PaidContent({ postId, post, next, prev }: Props) {
     return (
       <div>
         <PostDetail
+          site={site}
           post={{
             ...post,
             content: getContent(post, true),
@@ -72,6 +75,7 @@ export function PaidContent({ postId, post, next, prev }: Props) {
   return (
     <div className="">
       <PostDetail
+        site={site}
         post={{
           ...post,
           content: hasMembership ? getContent(post) : getContent(post, true),

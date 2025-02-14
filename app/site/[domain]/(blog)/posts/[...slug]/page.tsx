@@ -84,5 +84,13 @@ export default async function Page({
     )
   }
 
-  return <PaidContent postId={post.id} post={post} next={next} prev={prev} />
+  return (
+    <PaidContent
+      site={site}
+      postId={post.id}
+      post={post}
+      next={next}
+      prev={prev}
+    />
+  )
 }

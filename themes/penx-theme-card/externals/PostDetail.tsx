@@ -2,13 +2,15 @@ import { ReactNode } from 'react'
 import { ContentRender } from '@/components/theme-ui/ContentRender/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
-import { Post } from '@/lib/theme.types'
+import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Post, Site } from '@/lib/theme.types'
 import { formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Image from '../components/Image'
 import Link from '../components/Link'
 
 interface LayoutProps {
+  site: Site
   post: Post
   children: ReactNode
   className?: string
@@ -16,7 +18,7 @@ interface LayoutProps {
   prev?: Post
 }
 
-export function PostDetail({ post, className, next, prev }: LayoutProps) {
+export function PostDetail({ site, post, className, next, prev }: LayoutProps) {
   return (
     <article className="mt-20 mx-auto w-full lg:max-w-3xl">
       <header className="space-y-4 pb-4">
@@ -49,6 +51,7 @@ export function PostDetail({ post, className, next, prev }: LayoutProps) {
       <div className="grid-rows-[auto_1fr]">
         <div className="prose max-w-none pb-8 dark:prose-invert">
           <ContentRender content={post.content} />
+          <SubscribeNewsletterCard site={site} />
         </div>
 
         {post.cid && (
