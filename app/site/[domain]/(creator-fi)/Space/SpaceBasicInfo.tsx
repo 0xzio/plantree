@@ -20,6 +20,7 @@ export function SpaceBasicInfo({}: Props) {
   return (
     <div className="flex items-center gap-2">
       <UpdateSpaceDialog />
+
       <img
         alt={space.name || ''}
         className="w-20 h-20 rounded-lg shadow-sm bg-background"

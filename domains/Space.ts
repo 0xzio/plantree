@@ -1,4 +1,4 @@
-import { editorDefaultValue, IPFS_GATEWAY } from '@/lib/constants'
+import { editorDefaultValue, IPFS_GATEWAY, STATIC_URL } from '@/lib/constants'
 import { precision } from '@/lib/math'
 import { SpaceType } from '@/lib/types'
 import { Address } from 'viem'
@@ -88,6 +88,10 @@ export class Space {
     const { logo } = this.raw
     if (!logo) return ''
     if (logo.startsWith('http')) return logo
+
+    if (logo.startsWith('/')) {
+      return STATIC_URL + logo
+    }
     return IPFS_GATEWAY + `/ipfs/${logo}`
   }
 

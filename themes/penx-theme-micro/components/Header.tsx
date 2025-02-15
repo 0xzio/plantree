@@ -43,15 +43,17 @@ export const Header = ({ site }: Props) => {
           })}
         </div>
 
-        <Link
-          href="/membership"
-          className={cn(
-            'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
-            'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
-          )}
-        >
-          Membership
-        </Link>
+        {site.spaceId && (
+          <Link
+            href="/membership"
+            className={cn(
+              'font-medium hover:text-brand-500 text-foreground/90',
+              'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
+            )}
+          >
+            Membership
+          </Link>
+        )}
       </div>
 
       <div className="flex item-center gap-2">
