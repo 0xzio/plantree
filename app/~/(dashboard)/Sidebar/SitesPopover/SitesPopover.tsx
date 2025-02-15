@@ -59,16 +59,13 @@ export const SitesPopover = memo(function ProfilePopover({
 
   const initSiteId = useCallback(async () => {
     const site = await get(CURRENT_SITE)
+    console.log('====site:', site)
+
     if (!site) {
+      console.log('set.......x')
       await set(CURRENT_SITE, sites[0])
-    } else {
-      if (data?.userId === site.userId) {
-        await set(CURRENT_SITE, site)
-      } else {
-        await set(CURRENT_SITE, sites[0])
-      }
     }
-  }, [sites, data])
+  }, [sites])
 
   useEffect(() => {
     if (!sites?.length) return
