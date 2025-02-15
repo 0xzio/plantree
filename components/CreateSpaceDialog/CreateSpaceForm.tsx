@@ -20,11 +20,13 @@ import { spaceFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { appEmitter } from '@/lib/app-emitter'
 import { checkChain } from '@/lib/checkChain'
+import { STATIC_URL } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { getDashboardPath } from '@/lib/getDashboardPath'
 import { revalidatePath } from '@/lib/revalidatePath'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api } from '@/lib/trpc'
+import { uniqueId } from '@/lib/unique-id'
 import { wagmiConfig } from '@/lib/wagmi'
 import { zodResolver } from '@hookform/resolvers/zod'
 import {
@@ -65,6 +67,13 @@ const FormSchema = z.object({
       message: 'Name must be no more than 10 characters.',
     }),
 })
+async function uploadJson(key: string, value: any) {
+  const response = await fetch(`${STATIC_URL}/space-protocol/${key}`, {
+    method: 'PUT',
+    body: JSON.stringify(value),
+  }).then((d) => d.json())
+  return response
+}
 
 export function CreateSpaceForm() {
   const address = useAddress()
@@ -144,15 +153,11 @@ export function CreateSpaceForm() {
     try {
       await checkChain()
 
-      const res = await fetch('/api/ipfs-add', {
-        method: 'POST',
-        body: JSON.stringify({
-          logo: data.logo,
-        }),
-        headers: { 'Content-Type': 'application/json' },
-      }).then((d) => d.json())
+      const res = await uploadJson(`spaces/${uniqueId()}`, {
+        logo: data.logo,
+      })
 
-      console.log('====res:', res, price)
+      const uri = `/${res.key}`
 
       const hash = await writeContractAsync({
         address: addressMap.SpaceFactory,
@@ -163,7 +168,7 @@ export function CreateSpaceForm() {
             appId: BigInt(1),
             spaceName: data.name,
             symbol: data.symbolName,
-            uri: res.cid,
+            uri,
             preBuyEthAmount: BigInt(0),
             referral: zeroAddress,
           },
