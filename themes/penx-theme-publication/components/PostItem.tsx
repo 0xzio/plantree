@@ -77,7 +77,7 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
 
   return (
     <div className={cn('flex justify-between items-center gap-10', className)}>
-      <div className="flex flex-col gap-3 py-8">
+      <div className="flex flex-col gap-3 py-8 flex-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 text-sm">
             <AuthorAvatar post={post} />

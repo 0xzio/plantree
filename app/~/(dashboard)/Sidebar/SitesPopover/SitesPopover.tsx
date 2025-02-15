@@ -21,7 +21,7 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
-import { CURRENT_SITE, ROOT_DOMAIN } from '@/lib/constants'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
 import { queryClient } from '@/lib/queryClient'
 import { cn, getUrl } from '@/lib/utils'
@@ -51,26 +51,11 @@ interface Props {
 export const SitesPopover = memo(function ProfilePopover({
   className = '',
 }: Props) {
-  const { data } = useSession()
+  const { data, update } = useSession()
   const { push } = useRouter()
   const sigInState = useSignIn({})
   const { data: sites = [] } = useMySites()
   const site = useSiteContext()
-
-  const initSiteId = useCallback(async () => {
-    const site = await get(CURRENT_SITE)
-    console.log('====site:', site)
-
-    if (!site) {
-      console.log('set.......x')
-      await set(CURRENT_SITE, sites[0])
-    }
-  }, [sites])
-
-  useEffect(() => {
-    if (!sites?.length) return
-    initSiteId()
-  }, [sites, initSiteId])
 
   if (!data) return <div></div>
 
@@ -104,7 +89,12 @@ export const SitesPopover = memo(function ProfilePopover({
                 },
                 site,
               )
-              await set(CURRENT_SITE, site)
+
+              window.__SITE_ID__ = site.id
+              update({
+                type: 'UPDATE_ACTIVE_SITE',
+                activeSiteId: site.id,
+              })
               push(getDashboardPath(site))
             }}
           >

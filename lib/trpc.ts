@@ -5,16 +5,16 @@ import { createTRPCClient, httpBatchLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
 import { get } from 'idb-keyval'
 import superjson from 'superjson'
-import { CURRENT_SITE } from './constants'
 
 const link = httpBatchLink({
   url: `/api/trpc`,
   transformer: superjson,
   async headers() {
-    const site = await get(CURRENT_SITE)
-    if (site?.id) {
+    // console.log('=======window.__SITE_ID__:', window.__SITE_ID__)
+
+    if (window.__SITE_ID__) {
       return {
-        'X-ACTIVE-SITE-ID': site?.id,
+        'X-ACTIVE-SITE-ID': window.__SITE_ID__,
       }
     } else {
       return {}

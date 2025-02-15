@@ -20,7 +20,6 @@ export const SECONDS_PER_MONTH = BigInt(24 * 60 * 60 * 30) // 30 days
 export const SECONDS_PER_DAY = BigInt(24 * 60 * 60) // 1 days
 
 export const SITE_MODE = 'SITE_MODE'
-export const CURRENT_SITE = 'CURRENT_SITE'
 
 export enum TradeType {
   BUY = 'BUY',
