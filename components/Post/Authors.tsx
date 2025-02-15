@@ -48,7 +48,7 @@ export function Authors({ post }: { post: Post }) {
               className="inline-flex w-5 h-5 rounded-full hover:bg-foreground/50 hover:text-background items-center justify-center transition-colors cursor-pointer"
               onClick={async () => {
                 try {
-                  await deleteAuthor({ authorId: item.id })
+                  await deleteAuthor({ postId: post.id, authorId: item.id })
                   updatePost({
                     id: post.id,
                     authors: post.authors.filter(

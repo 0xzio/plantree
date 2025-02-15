@@ -1,5 +1,6 @@
 import {
   Account,
+  Author,
   Channel,
   Domain,
   Post,
@@ -282,4 +283,18 @@ export type SitePost = Post & {
       providerType: ProviderType
     }>
   }
+}
+
+export type PostById = Post & {
+  postTags: Array<PostTag & { tag: Tag }>
+  authors: Array<
+    Author & {
+      user: {
+        name: string | null
+        image: string | null
+        displayName: string | null
+        ensName: string | null
+      }
+    }
+  >
 }

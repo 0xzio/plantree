@@ -64,6 +64,8 @@ export const postRouter = router({
     }),
 
   byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const cachedPost = await cacheHelper.getCachedPost(input)
+    if (cachedPost) return cachedPost
     const post = await prisma.post.findUniqueOrThrow({
       include: {
         postTags: { include: { tag: true } },
@@ -83,6 +85,7 @@ export const postRouter = router({
       where: { id: input },
     })
 
+    await cacheHelper.updateCachedPost(post.id, post)
     // syncToGoogleDrive(ctx.token.uid, post as any)
     // console.log('post-------xxxxxxxxxx:', post?.postTags)
     return post
@@ -158,6 +161,7 @@ export const postRouter = router({
         },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
       return post
     }),
@@ -176,6 +180,8 @@ export const postRouter = router({
         where: { id },
         data: { image },
       })
+
+      await cacheHelper.updateCachedPost(post.id, null)
 
       return post
     }),
@@ -306,6 +312,7 @@ export const postRouter = router({
         data: { postCount: publishedCount },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
@@ -332,6 +339,7 @@ export const postRouter = router({
         data,
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
@@ -349,6 +357,7 @@ export const postRouter = router({
         data: { postStatus: PostStatus.ARCHIVED },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       revalidateTag(`posts-${post.slug}`)
@@ -364,6 +373,7 @@ export const postRouter = router({
         where: { id: input },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       return post
@@ -393,12 +403,15 @@ export const postRouter = router({
           },
         },
       })
+
+      await cacheHelper.updateCachedPost(input.postId, null)
       return author
     }),
 
   deleteAuthor: protectedProcedure
     .input(
       z.object({
+        postId: z.string(),
         authorId: z.string(),
       }),
     )
@@ -406,6 +419,8 @@ export const postRouter = router({
       await prisma.author.delete({
         where: { id: input.authorId },
       })
+
+      await cacheHelper.updateCachedPost(input.postId, null)
       return true
     }),
 })

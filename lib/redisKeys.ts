@@ -7,6 +7,10 @@ export const redisKeys = {
     return `site-pages:${siteId}`
   },
 
+  post(postId: string) {
+    return `post:${postId}`
+  },
+
   publishedPosts() {
     return `publishedPosts`
   },

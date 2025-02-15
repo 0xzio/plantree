@@ -2,7 +2,7 @@ import { Page } from '@prisma/client'
 import { produce } from 'immer'
 import Redis from 'ioredis'
 import { redisKeys } from './redisKeys'
-import { MySite, SitePost } from './types'
+import { MySite, PostById, SitePost } from './types'
 
 const redis = new Redis(process.env.REDIS_URL!)
 
@@ -91,6 +91,30 @@ export const cacheHelper = {
       redis.del(key)
     } else {
       redis.set(key, JSON.stringify(pages), 'EX', 60 * 60 * 24)
+    }
+  },
+
+  async getCachedPost(postId: string): Promise<PostById | undefined> {
+    const key = redisKeys.post(postId)
+    try {
+      const str = await redis.get(key)
+      if (str) {
+        const post = JSON.parse(str)
+        const postById = post as PostById
+        return produce(postById, (draft) => {
+          draft.createdAt = new Date(draft.createdAt)
+          draft.updatedAt = new Date(draft.updatedAt)
+        })
+      }
+    } catch (error) {}
+  },
+
+  async updateCachedPost(postId: string, post: PostById | null) {
+    const key = redisKeys.post(postId)
+    if (!post) {
+      redis.del(key)
+    } else {
+      redis.set(key, JSON.stringify(post), 'EX', 60 * 60 * 24)
     }
   },
 }
