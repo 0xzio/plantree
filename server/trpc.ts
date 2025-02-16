@@ -72,7 +72,7 @@ export const protectedProcedure = t.procedure.use(
       [
         'page.create',
         'database.create',
-        'asset.create',
+        // 'asset.create',
         'post.create',
       ].includes(path)
     ) {

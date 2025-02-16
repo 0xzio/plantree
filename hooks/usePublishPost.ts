@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useCheckChain } from '@/hooks/useCheckChain'
-import { Post, postAtom, usePost } from '@/hooks/usePost'
+import { loadPost, Post, postAtom, usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { creationFactoryAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
@@ -67,6 +67,8 @@ export function usePublishPost() {
           delivered,
           content: post.content,
         })
+
+        await loadPost(post.id)
 
         setLoading(false)
         revalidateMetadata(`posts`)
