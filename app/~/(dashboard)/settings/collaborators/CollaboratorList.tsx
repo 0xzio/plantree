@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
@@ -85,7 +85,7 @@ export default function CollaboratorList({}: Props) {
                   <SelectRole collaborator={item} />
                 </TableCell>
                 <TableCell className="flex space-x-3 justify-end">
-                  <DeleteConfirmDialog
+                  <ConfirmDialog
                     title="Delete Confirmation"
                     content="Are you sure you want to delete this item? This action cannot be undone."
                     onConfirm={async () => {

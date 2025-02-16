@@ -29,11 +29,12 @@ interface Props {
   content: string
   onConfirm: () => Promise<any>
   tooltipContent?: string
+  children?: React.ReactNode
 }
 
-export const DeleteConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
-  function DeleteConfirmDialog(
-    { title, content, onConfirm, tooltipContent },
+export const ConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
+  function ConfirmDialog(
+    { title, children, content, onConfirm, tooltipContent },
     ref,
   ) {
     const [isOpen, setIsOpen] = React.useState(false)
@@ -44,11 +45,10 @@ export const DeleteConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
         <AlertDialogTrigger asChild>
           <TooltipProvider delayDuration={50}>
             <Tooltip>
-              <TooltipTrigger asChild>
-                <Trash2
-                  className="h-4 w-4 cursor-pointer text-destructive hover:text-destructive/90"
-                  onClick={() => setIsOpen(true)}
-                />
+              <TooltipTrigger asChild onClick={() => setIsOpen(true)}>
+                {children || (
+                  <Trash2 className="h-4 w-4 cursor-pointer text-destructive hover:text-destructive/90" />
+                )}
               </TooltipTrigger>
               <TooltipContent>
                 <p>{tooltipContent}</p>
@@ -82,7 +82,7 @@ export const DeleteConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
                 setIsLoading(false)
               }}
             >
-              {isLoading ? <LoadingDots /> : 'Continue'}
+              {isLoading ? <LoadingDots /> : 'Confirm'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>

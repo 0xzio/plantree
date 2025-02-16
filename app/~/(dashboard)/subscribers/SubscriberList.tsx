@@ -1,6 +1,6 @@
 'use client'
 
-import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
@@ -49,7 +49,7 @@ export function SubscriberList() {
               <TableCell>{item.email}</TableCell>
               <TableCell>{format(item.createdAt, 'yyyy/MM/dd')}</TableCell>
               <TableCell>
-                <DeleteConfirmDialog
+                <ConfirmDialog
                   title="Delete subscriber"
                   content="Are you sure you want to delete this subscriber?"
                   tooltipContent="delete subscriber"

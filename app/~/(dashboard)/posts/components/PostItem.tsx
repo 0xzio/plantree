@@ -1,6 +1,8 @@
 'use client'
 
 import { useState } from 'react'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { PlateEditor } from '@/components/editor/plate-editor'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -29,7 +31,6 @@ import { useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { toast } from 'sonner'
-import { PlateEditor } from './editor/plate-editor'
 
 interface PostItemProps {
   status: PostStatus
@@ -129,33 +130,45 @@ export function PostItem({ post, status }: PostItemProps) {
         </Link>
 
         {status !== PostStatus.ARCHIVED && (
-          <Button
-            size="xs"
-            variant="ghost"
-            className="rounded-full text-xs h-7 gap-1 opacity-60"
-            onClick={async () => {
+          <ConfirmDialog
+            title="Archive this post?"
+            content="Are you sure you want to archive this post?"
+            tooltipContent="Archive this post"
+            onConfirm={async () => {
               await api.post.archive.mutate(post.id)
-              refetch()
+              await refetch()
             }}
           >
-            <Archive size={14}></Archive>
-            <div>Archive</div>
-          </Button>
+            <Button
+              size="xs"
+              variant="ghost"
+              className="rounded-full text-xs h-7 gap-1 opacity-60"
+            >
+              <Archive size={14}></Archive>
+              <div>Archive</div>
+            </Button>
+          </ConfirmDialog>
         )}
 
         {status === PostStatus.ARCHIVED && (
-          <Button
-            size="xs"
-            variant="ghost"
-            className="rounded-full text-xs h-7 text-red-500 gap-1 opacity-60"
-            onClick={async () => {
+          <ConfirmDialog
+            title="Delete this post?"
+            content="Are you sure you want to delete this post?"
+            tooltipContent="Delete this post"
+            onConfirm={async () => {
               await api.post.delete.mutate(post.id)
-              refetch()
+              await refetch()
             }}
           >
-            <Trash2 size={14}></Trash2>
-            <div>Delete</div>
-          </Button>
+            <Button
+              size="xs"
+              variant="ghost"
+              className="rounded-full text-xs h-7 text-red-500 gap-1 opacity-60"
+            >
+              <Trash2 size={14}></Trash2>
+              <div>Delete</div>
+            </Button>
+          </ConfirmDialog>
         )}
         {status === PostStatus.PUBLISHED && (
           <div className="text-xs text-foreground/50 flex gap-6">
@@ -241,30 +254,6 @@ export function PostItem({ post, status }: PostItemProps) {
           </div>
         )}
       </div>
-    </div>
-  )
-}
-
-interface PostListProps {
-  status: PostStatus
-}
-
-export function PostList({ status }: PostListProps) {
-  const { data = [], isLoading } = usePosts()
-
-  if (isLoading) return <div className="text-foreground/60">Loading...</div>
-
-  const posts = data.filter((post) => post.postStatus === status)
-
-  if (!posts.length) {
-    return <div className="text-foreground/60">No posts yet.</div>
-  }
-
-  return (
-    <div className="grid gap-4">
-      {posts.map((post) => {
-        return <PostItem key={post.id} post={post as any} status={status} />
-      })}
     </div>
   )
 }

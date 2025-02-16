@@ -1,6 +1,6 @@
 'use client'
 
-import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import {
   Table,
   TableBody,
@@ -137,7 +137,7 @@ export function NavList({ site }: Props) {
                   />
 
                   {item.type !== NavLinkType.BUILTIN && (
-                    <DeleteConfirmDialog
+                    <ConfirmDialog
                       title="Delete navigation"
                       content="Are you sure you want to delete this navigation?"
                       tooltipContent="Delete navigation"
