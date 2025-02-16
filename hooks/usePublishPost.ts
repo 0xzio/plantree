@@ -68,8 +68,6 @@ export function usePublishPost() {
           content: post.content,
         })
 
-        await loadPost(post.id)
-
         setLoading(false)
         revalidateMetadata(`posts`)
         // revalidateMetadata(`posts-${post.slug}`)
