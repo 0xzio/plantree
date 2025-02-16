@@ -7,6 +7,7 @@ import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@penxio/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
+import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 
 interface LayoutProps {
   site: Site
@@ -21,7 +22,10 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
   return (
     <div className={cn(className)}>
       <header className="space-y-4 pb-4">
-        <PageTitle className="mb-0">{post.title}</PageTitle>
+        <div className="mb-4">
+          <PageTitle className="mb-2">{post.title}</PageTitle>
+          {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
+        </div>
         <div className="flex items-center justify-between">
           <dl className="flex items-center gap-2 text-foreground/50">
             <dt className="sr-only">Published on</dt>
