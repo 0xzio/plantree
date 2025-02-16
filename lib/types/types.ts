@@ -163,6 +163,7 @@ export type Socials = {
   linkedin: string
   threads: string
   instagram: string
+  discord: string
   medium: string
 }
 

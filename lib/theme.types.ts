@@ -18,6 +18,7 @@ export interface Socials {
   farcaster: string
   x: string
   mastodon: string
+  discord: string
   github: string
   facebook: string
   youtube: string

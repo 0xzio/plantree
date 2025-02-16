@@ -1,4 +1,5 @@
 import {
+  Discord,
   Facebook,
   Github,
   Instagram,
@@ -20,6 +21,7 @@ const components = {
   twitter: Twitter,
   x: X,
   mastodon: Mastodon,
+  discord: Discord,
   threads: Threads,
   instagram: Instagram,
 }

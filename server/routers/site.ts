@@ -169,6 +169,7 @@ export const siteRouter = router({
             linkedin: z.string().optional(),
             threads: z.string().optional(),
             instagram: z.string().optional(),
+            discord: z.string().optional(),
             medium: z.string().optional(),
           })
           .optional(),
