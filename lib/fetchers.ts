@@ -86,6 +86,10 @@ export async function getPosts(siteId: string) {
         return {
           ...post,
           image: getUrl(post.image || ''),
+          user: {
+            ...post.user,
+            image: getUrl(post.user.image || ''),
+          },
           content,
         }
       })
