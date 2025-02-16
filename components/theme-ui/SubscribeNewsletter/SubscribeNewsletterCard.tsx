@@ -20,7 +20,7 @@ export function SubscribeNewsletterCard({ site, className }: Props) {
       <SubscribeNewsletterDialog site={site} />
       <div
         className={cn(
-          'mx-auto flex flex-col items-center gap-2 mt-8',
+          'mx-auto flex flex-col items-center gap-4 mt-8',
           className,
         )}
       >
