@@ -24,6 +24,7 @@ export function SettingNav({}: Props) {
     collaborators: '/~/settings/collaborators',
     storageProvider: '/~/settings/storage-provider',
     accessToken: '/~/settings/access-token',
+    analytics: '/~/settings/analytics',
   }
 
   const linkClassName = (path: string) =>
@@ -104,6 +105,9 @@ export function SettingNav({}: Props) {
           className={linkClassName(Paths.accessToken)}
         >
           Access token
+        </Link>
+        <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
+          Analytics
         </Link>
       </div>
     </div>

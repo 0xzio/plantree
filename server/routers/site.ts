@@ -5,13 +5,11 @@ import { revalidateSite } from '@/lib/revalidateSite'
 import { MySite } from '@/lib/types'
 import {
   AuthType,
-  CollaboratorRole,
   SiteMode,
   StorageProvider,
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import Redis from 'ioredis'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
@@ -173,6 +171,13 @@ export const siteRouter = router({
             medium: z.string().optional(),
           })
           .optional(),
+        analytics: z
+          .object({
+            gaMeasurementId: z.string().optional(),
+            umamiHost: z.string().optional(),
+            umamiWebsiteId: z.string().optional(),
+          })
+          .optional(),
         authType: z.nativeEnum(AuthType).optional(),
         authConfig: z
           .object({
@@ -190,6 +195,8 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input
+      console.log('=====data:', data, id)
+
       const newSite = await prisma.site.update({
         where: { id },
         include: { domains: true },

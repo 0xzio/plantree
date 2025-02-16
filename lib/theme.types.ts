@@ -29,6 +29,12 @@ export interface Socials {
   [key: string]: string
 }
 
+export interface Analytics {
+  gaMeasurementId: string
+  umamiHost: string
+  umamiWebsiteId: string
+}
+
 export enum NavLinkType {
   PAGE = 'PAGE',
   BUILTIN = 'BUILTIN',
@@ -64,6 +70,7 @@ export type Site = {
     [key: string]: string
   }
   socials: Socials
+  analytics: Analytics
   config: Record<string, any>
   themeConfig: Record<string, any>
   navLinks: NavLink[]

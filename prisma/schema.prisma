@@ -68,6 +68,7 @@ model Site {
   storageProvider StorageProvider @default(IPFS)
   storageConfig   Json?
   socials         Json?
+  analytics       Json?
   config          Json?
   navLinks        Json?
   themeName       String?         @db.VarChar(50)
