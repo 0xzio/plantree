@@ -299,13 +299,12 @@ async function createConfirmationEmail(params: {
 }) {
   const { tx, email, confirmationCode, siteId } = params
 
-  // Get site info
   const site = await tx.site.findUnique({
     where: { id: siteId },
     select: { name: true },
   })
 
-  const confirmUrl = `${process.env.NEXT_PUBLIC_URL}/api/confirm-subscription/${confirmationCode}`
+  const confirmUrl = `${process.env.NEXT_PUBLIC_URL}/api/newsletter/confirm/${confirmationCode}`
 
   const emailContent = createSubscriptionConfirmEmail({
     siteName: site?.name,
