@@ -7,7 +7,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { usePage } from '@/hooks/usePage'
+import { loadPage, usePage } from '@/hooks/usePage'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
@@ -70,6 +70,10 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
           onClick={async () => {
             try {
               await publish({
+                pageId: page.id,
+              })
+              await loadPage({
+                siteId: page.siteId,
                 pageId: page.id,
               })
               toast.success('Page published!')

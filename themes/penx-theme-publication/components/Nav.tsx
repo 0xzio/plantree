@@ -28,8 +28,7 @@ export const Nav = ({ site }: Props) => {
         <Link
           href="/membership"
           className={cn(
-            'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
-
+            'font-medium hover:text-brand-500 text-foreground/90',
             'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
           )}
         >

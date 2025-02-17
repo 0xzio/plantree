@@ -15,6 +15,34 @@ export const userRouter = router({
     return prisma.user.findMany({ take: 20 })
   }),
 
+  search: publicProcedure
+    .input(
+      z.object({
+        q: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return prisma.user.findMany({
+        where: {
+          OR: [
+            {
+              displayName: {
+                contains: input.q,
+                mode: 'insensitive',
+              },
+            },
+            {
+              email: {
+                contains: input.q,
+                mode: 'insensitive',
+              },
+            },
+          ],
+        },
+        take: 10,
+      })
+    }),
+
   me: protectedProcedure.query(async ({ ctx }) => {
     return prisma.user.findUnique({ where: { id: ctx.token.uid } })
   }),
@@ -43,7 +71,8 @@ export const userRouter = router({
     .input(
       z.object({
         image: z.string(),
-        name: z.string(),
+        name: z.string().optional(),
+        displayName: z.string().optional(),
         bio: z.string().optional(),
       }),
     )

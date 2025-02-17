@@ -65,19 +65,19 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
 
     return (
       <Link href={`/posts/${slug}`} className="space-y-2">
-        <span className="text-2xl font-bold hover:scale-105 transition-all origin-left block">
+        <h2 className="text-2xl font-bold hover:scale-105 transition-all origin-left block">
           {post.title}
-        </span>
-        <span className="text-foreground/80 hover:text-foreground transition-all hover:scale-105 break-words break-all block">
-          {str?.slice(0, 260)}...
-        </span>
+        </h2>
+        <p className="text-foreground/70 hover:text-foreground transition-all hover:scale-105 line-clamp-2">
+          {post.description || str?.slice(0, 200)}
+        </p>
       </Link>
     )
   }
 
   return (
     <div className={cn('flex justify-between items-center gap-10', className)}>
-      <div className="flex flex-col gap-3 py-8">
+      <div className="flex flex-col gap-3 py-8 flex-1">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-1 text-sm">
             <AuthorAvatar post={post} />

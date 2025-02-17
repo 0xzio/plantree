@@ -18,6 +18,7 @@ export interface Socials {
   farcaster: string
   x: string
   mastodon: string
+  discord: string
   github: string
   facebook: string
   youtube: string
@@ -26,6 +27,12 @@ export interface Socials {
   instagram: string
   medium: string
   [key: string]: string
+}
+
+export interface Analytics {
+  gaMeasurementId: string
+  umamiHost: string
+  umamiWebsiteId: string
 }
 
 export enum NavLinkType {
@@ -63,6 +70,7 @@ export type Site = {
     [key: string]: string
   }
   socials: Socials
+  analytics: Analytics
   config: Record<string, any>
   themeConfig: Record<string, any>
   navLinks: NavLink[]

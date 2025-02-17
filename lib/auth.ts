@@ -61,6 +61,7 @@ declare module 'next-auth' {
     ensName: string | null
     role: string
     siteId: string
+    activeSiteId: string
     accessToken: string
     subscriptionEndedAt: Date | null
     domain: {
@@ -204,6 +205,8 @@ export const authOptions: NextAuthOptions = {
         },
       },
       async authorize(credentials) {
+        // console.log('=======google:', credentials)
+
         try {
           if (!credentials?.email || !credentials?.openid) {
             throw new Error('Login fail')
@@ -212,7 +215,7 @@ export const authOptions: NextAuthOptions = {
           const account = await initUserByGoogleInfo(credentials)
           return account
         } catch (e) {
-          console.log('=======>>>>e:', e)
+          console.log('=======>>>>e1:', e)
           return null
         }
       },
@@ -400,6 +403,7 @@ export const authOptions: NextAuthOptions = {
         token.picture = sessionAccount.user.image as string
         token.domain = getSiteDomain(sessionAccount.user.sites[0])
         token.siteId = sessionAccount.user?.sites[0]?.id
+        token.activeSiteId = sessionAccount.user?.sites[0]?.id
         token.subscriptionEndedAt = getSubscriptionEndedAt(
           sessionAccount.user.subscriptions,
         )
@@ -424,6 +428,15 @@ export const authOptions: NextAuthOptions = {
           : []
       }
       if (trigger === 'update') {
+        if (session.type === 'UPDATE_PROFILE') {
+          if (session.displayName) token.name = session.displayName
+          if (session.image) token.picture = session.image
+        }
+
+        if (session.type === 'UPDATE_ACTIVE_SITE') {
+          if (session.activeSiteId) token.activeSiteId = session.activeSiteId
+        }
+
         const subscription = await prisma.subscription.findFirst({
           where: { userId: token.uid as string },
         })
@@ -455,6 +468,7 @@ export const authOptions: NextAuthOptions = {
       session.picture = token.picture as string
       session.domain = token.domain as any
       session.siteId = token.siteId as any
+      session.activeSiteId = token.activeSiteId as any
       session.subscriptions = token.subscriptions as any
       session.accessToken = token.accessToken as string
       session.subscriptionEndedAt = token.subscriptionEndedAt as any

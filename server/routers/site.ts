@@ -1,21 +1,19 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
-import { redisKeys } from '@/lib/redisKeys'
 import { revalidateSite } from '@/lib/revalidateSite'
+import { MySite } from '@/lib/types'
 import {
   AuthType,
-  CollaboratorRole,
   SiteMode,
   StorageProvider,
   SubdomainType,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import Redis from 'ioredis'
 import { z } from 'zod'
+import { reservedDomains } from '../lib/constants'
 import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
-
-const redis = new Redis(process.env.REDIS_URL!)
 
 export const siteRouter = router({
   list: publicProcedure.query(async () => {
@@ -64,6 +62,10 @@ export const siteRouter = router({
 
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
+
+    const cachedMySites = await cacheHelper.getCachedMySites(userId)
+    if (cachedMySites) return cachedMySites
+
     const collaborators = await prisma.collaborator.findMany({
       where: { userId },
     })
@@ -77,7 +79,8 @@ export const siteRouter = router({
       include: { domains: true, channels: true },
     })
 
-    return sites
+    await cacheHelper.updateCachedMySites(userId, sites)
+    return sites as MySite[]
   }),
 
   byId: protectedProcedure
@@ -164,7 +167,15 @@ export const siteRouter = router({
             linkedin: z.string().optional(),
             threads: z.string().optional(),
             instagram: z.string().optional(),
+            discord: z.string().optional(),
             medium: z.string().optional(),
+          })
+          .optional(),
+        analytics: z
+          .object({
+            gaMeasurementId: z.string().optional(),
+            umamiHost: z.string().optional(),
+            umamiWebsiteId: z.string().optional(),
           })
           .optional(),
         authType: z.nativeEnum(AuthType).optional(),
@@ -184,6 +195,8 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input
+      console.log('=====data:', data, id)
+
       const newSite = await prisma.site.update({
         where: { id },
         include: { domains: true },
@@ -195,6 +208,8 @@ export const siteRouter = router({
       } catch (error) {}
 
       revalidateSite(newSite.domains)
+
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return newSite
     }),
 
@@ -236,6 +251,13 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { siteId } = input
+      if (reservedDomains.includes(input.domain)) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: `"${input.domain}" is reserved and cannot be used.`,
+        })
+      }
+
       const newDomain = await prisma.domain.create({
         data: {
           domain: input.domain,
@@ -249,6 +271,8 @@ export const siteRouter = router({
         where: { siteId: siteId },
       })
       revalidateSite(domains)
+
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
 
       return newDomain
     }),
@@ -269,6 +293,7 @@ export const siteRouter = router({
         where: { siteId: input.siteId },
       })
       revalidateSite(domains)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return true
     }),
 
@@ -318,6 +343,7 @@ export const siteRouter = router({
           where: { siteId: siteId },
         })
         revalidateSite(domains)
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         return res
       } catch (error) {
         console.log('===error:', error)
@@ -345,6 +371,7 @@ export const siteRouter = router({
         const siteId = site?.id
         await tx.message.deleteMany({ where: { siteId } })
         await tx.channel.deleteMany({ where: { siteId } })
+        await tx.author.deleteMany({ where: { siteId } })
         await tx.node.deleteMany({ where: { userId } })
         await tx.post.deleteMany({ where: { siteId } })
         await tx.comment.deleteMany({ where: { userId } })
@@ -353,9 +380,27 @@ export const siteRouter = router({
         await tx.collaborator.deleteMany({ where: { siteId } })
         await tx.domain.deleteMany({ where: { siteId } })
         await tx.accessToken.deleteMany({ where: { siteId } })
+        await tx.assetLabel.deleteMany({ where: { siteId } })
+        await tx.label.deleteMany({ where: { siteId } })
+        await tx.assetAlbum.deleteMany({ where: { siteId } })
+        await tx.album.deleteMany({ where: { siteId } })
+        await tx.asset.deleteMany({ where: { siteId } })
+        await tx.block.deleteMany({ where: { siteId } })
+        await tx.page.deleteMany({ where: { siteId } })
+        await tx.record.deleteMany({ where: { siteId } })
+        await tx.field.deleteMany({ where: { siteId } })
+        await tx.view.deleteMany({ where: { siteId } })
+        await tx.database.deleteMany({ where: { siteId } })
+        await tx.subscriber.deleteMany({ where: { siteId } })
+        await tx.delivery.deleteMany({ where: { siteId } })
+        await tx.newsletter.deleteMany({ where: { siteId } })
         await tx.site.delete({ where: { id: siteId } })
+        await tx.hostedSite.deleteMany({ where: { userId } })
+        await tx.subscription.deleteMany({ where: { userId } })
         await tx.account.deleteMany({ where: { userId } })
         await tx.user.delete({ where: { id: userId } })
+
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         return true
       },
       {

@@ -1,3 +1,5 @@
+'use client'
+
 import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
@@ -15,6 +17,7 @@ import {
   Users,
 } from 'lucide-react'
 import { useSession } from 'next-auth/react'
+import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
@@ -24,6 +27,10 @@ import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
 import { SiteModeSelect } from './SiteModeSelect'
 import { SitesPopover } from './SitesPopover/SitesPopover'
+
+const LinkAccountEntry = dynamic(() => import('./LinkAccountEntry'), {
+  ssr: false,
+})
 
 interface Features {
   journal: boolean
@@ -144,10 +151,11 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             />
           </Link>
         )}
+      </div>
 
+      <div className="px-2 pb-2">
         {!spaceId && <EnableWeb3Entry />}
-        <LinkGoogleEntry />
-        <LinkWalletEntry />
+        <LinkAccountEntry />
       </div>
     </div>
   )

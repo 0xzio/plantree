@@ -68,6 +68,7 @@ model Site {
   storageProvider StorageProvider @default(IPFS)
   storageConfig   Json?
   socials         Json?
+  analytics       Json?
   config          Json?
   navLinks        Json?
   themeName       String?         @db.VarChar(50)
@@ -99,6 +100,9 @@ model Site {
   subscribers     Subscriber[]
   deliveries      Delivery[]
   newsletters     Newsletter[]
+  authors         Author[]
+  assetLabels     AssetLabel[]
+  assetAlbums     AssetAlbum[]
 
   @@index([userId])
   @@map("site")
@@ -303,9 +307,12 @@ model Author {
   postId String @db.Uuid
   user   User   @relation(fields: [userId], references: [id])
   userId String @db.Uuid
+  site   Site   @relation(fields: [siteId], references: [id])
+  siteId String @db.Uuid
 
   @@unique([userId, postId])
   @@index([postId])
+  @@index([siteId])
   @@map("author")
 }
 
@@ -588,6 +595,8 @@ model AssetLabel {
   labelId   String   @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id])
+  siteId    String   @db.Uuid
 
   @@map("asset_label")
 }
@@ -605,7 +614,7 @@ model Album {
   assetAlbums AssetAlbum[]
 
   @@index([userId])
-  @@map("Album")
+  @@map("album")
 }
 
 model AssetAlbum {
@@ -616,6 +625,8 @@ model AssetAlbum {
   albumId   String   @db.Uuid
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  site      Site     @relation(fields: [siteId], references: [id])
+  siteId    String   @db.Uuid
 
   @@map("asset_album")
 }
@@ -852,7 +863,7 @@ model Newsletter {
 // Newsletter subscriber
 model Subscriber {
   id         String           @id @default(uuid()) @db.Uuid
-  email      String?          @unique @db.VarChar(255)
+  email      String?          @db.VarChar(255)
   status     SubscriberStatus @default(ACTIVE)
   source     String?          @db.VarChar(100) // Where they subscribed from
   createdAt  DateTime         @default(now())

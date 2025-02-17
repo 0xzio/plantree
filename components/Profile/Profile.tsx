@@ -10,7 +10,6 @@ import { LoginDialog } from '../LoginDialog/LoginDialog'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
 import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Button } from '../ui/button'
-import { ProfileDialog } from './ProfileDialog/ProfileDialog'
 import { ProfilePopover } from './ProfilePopover'
 
 interface Props {}
@@ -31,7 +30,6 @@ export function Profile({}: Props) {
 
   return (
     <>
-      <ProfileDialog />
       <LoginDialog />
       {!authenticated && <LoginButton />}
       {authenticated && (

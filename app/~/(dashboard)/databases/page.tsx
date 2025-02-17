@@ -1,5 +1,5 @@
 import { DatabaseList } from '@/components/DatabaseList'
-import { PostList } from '@/components/PostList'
+import { PostList } from '@/app/~/(dashboard)/posts/components/PostList'
 import { PostStatus } from '@/lib/constants'
 
 // export const runtime = 'edge'

@@ -1,6 +1,11 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import { getEmailTpl } from '@/lib/getEmailTpl'
+import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
+import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
+import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
 import {
   DeliveryStatus,
@@ -26,12 +31,20 @@ export const postRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId } = input
+
+      const cachedMySites = await cacheHelper.getCachedSitePosts(siteId)
+      if (cachedMySites) return cachedMySites
+
       let posts = await findSitePosts(siteId)
 
-      return posts.map((post) => ({
+      const sitePosts = posts.map((post) => ({
         ...post,
         image: getUrl(post.image || ''),
       }))
+
+      await cacheHelper.updateCachedSitePosts(siteId, posts)
+
+      return sitePosts as SitePost[]
     }),
 
   publishedPosts: publicProcedure
@@ -51,6 +64,8 @@ export const postRouter = router({
     }),
 
   byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    const cachedPost = await cacheHelper.getCachedPost(input)
+    if (cachedPost) return cachedPost
     const post = await prisma.post.findUniqueOrThrow({
       include: {
         postTags: { include: { tag: true } },
@@ -70,6 +85,7 @@ export const postRouter = router({
       where: { id: input },
     })
 
+    await cacheHelper.updateCachedPost(post.id, post)
     // syncToGoogleDrive(ctx.token.uid, post as any)
     // console.log('post-------xxxxxxxxxx:', post?.postTags)
     return post
@@ -106,19 +122,23 @@ export const postRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.post.create({
+      const post = await prisma.post.create({
         data: {
           userId: ctx.token.uid,
           ...input,
           authors: {
             create: [
               {
+                siteId: ctx.activeSiteId,
                 userId: ctx.token.uid,
               },
             ],
           },
         },
       })
+
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      return post
     }),
 
   update: protectedProcedure
@@ -141,6 +161,8 @@ export const postRouter = router({
         },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
       return post
     }),
 
@@ -158,6 +180,8 @@ export const postRouter = router({
         where: { id },
         data: { image },
       })
+
+      await cacheHelper.updateCachedPost(post.id, null)
 
       return post
     }),
@@ -238,11 +262,22 @@ export const postRouter = router({
       }
 
       if (shouldCreateNewsletter) {
+        const site = await prisma.site.findUniqueOrThrow({
+          where: { id: input.siteId },
+          include: { domains: true },
+        })
+        const domain = getSiteDomain(site) || site.domains[0]
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
           title: info.title || '',
-          content: renderSlateToHtml(JSON.parse(info.content)),
+          // content: renderSlateToHtml(JSON.parse(info.content)),
+          content: getEmailTpl(
+            info.title || '',
+            renderSlateToHtml(JSON.parse(info.content)),
+            `https://${domain.domain}.penx.io/posts/${post.slug}`,
+            post.image ? getUrl(post.image) : '',
+          ),
           creatorId: ctx.token.uid,
         })
       }
@@ -277,6 +312,9 @@ export const postRouter = router({
         data: { postCount: publishedCount },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
@@ -301,6 +339,9 @@ export const postRouter = router({
         data,
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
@@ -316,6 +357,9 @@ export const postRouter = router({
         data: { postStatus: PostStatus.ARCHIVED },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
@@ -329,6 +373,9 @@ export const postRouter = router({
         where: { id: input },
       })
 
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
       return post
     }),
 
@@ -341,7 +388,10 @@ export const postRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const author = await prisma.author.create({
-        data: input,
+        data: {
+          siteId: ctx.activeSiteId,
+          ...input,
+        },
         include: {
           user: {
             select: {
@@ -353,12 +403,15 @@ export const postRouter = router({
           },
         },
       })
+
+      await cacheHelper.updateCachedPost(input.postId, null)
       return author
     }),
 
   deleteAuthor: protectedProcedure
     .input(
       z.object({
+        postId: z.string(),
         authorId: z.string(),
       }),
     )
@@ -366,6 +419,8 @@ export const postRouter = router({
       await prisma.author.delete({
         where: { id: input.authorId },
       })
+
+      await cacheHelper.updateCachedPost(input.postId, null)
       return true
     }),
 })

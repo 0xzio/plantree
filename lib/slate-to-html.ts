@@ -21,11 +21,12 @@ import { getUrl } from '@/lib/utils'
 
 export function renderSlateToHtml(nodes: any[]): string {
   const content = nodes.map((node) => renderNode(node)).join('')
-  return `
-    <div style="max-width: 100%;line-height: 1.5;color: #374151;font-family: system-ui, -apple-system, sans-serif;">
-    ${content}
-    </div>
-  `.trim()
+  // return `
+  //   <div style="max-width: 100%;line-height: 1.5;color: #374151;font-family: system-ui, -apple-system, sans-serif;">
+  //   ${content}
+  //   </div>
+  // `.trim()
+  return content.slice(0, 600)
 }
 
 function renderNode(node: any): string {

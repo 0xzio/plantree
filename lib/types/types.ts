@@ -1,4 +1,16 @@
-import { Account, Domain, Site, Subscription, User } from '@prisma/client'
+import {
+  Account,
+  Author,
+  Channel,
+  Domain,
+  Post,
+  PostTag,
+  ProviderType,
+  Site,
+  Subscription,
+  Tag,
+  User,
+} from '@prisma/client'
 import { Address } from 'viem'
 
 export type App = {
@@ -151,6 +163,7 @@ export type Socials = {
   linkedin: string
   threads: string
   instagram: string
+  discord: string
   medium: string
 }
 
@@ -254,4 +267,35 @@ export enum DeployStatus {
   SUCCESS = 'SUCCESS',
   DOMAIN_PENDING = 'DOMAIN_PENDING',
   FAIL = 'FAIL',
+}
+
+export type MySite = Site & {
+  channels: Channel[]
+  domains: Domain[]
+}
+
+export type SitePost = Post & {
+  postTags: Array<PostTag & { tag: Tag }>
+  user: {
+    displayName: string | null
+    image: string | null
+    accounts: Array<{
+      providerAccountId: string
+      providerType: ProviderType
+    }>
+  }
+}
+
+export type PostById = Post & {
+  postTags: Array<PostTag & { tag: Tag }>
+  authors: Array<
+    Author & {
+      user: {
+        name: string | null
+        image: string | null
+        displayName: string | null
+        ensName: string | null
+      }
+    }
+  >
 }

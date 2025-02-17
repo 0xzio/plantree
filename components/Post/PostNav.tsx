@@ -1,16 +1,26 @@
 'use client'
 
+import { usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
+import { ROOT_DOMAIN } from '@/lib/constants'
+import { getSiteDomain } from '@/lib/getSiteDomain'
 import { cn } from '@/lib/utils'
-import { ChevronLeft } from 'lucide-react'
+import { PostStatus } from '@prisma/client'
+import { ChevronLeft, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
 import { PublishPostPopover } from '../PublishPostPopover'
+import { useSiteContext } from '../SiteContext'
+import { Badge } from '../ui/badge'
 
 interface PostHeaderProps {
   className?: string
 }
 export function PostNav({ className }: PostHeaderProps) {
+  const { post } = usePost()
   const { isPostSaving } = usePostSaving()
+  const site = useSiteContext()
+  const { isSubdomain, domain } = getSiteDomain(site as any)
+  const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   return (
     <div
@@ -19,12 +29,31 @@ export function PostNav({ className }: PostHeaderProps) {
         className,
       )}
     >
-      <Link
-        href="/~/posts"
-        className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer"
-      >
-        <ChevronLeft size={20} />
-      </Link>
+      <div className="flex items-center gap-6">
+        <Link
+          href="/~/posts"
+          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer"
+        >
+          <ChevronLeft size={20} />
+        </Link>
+
+        {post?.postStatus === PostStatus.PUBLISHED && (
+          <div className="flex items-center gap-1">
+            <Badge size="sm" className="text-xs">
+              Published
+            </Badge>
+            <a
+              href={`${location.protocol}//${host}/posts/${post.slug}`}
+              target="_blank"
+              className="text-foreground/40 hover:text-foreground/80 flex items-center gap-1 text-sm"
+            >
+              <span>{`/posts/${post.slug}`}</span>
+              <ExternalLink size={14} />
+            </a>
+          </div>
+        )}
+      </div>
+
       <div className="flex items-center gap-2">
         <div className="rounded-lg bg-accent px-2 py-1 text-sm text-stone-400  dark:text-stone-500">
           {isPostSaving ? 'Saving...' : 'Saved'}

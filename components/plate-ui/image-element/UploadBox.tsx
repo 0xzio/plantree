@@ -21,9 +21,9 @@ export const UploadBox = ({
   const [uploading, setUploading] = useState(false)
   const path = ReactEditor.findPath(editor, element)
 
-  function setFileNode(data: Partial<ImageElement>, file: File) {
+  function setFileNode(data: Partial<ImageElement>, file?: File) {
     setNodes<ImageElement>(editor, data, { at: path })
-    console.log('======data:', data)
+    // console.log('======data:', data)
 
     const captionPath = Path.next(path)
 
@@ -83,6 +83,10 @@ export const UploadBox = ({
           uploading={uploading}
           handleFile={async (file) => {
             await handleUpload(file)
+          }}
+          onLinkChange={(url) => {
+            //
+            setFileNode({ url })
           }}
         />
       </div>

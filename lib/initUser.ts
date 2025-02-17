@@ -65,7 +65,14 @@ export async function initUserByAddress(address: string) {
           description: 'My personal site',
           userId: newUser.id,
           socials: {},
-          config: {},
+          config: {
+            features: {
+              journal: false,
+              gallery: false,
+              page: true,
+              database: false,
+            },
+          },
           about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
           themeName: 'garden',
@@ -196,7 +203,14 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           description: 'My personal site',
           userId: newUser.id,
           socials: {},
-          config: {},
+          config: {
+            features: {
+              journal: false,
+              gallery: false,
+              page: true,
+              database: false,
+            },
+          },
           about: JSON.stringify(editorDefaultValue),
           logo: info.picture,
           themeName: 'garden',
@@ -386,7 +400,14 @@ export async function initUserByFarcasterId(fid: string) {
           description: fcUser.profile.bio.text,
           userId: newUser.id,
           socials: {},
-          config: {},
+          config: {
+            features: {
+              journal: false,
+              gallery: false,
+              page: true,
+              database: false,
+            },
+          },
           about: JSON.stringify(editorDefaultValue),
           logo: newUser.image,
           themeName: 'garden',

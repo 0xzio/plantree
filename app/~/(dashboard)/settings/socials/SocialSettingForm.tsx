@@ -35,6 +35,7 @@ const FormSchema = z.object({
   threads: z.string().optional(),
   instagram: z.string().optional(),
   medium: z.string().optional(),
+  discord: z.string().optional(),
 })
 
 interface Props {}
@@ -58,6 +59,7 @@ export function SocialSettingForm({}: Props) {
       linkedin: social?.linkedin || '',
       threads: social?.threads || '',
       instagram: social?.instagram || '',
+      discord: social?.discord || '',
       medium: social?.medium || '',
     },
   })
@@ -76,6 +78,7 @@ export function SocialSettingForm({}: Props) {
           linkedin: data.linkedin,
           threads: data.threads,
           instagram: data.instagram,
+          discord: data.discord,
           medium: data.medium,
         },
       })
@@ -169,6 +172,24 @@ export function SocialSettingForm({}: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>Instagram</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://..."
+                  {...field}
+                  className="w-full"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="discord"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Discord</FormLabel>
               <FormControl>
                 <Input
                   placeholder="https://..."

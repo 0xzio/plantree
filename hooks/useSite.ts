@@ -1,4 +1,3 @@
-import { CURRENT_SITE } from '@/lib/constants'
 import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
 import { useQuery } from '@tanstack/react-query'
@@ -18,8 +17,7 @@ export function useSite() {
   } = useQuery({
     queryKey: ['current_site'],
     queryFn: async () => {
-      const siteId = await get(CURRENT_SITE)
-      const site = sites.find((s) => s.id === siteId)
+      const site = sites.find((s) => s.id === session?.activeSiteId)
       return site || sites[0]
     },
     enabled: !!session && sites.length > 0,

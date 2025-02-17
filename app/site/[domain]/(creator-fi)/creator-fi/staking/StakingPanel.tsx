@@ -186,7 +186,7 @@ export const StakingPanel = () => {
           </Button>
         </div>
 
-        <div className="mt-4 h-[50px] w-full text-sm text-white">
+        <div className="mt-4 h-[50px] w-full text-sm text-background">
           {isConnected ? (
             <Button
               onClick={() => onStaking(stakingDirection)}

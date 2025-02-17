@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useEffect, useState } from 'react'
+import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { CommandPanel } from '@/components/CommandPanel/CommandPanel'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
 import { LoadingDots } from '@/components/icons/loading-dots'
@@ -11,7 +11,7 @@ import { useQueryEthBalance } from '@/hooks/useEthBalance'
 import { useQueryEthPrice } from '@/hooks/useEthPrice'
 import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
-import { CURRENT_SITE, isServer, SIDEBAR_WIDTH } from '@/lib/constants'
+import { isBrowser, isServer, SIDEBAR_WIDTH } from '@/lib/constants'
 import { cn } from '@/lib/utils'
 import { runWorker } from '@/lib/worker'
 import { setConfig } from '@fower/react'
@@ -49,8 +49,8 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const { data: site, isLoading } = useQuery({
     queryKey: ['current_site'],
     queryFn: async () => {
-      const siteId = await get(CURRENT_SITE)
-      const site = sites.find((s) => s.id === siteId)
+      window.__SITE_ID__ = session?.activeSiteId || ''
+      const site = sites.find((s) => s.id === session?.activeSiteId)
       return site || sites[0]
     },
     enabled: !!session && sites.length > 0,
@@ -89,7 +89,9 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           {/* <NavbarWrapper /> */}
           <CreationDialog />
           <div
-            className={cn(!isFullWidth && 'mx-auto md:max-w-3xl pt-16 pb-20')}
+            className={cn(
+              !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
+            )}
           >
             {children}
           </div>

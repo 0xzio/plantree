@@ -77,9 +77,9 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
     }
 
     return (
-      <div ref={ref}>
-        <div className="w-32 h-8 rounded-2xl bg-accent relative cursor-pointer flex items-center justify-center">
-          <div className="absolute left-0 top-0 w-full h-full cursor-pointer z-1 flex items-center justify-center gap-1 text-neutral-400 text-sm">
+      <div ref={ref} className="flex items-center justify-start">
+        <div className="w-28 h-8 rounded-2xl relative cursor-pointer flex items-center justify-start text-foreground/40 hover:text-foreground/80">
+          <div className="absolute left-0 top-0 w-full h-full cursor-pointer z-1 flex items-center gap-1 text-sm">
             <ImageIcon size={18} />
             <div>Add cover</div>
           </div>

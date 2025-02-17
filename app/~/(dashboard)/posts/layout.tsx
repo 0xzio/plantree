@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 import { SiteLink } from '@/components/SiteLink'
-import { CreatePostButton } from './CreatePostButton'
-import { PostsNav } from './PostsNav'
+import { CreatePostButton } from './components/CreatePostButton'
+import { PostsNav } from './components/PostsNav'
 
 export const dynamic = 'force-static'
 

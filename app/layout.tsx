@@ -43,9 +43,11 @@ export const metadata: Metadata = {
 }
 
 export default async function RootLayout({
+  params,
   children,
 }: {
   children: React.ReactNode
+  params: { domain: string }
 }) {
   const cookies = headers().get('cookie')
   const headerList = headers()

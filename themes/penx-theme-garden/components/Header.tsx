@@ -28,7 +28,7 @@ export const Header = ({ site }: Props) => {
   return (
     <header className="">
       <div className="flex items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm">
-        <div className="lg:flex items-center space-x-4 leading-5 sm:space-x-6 hidden w-60">
+        <div className="lg:flex items-center space-x-4 leading-5 sm:space-x-6 hidden flex-1">
           <div className="flex items-center space-x-4">
             {links.map((link) => {
               if (link.pathname === '/creator-fi' && !site.spaceId) {
@@ -54,8 +54,7 @@ export const Header = ({ site }: Props) => {
               <Link
                 href="/membership"
                 className={cn(
-                  'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
-
+                  'font-medium hover:text-brand-500 text-foreground/90',
                   'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
                 )}
               >
@@ -86,7 +85,7 @@ export const Header = ({ site }: Props) => {
             <PostTypeNav className="hidden md:flex" />
           </div>
         </div>
-        <div className="flex item-center justify-end gap-3 w-60">
+        <div className="flex item-center justify-end gap-3 flex-1">
           <Link
             href="/about"
             className="font-medium flex items-center hover:text-brand-500 text-foreground/60 text-xs hover:scale-105 transition-all sm:hidden"

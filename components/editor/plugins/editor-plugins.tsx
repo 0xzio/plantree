@@ -5,6 +5,7 @@ import { ParagraphPlugin } from '@udecode/plate-common/react'
 import { DatePlugin } from '@udecode/plate-date/react'
 import { DocxPlugin } from '@udecode/plate-docx'
 import { EmojiPlugin } from '@udecode/plate-emoji/react'
+import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react'
 import {
   FontBackgroundColorPlugin,
   FontColorPlugin,
@@ -97,4 +98,5 @@ export const editorPlugins = [
 
   // custom
   titlePlugin,
+  // ExcalidrawPlugin,
 ]

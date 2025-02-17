@@ -4,7 +4,7 @@ import { forwardRef, HTMLAttributes } from 'react'
 import { useAddress } from '@/hooks/useAddress'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { trpc } from '@/lib/trpc'
-import { cn, isAddress } from '@/lib/utils'
+import { cn, getUrl, isAddress } from '@/lib/utils'
 import { ChevronDown, Copy } from 'lucide-react'
 import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
@@ -41,6 +41,8 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
     if (isAddress(name)) {
       name = name.slice(0, 3) + '...' + name.slice(-4)
     }
+    let src = image || session?.picture
+    if (src) src = getUrl(src)
 
     return (
       <div
@@ -48,7 +50,7 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
         className={cn('flex items-center gap-2', className)}
         {...rest}
       >
-        <UserAvatar address={address} image={image || session?.picture} />
+        <UserAvatar address={address} image={src} />
 
         {showName && (
           <>

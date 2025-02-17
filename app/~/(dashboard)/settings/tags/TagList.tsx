@@ -1,6 +1,6 @@
 'use client'
 
-import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { Skeleton } from '@/components/ui/skeleton'
 import {
   Table,
@@ -52,7 +52,7 @@ export function TagList({ site }: Props) {
               <TableCell>{item.name}</TableCell>
               <TableCell>{format(item.createdAt, 'yyyy/MM/dd')}</TableCell>
               <TableCell>
-                <DeleteConfirmDialog
+                <ConfirmDialog
                   title={`Delete tag: ${item.name}`}
                   content="All tags in post will be deleted, are you sure you want to delete this tag?"
                   tooltipContent="Delete tag"

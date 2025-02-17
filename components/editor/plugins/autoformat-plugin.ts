@@ -1,8 +1,6 @@
-'use client';
+'use client'
 
-import type { AutoformatRule } from '@udecode/plate-autoformat';
-import type { SlateEditor } from '@udecode/plate-common';
-
+import type { AutoformatRule } from '@udecode/plate-autoformat'
 import {
   autoformatArrow,
   autoformatLegal,
@@ -10,8 +8,8 @@ import {
   autoformatMath,
   autoformatPunctuation,
   autoformatSmartQuotes,
-} from '@udecode/plate-autoformat';
-import { AutoformatPlugin } from '@udecode/plate-autoformat/react';
+} from '@udecode/plate-autoformat'
+import { AutoformatPlugin } from '@udecode/plate-autoformat/react'
 import {
   BoldPlugin,
   CodePlugin,
@@ -20,48 +18,49 @@ import {
   SubscriptPlugin,
   SuperscriptPlugin,
   UnderlinePlugin,
-} from '@udecode/plate-basic-marks/react';
-import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import { insertEmptyCodeBlock } from '@udecode/plate-code-block';
+} from '@udecode/plate-basic-marks/react'
+import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
+import { insertEmptyCodeBlock } from '@udecode/plate-code-block'
 import {
   CodeBlockPlugin,
   CodeLinePlugin,
-} from '@udecode/plate-code-block/react';
+} from '@udecode/plate-code-block/react'
+import type { SlateEditor } from '@udecode/plate-common'
 import {
   getParentNode,
   insertNodes,
   isElement,
   isType,
   setNodes,
-} from '@udecode/plate-common';
-import { ParagraphPlugin } from '@udecode/plate-common/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { HighlightPlugin } from '@udecode/plate-highlight/react';
-import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
+} from '@udecode/plate-common'
+import { ParagraphPlugin } from '@udecode/plate-common/react'
+import { HEADING_KEYS } from '@udecode/plate-heading'
+import { HighlightPlugin } from '@udecode/plate-highlight/react'
+import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react'
 import {
   INDENT_LIST_KEYS,
   ListStyleType,
   toggleIndentList,
-} from '@udecode/plate-indent-list';
-import { TogglePlugin, openNextToggles } from '@udecode/plate-toggle/react';
+} from '@udecode/plate-indent-list'
+import { openNextToggles, TogglePlugin } from '@udecode/plate-toggle/react'
 
 export const format = (editor: SlateEditor, customFormatting: any) => {
   if (editor.selection) {
-    const parentEntry = getParentNode(editor, editor.selection);
+    const parentEntry = getParentNode(editor, editor.selection)
 
-    if (!parentEntry) return;
+    if (!parentEntry) return
 
-    const [node] = parentEntry;
+    const [node] = parentEntry
 
     if (
       isElement(node) &&
       !isType(editor, node, CodeBlockPlugin.key) &&
       !isType(editor, node, CodeLinePlugin.key)
     ) {
-      customFormatting();
+      customFormatting()
     }
   }
-};
+}
 
 export const autoformatMarks: AutoformatRule[] = [
   {
@@ -134,7 +133,7 @@ export const autoformatMarks: AutoformatRule[] = [
     mode: 'mark',
     type: CodePlugin.key,
   },
-];
+]
 
 export const autoformatBlocks: AutoformatRule[] = [
   {
@@ -152,21 +151,21 @@ export const autoformatBlocks: AutoformatRule[] = [
     mode: 'block',
     type: HEADING_KEYS.h3,
   },
-  {
-    match: '#### ',
-    mode: 'block',
-    type: HEADING_KEYS.h4,
-  },
-  {
-    match: '##### ',
-    mode: 'block',
-    type: HEADING_KEYS.h5,
-  },
-  {
-    match: '###### ',
-    mode: 'block',
-    type: HEADING_KEYS.h6,
-  },
+  // {
+  //   match: '#### ',
+  //   mode: 'block',
+  //   type: HEADING_KEYS.h4,
+  // },
+  // {
+  //   match: '##### ',
+  //   mode: 'block',
+  //   type: HEADING_KEYS.h5,
+  // },
+  // {
+  //   match: '###### ',
+  //   mode: 'block',
+  //   type: HEADING_KEYS.h6,
+  // },
   {
     match: '> ',
     mode: 'block',
@@ -177,7 +176,7 @@ export const autoformatBlocks: AutoformatRule[] = [
       insertEmptyCodeBlock(editor, {
         defaultType: ParagraphPlugin.key,
         insertNodesOptions: { select: true },
-      });
+      })
     },
     match: '```',
     mode: 'block',
@@ -192,24 +191,24 @@ export const autoformatBlocks: AutoformatRule[] = [
   },
   {
     format: (editor) => {
-      setNodes(editor, { type: HorizontalRulePlugin.key });
+      setNodes(editor, { type: HorizontalRulePlugin.key })
       insertNodes(editor, {
         children: [{ text: '' }],
         type: ParagraphPlugin.key,
-      });
+      })
     },
     match: ['---', '—-', '___ '],
     mode: 'block',
     type: HorizontalRulePlugin.key,
   },
-];
+]
 
 export const autoformatIndentLists: AutoformatRule[] = [
   {
     format: (editor) => {
       toggleIndentList(editor, {
         listStyleType: ListStyleType.Disc,
-      });
+      })
     },
     match: ['* ', '- '],
     mode: 'block',
@@ -229,11 +228,11 @@ export const autoformatIndentLists: AutoformatRule[] = [
     format: (editor) => {
       toggleIndentList(editor, {
         listStyleType: INDENT_LIST_KEYS.todo,
-      });
+      })
       setNodes(editor, {
         checked: false,
         listStyleType: INDENT_LIST_KEYS.todo,
-      });
+      })
     },
     match: ['[] '],
     mode: 'block',
@@ -243,17 +242,17 @@ export const autoformatIndentLists: AutoformatRule[] = [
     format: (editor) => {
       toggleIndentList(editor, {
         listStyleType: INDENT_LIST_KEYS.todo,
-      });
+      })
       setNodes(editor, {
         checked: true,
         listStyleType: INDENT_LIST_KEYS.todo,
-      });
+      })
     },
     match: ['[x] '],
     mode: 'block',
     type: 'list',
   },
-];
+]
 
 export const autoformatPlugin = AutoformatPlugin.configure({
   options: {
@@ -270,4 +269,4 @@ export const autoformatPlugin = AutoformatPlugin.configure({
       ...autoformatIndentLists,
     ],
   },
-});
+})

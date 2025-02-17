@@ -36,13 +36,18 @@ export const RESPACE_BASE_URI =
 
 export const RESPACE_SUBGRAPH_URL =
   NETWORK === NetworkNames.BASE
-    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
+    ? 'https://subgraph.satsuma-prod.com/0116b02fe157/zios-team--730474/respace/api'
     : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'
 
 export const PENX_SUBGRAPH_URL =
   NETWORK === NetworkNames.BASE
-    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/3xiEYVz3SuQ1rnTiwfwfuuHnxkh4EYM9RXqaErDwMUZE'
+    ? 'https://subgraph.satsuma-prod.com/1428c3664ef6/forsigners-team--172328/penx/api'
     : 'https://api.studio.thegraph.com/query/88544/creation-sepolia/version/latest'
+
+export const SUBGRAPH_URL =
+  NETWORK === NetworkNames.BASE
+    ? 'https://subgraph.satsuma-prod.com/0116b02fe157/zios-team--730474/respace/api'
+    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'
 
 export const ALLOCATION_CAP_URL =
   NETWORK === NetworkNames.BASE
@@ -53,8 +58,3 @@ export const DAILY_CLAIM_CAP_URL =
   NETWORK === NetworkNames.BASE
     ? 'https://penx.io/api/daily-claim-cap'
     : 'https://sepolia.penx.io/api/daily-claim-cap'
-
-export const SUBGRAPH_URL =
-  NETWORK === NetworkNames.BASE
-    ? 'https://gateway.thegraph.com/api/c2921e95d896043ce3602d19cbbedcd2/subgraphs/id/CU3uKSKPmb5UP2imvySrJSHpU5DDnfpV5TdjWqbeZ85M'
-    : 'https://api.studio.thegraph.com/query/88544/respace-base-sepolia/version/latest'

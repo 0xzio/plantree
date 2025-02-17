@@ -72,7 +72,7 @@ export const protectedProcedure = t.procedure.use(
       [
         'page.create',
         'database.create',
-        'asset.create',
+        // 'asset.create',
         'post.create',
       ].includes(path)
     ) {
@@ -154,7 +154,6 @@ export const protectedProcedure = t.procedure.use(
         'subscriber.create',
         'subscriber.updateStatus',
         'subscriber.delete',
-        'subscriber.addSubscriber',
         'subscriber.importSubscribers',
         'delivery.list',
         'delivery.updateStatus',

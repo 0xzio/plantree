@@ -126,6 +126,17 @@ export const subscriberRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const subscriber = await prisma.subscriber.findFirst({
+        where: { siteId: input.siteId, email: input.email },
+      })
+
+      if (subscriber) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Email is already subscribed',
+        })
+      }
+
       return prisma.subscriber.create({
         data: {
           ...input,

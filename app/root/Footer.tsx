@@ -59,6 +59,12 @@ export function Footer({}: Props) {
           </div>
 
           <div className="flex items-center">
+            <Link href="/refund-policy" className="">
+              Refund policy
+            </Link>
+          </div>
+
+          <div className="flex items-center">
             <Link href="/terms" className="">
               Terms & Conditions
             </Link>

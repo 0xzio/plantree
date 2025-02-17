@@ -1,6 +1,6 @@
 'use client'
 
-import { DeleteConfirmDialog } from '@/components/DeleteConfirmDialog'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Separator } from '@/components/ui/separator'
 import { useAccessTokens } from '@/hooks/useAccessTokens'
@@ -53,7 +53,7 @@ export default function AccessTokenList({}: Props) {
                     ? format(new Date(token.expiredAt), 'yyyy-MM-dd')
                     : 'Never exp'}
                 </span>
-                <DeleteConfirmDialog
+                <ConfirmDialog
                   title="Delete Confirm"
                   content="Are you sure you want to delete this access token?"
                   tooltipContent="delete access token"

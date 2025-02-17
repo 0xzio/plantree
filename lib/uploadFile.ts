@@ -16,7 +16,15 @@ export async function uploadFile(file: File, isPublic = true) {
   let data: UploadReturn = {}
   const site = window.__SITE__
 
-  const res = await fetch(`${STATIC_URL}/${fileHash}`, {
+  let qs = ''
+  if (file.type === 'image/svg+xml') {
+    let query = new URLSearchParams({})
+    query.set('contentType', 'image/svg+xml')
+    query.toString()
+    qs = `?${query.toString()}`
+  }
+
+  const res = await fetch(`${STATIC_URL}/${fileHash}${qs}`, {
     method: 'PUT',
     body: file,
   })

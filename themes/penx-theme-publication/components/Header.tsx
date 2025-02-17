@@ -49,7 +49,7 @@ export const Header = ({ site }: Props) => {
                 <Link
                   key={link.title}
                   href={link.href}
-                  className="font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90"
+                  className="font-medium hover:text-brand-500  text-foreground/90"
                 >
                   {link.title}
                 </Link>
