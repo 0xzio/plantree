@@ -39,3 +39,5 @@ Deploy your blog in **10 minutes**!
 
 
 ## ⚖️ License
+
+http://localhost:4000/validate-email?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Inppby5wZW54QGdtYWlsLmNvbSIsInBhc3N3b3JkIjoiMTIzNDU2IiwiaWF0IjoxNzM5Nzc5NjEwLCJleHAiOjE3NDIzNzE2MTB9.XoSzIDg3Sm7sbPsksgXz4cUsuyA4e5BmIWaD2-XyvLs

@@ -1,4 +1,4 @@
-export function getEmailTpl(
+export function getPostEmailTpl(
   title: string,
   content: string,
   url: string,

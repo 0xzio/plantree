@@ -158,6 +158,7 @@ enum ProviderType {
   WALLET
   FARCASTER
   PASSWORD
+  EMAIL
 }
 
 model Account {

@@ -1,12 +1,12 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
-import { getEmailTpl } from '@/lib/getEmailTpl'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
 import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
+import { getPostEmailTpl } from '@/server/lib/getPostEmailTpl'
 import {
   DeliveryStatus,
   GateType,
@@ -272,7 +272,7 @@ export const postRouter = router({
           postId: post.id,
           title: info.title || '',
           // content: renderSlateToHtml(JSON.parse(info.content)),
-          content: getEmailTpl(
+          content: getPostEmailTpl(
             info.title || '',
             renderSlateToHtml(JSON.parse(info.content)),
             `https://${domain.domain}.penx.io/posts/${post.slug}`,

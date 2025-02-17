@@ -9,10 +9,12 @@ import {
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
@@ -21,17 +23,15 @@ import { useAuthStatus } from './useAuthStatus'
 import { useLoginDialog } from './useLoginDialog'
 
 const FormSchema = z.object({
-  name: z.string().min(4, {
-    message: 'Username must be at least 4 characters.',
-  }),
-  password: z.string().min(4, {
-    message: 'Password must be at least 4 characters.',
+  email: z.string().email(),
+  password: z.string().min(6, {
+    message: 'Password must be at least 6 characters.',
   }),
 })
 
 interface Props {}
 
-export function LoginForm({}: Props) {
+export function RegisterForm({}: Props) {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useLoginDialog()
   const { setAuthStatus } = useAuthStatus()
@@ -39,7 +39,7 @@ export function LoginForm({}: Props) {
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: '',
+      email: '',
       password: '',
     },
   })
@@ -47,20 +47,12 @@ export function LoginForm({}: Props) {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
-
-      const result = await signIn('password', {
-        username: data.name,
-        password: data.password,
-        redirect: false,
-      })
-
-      console.log('=====result:', result)
-
-      if (!result?.ok) {
-        toast.error('Invalid username or password. Please try again')
-      } else {
-        setIsOpen(false)
-      }
+      await api.user.registerByEmail.mutate(data)
+      // setIsOpen(false)
+      setAuthStatus('register-email-sent')
+      toast.success(
+        'Registration request sent. Please check your email for the verification link.',
+      )
     } catch (error) {
       console.log('========error:', error)
       const msg = extractErrorMessage(error)
@@ -75,15 +67,12 @@ export function LoginForm({}: Props) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="name"
+          name="email"
           render={({ field }) => (
             <FormItem className="w-full">
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="Username or email"
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="Email" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -95,6 +84,7 @@ export function LoginForm({}: Props) {
           name="password"
           render={({ field }) => (
             <FormItem className="w-full">
+              <FormLabel>Password</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -115,19 +105,19 @@ export function LoginForm({}: Props) {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? <LoadingDots /> : <p>Login</p>}
+            {isLoading ? <LoadingDots /> : <p>Register</p>}
           </Button>
         </div>
       </form>
 
-      <div className="text-center text-sm">
-        No account?{' '}
+      <div className="text-center text-sm mt-2">
+        Already have an account?{' '}
         <a
           href="#"
           className="text-brand-500"
-          onClick={() => setAuthStatus('register')}
+          onClick={() => setAuthStatus('login')}
         >
-          Create one
+          Log in
         </a>
       </div>
     </Form>

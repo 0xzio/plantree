@@ -1,13 +1,16 @@
-import { NETWORK, NetworkNames } from '@/lib/constants'
+import { sendEmail } from '@/lib/aws-ses-client'
+import { isProd, NETWORK, NetworkNames, ROOT_DOMAIN } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import { genSaltSync, hashSync } from 'bcrypt-edge'
+import jwt from 'jsonwebtoken'
 import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
 import { getEthPrice } from '../lib/getEthPrice'
 import { getMe } from '../lib/getMe'
+import { getRegisterEmailTpl } from '../lib/getRegisterEmailTpl'
+import { hashPassword } from '../lib/hashPassword'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const userRouter = router({
@@ -129,6 +132,47 @@ export const userRouter = router({
       return getMe(token.userId, true)
     }),
 
+  registerByEmail: publicProcedure
+    .input(
+      z.object({
+        email: z.string().email(),
+        password: z.string().min(6, {
+          message: 'Password must be at least 6 characters.',
+        }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const account = await prisma.account.findFirst({
+        where: {
+          providerAccountId: input.email,
+        },
+      })
+
+      if (account) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Email already registered',
+        })
+      }
+
+      const token = jwt.sign(input, process.env.NEXTAUTH_SECRET!, {
+        expiresIn: '30d',
+      })
+
+      const prefix = isProd ? 'https://' : 'http://'
+      const content = getRegisterEmailTpl(
+        `${prefix}${ROOT_DOMAIN}/validate-email?token=${token}`,
+      )
+      const result = await sendEmail({
+        from: 'PenX<no-reply@penx.io>',
+        to: [input.email],
+        subject: 'Verify your email address',
+        html: content,
+        text: content.replace(/<[^>]*>/g, ''),
+      })
+      return true
+    }),
+
   linkWallet: publicProcedure
     .input(
       z.object({
@@ -240,8 +284,3 @@ export const userRouter = router({
       return true
     }),
 })
-
-async function hashPassword(password: string) {
-  const salt = genSaltSync(10)
-  return hashSync(password, salt)
-}

@@ -175,9 +175,9 @@ export function validateEmail(email: string) {
   return regex.test(email)
 }
 
-export function formatUsername(name = '', left = 5, right = 4) {
+export function formatUsername(name = '', left = 2, right = 3) {
   if (isAddress(name)) {
-    return shortenAddress(name, 2, 3)
+    return shortenAddress(name, left, right)
   }
   return name
 }
