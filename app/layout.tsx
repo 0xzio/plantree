@@ -45,6 +45,7 @@ export const metadata: Metadata = {
 export default async function RootLayout({
   params,
   children,
+  ...rest
 }: {
   children: React.ReactNode
   params: { domain: string }
@@ -74,15 +75,6 @@ export default async function RootLayout({
             <div id="portal" />
           </Providers>
         </ThemeProvider>
-
-        {process.env.NEXT_PUBLIC_UMAMIC_WEBSITE_ID && (
-          <script
-            async
-            defer
-            src="https://stats.penx.io/script.js"
-            data-website-id={process.env.NEXT_PUBLIC_UMAMIC_WEBSITE_ID}
-          ></script>
-        )}
       </body>
     </html>
   )

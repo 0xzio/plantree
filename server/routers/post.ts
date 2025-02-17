@@ -360,6 +360,7 @@ export const postRouter = router({
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
+      revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
