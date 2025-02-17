@@ -28,11 +28,6 @@ const nextConfig = {
     '@octokit/core',
     '@octokit/app',
     'react-tweet',
-    'penx-theme-micro',
-    'penx-theme-card',
-    'penx-theme-minimal',
-    'penx-theme-garden',
-    'penx-theme-photo',
   ],
 
   images: {

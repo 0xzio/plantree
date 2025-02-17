@@ -31,9 +31,6 @@ export default async function RootLayout({
 }) {
   const site = await getSite(params)
 
-  console.log('param>>>>>>>>x:', params)
-  console.log('site layout===>>>>>>>>>', site)
-
   return (
     <>
       {children}
@@ -50,7 +47,10 @@ export default async function RootLayout({
       )}
 
       {site.analytics?.gaMeasurementId && (
-        <GoogleAnalytics trackPageViews gaMeasurementId="" />
+        <GoogleAnalytics
+          trackPageViews
+          gaMeasurementId={site.analytics?.gaMeasurementId}
+        />
       )}
     </>
   )
