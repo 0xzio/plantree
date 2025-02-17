@@ -1,8 +1,113 @@
+import { createSubscriptionConfirmEmail } from '@/lib/getEmailTpl'
 import { prisma } from '@/lib/prisma'
-import { SubscriberStatus } from '@prisma/client'
+import { uniqueId } from '@/lib/unique-id'
+import {
+  SubscriberStatus,
+  SystemEmailStatus,
+  SystemEmailType,
+} from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
+
+async function handleSubscriber({
+  tx = prisma,
+  siteId,
+  email,
+  userId,
+  source = 'form',
+}: {
+  tx?: any
+  siteId: string
+  email: string
+  userId: string
+  source?: string
+}) {
+  const confirmExpireMinutes = 30
+  const confirmExpireAt = new Date(
+    Date.now() + confirmExpireMinutes * 60 * 1000,
+  )
+
+  const subscriber = await tx.subscriber.findFirst({
+    where: { siteId, email },
+  })
+
+  if (subscriber?.status === SubscriberStatus.ACTIVE) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: `Email "${email}" already exists`,
+    })
+  }
+
+  const confirmationCode = uniqueId()
+  const unsubscribeCode = uniqueId()
+
+  let updatedSubscriber
+
+  if (subscriber?.status === SubscriberStatus.PENDING) {
+    const metadata = (subscriber.metadata as Record<string, any>) || {}
+    const expireAt = metadata.confirmExpireAt
+      ? new Date(metadata.confirmExpireAt)
+      : null
+
+    if (expireAt && expireAt > new Date()) {
+      updatedSubscriber = await tx.subscriber.update({
+        where: { id: subscriber.id },
+        data: {
+          metadata: {
+            ...metadata,
+            confirmExpireAt: confirmExpireAt.toISOString(),
+          },
+        },
+      })
+    } else {
+      updatedSubscriber = await tx.subscriber.update({
+        where: { id: subscriber.id },
+        data: {
+          status: SubscriberStatus.PENDING,
+          confirmationCode,
+          unsubscribeCode,
+          confirmedAt: null,
+          unsubscribedAt: null,
+          metadata: {
+            confirmExpireAt: confirmExpireAt.toISOString(),
+          },
+        },
+      })
+    }
+  } else {
+    updatedSubscriber = await tx.subscriber.create({
+      data: {
+        siteId,
+        email,
+        userId,
+        source,
+        status: SubscriberStatus.PENDING,
+        confirmationCode,
+        unsubscribeCode,
+        confirmedAt: null,
+        unsubscribedAt: null,
+        metadata: {
+          confirmExpireAt: confirmExpireAt.toISOString(),
+        },
+      },
+    })
+  }
+
+  if (
+    !subscriber?.metadata?.confirmExpireAt ||
+    subscriber.metadata.confirmExpireAt <= new Date()
+  ) {
+    await createConfirmationEmail({
+      tx,
+      email,
+      confirmationCode,
+      siteId,
+    })
+  }
+
+  return updatedSubscriber
+}
 
 export const subscriberRouter = router({
   list: protectedProcedure
@@ -56,12 +161,12 @@ export const subscriberRouter = router({
         async (tx) => {
           for (const email of input.emails) {
             try {
-              await prisma.subscriber.create({
-                data: {
-                  siteId: input.siteId,
-                  email,
-                  userId: ctx.token.uid,
-                },
+              await handleSubscriber({
+                tx,
+                siteId: input.siteId,
+                email,
+                userId: ctx.token.uid,
+                source: 'admin_add',
               })
             } catch (error: any) {
               throw new TRPCError({
@@ -73,12 +178,11 @@ export const subscriberRouter = router({
               })
             }
           }
-
           return true
         },
         {
-          maxWait: 1000 * 60, // default: 2000
-          timeout: 1000 * 60, // default: 5000
+          maxWait: 1000 * 60,
+          timeout: 1000 * 60,
         },
       )
     }),
@@ -126,24 +230,22 @@ export const subscriberRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const subscriber = await prisma.subscriber.findFirst({
-        where: { siteId: input.siteId, email: input.email },
-      })
-
-      if (subscriber) {
+      try {
+        return await handleSubscriber({
+          siteId: input.siteId,
+          email: input.email,
+          userId: ctx.token.uid,
+          source: input.source,
+        })
+      } catch (error: any) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
-          message: 'Email is already subscribed',
+          message:
+            error.code === 'P2002'
+              ? `Email "${input.email}" already exists`
+              : error.message,
         })
       }
-
-      return prisma.subscriber.create({
-        data: {
-          ...input,
-          userId: ctx.token.uid,
-          status: 'ACTIVE',
-        },
-      })
     }),
 
   importSubscribers: protectedProcedure
@@ -158,14 +260,65 @@ export const subscriberRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.subscriber.createMany({
-        data: input.subscribers.map((sub) => ({
-          email: sub.email,
-          siteId: input.siteId,
-          userId: ctx.token.uid,
-          status: 'ACTIVE',
-          source: 'bulk_import',
-        })),
-      })
+      return prisma.$transaction(
+        async (tx) => {
+          for (const sub of input.subscribers) {
+            try {
+              await handleSubscriber({
+                tx,
+                siteId: input.siteId,
+                email: sub.email,
+                userId: ctx.token.uid,
+                source: 'bulk_import',
+              })
+            } catch (error: any) {
+              throw new TRPCError({
+                code: 'BAD_REQUEST',
+                message:
+                  error.code === 'P2002'
+                    ? `Email "${sub.email}" already exists`
+                    : error.message,
+              })
+            }
+          }
+          return true
+        },
+        {
+          maxWait: 1000 * 60,
+          timeout: 1000 * 60,
+        },
+      )
     }),
 })
+
+async function createConfirmationEmail(params: {
+  tx: any
+  email: string
+  confirmationCode: string
+  siteId: string
+}) {
+  const { tx, email, confirmationCode, siteId } = params
+
+  // Get site info
+  const site = await tx.site.findUnique({
+    where: { id: siteId },
+    select: { name: true },
+  })
+
+  const confirmUrl = `${process.env.NEXT_PUBLIC_URL}/api/confirm-subscription/${confirmationCode}`
+
+  const emailContent = createSubscriptionConfirmEmail({
+    siteName: site?.name,
+    confirmUrl,
+  })
+
+  await tx.systemEmail.create({
+    data: {
+      type: SystemEmailType.SUBSCRIPTION_CONFIRM,
+      status: SystemEmailStatus.PENDING,
+      toEmail: email,
+      subject: emailContent.subject,
+      content: emailContent.content,
+    },
+  })
+}

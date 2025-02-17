@@ -138,3 +138,69 @@ export function getEmailTpl(
   `
   return emailTemplate
 }
+
+interface SubscriptionConfirmEmailConfig {
+  siteName: string
+  confirmUrl: string
+  supportEmail?: string
+}
+
+export function createSubscriptionConfirmEmail(
+  config: SubscriptionConfirmEmailConfig,
+) {
+  const { siteName, confirmUrl } = config
+
+  return {
+    subject: `Confirm your subscription to ${siteName}`,
+    content: `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <meta charset="utf-8">
+          <meta name="viewport" content="width=device-width, initial-scale=1.0">
+          <title>Confirm your subscription</title>
+        </head>
+        <body style="
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+          line-height: 1.5;
+          color: #333;
+          max-width: 600px;
+          margin: 0 auto;
+          padding: 20px;
+        ">
+          <p style="margin-bottom: 20px;">
+            Please confirm your subscription to ${siteName} by clicking the button below:
+          </p>
+
+          <div style="text-align: center; margin: 30px 0;">
+            <a href="${confirmUrl}" 
+               style="
+                 background: #000;
+                 color: #fff;
+                 padding: 12px 24px;
+                 border-radius: 4px;
+                 text-decoration: none;
+                 display: inline-block;
+               "
+            >
+              Confirm Subscription
+            </a>
+          </div>
+
+          <p style="color: #666; font-size: 14px;">
+            If you didn't request this subscription, you can safely ignore this email.
+          </p>
+
+          <hr style="border: none; border-top: 1px solid #eee; margin: 30px 0;">
+
+          <div style="color: #666; font-size: 12px; text-align: center;">
+            <p>
+              This email was sent by ${siteName}.<br>
+              ${config.supportEmail ? `For support, contact ${config.supportEmail}` : ''}
+            </p>
+          </div>
+        </body>
+      </html>
+    `.trim(),
+  }
+}

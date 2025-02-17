@@ -820,10 +820,9 @@ enum NewsletterStatus {
 }
 
 enum SubscriberStatus {
+  PENDING // Subscriber is pending confirmation
   ACTIVE // Subscriber is active and receiving emails
   UNSUBSCRIBED // Subscriber has opted out
-  BOUNCED // Emails are bouncing
-  COMPLAINED // Marked as spam
 }
 
 enum DeliveryStatus {
@@ -862,18 +861,24 @@ model Newsletter {
 
 // Newsletter subscriber
 model Subscriber {
-  id         String           @id @default(uuid()) @db.Uuid
-  email      String?          @db.VarChar(255)
-  status     SubscriberStatus @default(ACTIVE)
-  source     String?          @db.VarChar(100) // Where they subscribed from
-  createdAt  DateTime         @default(now())
-  updatedAt  DateTime         @updatedAt
-  user       User             @relation(fields: [userId], references: [id])
-  userId     String           @db.Uuid
-  siteId     String           @db.Uuid
-  site       Site             @relation(fields: [siteId], references: [id])
-  deliveries Delivery[]
+  id               String           @id @default(uuid()) @db.Uuid
+  email            String?          @db.VarChar(255)
+  status           SubscriberStatus @default(ACTIVE)
+  source           String?          @db.VarChar(100) // Where they subscribed from
+  confirmationCode String           @db.VarChar(100)
+  unsubscribeCode  String           @db.VarChar(100)
+  confirmedAt      DateTime?
+  unsubscribedAt   DateTime?
+  metadata         Json?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+  user             User             @relation(fields: [userId], references: [id])
+  userId           String           @db.Uuid
+  siteId           String           @db.Uuid
+  site             Site             @relation(fields: [siteId], references: [id])
+  deliveries       Delivery[]
 
+  @@unique([email, siteId])
   @@index([siteId])
   @@index([email])
   @@index([status])
@@ -901,4 +906,37 @@ model Delivery {
   @@index([newsletterId])
   @@index([status])
   @@map("delivery")
+}
+
+enum SystemEmailType {
+  SUBSCRIPTION_CONFIRM // Confirm email subscription
+  RESET_PASSWORD // Reset password
+  NOTIFICATION // General notification
+}
+
+enum SystemEmailStatus {
+  PENDING // Waiting to be sent
+  SENDING // In the process of sending
+  SENT // Successfully sent
+  FAILED // Failed to send
+}
+
+model SystemEmail {
+  id           String            @id @default(uuid()) @db.Uuid
+  type         SystemEmailType
+  status       SystemEmailStatus @default(PENDING)
+  toEmail      String            @db.VarChar(255)
+  subject      String            @db.VarChar(255)
+  content      String            @db.Text
+  metadata     Json?
+  errorMessage String?           @db.Text
+  messageId    String?           @db.VarChar(255)
+  provider     String?           @db.VarChar(50)
+  sentAt       DateTime?
+  createdAt    DateTime          @default(now())
+  updatedAt    DateTime          @updatedAt
+
+  @@index([type])
+  @@index([status])
+  @@map("system_email")
 }
