@@ -19,11 +19,12 @@ import {
 } from 'viem/siwe'
 import {
   initUserByAddress,
+  initUserByEmail,
   initUserByFarcasterFrame,
   initUserByFarcasterInfo,
   initUserByGoogleInfo,
 } from './initUser'
-import { getAccountAddress } from './utils'
+import { getAccountAddress, validateEmail } from './utils'
 
 export type UserData = {
   user: FarcasterUser
@@ -220,6 +221,40 @@ export const authOptions: NextAuthOptions = {
         }
       },
     }),
+
+    CredentialsProvider({
+      id: 'register-by-email',
+      name: 'PenX',
+      credentials: {
+        validateToken: {
+          label: 'Validate token',
+          type: 'text',
+          placeholder: '',
+        },
+      },
+      async authorize(credentials) {
+        // console.log('=======google:', credentials)
+
+        try {
+          if (!credentials?.validateToken) {
+            throw new Error('Login fail')
+          }
+
+          const decoded = jwt.verify(
+            credentials.validateToken,
+            process.env.NEXTAUTH_SECRET!,
+          ) as any
+
+          const email = decoded.email
+          const password = decoded.password
+          const account = await initUserByEmail(email, password)
+          return account
+        } catch (e) {
+          console.log('=======>>>>e1:', e)
+          return null
+        }
+      },
+    }),
     CredentialsProvider({
       id: 'penx-farcaster',
       name: 'Sign in with Farcaster',
@@ -346,10 +381,23 @@ export const authOptions: NextAuthOptions = {
           if (!credentials?.username || !credentials?.password) {
             throw new Error('Login fail')
           }
+
+          if (validateEmail(credentials.username)) {
+            //
+          }
+
           const account = await prisma.account.findFirst({
             where: {
-              providerType: ProviderType.PASSWORD,
-              providerAccountId: credentials.username,
+              OR: [
+                {
+                  providerType: ProviderType.PASSWORD,
+                  providerAccountId: credentials.username,
+                },
+                {
+                  providerType: ProviderType.EMAIL,
+                  providerAccountId: credentials.username,
+                },
+              ],
             },
             include: {
               user: {

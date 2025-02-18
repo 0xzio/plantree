@@ -1,16 +1,14 @@
 'use client'
 
 import { Skeleton } from '@/components/ui/skeleton'
-import { useSites } from '@/hooks/useSites'
+import { useHomeSites } from '@/hooks/useHomeSites'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { cn, getUrl } from '@/lib/utils'
-import { Site } from '@prisma/client'
-import Image from 'next/image'
 import Link from 'next/link'
 
 export function SiteList() {
-  const { isLoading, data } = useSites()
+  const { isLoading, data } = useHomeSites()
 
   if (isLoading || !data)
     return (
@@ -32,7 +30,9 @@ export function SiteList() {
 
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-lg">
-      {data?.sites.map((site) => <SiteItem key={site.id} site={site} />)}
+      {data.map((site) => (
+        <SiteItem key={site.id} site={site} />
+      ))}
     </div>
   )
 }

@@ -175,9 +175,20 @@ export function validateEmail(email: string) {
   return regex.test(email)
 }
 
-export function formatUsername(name = '', left = 5, right = 4) {
+export function formatUsername(name = '', left = 2, right = 3) {
   if (isAddress(name)) {
-    return shortenAddress(name, 2, 3)
+    return shortenAddress(name, left, right)
   }
   return name
+}
+
+export const formatDate = (date: string | Date, locale = 'en-US') => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  }
+  const now = new Date(date).toLocaleDateString(locale, options)
+
+  return now
 }

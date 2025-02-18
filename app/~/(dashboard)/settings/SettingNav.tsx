@@ -25,6 +25,7 @@ export function SettingNav({}: Props) {
     storageProvider: '/~/settings/storage-provider',
     accessToken: '/~/settings/access-token',
     analytics: '/~/settings/analytics',
+    importExport: '/~/settings/import-export',
   }
 
   const linkClassName = (path: string) =>
@@ -108,6 +109,12 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
           Analytics
+        </Link>
+        <Link
+          href={Paths.importExport}
+          className={linkClassName(Paths.importExport)}
+        >
+          Import/Export
         </Link>
       </div>
     </div>

@@ -1,20 +1,23 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
-import { getEmailTpl } from '@/lib/getEmailTpl'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
 import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
+import { getPostEmailTpl } from '@/server/lib/getPostEmailTpl'
 import {
+  CollaboratorRole,
   DeliveryStatus,
   GateType,
   NewsletterStatus,
+  Post,
   PostType,
   Prisma,
   SubscriberStatus,
 } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
@@ -272,7 +275,7 @@ export const postRouter = router({
           postId: post.id,
           title: info.title || '',
           // content: renderSlateToHtml(JSON.parse(info.content)),
-          content: getEmailTpl(
+          content: getPostEmailTpl(
             info.title || '',
             renderSlateToHtml(JSON.parse(info.content)),
             `https://${domain.domain}.penx.io/posts/${post.slug}`,
@@ -349,6 +352,57 @@ export const postRouter = router({
       return post
     }),
 
+  importPosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        postData: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const siteId = input.siteId
+      const posts = JSON.parse(input.postData) as Post[]
+
+      return prisma.$transaction(async (tx) => {
+        for (const p of posts) {
+          await tx.post.create({
+            data: {
+              siteId,
+              userId: ctx.token.uid,
+              title: p.title,
+              content: p.content,
+              postStatus: p.postStatus,
+              image: p.image,
+              type: p.type,
+              authors: {
+                create: [
+                  {
+                    siteId,
+                    userId: ctx.token.uid,
+                  },
+                ],
+              },
+            },
+          })
+        }
+
+        const postCount = await tx.post.count({
+          where: {
+            siteId,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+
+        await tx.site.update({
+          where: { id: siteId },
+          data: { postCount },
+        })
+
+        await cacheHelper.updateCachedSitePosts(siteId, null)
+        return true
+      })
+    }),
+
   archive: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
@@ -360,6 +414,7 @@ export const postRouter = router({
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
+      revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`posts-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
@@ -377,6 +432,43 @@ export const postRouter = router({
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       return post
+    }),
+
+  deleteSitePosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const collaborator = await prisma.collaborator.findFirst({
+        where: { userId: ctx.token.uid, siteId: input.siteId },
+      })
+
+      if (collaborator?.role !== CollaboratorRole.OWNER) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Only owner can delete all posts in a site',
+        })
+      }
+
+      return prisma.$transaction(async (tx) => {
+        const { siteId } = input
+        await tx.comment.deleteMany({ where: { siteId } })
+        await tx.postTag.deleteMany({ where: { siteId } })
+        await tx.author.deleteMany({ where: { siteId } })
+        await tx.post.deleteMany({
+          where: { siteId },
+        })
+
+        await tx.site.update({
+          where: { id: siteId },
+          data: { postCount: 0 },
+        })
+
+        await cacheHelper.updateCachedSitePosts(input.siteId, null)
+        return true
+      })
     }),
 
   addAuthor: protectedProcedure

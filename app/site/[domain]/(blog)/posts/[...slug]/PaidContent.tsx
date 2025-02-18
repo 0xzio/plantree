@@ -1,5 +1,6 @@
 'use client'
 
+import { loadTheme } from '@/lib/loadTheme'
 import { Site } from '@/lib/theme.types'
 import { SubscriptionInSession } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -9,10 +10,10 @@ import dynamic from 'next/dynamic'
 import readingTime from 'reading-time'
 import { GateCover } from './GateCover'
 
-const PostDetail: any = dynamic(
-  () => import(process.env.NEXT_PUBLIC_THEME!).then((mod) => mod.PostDetail),
-  { ssr: false },
-)
+// const PostDetail: any = dynamic(
+//   () => import(process.env.NEXT_PUBLIC_THEME!).then((mod) => mod.PostDetail),
+//   { ssr: false },
+// )
 
 function getContent(post: Post, isGated = false) {
   let content = JSON.parse(post.content || '{}')
@@ -43,6 +44,8 @@ interface Props {
 
 export function PaidContent({ site, postId, post, next, prev }: Props) {
   const { data: session, status } = useSession()
+
+  const { PostDetail } = loadTheme(site.themeName)
 
   if (status === 'loading') return null
 

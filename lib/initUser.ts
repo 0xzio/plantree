@@ -1,6 +1,7 @@
 import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { AccountWithUser } from '@/lib/types'
+import { hashPassword } from '@/server/lib/hashPassword'
 import {
   CollaboratorRole,
   PostStatus,
@@ -10,6 +11,7 @@ import {
   SubscriptionStatus,
 } from '@prisma/client'
 import ky from 'ky'
+import { cacheHelper } from './cache-header'
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7
 
@@ -99,6 +101,8 @@ export async function initUserByAddress(address: string) {
           },
         },
       })
+
+      await cacheHelper.updateCachedHomeSites(null)
 
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
@@ -237,6 +241,8 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           },
         },
       })
+
+      await cacheHelper.updateCachedHomeSites(null)
 
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
@@ -435,6 +441,8 @@ export async function initUserByFarcasterId(fid: string) {
         },
       })
 
+      await cacheHelper.updateCachedHomeSites(null)
+
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
       })
@@ -454,6 +462,139 @@ export async function initUserByFarcasterId(fid: string) {
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: fid },
+        include: {
+          user: {
+            include: {
+              subscriptions: true,
+              sites: {
+                include: {
+                  domains: true,
+                },
+              },
+            },
+          },
+        },
+      })
+    },
+    {
+      maxWait: 5000, // default: 2000
+      timeout: 10000, // default: 5000
+    },
+  )
+}
+
+export async function initUserByEmail(email: string, password: string) {
+  return prisma.$transaction(
+    async (tx) => {
+      const account = await tx.account.findUnique({
+        where: { providerAccountId: email },
+        include: {
+          user: {
+            include: {
+              subscriptions: true,
+              sites: {
+                include: {
+                  domains: true,
+                },
+              },
+            },
+          },
+        },
+      })
+
+      if (account) return account
+
+      const [name] = email.split('@')
+
+      let newUser = await tx.user.create({
+        data: {
+          name: name,
+          displayName: name,
+          accounts: {
+            create: [
+              {
+                providerType: ProviderType.EMAIL,
+                providerAccountId: email,
+                email: email,
+                accessToken: await hashPassword(password),
+              },
+            ],
+          },
+          subscriptions: {
+            create: [
+              {
+                planId: '0',
+                status: SubscriptionStatus.ACTIVE,
+                startedAt: new Date(),
+                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
+              },
+            ],
+          },
+        },
+      })
+
+      const site = await tx.site.create({
+        data: {
+          name: name,
+          description: 'My personal site',
+          userId: newUser.id,
+          socials: {},
+          config: {
+            features: {
+              journal: false,
+              gallery: false,
+              page: true,
+              database: false,
+            },
+          },
+          about: JSON.stringify(editorDefaultValue),
+          logo: 'https://penx.io/logo.png',
+          themeName: 'garden',
+          navLinks: defaultNavLinks,
+          domains: {
+            create: [
+              {
+                domain: newUser.id,
+                subdomainType: SubdomainType.UserId,
+              },
+            ],
+          },
+          collaborators: {
+            create: {
+              userId: newUser.id,
+              role: CollaboratorRole.OWNER,
+            },
+          },
+          channels: {
+            create: {
+              name: 'general',
+              type: 'TEXT',
+            },
+          },
+        },
+      })
+
+      await cacheHelper.updateCachedHomeSites(null)
+
+      const post = await tx.post.findUnique({
+        where: { id: process.env.WELCOME_POST_ID },
+      })
+
+      if (post) {
+        await tx.post.create({
+          data: {
+            userId: newUser.id,
+            siteId: site.id,
+            type: PostType.ARTICLE,
+            title: post.title,
+            content: post.content,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+      }
+
+      return tx.account.findUniqueOrThrow({
+        where: { providerAccountId: email },
         include: {
           user: {
             include: {

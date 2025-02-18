@@ -1,5 +1,4 @@
 import { PropsWithChildren } from 'react'
-import { GateType, PostStatus, PostType } from '@prisma/client'
 
 enum AuthType {
   GOOGLE = 'GOOGLE',
@@ -14,11 +13,31 @@ enum StorageProvider {
   SUPABASE_STORAGE = 'SUPABASE_STORAGE',
 }
 
+export enum PostType {
+  ARTICLE = 'ARTICLE',
+  IMAGE = 'IMAGE',
+  VIDEO = 'VIDEO',
+  AUDIO = 'AUDIO',
+  NFT = 'NFT',
+  FIGMA = 'FIGMA',
+  NOTE = 'NOTE',
+}
+
+export enum GateType {
+  FREE = 'FREE',
+  PAID = 'PAID',
+}
+
+export enum PostStatus {
+  PUBLISHED = 'PUBLISHED',
+  DRAFT = 'DRAFT',
+  ARCHIVED = 'ARCHIVED',
+}
+
 export interface Socials {
   farcaster: string
   x: string
   mastodon: string
-  discord: string
   github: string
   facebook: string
   youtube: string
@@ -28,7 +47,6 @@ export interface Socials {
   medium: string
   [key: string]: string
 }
-
 export interface Analytics {
   gaMeasurementId: string
   umamiHost: string

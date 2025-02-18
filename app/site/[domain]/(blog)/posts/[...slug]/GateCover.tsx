@@ -27,7 +27,7 @@ export function GateCover({ slug }: Props) {
               openConnectModal?.()
             }
             if (data) {
-              location.href = `/creator-fi/plans?post_slug=${slug}`
+              location.href = `/membership?post_slug=${slug}`
             }
           }}
         >

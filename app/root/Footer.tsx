@@ -30,6 +30,16 @@ export function Footer({}: Props) {
 
           <div className="flex items-center">
             <a
+              href="https://docs.penx.io/"
+              target="_blank"
+              className="flex items-center gap-1"
+            >
+              <span>Docs</span>
+            </a>
+          </div>
+
+          <div className="flex items-center">
+            <a
               href="https://0xzio.penx.io/"
               target="_blank"
               className="flex items-center gap-1"

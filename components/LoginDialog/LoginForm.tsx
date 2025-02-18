@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
 import { z } from 'zod'
+import { useAuthStatus } from './useAuthStatus'
 import { useLoginDialog } from './useLoginDialog'
 
 const FormSchema = z.object({
@@ -33,6 +34,7 @@ interface Props {}
 export function LoginForm({}: Props) {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useLoginDialog()
+  const { setAuthStatus } = useAuthStatus()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -77,7 +79,11 @@ export function LoginForm({}: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormControl>
-                <Input placeholder="Username" {...field} className="w-full" />
+                <Input
+                  placeholder="Username or email"
+                  {...field}
+                  className="w-full"
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -113,6 +119,17 @@ export function LoginForm({}: Props) {
           </Button>
         </div>
       </form>
+
+      <div className="text-center text-sm">
+        No account?{' '}
+        <a
+          href="#"
+          className="text-brand-500"
+          onClick={() => setAuthStatus('register')}
+        >
+          Create one
+        </a>
+      </div>
     </Form>
   )
 }
