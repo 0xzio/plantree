@@ -8,6 +8,7 @@ import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
 import { getPostEmailTpl } from '@/server/lib/getPostEmailTpl'
 import {
+  CollaboratorRole,
   DeliveryStatus,
   GateType,
   NewsletterStatus,
@@ -15,6 +16,7 @@ import {
   Prisma,
   SubscriberStatus,
 } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
@@ -378,6 +380,37 @@ export const postRouter = router({
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       return post
+    }),
+
+  deleteSitePosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const collaborator = await prisma.collaborator.findFirst({
+        where: { userId: ctx.token.uid, siteId: input.siteId },
+      })
+
+      if (collaborator?.role !== CollaboratorRole.OWNER) {
+        throw new TRPCError({
+          code: 'UNAUTHORIZED',
+          message: 'Only owner can delete all posts in a site',
+        })
+      }
+
+      return prisma.$transaction(async (tx) => {
+        const { siteId } = input
+        await tx.comment.deleteMany({ where: { siteId } })
+        await tx.postTag.deleteMany({ where: { siteId } })
+        await tx.author.deleteMany({ where: { siteId } })
+        await tx.post.deleteMany({
+          where: { siteId },
+        })
+        await cacheHelper.updateCachedSitePosts(input.siteId, null)
+        return true
+      })
     }),
 
   addAuthor: protectedProcedure

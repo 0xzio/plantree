@@ -50,9 +50,12 @@ export const ConfirmDialog = React.forwardRef<HTMLDivElement, Props>(
                   <Trash2 className="h-4 w-4 cursor-pointer text-destructive hover:text-destructive/90" />
                 )}
               </TooltipTrigger>
-              <TooltipContent>
-                <p>{tooltipContent}</p>
-              </TooltipContent>
+
+              {tooltipContent && (
+                <TooltipContent>
+                  <div>{tooltipContent}</div>
+                </TooltipContent>
+              )}
             </Tooltip>
           </TooltipProvider>
         </AlertDialogTrigger>

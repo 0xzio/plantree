@@ -1,5 +1,6 @@
 'use client'
 
+import { DeletePostsCard } from './DeletePostsCard'
 import { ExportCard } from './ExportCard'
 import { ImportCard } from './ImportCard'
 
@@ -10,6 +11,7 @@ export default function Page() {
     <div className="space-y-6">
       <ImportCard />
       <ExportCard />
+      <DeletePostsCard />
     </div>
   )
 }

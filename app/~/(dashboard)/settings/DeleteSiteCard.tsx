@@ -8,7 +8,6 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Site } from '@prisma/client'
 import { useDeleteSiteDialog } from './DeleteSiteDialog/useDeleteSiteDialog'
 
 interface Props {}
