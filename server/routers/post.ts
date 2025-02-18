@@ -534,6 +534,7 @@ async function createNewsletterWithDelivery(params: {
           newsletterId: newsletter.id,
           subscriberId: subscriber.id,
           status: DeliveryStatus.PENDING,
+          unSubscribeUrl: `${process.env.NEXT_PUBLIC_URL}/api/newsletter/unsubscribe/${subscriber.unsubscribeCode}`,
         })),
       })
     }
