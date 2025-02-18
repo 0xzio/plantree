@@ -12,6 +12,7 @@ import {
   DeliveryStatus,
   GateType,
   NewsletterStatus,
+  Post,
   PostType,
   Prisma,
   SubscriberStatus,
@@ -351,6 +352,57 @@ export const postRouter = router({
       return post
     }),
 
+  importPosts: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        postData: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const siteId = input.siteId
+      const posts = JSON.parse(input.postData) as Post[]
+
+      return prisma.$transaction(async (tx) => {
+        for (const p of posts) {
+          await tx.post.create({
+            data: {
+              siteId,
+              userId: ctx.token.uid,
+              title: p.title,
+              content: p.content,
+              postStatus: p.postStatus,
+              image: p.image,
+              type: p.type,
+              authors: {
+                create: [
+                  {
+                    siteId,
+                    userId: ctx.token.uid,
+                  },
+                ],
+              },
+            },
+          })
+        }
+
+        const postCount = await tx.post.count({
+          where: {
+            siteId,
+            postStatus: PostStatus.PUBLISHED,
+          },
+        })
+
+        await tx.site.update({
+          where: { id: siteId },
+          data: { postCount },
+        })
+
+        await cacheHelper.updateCachedSitePosts(siteId, null)
+        return true
+      })
+    }),
+
   archive: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
@@ -408,6 +460,12 @@ export const postRouter = router({
         await tx.post.deleteMany({
           where: { siteId },
         })
+
+        await tx.site.update({
+          where: { id: siteId },
+          data: { postCount: 0 },
+        })
+
         await cacheHelper.updateCachedSitePosts(input.siteId, null)
         return true
       })

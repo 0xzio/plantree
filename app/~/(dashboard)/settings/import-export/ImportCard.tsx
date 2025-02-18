@@ -4,6 +4,7 @@ import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { useMutation } from '@tanstack/react-query'
 import { toast } from 'sonner'
+import { ImportPostsButton } from './ImportPostsButton'
 
 function ImportSubscribers() {
   const site = useSiteContext()
@@ -30,21 +31,10 @@ function ImportSubscribers() {
 }
 
 function ImportPosts() {
-  const site = useSiteContext()
-  const { isPending, mutateAsync: exportPosts } = useMutation({
-    mutationKey: ['export-subscribers'],
-    mutationFn: async () => {
-      //
-      toast.success('Subscribers exported successfully!')
-    },
-  })
-
   return (
     <div className="flex items-center justify-between">
       <div className="font-semibold">Posts</div>
-      <Button disabled={isPending} onClick={async () => await exportPosts()}>
-        Import
-      </Button>
+      <ImportPostsButton />
     </div>
   )
 }
