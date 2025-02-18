@@ -146,6 +146,7 @@ body {
     'Segoe UI Emoji',
     'Segoe UI Symbol',
     'Noto Color Emoji';
+  scroll-padding-top: 72px;
 }
 .react-datepicker__triangle {
   display: none;

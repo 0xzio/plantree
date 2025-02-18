@@ -89,6 +89,7 @@ export type Site = {
   }
   socials: Socials
   analytics: Analytics
+  catalogue: any
   config: Record<string, any>
   themeConfig: Record<string, any>
   navLinks: NavLink[]

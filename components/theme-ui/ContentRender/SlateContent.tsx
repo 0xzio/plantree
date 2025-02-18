@@ -20,6 +20,8 @@ import {
   ELEMENT_UL,
 } from '@/lib/constants'
 import { cn, getUrl } from '@/lib/utils'
+import { slug } from 'github-slugger'
+import { Node } from 'slate'
 import { Editable } from 'slate-react'
 import { Leaf } from './Leaf'
 
@@ -30,6 +32,8 @@ export function SlateContent() {
       renderLeaf={(props) => <Leaf {...props} />}
       renderElement={({ attributes, children, element }) => {
         // console.log('=======element.type:', element.type)
+        const text = Node.string(element)
+        const id = slug(text)
 
         switch (element.type) {
           case ELEMENT_P:
@@ -54,17 +58,41 @@ export function SlateContent() {
               </div>
             )
           case ELEMENT_H1:
-            return <h1 {...attributes}>{children}</h1>
+            return (
+              <h1 id={id} {...attributes}>
+                {children}
+              </h1>
+            )
           case ELEMENT_H2:
-            return <h2 {...attributes}>{children}</h2>
+            return (
+              <h2 id={id} {...attributes}>
+                {children}
+              </h2>
+            )
           case ELEMENT_H3:
-            return <h3 {...attributes}>{children}</h3>
+            return (
+              <h3 id={id} {...attributes}>
+                {children}
+              </h3>
+            )
           case ELEMENT_H4:
-            return <h4 {...attributes}>{children}</h4>
+            return (
+              <h4 id={id} {...attributes}>
+                {children}
+              </h4>
+            )
           case ELEMENT_H5:
-            return <h5 {...attributes}>{children}</h5>
+            return (
+              <h5 id={id} {...attributes}>
+                {children}
+              </h5>
+            )
           case ELEMENT_H6:
-            return <h6 {...attributes}>{children}</h6>
+            return (
+              <h6 id={id} {...attributes}>
+                {children}
+              </h6>
+            )
           case ELEMENT_HR:
             return <hr {...attributes}></hr>
           case ELEMENT_UL:

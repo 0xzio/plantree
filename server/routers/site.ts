@@ -197,6 +197,8 @@ export const siteRouter = router({
             umamiWebsiteId: z.string().optional(),
           })
           .optional(),
+        // catalogue: z.record(z.unknown()).optional(),
+        catalogue: z.string().optional(),
         authType: z.nativeEnum(AuthType).optional(),
         authConfig: z
           .object({
@@ -214,8 +216,10 @@ export const siteRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...data } = input
-      console.log('=====data:', data, id)
 
+      if (data.catalogue) {
+        data.catalogue = JSON.parse(data.catalogue)
+      }
       const newSite = await prisma.site.update({
         where: { id },
         include: { domains: true },

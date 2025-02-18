@@ -1,4 +1,3 @@
-import { createSubscriptionConfirmEmail } from '@/lib/getEmailTpl'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
 import {
@@ -8,6 +7,7 @@ import {
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
+import { createSubscriptionConfirmEmail } from '../lib/getPostEmailTpl'
 import { protectedProcedure, router } from '../trpc'
 
 async function handleSubscriber({

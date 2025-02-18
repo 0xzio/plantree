@@ -14,6 +14,7 @@ export function SettingNav({}: Props) {
     general: '/~/settings',
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
+    catalogue: '/~/settings/catalogue',
     features: '/~/settings/features',
     socials: '/~/settings/socials',
     domain: '/~/settings/domain',
@@ -109,6 +110,9 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
           Analytics
+        </Link>
+        <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
+          Catalogue
         </Link>
         <Link
           href={Paths.importExport}

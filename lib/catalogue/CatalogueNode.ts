@@ -10,14 +10,18 @@ export class CatalogueNode {
 
   emoji?: string
 
+  uri?: string
+
+  title?: string
+
   children: CatalogueNode[] = []
 
-  get isNode(): boolean {
-    return this.type === CatalogueNodeType.NODE
+  get isDoc(): boolean {
+    return this.type === CatalogueNodeType.DOC
   }
 
-  get isGroup(): boolean {
-    return this.type === CatalogueNodeType.GROUP
+  get isCategory(): boolean {
+    return this.type === CatalogueNodeType.CATEGORY
   }
 
   get foldable(): boolean {
@@ -29,14 +33,18 @@ export class CatalogueNode {
     this.type = options.type
     this.folded = options.folded ?? false
     this.emoji = options.emoji
+    this.title = options.title
+    this.uri = options.uri
   }
 
   toJSON() {
     return {
       id: this.id,
       folded: this.folded,
-      emoji: this.emoji,
       type: this.type,
+      uri: this.uri,
+      emoji: this.emoji,
+      title: this.title,
     }
   }
 }

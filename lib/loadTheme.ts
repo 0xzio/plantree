@@ -1,4 +1,5 @@
 import * as card from '@/themes/card'
+import * as docs from '@/themes/docs'
 import * as garden from '@/themes/garden'
 import * as micro from '@/themes/micro'
 import * as minimal from '@/themes/minimal'
@@ -10,6 +11,7 @@ const map: Record<string, any> = {
   micro,
   minimal,
   publication,
+  docs,
 }
 
 export function loadTheme(name = 'garden'): any {

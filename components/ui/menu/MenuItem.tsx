@@ -22,10 +22,10 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       <div
         ref={ref}
         className={cn(
-          'px-3 py-2 max-h-9 flex flex-row items-center bg-background text-foreground text-sm transition-colors',
-          disabled && 'cursor-not-allowed opacity-40 bg-foreground/10',
+          'px-3 py-2 flex flex-row items-center bg-background text-foreground text-sm transition-colors',
+          disabled && 'cursor-not-allowed opacity-40 bg-foreground/5',
           !disabled && 'cursor-pointer',
-          !disabled && !selected && 'hover:bg-foreground/10',
+          !disabled && !selected && 'hover:bg-foreground/5',
           className,
         )}
         {...rest}

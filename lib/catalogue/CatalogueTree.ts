@@ -14,8 +14,8 @@ export class CatalogueTree {
     return this.nodes[0]?.id
   }
 
-  static fromJSON(json = []): CatalogueTree {
-    function convert(nodes: ICatalogueNode[]): CatalogueNode[] {
+  static fromJSON(json: any = []): CatalogueTree {
+    function convert(nodes: ICatalogueNode[] = []): CatalogueNode[] {
       return nodes.map((node) => {
         if (!node.children?.length) return new CatalogueNode(node)
         const catalogue = new CatalogueNode(node)
@@ -40,6 +40,10 @@ export class CatalogueTree {
       })
     }
     return convert(this.nodes)
+  }
+
+  setNodes(nodes: CatalogueNode[] = []) {
+    this.nodes = nodes
   }
 
   addNode = (opt: CreateCatalogueNodeOptions, parentId?: string) => {
@@ -93,7 +97,7 @@ export class CatalogueTree {
   }
 
   getSiblings = (id: string) => {
-    const nodes = this.flatten(CatalogueNodeType.NODE)
+    const nodes = this.flatten(CatalogueNodeType.DOC)
     const index = nodes.findIndex((node) => node.id === id)
     return {
       prev: nodes[index - 1],
@@ -131,6 +135,13 @@ export class CatalogueTree {
     const node: CatalogueNode | undefined = this.findNode(id)
     if (node) {
       node.emoji = unified
+    }
+  }
+
+  updateTitle = (id: string, title: string) => {
+    const node: CatalogueNode | undefined = this.findNode(id)
+    if (node) {
+      node.title = title
     }
   }
 }

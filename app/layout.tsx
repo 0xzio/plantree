@@ -8,7 +8,6 @@ import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
 import { headers } from 'next/headers'
-import NextTopLoader from 'nextjs-toploader'
 import { Providers } from './providers'
 
 const roboto = Poppins({
@@ -57,13 +56,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background antialiased font-sans')}>
-        <NextTopLoader
-          color="#000"
-          // crawlSpeed={0.08}
-          height={2}
-          showSpinner={false}
-          template='<div class="bar" role="bar"><div class="peg"></div></div>'
-        />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

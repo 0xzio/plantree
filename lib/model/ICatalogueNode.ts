@@ -1,6 +1,7 @@
 export enum CatalogueNodeType {
-  NODE = 'NODE',
-  GROUP = 'GROUP',
+  DOC = 'DOC',
+  LINK = 'LINK',
+  CATEGORY = 'CATEGORY',
 }
 export interface ICatalogueNode {
   id: string // nodeId
@@ -10,6 +11,10 @@ export interface ICatalogueNode {
   type: CatalogueNodeType
 
   emoji?: string
+
+  title?: string
+
+  uri?: string // url or postId
 
   children?: ICatalogueNode[]
 }
