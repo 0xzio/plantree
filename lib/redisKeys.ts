@@ -26,4 +26,8 @@ export const redisKeys = {
   mySites(uid: string) {
     return `sites:${uid}`
   },
+
+  homeSites() {
+    return `sites:home`
+  },
 }

@@ -11,6 +11,7 @@ import {
   SubscriptionStatus,
 } from '@prisma/client'
 import ky from 'ky'
+import { cacheHelper } from './cache-header'
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7
 
@@ -100,6 +101,8 @@ export async function initUserByAddress(address: string) {
           },
         },
       })
+
+      await cacheHelper.updateCachedHomeSites(null)
 
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
@@ -238,6 +241,8 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           },
         },
       })
+
+      await cacheHelper.updateCachedHomeSites(null)
 
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
@@ -436,6 +441,8 @@ export async function initUserByFarcasterId(fid: string) {
         },
       })
 
+      await cacheHelper.updateCachedHomeSites(null)
+
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },
       })
@@ -566,6 +573,8 @@ export async function initUserByEmail(email: string, password: string) {
           },
         },
       })
+
+      await cacheHelper.updateCachedHomeSites(null)
 
       const post = await tx.post.findUnique({
         where: { id: process.env.WELCOME_POST_ID },

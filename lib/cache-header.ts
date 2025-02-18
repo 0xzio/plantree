@@ -35,6 +35,34 @@ export const cacheHelper = {
     }
   },
 
+  async getCachedHomeSites(): Promise<MySite[] | undefined> {
+    const key = redisKeys.homeSites()
+    try {
+      const str = await redis.get(key)
+      if (str) {
+        const sites = JSON.parse(str)
+        if (Array.isArray(sites)) {
+          const homeSites = sites as MySite[]
+          return produce(homeSites, (draft) => {
+            for (const site of draft) {
+              site.createdAt = new Date(site.createdAt)
+              site.updatedAt = new Date(site.updatedAt)
+            }
+          })
+        }
+      }
+    } catch (error) {}
+  },
+
+  async updateCachedHomeSites(sites: MySite[] | null) {
+    const key = redisKeys.homeSites()
+    if (!sites) {
+      redis.del(key)
+    } else {
+      redis.set(key, JSON.stringify(sites), 'EX', 60 * 60 * 24)
+    }
+  },
+
   async getCachedSitePosts(siteId: string): Promise<SitePost[] | undefined> {
     const key = redisKeys.sitePosts(siteId)
     try {

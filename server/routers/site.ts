@@ -60,6 +60,25 @@ export const siteRouter = router({
       }
     }),
 
+  homeSites: publicProcedure.query(async ({ input }) => {
+    const cachedSites = await cacheHelper.getCachedHomeSites()
+    if (cachedSites) return cachedSites
+    const sites = await prisma.site.findMany({
+      where: {
+        postCount: { gte: 2 },
+      },
+      include: {
+        domains: true,
+        channels: true,
+      },
+      orderBy: { createdAt: 'asc' },
+      take: 36,
+    })
+
+    await cacheHelper.updateCachedHomeSites(sites)
+    return sites
+  }),
+
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
 
@@ -210,6 +229,7 @@ export const siteRouter = router({
       revalidateSite(newSite.domains)
 
       await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      await cacheHelper.updateCachedHomeSites(null)
       return newSite
     }),
 
@@ -273,7 +293,7 @@ export const siteRouter = router({
       revalidateSite(domains)
 
       await cacheHelper.updateCachedMySites(ctx.token.uid, null)
-
+      await cacheHelper.updateCachedHomeSites(null)
       return newDomain
     }),
 
@@ -294,6 +314,7 @@ export const siteRouter = router({
       })
       revalidateSite(domains)
       await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      await cacheHelper.updateCachedHomeSites(null)
       return true
     }),
 
@@ -344,6 +365,7 @@ export const siteRouter = router({
         })
         revalidateSite(domains)
         await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+        await cacheHelper.updateCachedHomeSites(null)
         return res
       } catch (error) {
         console.log('===error:', error)
@@ -401,6 +423,7 @@ export const siteRouter = router({
         await tx.user.delete({ where: { id: userId } })
 
         await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+        await cacheHelper.updateCachedHomeSites(null)
         return true
       },
       {
