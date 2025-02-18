@@ -1,5 +1,6 @@
 'use client'
 
+import { loadTheme } from '@/lib/loadTheme'
 import { Site } from '@/lib/theme.types'
 import { SubscriptionInSession } from '@/lib/types'
 import { cn } from '@/lib/utils'
@@ -44,54 +45,55 @@ interface Props {
 export function PaidContent({ site, postId, post, next, prev }: Props) {
   const { data: session, status } = useSession()
 
+  const { PostDetail } = loadTheme(site.themeName)
+
   if (status === 'loading') return null
-  return null
 
   /**  not login */
-  // if (!session) {
-  //   return (
-  //     <div>
-  //       <PostDetail
-  //         site={site}
-  //         post={{
-  //           ...post,
-  //           content: getContent(post, true),
-  //           readingTime: readingTime(post.content),
-  //         }}
-  //         readable={false}
-  //         next={next}
-  //         prev={prev}
-  //         className="min-h-[auto]"
-  //       />
+  if (!session) {
+    return (
+      <div>
+        <PostDetail
+          site={site}
+          post={{
+            ...post,
+            content: getContent(post, true),
+            readingTime: readingTime(post.content),
+          }}
+          readable={false}
+          next={next}
+          prev={prev}
+          className="min-h-[auto]"
+        />
 
-  //       <div className="mx-auto relative">
-  //         <GateCover slug={post.slug} />
-  //       </div>
-  //     </div>
-  //   )
-  // }
+        <div className="mx-auto relative">
+          <GateCover slug={post.slug} />
+        </div>
+      </div>
+    )
+  }
 
-  // const hasMembership = checkMembership(session.subscriptions)
+  const hasMembership = checkMembership(session.subscriptions)
 
-  // return (
-  //   <div className="">
-  //     <PostDetail
-  //       site={site}
-  //       post={{
-  //         ...post,
-  //         content: hasMembership ? getContent(post) : getContent(post, true),
-  //         readingTime: readingTime(post.content),
-  //       }}
-  //       readable={hasMembership}
-  //       next={next}
-  //       prev={prev}
-  //       className={cn(!hasMembership && 'min-h-[auto]')}
-  //     />
-  //     {!hasMembership && (
-  //       <div className="mx-auto relative">
-  //         <GateCover slug={post.slug} />
-  //       </div>
-  //     )}
-  //   </div>
-  // )
+  return (
+    <div className="">
+      <PostDetail
+        site={site}
+        post={{
+          ...post,
+          content: hasMembership ? getContent(post) : getContent(post, true),
+          readingTime: readingTime(post.content),
+        }}
+        readable={hasMembership}
+        next={next}
+        prev={prev}
+        className={cn(!hasMembership && 'min-h-[auto]')}
+      />
+      {!hasMembership && (
+        <div className="mx-auto relative">
+          <GateCover slug={post.slug} />
+        </div>
+      )}
+    </div>
+  )
 }
