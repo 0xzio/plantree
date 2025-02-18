@@ -5,6 +5,18 @@ import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
 export const subscriberRouter = router({
+  all: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return prisma.subscriber.findMany({
+        where: { siteId: input.siteId },
+      })
+    }),
+
   list: protectedProcedure
     .input(
       z.object({
