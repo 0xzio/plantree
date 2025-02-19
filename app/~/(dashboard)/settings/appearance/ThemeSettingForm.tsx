@@ -82,9 +82,10 @@ export function ThemeSettingForm({ site }: Props) {
                   <SelectItem value="minimal">Minimal</SelectItem>
                   <SelectItem value="garden">Garden</SelectItem>
                   <SelectItem value="publication">Publication</SelectItem>
+                  <SelectItem value="sidebar">Sidebar</SelectItem>
+                  <SelectItem value="docs">Docs</SelectItem>
                   <SelectItem value="micro">Micro</SelectItem>
                   <SelectItem value="card">Card</SelectItem>
-                  <SelectItem value="docs">Docs</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />

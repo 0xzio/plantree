@@ -11,7 +11,7 @@ export function SocialNav({ site, className }: Props) {
   if (!site) return null
   const socials = site.socials
   return (
-    <div className={cn('flex space-x-4 item-center', className)}>
+    <div className={cn('flex gap-4 item-center', className)}>
       <SocialIcon kind="mail" href={`mailto:${socials?.email}`} size={6} />
       <SocialIcon kind="github" href={socials.github} size={6} />
       <SocialIcon kind="discord" href={socials.discord} size={6} />

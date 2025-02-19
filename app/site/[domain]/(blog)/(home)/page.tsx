@@ -1,4 +1,4 @@
-import { getPosts, getSite } from '@/lib/fetchers'
+import { getPosts, getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata, ResolvingMetadata } from 'next'
 

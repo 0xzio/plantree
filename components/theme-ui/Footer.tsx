@@ -10,7 +10,6 @@ interface Props {
 
 export function Footer({ site, className }: Props) {
   if (!site) return null
-  const socials = site.socials
   return (
     <footer className={cn('mt-auto mb-8', className)}>
       <div className="mt-16 flex flex-col items-center">

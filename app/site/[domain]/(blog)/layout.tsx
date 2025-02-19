@@ -1,6 +1,6 @@
 import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SiteProvider } from '@/components/SiteContext'
-import { getSite } from '@/lib/fetchers'
+import { getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
@@ -32,10 +32,11 @@ export default async function RootLayout({
   params: { domain: string }
 }) {
   const site = await getSite(params)
+  const tags = await getTags(site.id)
   const { SiteLayout } = loadTheme(site.themeName)
 
   return (
-    <SiteLayout site={site}>
+    <SiteLayout site={site} tags={tags}>
       <SiteProvider site={site as any}>
         {children}
         {site.spaceId && <ChatSheet />}
