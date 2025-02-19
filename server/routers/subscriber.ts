@@ -1,6 +1,6 @@
-import { createSubscriptionConfirmEmail } from '@/lib/getEmailTpl'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
+import { createSubscriptionConfirmEmail } from '@/server/lib/getPostEmailTpl'
 import {
   SubscriberStatus,
   SystemEmailStatus,
