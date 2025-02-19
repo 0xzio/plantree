@@ -13,7 +13,7 @@ interface Props {
 export function HomePage({ posts = [], site }: Props) {
   return (
     <div className="">
-      <div className="prose max-w-none mb-10 text-foreground/70">
+      <div className="prose dark:prose-invert max-w-none mb-10 text-foreground/70">
         <PageTitle>{site.name}</PageTitle>
         <ContentRender content={site.about} />
       </div>

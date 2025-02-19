@@ -90,7 +90,7 @@ export const Sidebar = ({ site }: Props) => {
           <CatalogueItem
             key={item.id}
             name={item.title || 'Untitled'}
-            item={item}
+            item={item as any}
             depth={item.depth}
           />
         )

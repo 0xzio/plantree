@@ -1,7 +1,11 @@
 'use client'
 
-import { forwardRef } from 'react'
-import { CatalogueNodeType, ICatalogueNode } from '@/lib/model'
+import { forwardRef, useMemo } from 'react'
+import {
+  CatalogueNodeJSON,
+  CatalogueNodeType,
+  ICatalogueNode,
+} from '@/lib/model'
 import { cn } from '@/lib/utils'
 import { FowerHTMLProps } from '@fower/react'
 import { Emoji, EmojiStyle } from 'emoji-picker-react'
@@ -11,17 +15,31 @@ import Link from 'next/link'
 interface CatalogueItemProps extends FowerHTMLProps<'div'> {
   depth: number
   name: string
-  item: ICatalogueNode
+  item: CatalogueNodeJSON
 }
 
 export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
   function CatalogueItem({ item, name, depth }: CatalogueItemProps, ref) {
-    // console.log('=========>>item:', item)
-
     const isCategory = item.type === CatalogueNodeType.CATEGORY
+
+    const href = useMemo(() => {
+      if (item.type === CatalogueNodeType.PAGE) return `/p/${item.uri}`
+      if (item.type === CatalogueNodeType.POST) return `/posts/${item.uri}`
+      if (item.type === CatalogueNodeType.LINK) {
+        return item.uri || ''
+      }
+      return `/posts/${item.uri}`
+    }, [item])
+
+    const linkProps: Record<string, string> = {}
+    if (item.type === CatalogueNodeType.LINK && item.uri?.startsWith('http')) {
+      linkProps.target = '_blank'
+    }
+
     return (
       <Link
-        href={`/posts/${item.uri}`}
+        href={href}
+        {...linkProps}
         className={cn(
           'catalogueItem py-1 hover:bg-foreground/5 relative rounded px-2 flex justify-between items-center mb-[1px] transition-colors cursor-pointer',
           isCategory && 'mt-6',
@@ -38,25 +56,13 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
           }
         }}
       >
-        <div
-          className="flex items-center gap-x-1 flex-1 h-full cursor-pointer text-foreground/50"
-          // onClick={async (e) => {
-          // }}
-        >
+        <div className="flex items-center gap-x-1 flex-1 h-full cursor-pointer text-foreground/50">
           {item.emoji && (
-            <div
-              className="inline-flex flex-shrink-0"
-              onClick={(e) => {
-                e.preventDefault()
-                e.stopPropagation()
-              }}
-            >
-              <Emoji
-                unified={item.emoji}
-                emojiStyle={EmojiStyle.APPLE}
-                size={18}
-              />
-            </div>
+            <Emoji
+              unified={item.emoji}
+              emojiStyle={EmojiStyle.APPLE}
+              size={18}
+            />
           )}
 
           <div
@@ -69,7 +75,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
           </div>
         </div>
 
-        {!!item.children?.length && (
+        {/* {!!item.hasChildren && (
           <div
             className="inline-flex text-foreground/50 hover:bg-foreground/10 rounded justify-center items-center h-5 w-5"
             onClick={(e) => {
@@ -80,7 +86,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
             {item.folded && <ChevronRight size={14} />}
             {!item.folded && <ChevronDown size={14} />}
           </div>
-        )}
+        )} */}
       </Link>
     )
   },

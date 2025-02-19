@@ -1,14 +1,9 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
-import { useSiteContext } from '@/components/SiteContext'
-import { Button } from '@/components/ui/button'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { usePages } from '@/hooks/usePages'
 import { usePosts } from '@/hooks/usePosts'
 import { useSite } from '@/hooks/useSite'
-import { CatalogueTree } from '@/lib/catalogue'
-import { ca } from 'date-fns/locale'
 import { CatalogueBox } from './CatalogueBox/CatalogueBox'
 
 export const dynamic = 'force-static'
@@ -16,8 +11,9 @@ export const dynamic = 'force-static'
 export default function Page() {
   const { isLoading, error } = useSite()
   const posts = usePosts()
+  const pages = usePages()
 
-  if (isLoading || posts.isLoading) {
+  if (isLoading || posts.isLoading || pages.isLoading) {
     return (
       <div>
         <LoadingDots className="bg-foreground/60" />

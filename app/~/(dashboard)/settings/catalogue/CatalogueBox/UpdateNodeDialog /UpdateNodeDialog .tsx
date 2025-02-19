@@ -8,24 +8,22 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { useCatalogue } from '../hooks/useCatalogue'
-import { CategoryNodeForm } from './CategoryNodeForm'
-import { useCategoryNodeDialog } from './useCategoryNodeDialog'
+import { UpdateNodeForm } from './UpdateNodeForm'
+import { useUpdateNodeDialog } from './useUpdateNodeDialog'
 
 interface Props {}
 
-export function CategoryNodeDialog({}: Props) {
-  const { isOpen, setIsOpen, node } = useCategoryNodeDialog()
+export function UpdateNodeDialog({}: Props) {
+  const { isOpen, setIsOpen } = useUpdateNodeDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent className="sm:max-w-[425px] grid gap-4">
         <DialogHeader>
-          <DialogTitle className="">
-            {node ? 'Edit category' : 'Add category'}
-          </DialogTitle>
+          <DialogTitle className="">Rename</DialogTitle>
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
-        <CategoryNodeForm />
+        <UpdateNodeForm />
       </DialogContent>
     </Dialog>
   )

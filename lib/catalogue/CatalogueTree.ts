@@ -97,7 +97,7 @@ export class CatalogueTree {
   }
 
   getSiblings = (id: string) => {
-    const nodes = this.flatten(CatalogueNodeType.DOC)
+    const nodes = this.flatten(CatalogueNodeType.POST)
     const index = nodes.findIndex((node) => node.id === id)
     return {
       prev: nodes[index - 1],

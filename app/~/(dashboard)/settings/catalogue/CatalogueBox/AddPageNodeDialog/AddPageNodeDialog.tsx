@@ -8,45 +8,45 @@ import {
   DialogTitle,
 } from '@/components/ui/dialog'
 import { Menu, MenuItem } from '@/components/ui/menu'
-import { usePosts } from '@/hooks/usePosts'
+import { usePages } from '@/hooks/usePages'
 import { CatalogueNodeType } from '@/lib/model'
-import { PostStatus } from '@prisma/client'
+import { PageStatus } from '@prisma/client'
 import { useCatalogue } from '../hooks/useCatalogue'
-import { useAddPostNodeDialog } from './useAddPostNodeDialog'
+import { useAddPageNodeDialog } from './useAddPageNodeDialog'
 
 interface Props {}
 
-export function AddPostNodeDialog({}: Props) {
-  const { isOpen, setIsOpen, parentId } = useAddPostNodeDialog()
-  const { data = [] } = usePosts()
+export function AddPageNodeDialog({}: Props) {
+  const { isOpen, setIsOpen, parentId } = useAddPageNodeDialog()
+  const { data = [] } = usePages()
   const { addNode } = useCatalogue()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent className="sm:max-w-[425px] grid gap-4">
         <DialogHeader>
-          <DialogTitle className="">Select a post</DialogTitle>
+          <DialogTitle className="">Select a page</DialogTitle>
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
         <Menu className="shadow-none">
-          {data.map((post) => {
-            if (post.postStatus !== PostStatus.PUBLISHED) return null
+          {data.map((item) => {
+            if (item.status !== PageStatus.PUBLISHED) return null
             return (
               <MenuItem
-                key={post.id}
+                key={item.id}
                 onClick={() => {
                   addNode(
                     {
-                      uri: post.slug,
-                      title: post.title,
-                      type: CatalogueNodeType.POST,
+                      uri: item.slug,
+                      title: item.title,
+                      type: CatalogueNodeType.PAGE,
                     },
                     parentId,
                   )
                   setIsOpen(false)
                 }}
               >
-                {post.title}
+                {item.title}
               </MenuItem>
             )
           })}

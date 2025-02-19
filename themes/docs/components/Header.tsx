@@ -27,13 +27,13 @@ export const Header = ({ site }: Props) => {
     >
       <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
         <div className="flex items-center space-x-6 leading-5 sm:space-x-6">
-          <div className="px-0 py-3 flex items-center gap-2">
-            <Avatar className="h-8 w-8">
+          <Link href="/" className="px-0 py-3 flex items-center gap-2">
+            <Avatar className="h-8 w-8 border">
               <AvatarImage src={getUrl(site.logo || '')} />
               <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
             </Avatar>
             <div className="text-lg font-bold">{site.name}</div>
-          </div>
+          </Link>
           <div className="flex items-center space-x-4">
             {links.map((link) => {
               if (link.pathname === '/creator-fi' && !site.spaceId) {

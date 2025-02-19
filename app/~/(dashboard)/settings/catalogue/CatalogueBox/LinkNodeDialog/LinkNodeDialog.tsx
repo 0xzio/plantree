@@ -7,25 +7,24 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { useCatalogue } from '../hooks/useCatalogue'
-import { CategoryNodeForm } from './CategoryNodeForm'
-import { useCategoryNodeDialog } from './useCategoryNodeDialog'
+import { LinkNodeForm } from './LinkNodeForm'
+import { useLinkNodeDialog } from './useLinkNodeDialog'
 
 interface Props {}
 
-export function CategoryNodeDialog({}: Props) {
-  const { isOpen, setIsOpen, node } = useCategoryNodeDialog()
+export function LinkNodeDialog({}: Props) {
+  const { isOpen, setIsOpen, node } = useLinkNodeDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent className="sm:max-w-[425px] grid gap-4">
         <DialogHeader>
           <DialogTitle className="">
-            {node ? 'Edit category' : 'Add category'}
+            {node ? 'Edit link' : 'Add link'}
           </DialogTitle>
           <DialogDescription className="hidden"></DialogDescription>
         </DialogHeader>
-        <CategoryNodeForm />
+        <LinkNodeForm />
       </DialogContent>
     </Dialog>
   )

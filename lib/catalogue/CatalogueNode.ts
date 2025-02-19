@@ -1,4 +1,8 @@
-import { CatalogueNodeType, ICatalogueNode } from '@/lib/model'
+import {
+  CatalogueNodeJSON,
+  CatalogueNodeType,
+  ICatalogueNode,
+} from '@/lib/model'
 import { CreateCatalogueNodeOptions } from './types'
 
 export class CatalogueNode {
@@ -17,7 +21,7 @@ export class CatalogueNode {
   children: CatalogueNode[] = []
 
   get isDoc(): boolean {
-    return this.type === CatalogueNodeType.DOC
+    return this.type === CatalogueNodeType.POST
   }
 
   get isCategory(): boolean {
@@ -37,7 +41,7 @@ export class CatalogueNode {
     this.uri = options.uri
   }
 
-  toJSON() {
+  toJSON(): CatalogueNodeJSON {
     return {
       id: this.id,
       folded: this.folded,
@@ -45,6 +49,7 @@ export class CatalogueNode {
       uri: this.uri,
       emoji: this.emoji,
       title: this.title,
+      hasChildren: this.children.length > 0,
     }
   }
 }

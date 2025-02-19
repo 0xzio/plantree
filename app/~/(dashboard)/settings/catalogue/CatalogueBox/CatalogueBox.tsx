@@ -31,13 +31,16 @@ import {
 } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
 import { Box } from '@fower/react'
+import { AddPageNodeDialog } from './AddPageNodeDialog/AddPageNodeDialog'
 import { AddPostNodeDialog } from './AddPostNodeDialog/AddPostNodeDialog'
 import { CatalogueBoxHeader } from './CatalogueBoxHeader'
 import { CatalogueItem } from './CatalogueItem'
 import { CategoryNodeDialog } from './CategoryNodeDialog/CategoryNodeDialog'
 import { useCatalogue } from './hooks/useCatalogue'
+import { LinkNodeDialog } from './LinkNodeDialog/LinkNodeDialog'
 import { SortableTreeItem } from './SortableTreeItem'
 import { FlattenedItem, TreeItem, TreeItems } from './types'
+import { UpdateNodeDialog } from './UpdateNodeDialog /UpdateNodeDialog '
 import {
   buildTree,
   flattenTree,
@@ -86,6 +89,7 @@ export const CatalogueBox = () => {
   )
   const { data: posts = [] } = usePosts()
   const { setNodes } = useCatalogue()
+
   // console.log('>>>>>>>>>>>site:', site, posts)
 
   const [activeId, setActiveId] = useState<UniqueIdentifier | null>(null)
@@ -137,7 +141,10 @@ export const CatalogueBox = () => {
   return (
     <Box w-100p>
       <AddPostNodeDialog />
+      <AddPageNodeDialog />
       <CategoryNodeDialog />
+      <LinkNodeDialog />
+      <UpdateNodeDialog />
       <CatalogueBoxHeader />
 
       <DndContext
@@ -186,7 +193,7 @@ export const CatalogueBox = () => {
                 <CatalogueItem
                   item={activeItem}
                   depth={activeItem.depth}
-                  name="TODO"
+                  name=""
                   opacity-80
                 />
               ) : null}

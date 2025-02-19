@@ -7,8 +7,10 @@ import {
 } from '@/components/ui/popover'
 import { Box } from '@fower/react'
 import { Plus } from 'lucide-react'
-import { useCategoryNodeDialog } from './CategoryNodeDialog/useCategoryNodeDialog'
+import { useAddPageNodeDialog } from './AddPageNodeDialog/useAddPageNodeDialog'
 import { useAddPostNodeDialog } from './AddPostNodeDialog/useAddPostNodeDialog'
+import { useCategoryNodeDialog } from './CategoryNodeDialog/useCategoryNodeDialog'
+import { useLinkNodeDialog } from './LinkNodeDialog/useLinkNodeDialog'
 
 interface Props {
   parentId?: string
@@ -17,7 +19,9 @@ interface Props {
 export function AddNodePopover({ parentId = '' }: Props) {
   const [open, setOpen] = useState(false)
   const addPostNodeDialog = useAddPostNodeDialog()
-  const addCategoryNodeDialog = useCategoryNodeDialog()
+  const addPageNodeDialog = useAddPageNodeDialog()
+  const categoryNodeDialog = useCategoryNodeDialog()
+  const linkNodeDialog = useLinkNodeDialog()
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -36,8 +40,19 @@ export function AddNodePopover({ parentId = '' }: Props) {
           <Plus size={16} />
         </Box>
       </PopoverTrigger>
-      <PopoverContent asChild className="p-0 w-60">
+      <PopoverContent asChild className="p-0 w-48">
         <Menu>
+          <MenuItem
+            onClick={async () => {
+              categoryNodeDialog.setState({
+                parentId,
+                isOpen: true,
+              })
+              setOpen(false)
+            }}
+          >
+            Category
+          </MenuItem>
           <MenuItem
             onClick={() => {
               addPostNodeDialog.setState({
@@ -49,21 +64,27 @@ export function AddNodePopover({ parentId = '' }: Props) {
           >
             Post
           </MenuItem>
-          {/* <MenuItem>Link</MenuItem> */}
           <MenuItem
-            onClick={async () => {
-              // await addNode({
-              //   type: CatalogueNodeType.CATEGORY,
-              // })
-
-              addCategoryNodeDialog.setState({
+            onClick={() => {
+              addPageNodeDialog.setState({
                 parentId,
                 isOpen: true,
               })
               setOpen(false)
             }}
           >
-            Category
+            Page
+          </MenuItem>
+          <MenuItem
+            onClick={() => {
+              linkNodeDialog.setState({
+                parentId,
+                isOpen: true,
+              })
+              setOpen(false)
+            }}
+          >
+            Link
           </MenuItem>
         </Menu>
       </PopoverContent>

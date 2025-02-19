@@ -1,4 +1,3 @@
-import { ModeToggle } from '@/components/ModeToggle'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import SocialIcon from './SocialIcon'
