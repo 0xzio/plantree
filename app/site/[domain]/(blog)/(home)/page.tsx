@@ -25,7 +25,7 @@ export default async function HomePage({
   params: { domain: string }
 }) {
   const site = await getSite(params)
-  const posts = await getPosts(site.id)
+  const [posts, tags] = await Promise.all([getPosts(site.id), getTags(site.id)])
 
   const { HomePage } = loadTheme(site.themeName)
 
@@ -33,5 +33,5 @@ export default async function HomePage({
     return <div>Theme not found</div>
   }
 
-  return <HomePage posts={posts} authors={[]} site={site} />
+  return <HomePage posts={posts} tags={tags} authors={[]} site={site} />
 }

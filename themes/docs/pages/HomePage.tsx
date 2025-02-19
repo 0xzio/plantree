@@ -3,8 +3,6 @@ import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
-import Image from 'next/image'
-import Link from '../components/Link'
 import { PostItem } from '../components/PostItem'
 
 interface Props {

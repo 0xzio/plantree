@@ -12,8 +12,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import {
   Select,
   SelectContent,
@@ -82,8 +80,9 @@ export function ThemeSettingForm({ site }: Props) {
                   <SelectItem value="minimal">Minimal</SelectItem>
                   <SelectItem value="garden">Garden</SelectItem>
                   <SelectItem value="publication">Publication</SelectItem>
-                  <SelectItem value="sidebar">Sidebar</SelectItem>
+                  <SelectItem value="aside">Aside</SelectItem>
                   <SelectItem value="docs">Docs</SelectItem>
+                  <SelectItem value="sue">Sue</SelectItem>
                   <SelectItem value="micro">Micro</SelectItem>
                   <SelectItem value="card">Card</SelectItem>
                 </SelectContent>

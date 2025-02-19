@@ -1,7 +1,7 @@
+import Image from 'next/image'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { Post, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
-import Image from 'next/image'
 import Link from './Link'
 import Tag from './Tag'
 
