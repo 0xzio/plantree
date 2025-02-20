@@ -6,13 +6,6 @@ enum AuthType {
   PRIVY = 'PRIVY',
 }
 
-enum StorageProvider {
-  IPFS = 'IPFS',
-  R2 = 'R2',
-  VERCEL_BLOB = 'VERCEL_BLOB',
-  SUPABASE_STORAGE = 'SUPABASE_STORAGE',
-}
-
 export enum PostType {
   ARTICLE = 'ARTICLE',
   IMAGE = 'IMAGE',
@@ -82,7 +75,6 @@ export type Site = {
   authConfig?: {
     [key: string]: string
   }
-  storageProvider: StorageProvider
   storageConfig?: {
     vercelBlobToken: string
     [key: string]: string

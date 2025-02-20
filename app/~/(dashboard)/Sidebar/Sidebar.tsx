@@ -4,7 +4,6 @@ import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
-import { SiteMode } from '@prisma/client'
 import {
   Calendar,
   CalendarDays,
@@ -25,7 +24,6 @@ import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
 import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
-import { SiteModeSelect } from './SiteModeSelect'
 import { SitesPopover } from './SitesPopover/SitesPopover'
 
 const LinkAccountEntry = dynamic(() => import('./LinkAccountEntry'), {

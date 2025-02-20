@@ -3,12 +3,7 @@ import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
 import { MySite } from '@/lib/types'
-import {
-  AuthType,
-  SiteMode,
-  StorageProvider,
-  SubdomainType,
-} from '@prisma/client'
+import { AuthType, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
@@ -164,7 +159,6 @@ export const siteRouter = router({
         about: z.string().optional(),
         themeName: z.string().optional(),
         spaceId: z.string().optional(),
-        mode: z.nativeEnum(SiteMode).optional(),
         navLinks: z
           .array(
             z.object({
@@ -206,7 +200,6 @@ export const siteRouter = router({
             privyAppSecret: z.string().optional(),
           })
           .optional(),
-        storageProvider: z.nativeEnum(StorageProvider).optional(),
         storageConfig: z
           .object({
             vercelBlobToken: z.string().optional(),

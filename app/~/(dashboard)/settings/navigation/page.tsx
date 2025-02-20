@@ -7,7 +7,6 @@ import { useSite } from '@/hooks/useSite'
 import { trpc } from '@/lib/trpc'
 import { useNavLinkDialog } from './NavLinkDialog/useNavLinkDialog'
 import { NavList } from './NavList'
-import { ThemeSettingForm } from './ThemeSettingForm'
 
 export const dynamic = 'force-static'
 
@@ -25,15 +24,6 @@ export default function Page() {
 
   return (
     <div className="grid gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Theme settings</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <ThemeSettingForm site={site!} />
-        </CardContent>
-      </Card>
-
       <Card>
         <CardHeader>
           <CardTitle className="flex justify-between items-center">

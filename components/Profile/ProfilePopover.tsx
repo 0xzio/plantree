@@ -21,7 +21,7 @@ import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
-import { AuthType, SiteMode } from '@prisma/client'
+import { AuthType } from '@prisma/client'
 import {
   DatabaseBackup,
   FileText,

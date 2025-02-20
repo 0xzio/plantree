@@ -1,4 +1,3 @@
-import { StorageProvider } from '@prisma/client'
 import { calculateSHA256FromFile } from './calculateSHA256FromFile'
 import { IPFS_GATEWAY, IPFS_UPLOAD_URL, STATIC_URL } from './constants'
 import { api } from './trpc'

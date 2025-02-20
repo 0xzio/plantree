@@ -1,5 +1,6 @@
 'use client'
 
+import { Separator } from '@/components/ui/separator'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -14,6 +15,8 @@ export function SettingNav({}: Props) {
     general: '/~/settings',
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
+    theme: '/~/settings/theme',
+    navigation: '/~/settings/navigation',
     catalogue: '/~/settings/catalogue',
     features: '/~/settings/features',
     socials: '/~/settings/socials',
@@ -23,7 +26,6 @@ export function SettingNav({}: Props) {
     web3: '/~/settings/web3',
     subscription: '/~/settings/subscription',
     collaborators: '/~/settings/collaborators',
-    storageProvider: '/~/settings/storage-provider',
     accessToken: '/~/settings/access-token',
     analytics: '/~/settings/analytics',
     importExport: '/~/settings/import-export',
@@ -51,8 +53,10 @@ export function SettingNav({}: Props) {
         </Link>
       </div>
 
+      <Separator className="w-3/4" />
+
       <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
-        <div className="text-xs text-foreground/30">Site</div>
+        <div className="text-xs text-foreground/30">Site - general</div>
         <Link href={Paths.general} className={linkClassName(Paths.general)}>
           General
         </Link>
@@ -60,15 +64,6 @@ export function SettingNav({}: Props) {
           Features
         </Link>
 
-        <Link
-          href={Paths.appearance}
-          className={linkClassName(Paths.appearance)}
-        >
-          Appearance
-        </Link>
-        {/* <Link href={Paths.authType} className={linkClassName(Paths.authType)}>
-        Auth type
-      </Link> */}
         <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
           Web3
         </Link>
@@ -84,18 +79,31 @@ export function SettingNav({}: Props) {
           Tags
         </Link>
 
-        <Link href={Paths.domain} className={linkClassName(Paths.domain)}>
-          Domain
-        </Link>
-        {/* <Link
-        href={Paths.storageProvider}
-        className={linkClassName(Paths.storageProvider)}
-      >
-        Storage provider
-      </Link> */}
         <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
           Socials
         </Link>
+      </div>
+
+      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
+        <div className="text-xs text-foreground/30">Site - UI</div>
+
+        <Link href={Paths.theme} className={linkClassName(Paths.theme)}>
+          Theme
+        </Link>
+        <Link
+          href={Paths.navigation}
+          className={linkClassName(Paths.navigation)}
+        >
+          Navigation
+        </Link>
+        <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
+          Catalogue
+        </Link>
+      </div>
+
+      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
+        <div className="text-xs text-foreground/30">Site - advanced</div>
+
         <Link
           href={Paths.collaborators}
           className={linkClassName(Paths.collaborators)}
@@ -111,9 +119,11 @@ export function SettingNav({}: Props) {
         <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
           Analytics
         </Link>
-        <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
-          Catalogue
+
+        <Link href={Paths.domain} className={linkClassName(Paths.domain)}>
+          Domain
         </Link>
+
         <Link
           href={Paths.importExport}
           className={linkClassName(Paths.importExport)}

@@ -26,7 +26,6 @@ import { getDashboardPath } from '@/lib/getDashboardPath'
 import { queryClient } from '@/lib/queryClient'
 import { cn, getUrl } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
-import { AuthType, SiteMode } from '@prisma/client'
 import { get, set } from 'idb-keyval'
 import {
   ChevronDown,
