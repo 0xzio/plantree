@@ -10,8 +10,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { getGoogleUserInfo } from '@/lib/getGoogleUserInfo'
 import { signIn } from 'next-auth/react'
+import { getGoogleUserInfo } from '@/lib/getGoogleUserInfo'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { ClientOnly } from '../ClientOnly'

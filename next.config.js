@@ -7,8 +7,14 @@ const withVanillaExtract = createVanillaExtractPlugin()
  */
 const nextConfig = {
   experimental: {
-    serverActions: {
-      allowedOrigins: ['app.localhost:4000'],
+    swcPlugins: [['@lingui/swc-plugin', {}]],
+    turbo: {
+      rules: {
+        '*.po': {
+          loaders: ['@lingui/loader'],
+          as: '*.js',
+        },
+      },
     },
   },
 

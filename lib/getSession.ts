@@ -1,9 +1,10 @@
 import { User } from '@prisma/client'
 import NextAuth, { getServerSession, type NextAuthOptions } from 'next-auth'
 import { SubscriptionInSession } from './types'
+import { auth } from './auth'
 
 export async function getSession() {
-  return getServerSession() as Promise<{
+  return auth() as Promise<{
     user: {
       id: string
       name: string

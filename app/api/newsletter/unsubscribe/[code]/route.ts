@@ -4,10 +4,10 @@ import { NextResponse } from 'next/server'
 
 export async function GET(
   request: Request,
-  { params }: { params: { code: string } },
+  { params }: { params: Promise<{ code: string }> },
 ) {
   try {
-    const unsubscribeCode = params.code
+    const unsubscribeCode = (await params).code
 
     const subscriber = await prisma.subscriber.findFirst({
       where: { unsubscribeCode },

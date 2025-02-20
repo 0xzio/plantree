@@ -7,6 +7,7 @@ import jwt from 'jsonwebtoken'
 import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
+import { generateNonce } from '../lib/generateNonce'
 import { getEthPrice } from '../lib/getEthPrice'
 import { getMe } from '../lib/getMe'
 import { getRegisterEmailTpl } from '../lib/getRegisterEmailTpl'
@@ -14,6 +15,11 @@ import { hashPassword } from '../lib/hashPassword'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const userRouter = router({
+  getNonce: publicProcedure.query(async ({ ctx, input }) => {
+    let nonce = generateNonce()
+    return nonce
+  }),
+
   list: publicProcedure.query(async ({ ctx, input }) => {
     return prisma.user.findMany({ take: 20 })
   }),

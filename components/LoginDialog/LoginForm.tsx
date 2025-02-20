@@ -12,9 +12,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import { signIn } from 'next-auth/react'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { signIn } from 'next-auth/react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useAuthStatus } from './useAuthStatus'

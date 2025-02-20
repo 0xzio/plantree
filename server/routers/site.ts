@@ -200,11 +200,6 @@ export const siteRouter = router({
             privyAppSecret: z.string().optional(),
           })
           .optional(),
-        storageConfig: z
-          .object({
-            vercelBlobToken: z.string().optional(),
-          })
-          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

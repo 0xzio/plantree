@@ -24,7 +24,7 @@ export default function ChatView({
   image,
 }: Props) {
   const channel = useMemo<Channel>(() => {
-    return channels[0]
+    return channels[0]!
   }, [channels])
 
   useEffect(() => {

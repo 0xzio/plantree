@@ -44,8 +44,8 @@ const StarSVG = () => (
 function pathStar(ctx: CanvasRenderingContext2D, center: Item, size: number) {
   let moved = false
   for (const p of starPoints) {
-    const x = (p[0] - 50) * (size / 100) + center[0]
-    const y = (p[1] - 50) * (size / 100) + center[1]
+    const x = (p[0]! - 50) * (size / 100) + center[0]
+    const y = (p[1]! - 50) * (size / 100) + center[1]
 
     if (moved) {
       ctx.lineTo(x, y)

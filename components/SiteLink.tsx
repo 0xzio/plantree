@@ -1,6 +1,6 @@
 'use client'
 
-import { useDomainStatus } from '@/app/~/(dashboard)/settings/domain/use-domain-status'
+import { useDomainStatus } from '@/app/[lang]/~/(dashboard)/settings/domain/use-domain-status'
 import { Badge } from '@/components/ui/badge'
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
@@ -16,10 +16,10 @@ export function SiteLink() {
   const link = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   if (isSubdomain) {
-    return <SiteLinkContent link={link} />
+    return <SiteLinkContent link={link!} />
   }
 
-  return <CustomDomainSiteLink customDomain={domain} subdomain={domain} />
+  return <CustomDomainSiteLink customDomain={domain!} subdomain={domain!} />
 }
 
 interface SiteLinkContentProps {

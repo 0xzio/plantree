@@ -1,4 +1,5 @@
 import { spaceAbi } from '@/lib/abi'
+
 import { NETWORK, NetworkNames, PROJECT_ID, ROOT_DOMAIN } from '@/lib/constants'
 import { getBasePublicClient } from '@/lib/getBasePublicClient'
 import { getSiteDomain, UserWithDomains } from '@/lib/getSiteDomain'
@@ -25,6 +26,21 @@ import {
   initUserByGoogleInfo,
 } from './initUser'
 import { getAccountAddress, validateEmail } from './utils'
+
+declare module 'next-auth' {
+  interface Session {
+    address: string
+    name: string
+    userId: string
+    ensName: string | null
+    role: string
+    domain: {
+      domain: string
+      isSubdomain: boolean
+    }
+    subscriptions: SubscriptionInSession[]
+  }
+}
 
 export type UserData = {
   user: FarcasterUser
@@ -525,6 +541,7 @@ export const authOptions: NextAuthOptions = {
     },
   },
 }
+export const { handlers, auth, signIn, signOut } = NextAuth(authOptions)
 
 async function updateSubscriptions(userId: string, address: Address) {
   if (!address) return []

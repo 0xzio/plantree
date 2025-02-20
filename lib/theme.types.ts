@@ -75,10 +75,6 @@ export type Site = {
   authConfig?: {
     [key: string]: string
   }
-  storageConfig?: {
-    vercelBlobToken: string
-    [key: string]: string
-  }
   socials: Socials
   analytics: Analytics
   catalogue: any

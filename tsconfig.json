@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "target": "ES5",
+    "target": "es2017",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
+    // "noUncheckedIndexedAccess": true,
     "forceConsistentCasingInFileNames": true,
     "strictPropertyInitialization": false,
     "noEmit": true,
@@ -13,8 +14,8 @@
     "module": "esnext",
     "moduleResolution": "Bundler",
     "resolveJsonModule": true,
-    "downlevelIteration": true,
     "isolatedModules": true,
+    // "downlevelIteration": true,
     "jsx": "preserve",
     "incremental": true,
     "plugins": [

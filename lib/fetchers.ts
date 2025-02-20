@@ -74,6 +74,21 @@ export async function getSite(params: any) {
   )()
 }
 
+export async function getFirstSite() {
+  return await unstable_cache(
+    async () => {
+      const site = await prisma.site.findFirst()
+      return site!
+    },
+    [`first-site`],
+    {
+      // revalidate: isProd ? 3600 * 24 : 10,
+      revalidate: REVALIDATE_TIME,
+      tags: [`first-site`],
+    },
+  )()
+}
+
 export async function getPosts(siteId: string) {
   const posts = await unstable_cache(
     async () => {
