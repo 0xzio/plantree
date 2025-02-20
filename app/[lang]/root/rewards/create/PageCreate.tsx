@@ -3,7 +3,7 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { ChevronLeft } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { CreateRewardRequestForm } from './CreateRewardForm'
 
 export function PageCreate() {

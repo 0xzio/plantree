@@ -12,14 +12,14 @@ import { useQueryEthPrice } from '@/hooks/useEthPrice'
 import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
 import { isBrowser, isServer, SIDEBAR_WIDTH } from '@/lib/constants'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { runWorker } from '@/lib/worker'
 import { setConfig } from '@fower/react'
 import { Site } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
 import { get } from 'idb-keyval'
-import { useSession } from 'next-auth/react'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { Navbar } from './Navbar'
 import { Sidebar } from './Sidebar/Sidebar'
 import { SidebarSheet } from './Sidebar/SidebarSheet'
@@ -39,7 +39,6 @@ setConfig({
 })
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
-  const { push } = useRouter()
   const [sidebarOpen, setSideBarOpen] = useState(true)
   useQueryEthPrice()
   useQueryEthBalance()

@@ -10,7 +10,7 @@ import { cn } from '@/lib/utils'
 import { FowerHTMLProps } from '@fower/react'
 import { Emoji, EmojiStyle } from 'emoji-picker-react'
 import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 interface CatalogueItemProps extends FowerHTMLProps<'div'> {
   depth: number

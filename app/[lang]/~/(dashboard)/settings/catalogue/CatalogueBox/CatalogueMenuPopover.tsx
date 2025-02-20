@@ -13,7 +13,7 @@ import { useAddPageNodeDialog } from './AddPageNodeDialog/useAddPageNodeDialog'
 import { useCategoryNodeDialog } from './CategoryNodeDialog/useCategoryNodeDialog'
 import { useCatalogue } from './hooks/useCatalogue'
 import { useLinkNodeDialog } from './LinkNodeDialog/useLinkNodeDialog'
-import { useUpdateNodeDialog } from './UpdateNodeDialog /useUpdateNodeDialog'
+import { useUpdateNodeDialog } from './UpdateNodeDialog/useUpdateNodeDialog'
 
 interface Props {
   node: ICatalogueNode

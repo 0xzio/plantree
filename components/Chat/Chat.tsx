@@ -4,8 +4,8 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { Subscription } from '@/domains/Subscription'
 import { spaceAbi } from '@/lib/abi'
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 import { Address } from 'viem'
 import { useAccount, useReadContract } from 'wagmi'
 import { useSiteContext } from '../SiteContext'
@@ -70,8 +70,8 @@ export function Chat() {
       siteId={site.id}
       channels={site.channels}
       userId={session?.userId as string}
-      displayName={session?.user?.name || ''}
-      image={session?.user?.image || ''}
+      displayName={session?.name || ''}
+      image={session?.image || ''}
     />
   )
 }

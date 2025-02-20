@@ -1,7 +1,7 @@
 'use client'
 
 import { ArrowRight, Bitcoin } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 export function EnableWeb3Entry() {
   return (

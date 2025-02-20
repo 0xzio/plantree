@@ -9,9 +9,10 @@ import {
   GOOGLE_DRIVE_OAUTH_REDIRECT_URI,
   GOOGLE_OAUTH_REDIRECT_URI,
 } from '@/lib/constants'
+import { usePathname } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
-import { useSession } from 'next-auth/react'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 interface Props extends ButtonProps {

@@ -15,9 +15,9 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { signOut } from 'next-auth/react'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -32,6 +32,7 @@ interface Props {}
 
 export function DeleteSiteForm() {
   const { isPending, mutateAsync } = trpc.site.deleteSite.useMutation()
+  const { logout } = useSession()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -43,7 +44,7 @@ export function DeleteSiteForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       await mutateAsync()
-      await signOut()
+      await logout()
       toast.success('Site delete successfully!')
       location.href = '/'
     } catch (error) {

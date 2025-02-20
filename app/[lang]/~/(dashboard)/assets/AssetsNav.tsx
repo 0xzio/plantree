@@ -1,8 +1,8 @@
 'use client'
 
 import { useMemo, useState } from 'react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link } from '@/lib/i18n'
+import { usePathname } from '@/lib/i18n'
 import { Separator } from '@/components/ui/separator'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { UploadAssetButton } from './UploadAssetButton'

@@ -1,9 +1,8 @@
 'use client'
 
 import { useSpaceContext } from '@/components/SpaceContext'
+import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
 import { SpaceBasicInfo } from './SpaceBasicInfo'
 import { SpaceStats } from './SpaceStats'
 

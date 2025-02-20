@@ -1,7 +1,7 @@
 import { SpaceProvider } from '@/components/SpaceContext'
 import { getSite, getSpace } from '@/lib/fetchers'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { PlanList } from '../(creator-fi)/creator-fi/(membership)/plans/PlanList'
 
 export const dynamic = 'force-static'

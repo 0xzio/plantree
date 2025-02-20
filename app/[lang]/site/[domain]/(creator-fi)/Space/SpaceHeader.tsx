@@ -5,7 +5,7 @@ import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { getUrl } from '@/lib/utils'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 interface Props {}
 

@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { store } from '@/store'
 import { addDays, subDays } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 
 interface Props {
   date?: string

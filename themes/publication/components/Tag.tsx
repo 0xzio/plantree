@@ -1,5 +1,5 @@
 import { slug } from 'github-slugger'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { PostTag } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 

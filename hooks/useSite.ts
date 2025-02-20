@@ -2,7 +2,7 @@ import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
 import { useQuery } from '@tanstack/react-query'
 import { get } from 'idb-keyval'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useMySites } from './useMySites'
 
 export function useSite() {

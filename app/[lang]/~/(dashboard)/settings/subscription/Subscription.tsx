@@ -11,7 +11,7 @@ import { useIsMember } from '@/hooks/useIsMember'
 import { toReadableTime } from '@/lib/utils'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { format } from 'date-fns'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useAccount } from 'wagmi'
 
 interface Props {}

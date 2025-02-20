@@ -5,7 +5,7 @@ import {
   GridCellKind,
 } from '@glideapps/glide-data-grid'
 import { Block } from '@prisma/client'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { Node } from 'slate'
 import { PlateEditor } from '../editor/plate-editor'
 import LoadingCircle from '../icons/loading-circle'

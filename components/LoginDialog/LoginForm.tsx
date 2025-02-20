@@ -12,8 +12,8 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { signIn } from 'next-auth/react'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -35,6 +35,7 @@ export function LoginForm({}: Props) {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useLoginDialog()
   const { setAuthStatus } = useAuthStatus()
+  const { login } = useSession()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -48,19 +49,14 @@ export function LoginForm({}: Props) {
     try {
       setLoading(true)
 
-      const result = await signIn('password', {
+      const result = await login({
+        type: 'password',
         username: data.name,
         password: data.password,
-        redirect: false,
       })
 
       console.log('=====result:', result)
-
-      if (!result?.ok) {
-        toast.error('Invalid username or password. Please try again')
-      } else {
-        setIsOpen(false)
-      }
+      setIsOpen(false)
     } catch (error) {
       console.log('========error:', error)
       const msg = extractErrorMessage(error)

@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { useAccount } from 'wagmi'
 
 export function LaunchButton() {

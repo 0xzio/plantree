@@ -1,7 +1,7 @@
 'use client'
 
 import { Check } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { Button } from '../ui/button'
 import { UseCouponCode } from '../UseCouponCode'
 import { useSubscriptionGuideDialog } from './useSubscriptionGuideDialog'

@@ -8,7 +8,6 @@ import {
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { createSubscriptionConfirmEmail } from '../lib/getPostEmailTpl'
 import { protectedProcedure, router } from '../trpc'
 
 async function handleSubscriber({

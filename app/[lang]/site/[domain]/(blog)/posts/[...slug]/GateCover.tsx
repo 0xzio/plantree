@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useAccount } from 'wagmi'
 
 interface Props {

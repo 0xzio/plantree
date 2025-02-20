@@ -7,7 +7,7 @@ import { cn } from '@/lib/utils'
 import { Database } from '@prisma/client'
 import { format } from 'date-fns'
 import { Edit3Icon, Trash2 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { DeleteDatabaseDialog } from './database-ui/DeleteDatabaseDialog/DeleteDatabaseDialog'
 import { useDeleteDatabaseDialog } from './database-ui/DeleteDatabaseDialog/useDeleteDatabaseDialog'
 

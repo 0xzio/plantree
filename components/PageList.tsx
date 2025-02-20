@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils'
 import { Page } from '@prisma/client'
 import { format } from 'date-fns'
 import { Edit3Icon, Trash2 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { DeletePageDialog } from './DeletePageDialog/DeletePageDialog'
 import { useDeletePageDialog } from './DeletePageDialog/useDeleteDatabaseDialog'
 

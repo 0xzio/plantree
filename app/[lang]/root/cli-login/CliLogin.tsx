@@ -5,7 +5,7 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { trpc } from '@/lib/trpc'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 

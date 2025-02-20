@@ -5,7 +5,7 @@ import { useHomeSites } from '@/hooks/useHomeSites'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { cn, getUrl } from '@/lib/utils'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 export function SiteList() {
   const { isLoading, data } = useHomeSites()

@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 
 export function useIsMember() {
   const { data } = useSession()

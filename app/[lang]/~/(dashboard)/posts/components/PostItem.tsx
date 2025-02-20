@@ -27,9 +27,9 @@ import {
   ExternalLink,
   Trash2,
 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 interface PostItemProps {

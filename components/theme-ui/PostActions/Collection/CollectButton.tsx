@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils'
 import { Post } from '@/lib/theme.types'
 import { AuthType } from '@prisma/client'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useAccount } from 'wagmi'
 import { CollectDialog } from './CollectDialog'
 

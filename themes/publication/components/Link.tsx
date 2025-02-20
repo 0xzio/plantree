@@ -1,5 +1,5 @@
 import { AnchorHTMLAttributes } from 'react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import type { LinkProps } from 'next/link'
 
 const CustomLink = ({

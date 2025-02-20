@@ -2,7 +2,7 @@ import { forwardRef } from 'react'
 import { Box, FowerHTMLProps } from '@fower/react'
 import { addDays, format, subDays } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 
 interface Props extends FowerHTMLProps<'div'> {
   date?: string

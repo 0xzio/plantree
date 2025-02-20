@@ -3,32 +3,27 @@
 import React, { useCallback, useEffect, useRef } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
-import { signIn } from 'next-auth/react'
 import { trpc } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from 'next-auth/react'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 export function ValidateEmail() {
   const searchParams = useSearchParams()
-  const { data } = useSession()
+  const { data, login } = useSession()
   const inited = useRef(false)
 
-  const login = useCallback(
+  const loginWithEmail = useCallback(
     async function () {
       const token = searchParams?.get('token') as string
       try {
-        const result = await signIn('register-by-email', {
+        const result = await login({
+          type: 'register-by-email',
           validateToken: token,
-          redirect: false,
         })
 
         console.log('=====result:', result)
-
-        if (!result?.ok) {
-          toast.error('Failed to register. Please try again')
-        }
       } catch (error) {
         console.log('>>>>>>>>>>>>erorr:', error)
         toast.error('Failed to register. Please try again')
@@ -36,14 +31,14 @@ export function ValidateEmail() {
 
       location.href = `${location.origin}/~/posts`
     },
-    [searchParams],
+    [searchParams, login],
   )
 
   useEffect(() => {
     if (inited.current) return
     inited.current = true
-    login()
-  }, [searchParams, login])
+    loginWithEmail()
+  }, [searchParams, loginWithEmail])
 
   return (
     <div className="p-10 h-[80vh] flex items-center justify-center flex-col">

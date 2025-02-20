@@ -30,7 +30,7 @@ import { RouterInputs, RouterOutputs } from '@/server/_app'
 import { Field, Record as Row, View } from '@prisma/client'
 import { arrayMoveImmutable } from 'array-move'
 import { produce } from 'immer'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useSearchParams } from 'next/navigation'
 import { useSiteContext } from '../SiteContext'
 

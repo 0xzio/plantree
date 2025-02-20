@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
 import { trpc } from '@/lib/trpc'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { toast } from 'sonner'
 import { z } from 'zod'
 

@@ -11,18 +11,23 @@ import { wagmiConfig } from '@/lib/wagmi/wagmiConfig'
 import { StoreProvider } from '@/store'
 import { AuthKitProvider } from '@farcaster/auth-kit'
 import { RainbowKitProvider } from '@rainbow-me/rainbowkit'
-import {
-  GetSiweMessageOptions,
-  RainbowKitSiweNextAuthProvider,
-} from '@rainbow-me/rainbowkit-siwe-next-auth'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { SessionProvider } from 'next-auth/react'
 import { Toaster } from 'sonner'
 import { WagmiProvider } from 'wagmi'
+import { RainbowKitSiweProvider } from './RainbowKitSiweProvider'
 
-const getSiweMessageOptions: GetSiweMessageOptions = () => ({
-  statement: 'Sign in with ethereum',
-})
+function RainbowProvider({ children }: { children: React.ReactNode }) {
+  return (
+    <RainbowKitSiweProvider>
+      <RainbowKitProvider>
+        <StoreProvider>
+          <GoogleOauthDialog />
+          {children}
+        </StoreProvider>
+      </RainbowKitProvider>
+    </RainbowKitSiweProvider>
+  )
+}
 
 export function Providers({
   children,
@@ -32,12 +37,9 @@ export function Providers({
   cookies: string | null
 }) {
   return (
-    <SessionProvider refetchInterval={0}>
+    <>
       <Toaster className="dark:hidden" richColors />
       <Toaster theme="dark" className="hidden dark:block" richColors />
-      <Suspense>
-        <GoogleOauthDialog />
-      </Suspense>
       <trpc.Provider client={trpcClient} queryClient={queryClient}>
         <AuthKitProvider
           config={{
@@ -50,18 +52,12 @@ export function Providers({
           <WagmiProvider config={wagmiConfig}>
             <QueryClientProvider client={queryClient}>
               <FrameProvider>
-                <RainbowKitSiweNextAuthProvider
-                  getSiweMessageOptions={getSiweMessageOptions}
-                >
-                  <RainbowKitProvider>
-                    <StoreProvider>{children}</StoreProvider>
-                  </RainbowKitProvider>
-                </RainbowKitSiweNextAuthProvider>
+                <RainbowProvider>{children}</RainbowProvider>
               </FrameProvider>
             </QueryClientProvider>
           </WagmiProvider>
         </AuthKitProvider>
       </trpc.Provider>
-    </SessionProvider>
+    </>
   )
 }

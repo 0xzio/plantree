@@ -5,6 +5,8 @@ import { SignInButton } from '@/components/facaster-auth'
 import { GoogleOauthButton } from '@/components/GoogleOauthButton'
 import { TextLogo } from '@/components/TextLogo'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
+import { api } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import {
   AuthKitProvider,
   SignInButton as FSignInButton,
@@ -13,34 +15,29 @@ import {
   useProfile,
   useSignIn,
 } from '@farcaster/auth-kit'
-import { getCsrfToken, signIn, signOut, useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { LoginForm } from './LoginForm'
 import { useLoginDialog } from './useLoginDialog'
 
 export function LoginDialogContent() {
   const { setIsOpen } = useLoginDialog()
-  const getNonce = useCallback(async () => {
-    const nonce = await getCsrfToken()
-    if (!nonce) throw new Error('Unable to generate nonce')
-    return nonce
-  }, [])
+  const { login, logout } = useSession()
 
   const handleSuccess = useCallback(
     async (res: StatusAPIResponse) => {
       // alert('Signed in successfully')
-      await signIn('penx-farcaster', {
-        message: res.message,
-        signature: res.signature,
-        name: res.username,
-        pfp: res.pfpUrl,
-        redirect: false,
+      await login({
+        type: 'penx-farcaster',
+        message: res.message!,
+        signature: res.signature!,
+        name: res.username!,
+        pfp: res.pfpUrl!,
       })
 
       toast.success('Signed in successfully')
       setIsOpen(false)
     },
-    [setIsOpen],
+    [setIsOpen, login],
   )
 
   return (
@@ -73,13 +70,13 @@ export function LoginDialogContent() {
         // onStatusResponse={(res) => {
         //   alert(JSON.stringify(res))
         // }}
-        nonce={getNonce}
+        nonce={api.user.getNonce.query}
         onSuccess={handleSuccess}
         onError={(error) => {
           // alert('Failed to sign in' + JSON.stringify(error))
           toast.error('Failed to sign in')
         }}
-        onSignOut={() => signOut()}
+        onSignOut={() => logout()}
       />
       <div className="text-center text-foreground/40">or</div>
       <LoginForm />

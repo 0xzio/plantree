@@ -1,7 +1,13 @@
 'use client'
 
 import { useMemo } from 'react'
-import { GoogleLoginData, LoginData, SessionData } from '@/lib/session'
+import {
+  GoogleLoginData,
+  LoginData,
+  SessionData,
+  UpdateActiveSiteData,
+  UpdateSessionData,
+} from '@/lib/types'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { queryClient } from './queryClient'
 
@@ -20,19 +26,11 @@ async function fetchJson<JSON = unknown>(
   }).then((res) => res.json())
 }
 
-export default function useSession() {
+export function useSession() {
   const { isPending, data: session } = useQuery({
     queryKey: ['session'],
     queryFn: () => fetchJson<SessionData>(sessionApiRoute),
   })
-
-  // const { trigger: login } = useSWRMutation(sessionApiRoute, doLogin, {
-  //   // the login route already provides the updated information, no need to revalidate
-  //   revalidate: false,
-  // })
-
-  // const { trigger: logout } = useSWRMutation(sessionApiRoute, doLogout)
-  // const { trigger: increment } = useSWRMutation(sessionApiRoute, doIncrement)
 
   async function login(data: LoginData) {
     const res = await fetchJson<SessionData>(sessionApiRoute, {
@@ -59,12 +57,20 @@ export default function useSession() {
     return 'loading'
   }, [isPending, session]) as 'loading' | 'unauthenticated' | 'authenticated'
 
+  async function update(data: UpdateSessionData) {
+    const res = await fetchJson<SessionData>(sessionApiRoute, {
+      body: JSON.stringify(data),
+      method: 'PATCH',
+    })
+  }
+
   return {
     session: session?.isLoggedIn ? session : undefined,
     data: session?.isLoggedIn ? session : undefined,
     logout,
     login,
     status,
+    update,
     isLoading: isPending,
     subscriptions: [] as any,
   }

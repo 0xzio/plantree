@@ -1,8 +1,10 @@
 import { prisma } from '@/lib/prisma'
+import { getServerSession, getSessionOptions } from '@/lib/session'
+import { SessionData } from '@/lib/types'
 import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import type * as trpcNext from '@trpc/server/adapters/next'
+import { getIronSession } from 'iron-session'
 import jwt from 'jsonwebtoken'
-import { getToken } from 'next-auth/jwt'
 
 interface CreateContextOptions {
   // session: Session | null
@@ -60,11 +62,7 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
   const { req } = opts
 
   const nextAuthSecret = await getAuthSecret()
-
-  let token = (await getToken({
-    req: req as any,
-    secret: nextAuthSecret,
-  })) as any
+  let token = await getServerSession()
 
   let authorization = req.headers.get('authorization')
 

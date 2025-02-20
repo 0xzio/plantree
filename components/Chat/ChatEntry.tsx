@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button'
 import { MessageCircleMore } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
 import { useChatSheet } from './useChatSheet'
 

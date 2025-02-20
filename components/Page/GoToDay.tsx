@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/popover'
 import { format } from 'date-fns'
 import { CalendarDays } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 
 interface Props {
   initialDate: Date

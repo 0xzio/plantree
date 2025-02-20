@@ -1,7 +1,6 @@
 import { appRouter } from '@/server/_app'
 import { createContext } from '@/server/context'
 import { fetchRequestHandler } from '@trpc/server/adapters/fetch'
-import { getToken } from 'next-auth/jwt'
 import cors from './cors'
 
 const handler = async (req: Request) => {
@@ -9,7 +8,7 @@ const handler = async (req: Request) => {
     endpoint: '/api/trpc',
     req,
     router: appRouter,
-    createContext,
+    createContext: createContext as any, // TODO:handle any
   })
   return cors(req, response)
 }

@@ -176,12 +176,6 @@ export type SubscriptionRaw = {
   uri: string
 }
 
-export type SubscriptionInSession = {
-  planId: number
-  startTime: number
-  duration: number
-}
-
 export type DomainVerificationStatusProps =
   | 'Valid Configuration'
   | 'Invalid Configuration'

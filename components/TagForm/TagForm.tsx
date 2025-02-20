@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Database, useQueryDatabase } from '@/hooks/useQueryDatabase'
 import { Box } from '@fower/react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { Editor, Path } from 'slate'
 import { FieldIcon } from '../database-ui/shared/FieldIcon'
 import { TTagElement } from '../editor/plugins/tag-plugin/lib/types'

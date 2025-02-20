@@ -7,41 +7,38 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import { signIn } from 'next-auth/react'
 import { getGoogleUserInfo } from '@/lib/getGoogleUserInfo'
+import { useSession } from '@/lib/useSession'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
-import { ClientOnly } from '../ClientOnly'
 import { useGoogleOauthDialog } from './useGoogleOauthDialog'
 
 export function GoogleOauthDialog() {
   const { isOpen, setIsOpen } = useGoogleOauthDialog()
   const searchParams = useSearchParams()
   const authType = searchParams?.get('auth_type')
+  const { login } = useSession()
 
-  const login = useCallback(
+  const loginWithGoogle = useCallback(
     async function () {
       const accessToken = searchParams?.get('access_token')!
       try {
         const info = await getGoogleUserInfo(accessToken)
         console.log('=====info:', info)
 
-        const result = await signIn('penx-google', {
+        const result = await login({
+          type: 'penx-google',
           email: info.email,
           openid: info.sub,
           picture: info.picture,
           name: info.name,
-          redirect: false,
         })
 
         console.log('=====result:', result)
-
-        if (!result?.ok) {
-          toast.error('Failed to sign in with Google. Please try again')
-        }
       } catch (error) {
         console.log('>>>>>>>>>>>>erorr:', error)
         toast.error('Failed to sign in with Google. Please try again.')
@@ -54,18 +51,21 @@ export function GoogleOauthDialog() {
 
       location.href = `${location.origin}/${location.pathname}`
     },
-    [searchParams],
+    [searchParams, login],
   )
 
   useEffect(() => {
     if (authType === 'google' && !isOpen) {
       setIsOpen(true)
-      login()
+      loginWithGoogle()
     }
-  }, [authType, isOpen, setIsOpen, searchParams, login])
+  }, [authType, isOpen, setIsOpen, searchParams, loginWithGoogle])
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
+      <DialogTitle className="hidden">
+        <DialogDescription></DialogDescription>
+      </DialogTitle>
       <DialogContent
         closable={false}
         className="h-64 flex items-center justify-center w-[90%] sm:max-w-[425px] rounded-xl focus-visible:outline-none"

@@ -7,7 +7,7 @@ import { useQueryLogoImages } from '@/hooks/useLogoImages'
 import { useSpaces } from '@/hooks/useSpaces'
 import { precision } from '@/lib/math'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { SpaceLogo } from './SpaceLogo'
 
 export function SpaceList() {

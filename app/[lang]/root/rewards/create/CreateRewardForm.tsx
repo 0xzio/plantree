@@ -24,7 +24,7 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { ContributionType, Platform } from '@prisma/client'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { toast } from 'sonner'
 import { z } from 'zod'
 

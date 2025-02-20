@@ -21,7 +21,7 @@ import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import { ChevronDown, FileText, Image, Pen, Plus, Video } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 export function CreatePostButton() {

@@ -1,8 +1,8 @@
 import { LangSwitcher } from '@/components/LangSwitcher'
 import { ModeToggle } from '@/components/ModeToggle'
 import { SocialNav } from '@/components/SocialNav'
+import { Link } from '@/lib/i18n'
 import { ExternalLink } from 'lucide-react'
-import Link from 'next/link'
 
 interface Props {}
 

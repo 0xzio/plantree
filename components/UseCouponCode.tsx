@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { trpc } from '@/lib/trpc'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { toast } from 'sonner'
 import { LoadingDots } from './icons/loading-dots'
 import { useSubscriptionGuideDialog } from './SubscriptionGuideDialog/useSubscriptionGuideDialog'
@@ -36,7 +36,7 @@ export function UseCouponCode() {
           onClick={async () => {
             try {
               await mutateAsync({ code: couponCode.trim() })
-              await update()
+              await update({ type: 'update-subscription' })
               setIsOpen(false)
               toast.success('Coupon code applied successfully')
             } catch (error) {

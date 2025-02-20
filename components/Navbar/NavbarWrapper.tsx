@@ -2,10 +2,10 @@
 
 import React, { HTMLAttributes, PropsWithChildren, useMemo } from 'react'
 import { cn } from '@/lib/utils'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { Merienda } from 'next/font/google'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
+import { Link } from '@/lib/i18n'
+import { usePathname } from '@/lib/i18n'
 import { ProfilePopover } from '../Profile/ProfilePopover'
 import { useSiteContext } from '../SiteContext'
 import { WalletConnectButton } from '../WalletConnectButton'

@@ -2,7 +2,7 @@ import { forwardRef, useState } from 'react'
 import DatePicker from 'react-datepicker'
 import { store } from '@/store'
 import { Calendar, CalendarDays } from 'lucide-react'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { DailyShortcut } from './DailyShortcut'
 
 export const DailyNoteNav = ({ date }: { date?: string }) => {

@@ -10,9 +10,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useRouter } from '@/lib/i18n'
 import { msg } from '@lingui/core/macro'
 import { useLingui } from '@lingui/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from '@/lib/i18n'
 
 type LOCALES = 'en' | 'ja' | 'ko' | 'fr' | 'ru' | 'zh-CN'
 

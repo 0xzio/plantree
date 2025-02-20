@@ -19,6 +19,8 @@ import {
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
+import { useRouter } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { AuthType } from '@prisma/client'
@@ -34,8 +36,7 @@ import {
   UserRound,
   Wallet,
 } from 'lucide-react'
-import { signOut, useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from '@/lib/i18n'
 import { ProfileAvatar } from './ProfileAvatar'
 import { WalletInfo } from './WalletInfo'
 
@@ -50,7 +51,7 @@ export const ProfilePopover = memo(function ProfilePopover({
   showDropIcon = false,
   className = '',
 }: Props) {
-  const { data } = useSession()
+  const { data, logout } = useSession()
   const { push } = useRouter()
   const sigInState = useSignIn({})
   const pathname = usePathname()
@@ -64,13 +65,13 @@ export const ProfilePopover = memo(function ProfilePopover({
         <ProfileAvatar
           showName={showName}
           showDropIcon={showDropIcon}
-          image={data.user?.image || ''}
+          image={data?.image || ''}
           className={cn('cursor-pointer', className)}
         />
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="grid gap-2">
-          <ProfileAvatar showName showCopy image={data.user?.image || ''} />
+          <ProfileAvatar showName showCopy image={data?.image || ''} />
           {data.address && <WalletInfo />}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
@@ -143,7 +144,7 @@ export const ProfilePopover = memo(function ProfilePopover({
           className="cursor-pointer"
           onClick={async () => {
             try {
-              await signOut()
+              await logout()
               sigInState?.signOut()
               push('/')
             } catch (error) {}

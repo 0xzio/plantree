@@ -3,9 +3,9 @@
 import { forwardRef, HTMLAttributes } from 'react'
 import { useAddress } from '@/hooks/useAddress'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
+import { useSession } from '@/lib/useSession'
 import { cn, getUrl, isAddress } from '@/lib/utils'
 import { ChevronDown, Copy } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { UserAvatar } from '../UserAvatar'
 
@@ -35,7 +35,7 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
     const { data: session } = useSession()
     const shortAddress = address.slice(0, 6) + '...' + address.slice(-4)
     const { copy } = useCopyToClipboard()
-    let name = session?.user?.name || ''
+    let name = session?.name || ''
 
     if (isAddress(name)) {
       name = name.slice(0, 3) + '...' + name.slice(-4)

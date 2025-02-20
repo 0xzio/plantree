@@ -19,8 +19,8 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { useAccount, useWriteContract } from 'wagmi'
 import { z } from 'zod'
@@ -61,7 +61,7 @@ export function ProfileSettingForm() {
       await mutateAsync(data)
       refetch()
       update({
-        type: 'UPDATE_PROFILE',
+        type: 'update-profile',
         ...data,
       })
       toast.success('Profile updated successfully!')

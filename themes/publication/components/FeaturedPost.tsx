@@ -2,7 +2,7 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { Post } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 interface Props {
   post: Post

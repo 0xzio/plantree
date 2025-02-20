@@ -2,11 +2,17 @@ import { getSite } from '@/lib/fetchers'
 import { Metadata } from 'next'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
-export const dynamic = 'force-static'
-export const revalidate = 86400; // 3600 * 24
+type Params = Promise<{ domain: string }>
 
-export async function generateMetadata({ params }: any): Promise<Metadata> {
-  const site = await getSite(params)
+export const dynamic = 'force-static'
+export const revalidate = 86400 // 3600 * 24
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Params
+}): Promise<Metadata> {
+  const site = await getSite(await params)
 
   const title = site?.name || ''
   const description = site?.description || ''
@@ -27,7 +33,7 @@ export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
-  params: Promise<{ domain: string }>
+  params: Params
 }) {
   const site = await getSite(await params)
 

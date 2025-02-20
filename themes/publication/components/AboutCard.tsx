@@ -6,7 +6,7 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Button } from '@/components/ui/button'
 import { Post, Site } from '@/lib/theme.types'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 
 interface Props {
   site: Site

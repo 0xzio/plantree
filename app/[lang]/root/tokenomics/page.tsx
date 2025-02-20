@@ -2,7 +2,7 @@ import { PropsWithChildren, ReactNode } from 'react'
 import { Button } from '@/components/ui/button'
 import { addressMap } from '@/lib/address'
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 interface TokenInfoItemProps {
   label: string

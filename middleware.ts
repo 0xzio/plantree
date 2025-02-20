@@ -1,6 +1,8 @@
+import { getIronSession } from 'iron-session'
 import Negotiator from 'negotiator'
-import { getToken } from 'next-auth/jwt'
 import { NextRequest, NextResponse } from 'next/server'
+import { getSessionOptions } from './lib/session'
+import { SessionData } from './lib/types'
 import linguiConfig from './lingui.config'
 
 const locales = linguiConfig.locales as string[]
@@ -49,8 +51,6 @@ export default async function middleware(req: NextRequest) {
     ? `${url.pathname.replace(`/${locale}`, '')}${postfix}`
     : `${url.pathname}${postfix}`
 
-  console.log('======url.pathname:', url.pathname, 'path:', path)
-
   // Redirect if there is no locale
 
   const isRoot =
@@ -65,23 +65,27 @@ export default async function middleware(req: NextRequest) {
   //   process.env.NEXT_PUBLIC_ROOT_DOMAIN,
   // )
 
-  console.log(
-    '========pathnameHasLocale:',
-    pathnameHasLocale,
-    'locale:',
-    locale,
-  )
+  // console.log(
+  //   '========pathnameHasLocale:',
+  //   pathnameHasLocale,
+  //   'locale:',
+  //   locale,
+  // )
+
   const isDashboard = path.startsWith('/~')
 
   if (isRoot) {
     if (isDashboard) {
-      const token = await getToken({ req: req })
+      const token = await getIronSession<SessionData>(
+        req.cookies as any,
+        getSessionOptions(),
+      )
+
       if (!token) {
         return NextResponse.redirect(new URL('/', req.url))
       }
-      return NextResponse.rewrite(new URL(path, req.url))
+      return NextResponse.rewrite(new URL(`/${locale}${path}`, req.url))
     } else {
-      console.log('=====path:', path)
       return NextResponse.rewrite(new URL(`/${locale}/root${path}`, req.url))
     }
   }
@@ -95,7 +99,11 @@ export default async function middleware(req: NextRequest) {
   // return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
   // return NextResponse.next()
 
-  return NextResponse.rewrite(new URL(`/site/${hostname}${path}`, req.url))
+  console.log('>>>>>>>hostname:', hostname, 'path:', path, 'locale:', locale)
+
+  return NextResponse.rewrite(
+    new URL(`/${locale}/site/${hostname}${path}`, req.url),
+  )
 }
 
 function getRequestLocale(requestHeaders: Headers): string {

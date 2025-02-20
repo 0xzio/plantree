@@ -2,7 +2,9 @@
 
 import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
+import { Link } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
+import { useSession } from '@/lib/useSession'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
 import {
   Calendar,
@@ -15,10 +17,8 @@ import {
   TableProperties,
   Users,
 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { usePathname, useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'

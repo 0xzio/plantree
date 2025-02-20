@@ -1,5 +1,5 @@
 import { trpc } from '@/lib/trpc'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 
 export function useMySites() {
   const { data } = useSession()

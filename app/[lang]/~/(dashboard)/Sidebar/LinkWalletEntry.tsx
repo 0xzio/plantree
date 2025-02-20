@@ -4,7 +4,7 @@ import { IconGoogle } from '@/components/icons/IconGoogle'
 import { useMyAccounts } from '@/hooks/useMyAccounts'
 import { ProviderType } from '@prisma/client'
 import { ArrowRight } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 export function LinkWalletEntry() {
   const { data: accounts = [], isLoading } = useMyAccounts()

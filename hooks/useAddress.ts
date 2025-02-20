@@ -1,4 +1,4 @@
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { Address } from 'viem'
 import { useAccount } from 'wagmi'
 

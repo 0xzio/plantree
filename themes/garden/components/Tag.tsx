@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
 import { slug } from 'github-slugger'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 interface Props {
   text: string

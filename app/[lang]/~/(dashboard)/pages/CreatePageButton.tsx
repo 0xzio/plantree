@@ -9,7 +9,7 @@ import { useDatabases } from '@/hooks/useDatabases'
 import { useIsMember } from '@/hooks/useIsMember'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 export function CreatePageButton() {

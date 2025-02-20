@@ -37,7 +37,7 @@ import {
   EyeOff,
   Settings,
 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 export const useChat = () => {
   return useBaseChat({

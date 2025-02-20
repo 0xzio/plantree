@@ -7,7 +7,7 @@ import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { ExternalLink } from 'lucide-react'
-import { useSession } from 'next-auth/react'
+import { useSession } from '@/lib/useSession'
 import { toast } from 'sonner'
 
 export const DeploySiteForm = () => {

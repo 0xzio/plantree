@@ -34,7 +34,7 @@ import {
   readContracts,
   waitForTransactionReceipt,
 } from '@wagmi/core'
-import { useRouter } from 'next/navigation'
+import { useRouter } from '@/lib/i18n'
 import pRetry, { AbortError } from 'p-retry'
 import { toast } from 'sonner'
 import { zeroAddress } from 'viem'

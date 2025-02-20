@@ -21,10 +21,11 @@ import {
 } from '@/components/ui/dropdown-menu'
 import { useMySites } from '@/hooks/useMySites'
 import { useSite } from '@/hooks/useSite'
-import { signOut } from 'next-auth/react'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
+import { useRouter } from '@/lib/i18n'
 import { queryClient } from '@/lib/queryClient'
+import { useSession } from '@/lib/useSession'
 import { cn, getUrl } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { get, set } from 'idb-keyval'
@@ -41,8 +42,6 @@ import {
   UserRound,
   Wallet,
 } from 'lucide-react'
-import { useSession } from 'next-auth/react'
-import { usePathname, useRouter } from 'next/navigation'
 
 interface Props {
   className?: string
@@ -51,7 +50,7 @@ interface Props {
 export const SitesPopover = memo(function ProfilePopover({
   className = '',
 }: Props) {
-  const { data, update } = useSession()
+  const { data, logout, update } = useSession()
   const { push } = useRouter()
   const sigInState = useSignIn({})
   const { data: sites = [] } = useMySites()
@@ -92,7 +91,7 @@ export const SitesPopover = memo(function ProfilePopover({
 
               window.__SITE_ID__ = site.id
               update({
-                type: 'UPDATE_ACTIVE_SITE',
+                type: 'update-active-site',
                 activeSiteId: site.id,
               })
               push(getDashboardPath(site))
@@ -109,7 +108,7 @@ export const SitesPopover = memo(function ProfilePopover({
           className="cursor-pointer"
           onClick={async () => {
             try {
-              await signOut()
+              await logout()
               sigInState?.signOut()
               push('/')
             } catch (error) {}

@@ -1,10 +1,10 @@
 import { ProfilePopover } from '@/components/Profile/ProfilePopover'
 import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
+import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { Calendar, Feather, Menu, Settings } from 'lucide-react'
-import Link from 'next/link'
-import { usePathname, useRouter } from 'next/navigation'
+import { usePathname } from '@/lib/i18n'
 import { useSidebarSheet } from './Sidebar/useSidebarSheet'
 
 export const Navbar = () => {

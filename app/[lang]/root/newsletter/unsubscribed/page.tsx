@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { CheckCircle2 } from 'lucide-react'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 
 type SearchParams = Promise<{ email?: string }>
 

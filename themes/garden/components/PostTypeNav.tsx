@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
+import { Link } from '@/lib/i18n'
 import { useSearchParams } from 'next/navigation'
 
 interface Props {

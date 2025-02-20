@@ -29,6 +29,7 @@ import {
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
 import { api } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { sleep } from '@/lib/utils'
 import { wagmiConfig } from '@/lib/wagmi'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -37,7 +38,6 @@ import {
   waitForTransactionReceipt,
   writeContract,
 } from '@wagmi/core'
-import { useSession } from 'next-auth/react'
 import { toast } from 'sonner'
 import { useAccount, useReadContract, useWriteContract } from 'wagmi'
 import { z } from 'zod'
@@ -134,7 +134,7 @@ export function SubscriptionForm({}: Props) {
         duration: Number(increasingDuration),
       })
 
-      await update()
+      await update({ type: 'update-subscription' })
       toast.success('Subscribe successfully!')
       setIsOpen(false)
     } catch (error) {

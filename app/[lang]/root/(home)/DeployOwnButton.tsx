@@ -2,9 +2,8 @@
 
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
-import { useSession } from 'next-auth/react'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { Link, useRouter } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 
 export function DeployOwnButton() {
   const { data } = useSession()
@@ -18,7 +17,7 @@ export function DeployOwnButton() {
     >
       <Link href="/self-hosted" className="overflow-hidden">
         <div>Deploy my own</div>
-        {/* <div className="absolute top-0 right-0 text-xs bg-emerald-500 px-1 py-[1px] rounded-bl-lg text-white">
+        {/* <div className="absolute top-0 right-0 text-xs bg-emerald-500 px-1 py-[] rounded-bl-lg text-white">
           Recommend
         </div> */}
       </Link>
