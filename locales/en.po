@@ -35,4 +35,4 @@ msgstr "ru"
 
 #: app/[lang]/root/(home)/page.tsx:52
 msgid "Sites"
-msgstr "Sites!!!"
+msgstr "Sites"

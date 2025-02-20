@@ -80,7 +80,7 @@ export const databaseRouter = router({
 
           const newFields = [firstField, secondField]
 
-          const viewFields: ViewField[] = newFields.map((field) => ({
+          const viewFields = newFields.map((field) => ({
             fieldId: field.id,
             width: 160,
             visible: true,
@@ -177,6 +177,7 @@ export const databaseRouter = router({
         data: {
           userId: ctx.token.uid,
           ...input,
+          fields: input.fields as any,
         },
       })
       return true
@@ -329,7 +330,7 @@ export const databaseRouter = router({
             view?.viewFields as any as ViewField[],
             input.fromIndex,
             input.toIndex,
-          ),
+          ) as any,
         },
       })
 
@@ -346,7 +347,7 @@ export const databaseRouter = router({
     .mutation(async ({ ctx, input }) => {
       await prisma.record.update({
         where: { id: input.recordId },
-        data: { fields: input.fields },
+        data: { fields: input.fields as any },
       })
       return true
     }),
@@ -378,7 +379,9 @@ export const databaseRouter = router({
         await prisma.view.update({
           where: { id: view.id },
           data: {
-            viewFields: viewFields.filter((i) => i.fieldId !== input.fieldId),
+            viewFields: viewFields.filter(
+              (i) => i.fieldId !== input.fieldId,
+            ) as any,
           },
         })
       }
@@ -430,7 +433,7 @@ export const databaseRouter = router({
 
       await prisma.view.update({
         where: { id: input.viewId },
-        data: { viewFields },
+        data: { viewFields: viewFields as any },
       })
 
       return true

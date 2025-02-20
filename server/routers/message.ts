@@ -1,8 +1,8 @@
+import { prisma } from '@/lib/prisma'
 import { Message } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { publicProcedure, router } from '../trpc'
-import { TRPCError } from '@trpc/server'
-import { prisma } from '@/lib/prisma'
 
 export const messageRouter = router({
   listByChannelId: publicProcedure
@@ -24,9 +24,9 @@ export const messageRouter = router({
               user: {
                 select: {
                   displayName: true,
-                  image: true
-                }
-              }
+                  image: true,
+                },
+              },
             },
           })
           .withPages({ limit: 20, page, includePageCount: true })
@@ -45,6 +45,5 @@ export const messageRouter = router({
           cause: error,
         })
       }
-
     }),
 })

@@ -4,8 +4,8 @@ import { Skeleton } from '@/components/ui/skeleton'
 import { useHomeSites } from '@/hooks/useHomeSites'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain, SiteWithDomains } from '@/lib/getSiteDomain'
-import { cn, getUrl } from '@/lib/utils'
 import { Link } from '@/lib/i18n'
+import { cn, getUrl } from '@/lib/utils'
 
 export function SiteList() {
   const { isLoading, data } = useHomeSites()
@@ -47,6 +47,7 @@ function SiteItem({ site }: { site: SiteWithDomains }) {
     <Link
       key={site.id}
       href={link}
+      isSite
       target="_blank"
       className={cn(
         'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all dark:bg-foreground/5',

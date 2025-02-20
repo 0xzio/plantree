@@ -8,10 +8,13 @@ import {
   useRouter as useRouterNext,
 } from 'next/navigation'
 
-type Props = React.ComponentPropsWithoutRef<typeof NextLink>
-export function Link(props: Props) {
+type Props = React.ComponentPropsWithoutRef<typeof NextLink> & {
+  isSite?: boolean
+}
+export function Link({ isSite = false, ...props }: Props) {
   const { i18n } = useLingui()
-  return <NextLink {...props} href={`/${i18n.locale}${props.href}`}></NextLink>
+  const href = isSite ? props.href : `/${i18n.locale}${props.href}`
+  return <NextLink {...props} href={href}></NextLink>
 }
 
 export function useRouter() {
