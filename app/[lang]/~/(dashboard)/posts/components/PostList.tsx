@@ -13,7 +13,7 @@ export function PostList({ status }: PostListProps) {
 
   if (isLoading) return <div className="text-foreground/60">Loading...</div>
 
-  const posts = data.filter((post) => post.postStatus === status)
+  const posts = data.filter((post) => post.status === status)
 
   if (!posts.length) {
     return <div className="text-foreground/60">No posts yet.</div>

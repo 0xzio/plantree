@@ -82,12 +82,7 @@ export const SitesPopover = memo(function ProfilePopover({
             key={site.id}
             className="cursor-pointer flex items-center gap-2"
             onClick={async () => {
-              queryClient.setQueriesData(
-                {
-                  queryKey: ['current_site'],
-                },
-                site,
-              )
+              queryClient.setQueriesData({ queryKey: ['current_site'] }, site)
 
               window.__SITE_ID__ = site.id
               update({

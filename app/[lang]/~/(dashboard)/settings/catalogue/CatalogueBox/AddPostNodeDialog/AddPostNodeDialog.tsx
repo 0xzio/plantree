@@ -30,7 +30,7 @@ export function AddPostNodeDialog({}: Props) {
         </DialogHeader>
         <Menu className="shadow-none">
           {data.map((post) => {
-            if (post.postStatus !== PostStatus.PUBLISHED) return null
+            if (post.status !== PostStatus.PUBLISHED) return null
             return (
               <MenuItem
                 key={post.id}

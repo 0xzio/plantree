@@ -10,7 +10,7 @@ import {
 import { Menu, MenuItem } from '@/components/ui/menu'
 import { usePages } from '@/hooks/usePages'
 import { CatalogueNodeType } from '@/lib/model'
-import { PageStatus } from '@prisma/client'
+import { PostStatus } from '@prisma/client'
 import { useCatalogue } from '../hooks/useCatalogue'
 import { useAddPageNodeDialog } from './useAddPageNodeDialog'
 
@@ -30,7 +30,7 @@ export function AddPageNodeDialog({}: Props) {
         </DialogHeader>
         <Menu className="shadow-none">
           {data.map((item) => {
-            if (item.status !== PageStatus.PUBLISHED) return null
+            if (item.status !== PostStatus.PUBLISHED) return null
             return (
               <MenuItem
                 key={item.id}

@@ -83,7 +83,7 @@ export function FeaturesSettingForm({ site }: Props) {
         Enable or disable advanced features
       </div>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <FormField
+        {/* <FormField
           control={form.control}
           name="journal"
           render={({ field }) => (
@@ -101,7 +101,7 @@ export function FeaturesSettingForm({ site }: Props) {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
         <FormField
           control={form.control}

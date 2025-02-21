@@ -1,6 +1,5 @@
 // This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL") // uses connection pooling
@@ -78,8 +77,6 @@ model Site {
   postTags           PostTag[]
   accessTokens       AccessToken[]
   comments           Comment[]
-  pages              Page[]
-  blocks             Block[]
   databases          Database[]
   fields             Field[]
   records            Record[]
@@ -127,8 +124,6 @@ model User {
   assets        Asset[]
   labels        Label[]
   albums        Album[]
-  pages         Page[]
-  blocks        Block[]
   databases     Database[]
   fields        Field[]
   records       Record[]
@@ -254,21 +249,24 @@ model Post {
   slug          String        @default(uuid())
   title         String        @default("") @db.VarChar(500)
   description   String        @default("") @db.VarChar(1000)
+  icon          String        @default("") @db.VarChar(50)
+  image         String?       @default("") @db.VarChar(2183)
   content       String        @default("") @db.Text
   i18n          Json?
   cid           String        @default("") @db.VarChar(100)
-  pageId        String?       @unique @db.Uuid
   creationId    Int?          @db.Integer
   type          PostType      @default(ARTICLE)
   gateType      GateType      @default(FREE)
-  postStatus    PostStatus    @default(DRAFT)
+  status        PostStatus    @default(DRAFT)
   commentStatus CommentStatus @default(OPEN)
   commentCount  Int           @default(0) @db.Integer
-  image         String?       @default("") @db.VarChar(2183)
   featured      Boolean       @default(false)
   collectible   Boolean       @default(false)
   delivered     Boolean       @default(false)
   isPopular     Boolean       @default(false)
+  isJournal     Boolean       @default(false)
+  isPage        Boolean       @default(false)
+  date          String        @default("") @db.VarChar(20)
   publishedAt   DateTime?
   archivedAt    DateTime?
   createdAt     DateTime      @default(now())
@@ -284,10 +282,10 @@ model Post {
 
   @@unique([siteId, slug])
   @@index([userId])
-  @@index([siteId, postStatus])
+  @@index([siteId, status])
   @@index([type])
   @@index([gateType])
-  @@index([userId, postStatus])
+  @@index([userId, status])
   @@index([userId, type])
   @@index([siteId])
   @@map("post")
@@ -621,66 +619,6 @@ model AssetAlbum {
   siteId    String   @db.Uuid
 
   @@map("asset_album")
-}
-
-enum PageStatus {
-  PUBLISHED
-  DRAFT
-  ARCHIVED
-}
-
-model Page {
-  id          String     @id @default(uuid()) @db.Uuid
-  slug        String     @default(uuid())
-  parentId    String?    @db.Uuid
-  parentType  String?
-  title       String     @default("") @db.VarChar(500)
-  cover       String?    @db.VarChar(2183)
-  icon        String     @default("") @db.VarChar(50)
-  isTrashed   Boolean    @default(false)
-  isJournal   Boolean    @default(false)
-  status      PageStatus @default(DRAFT)
-  children    Json?
-  props       Json?
-  date        String     @default("") @db.VarChar(20)
-  publishedAt DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  user        User       @relation(fields: [userId], references: [id])
-  userId      String     @db.Uuid
-  site        Site       @relation(fields: [siteId], references: [id])
-  siteId      String     @db.Uuid
-  blocks      Block[]
-
-  @@unique([siteId, slug])
-  @@index([userId])
-  @@index([siteId])
-  @@index([siteId, status])
-  @@map("page")
-}
-
-model Block {
-  id          String   @id @default(uuid()) @db.Uuid
-  parentId    String?  @db.Uuid
-  type        String
-  isTrashed   Boolean  @default(false)
-  isCollapsed Boolean  @default(false)
-  content     Json?
-  children    Json?
-  props       Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  page        Page     @relation(fields: [pageId], references: [id])
-  pageId      String   @db.Uuid
-  user        User     @relation(fields: [userId], references: [id])
-  userId      String   @db.Uuid
-  site        Site     @relation(fields: [siteId], references: [id])
-  siteId      String   @db.Uuid
-
-  @@index([userId])
-  @@index([pageId])
-  @@index([siteId])
-  @@map("block")
 }
 
 model Database {

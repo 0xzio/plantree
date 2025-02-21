@@ -3,9 +3,11 @@
 import { editorDefaultValue, PostStatus } from '@/lib/constants'
 import { revalidateMetadata } from '@/lib/revalidateTag'
 import { api, trpc } from '@/lib/trpc'
+import { isValidUUIDv4 } from '@/lib/utils'
 import { RouterOutputs } from '@/server/_app'
 import { store } from '@/store'
 import { PostTag, Tag } from '@prisma/client'
+import { format } from 'date-fns'
 import { produce } from 'immer'
 import { atom, useAtom } from 'jotai'
 import { postLoadingAtom } from './usePostLoading'
@@ -120,7 +122,7 @@ export function updatePostPublishStatus() {
   const post = store.get(postAtom)
   store.set(postAtom, {
     ...post,
-    postStatus: PostStatus.PUBLISHED,
+    status: PostStatus.PUBLISHED,
     publishedAt: new Date(),
   })
 }
@@ -146,11 +148,22 @@ export function removePostTag(postTag: PostTagWithTag) {
   revalidateMetadata(`${postTag.siteId}-tag-${postTag.tag.name}`)
 }
 
-export async function loadPost(postId: string) {
+export async function loadPost(id: string) {
   store.set(postLoadingAtom, true)
-  const post = await api.post.byId.query(postId)
-  store.set(postAtom, post)
-  store.set(postLoadingAtom, false)
+
+  if (isValidUUIDv4(id)) {
+    const post = await api.post.byId.query(id)
+    store.set(postAtom, post)
+    store.set(postLoadingAtom, false)
+  } else {
+    const date = id === 'today' ? format(new Date(), 'yyyy-MM-dd') : id
+    const post = await api.page.getPage.query({
+      date,
+      siteId: window.__SITE_ID__,
+    })
+    store.set(postAtom, post)
+    store.set(postLoadingAtom, false)
+  }
 }
 
 export async function loadPostBySlug(slug: string) {

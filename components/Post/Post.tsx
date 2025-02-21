@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
 import { Post as IPost, usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
@@ -7,18 +8,25 @@ import { useSiteCollaborators } from '@/hooks/useSiteCollaborators'
 import { useSiteTags } from '@/hooks/useSiteTags'
 import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
+import { isValidUUIDv4 } from '@/lib/utils'
 import { PostType } from '@prisma/client'
+import { format } from 'date-fns'
+import { useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
 import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
+import { JournalNav } from './JournalNav'
 import { Tags } from './Tags'
 
-export function Post({ post }: { post: IPost }) {
+export function Post() {
+  const params = useSearchParams()
+  const id = params?.get('id') || ''
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
   // console.log('post==============:', post)
   const {
+    post,
     title,
     description,
     content,
@@ -30,6 +38,18 @@ export function Post({ post }: { post: IPost }) {
   useSiteTags()
   useSiteCollaborators()
 
+  const isJournal = useMemo(() => {
+    return !isValidUUIDv4(id)
+  }, [id])
+  const isToday = id === 'today'
+
+  const journalTitle = useMemo(() => {
+    if (!isJournal) return ''
+    if (isToday) return 'Today, ' + format(new Date(Date.now()), 'LLL do')
+    const formattedDate = format(new Date(id || Date.now()), 'LLL do')
+    return formattedDate
+  }, [isJournal, isToday, id])
+
   const debouncedUpdate = useDebouncedCallback(
     async (value: IPost) => {
       setPostSaving(true)
@@ -39,7 +59,7 @@ export function Post({ post }: { post: IPost }) {
           title: value.title,
           content: value.content,
           description: value.description,
-          i18n: value.i18n,
+          i18n: value.i18n ?? {},
         })
       } catch (error) {}
       setPostSaving(false)
@@ -54,21 +74,32 @@ export function Post({ post }: { post: IPost }) {
         {post.type === PostType.ARTICLE && (
           <div className="mb-5 flex flex-col space-y-3 ">
             <CoverUpload post={post} />
-            <TextareaAutosize
-              className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
-              placeholder="Title"
-              value={title || ''}
-              autoFocus
-              onChange={(e) => {
-                const newPost = updateTitle(e.target.value)
-                debouncedUpdate(newPost)
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                }
-              }}
-            />
+            {isJournal && (
+              <div className="flex items-center gap-4">
+                <span className="text-foreground text-4xl font-bold">
+                  {journalTitle}
+                </span>
+                <JournalNav date={post.date} />
+              </div>
+            )}
+
+            {!isJournal && (
+              <TextareaAutosize
+                className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
+                placeholder="Title"
+                value={title || ''}
+                autoFocus
+                onChange={(e) => {
+                  const newPost = updateTitle(e.target.value)
+                  debouncedUpdate(newPost)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    e.preventDefault()
+                  }
+                }}
+              />
+            )}
             <TextareaAutosize
               className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
               placeholder="Description"
@@ -85,10 +116,13 @@ export function Post({ post }: { post: IPost }) {
             />
           </div>
         )}
-        <div className="flex items-center justify-between">
-          <Authors post={post} />
-          <Tags />
-        </div>
+
+        {!post.isPage && (
+          <div className="flex items-center justify-between">
+            <Authors post={post} />
+            <Tags />
+          </div>
+        )}
 
         <PlateEditor
           className="w-full -mx-6"

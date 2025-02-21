@@ -1,18 +1,12 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
-import { uniqueId } from '@/lib/unique-id'
-import { Page, PageStatus } from '@prisma/client'
+import { PostStatus } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { slug } from 'github-slugger'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { createPage } from '../lib/createPage'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
-
-interface SlateElement {
-  id: string
-  [key: string]: any
-}
 
 export const pageRouter = router({
   list: protectedProcedure
@@ -24,23 +18,16 @@ export const pageRouter = router({
     .query(async ({ ctx, input }) => {
       const cachedPages = await cacheHelper.getCachedSitePages(input.siteId)
       if (cachedPages) return cachedPages
-      const pages = await prisma.page.findMany({
-        where: { siteId: input.siteId, isJournal: false },
+      const pages = await prisma.post.findMany({
+        where: {
+          siteId: input.siteId,
+          isJournal: false,
+          isPage: true,
+        },
         orderBy: { createdAt: 'desc' },
       })
       return pages
     }),
-
-  byId: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
-    const page = await prisma.page.findUniqueOrThrow({
-      include: {
-        blocks: true,
-      },
-      where: { id: input },
-    })
-
-    return page
-  }),
 
   getPage: protectedProcedure
     .input(
@@ -60,14 +47,42 @@ export const pageRouter = router({
       }
 
       if (pageId) {
-        return prisma.page.findUniqueOrThrow({
-          include: { blocks: true },
+        return prisma.post.findUniqueOrThrow({
           where: { id: pageId },
+          include: {
+            postTags: { include: { tag: true } },
+            authors: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                    image: true,
+                    displayName: true,
+                    ensName: true,
+                  },
+                },
+              },
+            },
+          },
         })
       } else {
-        const page = await prisma.page.findFirst({
-          include: { blocks: true },
+        const page = await prisma.post.findFirst({
           where: { siteId: input.siteId, date },
+          include: {
+            postTags: { include: { tag: true } },
+            authors: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                    image: true,
+                    displayName: true,
+                    ensName: true,
+                  },
+                },
+              },
+            },
+          },
         })
 
         if (page) return page
@@ -80,9 +95,23 @@ export const pageRouter = router({
           isJournal: true,
         })
 
-        return prisma.page.findUniqueOrThrow({
-          include: { blocks: true },
+        return prisma.post.findUniqueOrThrow({
           where: { id },
+          include: {
+            postTags: { include: { tag: true } },
+            authors: {
+              include: {
+                user: {
+                  select: {
+                    name: true,
+                    image: true,
+                    displayName: true,
+                    ensName: true,
+                  },
+                },
+              },
+            },
+          },
         })
       }
     }),
@@ -104,101 +133,6 @@ export const pageRouter = router({
       return page
     }),
 
-  update: protectedProcedure
-    .input(
-      z.object({
-        pageId: z.string(),
-        title: z.string().optional(),
-        elements: z.string().optional(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      let { pageId, elements, ...data } = input
-      let slateElements = JSON.parse(elements || '[]') as SlateElement[]
-
-      slateElements = slateElements.map((e) => ({
-        ...e,
-        id: e.id || uniqueId(),
-      }))
-
-      const children = slateElements.map((el) => el.id)
-
-      const page = await prisma.page.update({
-        where: { id: pageId },
-        data: {
-          ...data,
-          children,
-        },
-      })
-
-      const pageBlocks = await prisma.block.findMany({
-        where: { pageId: pageId },
-      })
-
-      const blockIdsSet = new Set(pageBlocks.map((b) => b.id))
-
-      const updated: SlateElement[] = []
-      const added: SlateElement[] = []
-
-      // console.log('=====updated:', updated, 'added:', added)
-
-      for (const e of slateElements) {
-        if (blockIdsSet.has(e.id)) {
-          updated.push(e)
-        } else {
-          added.push(e)
-        }
-      }
-
-      if (added.length) {
-        const addedPromises = added.map(({ id, ...content }) => {
-          return prisma.block.create({
-            data: {
-              id,
-              siteId: page.siteId,
-              userId: ctx.token.uid,
-              pageId,
-              parentId: pageId,
-              type: content?.type,
-              content: content,
-              children: [],
-              props: {},
-            },
-          })
-        })
-
-        await Promise.all(addedPromises)
-      }
-
-      const updatedPromises = updated.map(({ id, ...content }) => {
-        return prisma.block.update({
-          where: { id },
-          data: { content },
-        })
-      })
-
-      await Promise.all(updatedPromises)
-      await cleanDeletedBlocks(page)
-      await cacheHelper.updateCachedSitePages(page.siteId, null)
-      return page
-    }),
-
-  delete: protectedProcedure
-    .input(
-      z.object({
-        pageId: z.string(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      const page = await prisma.page.findUniqueOrThrow({
-        where: { id: input.pageId },
-      })
-      await prisma.block.deleteMany({ where: { pageId: input.pageId } })
-      await prisma.page.delete({ where: { id: input.pageId } })
-      await cacheHelper.updateCachedSitePages(page.siteId, null)
-      return true
-    }),
-
   publish: protectedProcedure
     .input(
       z.object({
@@ -207,42 +141,25 @@ export const pageRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { pageId } = input
-      let page = await prisma.page.findUniqueOrThrow({
+      let post = await prisma.post.findUniqueOrThrow({
         where: { id: pageId },
       })
 
-      await prisma.page.update({
+      await prisma.post.update({
         where: { id: pageId },
         data: {
-          status: PageStatus.PUBLISHED,
+          status: PostStatus.PUBLISHED,
           publishedAt: new Date(),
-          slug: slug(page.title || page.id),
+          slug: slug(post.title || post.id),
         },
       })
 
-      await cacheHelper.updateCachedSitePages(page.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
 
-      revalidateTag(`${page.siteId}-page-${page.slug}`)
+      revalidateTag(`${post.siteId}-page-${post.slug}`)
       // revalidateTag(`${post.siteId}-posts`)
       // revalidatePath(`/posts/${post.slug}`)
 
-      return page
+      return post
     }),
 })
-
-async function cleanDeletedBlocks(page: Page) {
-  const pageBlocks = await prisma.block.findMany({
-    where: { pageId: page.id },
-  })
-
-  const promises: any[] = []
-
-  for (const block of pageBlocks) {
-    const blockIds = page.children as string[]
-    if (!blockIds.includes(block.id)) {
-      promises.push(prisma.block.delete({ where: { id: block.id } }))
-    }
-  }
-
-  if (promises.length) await Promise.all(promises)
-}

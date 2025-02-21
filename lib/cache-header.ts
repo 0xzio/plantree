@@ -1,4 +1,4 @@
-import { Page } from '@prisma/client'
+import { Post } from '@prisma/client'
 import { produce } from 'immer'
 import Redis from 'ioredis'
 import { redisKeys } from './redisKeys'
@@ -94,14 +94,14 @@ export const cacheHelper = {
     }
   },
 
-  async getCachedSitePages(siteId: string): Promise<Page[] | undefined> {
+  async getCachedSitePages(siteId: string): Promise<Post[] | undefined> {
     const key = redisKeys.sitePages(siteId)
     try {
       const str = await redis.get(key)
       if (str) {
         const pages = JSON.parse(str)
         if (Array.isArray(pages)) {
-          const sitePosts = pages as Page[]
+          const sitePosts = pages as Post[]
           return produce(sitePosts, (draft) => {
             for (const page of draft) {
               page.createdAt = new Date(page.createdAt)
@@ -113,7 +113,7 @@ export const cacheHelper = {
     } catch (error) {}
   },
 
-  async updateCachedSitePages(siteId: string, pages: Page[] | null) {
+  async updateCachedSitePages(siteId: string, pages: Post[] | null) {
     const key = redisKeys.sitePosts(siteId)
     if (!pages) {
       redis.del(key)

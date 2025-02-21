@@ -38,7 +38,7 @@ export function PostNav({ className }: PostHeaderProps) {
           <ChevronLeft size={20} />
         </Link>
 
-        {post?.postStatus === PostStatus.PUBLISHED && (
+        {post?.status === PostStatus.PUBLISHED && (
           <div className="hidden md:flex items-center gap-1">
             <Badge size="sm" className="text-xs">
               Published

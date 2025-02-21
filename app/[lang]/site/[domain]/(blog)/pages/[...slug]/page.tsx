@@ -7,7 +7,6 @@ import {
   getSite,
 } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
-import { pageToSlate } from '@/lib/serializer/pageToSlate'
 import { Metadata } from 'next'
 
 type Params = Promise<{ domain: string; slug: string[]; lang: string }>
@@ -38,10 +37,9 @@ export default async function Page(props: { params: Params }) {
   const slug = decodeURI(params.slug.join('/'))
   const site = await getSite(params)
   const page = await getPage(site.id, slug)
-  const content = pageToSlate(page!)
 
   const { PageDetail } = loadTheme(site.themeName)
-  if (!PageDetail) return <PageDefaultUI content={content} />
+  if (!PageDetail) return <PageDefaultUI content={page!.content} />
 
-  return <PageDetail content={content} page={page} />
+  return <PageDetail content={page!.content} page={page} />
 }

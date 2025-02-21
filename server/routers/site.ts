@@ -437,8 +437,6 @@ export const siteRouter = router({
         await tx.assetAlbum.deleteMany({ where: { siteId } })
         await tx.album.deleteMany({ where: { siteId } })
         await tx.asset.deleteMany({ where: { siteId } })
-        await tx.block.deleteMany({ where: { siteId } })
-        await tx.page.deleteMany({ where: { siteId } })
         await tx.record.deleteMany({ where: { siteId } })
         await tx.field.deleteMany({ where: { siteId } })
         await tx.view.deleteMany({ where: { siteId } })

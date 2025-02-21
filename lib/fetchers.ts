@@ -264,9 +264,8 @@ export async function getSpaceIds() {
 export async function getPage(siteId: string, slug: string) {
   return await unstable_cache(
     async () => {
-      const page = await prisma.page.findFirst({
+      const page = await prisma.post.findFirst({
         where: { slug, siteId },
-        include: { blocks: true },
       })
 
       if (!page) return null
@@ -301,7 +300,7 @@ function findManyPosts(siteId: string) {
     },
     where: {
       siteId,
-      postStatus: PostStatus.PUBLISHED,
+      status: PostStatus.PUBLISHED,
     },
     orderBy: [{ publishedAt: 'desc' }],
   })

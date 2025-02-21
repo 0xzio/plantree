@@ -196,7 +196,6 @@ export const postRouter = router({
       z.object({
         siteId: z.string(),
         postId: z.string().optional(),
-        pageId: z.string().optional(),
         creationId: z.number().optional(),
         type: z.nativeEnum(PostType),
         gateType: z.nativeEnum(GateType),
@@ -208,10 +207,10 @@ export const postRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.token.uid
-      const { pageId, gateType, collectible, creationId } = input
+      const { gateType, collectible, creationId } = input
 
       let post = await prisma.post.findFirst({
-        where: { OR: [{ pageId }, { id: input.postId }] },
+        where: { id: input.postId },
       })
 
       function getPostInfo() {
@@ -235,11 +234,9 @@ export const postRouter = router({
           data: {
             siteId: input.siteId,
             userId,
-            slug: input.pageId,
             title: info.title,
             type: input.type,
-            pageId: input.pageId,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
             image: input.image,
             gateType: input.gateType,
             collectible: input.collectible,
@@ -256,7 +253,7 @@ export const postRouter = router({
             title: info.title,
             type: input.type,
             image: input.image,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
             gateType: input.gateType,
             collectible: input.collectible,
             content: info.content,
@@ -298,7 +295,7 @@ export const postRouter = router({
       await prisma.post.update({
         where: { id: post.id },
         data: {
-          postStatus: PostStatus.PUBLISHED,
+          status: PostStatus.PUBLISHED,
           collectible,
           creationId,
           // cid: res.cid,
@@ -309,7 +306,7 @@ export const postRouter = router({
       })
 
       const publishedCount = await prisma.post.count({
-        where: { siteId: input.siteId, postStatus: PostStatus.PUBLISHED },
+        where: { siteId: input.siteId, status: PostStatus.PUBLISHED },
       })
 
       await prisma.site.update({
@@ -373,7 +370,7 @@ export const postRouter = router({
               userId: ctx.token.uid,
               title: p.title,
               content: p.content,
-              postStatus: p.postStatus,
+              status: p.status,
               image: p.image,
               type: p.type,
               authors: {
@@ -391,7 +388,7 @@ export const postRouter = router({
         const postCount = await tx.post.count({
           where: {
             siteId,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
           },
         })
 
@@ -410,7 +407,7 @@ export const postRouter = router({
     .mutation(async ({ ctx, input }) => {
       const post = await prisma.post.update({
         where: { id: input },
-        data: { postStatus: PostStatus.ARCHIVED },
+        data: { status: PostStatus.ARCHIVED },
       })
 
       await cacheHelper.updateCachedPost(post.id, null)
@@ -543,7 +540,7 @@ function findSitePosts(siteId: string) {
 
 function publishedSitePosts(siteId: string) {
   return prisma.post.findMany({
-    where: { siteId, postStatus: PostStatus.PUBLISHED },
+    where: { siteId, status: PostStatus.PUBLISHED },
     include: {
       postTags: { include: { tag: true } },
       user: {
