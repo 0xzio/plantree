@@ -13,26 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/LangSwitcher.tsx:25
-msgid "cn"
-msgstr ""
-
-#: components/LangSwitcher.tsx:21
-msgid "English"
-msgstr ""
-
-#: components/LangSwitcher.tsx:22
-msgid "ja"
-msgstr ""
-
-#: components/LangSwitcher.tsx:23
-msgid "ko"
-msgstr ""
-
-#: components/LangSwitcher.tsx:24
-msgid "ru"
-msgstr ""
-
 #: app/[lang]/root/(home)/page.tsx:52
 msgid "Sites"
 msgstr ""

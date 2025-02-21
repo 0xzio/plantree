@@ -19,12 +19,13 @@ export async function generateMetadata({
   }
 }
 
-export default async function HomePage({
-  params,
-}: {
+export default async function HomePage(props: {
   params: Promise<{ domain: string }>
 }) {
-  const site = await getSite(await params)
+
+  const params = await props.params
+
+  const site = await getSite(params)
   const [posts, tags] = await Promise.all([getPosts(site.id), getTags(site.id)])
 
   const { HomePage } = loadTheme(site.themeName)

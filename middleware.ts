@@ -45,6 +45,8 @@ export default async function middleware(req: NextRequest) {
   const searchParams = req.nextUrl.searchParams.toString()
   // Get the pathname of the request (e.g. /, /about, /blog/first-post)
 
+  // console.log('=======searchParams:', searchParams, req.url, req.nextUrl)
+
   const postfix = searchParams.length > 0 ? `?${searchParams}` : ''
 
   const path = pathnameHasLocale
@@ -99,7 +101,7 @@ export default async function middleware(req: NextRequest) {
   // return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
   // return NextResponse.next()
 
-  console.log('>>>>>>>hostname:', hostname, 'path:', path, 'locale:', locale)
+  // console.log('>>>>>>>hostname:', hostname, 'path:', path, 'locale:', locale)
 
   return NextResponse.rewrite(
     new URL(`/${locale}/site/${hostname}${path}`, req.url),

@@ -1,9 +1,8 @@
 'use client'
 
 import { Separator } from '@/components/ui/separator'
+import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { Link } from '@/lib/i18n'
-import { usePathname } from '@/lib/i18n'
 
 interface Props {}
 
@@ -15,6 +14,7 @@ export function SettingNav({}: Props) {
     general: '/~/settings',
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
+    i18n: '/~/settings/i18n',
     theme: '/~/settings/theme',
     navigation: '/~/settings/navigation',
     catalogue: '/~/settings/catalogue',
@@ -81,6 +81,10 @@ export function SettingNav({}: Props) {
 
         <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
           Socials
+        </Link>
+
+        <Link href={Paths.i18n} className={linkClassName(Paths.i18n)}>
+          i18n
         </Link>
       </div>
 

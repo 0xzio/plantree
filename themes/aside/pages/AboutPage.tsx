@@ -11,7 +11,7 @@ export function AboutPage({ site }: Props) {
   return (
     <>
       <div className="">
-        <PageTitle>About</PageTitle>
+        <PageTitle className="mt-0">About</PageTitle>
         <div className="">
           <div className="flex flex-col items-center space-x-2 pt-8">
             {site.logo && (

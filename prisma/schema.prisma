@@ -255,6 +255,7 @@ model Post {
   title         String        @default("") @db.VarChar(500)
   description   String        @default("") @db.VarChar(1000)
   content       String        @default("") @db.Text
+  i18n          Json?
   cid           String        @default("") @db.VarChar(100)
   pageId        String?       @unique @db.Uuid
   creationId    Int?          @db.Integer

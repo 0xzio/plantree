@@ -3,6 +3,7 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Footer } from '@/components/theme-ui/Footer'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
+import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
 import { Post, Site } from '@/lib/theme.types'
@@ -20,30 +21,20 @@ interface LayoutProps {
 }
 
 export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
+  // console.log('======post:', post)
+
   return (
     <div className="flex gap-x-16">
       <div className={cn('flex-1 flex flex-col', className)}>
         <div className="mb-auto flex-1">
           <header className="space-y-4 pb-4 ">
             <div className="mb-4">
-              <PageTitle className="mb-2 mt-8">{post.title}</PageTitle>
+              <PageTitle className="mb-2 mt-0">{post.title}</PageTitle>
               {post.description && (
                 <PostSubtitle>{post.description}</PostSubtitle>
               )}
             </div>
-            <div className="flex items-center justify-between">
-              <dl className="flex items-center gap-2 text-foreground/50">
-                <dt className="sr-only">Published on</dt>
-                <dd className="text-base font-medium leading-6">
-                  <time>{formatDate(post.updatedAt)}</time>
-                </dd>
-                <dd>·</dd>
-                <dd className="text-base font-medium leading-6">
-                  {post.readingTime.text}
-                </dd>
-              </dl>
-            </div>
-
+            <PostMetadata site={site} post={post} />
             <PostActions post={post} />
           </header>
           <div className="grid-rows-[auto_1fr]">

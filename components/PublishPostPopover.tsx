@@ -30,6 +30,8 @@ export function PublishPostPopover({ className }: Props) {
     >
       <PopoverTrigger asChild>
         <Button
+          size="sm"
+          variant="secondary"
           className={cn('w-24', className)}
           onClick={() => {
             setOpen(true)

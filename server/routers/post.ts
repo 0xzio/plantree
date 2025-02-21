@@ -128,6 +128,7 @@ export const postRouter = router({
       const post = await prisma.post.create({
         data: {
           userId: ctx.token.uid,
+          i18n: {},
           ...input,
           authors: {
             create: [
@@ -151,6 +152,7 @@ export const postRouter = router({
         title: z.string().optional(),
         content: z.string().optional(),
         description: z.string().optional(),
+        i18n: z.record(z.any()).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

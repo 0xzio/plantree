@@ -4,13 +4,14 @@ import { usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
+import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { PostStatus } from '@prisma/client'
 import { ChevronLeft, ExternalLink } from 'lucide-react'
-import { Link } from '@/lib/i18n'
 import { PublishPostPopover } from '../PublishPostPopover'
 import { useSiteContext } from '../SiteContext'
 import { Badge } from '../ui/badge'
+import { MoreMenu } from './MoreMenu'
 
 interface PostHeaderProps {
   className?: string
@@ -32,13 +33,13 @@ export function PostNav({ className }: PostHeaderProps) {
       <div className="flex items-center gap-6">
         <Link
           href="/~/posts"
-          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer"
+          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer flex-shrink-0"
         >
           <ChevronLeft size={20} />
         </Link>
 
         {post?.postStatus === PostStatus.PUBLISHED && (
-          <div className="flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-1">
             <Badge size="sm" className="text-xs">
               Published
             </Badge>
@@ -59,6 +60,7 @@ export function PostNav({ className }: PostHeaderProps) {
           {isPostSaving ? 'Saving...' : 'Saved'}
         </div>
         <PublishPostPopover className="" />
+        <MoreMenu post={post} />
       </div>
     </div>
   )

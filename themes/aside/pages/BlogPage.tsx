@@ -1,5 +1,5 @@
-import { Post } from '@/lib/theme.types'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
+import { Post } from '@/lib/theme.types'
 import { PostList } from '../components/PostList'
 
 interface Props {
@@ -16,10 +16,9 @@ export function BlogPage({
   pagination,
   initialDisplayPosts,
 }: Props) {
-
   return (
     <div className="space-y-6">
-      <PageTitle>Blog</PageTitle>
+      <PageTitle className="mt-0">Blog</PageTitle>
       <PostList
         posts={posts}
         pagination={pagination}

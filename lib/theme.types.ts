@@ -78,7 +78,10 @@ export type Site = {
   socials: Socials
   analytics: Analytics
   catalogue: any
-  config: Record<string, any>
+  config: {
+    locales: string[]
+    features: Record<string, any>
+  }
   themeConfig: Record<string, any>
   navLinks: NavLink[]
   subdomain: string | null

@@ -214,12 +214,11 @@ export const siteRouter = router({
         data,
       })
 
-      try {
-        await syncSiteToHub(newSite)
-      } catch (error) {}
+      // try {
+      //   await syncSiteToHub(newSite)
+      // } catch (error) {}
 
       revalidateSite(newSite.domains)
-
       await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       await cacheHelper.updateCachedHomeSites(null)
       return newSite
@@ -240,6 +239,7 @@ export const siteRouter = router({
 
       let site = await prisma.site.findUniqueOrThrow({
         where: { id: siteId },
+        include: { domains: true },
       })
       site = await prisma.site.update({
         where: { id: siteId },
@@ -249,7 +249,45 @@ export const siteRouter = router({
             features,
           },
         },
+        include: { domains: true },
       })
+
+      revalidateSite(site.domains)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      await cacheHelper.updateCachedHomeSites(null)
+
+      return site
+    }),
+
+  updateLocalesConfig: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+        locales: z.array(z.string()),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { siteId, locales } = input
+
+      let site = await prisma.site.findUniqueOrThrow({
+        where: { id: siteId },
+        include: { domains: true },
+      })
+
+      site = await prisma.site.update({
+        where: { id: siteId },
+        data: {
+          config: {
+            ...(site.config as any),
+            locales,
+          },
+        },
+        include: { domains: true },
+      })
+
+      revalidateSite(site.domains)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      await cacheHelper.updateCachedHomeSites(null)
 
       return site
     }),

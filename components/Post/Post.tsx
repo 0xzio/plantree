@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import TextareaAutosize from 'react-textarea-autosize'
-import { Post as IPost, updatePost } from '@/hooks/usePost'
+import { Post as IPost, usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
 import { useSiteCollaborators } from '@/hooks/useSiteCollaborators'
 import { useSiteTags } from '@/hooks/useSiteTags'
@@ -16,58 +15,53 @@ import { CoverUpload } from './CoverUpload'
 import { Tags } from './Tags'
 
 export function Post({ post }: { post: IPost }) {
-  const [data, setData] = useState<IPost>(post)
   const { mutateAsync } = trpc.post.update.useMutation()
   const { setPostSaving } = usePostSaving()
   // console.log('post==============:', post)
+  const {
+    title,
+    description,
+    content,
+    updateTitle,
+    updateDescription,
+    updateContent,
+  } = usePost()
 
   useSiteTags()
   useSiteCollaborators()
 
-  const debounced = useDebouncedCallback(
+  const debouncedUpdate = useDebouncedCallback(
     async (value: IPost) => {
-      if (data.content !== post.content || data.title !== post.title) {
-        setPostSaving(true)
-
-        try {
-          await mutateAsync({
-            id: data.id,
-            title: value.title,
-            content: value.content,
-            description: value.description,
-          })
-
-          updatePost({
-            id: data.id,
-            title: value.title,
-            content: value.content,
-            description: value.description,
-          })
-        } catch (error) {}
-        setPostSaving(false)
-      }
+      setPostSaving(true)
+      try {
+        await mutateAsync({
+          id: value.id,
+          title: value.title,
+          content: value.content,
+          description: value.description,
+          i18n: value.i18n,
+        })
+      } catch (error) {}
+      setPostSaving(false)
     },
     // delay in ms
-    400,
+    200,
   )
-
-  useEffect(() => {
-    debounced(data)
-  }, [data, debounced])
 
   return (
     <div className="w-full h-full">
       <div className="relative min-h-[500px] max-w-screen-lg p-12 px-8 mx-auto z-0">
         {post.type === PostType.ARTICLE && (
           <div className="mb-5 flex flex-col space-y-3 ">
-            <CoverUpload post={data} />
+            <CoverUpload post={post} />
             <TextareaAutosize
               className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
               placeholder="Title"
-              defaultValue={data?.title || ''}
+              value={title || ''}
               autoFocus
               onChange={(e) => {
-                setData({ ...data, title: e.target.value })
+                const newPost = updateTitle(e.target.value)
+                debouncedUpdate(newPost)
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -78,10 +72,11 @@ export function Post({ post }: { post: IPost }) {
             <TextareaAutosize
               className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
               placeholder="Description"
-              defaultValue={post?.description || ''}
-              onChange={(e) =>
-                setData({ ...data, description: e.target.value })
-              }
+              value={description}
+              onChange={(e) => {
+                const newPost = updateDescription(e.target.value)
+                debouncedUpdate(newPost)
+              }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
                   e.preventDefault()
@@ -97,10 +92,11 @@ export function Post({ post }: { post: IPost }) {
 
         <PlateEditor
           className="w-full -mx-6"
-          value={post.content ? JSON.parse(post.content) : editorDefaultValue}
+          value={content ? JSON.parse(content) : editorDefaultValue}
           showAddButton
           onChange={(v) => {
-            setData({ ...data, content: JSON.stringify(v) })
+            const newPost = updateContent(JSON.stringify(v))
+            debouncedUpdate(newPost)
           }}
         />
       </div>

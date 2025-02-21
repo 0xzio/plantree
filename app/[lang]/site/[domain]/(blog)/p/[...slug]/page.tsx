@@ -10,7 +10,7 @@ import { loadTheme } from '@/lib/loadTheme'
 import { pageToSlate } from '@/lib/serializer/pageToSlate'
 import { Metadata } from 'next'
 
-type Params = Promise<{ domain: string; slug: string[] }>
+type Params = Promise<{ domain: string; slug: string[]; lang: string }>
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
@@ -21,11 +21,11 @@ export async function generateMetadata(props: {
   const params = await props.params
   const site = await getSite(params)
   const slug = decodeURI(params.slug.join('/'))
-  const page = await getPost(site.id, slug)
+  const page = await getPage(site.id, slug)
 
   return {
     title: page?.title,
-    description: page?.description,
+    description: page?.title,
   }
 }
 

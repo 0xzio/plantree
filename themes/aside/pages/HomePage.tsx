@@ -1,10 +1,7 @@
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
-import Image from 'next/image'
-import Link from '../components/Link'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -17,8 +14,8 @@ export function HomePage({ posts = [], site }: Props) {
   return (
     <div className="mb-20">
       <div className="flex flex-col">
-        <div className="flex flex-col mt-6">
-          <PageTitle className="mt-4">{site.name}</PageTitle>
+        <div className="flex flex-col">
+          <PageTitle className="mt-0">{site.name}</PageTitle>
         </div>
         <div className="prose dark:prose-invert max-w-none mb-10 text-foreground/70">
           <ContentRender content={site.about} />
