@@ -29,7 +29,7 @@ export function LangSwitcher({ className, site }: LangSwitcherProps) {
   const { i18n } = useLingui()
   const pathname = usePathname()
 
-  console.log('=====i18n:', i18n, i18n.locale)
+  // console.log('=====i18n:', i18n, i18n.locale)
 
   const [locale, setLocale] = useState<LOCALES>(
     // pathname?.split('/')[1] as LOCALES,

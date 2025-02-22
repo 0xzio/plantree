@@ -1,17 +1,11 @@
-import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
-import { prisma } from '@/lib/prisma'
-import { AccountWithUser } from '@/lib/types'
-import { hashPassword } from '@/server/lib/hashPassword'
-import {
-  CollaboratorRole,
-  PostStatus,
-  PostType,
-  ProviderType,
-  SubdomainType,
-  SubscriptionStatus,
-} from '@prisma/client'
-import ky from 'ky'
-import { cacheHelper } from './cache-header'
+import { defaultNavLinks, editorDefaultValue } from '@/lib/constants';
+import { prisma } from '@/lib/prisma';
+import { AccountWithUser } from '@/lib/types';
+import { hashPassword } from '@/server/lib/hashPassword';
+import { CollaboratorRole, PostStatus, PostType, ProviderType, SubdomainType, SubscriptionStatus } from '@prisma/client';
+import ky from 'ky';
+import { cacheHelper } from './cache-header';
+
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7
 
@@ -68,6 +62,7 @@ export async function initUserByAddress(address: string) {
           userId: newUser.id,
           socials: {},
           config: {
+            locales: ['en', 'zh-CN', 'ja'],
             features: {
               journal: false,
               gallery: false,
@@ -208,6 +203,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           userId: newUser.id,
           socials: {},
           config: {
+            locales: ['en', 'zh-CN', 'ja'],
             features: {
               journal: false,
               gallery: false,
@@ -407,6 +403,7 @@ export async function initUserByFarcasterId(fid: string) {
           userId: newUser.id,
           socials: {},
           config: {
+            locales: ['en', 'zh-CN', 'ja'],
             features: {
               journal: false,
               gallery: false,
@@ -540,6 +537,7 @@ export async function initUserByEmail(email: string, password: string) {
           userId: newUser.id,
           socials: {},
           config: {
+            locales: ['en', 'zh-CN', 'ja'],
             features: {
               journal: false,
               gallery: false,

@@ -1,5 +1,6 @@
 import prisma from '@/lib/prisma'
-import { Site } from '@/lib/theme.types'
+import { Friend, Project, Site } from '@/lib/theme.types'
+import { getDatabaseData } from '@/server/lib/getDatabaseData'
 import { post } from '@farcaster/auth-client'
 import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
@@ -9,8 +10,10 @@ import { unstable_cache } from 'next/cache'
 import {
   defaultNavLinks,
   editorDefaultValue,
+  FRIEND_DATABASE_NAME,
   isProd,
   PostStatus,
+  PROJECT_DATABASE_NAME,
   RESPACE_BASE_URI,
   ROOT_DOMAIN,
   SUBGRAPH_URL,
@@ -276,6 +279,47 @@ export async function getPage(siteId: string, slug: string) {
     {
       revalidate: REVALIDATE_TIME,
       tags: [`${siteId}-page-${slug}`],
+    },
+  )()
+}
+
+export async function getFriends(siteId: string) {
+  return await unstable_cache(
+    async () => {
+      const friends = await getDatabaseData<Friend>({
+        siteId,
+        slug: FRIEND_DATABASE_NAME,
+      })
+      return friends.map((friend) => ({
+        ...friend,
+        avatar: getUrl(friend.avatar || ''),
+      }))
+    },
+    [`${siteId}-friends`],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: [`${siteId}-friends`],
+    },
+  )()
+}
+
+export async function getProjects(siteId: string) {
+  return await unstable_cache(
+    async () => {
+      const projects = await getDatabaseData<Project>({
+        siteId,
+        slug: PROJECT_DATABASE_NAME,
+      })
+      return projects.map((item) => ({
+        ...item,
+        icon: getUrl(item.icon || ''),
+        cover: getUrl(item.cover || ''),
+      }))
+    },
+    [`${siteId}-projects`],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: [`${siteId}-projects`],
     },
   )()
 }

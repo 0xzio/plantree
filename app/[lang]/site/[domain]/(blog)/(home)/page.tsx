@@ -1,4 +1,4 @@
-import { getPosts, getSite, getTags } from '@/lib/fetchers'
+import { getFriends, getPosts, getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata, ResolvingMetadata } from 'next'
 
@@ -22,11 +22,14 @@ export async function generateMetadata({
 export default async function HomePage(props: {
   params: Promise<{ domain: string }>
 }) {
-
   const params = await props.params
 
   const site = await getSite(params)
-  const [posts, tags] = await Promise.all([getPosts(site.id), getTags(site.id)])
+  const [posts, tags, friends] = await Promise.all([
+    getPosts(site.id),
+    getTags(site.id),
+    getFriends(site.id),
+  ])
 
   const { HomePage } = loadTheme(site.themeName)
 
@@ -34,5 +37,15 @@ export default async function HomePage(props: {
     return <div>Theme not found</div>
   }
 
-  return <HomePage posts={posts} tags={tags} authors={[]} site={site} />
+  console.log('=========friends:', friends)
+
+  return (
+    <HomePage
+      posts={posts}
+      tags={tags}
+      friends={friends}
+      authors={[]}
+      site={site}
+    />
+  )
 }

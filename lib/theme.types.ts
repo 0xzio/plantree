@@ -60,6 +60,24 @@ export type NavLink = {
   visible: boolean
 }
 
+export type Project = {
+  name: string
+  introduction: string
+  avatar: string
+  url: string
+  icon: string
+  cover: string
+  [key: string]: string
+}
+
+export type Friend = {
+  name: string
+  introduction: string
+  avatar: string
+  url: string
+  [key: string]: string
+}
+
 export type Site = {
   id: string
   name: string

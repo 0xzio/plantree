@@ -9,7 +9,9 @@ import { prisma } from '@/lib/prisma'
 import { FieldType, Option, ViewField, ViewType } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
 import { arrayMoveImmutable } from 'array-move'
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
+import { getDatabaseData } from '../lib/getDatabaseData'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const databaseRouter = router({
@@ -38,6 +40,32 @@ export const databaseRouter = router({
       where: { id: input },
     })
   }),
+
+  getProjects: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      return getDatabaseData({
+        siteId: input.siteId,
+        slug: PROJECT_DATABASE_NAME,
+      })
+    }),
+
+  getFriends: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ input }) => {
+      return getDatabaseData({
+        siteId: input.siteId,
+        slug: FRIEND_DATABASE_NAME,
+      })
+    }),
 
   bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
     return prisma.database.findFirstOrThrow({
@@ -326,10 +354,25 @@ export const databaseRouter = router({
     .mutation(async ({ ctx, input }) => {
       // TODO: handle options
       const { fieldId, options, ...rest } = input
-      await prisma.field.update({
+      const field = await prisma.field.update({
         where: { id: fieldId },
         data: rest,
       })
+
+      const { slug } = await prisma.database.findUniqueOrThrow({
+        where: { id: field.databaseId },
+        select: { slug: true },
+      })
+
+      const siteId = ctx.activeSiteId
+      if (slug === PROJECT_DATABASE_NAME) {
+        revalidateTag(`${siteId}-projects`)
+      }
+
+      if (slug === FRIEND_DATABASE_NAME) {
+        revalidateTag(`${siteId}-friends`)
+      }
+      return true
 
       return true
     }),
@@ -369,10 +412,25 @@ export const databaseRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      await prisma.record.update({
+      const record = await prisma.record.update({
         where: { id: input.recordId },
         data: { fields: input.fields as any },
       })
+
+      const { slug } = await prisma.database.findUniqueOrThrow({
+        where: { id: record.databaseId },
+        select: { slug: true },
+      })
+
+      const siteId = ctx.activeSiteId
+      if (slug === PROJECT_DATABASE_NAME) {
+        revalidateTag(`${siteId}-projects`)
+      }
+
+      if (slug === FRIEND_DATABASE_NAME) {
+        revalidateTag(`${siteId}-friends`)
+      }
+
       return true
     }),
 
@@ -426,7 +484,21 @@ export const databaseRouter = router({
   deleteRecord: protectedProcedure
     .input(z.string())
     .mutation(async ({ ctx, input }) => {
-      await prisma.record.delete({ where: { id: input } })
+      const record = await prisma.record.delete({ where: { id: input } })
+
+      const { slug } = await prisma.database.findUniqueOrThrow({
+        where: { id: record.databaseId },
+        select: { slug: true },
+      })
+
+      const siteId = ctx.activeSiteId
+      if (slug === PROJECT_DATABASE_NAME) {
+        revalidateTag(`${siteId}-projects`)
+      }
+
+      if (slug === FRIEND_DATABASE_NAME) {
+        revalidateTag(`${siteId}-friends`)
+      }
       return true
     }),
 

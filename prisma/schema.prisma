@@ -56,8 +56,6 @@ model Site {
   config             Json?
   navLinks           Json?
   catalogue          Json?
-  projects           Json?
-  friends            Json?
   newsletterConfig   Json?
   notificationConfig Json?
   themeName          String?        @db.VarChar(50)

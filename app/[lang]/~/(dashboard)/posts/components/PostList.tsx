@@ -1,7 +1,9 @@
 'use client'
 
+import { useSiteContext } from '@/components/SiteContext'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus } from '@/lib/constants'
+import { trpc } from '@/lib/trpc'
 import { PostItem } from './PostItem'
 
 interface PostListProps {
@@ -10,6 +12,10 @@ interface PostListProps {
 
 export function PostList({ status }: PostListProps) {
   const { data = [], isLoading } = usePosts()
+
+  const { id } = useSiteContext()
+  const { data: projects } = trpc.database.getProjects.useQuery({ siteId: id })
+  console.log('======projects:', projects)
 
   if (isLoading) return <div className="text-foreground/60">Loading...</div>
 

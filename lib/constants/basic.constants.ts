@@ -101,6 +101,18 @@ export const defaultNavLinks: NavLink[] = [
     visible: true,
   },
   {
+    title: 'Projects',
+    pathname: '/projects',
+    type: NavLinkType.BUILTIN,
+    visible: true,
+  },
+  {
+    title: 'Friends',
+    pathname: '/friends',
+    type: NavLinkType.BUILTIN,
+    visible: false,
+  },
+  {
     title: 'Tags',
     pathname: '/tags',
     type: NavLinkType.BUILTIN,

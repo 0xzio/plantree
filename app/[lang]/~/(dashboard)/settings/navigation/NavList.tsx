@@ -32,6 +32,12 @@ export function NavList({ site }: Props) {
   const { setState } = useNavLinkDialog()
   const { refetch } = useSite()
 
+  // TODO: fallback
+  if (!navLinks.some((link) => link.pathname === '/friends')) {
+    navLinks.push(defaultNavLinks[2])
+    navLinks.push(defaultNavLinks[3])
+  }
+
   return (
     <>
       <NavLinkDialog />

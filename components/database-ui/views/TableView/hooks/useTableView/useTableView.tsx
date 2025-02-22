@@ -13,6 +13,7 @@ import { RateCell } from '@/components/cells/rate-cell'
 import { SingleSelectCell } from '@/components/cells/single-select-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
 import { useDatabaseContext } from '@/components/database-ui/DatabaseProvider'
+import { useSiteContext } from '@/components/SiteContext'
 import { FRIEND_DATABASE_NAME, PROJECT_DATABASE_NAME } from '@/lib/constants'
 import { IColumnNode, IOptionNode, ViewColumn } from '@/lib/model'
 import { queryClient } from '@/lib/queryClient'
@@ -31,6 +32,7 @@ import {
 import { Field } from '@prisma/client'
 import { format } from 'date-fns'
 import { produce } from 'immer'
+import { revalidateTag } from 'next/cache'
 
 function getCols(fields: Field[], viewFields: ViewField[]) {
   const sortedFields = viewFields
@@ -68,6 +70,7 @@ function getCols(fields: Field[], viewFields: ViewField[]) {
 }
 
 export function useTableView() {
+  const site = useSiteContext()
   const {
     database,
     filterResult: { filterRows = [], cellNodesMapList = [] },
