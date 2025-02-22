@@ -6,7 +6,7 @@ import { useAddSubscriberDialog } from './AddSubscriberDialog/useAddSubscriberDi
 export function AddSubscriberButton() {
   const { setIsOpen } = useAddSubscriberDialog()
   return (
-    <Button className="w-32 flex gap-1" onClick={() => setIsOpen(true)}>
+    <Button className="flex gap-1" onClick={() => setIsOpen(true)}>
       Add subscribers
     </Button>
   )

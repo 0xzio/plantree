@@ -92,8 +92,6 @@ export async function POST(request: NextRequest) {
     const account = await initUserByGoogleInfo(json)
     await updateSession(session, account)
 
-    console.log('======session:', session)
-
     return Response.json(session)
   }
 

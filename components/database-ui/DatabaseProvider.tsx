@@ -13,6 +13,7 @@ import {
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useQueryDatabase } from '@/hooks/useQueryDatabase'
 import { getRandomColorName } from '@/lib/color-helper'
+import { FRIEND_DATABASE_NAME, PROJECT_DATABASE_NAME } from '@/lib/constants'
 import { IFilterResult, IOptionNode } from '@/lib/model'
 import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
@@ -26,11 +27,11 @@ import {
   ViewType,
 } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
+import { useSession } from '@/lib/useSession'
 import { RouterInputs, RouterOutputs } from '@/server/_app'
 import { Field, Record as Row, View } from '@prisma/client'
 import { arrayMoveImmutable } from 'array-move'
 import { produce } from 'immer'
-import { useSession } from '@/lib/useSession'
 import { useSearchParams } from 'next/navigation'
 import { useSiteContext } from '../SiteContext'
 
@@ -57,6 +58,12 @@ type UpdateViewFieldInput = Omit<
   RouterInputs['database']['updateViewField'],
   'viewId' | 'fieldId'
 >
+
+type UpdateFieldInput = {
+  name?: string
+  displayName?: string
+  fieldType?: string
+}
 
 export interface IDatabaseContext {
   database: Database
@@ -110,6 +117,7 @@ export interface IDatabaseContext {
   ): Promise<void>
 
   updateFieldName(fieldId: string, name: string): Promise<void>
+  updateField(fieldId: string, input: UpdateFieldInput): Promise<void>
   updateColumnWidth(fieldId: string, width: number): Promise<void>
   addOption(fieldId: string, name: string): Promise<Option>
   deleteCellOption(cellId: string, optionId: string): Promise<void>
@@ -117,10 +125,24 @@ export interface IDatabaseContext {
 
 export const DatabaseContext = createContext({} as IDatabaseContext)
 
-export function DatabaseProvider({ children }: PropsWithChildren) {
+interface DatabaseProviderProps {
+  id?: string
+  slug?: string
+  fetcher?: () => Promise<RouterOutputs['database']['byId']>
+}
+export function DatabaseProvider({
+  id,
+  slug,
+  fetcher,
+  children,
+}: PropsWithChildren<DatabaseProviderProps>) {
   const params = useSearchParams()
-  const databaseId = params?.get('id')!
-  const { isLoading, data } = useQueryDatabase(databaseId)
+  const databaseId = id || params?.get('id')!
+  const { isLoading, data } = useQueryDatabase({
+    id: databaseId,
+    slug,
+    fetcher,
+  })
 
   if (isLoading) {
     return (
@@ -153,7 +175,14 @@ function DatabaseContent({
 
   function reloadDatabase(newDatabase: Database) {
     queryClient.setQueriesData(
-      { queryKey: ['database', databaseId] },
+      {
+        queryKey: [
+          'database',
+          [PROJECT_DATABASE_NAME, FRIEND_DATABASE_NAME].includes(database.slug)
+            ? database.slug
+            : databaseId,
+        ],
+      },
       newDatabase,
     )
   }
@@ -258,6 +287,7 @@ function DatabaseContent({
       [FieldType.SINGLE_SELECT]: 'Single Select',
       [FieldType.MULTIPLE_SELECT]: 'Multiple Select',
       [FieldType.RATE]: 'Rate',
+      [FieldType.IMAGE]: 'Image',
       [FieldType.MARKDOWN]: 'Markdown',
       [FieldType.DATE]: 'Date',
       [FieldType.CREATED_AT]: 'Created At',
@@ -367,6 +397,26 @@ function DatabaseContent({
     await api.database.updateField.mutate({
       fieldId,
       displayName: name,
+    })
+  }
+
+  async function updateField(fieldId: string, data: UpdateFieldInput) {
+    const newDatabase = produce(database, (draft) => {
+      for (const field of draft.fields) {
+        if (field.id === fieldId) {
+          if (data.displayName) field.displayName = data.displayName
+          if (data.name) field.name = data.name
+          if (data.fieldType) field.fieldType = data.fieldType
+          break
+        }
+      }
+    })
+
+    reloadDatabase(newDatabase)
+
+    await api.database.updateField.mutate({
+      fieldId,
+      ...data,
     })
   }
 
@@ -494,6 +544,7 @@ function DatabaseContent({
         deleteField,
         sortFields,
         updateFieldName,
+        updateField,
         updateColumnWidth,
         addOption,
         deleteCellOption,

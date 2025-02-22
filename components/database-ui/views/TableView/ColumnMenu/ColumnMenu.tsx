@@ -108,7 +108,7 @@ export function ColumnMenu({ index = 0, field, close }: ColumnMenuProps) {
             <div>
               <Pen size={16} />
             </div>
-            <div>Edit Field</div>
+            <div>Edit field</div>
           </MenuItem>
         )}
 

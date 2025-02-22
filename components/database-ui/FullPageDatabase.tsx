@@ -1,6 +1,7 @@
 'use client'
 
 import { DATABASE_TOOLBAR_HEIGHT, WORKBENCH_NAV_HEIGHT } from '@/lib/constants'
+import { RouterOutputs } from '@/server/_app'
 import { Separator } from '../ui/separator'
 import { DatabaseProvider } from './DatabaseProvider'
 import { TableName } from './TableName'
@@ -9,9 +10,16 @@ import { ViewList } from './ViewNav/ViewList'
 import { ViewRenderer } from './ViewRenderer'
 import { ViewToolBar } from './ViewToolBar/ViewToolBar'
 
-export const FullPageDatabase = () => {
+type Database = RouterOutputs['database']['byId']
+interface Props {
+  id?: string
+  slug?: string
+  fetcher?: () => Promise<Database>
+}
+
+export const FullPageDatabase = (props: Props) => {
   return (
-    <DatabaseProvider>
+    <DatabaseProvider {...props}>
       <div className="flex flex-col px-0 sm:px-3">
         <div
           className="w-full flex items-center justify-between gap-8"

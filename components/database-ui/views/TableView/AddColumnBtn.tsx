@@ -75,7 +75,12 @@ function Content({ setIsOpen }: PopoverStateProps) {
 
       <Item fieldType={FieldType.RATE} setIsOpen={setIsOpen}>
         <FieldIcon fieldType={FieldType.SINGLE_SELECT} />
-        <div>RATE</div>
+        <div>Rate</div>
+      </Item>
+
+      <Item fieldType={FieldType.IMAGE} setIsOpen={setIsOpen}>
+        <FieldIcon fieldType={FieldType.IMAGE} />
+        <div>Image</div>
       </Item>
 
       {/* <Item fieldType={FieldType.MARKDOWN} setIsOpen={setIsOpen}>

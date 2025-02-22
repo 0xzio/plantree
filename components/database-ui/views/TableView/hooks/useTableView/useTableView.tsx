@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import isEqual from 'react-fast-compare'
 import { DateCell } from '@/components/cells/date-cell'
 import { FileCell } from '@/components/cells/file-cell'
+import { ImageCell } from '@/components/cells/image-cell'
 import {
   PasswordCell,
   passwordCellRenderer,
@@ -12,6 +13,7 @@ import { RateCell } from '@/components/cells/rate-cell'
 import { SingleSelectCell } from '@/components/cells/single-select-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
 import { useDatabaseContext } from '@/components/database-ui/DatabaseProvider'
+import { FRIEND_DATABASE_NAME, PROJECT_DATABASE_NAME } from '@/lib/constants'
 import { IColumnNode, IOptionNode, ViewColumn } from '@/lib/model'
 import { queryClient } from '@/lib/queryClient'
 import { mappedByKey } from '@/lib/shared'
@@ -118,6 +120,17 @@ export function useTableView() {
 
       const cellData = getCellData()
 
+      if (cellData?.refType) {
+        return {
+          kind: GridCellKind.Text,
+          readonly: false,
+          allowOverlay: true,
+          copyData: '',
+          data: '',
+          displayData: '',
+        }
+      }
+
       if (field.fieldType === FieldType.DATE) {
         return {
           kind: GridCellKind.Custom,
@@ -171,6 +184,19 @@ export function useTableView() {
             name: '',
           },
         } as FileCell
+      }
+
+      if (field.fieldType === FieldType.IMAGE) {
+        return {
+          kind: GridCellKind.Custom,
+          allowOverlay: true,
+          readonly: true,
+          copyData: '',
+          data: {
+            kind: 'image-cell',
+            data: cellData,
+          },
+        } as ImageCell
       }
 
       if (
@@ -241,7 +267,7 @@ export function useTableView() {
         displayData: cellData,
       }
     },
-    [database, database.records, database.fields],
+    [columnsMap, currentView, records],
   )
 
   const setCellValue = async (
@@ -280,7 +306,14 @@ export function useTableView() {
     })
 
     queryClient.setQueriesData(
-      { queryKey: ['database', record.databaseId] },
+      {
+        queryKey: [
+          'database',
+          [PROJECT_DATABASE_NAME, FRIEND_DATABASE_NAME].includes(database.slug)
+            ? database.slug
+            : database.id,
+        ],
+      },
       newDatabase,
     )
 

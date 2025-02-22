@@ -1,5 +1,7 @@
+// import { imageCellRenderer } from '@glideapps/glide-data-grid'
 import { dateCellRenderer } from './date-cell'
 import { fileCellRenderer } from './file-cell'
+import { imageCellRenderer } from './image-cell'
 import { multipleSelectCellRenderer } from './multiple-select-cell'
 import { passwordCellRenderer } from './password-cell'
 import { RateCellRenderer } from './rate-cell'
@@ -14,4 +16,5 @@ export const cellRenderers = [
   passwordCellRenderer,
   RateCellRenderer,
   fileCellRenderer,
+  imageCellRenderer,
 ]
