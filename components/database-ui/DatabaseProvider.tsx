@@ -13,6 +13,7 @@ import {
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useQueryDatabase } from '@/hooks/useQueryDatabase'
 import { getRandomColorName } from '@/lib/color-helper'
+import { FRIEND_DATABASE_NAME, PROJECT_DATABASE_NAME } from '@/lib/constants'
 import { IFilterResult, IOptionNode } from '@/lib/model'
 import { queryClient } from '@/lib/queryClient'
 import { api } from '@/lib/trpc'
@@ -177,8 +178,8 @@ function DatabaseContent({
       {
         queryKey: [
           'database',
-          database.slug === '__PENX_PROJECTS__'
-            ? '__PENX_PROJECTS__'
+          [PROJECT_DATABASE_NAME, FRIEND_DATABASE_NAME].includes(database.slug)
+            ? database.slug
             : databaseId,
         ],
       },

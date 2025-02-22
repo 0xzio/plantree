@@ -1,5 +1,10 @@
 import { getRandomColorName } from '@/lib/color-helper'
-import { PENX_LOGO_URL, PENX_URL } from '@/lib/constants'
+import {
+  FRIEND_DATABASE_NAME,
+  PENX_LOGO_URL,
+  PENX_URL,
+  PROJECT_DATABASE_NAME,
+} from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { FieldType, Option, ViewField, ViewType } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
@@ -538,7 +543,7 @@ export const databaseRouter = router({
             },
             where: {
               siteId: input.siteId,
-              slug: '__PENX_PROJECTS__',
+              slug: PROJECT_DATABASE_NAME,
             },
           })
 
@@ -548,8 +553,8 @@ export const databaseRouter = router({
             data: {
               siteId: input.siteId,
               userId: ctx.token.uid,
-              name: 'Projects',
-              slug: '__PENX_PROJECTS__',
+              name: 'Project',
+              slug: PROJECT_DATABASE_NAME,
               color: getRandomColorName(),
             },
           })
@@ -665,6 +670,166 @@ export const databaseRouter = router({
               if (index === 2) value = PENX_LOGO_URL
               if (index === 3) value = PENX_LOGO_URL
               if (index === 4) value = PENX_URL
+              return {
+                ...acc,
+                [field.id]: value,
+              }
+            },
+            {} as Record<string, any>,
+          )
+
+          await tx.record.createMany({
+            data: [
+              {
+                databaseId: newDatabase.id,
+                sort: 0,
+                fields: recordFields,
+                siteId: input.siteId,
+                userId: ctx.token.uid,
+              },
+            ],
+          })
+
+          return tx.database.findUniqueOrThrow({
+            include: {
+              views: true,
+              fields: true,
+              records: true,
+            },
+            where: { id: newDatabase.id },
+          })
+        },
+        {
+          maxWait: 1000 * 60, // default: 2000
+          timeout: 1000 * 60, // default: 5000
+        },
+      )
+    }),
+
+  getOrCreateFriendsDatabase: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      return prisma.$transaction(
+        async (tx) => {
+          const friendsDatabase = await tx.database.findFirst({
+            include: {
+              views: true,
+              fields: true,
+              records: true,
+            },
+            where: {
+              siteId: input.siteId,
+              slug: FRIEND_DATABASE_NAME,
+            },
+          })
+
+          if (friendsDatabase) return friendsDatabase
+
+          const newDatabase = await tx.database.create({
+            data: {
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+              name: 'Friend',
+              slug: FRIEND_DATABASE_NAME,
+              color: getRandomColorName(),
+            },
+          })
+
+          const nameField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.TEXT,
+              displayName: 'Name',
+              name: 'name',
+              isPrimary: true,
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const introductionField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.TEXT,
+              name: 'introduction',
+              displayName: 'Introduction',
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const iconField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.IMAGE,
+              name: 'avatar',
+              displayName: 'Avatar',
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const urlField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.URL,
+              name: 'url',
+              displayName: 'URL',
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const newFields = [nameField, introductionField, iconField, urlField]
+
+          const viewFields = newFields.map((field) => ({
+            fieldId: field.id,
+            width: 160,
+            visible: true,
+          }))
+
+          const tableView = await tx.view.create({
+            data: {
+              databaseId: newDatabase.id,
+              name: 'Table',
+              viewType: ViewType.TABLE,
+              viewFields,
+              sorts: [],
+              filters: [],
+              groups: [],
+              kanbanOptionIds: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          await tx.database.update({
+            where: { id: newDatabase.id },
+            data: {
+              activeViewId: tableView.id,
+              viewIds: [tableView.id],
+            },
+          })
+
+          const recordFields = newFields.reduce(
+            (acc, field, index) => {
+              let value = ''
+              if (index === 0) value = 'Zio'
+              if (index === 1) value = 'Creator of PenX'
+              if (index === 2) value = PENX_LOGO_URL
+              if (index === 3) value = 'https://zio.penx.io'
               return {
                 ...acc,
                 [field.id]: value,

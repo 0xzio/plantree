@@ -3,8 +3,8 @@
 import { FullPageDatabase } from '@/components/database-ui'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSite } from '@/hooks/useSite'
-import { PROJECT_DATABASE_NAME } from '@/lib/constants'
-import { api, trpc } from '@/lib/trpc'
+import { FRIEND_DATABASE_NAME } from '@/lib/constants'
+import { api } from '@/lib/trpc'
 
 export const dynamic = 'force-static'
 
@@ -21,9 +21,9 @@ export default function Page() {
   return (
     <div>
       <FullPageDatabase
-        slug={PROJECT_DATABASE_NAME}
+        slug={FRIEND_DATABASE_NAME}
         fetcher={async () => {
-          return await api.database.getOrCreateProjectsDatabase.mutate({
+          return await api.database.getOrCreateFriendsDatabase.mutate({
             siteId: site.id,
           })
         }}

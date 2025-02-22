@@ -30,6 +30,7 @@ export function SettingNav({}: Props) {
     analytics: '/~/settings/analytics',
     importExport: '/~/settings/import-export',
     projects: '/~/settings/projects',
+    friends: '/~/settings/friends',
   }
 
   const linkClassName = (path: string) =>
@@ -89,6 +90,9 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.projects} className={linkClassName(Paths.projects)}>
           Projects
+        </Link>
+        <Link href={Paths.friends} className={linkClassName(Paths.friends)}>
+          Friends
         </Link>
       </div>
 

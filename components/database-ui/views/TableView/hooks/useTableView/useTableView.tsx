@@ -13,6 +13,7 @@ import { RateCell } from '@/components/cells/rate-cell'
 import { SingleSelectCell } from '@/components/cells/single-select-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
 import { useDatabaseContext } from '@/components/database-ui/DatabaseProvider'
+import { FRIEND_DATABASE_NAME, PROJECT_DATABASE_NAME } from '@/lib/constants'
 import { IColumnNode, IOptionNode, ViewColumn } from '@/lib/model'
 import { queryClient } from '@/lib/queryClient'
 import { mappedByKey } from '@/lib/shared'
@@ -308,9 +309,9 @@ export function useTableView() {
       {
         queryKey: [
           'database',
-          database.slug === '__PENX_PROJECTS__'
-            ? '__PENX_PROJECTS__'
-            : record.databaseId,
+          [PROJECT_DATABASE_NAME, FRIEND_DATABASE_NAME].includes(database.slug)
+            ? database.slug
+            : database.id,
         ],
       },
       newDatabase,

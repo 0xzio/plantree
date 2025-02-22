@@ -57,6 +57,9 @@ export const TODO_DATABASE_NAME = '__TODO__'
 
 export const FILE_DATABASE_NAME = '__FILE__'
 
+export const PROJECT_DATABASE_NAME = '__PENX_PROJECT__'
+export const FRIEND_DATABASE_NAME = '__PENX_FRIEND__'
+
 export enum EditorMode {
   OUTLINER = 'OUTLINER',
   BLOCK = 'BLOCK',
