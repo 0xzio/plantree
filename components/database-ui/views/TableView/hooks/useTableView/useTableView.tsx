@@ -305,7 +305,14 @@ export function useTableView() {
     })
 
     queryClient.setQueriesData(
-      { queryKey: ['database', record.databaseId] },
+      {
+        queryKey: [
+          'database',
+          database.slug === '__PENX_PROJECTS__'
+            ? '__PENX_PROJECTS__'
+            : record.databaseId,
+        ],
+      },
       newDatabase,
     )
 

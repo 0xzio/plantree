@@ -127,10 +127,12 @@ export const DatabaseContext = createContext({} as IDatabaseContext)
 interface DatabaseProviderProps {
   id?: string
   slug?: string
+  fetcher?: () => Promise<RouterOutputs['database']['byId']>
 }
 export function DatabaseProvider({
   id,
   slug,
+  fetcher,
   children,
 }: PropsWithChildren<DatabaseProviderProps>) {
   const params = useSearchParams()
@@ -138,6 +140,7 @@ export function DatabaseProvider({
   const { isLoading, data } = useQueryDatabase({
     id: databaseId,
     slug,
+    fetcher,
   })
 
   if (isLoading) {
@@ -171,7 +174,14 @@ function DatabaseContent({
 
   function reloadDatabase(newDatabase: Database) {
     queryClient.setQueriesData(
-      { queryKey: ['database', databaseId] },
+      {
+        queryKey: [
+          'database',
+          database.slug === '__PENX_PROJECTS__'
+            ? '__PENX_PROJECTS__'
+            : databaseId,
+        ],
+      },
       newDatabase,
     )
   }
