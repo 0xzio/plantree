@@ -18,6 +18,7 @@ import {
   SubscriberStatus,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { slug } from 'github-slugger'
 import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
@@ -250,6 +251,7 @@ export const postRouter = router({
         post = await prisma.post.update({
           where: { id: post.id },
           data: {
+            slug: post.isPage ? slug(post.title) : post.id,
             title: info.title,
             type: input.type,
             image: input.image,
@@ -296,6 +298,7 @@ export const postRouter = router({
         where: { id: post.id },
         data: {
           status: PostStatus.PUBLISHED,
+          slug: post.isPage ? slug(post.title) : post.id,
           collectible,
           creationId,
           // cid: res.cid,

@@ -17,11 +17,11 @@ import { useIsMember } from '@/hooks/useIsMember'
 import { loadPost } from '@/hooks/usePost'
 import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { useRouter } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import { ChevronDown, FileText, Image, Pen, Plus, Video } from 'lucide-react'
-import { useRouter } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 export function CreatePostButton() {
@@ -49,7 +49,7 @@ export function CreatePostButton() {
         content,
       })
       await loadPost(post.id)
-      push(`/~/post/${post.id}`)
+      push(`/~/post?id=${post.id}`)
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg || 'Failed to create post')
