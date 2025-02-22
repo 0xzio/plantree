@@ -1,31 +1,13 @@
 'use client'
 
-import { useSiteContext } from '@/components/SiteContext'
-import { Button } from '@/components/ui/button'
-import { useMutation } from '@tanstack/react-query'
-import { toast } from 'sonner'
 import { ImportPostsButton } from './ImportPostsButton'
+import { ImportSubscribersButton } from './importSubscribersButton'
 
 function ImportSubscribers() {
-  const site = useSiteContext()
-  const { isPending, mutateAsync: exportPosts } = useMutation({
-    mutationKey: ['export-subscribers'],
-    mutationFn: async () => {
-      toast.success('Subscribers exported successfully!')
-    },
-  })
-
   return (
     <div className="flex items-center justify-between">
       <div className="font-semibold">Subscribers</div>
-      <Button
-        disabled={isPending}
-        onClick={() => {
-          toast.info('Coming soon! This feature is not yet available.')
-        }}
-      >
-        Import
-      </Button>
+      <ImportSubscribersButton />
     </div>
   )
 }

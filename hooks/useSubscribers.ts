@@ -1,12 +1,27 @@
 import { useSiteContext } from '@/components/SiteContext'
 import { trpc } from '@/lib/trpc'
+import { SubscriberStatus } from '@prisma/client'
 
-export function useSubscribers() {
+interface UseSubscribersOptions {
+  search?: string
+  status?: SubscriberStatus
+  limit?: number
+}
+
+export function useSubscribers(options: UseSubscribersOptions = {}) {
   const site = useSiteContext()
-  return trpc.subscriber.list.useQuery(
-    { siteId: site?.id },
+  const { search, status, limit = 20 } = options
+
+  return trpc.subscriber.list.useInfiniteQuery(
+    {
+      siteId: site?.id,
+      search,
+      status,
+      limit,
+    },
     {
       enabled: !!site?.id,
+      getNextPageParam: (lastPage) => lastPage.nextCursor,
     },
   )
 }

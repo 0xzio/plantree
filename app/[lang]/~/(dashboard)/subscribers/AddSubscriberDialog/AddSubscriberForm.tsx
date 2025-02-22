@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
@@ -15,7 +15,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useSubscribers } from '@/hooks/useSubscribers'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,7 +30,6 @@ export function AddSubscriberForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useAddSubscriberDialog()
   const site = useSiteContext()
-  const { refetch } = useSubscribers()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -52,9 +50,10 @@ export function AddSubscriberForm() {
         siteId: site.id,
         emails,
       })
-      await refetch()
       setIsOpen(false)
-      toast.success('Add subscribers successfully!')
+      setTimeout(() => {
+        toast.success('Add subscribers successfully!')
+      }, 300)
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg || 'Failed to add subscribers. Please try again.')
