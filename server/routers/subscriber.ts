@@ -109,6 +109,15 @@ async function handleSubscriber({
   return updatedSubscriber
 }
 
+export interface ImportResult {
+  success: number
+  failed: Array<{
+    email: string
+    reason: string
+  }>
+  total: number
+}
+
 export const subscriberRouter = router({
   all: protectedProcedure
     .input(
@@ -127,22 +136,49 @@ export const subscriberRouter = router({
       z.object({
         siteId: z.string(),
         status: z.nativeEnum(SubscriberStatus).optional(),
+        search: z.string().optional(),
         cursor: z.string().optional(),
-        limit: z.number().min(1).max(100).default(50),
+        limit: z.number().min(1).max(100).default(20),
       }),
     )
     .query(async ({ ctx, input }) => {
-      const { siteId, status, cursor, limit } = input
+      const { siteId, status, search, cursor, limit } = input
 
-      return prisma.subscriber.findMany({
+      const items = await prisma.subscriber.findMany({
         where: {
           siteId,
           ...(status && { status }),
+          ...(search && {
+            email: {
+              contains: search,
+              mode: 'insensitive',
+            },
+          }),
         },
-        take: limit,
+        select: {
+          id: true,
+          email: true,
+          status: true,
+          createdAt: true,
+          confirmedAt: true,
+          unsubscribedAt: true,
+          source: true,
+        },
+        orderBy: [{ createdAt: 'desc' }],
+        take: limit + 1,
         ...(cursor && { skip: 1, cursor: { id: cursor } }),
-        orderBy: { createdAt: 'desc' },
       })
+
+      let nextCursor: typeof cursor | undefined = undefined
+      if (items.length > limit) {
+        const nextItem = items.pop()
+        nextCursor = nextItem!.id
+      }
+
+      return {
+        items,
+        nextCursor,
+      }
     }),
 
   count: protectedProcedure
@@ -272,34 +308,37 @@ export const subscriberRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      return prisma.$transaction(
-        async (tx) => {
-          for (const sub of input.subscribers) {
-            try {
-              await handleSubscriber({
-                tx,
-                siteId: input.siteId,
-                email: sub.email,
-                userId: ctx.token.uid,
-                source: 'bulk_import',
-              })
-            } catch (error: any) {
-              throw new TRPCError({
-                code: 'BAD_REQUEST',
-                message:
-                  error.code === 'P2002'
-                    ? `Email "${sub.email}" already exists`
-                    : error.message,
-              })
-            }
-          }
-          return true
-        },
-        {
-          maxWait: 1000 * 60,
-          timeout: 1000 * 60,
-        },
-      )
+      const result: ImportResult = {
+        success: 0,
+        failed: [],
+        total: input.subscribers.length,
+      }
+
+      for (const sub of input.subscribers) {
+        try {
+          await prisma.$transaction(async (tx) => {
+            await handleSubscriber({
+              tx,
+              siteId: input.siteId,
+              email: sub.email,
+              userId: ctx.token.uid,
+              source: 'bulk_import',
+            })
+          })
+        } catch (error: any) {
+          result.failed.push({
+            email: sub.email,
+            reason:
+              error.code === 'P2002'
+                ? 'Already exists'
+                : error.message || 'Unknown error',
+          })
+          result.success = result.total - result.failed.length
+          console.log(result)
+        }
+      }
+
+      return result
     }),
 })
 
