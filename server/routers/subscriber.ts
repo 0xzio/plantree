@@ -44,13 +44,17 @@ async function handleSubscriber({
 
   let updatedSubscriber
 
-  if (subscriber?.status === SubscriberStatus.PENDING) {
+  if (subscriber) {
     const metadata = (subscriber.metadata as Record<string, any>) || {}
     const expireAt = metadata.confirmExpireAt
       ? new Date(metadata.confirmExpireAt)
       : null
 
-    if (expireAt && expireAt > new Date()) {
+    if (
+      subscriber.status === SubscriberStatus.PENDING &&
+      expireAt &&
+      expireAt > new Date()
+    ) {
       updatedSubscriber = await tx.subscriber.update({
         where: { id: subscriber.id },
         data: {
@@ -96,7 +100,8 @@ async function handleSubscriber({
 
   if (
     !subscriber?.metadata?.confirmExpireAt ||
-    subscriber.metadata.confirmExpireAt <= new Date()
+    subscriber.metadata.confirmExpireAt <= new Date() ||
+    subscriber.status === SubscriberStatus.UNSUBSCRIBED
   ) {
     await createConfirmationEmail({
       tx,
@@ -334,7 +339,6 @@ export const subscriberRouter = router({
                 : error.message || 'Unknown error',
           })
           result.success = result.total - result.failed.length
-          console.log(result)
         }
       }
 
