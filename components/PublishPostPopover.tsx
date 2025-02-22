@@ -30,6 +30,8 @@ export function PublishPostPopover({ className }: Props) {
     >
       <PopoverTrigger asChild>
         <Button
+          size="sm"
+          variant="secondary"
           className={cn('w-24', className)}
           onClick={() => {
             setOpen(true)
@@ -61,60 +63,64 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
 
   return (
     <PopoverContent align="end" className="w-[360px] flex flex-col gap-5">
-      <div className="text-center text-xl font-semibold">Publish your post</div>
-
-      <div>
-        <div className="font-semibold">Access control</div>
-        <div className="text-sm leading-tight">
-          Gate this post, config who can read this post.
-        </div>
+      <div className="text-center text-xl font-semibold">
+        {post.isPage ? 'Publish your page' : 'Publish your post'}
       </div>
-
-      <GateTypeSelect
-        value={gateType}
-        onSelect={(value) => {
-          setGateType(value)
-        }}
-      />
-      <div>
-        <div className="flex items-center justify-between">
-          <Label htmlFor="post-collectible">Collectible</Label>
-          <Switch
-            id="post-collectible"
-            checked={collectible}
-            disabled={!spaceId}
-            onCheckedChange={(value) => {
-              setCollectible(value)
+      {!post.isPage && (
+        <>
+          <div>
+            <div className="font-semibold">Access control</div>
+            <div className="text-sm leading-tight">
+              Gate this post, config who can read this post.
+            </div>
+          </div>
+          <GateTypeSelect
+            value={gateType}
+            onSelect={(value) => {
+              setGateType(value)
             }}
           />
-        </div>
-        <div className="text-foreground/60 text-xs">
-          Bind a space ID to enable collection.
-        </div>
-      </div>
-
-      <div>
-        <div className="flex items-center justify-between">
-          <Label htmlFor="post-delivered">Deliver your newsletter</Label>
-          {post.delivered ? (
-            <div className="text-sm text-muted-foreground">Already sent</div>
-          ) : (
-            <Switch
-              id="post-delivered"
-              checked={delivered}
-              onCheckedChange={(value) => {
-                setDelivered(value)
-              }}
-            />
-          )}
-        </div>
-        <div className="text-foreground/60 text-xs">
-          {post.delivered
-            ? 'This newsletter has been sent to subscribers.'
-            : 'Send your newsletter to subscribers.'}
-        </div>
-      </div>
-
+          <div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="post-collectible">Collectible</Label>
+              <Switch
+                id="post-collectible"
+                checked={collectible}
+                disabled={!spaceId}
+                onCheckedChange={(value) => {
+                  setCollectible(value)
+                }}
+              />
+            </div>
+            <div className="text-foreground/60 text-xs">
+              Bind a space ID to enable collection.
+            </div>
+          </div>
+          <div>
+            <div className="flex items-center justify-between">
+              <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+              {post.delivered ? (
+                <div className="text-sm text-muted-foreground">
+                  Already sent
+                </div>
+              ) : (
+                <Switch
+                  id="post-delivered"
+                  checked={delivered}
+                  onCheckedChange={(value) => {
+                    setDelivered(value)
+                  }}
+                />
+              )}
+            </div>
+            <div className="text-foreground/60 text-xs">
+              {post.delivered
+                ? 'This newsletter has been sent to subscribers.'
+                : 'Send your newsletter to subscribers.'}
+            </div>
+          </div>
+        </>
+      )}
       <div className="flex gap-2 justify-center">
         <PopoverClose asChild>
           <Button variant="secondary" className="w-full">

@@ -1,6 +1,7 @@
 import { ModeToggle } from '@/components/ModeToggle'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import { LangSwitcher } from './LangSwitcher'
 import { SocialNav } from './SocialNav'
 
 interface Props {
@@ -15,7 +16,7 @@ export function Footer({ site, className }: Props) {
       <div className="mt-16 flex flex-col items-center">
         <div className="mb-3 flex space-x-4 item-center"></div>
         <SocialNav className="mb-3" site={site} />
-        <div className="mb-2 flex space-x-2 text-sm item-center text-card-foreground/50">
+        <div className="mb-2 flex space-x-2 text-sm item-center text-foreground/50">
           <div className="flex items-center">{`© ${new Date().getFullYear()}`}</div>
           <div className="flex items-center">{` • `}</div>
           <div className="flex items-center">{site.name}</div>
@@ -31,6 +32,7 @@ export function Footer({ site, className }: Props) {
             </a>
           </div>
           <ModeToggle />
+          <LangSwitcher site={site} />
         </div>
       </div>
     </footer>

@@ -8,6 +8,7 @@ import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
+import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 
 interface LayoutProps {
   site: Site
@@ -33,16 +34,7 @@ export function PostDetail({
           <PageTitle className="mb-2">{post.title}</PageTitle>
           {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
         </div>
-        <dl className="flex items-center gap-2">
-          <dt className="sr-only">Published on</dt>
-          <dd className="text-base font-medium leading-6 text-foreground/60">
-            <time>{formatDate(post.updatedAt)}</time>
-          </dd>
-          <dd>·</dd>
-          <dd className="text-base font-medium leading-6 text-foreground/60">
-            {post.readingTime.text}
-          </dd>
-        </dl>
+        <PostMetadata site={site} post={post}/>
         <PostActions post={post} />
       </header>
       <div className="grid-rows-[auto_1fr]">

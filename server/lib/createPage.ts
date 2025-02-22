@@ -10,33 +10,13 @@ interface Input {
 }
 
 export async function createPage(input: Input) {
-  const { userId, siteId } = input
-  const newPage = await prisma.page.create({
+  const newPage = await prisma.post.create({
     data: {
-      props: {},
-      children: [],
+      content: JSON.stringify(editorDefaultValue),
+      isPage: true,
       ...input,
     },
   })
 
-  const newBlock = await prisma.block.create({
-    data: {
-      userId,
-      siteId,
-      pageId: newPage.id,
-      parentId: newPage.id,
-      content: editorDefaultValue[0],
-      type: ELEMENT_P,
-      props: {},
-      children: [],
-    },
-  })
-
-  await prisma.page.update({
-    where: { id: newPage.id },
-    data: { children: [newBlock.id] },
-  })
-
-  newPage.children = [newBlock.id]
   return newPage
 }

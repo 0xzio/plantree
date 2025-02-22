@@ -116,7 +116,7 @@ export async function initUserByAddress(address: string) {
             type: PostType.ARTICLE,
             title: post.title,
             content: post.content,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
           },
         })
       }
@@ -256,7 +256,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
             type: PostType.ARTICLE,
             title: post.title,
             content: post.content,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
           },
         })
       }
@@ -455,7 +455,7 @@ export async function initUserByFarcasterId(fid: string) {
             type: PostType.ARTICLE,
             title: post.title,
             content: post.content,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
           },
         })
       }
@@ -588,7 +588,7 @@ export async function initUserByEmail(email: string, password: string) {
             type: PostType.ARTICLE,
             title: post.title,
             content: post.content,
-            postStatus: PostStatus.PUBLISHED,
+            status: PostStatus.PUBLISHED,
           },
         })
       }

@@ -71,7 +71,7 @@ export function usePublishPost() {
         setLoading(false)
         revalidateMetadata(`posts`)
         // revalidateMetadata(`posts-${post.slug}`)
-        toast.success('Post published successfully!')
+        toast.success('published successfully!')
       } catch (error) {
         console.log('========error:', error)
         const msg = extractErrorMessage(error)

@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef, useMemo } from 'react'
+import { Link } from '@/lib/i18n'
 import {
   CatalogueNodeJSON,
   CatalogueNodeType,
@@ -10,7 +11,6 @@ import { cn } from '@/lib/utils'
 import { FowerHTMLProps } from '@fower/react'
 import { Emoji, EmojiStyle } from 'emoji-picker-react'
 import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
-import { Link } from '@/lib/i18n'
 
 interface CatalogueItemProps extends FowerHTMLProps<'div'> {
   depth: number
@@ -23,7 +23,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
     const isCategory = item.type === CatalogueNodeType.CATEGORY
 
     const href = useMemo(() => {
-      if (item.type === CatalogueNodeType.PAGE) return `/p/${item.uri}`
+      if (item.type === CatalogueNodeType.PAGE) return `/pages/${item.uri}`
       if (item.type === CatalogueNodeType.POST) return `/posts/${item.uri}`
       if (item.type === CatalogueNodeType.LINK) {
         return item.uri || ''

@@ -39,7 +39,6 @@ setConfig({
 })
 
 export function DashboardLayout({ children }: { children: ReactNode }) {
-  const [sidebarOpen, setSideBarOpen] = useState(true)
   useQueryEthPrice()
   useQueryEthBalance()
   const { data: session } = useSession()

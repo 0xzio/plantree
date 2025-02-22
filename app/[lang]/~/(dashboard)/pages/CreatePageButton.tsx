@@ -8,8 +8,8 @@ import { Button } from '@/components/ui/button'
 import { useDatabases } from '@/hooks/useDatabases'
 import { useIsMember } from '@/hooks/useIsMember'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { api } from '@/lib/trpc'
 import { useRouter } from '@/lib/i18n'
+import { api } from '@/lib/trpc'
 import { toast } from 'sonner'
 
 export function CreatePageButton() {

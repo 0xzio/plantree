@@ -3,10 +3,11 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Footer } from '@/components/theme-ui/Footer'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
+import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
 import { Post, Site } from '@/lib/theme.types'
-import { cn, formatDate } from '@/lib/utils'
+import { cn } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
 import Link from '../components/Link'
 import { Toc } from '../components/Toc'
@@ -32,19 +33,7 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
                 <PostSubtitle>{post.description}</PostSubtitle>
               )}
             </div>
-            <div className="flex items-center justify-between">
-              <dl className="flex items-center gap-2 text-foreground/50">
-                <dt className="sr-only">Published on</dt>
-                <dd className="text-base font-medium leading-6">
-                  <time>{formatDate(post.updatedAt)}</time>
-                </dd>
-                <dd>·</dd>
-                <dd className="text-base font-medium leading-6">
-                  {post.readingTime.text}
-                </dd>
-              </dl>
-            </div>
-
+            <PostMetadata site={site} post={post} />
             <PostActions post={post} />
           </header>
           <div className="grid-rows-[auto_1fr]">

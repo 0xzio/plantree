@@ -16,7 +16,9 @@ import { Post } from '@/hooks/usePost'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { Link } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { cn, getUrl } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import { format } from 'date-fns'
@@ -27,9 +29,7 @@ import {
   ExternalLink,
   Trash2,
 } from 'lucide-react'
-import { useSession } from '@/lib/useSession'
 import Image from 'next/image'
-import { Link } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 interface PostItemProps {
@@ -40,7 +40,7 @@ interface PostItemProps {
 export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
   const { data } = useSession()
-  const isPublished = post.postStatus === PostStatus.PUBLISHED
+  const isPublished = post.status === PostStatus.PUBLISHED
   const [date, setDate] = useState<Date>(post.publishedAt || new Date())
   const [open, setOpen] = useState(false)
 
@@ -113,7 +113,7 @@ export function PostItem({ post, status }: PostItemProps) {
         ))}
       </div>
       <div className="flex items-center gap-2 flex-wrap">
-        {post.postStatus !== PostStatus.PUBLISHED && (
+        {post.status !== PostStatus.PUBLISHED && (
           <div className="text-sm text-foreground/50">
             <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
           </div>

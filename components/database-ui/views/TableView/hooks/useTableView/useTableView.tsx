@@ -9,7 +9,6 @@ import {
   passwordCellRenderer,
 } from '@/components/cells/password-cell'
 import { RateCell } from '@/components/cells/rate-cell'
-import { RefCell } from '@/components/cells/ref-cell'
 import { SingleSelectCell } from '@/components/cells/single-select-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
 import { useDatabaseContext } from '@/components/database-ui/DatabaseProvider'
@@ -30,7 +29,6 @@ import {
 import { Field } from '@prisma/client'
 import { format } from 'date-fns'
 import { produce } from 'immer'
-import { useLoadBlocks } from './useLoadBlocks'
 
 function getCols(fields: Field[], viewFields: ViewField[]) {
   const sortedFields = viewFields
@@ -89,8 +87,6 @@ export function useTableView() {
 
   const gridRef = useRef<DataEditorRef>(null)
 
-  const { cellBlockRef } = useLoadBlocks(gridRef, database)
-
   const getContent = useCallback(
     (cell: Item): GridCell => {
       const [col, row] = cell
@@ -121,21 +117,6 @@ export function useTableView() {
       }
 
       const cellData = getCellData()
-
-      if (cellData?.refType) {
-        const info = cellBlockRef.current[record.id]
-
-        return {
-          kind: GridCellKind.Custom,
-          allowOverlay: true,
-          copyData: '',
-          data: {
-            kind: 'ref-cell',
-            data: cellData,
-            block: info?.block,
-          },
-        } as RefCell
-      }
 
       if (field.fieldType === FieldType.DATE) {
         return {

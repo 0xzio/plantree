@@ -3,10 +3,10 @@ import { useSiteContext } from '@/components/SiteContext'
 import { localDB } from '@/lib/local-db'
 import { queryClient } from '@/lib/queryClient'
 import { api, trpc } from '@/lib/trpc'
-import { Page } from '@prisma/client'
 import { useQuery } from '@tanstack/react-query'
+import { Post } from '@prisma/client'
 
-function equal(remotePages: Page[], localPages: any[]): boolean {
+function equal(remotePages: Post[], localPages: any[]): boolean {
   if (remotePages.length !== localPages.length) return false
 
   const isSame = remotePages.every((remotePage, index) => {

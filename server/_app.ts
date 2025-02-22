@@ -4,7 +4,6 @@
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { accessTokenRouter } from './routers/access-token'
 import { assetRouter } from './routers/asset'
-import { blockRouter } from './routers/block'
 import { cliRouter } from './routers/cli'
 import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
@@ -49,7 +48,6 @@ export const appRouter = router({
   asset: assetRouter,
   database: databaseRouter,
   page: pageRouter,
-  block: blockRouter,
   coupon: couponRouter,
   extension: extensionRouter,
   plan: planRouter,
