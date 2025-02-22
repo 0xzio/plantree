@@ -94,7 +94,7 @@ export function PostItem({ post, status }: PostItemProps) {
           href={
             isPublished
               ? `${location.protocol}//${data?.domain.domain}.${ROOT_DOMAIN}/posts/${post.slug}`
-              : `/~/post/${post.id}`
+              : `/~/post?id=${post.id}`
           }
           className="inline-flex items-center hover:scale-105 transition-transform gap-2"
         >
@@ -118,7 +118,7 @@ export function PostItem({ post, status }: PostItemProps) {
             <div>{format(new Date(post.updatedAt), 'yyyy-MM-dd')}</div>
           </div>
         )}
-        <Link href={`/~/post/${post.id}`}>
+        <Link href={`/~/post?id=${post.id}`}>
           <Button
             size="xs"
             variant="ghost"

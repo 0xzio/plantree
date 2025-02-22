@@ -6,12 +6,22 @@ import { useQuery } from '@tanstack/react-query'
 
 export type Database = RouterOutputs['database']['byId']
 
-export function useQueryDatabase(databaseId: string) {
+type Options = {
+  id?: string
+  slug?: string
+}
+
+export function useQueryDatabase({ id, slug }: Options) {
+  const uniqueId = id || slug
   return useQuery({
-    queryKey: ['database', databaseId],
+    queryKey: ['database', uniqueId],
     queryFn: async () => {
-      return await api.database.byId.query(databaseId)
+      if (id) {
+        return await api.database.byId.query(id)
+      } else {
+        return await api.database.bySlug.query(slug!)
+      }
     },
-    enabled: !!databaseId,
+    enabled: !!uniqueId,
   })
 }

@@ -1,5 +1,4 @@
 import React, { FC, forwardRef, PropsWithChildren } from 'react'
-import { ChevronDown, RefreshCcw } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
@@ -7,6 +6,7 @@ import {
 } from '@/components/ui/popover'
 import { FieldType } from '@/lib/types'
 import { Box, FowerHTMLProps } from '@fower/react'
+import { ChevronDown, RefreshCcw } from 'lucide-react'
 import { FieldIcon } from '../../shared/FieldIcon'
 import { useFieldTypeSelectPopover } from './hooks/useFieldTypeSelectPopover'
 
@@ -28,8 +28,6 @@ interface Props {
 
 export const FieldSelectPopover = forwardRef<HTMLDivElement, Props>(
   function FieldSelectPopover({ value, onChange }, ref) {
-    console.log('value==:', value)
-
     const { isOpen, setIsOpen } = useFieldTypeSelectPopover()
     return (
       <Popover open={isOpen} onOpenChange={setIsOpen}>

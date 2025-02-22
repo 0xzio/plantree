@@ -1,7 +1,7 @@
 import { forwardRef } from 'react'
 import { Database, useQueryDatabase } from '@/hooks/useQueryDatabase'
-import { Box } from '@fower/react'
 import { Link } from '@/lib/i18n'
+import { Box } from '@fower/react'
 import { Editor, Path } from 'slate'
 import { FieldIcon } from '../database-ui/shared/FieldIcon'
 import { TTagElement } from '../editor/plugins/tag-plugin/lib/types'
@@ -19,7 +19,9 @@ export const TagForm = forwardRef<HTMLDivElement, Props>(function TagForm(
   { element },
   ref,
 ) {
-  const { isLoading, data } = useQueryDatabase(element.databaseId)
+  const { isLoading, data } = useQueryDatabase({
+    id: element.databaseId,
+  })
 
   if (isLoading) {
     return (

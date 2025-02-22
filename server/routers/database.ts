@@ -33,6 +33,20 @@ export const databaseRouter = router({
     })
   }),
 
+  bySlug: protectedProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return prisma.database.findFirstOrThrow({
+      include: {
+        views: true,
+        fields: true,
+        records: true,
+      },
+      where: {
+        id: input,
+        siteId: ctx.activeSiteId,
+      },
+    })
+  }),
+
   create: protectedProcedure
     .input(
       z.object({
@@ -297,11 +311,15 @@ export const databaseRouter = router({
     .input(
       z.object({
         fieldId: z.string(),
+        name: z.string().optional(),
         displayName: z.string().optional(),
+        fieldType: z.string().optional(),
+        options: z.array(z.any()).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const { fieldId, ...rest } = input
+      // TODO: handle options
+      const { fieldId, options, ...rest } = input
       await prisma.field.update({
         where: { id: fieldId },
         data: rest,

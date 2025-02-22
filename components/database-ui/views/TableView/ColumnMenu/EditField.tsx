@@ -2,13 +2,13 @@
 
 import { FormEvent, forwardRef } from 'react'
 import { Controller } from 'react-hook-form'
-import { ChevronDown, X } from 'lucide-react'
 import { useDatabaseContext } from '@/components/database-ui/DatabaseProvider'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { FieldType, Option } from '@/lib/types'
-import { Field } from '@prisma/client'
 import { Box } from '@fower/react'
+import { Field } from '@prisma/client'
+import { ChevronDown, X } from 'lucide-react'
 import { FieldSelectPopover } from '../FieldSelectPopover'
 import { useEditFieldForm } from '../useEditFieldForm'
 
@@ -44,13 +44,13 @@ export function EditField({ field, onSave, onCancel, close }: EditFieldProps) {
         Field name
       </Box>
       <Controller
-        name="fieldName"
+        name="name"
         control={control}
         rules={{ required: true }}
         render={({ field }) => <Input size="sm" placeholder="" {...field} />}
       />
 
-      <Box textXS gray500 mb--4>
+      {/* <Box textXS gray500 mb--4>
         Type
       </Box>
 
@@ -59,7 +59,7 @@ export function EditField({ field, onSave, onCancel, close }: EditFieldProps) {
         control={control}
         rules={{ required: true }}
         render={({ field }) => <FieldSelectPopover {...field} />}
-      />
+      /> */}
 
       {field.fieldType === FieldType.SINGLE_SELECT && (
         <>
