@@ -1,4 +1,4 @@
-import { getFirstSite, getPost, getPosts, getSite } from '@/lib/fetchers'
+import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { GateType, Post } from '@prisma/client'
 import { produce } from 'immer'

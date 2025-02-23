@@ -1,9 +1,11 @@
 import { Suspense } from 'react'
 import { initLingui } from '@/initLingui'
+import { getHomeSites, getSiteCount } from '@/lib/fetchers'
 import { Trans } from '@lingui/react/macro'
 import { Metadata } from 'next'
 import { LaunchButton } from './LaunchButton'
 import { Screenshots } from './Screenshots'
+import { SiteCount } from './SiteCount'
 import { SiteList } from './SiteList'
 
 const appUrl = process.env.NEXT_PUBLIC_URL
@@ -24,14 +26,14 @@ const frame = {
 }
 
 export const dynamic = 'force-static'
-export const revalidate = 86400; // 3600 * 24 * 365
+export const revalidate = 86400 // 3600 * 24 * 365
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'PenX',
     openGraph: {
       title: 'PenX',
-      description: 'Next generation blogging tools',
+      description: 'Modern blogging tools',
     },
     other: {
       'fc:frame': JSON.stringify(frame),
@@ -42,8 +44,13 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function HomePage(props: { params: any }) {
   const lang = (await props.params).lang
   initLingui(lang)
+  const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
   return (
     <div>
+      <div className="flex justify-center mt-8">
+        <SiteCount count={count} sites={sites} />
+      </div>
+
       <div className="rounded-xl shadow-lg border border-foreground/5 w-full h-700 overflow-hidden mt-20">
         <Screenshots />
       </div>
@@ -55,7 +62,7 @@ export default async function HomePage(props: { params: any }) {
           <LaunchButton />
         </Suspense> */}
       </div>
-      <SiteList />
+      <SiteList sites={sites} />
     </div>
   )
 }

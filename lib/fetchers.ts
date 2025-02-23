@@ -7,6 +7,7 @@ import { gql, request } from 'graphql-request'
 import { produce } from 'immer'
 import ky from 'ky'
 import { unstable_cache } from 'next/cache'
+import { cacheHelper } from './cache-header'
 import {
   defaultNavLinks,
   editorDefaultValue,
@@ -320,6 +321,48 @@ export async function getProjects(siteId: string) {
     {
       revalidate: REVALIDATE_TIME,
       tags: [`${siteId}-projects`],
+    },
+  )()
+}
+
+export async function getHomeSites() {
+  return await unstable_cache(
+    async () => {
+      const cachedSites = await cacheHelper.getCachedHomeSites()
+      if (cachedSites) return cachedSites
+      const sites = await prisma.site.findMany({
+        where: {
+          postCount: { gte: 2 },
+        },
+        include: {
+          domains: true,
+          channels: true,
+        },
+        orderBy: { createdAt: 'asc' },
+        take: 36,
+      })
+
+      await cacheHelper.updateCachedHomeSites(sites)
+      return sites
+    },
+    ['home-sites'],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: ['home-sites'],
+    },
+  )()
+}
+
+export async function getSiteCount() {
+  return await unstable_cache(
+    async () => {
+      const count = await prisma.site.count()
+      return count
+    },
+    ['site-count'],
+    {
+      revalidate: REVALIDATE_TIME,
+      tags: ['site-count'],
     },
   )()
 }

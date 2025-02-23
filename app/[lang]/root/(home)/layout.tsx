@@ -4,11 +4,12 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Link } from '@/lib/i18n'
 import { DeployOwnButton } from './DeployOwnButton'
+import { SiteCount } from './SiteCount'
 import { Slogan } from './Slogan'
 import { StartWritingButton } from './StartWritingButton'
 
 export const dynamic = 'force-static'
-export const revalidate = 86400; // 3600 * 24 * 365
+export const revalidate = 86400 // 3600 * 24 * 365
 
 export default async function HomePage({ children }: PropsWithChildren) {
   return (

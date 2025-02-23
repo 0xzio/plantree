@@ -5,7 +5,7 @@
 
 <h1 style="border-bottom: none">
     <b>PenX</b><br />
-     Next generation blogging tools.
+     Modern blogging tools.
     <br>
 </h1>
 

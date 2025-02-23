@@ -53,7 +53,7 @@ export function LangSwitcher({ className, site }: LangSwitcherProps) {
     <Select value={locale} onValueChange={handleChange}>
       <SelectTrigger
         className={cn(
-          'w-auto h-auto flex border-none py-0 px-0 bg-transparent',
+          'w-auto h-auto flex border-none py-0 px-0 bg-transparent text-foreground/60',
           className,
         )}
       >
