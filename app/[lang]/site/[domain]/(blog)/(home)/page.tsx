@@ -37,8 +37,6 @@ export default async function HomePage(props: {
     return <div>Theme not found</div>
   }
 
-  console.log('=========friends:', friends)
-
   return (
     <HomePage
       posts={posts}

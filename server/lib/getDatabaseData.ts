@@ -14,7 +14,7 @@ export async function getDatabaseData<T = any>(input: Input) {
   if (input.slug) where.slug = input.slug
   if (input.id) where.id = input.id
 
-  const database = await prisma.database.findFirstOrThrow({
+  const database = await prisma.database.findFirst({
     include: {
       views: true,
       fields: true,
@@ -22,7 +22,7 @@ export async function getDatabaseData<T = any>(input: Input) {
     },
     where,
   })
-  // console.log('=======>>>database:', database, database.records)
+  if (!database) return []
 
   const data = database.records.map((record) => {
     return database.fields.reduce(

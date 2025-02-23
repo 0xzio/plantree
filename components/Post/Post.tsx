@@ -17,6 +17,7 @@ import { PlateEditor } from '../editor/plate-editor'
 import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
 import { JournalNav } from './JournalNav'
+import { PostLocales } from './PostLocales'
 import { Tags } from './Tags'
 
 export function Post() {
@@ -120,7 +121,10 @@ export function Post() {
         {!post.isPage && (
           <div className="flex items-center justify-between">
             <Authors post={post} />
-            <Tags />
+            <div className="flex items-center gap-2">
+              <Tags />
+              <PostLocales />
+            </div>
           </div>
         )}
 

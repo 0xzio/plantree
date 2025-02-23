@@ -7,13 +7,10 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { Post, updatePost, usePost } from '@/hooks/usePost'
-import { langMap } from '@/lib/supportLanguages'
 import { Ellipsis } from 'lucide-react'
-import { toast } from 'sonner'
 import { useSiteContext } from '../SiteContext'
 import { Button } from '../ui/button'
-import { Menu, MenuItem } from '../ui/menu'
-import { Separator } from '../ui/separator'
+import { MenuItem } from '../ui/menu'
 
 export function MoreMenu({ post }: { post: Post }) {
   const [isOpen, setIsOpen] = useState(false)
@@ -39,32 +36,6 @@ export function MoreMenu({ post }: { post: Post }) {
         <MenuItem>Copy link</MenuItem>
         <MenuItem>Copy markdown</MenuItem>
         <MenuItem>Copy html</MenuItem>
-
-        {locales.length > 0 && (
-          <>
-            <Separator className="my-1 -mr-2"></Separator>
-            <MenuItem
-              onClick={() => {
-                setLang('')
-                setIsOpen(false)
-              }}
-            >
-              Default language
-            </MenuItem>
-          </>
-        )}
-
-        {locales.map((locale) => (
-          <MenuItem
-            key={locale}
-            onClick={() => {
-              setLang(locale)
-              setIsOpen(false)
-            }}
-          >
-            {langMap.get(locale) || locale}
-          </MenuItem>
-        ))}
       </PopoverContent>
     </Popover>
   )

@@ -30,16 +30,16 @@ export function Authors({ post }: { post: Post }) {
       {post.authors.map((item) => (
         <div
           key={item.id}
-          className="flex items-center gap-1 border border-foreground/10 rounded-full h-9 pl-1 pr-2"
+          className="flex items-center gap-1 border border-foreground/10 rounded-full h-8 pl-1 pr-2"
         >
           <UserAvatar
             key={item.id}
-            className="h-6 w-6"
+            className="h-5 w-5"
             address={item.user.displayName || ''}
             image={item.user.image || ''}
           />
 
-          <div className="text-sm text-foreground/60">
+          <div className="text-xs text-foreground">
             {formatUsername(item.user.displayName || item.user.name || '')}
           </div>
 

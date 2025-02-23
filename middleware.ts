@@ -36,9 +36,8 @@ export default async function middleware(req: NextRequest) {
   // const token = await getToken({ req })
   // console.log('====token:', token)
 
-  const locale = pathnameHasLocale
-    ? pathname.split('/')[1]
-    : getRequestLocale(req.headers)
+  const locale = pathnameHasLocale ? pathname.split('/')[1] : 'en'
+  // : getRequestLocale(req.headers)
 
   // req.nextUrl.pathname = `/${locale}${pathname}`
 
