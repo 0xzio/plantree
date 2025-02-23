@@ -1,12 +1,12 @@
 import { ReactNode } from 'react'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { IPFSLink } from '@/components/theme-ui/IPFSLink'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
 import { Post, Site } from '@/lib/theme.types'
-import { ExternalLink } from 'lucide-react'
 import Image from '../components/Image'
 import Link from '../components/Link'
 
@@ -47,19 +47,7 @@ export function PostDetail({ site, post, className, next, prev }: LayoutProps) {
           <SubscribeNewsletterCard site={site} />
         </div>
 
-        {post.cid && (
-          <div className="text-foreground/60 text-xs rounded-md py-2 md:flex items-center gap-2 hidden">
-            <span className="text-foreground/80">IPFS CID:</span>
-            <span>{post.cid}</span>
-            <a
-              className="inline-flex"
-              href={`https://ipfs-gateway.spaceprotocol.xyz/ipfs/${post.cid}`}
-              target="_blank"
-            >
-              <ExternalLink className="cursor-pointer" size={12} />
-            </a>
-          </div>
-        )}
+        <IPFSLink cid={post.cid} />
 
         <footer>
           <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">

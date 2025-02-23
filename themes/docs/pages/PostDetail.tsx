@@ -1,7 +1,9 @@
 import { ReactNode } from 'react'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Footer } from '@/components/theme-ui/Footer'
+import { IPFSLink } from '@/components/theme-ui/IPFSLink'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
+import { PaginationNav } from '@/components/theme-ui/PaginationNav'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
@@ -41,46 +43,10 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
               <ContentRender content={post.content} />
               <SubscribeNewsletterCard site={site} />
             </div>
-            {post.cid && (
-              <div className="text-foreground/60 text-xs rounded-md py-2 md:flex items-center gap-2 hidden">
-                <span className="text-foreground/80">IPFS CID:</span>
-                <span>{post.cid}</span>
-                <a
-                  className="inline-flex"
-                  href={`https://ipfs-gateway.spaceprotocol.xyz/ipfs/${post.cid}`}
-                  target="_blank"
-                >
-                  <ExternalLink className="cursor-pointer" size={12} />
-                </a>
-              </div>
-            )}
 
-            <footer>
-              <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-                {prev && prev.path && (
-                  <div className="pt-4 xl:pt-8">
-                    <Link
-                      href={`/${prev.path}`}
-                      className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
-                      aria-label={`Previous post: ${prev.title}`}
-                    >
-                      &larr; {prev.title}
-                    </Link>
-                  </div>
-                )}
-                {next && next.path && (
-                  <div className="pt-4 xl:pt-8">
-                    <Link
-                      href={`/${next.path}`}
-                      className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
-                      aria-label={`Next post: ${next.title}`}
-                    >
-                      {next.title} &rarr;
-                    </Link>
-                  </div>
-                )}
-              </div>
-            </footer>
+            <IPFSLink cid={post.cid} />
+
+            <PaginationNav prev={prev} next={next} />
           </div>
         </div>
         <Footer className="mt-auto" site={site} />

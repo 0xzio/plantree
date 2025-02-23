@@ -62,7 +62,7 @@ export default async function HomePage(props: { params: any }) {
           <LaunchButton />
         </Suspense> */}
       </div>
-      <SiteList sites={sites} />
+      <SiteList />
     </div>
   )
 }
