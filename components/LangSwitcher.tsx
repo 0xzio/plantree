@@ -37,8 +37,6 @@ export function LangSwitcher({
     i18n.locale as any,
   )
 
-  console.log('======locales:', locales)
-
   function handleChange(value: string) {
     const locale = value as LOCALES
 

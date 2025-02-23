@@ -1,24 +1,46 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { createPortal } from 'react-dom';
-import { useSiteContext } from '@/components/SiteContext';
-import { usePosts } from '@/hooks/usePosts';
-import { CatalogueTree } from '@/lib/catalogue';
-import { getProjection } from '@/lib/dnd-projection';
-import { ICatalogueNode, INode } from '@/lib/model';
-import { closestCenter, defaultDropAnimation, DndContext, DragEndEvent, DragMoveEvent, DragOverEvent, DragOverlay, DragStartEvent, DropAnimation, KeyboardSensor, MeasuringStrategy, Modifier, PointerSensor, useSensor, useSensors } from '@dnd-kit/core';
-import { arrayMove, rectSortingStrategy, SortableContext, sortableKeyboardCoordinates, verticalListSortingStrategy } from '@dnd-kit/sortable';
-import { CSS } from '@dnd-kit/utilities';
-import { Box } from '@fower/react';
-import { AddPageNodeDialog } from './AddPageNodeDialog/AddPageNodeDialog';
-import { AddPostNodeDialog } from './AddPostNodeDialog/AddPostNodeDialog';
-import { CatalogueBoxHeader } from './CatalogueBoxHeader';
-import { CatalogueItem } from './CatalogueItem';
-import { CategoryNodeDialog } from './CategoryNodeDialog/CategoryNodeDialog';
-import { useCatalogue } from './hooks/useCatalogue';
-import { LinkNodeDialog } from './LinkNodeDialog/LinkNodeDialog';
-import { SortableTreeItem } from './SortableTreeItem';
-import { FlattenedItem, TreeItem, TreeItems } from './types';
-import { UpdateNodeDialog } from './UpdateNodeDialog/UpdateNodeDialog';
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
+import { useSiteContext } from '@/components/SiteContext'
+import { usePosts } from '@/hooks/usePosts'
+import { CatalogueTree } from '@/lib/catalogue'
+import { getProjection } from '@/lib/dnd-projection'
+import { ICatalogueNode, INode } from '@/lib/model'
+import {
+  closestCenter,
+  defaultDropAnimation,
+  DndContext,
+  DragEndEvent,
+  DragMoveEvent,
+  DragOverEvent,
+  DragOverlay,
+  DragStartEvent,
+  DropAnimation,
+  KeyboardSensor,
+  MeasuringStrategy,
+  Modifier,
+  PointerSensor,
+  useSensor,
+  useSensors,
+} from '@dnd-kit/core'
+import {
+  arrayMove,
+  rectSortingStrategy,
+  SortableContext,
+  sortableKeyboardCoordinates,
+  verticalListSortingStrategy,
+} from '@dnd-kit/sortable'
+import { CSS } from '@dnd-kit/utilities'
+import { Box } from '@fower/react'
+import { AddPageNodeDialog } from './AddPageNodeDialog/AddPageNodeDialog'
+import { AddPostNodeDialog } from './AddPostNodeDialog/AddPostNodeDialog'
+import { CatalogueBoxHeader } from './CatalogueBoxHeader'
+import { CatalogueItem } from './CatalogueItem'
+import { CategoryNodeDialog } from './CategoryNodeDialog/CategoryNodeDialog'
+import { useCatalogue } from './hooks/useCatalogue'
+import { LinkNodeDialog } from './LinkNodeDialog/LinkNodeDialog'
+import { SortableTreeItem } from './SortableTreeItem'
+import { FlattenedItem, TreeItem, TreeItems } from './types'
+import { UpdateNodeDialog } from './UpdateNodeDialog/UpdateNodeDialog'
 import {
   buildTree,
   flattenTree,
@@ -200,8 +222,6 @@ export const CatalogueBox = () => {
 
   function handleDragEnd({ active, over }: DragEndEvent) {
     resetState()
-
-    console.log('end.......')
 
     if (!projected || !over) return
 

@@ -25,7 +25,7 @@ interface LayoutProps {
 
 export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
   return (
-    <div className="flex gap-x-16">
+    <div className="flex gap-x-16 pt-4">
       <div className={cn('flex-1 flex flex-col', className)}>
         <div className="mb-auto flex-1">
           <header className="space-y-4 pb-4 ">

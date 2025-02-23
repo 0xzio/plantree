@@ -41,8 +41,9 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
         href={href}
         {...linkProps}
         className={cn(
-          'catalogueItem py-1 hover:bg-foreground/5 relative rounded px-2 flex justify-between items-center mb-[1px] transition-colors cursor-pointer',
+          'catalogueItem py-1 relative rounded px-2 flex justify-between items-center mb-[1px] transition-colors',
           isCategory && 'mt-6',
+          !isCategory && 'hover:bg-foreground/5 cursor-pointer',
         )}
         style={
           {
@@ -68,7 +69,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
           <div
             className={cn(
               'text-[15px] text-foreground/70',
-              isCategory && 'font-bold text-foreground text-base',
+              isCategory && 'font-semibold text-foreground text-base',
             )}
           >
             {name || 'Untitled'}

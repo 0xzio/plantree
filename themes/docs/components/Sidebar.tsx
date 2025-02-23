@@ -80,7 +80,7 @@ export const Sidebar = ({ site }: Props) => {
 
   return (
     <aside
-      className="sidebar w-64 sticky top-16 flex-shrink-0 py-8 overflow-y-auto"
+      className="sidebar w-64 sticky top-16 flex-shrink-0 pt-4 pb-8 overflow-y-auto"
       style={{
         height: 'calc(100vh - 4rem)',
       }}

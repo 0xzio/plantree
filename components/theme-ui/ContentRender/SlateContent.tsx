@@ -124,8 +124,11 @@ export function SlateContent() {
               </div>
             )
           case ELEMENT_IMG:
+            const width = (element as any).width
             return (
               <img
+                className="mx-auto"
+                style={{ width: width ? width : 'auto' }}
                 src={getUrl((element as any).url)}
                 alt=""
                 {...attributes}

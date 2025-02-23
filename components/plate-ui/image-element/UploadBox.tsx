@@ -25,10 +25,10 @@ export const UploadBox = ({
     setNodes<ImageElement>(editor, data, { at: path })
     // console.log('======data:', data)
 
-    const captionPath = Path.next(path)
+    // const captionPath = Path.next(path)
 
     try {
-      Transforms.removeNodes(editor, { at: captionPath })
+      // Transforms.removeNodes(editor, { at: captionPath })
     } catch (error) {}
   }
 
