@@ -82,7 +82,7 @@ export default async function middleware(req: NextRequest) {
         getSessionOptions(),
       )
 
-      if (!token) {
+      if (!token?.userId) {
         return NextResponse.redirect(new URL('/', req.url))
       }
       return NextResponse.rewrite(new URL(`/${locale}${path}`, req.url))

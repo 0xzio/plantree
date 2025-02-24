@@ -132,34 +132,4 @@ export const pageRouter = router({
       await cacheHelper.updateCachedSitePages(input.siteId, null)
       return page
     }),
-
-  publish: protectedProcedure
-    .input(
-      z.object({
-        pageId: z.string(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      const { pageId } = input
-      let post = await prisma.post.findUniqueOrThrow({
-        where: { id: pageId },
-      })
-
-      await prisma.post.update({
-        where: { id: pageId },
-        data: {
-          status: PostStatus.PUBLISHED,
-          publishedAt: new Date(),
-          slug: slug(post.title || post.id),
-        },
-      })
-
-      await cacheHelper.updateCachedSitePages(post.siteId, null)
-
-      revalidateTag(`${post.siteId}-page-${post.slug}`)
-      // revalidateTag(`${post.siteId}-posts`)
-      // revalidatePath(`/posts/${post.slug}`)
-
-      return post
-    }),
 })

@@ -56,7 +56,7 @@ export function PostNav({ className }: PostHeaderProps) {
       </div>
 
       <div className="flex items-center gap-2">
-        <div className="rounded-lg bg-accent px-2 py-1 text-sm text-stone-400  dark:text-stone-500">
+        <div className="rounded-lg bg-accent px-2 py-1 text-sm text-foreground/40">
           {isPostSaving ? 'Saving...' : 'Saved'}
         </div>
         <PublishPostPopover className="" />
