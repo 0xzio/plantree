@@ -1,32 +1,28 @@
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar/MobileSidebarSheet'
+import { Navigation } from '@/components/theme-ui/Navigation'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Site } from '@/lib/theme.types'
 import { cn, getUrl } from '@/lib/utils'
 import Link from './Link'
-import { MobileSidebar } from './MobileSidebar/MobileSidebar'
+import { Sidebar } from './Sidebar'
 
 interface Props {
   site: Site
 }
 
 export const Header = ({ site }: Props) => {
-  const links = [
-    ...site?.navLinks,
-    {
-      pathname: '/creator-fi',
-      title: 'CreatorFi',
-      visible: true,
-    },
-  ]
   return (
     <header
       className={cn(
         'flex items-center w-full px-4 xl:px-0 py-4 h-16 z-40 sticky top-0 bg-background border-b border-foreground/5 gap-2',
       )}
     >
-      <MobileSidebar site={site} />
+      <MobileSidebarSheet site={site}>
+        <Sidebar site={site} height="auto" />
+      </MobileSidebarSheet>
 
       <div className="max-w-7xl mx-auto flex items-center justify-between w-full">
         <div className="flex items-center space-x-6 leading-5 sm:space-x-6">
@@ -37,39 +33,7 @@ export const Header = ({ site }: Props) => {
             </Avatar>
             <div className="text-lg font-bold">{site.name}</div>
           </Link>
-          <div className="flex items-center space-x-4">
-            {links.map((link) => {
-              if (link.pathname === '/creator-fi' && !site.spaceId) {
-                return null
-              }
-
-              if (!link.visible) return null
-
-              return (
-                <Link
-                  key={link.pathname}
-                  href={link.pathname}
-                  className={cn(
-                    'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
-                  )}
-                >
-                  {link.title}
-                </Link>
-              )
-            })}
-
-            {site.spaceId && (
-              <Link
-                href="/membership"
-                className={cn(
-                  'font-medium hover:text-brand-500 text-foreground/90',
-                  'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
-                )}
-              >
-                Membership
-              </Link>
-            )}
-          </div>
+          <Navigation site={site} />
         </div>
         <div className="flex item-center gap-2">
           <div className="flex items-center">

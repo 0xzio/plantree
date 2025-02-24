@@ -1,8 +1,10 @@
-import { Merienda } from 'next/font/google'
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
+import { Navigation } from '@/components/theme-ui/Navigation'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import { Merienda } from 'next/font/google'
 import Link from './Link'
 
 const merienda = Merienda({
@@ -11,14 +13,6 @@ const merienda = Merienda({
   display: 'swap',
 })
 
-const headerNavLinks = [
-  { href: '/', title: 'Home' },
-  { href: '/posts', title: 'Blog' },
-  { href: '/tags', title: 'Tags' },
-  { href: '/about', title: 'About' },
-  { href: '/membership', title: 'Membership', isMembership: true },
-]
-
 const headerNavLinksRight = [{ href: '/creator-fi', title: 'CreatorFi' }]
 
 interface Props {
@@ -26,57 +20,28 @@ interface Props {
 }
 
 export const Header = ({ site }: Props) => {
-  const links = [...site?.navLinks]
   return (
-    <header className={cn('flex items-center w-full py-4 h-16 z-40')}>
-      <div className="flex-1 no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
-        {links.map((link) => {
-          if (link.pathname === '/creator-fi' && !site.spaceId) {
-            return null
-          }
-
-          if (!link.visible) return null
-          return (
-            <Link
-              key={link.pathname}
-              href={link.pathname}
-              className={cn(
-                'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
-              )}
-            >
-              {link.title}
-            </Link>
-          )
-        })}
-
-        {site.spaceId && (
-          <Link
-            href="/membership"
-            className={cn(
-              'font-medium hover:text-brand-500 text-foreground/90',
-              'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
-            )}
-          >
-            Membership
-          </Link>
-        )}
+    <header
+      className={cn(
+        'flex items-center justify-between w-full py-4 h-16 z-40 gap-2',
+      )}
+    >
+      <MobileSidebarSheet site={site} />
+      <Navigation site={site} className="w-80" />
+      <div className="flex-1 flex justify-start md:justify-center">
+        <Link
+          href="/"
+          aria-label={site.name}
+          className={cn(
+            'h-6 text-lg md:text-2xl font-semibold',
+            merienda.className,
+          )}
+        >
+          {site.name}
+        </Link>
       </div>
-
-      <Link href="/" aria-label={site.name}>
-        <div className="flex items-center justify-between">
-          <div
-            className={cn(
-              'hidden h-6 text-2xl font-semibold sm:block',
-              merienda.className,
-            )}
-          >
-            {site.name}
-          </div>
-        </div>
-      </Link>
-
-      <div className="flex items-center justify-end flex-1 gap-4">
-        <div className="no-scrollbar hidden items-center space-x-4 overflow-x-auto sm:flex sm:space-x-6">
+      <div className="flex items-center justify-end gap-4 w-80">
+        <div className="space-x-4 flex items-center sm:space-x-6">
           {headerNavLinksRight.map((link) => {
             if (link.href === '/creator-fi' && !site.spaceId) {
               return null

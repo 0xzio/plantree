@@ -1,6 +1,7 @@
 'use client'
 
 import { forwardRef, useMemo } from 'react'
+import { useMobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
 import { Link } from '@/lib/i18n'
 import {
   CatalogueNodeJSON,
@@ -10,8 +11,6 @@ import {
 import { cn } from '@/lib/utils'
 import { FowerHTMLProps } from '@fower/react'
 import { Emoji, EmojiStyle } from 'emoji-picker-react'
-import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
-import { useMobileSidebar } from './MobileSidebar/useMobileSidebar'
 
 interface CatalogueItemProps extends FowerHTMLProps<'div'> {
   depth: number
@@ -21,7 +20,7 @@ interface CatalogueItemProps extends FowerHTMLProps<'div'> {
 
 export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
   function CatalogueItem({ item, name, depth }: CatalogueItemProps, ref) {
-    const { setIsOpen } = useMobileSidebar()
+    const { setIsOpen } = useMobileSidebarSheet()
     const isCategory = item.type === CatalogueNodeType.CATEGORY
 
     const href = useMemo(() => {

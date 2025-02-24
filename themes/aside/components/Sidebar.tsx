@@ -24,7 +24,7 @@ export const Sidebar = ({ site, tags }: Props) => {
   ]
   return (
     <aside
-      className="sidebar w-52 sticky top-0 flex-shrink-0 pt-14 pb-4 overflow-y-auto flex flex-col items-end pr-2"
+      className="sidebar w-52 sticky top-0 flex-shrink-0 pt-14 pb-4 overflow-y-auto flex-col items-end pr-2 hidden md:flex"
       style={{
         height: 'calc(100vh)',
       }}

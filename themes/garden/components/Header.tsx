@@ -1,5 +1,6 @@
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Lobster } from 'next/font/google'
@@ -27,9 +28,10 @@ export const Header = ({ site }: Props) => {
   ]
   return (
     <header className="">
-      <div className="flex items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm">
+      <div className="flex items-center md:items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm">
+        <MobileSidebarSheet site={site} />
         <div className="lg:flex items-center space-x-4 leading-5 sm:space-x-6 hidden flex-1">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4 text-xs">
             {links.map((link) => {
               if (link.pathname === '/creator-fi' && !site.spaceId) {
                 return null
@@ -86,12 +88,6 @@ export const Header = ({ site }: Props) => {
           </div>
         </div>
         <div className="flex item-center justify-end gap-3 flex-1">
-          <Link
-            href="/about"
-            className="font-medium flex items-center hover:text-brand-500 text-foreground/60 text-xs hover:scale-105 transition-all sm:hidden"
-          >
-            About
-          </Link>
           <div className="flex items-center">
             <Airdrop />
           </div>
