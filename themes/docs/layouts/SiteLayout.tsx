@@ -16,7 +16,7 @@ export function SiteLayout({ children, site }: Props) {
     <div>
       <Header site={site} />
       <main className="flex flex-1 w-full px-4 xl:px-0 gap-x-16 relative max-w-7xl mx-auto">
-        <Sidebar site={site} />
+        <Sidebar site={site} className="hidden md:block" />
         <div className="flex-1">{children}</div>
         {/* <Footer site={site} /> */}
       </main>

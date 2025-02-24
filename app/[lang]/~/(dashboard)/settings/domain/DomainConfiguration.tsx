@@ -29,7 +29,7 @@ export function DomainConfiguration({ domain }: { domain: string }) {
 
   const { status, domainJson } = useDomainStatus({ domain })
 
-  // if (!status || status === 'Valid Configuration' || !domainJson) return null
+  // if (!status || status === 'Valid configuration' || !domainJson) return null
   if (!status || !domainJson) return null
 
   const subdomain = getSubdomain(domainJson.name, domainJson.apexName)
@@ -109,7 +109,7 @@ export function DomainConfiguration({ domain }: { domain: string }) {
                   : 'border-background text-foreground/40'
               } ease border-b-2 pb-1 text-sm transition-all duration-150`}
             >
-              A Record{!subdomain && ' (recommended)'}
+              A Record
             </button>
           </div>
           <div className="my-3 text-left">

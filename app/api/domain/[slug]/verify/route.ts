@@ -11,7 +11,7 @@ export async function GET(
   { params }: { params: Promise<{ slug: string }> },
 ) {
   const domain = decodeURIComponent((await params).slug)
-  let status: DomainVerificationStatusProps = 'Valid Configuration'
+  let status: DomainVerificationStatusProps = 'Valid configuration'
 
   const [domainJson, configJson] = await Promise.all([
     getDomainResponse(domain),
@@ -33,12 +33,12 @@ export async function GET(
 
     // domain was just verified
     if (verificationJson && verificationJson.verified) {
-      status = 'Valid Configuration'
+      status = 'Valid configuration'
     }
   } else if (configJson.misconfigured) {
     status = 'Invalid Configuration'
   } else {
-    status = 'Valid Configuration'
+    status = 'Valid configuration'
   }
 
   return NextResponse.json({

@@ -177,7 +177,7 @@ export type SubscriptionRaw = {
 }
 
 export type DomainVerificationStatusProps =
-  | 'Valid Configuration'
+  | 'Valid configuration'
   | 'Invalid Configuration'
   | 'Pending Verification'
   | 'Domain Not Found'

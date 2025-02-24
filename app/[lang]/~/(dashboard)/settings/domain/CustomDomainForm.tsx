@@ -75,7 +75,7 @@ export function CustomDomainForm({ site }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-        <div className="text-2xl font-bold">Custom Domain</div>
+        <div className="text-2xl font-bold">Custom domain</div>
         <FormField
           control={form.control}
           name="domain"

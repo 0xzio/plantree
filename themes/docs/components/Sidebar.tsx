@@ -58,9 +58,10 @@ export function removeChildrenOf(
 
 interface Props {
   site: Site
+  className?: string
 }
 
-export const Sidebar = ({ site }: Props) => {
+export const Sidebar = ({ site, className }: Props) => {
   const tree = CatalogueTree.fromJSON(
     Array.isArray(site.catalogue) ? site.catalogue : [],
   )
@@ -80,7 +81,10 @@ export const Sidebar = ({ site }: Props) => {
 
   return (
     <aside
-      className="sidebar w-64 sticky top-16 flex-shrink-0 pt-4 pb-8 overflow-y-auto"
+      className={cn(
+        'sidebar w-60 sticky top-16 flex-shrink-0 pt-4 pb-8 overflow-y-auto',
+        className,
+      )}
       style={{
         height: 'calc(100vh - 4rem)',
       }}

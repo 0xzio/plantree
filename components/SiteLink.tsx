@@ -52,7 +52,7 @@ function CustomDomainSiteLink({
   })
 
   if (loading) return <LoadingCircle />
-  if (status === 'Valid Configuration') {
+  if (status === 'Valid configuration') {
     const link = `${customDomain}`
     return <SiteLinkContent link={link} />
   }

@@ -9,7 +9,7 @@ export default function DomainStatus({ domain }: { domain: string }) {
 
   return loading ? (
     <LoadingCircle />
-  ) : status === 'Valid Configuration' ? (
+  ) : status === 'Valid configuration' ? (
     <CheckCircle2
       fill="#2563EB"
       stroke="currentColor"

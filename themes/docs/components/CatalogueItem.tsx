@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils'
 import { FowerHTMLProps } from '@fower/react'
 import { Emoji, EmojiStyle } from 'emoji-picker-react'
 import { ChevronDown, ChevronRight, Plus } from 'lucide-react'
+import { useMobileSidebar } from './MobileSidebar/useMobileSidebar'
 
 interface CatalogueItemProps extends FowerHTMLProps<'div'> {
   depth: number
@@ -20,6 +21,7 @@ interface CatalogueItemProps extends FowerHTMLProps<'div'> {
 
 export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
   function CatalogueItem({ item, name, depth }: CatalogueItemProps, ref) {
+    const { setIsOpen } = useMobileSidebar()
     const isCategory = item.type === CatalogueNodeType.CATEGORY
 
     const href = useMemo(() => {
@@ -51,6 +53,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
           }
         }
         onClick={(e) => {
+          setIsOpen?.(false)
           if (isCategory) {
             e.preventDefault()
             console.log('category clicked:', item.id)

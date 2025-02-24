@@ -48,7 +48,7 @@ export function SlateContent() {
                   }}
                   {...attributes}
                 >
-                  <li className="[&>*]:inline-flex">{children}</li>
+                  <li className="[&>*]:inline">{children}</li>
                 </ul>
               )
             }
@@ -96,7 +96,11 @@ export function SlateContent() {
           case ELEMENT_HR:
             return <hr {...attributes}></hr>
           case ELEMENT_UL:
-            return <ul {...attributes}>{children}</ul>
+            return (
+              <ul className="bg-red-300" {...attributes}>
+                {children}
+              </ul>
+            )
           case ELEMENT_OL:
             return <ol {...attributes}>{children}</ol>
           case 'numbered-list':
@@ -104,7 +108,11 @@ export function SlateContent() {
           case ELEMENT_LI:
             return <>{children}</>
           case ELEMENT_LIC:
-            return <li {...attributes}>{children}</li>
+            return (
+              <li className="inline [&>*]:inline bg-amber-200" {...attributes}>
+                {children}
+              </li>
+            )
           case ELEMENT_TODO:
             const checked = (element as any).checked
             return (

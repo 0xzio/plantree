@@ -40,4 +40,3 @@ Deploy your blog in **10 minutes**!
 
 
 ## ⚖️ License
-
