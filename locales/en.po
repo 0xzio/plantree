@@ -13,6 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: app/[lang]/root/(home)/page.tsx:52
+#: app/[lang]/root/(home)/page.tsx:59
 msgid "Sites"
 msgstr "Sites"
