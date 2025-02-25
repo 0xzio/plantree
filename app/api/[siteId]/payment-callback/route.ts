@@ -39,10 +39,10 @@ export async function GET(req: NextRequest) {
   await prisma.site.update({
     where: { id: siteId },
     data: {
-      sassSubscriptionId: subscription_id,
-      sassPlanType: planType as any,
       sassCustomerId: customer_id,
-      sassProductId: product_id,
+      // sassSubscriptionId: subscription_id,
+      // sassPlanType: planType as any,
+      // sassProductId: product_id,
     },
   })
 

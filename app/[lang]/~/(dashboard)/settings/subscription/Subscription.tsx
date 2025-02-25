@@ -1,6 +1,8 @@
 'use client'
 
 import { useMemo } from 'react'
+import { ConfirmDialog } from '@/components/ConfirmDialog'
+import { PlanListDialog } from '@/components/PlanList/PlanListDialog'
 import { usePlanListDialog } from '@/components/PlanList/usePlanListDialog'
 import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
 import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
@@ -9,12 +11,12 @@ import { Button } from '@/components/ui/button'
 import { Separator } from '@/components/ui/separator'
 import { UseCouponCode } from '@/components/UseCouponCode'
 import { useIsMember } from '@/hooks/useIsMember'
+import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { toReadableTime } from '@/lib/utils'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { format } from 'date-fns'
 import { useAccount } from 'wagmi'
-import { PlanListDialog } from '@/components/PlanList/PlanListDialog'
 
 interface Props {}
 
@@ -47,7 +49,7 @@ export function Subscription({}: Props) {
             Subscribe to Penx to support us in building the best product.
           </div>
 
-          {isMember && (
+          {/* {isMember && (
             <div className="flex items-center gap-2">
               <div className="text-foreground/50">Plan expires at</div>
               <div className="text-lg font-semibold">
@@ -58,9 +60,9 @@ export function Subscription({}: Props) {
               </div>
               {time && <div className="text-foreground/50">({time})</div>}
             </div>
-          )}
+          )} */}
 
-          <div>
+          <div className="space-x-2">
             <Button
               size="lg"
               onClick={() => {
@@ -72,8 +74,20 @@ export function Subscription({}: Props) {
                 // }
               }}
             >
-              {isMember ? 'Update subscription' : 'Upgrade to Pro'}
+              {isMember ? 'Change plan' : 'Upgrade'}
             </Button>
+
+            <ConfirmDialog
+              title="Cancel subscription?"
+              content="Are you sure you want to cancel subscription?"
+              onConfirm={async () => {
+                await api.billing.cancel.mutate()
+              }}
+            >
+              <Button className="text-foreground/40" variant="link">
+                Cancel subscription
+              </Button>
+            </ConfirmDialog>
           </div>
         </div>
 

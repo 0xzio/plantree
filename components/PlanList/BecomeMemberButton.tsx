@@ -27,8 +27,8 @@ export function BecomeMemberButton({ type }: Props) {
       disabled={isPending}
       onClick={async () => {
         if (isDashboard) {
-          const data = await mutateAsync({ planType: 'FREE' })
-          console.log('data===>>:', data);
+          const data = await mutateAsync({ planType: type })
+          console.log('data===>>:', data)
           location.href = data.checkout_url
           return
         }

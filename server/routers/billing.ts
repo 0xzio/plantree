@@ -1,13 +1,5 @@
-import { ROOT_DOMAIN } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { uniqueId } from '@/lib/unique-id'
-import { createSubscriptionConfirmEmail } from '@/server/lib/getPostEmailTpl'
-import {
-  SubscriberStatus,
-  SystemEmailStatus,
-  SystemEmailType,
-} from '@prisma/client'
-import { TRPCError } from '@trpc/server'
+import { PlanType } from '@prisma/client'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -19,6 +11,13 @@ interface CheckoutRes {
   status: string
   checkout_url: string
   mode: string
+}
+
+interface CancelRes {
+  status: string
+  current_period_start_date: string
+  current_period_end_date: string
+  canceled_at: string
 }
 
 const apiKey = process.env.CREEM_API_KEY!
@@ -56,4 +55,34 @@ export const billingRouter = router({
 
       return res
     }),
+
+  cancel: protectedProcedure.mutation(async ({ ctx, input }) => {
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { id: ctx.activeSiteId },
+    })
+
+    const res: CancelRes = await fetch(
+      `${process.env.CREEM_API_HOST}/v1/subscriptions/${site.sassSubscriptionId}/cancel`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'x-api-key': apiKey,
+        },
+      },
+    ).then((response) => response.json())
+    console.log('>>>>====res:', res)
+
+    await prisma.site.update({
+      where: { id: ctx.activeSiteId },
+      data: {
+        sassPlanType: PlanType.FREE,
+        sassProductId: null,
+        sassCurrentPeriodEnd: new Date(res.current_period_end_date),
+        sassSubscriptionId: null,
+      },
+    })
+
+    return true
+  }),
 })
