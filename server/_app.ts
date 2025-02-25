@@ -4,15 +4,18 @@
 import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { accessTokenRouter } from './routers/access-token'
 import { assetRouter } from './routers/asset'
+import { billingRouter } from './routers/billing'
 import { cliRouter } from './routers/cli'
 import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
 import { couponRouter } from './routers/coupon'
 import { databaseRouter } from './routers/database'
+import { deliveryRouter } from './routers/delivery'
 import { extensionRouter } from './routers/extension'
 import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
+import { newsletterRouter } from './routers/newsletter'
 import { nodeRouter } from './routers/node'
 import { pageRouter } from './routers/page'
 import { planRouter } from './routers/plan'
@@ -24,8 +27,6 @@ import { subscriberRouter } from './routers/subscriber'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { userRouter } from './routers/user'
-import { deliveryRouter } from './routers/delivery'
-import { newsletterRouter } from './routers/newsletter'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
 export const appRouter = router({
@@ -54,6 +55,7 @@ export const appRouter = router({
   subscriber: subscriberRouter,
   delivery: deliveryRouter,
   newsletter: newsletterRouter,
+  billing: billingRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)
