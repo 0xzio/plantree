@@ -1,6 +1,4 @@
-import { PlanItem } from './PlanItem'
-import { PlanList } from './PlanList'
-import { PricingSlogan } from './PricingSlogan'
+import { PlanList } from '@/components/PlanList/PlanList'
 
 // export const runtime = 'edge'
 
@@ -9,7 +7,6 @@ export const dynamic = 'force-static'
 export default function HomePage() {
   return (
     <div className="flex flex-col justify-center pt-20 gap-8">
-      <PricingSlogan />
       <PlanList />
     </div>
   )

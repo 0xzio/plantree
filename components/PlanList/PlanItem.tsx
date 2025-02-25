@@ -1,6 +1,5 @@
 import { Check } from 'lucide-react'
 import { BecomeMemberButton } from './BecomeMemberButton'
-import { SubscriptionPrice } from './SubscriptionPrice'
 
 interface Props {
   name: string
@@ -32,7 +31,7 @@ export function PlanItem({
         ))}
       </div>
       <div className="text-center">
-        <BecomeMemberButton />
+        <BecomeMemberButton type={type} />
       </div>
     </div>
   )
