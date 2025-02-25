@@ -15,7 +15,10 @@ function ImportSubscribers() {
 function ImportPosts() {
   return (
     <div className="flex items-center justify-between">
-      <div className="font-semibold">Posts</div>
+      <div className="flex flex-col">
+        <div className="font-semibold">Posts</div>
+        <div className="text-xs text-muted-foreground">Support PenX, Paragraph, Substack</div>
+      </div>
       <ImportPostsButton />
     </div>
   )
