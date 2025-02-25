@@ -2,8 +2,8 @@
 
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
-import { useSession } from '@/lib/useSession'
 import { useRouter } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 
 export function BecomeMemberButton() {
   const { setIsOpen } = useLoginDialog()
@@ -22,7 +22,7 @@ export function BecomeMemberButton() {
         }
       }}
     >
-      Become a member
+      Get started
     </Button>
   )
 }
