@@ -29,15 +29,15 @@ export const Nav = () => {
       to: '/self-hosted',
     },
 
-    {
-      text: 'Tokenomics',
-      to: '/tokenomics',
-    },
+    // {
+    //   text: 'Tokenomics',
+    //   to: '/tokenomics',
+    // },
 
-    {
-      text: 'Sponsor',
-      to: '/sponsor',
-    },
+    // {
+    //   text: 'Sponsor',
+    //   to: '/sponsor',
+    // },
     {
       text: 'Pricing',
       to: '/pricing',
