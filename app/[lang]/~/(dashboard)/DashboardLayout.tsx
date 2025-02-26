@@ -4,6 +4,7 @@ import { ReactNode, useEffect, useMemo, useState } from 'react'
 import { CommandPanel } from '@/components/CommandPanel/CommandPanel'
 import { CreationDialog } from '@/components/CreationDialog/CreationDialog'
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { PlanListDialog } from '@/components/PlanList/PlanListDialog'
 import { SiteProvider } from '@/components/SiteContext'
 import { SubscriptionDialog } from '@/components/SubscriptionDialog/SubscriptionDialog'
 import { SubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/SubscriptionGuideDialog'
@@ -77,6 +78,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <CommandPanel />
         <SubscriptionGuideDialog />
         <SubscriptionDialog />
+        <PlanListDialog />
         <div
           className={cn('h-screen sticky top-0 hidden md:flex')}
           style={{ width: SIDEBAR_WIDTH }}

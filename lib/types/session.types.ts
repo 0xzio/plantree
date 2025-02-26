@@ -18,6 +18,7 @@ export interface SessionData {
   activeSiteId: string
   planType: string
   currentPeriodEnd: string
+  billingCycle: string
   subscriptionStatus: string
   accessToken: string
   subscriptionEndedAt: Date | null

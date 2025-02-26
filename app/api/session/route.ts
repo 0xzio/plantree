@@ -43,6 +43,7 @@ async function updateSession(
   session: IronSession<SessionData>,
   account: AccountWithUser,
 ) {
+  const site = account.user.sites[0]
   session.isLoggedIn = true
   session.message = ''
   session.uid = account.userId
@@ -52,14 +53,13 @@ async function updateSession(
   session.name = account.user.name as string
   session.picture = account.user.image as string
   session.image = account.user.image as string
-  session.domain = getSiteDomain(account.user.sites[0])
-  session.siteId = account.user?.sites[0]?.id
-  session.activeSiteId = account.user?.sites[0]?.id
-  session.planType = account.user?.sites[0].sassPlanType
-  session.subscriptionStatus =
-    account.user?.sites[0].sassSubscriptionStatus || ''
-  session.currentPeriodEnd = account.user?.sites[0]
-    ?.sassCurrentPeriodEnd as any as string
+  session.domain = getSiteDomain(site)
+  session.siteId = site.id
+  session.activeSiteId = site.id
+  session.planType = site.sassPlanType
+  session.subscriptionStatus = site.sassSubscriptionStatus || ''
+  session.currentPeriodEnd = site?.sassCurrentPeriodEnd as any as string
+  session.billingCycle = site?.sassBillingCycle as any as string
 
   session.subscriptionEndedAt = getSubscriptionEndedAt(
     account.user.subscriptions,

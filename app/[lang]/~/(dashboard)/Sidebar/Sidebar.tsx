@@ -25,6 +25,7 @@ import { LinkWalletEntry } from './LinkWalletEntry'
 import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
 import { SitesPopover } from './SitesPopover/SitesPopover'
+import { UpgradeButton } from './UpgradeButton'
 
 const LinkAccountEntry = dynamic(() => import('./LinkAccountEntry'), {
   ssr: false,
@@ -151,10 +152,11 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         )}
       </div>
 
-      <div className="px-2 pb-2">
+      <div className="px-2 pb-2 flex-1">
         {!spaceId && <EnableWeb3Entry />}
         <LinkAccountEntry />
       </div>
+      <UpgradeButton />
     </div>
   )
 }

@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma'
-import { PlanType } from '@prisma/client'
+import { BillingCycle, PlanType } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
 import {
   isCheckoutCompleted,
@@ -24,6 +24,10 @@ export async function POST(req: NextRequest) {
           json.object.subscription.current_period_end_date,
         ),
         sassSubscriptionStatus: json.object.subscription.status,
+        sassBillingCycle:
+          json.object.product.billing_period === 'every-month'
+            ? BillingCycle.MONTHLY
+            : BillingCycle.ANNUAL,
         sassSubscriptionId: json.object.subscription.id,
       },
     })
@@ -37,6 +41,10 @@ export async function POST(req: NextRequest) {
         sassProductId: json.object.product.id,
         sassCurrentPeriodEnd: new Date(json.object.current_period_end_date),
         sassSubscriptionStatus: json.object.status,
+        sassBillingCycle:
+          json.object.product.billing_period === 'every-month'
+            ? BillingCycle.MONTHLY
+            : BillingCycle.ANNUAL,
         sassSubscriptionId: json.object.id,
       },
     })

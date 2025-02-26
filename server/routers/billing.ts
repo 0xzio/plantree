@@ -1,7 +1,13 @@
+import {
+  CREEM_PRODUCT_PROFESSIONAL_ANNUAL,
+  CREEM_PRODUCT_PROFESSIONAL_MONTHLY,
+  CREEM_PRODUCT_STANDARD_ANNUAL,
+  CREEM_PRODUCT_STANDARD_MONTHLY,
+} from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import { SessionData } from '@/lib/types'
-import { PlanType } from '@prisma/client'
+import { BillingCycle, PlanType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { z } from 'zod'
@@ -30,18 +36,36 @@ export const billingRouter = router({
   checkout: protectedProcedure
     .input(
       z.object({
-        planType: z.string(),
+        planType: z.nativeEnum(PlanType),
+        billingCycle: z.nativeEnum(BillingCycle),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const getProductId = () => {
+        if (input.planType === PlanType.STANDARD) {
+          return input.billingCycle === BillingCycle.MONTHLY
+            ? CREEM_PRODUCT_STANDARD_MONTHLY
+            : CREEM_PRODUCT_STANDARD_ANNUAL
+        } else {
+          return input.billingCycle === BillingCycle.MONTHLY
+            ? CREEM_PRODUCT_PROFESSIONAL_MONTHLY
+            : CREEM_PRODUCT_PROFESSIONAL_ANNUAL
+        }
+        //
+      }
+
+      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
+
+      console.log('=====>>>success_url:', success_url)
+
       const res: CheckoutRes = await fetch(
         `${process.env.CREEM_API_HOST}/v1/checkouts`,
         {
           method: 'POST',
           body: JSON.stringify({
-            product_id: process.env.CREEM_PRODUCT_ID_CREATOR,
-            request_id: `${input.planType}___${ctx.token.uid}`,
-            success_url: `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`,
+            product_id: getProductId(),
+            request_id: `${input.planType}___${input.billingCycle}___${ctx.token.uid}`,
+            success_url,
             // customer: {
             //   email: 'yourUserEmail@gmail.com',
             // },

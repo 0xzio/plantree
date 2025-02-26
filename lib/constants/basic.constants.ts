@@ -125,3 +125,12 @@ export const defaultNavLinks: NavLink[] = [
     visible: true,
   },
 ]
+
+export const CREEM_PRODUCT_STANDARD_MONTHLY =
+  process.env.CREEM_PRODUCT_STANDARD_MONTHLY!
+export const CREEM_PRODUCT_PROFESSIONAL_MONTHLY =
+  process.env.CREEM_PRODUCT_PROFESSIONAL_MONTHLY!
+export const CREEM_PRODUCT_STANDARD_ANNUAL =
+  process.env.CREEM_PRODUCT_STANDARD_ANNUAL!
+export const CREEM_PRODUCT_PROFESSIONAL_ANNUAL =
+  process.env.CREEM_PRODUCT_PROFESSIONAL_ANNUAL!

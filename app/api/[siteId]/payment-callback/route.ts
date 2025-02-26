@@ -2,6 +2,7 @@ import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import { SessionData } from '@/lib/types'
+import { BillingCycle } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -38,7 +39,10 @@ export async function GET(req: NextRequest) {
     throw new Error('INVALID_SIGNATURE')
   }
 
-  const [planType] = request_id.split('___')
+  const [planType, billingCycle] = request_id.split('___')
+
+  const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
+  const millisecondsPerYear = 12 * 30 * 24 * 60 * 60 * 1000
 
   await prisma.site.update({
     where: { id: siteId },
@@ -46,6 +50,7 @@ export async function GET(req: NextRequest) {
       sassCustomerId: customer_id,
       sassSubscriptionId: subscription_id,
       sassSubscriptionStatus: 'active',
+      sassBillingCycle: billingCycle as any,
       sassPlanType: planType as any,
       sassProductId: product_id,
     },
@@ -57,13 +62,16 @@ export async function GET(req: NextRequest) {
     sessionOptions,
   )
 
-  const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
-
   session.planType = planType
   session.subscriptionStatus = 'active'
+  session.billingCycle = billingCycle
+
   session.currentPeriodEnd = new Date(
-    Date.now() + millisecondsPerMonth,
-  ).toString()
+    Date.now() +
+      (billingCycle === BillingCycle.MONTHLY
+        ? millisecondsPerMonth
+        : millisecondsPerYear),
+  ).toISOString()
 
   await session.save()
 

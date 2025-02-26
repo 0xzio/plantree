@@ -1,10 +1,15 @@
+'use client'
+
+import { PlanType } from '@prisma/client'
 import { Check } from 'lucide-react'
-import { BecomeMemberButton } from './BecomeMemberButton'
+import { UpgradeButton } from './UpgradeButton'
+import { useBillingCycle } from './useBillingCycle'
 
 interface Props {
   name: string
-  type: 'FREE' | 'CREATOR' | 'TEAM'
-  price: number
+  type: PlanType
+  monthlyPrice: number
+  annualPrice: number
   collaboratorCount?: number
   benefits: string[]
 }
@@ -12,17 +17,21 @@ interface Props {
 export function PlanItem({
   name,
   type,
-  price,
+  monthlyPrice,
+  annualPrice,
   benefits,
   collaboratorCount,
 }: Props) {
+  const { isMonthly } = useBillingCycle()
   return (
-    <div className="space-y-8 bg-background rounded-2xl px-10 py-8 shadow dark:border w-full flex flex-col">
+    <div className="space-y-8 bg-background rounded-2xl px-8 py-8 shadow dark:border w-full flex flex-col">
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="text-xl">{name}</div>
         <div className="flex items-center gap-1">
-          <div className="text-2xl font-bold">${price}</div>
-          <div className=""> / mo</div>
+          <div className="text-3xl font-bold">
+            {isMonthly ? `$${monthlyPrice}` : `$${annualPrice}`}
+          </div>
+          <div className=""> / {isMonthly ? 'month' : 'year'}</div>
         </div>
       </div>
       <div className="space-y-3 flex-1">
@@ -31,7 +40,7 @@ export function PlanItem({
         ))}
       </div>
       <div className="text-center">
-        <BecomeMemberButton type={type} />
+        <UpgradeButton type={type} />
       </div>
     </div>
   )

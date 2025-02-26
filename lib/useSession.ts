@@ -77,9 +77,16 @@ export function useSession() {
       planType = PlanType.FREE
     }
 
+    const isFree = planType === PlanType.FREE
+    const isStandard = planType === PlanType.STANDARD
+    const isProfessional = planType === PlanType.PROFESSIONAL
+
     return {
       ...session,
       planType,
+      isFree,
+      isStandard,
+      isProfessional,
     }
   }, [session])
 
