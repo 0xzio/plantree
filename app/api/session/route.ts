@@ -11,6 +11,7 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import {
   AccountWithUser,
+  isCancelSubscription,
   isFarcasterLogin,
   isGoogleLogin,
   isPasswordLogin,
@@ -54,6 +55,12 @@ async function updateSession(
   session.domain = getSiteDomain(account.user.sites[0])
   session.siteId = account.user?.sites[0]?.id
   session.activeSiteId = account.user?.sites[0]?.id
+  session.planType = account.user?.sites[0].sassPlanType
+  session.subscriptionStatus =
+    account.user?.sites[0].sassSubscriptionStatus || ''
+  session.currentPeriodEnd = account.user?.sites[0]
+    ?.sassCurrentPeriodEnd as any as string
+
   session.subscriptionEndedAt = getSubscriptionEndedAt(
     account.user.subscriptions,
   )
@@ -268,6 +275,10 @@ export async function PATCH(request: NextRequest) {
     if (subscription) {
       session.subscriptionEndedAt = subscription.endedAt
     }
+  }
+
+  if (isCancelSubscription(json)) {
+    session.subscriptionStatus = 'canceled'
   }
 
   // session.updateConfig({

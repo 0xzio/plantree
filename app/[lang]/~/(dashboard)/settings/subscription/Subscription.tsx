@@ -14,15 +14,15 @@ import { useIsMember } from '@/hooks/useIsMember'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { toReadableTime } from '@/lib/utils'
+import { PlanType } from '@prisma/client'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { format } from 'date-fns'
 import { useAccount } from 'wagmi'
 
 interface Props {}
 
 export function Subscription({}: Props) {
   const { setIsOpen } = useSubscriptionGuideDialog()
-  const { data: session } = useSession()
+  const { data: session, update } = useSession()
   const isMember = useIsMember()
   const subscriptionDialog = useSubscriptionDialog()
   const { isConnected } = useAccount()
@@ -35,14 +35,19 @@ export function Subscription({}: Props) {
   }, [session])
 
   const planListDialog = usePlanListDialog()
+
   return (
     <>
       <PlanListDialog />
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-3">
           <div className="flex items-center gap-2">
-            {' '}
-            <div className="text-2xl font-bold">PenX Pro</div>
+            <div className="text-2xl font-bold">PenX</div>
+            <Badge>{session?.planType || 'Free'}</Badge>
+            {session?.planType !== PlanType.FREE &&
+              session?.subscriptionStatus === 'canceled' && (
+                <Badge variant="secondary">Canceled</Badge>
+              )}
           </div>
 
           <div className="text-foreground/60">
@@ -74,26 +79,34 @@ export function Subscription({}: Props) {
                 // }
               }}
             >
-              {isMember ? 'Change plan' : 'Upgrade'}
+              {session?.planType !== PlanType.FREE &&
+              session?.subscriptionStatus !== 'canceled'
+                ? 'Change plan'
+                : 'Upgrade'}
             </Button>
 
-            <ConfirmDialog
-              title="Cancel subscription?"
-              content="Are you sure you want to cancel subscription?"
-              onConfirm={async () => {
-                await api.billing.cancel.mutate()
-              }}
-            >
-              <Button className="text-foreground/40" variant="link">
-                Cancel subscription
-              </Button>
-            </ConfirmDialog>
+            {session?.planType !== PlanType.FREE &&
+              session?.subscriptionStatus !== 'canceled' && (
+                <ConfirmDialog
+                  title="Cancel subscription?"
+                  content="Are you sure you want to cancel subscription?"
+                  onConfirm={async () => {
+                    await api.billing.cancel.mutate()
+                    await update({
+                      type: 'cancel-subscription',
+                    })
+                  }}
+                >
+                  <Button className="text-foreground/40" variant="link">
+                    Cancel subscription
+                  </Button>
+                </ConfirmDialog>
+              )}
           </div>
         </div>
 
-        <Separator className="my-6"></Separator>
-
-        <UseCouponCode></UseCouponCode>
+        {/* <Separator className="my-6"></Separator> */}
+        {/* <UseCouponCode></UseCouponCode> */}
       </div>
     </>
   )

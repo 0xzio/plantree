@@ -23,7 +23,8 @@ export async function POST(req: NextRequest) {
         sassCurrentPeriodEnd: new Date(
           json.object.subscription.current_period_end_date,
         ),
-        sassSubscriptionId: json.object.id,
+        sassSubscriptionStatus: json.object.subscription.status,
+        sassSubscriptionId: json.object.subscription.id,
       },
     })
   }
@@ -35,6 +36,7 @@ export async function POST(req: NextRequest) {
         sassPlanType: json.object.metadata.planType as any,
         sassProductId: json.object.product.id,
         sassCurrentPeriodEnd: new Date(json.object.current_period_end_date),
+        sassSubscriptionStatus: json.object.status,
         sassSubscriptionId: json.object.id,
       },
     })
@@ -44,8 +46,9 @@ export async function POST(req: NextRequest) {
     await prisma.site.update({
       where: { sassCustomerId: json.object.customer.id },
       data: {
-        sassPlanType: PlanType.FREE,
+        // sassPlanType: PlanType.FREE,
         sassCurrentPeriodEnd: new Date(json.object.current_period_end_date),
+        sassSubscriptionStatus: json.object.status,
       },
     })
   }

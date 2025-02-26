@@ -8,6 +8,7 @@ import {
   UpdateActiveSiteData,
   UpdateSessionData,
 } from '@/lib/types'
+import { PlanType } from '@prisma/client'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { queryClient } from './queryClient'
 
@@ -62,11 +63,29 @@ export function useSession() {
       body: JSON.stringify(data),
       method: 'PATCH',
     })
+    queryClient.setQueriesData({ queryKey: ['session'] }, res)
   }
 
+  const formattedSession = useMemo(() => {
+    if (!session?.isLoggedIn) return undefined
+    let planType = session.planType
+
+    if (
+      session.currentPeriodEnd &&
+      Date.now() > new Date(session.currentPeriodEnd).getTime()
+    ) {
+      planType = PlanType.FREE
+    }
+
+    return {
+      ...session,
+      planType,
+    }
+  }, [session])
+
   return {
-    session: session?.isLoggedIn ? session : undefined,
-    data: session?.isLoggedIn ? session : undefined,
+    session: formattedSession,
+    data: formattedSession,
     logout,
     login,
     status,

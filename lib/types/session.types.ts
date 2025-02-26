@@ -16,6 +16,9 @@ export interface SessionData {
   role: string
   siteId: string
   activeSiteId: string
+  planType: string
+  currentPeriodEnd: string
+  subscriptionStatus: string
   accessToken: string
   subscriptionEndedAt: Date | null
   domain: {
@@ -93,6 +96,7 @@ export type UpdateSessionData =
   | UpdateActiveSiteData
   | UpdateProfileData
   | UpdateSubscriptionData
+  | CancelSubscriptionData
 
 export type UpdateActiveSiteData = {
   type: 'update-active-site'
@@ -122,4 +126,14 @@ export function isUpdateSubscription(
   value: any,
 ): value is UpdateSubscriptionData {
   return typeof value === 'object' && value?.type === 'update-subscription'
+}
+
+export type CancelSubscriptionData = {
+  type: 'cancel-subscription'
+}
+
+export function isCancelSubscription(
+  value: any,
+): value is UpdateSubscriptionData {
+  return typeof value === 'object' && value?.type === 'cancel-subscription'
 }

@@ -1,5 +1,9 @@
 import { prisma } from '@/lib/prisma'
+import { getServerSession, getSessionOptions } from '@/lib/session'
+import { SessionData } from '@/lib/types'
 import { PlanType } from '@prisma/client'
+import { getIronSession, IronSession } from 'iron-session'
+import { cookies } from 'next/headers'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -76,12 +80,23 @@ export const billingRouter = router({
     await prisma.site.update({
       where: { id: ctx.activeSiteId },
       data: {
-        sassPlanType: PlanType.FREE,
-        sassProductId: null,
+        // sassPlanType: PlanType.FREE,
+        // sassProductId: null,
+        sassSubscriptionStatus: 'canceled',
         sassCurrentPeriodEnd: new Date(res.current_period_end_date),
-        sassSubscriptionId: null,
+        // sassSubscriptionId: null,
       },
     })
+
+    const sessionOptions = getSessionOptions()
+    const session = await getIronSession<SessionData>(
+      await cookies(),
+      sessionOptions,
+    )
+
+    session.subscriptionStatus = 'canceled'
+
+    await session.save()
 
     return true
   }),

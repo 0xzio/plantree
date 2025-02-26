@@ -1,5 +1,9 @@
 import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
+import { getServerSession, getSessionOptions } from '@/lib/session'
+import { SessionData } from '@/lib/types'
+import { getIronSession, IronSession } from 'iron-session'
+import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 const apiKey = process.env.CREEM_API_KEY!
@@ -8,7 +12,6 @@ export async function GET(req: NextRequest) {
   const url = new URL(req.url)
 
   const siteId = url.pathname.split('/')[2]
-  console.log('=====siteId:', siteId)
 
   const request_id = url.searchParams.get('request_id') || ''
   const checkout_id = url.searchParams.get('checkout_id')!
@@ -29,6 +32,7 @@ export async function GET(req: NextRequest) {
 
   console.log('=======>>>signature:', signature)
   console.log('=======generateSignature:', generateSignature(params))
+  console.log('=======params:', params)
 
   if (signature !== generateSignature(params)) {
     throw new Error('INVALID_SIGNATURE')
@@ -40,11 +44,28 @@ export async function GET(req: NextRequest) {
     where: { id: siteId },
     data: {
       sassCustomerId: customer_id,
-      // sassSubscriptionId: subscription_id,
-      // sassPlanType: planType as any,
-      // sassProductId: product_id,
+      sassSubscriptionId: subscription_id,
+      sassSubscriptionStatus: 'active',
+      sassPlanType: planType as any,
+      sassProductId: product_id,
     },
   })
+
+  const sessionOptions = getSessionOptions()
+  const session = await getIronSession<SessionData>(
+    await cookies(),
+    sessionOptions,
+  )
+
+  const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
+
+  session.planType = planType
+  session.subscriptionStatus = 'active'
+  session.currentPeriodEnd = new Date(
+    Date.now() + millisecondsPerMonth,
+  ).toString()
+
+  await session.save()
 
   return NextResponse.redirect(
     `${url.protocol}//${url.host}/~/settings/subscription`,
