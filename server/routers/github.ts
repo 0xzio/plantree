@@ -13,7 +13,8 @@ export const githubRouter = router({
     const user = await prisma.user.findUniqueOrThrow({
       where: { id: ctx.token.uid },
     })
-    const github = user?.github as GithubInfo
+
+    const github = (user?.github || {}) as GithubInfo
 
     if (!github.token || !github.refreshToken) return github
 
