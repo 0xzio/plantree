@@ -19,6 +19,11 @@ export const Nav = () => {
       text: 'Themes',
       to: '/themes',
     },
+
+    {
+      text: 'Themes',
+      to: '/themes',
+    },
     // {
     //   text: 'Marketplace',
     //   to: '/marketplace',
@@ -34,14 +39,14 @@ export const Nav = () => {
     //   to: '/tokenomics',
     // },
 
-    // {
-    //   text: 'Sponsor',
-    //   to: '/sponsor',
-    // },
     {
-      text: 'Pricing',
-      to: '/pricing',
+      text: 'Sponsor',
+      to: '/sponsor',
     },
+    // {
+    //   text: 'Pricing',
+    //   to: '/pricing',
+    // },
     // {
     //   text: 'Rewards',
     //   to: '/rewards',

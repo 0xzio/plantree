@@ -52,6 +52,7 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
         <input
           ref={inputRef}
           accept="image/*"
+          type="file"
           onChange={handleFileChange}
           className="absolute left-0 top-0 opacity-0 w-full h-full cursor-pointer"
         />

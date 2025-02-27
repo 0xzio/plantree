@@ -165,6 +165,7 @@
     "nextjs-toploader": "^1.6.12",
     "nodemailer": "^6.10.0",
     "octokit": "^4.0.2",
+    "openai": "^4.85.4",
     "openai-edge": "^1.2.2",
     "p-retry": "^6.2.0",
     "prisma-extension-pagination": "^0.7.5",
