@@ -1,10 +1,8 @@
 import { useMemo } from 'react'
-import { useQuery } from '@tanstack/react-query'
+import { trpc } from '@/lib/trpc'
 
 export function useGitHubToken() {
-  const { data: github, ...rest } = useQuery(['githubToken'], () =>
-    trpc.github.githubInfo.query({ address }),
-  )
+  const { data: github, ...rest } = trpc.github.githubInfo.useQuery()
 
   const isTokenValid = useMemo(() => {
     if (!github) return false
@@ -12,10 +10,9 @@ export function useGitHubToken() {
   }, [github])
 
   return {
-    isTokenValid: false,
-    github: {},
-    // token: github?.token,
-    token: '',
-    // ...rest,
+    isTokenValid,
+    github,
+    token: github?.token,
+    ...rest,
   }
 }

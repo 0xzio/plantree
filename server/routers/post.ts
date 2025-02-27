@@ -272,6 +272,7 @@ export const postRouter = router({
           include: { domains: true },
         })
         const domain = getSiteDomain(site) || site.domains[0]
+
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
@@ -313,13 +314,17 @@ export const postRouter = router({
         where: { siteId: input.siteId, status: PostStatus.PUBLISHED },
       })
 
-      await prisma.site.update({
+      const site = await prisma.site.update({
         where: { id: input.siteId },
         data: { postCount: publishedCount },
       })
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+
+      setTimeout(async () => {
+        syncPostToHub(site, post)
+      }, 0)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)

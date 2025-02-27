@@ -1,68 +1,61 @@
+import { cacheHelper } from '@/lib/cache-header'
+import { prisma } from '@/lib/prisma'
+import { GithubInfo } from '@/lib/types'
 import { components } from '@octokit/openapi-types'
 import { Octokit } from 'octokit'
 import { z } from 'zod'
-import { GithubInfo, User } from '@penx/model'
-import { getTokenByInstallationId } from '../service/getTokenByInstallationId'
-import { refreshGitHubToken } from '../service/refreshGitHubToken'
-import { createTRPCRouter, publicProcedure } from '../trpc'
+import { getTokenByInstallationId } from '../lib/getTokenByInstallationId'
+import { refreshGitHubToken } from '../lib/refreshGitHubToken'
+import { protectedProcedure, publicProcedure, router } from '../trpc'
 
-export const githubRouter = createTRPCRouter({
-  githubInfo: publicProcedure
-    .input(
-      z.object({
-        address: z.string(),
-      }),
-    )
-    .query(async ({ ctx, input }) => {
-      const { address } = input
+export const githubRouter = router({
+  githubInfo: protectedProcedure.query(async ({ ctx, input }) => {
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { id: ctx.token.uid },
+    })
+    const github = user?.github as GithubInfo
 
-      const user = await ctx.prisma.user.findUnique({
-        where: { address },
-      })
+    if (!github.token || !github.refreshToken) return github
 
-      const github: GithubInfo = JSON.parse(user?.github || '{}')
+    const tokenExpiresAt = new Date(github.tokenExpiresAt!).valueOf()
+    const isTokenExpired = Date.now() > tokenExpiresAt
 
-      if (!github.token || !github.refreshToken) return github
+    // accessToken not expired, use it
+    if (!isTokenExpired) return github
 
-      const tokenExpiresAt = new Date(github.tokenExpiresAt!).valueOf()
-      const isTokenExpired = Date.now() > tokenExpiresAt
+    const refreshTokenExpiresAt = new Date(
+      github.refreshTokenExpiresAt!,
+    ).valueOf()
 
-      // accessToken not expired, use it
-      if (!isTokenExpired) return github
+    const isRefreshTokenExpired = Date.now() > refreshTokenExpiresAt
 
-      const refreshTokenExpiresAt = new Date(
-        github.refreshTokenExpiresAt!,
-      ).valueOf()
-
-      const isRefreshTokenExpired = Date.now() > refreshTokenExpiresAt
-
-      // accessToken is expired, but refreshToken not expired, refresh it to get a new accessToken
-      if (isTokenExpired && !isRefreshTokenExpired) {
-        try {
-          const info = await refreshGitHubToken(github.refreshToken)
-          await ctx.prisma.user.update({
-            where: { address },
-            data: {
-              github: JSON.stringify({
-                ...github,
-                token: info.token,
-                refreshToken: info.refreshToken,
-                tokenExpiresAt: info.expiresAt,
-                refreshTokenExpiresAt: info.refreshTokenExpiresAt,
-              } as GithubInfo),
-            },
-          })
-        } catch (error) {
-          return github
-        }
-      } else {
+    // accessToken is expired, but refreshToken not expired, refresh it to get a new accessToken
+    if (isTokenExpired && !isRefreshTokenExpired) {
+      try {
+        const info = await refreshGitHubToken(github.refreshToken)
+        await prisma.user.update({
+          where: { id: ctx.token.uid },
+          data: {
+            github: JSON.stringify({
+              ...github,
+              token: info.token,
+              refreshToken: info.refreshToken,
+              tokenExpiresAt: info.expiresAt,
+              refreshTokenExpiresAt: info.refreshTokenExpiresAt,
+            } as GithubInfo),
+          },
+        })
+      } catch (error) {
         return github
       }
-
+    } else {
       return github
-    }),
+    }
 
-  appInstallations: publicProcedure
+    return github
+  }),
+
+  appInstallations: protectedProcedure
     .input(
       z.object({
         token: z.string(),
@@ -96,7 +89,7 @@ export const githubRouter = createTRPCRouter({
       return []
     }),
 
-  searchRepo: publicProcedure
+  searchRepo: protectedProcedure
     .input(
       z.object({
         q: z.string().optional(),
@@ -149,19 +142,41 @@ export const githubRouter = createTRPCRouter({
   /**
    * Get Octokit auth token
    */
-  getTokenByAddress: publicProcedure
+  getTokenByUserId: protectedProcedure.query(async ({ ctx, input }) => {
+    const user = await prisma.user.findUniqueOrThrow({
+      where: { id: ctx.token.uid },
+    })
+
+    const github = user?.github as GithubInfo
+    return getTokenByInstallationId(github.installationId)
+  }),
+
+  connectRepo: publicProcedure
     .input(
       z.object({
-        address: z.string(),
+        repo: z.string(),
+        installationId: z.number(),
       }),
     )
-    .query(async ({ ctx, input }) => {
-      const { address } = input
-      const userRaw = await ctx.prisma.user.findUniqueOrThrow({
-        where: { address },
+    .mutation(async ({ ctx, input }) => {
+      const site = await prisma.site.update({
+        where: { id: ctx.activeSiteId },
+        data: input,
       })
 
-      const user = new User(userRaw)
-      return getTokenByInstallationId(user.github.installationId)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      return site
     }),
+
+  disconnectRepo: publicProcedure.mutation(async ({ ctx, input }) => {
+    const site = await prisma.site.update({
+      where: { id: ctx.activeSiteId },
+      data: {
+        repo: '',
+        installationId: null,
+      },
+    })
+    await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+    return site
+  }),
 })

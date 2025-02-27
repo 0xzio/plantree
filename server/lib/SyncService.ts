@@ -44,8 +44,6 @@ export class SyncService {
   private site: Site
   private post: Post
 
-  spacesDir = 'spaces'
-
   filesTree: Content[]
 
   commitSha: string
@@ -54,10 +52,10 @@ export class SyncService {
     return 'main'
   }
 
-  setSharedParams() {
+  setSharedParams(owner: string, repo: string) {
     const sharedParams = {
-      owner: 'penx-labs',
-      repo: 'hub',
+      owner,
+      repo,
       headers: {
         'X-GitHub-Api-Version': '2022-11-28',
       },
@@ -65,11 +63,11 @@ export class SyncService {
     this.params = sharedParams
   }
 
-  static async init(token: string) {
+  static async init(token: string, site: Site) {
     const s = new SyncService()
-    s.setSharedParams()
+    const [owner, repo] = (site.repo || '').split('/')
+    s.setSharedParams(owner, repo)
     s.app = new Octokit({ auth: token })
-
     return s
   }
 
@@ -85,7 +83,7 @@ export class SyncService {
 
   private async commit(treeSha: string) {
     const parentSha = this.baseBranchSha
-    const msg = this.post ? 'Push post' : 'Push site'
+    const msg = this.post ? `Publish post: ${this.post.title}` : 'Push site'
 
     const commit = await this.app.request(
       'POST /repos/{owner}/{repo}/git/commits',
@@ -130,7 +128,7 @@ export class SyncService {
   async getPostTree() {
     let tree: TreeItem[] = []
     const item = {
-      path: `users/${this.post.userId}/${this.post.id}.json`,
+      path: `json/${this.post.id}.json`,
       mode: '100644',
       type: 'blob',
       content: JSON.stringify(this.post, null, 2),

@@ -1,4 +1,3 @@
-import { Box } from '@fower/react'
 import { GitHubAuthButton } from './GitHubAuthButton'
 import { GithubConnectionBox } from './GitHubConnectionBox'
 import { GitIntegration } from './GitIntegration'
@@ -8,11 +7,10 @@ export const ConnectGitHub = () => {
   const { github, isTokenValid, isLoading } = useGitHubToken()
 
   return (
-    <Box rounded2XL>
-      <div className="text-2xl font-bold">Github Connection</div>
-      <Box mb6 gray600>
-        Connect to you GitHub Repository, so you can sync docs to GitHub
-      </Box>
+    <div>
+      <div className="mb-6 text-foreground/60">
+        Connect to you GitHub Repository, so you can backup data to GitHub
+      </div>
 
       <GithubConnectionBox isLoading={isLoading}>
         {isTokenValid ? (
@@ -21,6 +19,6 @@ export const ConnectGitHub = () => {
           <GitHubAuthButton />
         )}
       </GithubConnectionBox>
-    </Box>
+    </div>
   )
 }

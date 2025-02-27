@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
+import { queryClient } from '@/lib/queryClient'
+import { api } from '@/lib/trpc'
 import { Box } from '@fower/react'
 import { toast } from 'sonner'
 
@@ -11,16 +14,24 @@ interface Props {
 
 export function GitHubConnectButton({ installationId, repo }: Props) {
   const [loading, setLoading] = useState(false)
+  const site = useSiteContext()
 
   async function connect() {
     setLoading(true)
     try {
-      // const user = await trpc.user.connectRepo.mutate({
-      //   address,
-      //   installationId,
-      //   repo,
-      // })
-      // store.setUser(new User(user))
+      await api.github.connectRepo.mutate({
+        installationId,
+        repo,
+      })
+
+      queryClient.setQueriesData(
+        { queryKey: ['current_site'] },
+        {
+          ...site,
+          installationId,
+          repo,
+        },
+      )
     } catch (error) {
       toast.warning('Connect GitHub failed')
     }

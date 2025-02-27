@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react'
+import { LoadingDots } from '@/components/icons/loading-dots'
+import { useSiteContext } from '@/components/SiteContext'
 import { Input } from '@/components/ui/input'
+import { trpc } from '@/lib/trpc'
 import { Box } from '@fower/react'
-import { useQuery } from '@tanstack/react-query'
 import { useDebouncedCallback } from 'use-debounce'
 import { GithubConnectedBox } from './GitHubConnectedBox'
 import { GithubInstallationSelect } from './GitHubInstallationSelect'
@@ -12,46 +14,56 @@ interface Props {
 }
 
 export function GitIntegration({ github }: Props) {
-  // const { data: installations } = useQuery(['appInstallations'], () =>
-  //   trpc.github.appInstallations.query({
-  //     token: github?.token!,
-  //   }),
-  // )
+  const site = useSiteContext()
+  const { data: installations, isLoading: isLoadInstallations } =
+    trpc.github.appInstallations.useQuery({
+      token: github?.token!,
+    })
 
-  const [installationId, setInstallationId] = useState<number>()
+  const [installationId, setInstallationId] = useState('')
+
   const [q, setQ] = useState<string>('')
   const debouncedSetQ = useDebouncedCallback(async (val) => {
     return setQ(val)
   }, 500)
 
-  // useEffect(() => {
-  //   if (installations?.length && !installationId) {
-  //     setInstallationId(installations[0].installationId)
-  //   }
-  // }, [installations, installationId])
+  useEffect(() => {
+    if (installations?.length && !installationId) {
+      setInstallationId(installations[0].installationId.toString())
+    }
+  }, [installations, installationId])
 
-  // const repo = user.repo
+  if (isLoadInstallations) {
+    return (
+      <div className="h-40 flex items-center justify-center">
+        <LoadingDots></LoadingDots>
+      </div>
+    )
+  }
 
-  // if (repo) {
-  //   return <GithubConnectedBox repo={repo} />
-  // }
+  if (site.repo) {
+    return <GithubConnectedBox repo={site.repo} />
+  }
 
   return (
     <Box mt2 column gapY4>
       <Box toBetween gapX3>
         <GithubInstallationSelect
           token={github?.token!}
-          value={installationId!}
-          onChange={(v: number) => setInstallationId(v)}
+          value={(installationId || '').toString()}
+          onChange={(v: string) => setInstallationId(v)}
         />
         <Input
           placeholder="Search..."
-          flex-1
           onChange={(e) => debouncedSetQ(e.target.value)}
         />
       </Box>
       {installationId && (
-        <Repos token={github?.token!} q={q} installationId={installationId} />
+        <Repos
+          token={github?.token!}
+          q={q}
+          installationId={Number(installationId)}
+        />
       )}
     </Box>
   )

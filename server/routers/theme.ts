@@ -118,6 +118,6 @@ export const themeRouter = router({
     }),
 
   getGitHubToken: publicProcedure.query(() => {
-    return getTokenByInstallationId()
+    return getTokenByInstallationId(0)
   }),
 })

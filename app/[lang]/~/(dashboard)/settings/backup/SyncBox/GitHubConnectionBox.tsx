@@ -7,18 +7,18 @@ interface Props extends FowerHTMLProps<'div'> {
 
 export function GithubConnectionBox({ children, isLoading, ...rest }: Props) {
   return (
-    <Box {...rest}>
+    <div {...rest}>
       {isLoading && (
-        <Box toBetween>
-          <Box toCenter gap2>
+        <div className="flex justify-between">
+          <div className="flex items-center justify-center gap-2">
             <Skeleton className="w-8 h-8 rounded-full" />
             <Skeleton className="h-8 w-32" />
-          </Box>
+          </div>
           <Skeleton className="w-32 h-11 rounded-2xl" />
-        </Box>
+        </div>
       )}
 
       {!isLoading && <Box>{children}</Box>}
-    </Box>
+    </div>
   )
 }

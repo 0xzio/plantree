@@ -293,3 +293,12 @@ export type PostById = Post & {
     }
   >
 }
+
+export type GithubInfo = {
+  installationId: number
+  repo: string
+  token: string
+  refreshToken: string
+  tokenExpiresAt: string
+  refreshTokenExpiresAt: string
+}

@@ -76,6 +76,8 @@ model Site {
   catalogue              Json?
   newsletterConfig       Json?
   notificationConfig     Json?
+  repo                   String?        @db.VarChar(100)
+  installationId         Int?           @db.Integer // github app installationId
   themeName              String?        @db.VarChar(50)
   themeConfig            Json?
   memberCount            Int            @default(0) @db.Integer
