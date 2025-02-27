@@ -76,7 +76,6 @@ export const siteRouter = router({
 
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
-
     const cachedMySites = await cacheHelper.getCachedMySites(userId)
     if (cachedMySites) return cachedMySites
 

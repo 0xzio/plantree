@@ -12,6 +12,7 @@ import { couponRouter } from './routers/coupon'
 import { databaseRouter } from './routers/database'
 import { deliveryRouter } from './routers/delivery'
 import { extensionRouter } from './routers/extension'
+import { githubRouter } from './routers/github'
 import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
@@ -56,6 +57,7 @@ export const appRouter = router({
   delivery: deliveryRouter,
   newsletter: newsletterRouter,
   billing: billingRouter,
+  github: githubRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

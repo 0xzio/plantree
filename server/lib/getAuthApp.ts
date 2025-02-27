@@ -1,8 +1,9 @@
 import { createAppAuth } from '@octokit/auth-app'
+import { Octokit } from 'octokit'
 
 const privateKey = JSON.parse(process.env.GITHUB_PRIVATE_KEY || '{}').key
 
-export async function getTokenByInstallationId(installationId: number) {
+export async function getAuthApp(installationId: number) {
   const auth = createAppAuth({
     appId: process.env.GITHUB_APP_ID!,
     privateKey,
@@ -14,5 +15,9 @@ export async function getTokenByInstallationId(installationId: number) {
     type: 'installation',
     installationId,
   })
-  return installationAuthentication.token
+
+  const octokit = new Octokit({
+    auth: installationAuthentication.token,
+  })
+  return octokit
 }
