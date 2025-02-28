@@ -150,7 +150,7 @@ export const githubRouter = router({
     return getTokenByInstallationId(github.installationId)
   }),
 
-  connectRepo: publicProcedure
+  connectRepo: protectedProcedure
     .input(
       z.object({
         repo: z.string(),
@@ -167,7 +167,7 @@ export const githubRouter = router({
       return site
     }),
 
-  disconnectRepo: publicProcedure.mutation(async ({ ctx, input }) => {
+  disconnectRepo: protectedProcedure.mutation(async ({ ctx, input }) => {
     const site = await prisma.site.update({
       where: { id: ctx.activeSiteId },
       data: {
@@ -178,4 +178,14 @@ export const githubRouter = router({
     await cacheHelper.updateCachedMySites(ctx.token.uid, null)
     return site
   }),
+
+  getGitHubToken: protectedProcedure
+    .input(
+      z.object({
+        installationId: z.number(),
+      }),
+    )
+    .query(({ input }) => {
+      return getTokenByInstallationId(input.installationId)
+    }),
 })

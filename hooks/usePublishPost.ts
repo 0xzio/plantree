@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { editorPlugins } from '@/components/editor/plugins/editor-plugins'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { loadPost, Post, postAtom, usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
@@ -7,9 +8,11 @@ import { addressMap } from '@/lib/address'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
 import { revalidateMetadata } from '@/lib/revalidateTag'
+import { syncPostToHub } from '@/lib/syncPostToHub'
 import { api } from '@/lib/trpc'
 import { store } from '@/store'
 import { GateType, PostType } from '@prisma/client'
+import { createPlateEditor } from '@udecode/plate/react'
 import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
 import { Address } from 'viem'
@@ -17,7 +20,8 @@ import { useAccount, useWriteContract } from 'wagmi'
 import { useSiteContext } from '../components/SiteContext'
 
 export function usePublishPost() {
-  const { spaceId, id } = useSiteContext()
+  const site = useSiteContext()
+  const { spaceId, id } = site
   const { address } = useAccount()
   const [isLoading, setLoading] = useState(false)
   const checkChain = useCheckChain()
@@ -72,13 +76,26 @@ export function usePublishPost() {
         revalidateMetadata(`posts`)
         // revalidateMetadata(`posts-${post.slug}`)
         toast.success('published successfully!')
+
+        // backup to github
+        if (site.repo && site.installationId) {
+          const editor = createPlateEditor({
+            value: JSON.parse(post.content),
+            plugins: editorPlugins,
+          })
+
+          const content = (editor.api as any).markdown.serialize()
+          syncPostToHub(site, post, content).catch((error) => {
+            const msg = extractErrorMessage(error)
+            toast.error(msg)
+          })
+        }
       } catch (error) {
         console.log('========error:', error)
         const msg = extractErrorMessage(error)
         toast.error(msg)
+        setLoading(false)
       }
-
-      setLoading(false)
     },
   }
 }

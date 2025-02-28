@@ -24,7 +24,6 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
 import { checkSitePermission } from '../lib/checkSitePermission'
-import { syncPostToHub } from '../lib/syncPostToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const postRouter = router({
@@ -321,8 +320,6 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
-
-      syncPostToHub(site, post)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)

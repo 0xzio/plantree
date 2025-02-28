@@ -7,7 +7,6 @@ import { AuthType, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
-import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const siteRouter = router({

@@ -14,6 +14,7 @@ import { format } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
+import { AddPropButton } from './AddPropButton'
 import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
 import { JournalNav } from './JournalNav'
@@ -128,6 +129,7 @@ export function Post() {
               </div>
             </div>
           )}
+          <AddPropButton />
         </div>
 
         <div className="w-full" data-registry="plate">

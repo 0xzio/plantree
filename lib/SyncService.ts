@@ -33,8 +33,6 @@ type Content = {
 }
 
 export class SyncService {
-  password: any
-
   private params: SharedParams
 
   private app: Octokit
@@ -125,16 +123,22 @@ export class SyncService {
     return tree
   }
 
-  async getPostTree() {
+  async getPostTree(markdown = '') {
     let tree: TreeItem[] = []
-    const item = {
+
+    tree.push({
       path: `json/${this.post.id}.json`,
       mode: '100644',
       type: 'blob',
       content: JSON.stringify(this.post, null, 2),
-    } as TreeItem
+    })
 
-    tree.push(item)
+    tree.push({
+      path: `markdown/${this.post.id}.md`,
+      mode: '100644',
+      type: 'blob',
+      content: markdown,
+    })
 
     return tree
   }
@@ -146,10 +150,11 @@ export class SyncService {
     await this.pushTree(tree)
   }
 
-  async pushPost(post: Post) {
+  async pushPost(post: Post, markdown = '') {
     this.post = post
     let tree: TreeItem[] = []
-    tree = await this.getPostTree()
+    tree = await this.getPostTree(markdown)
+
     await this.pushTree(tree)
   }
 

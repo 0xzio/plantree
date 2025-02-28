@@ -116,8 +116,4 @@ export const themeRouter = router({
       await redis.set(ALL_EXTENSIONS_KEY, JSON.stringify(themes))
       return true
     }),
-
-  getGitHubToken: publicProcedure.query(() => {
-    return getTokenByInstallationId(0)
-  }),
 })
