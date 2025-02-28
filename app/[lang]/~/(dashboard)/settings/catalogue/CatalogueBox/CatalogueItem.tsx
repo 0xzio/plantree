@@ -45,7 +45,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
         ref={ref}
         className={cn(
           'catalogueItem py-1 hover:bg-foreground/5 relative rounded pr-2 flex justify-between items-center mb-[1px] transition-colors',
-          sortable?.isOver && item.isCategory && 'bg-brand-500',
+          sortable?.isOver && item.isCategory && 'bg-brand',
         )}
         pl={depth * 24 + 6}
         css={css}

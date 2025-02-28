@@ -17,17 +17,17 @@ export function SocialNav({ className }: Props) {
         target="_blank"
         className="inline-flex"
       >
-        <span className="i-[ic--round-discord] w-7 h-7  hover:text-foreground/60 text-foreground/80"></span>
+        <span className="icon-[ic--round-discord] w-7 h-7  hover:text-foreground/60 text-foreground/80"></span>
       </a>
       <a
-        href="https://github.com/0xzio/penx"
+        href="https://github.com/penx-labs/penx"
         target="_blank"
         className="inline-flex"
       >
-        <span className="i-[mdi--github] w-7 h-7  hover:text-foreground/60 text-foreground/80"></span>
+        <span className="icon-[mdi--github] w-7 h-7  hover:text-foreground/60 text-foreground/80"></span>
       </a>
       <a href="https://x.com/0xzio_eth" target="_blank" className="inline-flex">
-        <span className="i-[prime--twitter] w-5 h-5 hover:text-foreground/60 text-foreground/80"></span>
+        <span className="icon-[prime--twitter] w-5 h-5 hover:text-foreground/60 text-foreground/80"></span>
       </a>
     </div>
   )

@@ -29,7 +29,7 @@ export function SubscriptionPrice({}: Props) {
       <a
         href={process.env.NEXT_PUBLIC_HOW_TO_GET_PEN_URL}
         target="_blank"
-        className="text-brand-500 text-sm flex items-center gap-1"
+        className="text-brand text-sm flex items-center gap-1"
       >
         <span>How to get $PEN?</span>
         <ExternalLink size={12}></ExternalLink>

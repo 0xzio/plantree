@@ -423,7 +423,6 @@ export const siteRouter = router({
         await tx.message.deleteMany({ where: { siteId } })
         await tx.channel.deleteMany({ where: { siteId } })
         await tx.author.deleteMany({ where: { siteId } })
-        await tx.node.deleteMany({ where: { userId } })
         await tx.post.deleteMany({ where: { siteId } })
         await tx.comment.deleteMany({ where: { userId } })
         await tx.postTag.deleteMany({ where: { siteId } })

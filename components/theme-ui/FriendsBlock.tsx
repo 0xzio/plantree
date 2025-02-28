@@ -20,7 +20,7 @@ export function FriendsBlock({ site, friends, className }: Props) {
               <AvatarImage src={item.avatar} />
               <AvatarFallback>{item.name.slice(0, 1)}</AvatarFallback>
             </Avatar>
-            <a href={item.url} target="_blank" className="text-brand-500">
+            <a href={item.url} target="_blank" className="text-brand">
               {item.name}
             </a>
             <div>{item.introduction}</div>

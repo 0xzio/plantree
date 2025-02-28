@@ -150,7 +150,7 @@ export function SlateContent() {
               <a
                 href={(element as any).url}
                 target="_blank"
-                className="text-brand-500 no-underline hover:underline decoration-brand-500 underline-offset-4 cursor-pointer"
+                className="text-brand no-underline hover:underline decoration-brand underline-offset-4 cursor-pointer"
                 {...attributes}
               >
                 {children}

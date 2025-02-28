@@ -17,7 +17,6 @@ import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
 import { newsletterRouter } from './routers/newsletter'
-import { nodeRouter } from './routers/node'
 import { pageRouter } from './routers/page'
 import { planRouter } from './routers/plan'
 import { postRouter } from './routers/post'
@@ -37,7 +36,6 @@ export const appRouter = router({
   hostedSite: hostedSiteRouter,
   user: userRouter,
   post: postRouter,
-  node: nodeRouter,
   tag: tagRouter,
   google: googleRouter,
   accessToken: accessTokenRouter,

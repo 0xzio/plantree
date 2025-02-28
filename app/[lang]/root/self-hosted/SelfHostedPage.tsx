@@ -77,7 +77,7 @@ function Content() {
           <div className="text-sm">
             Read the deployment guide:{' '}
             <a
-              className="text-brand-500"
+              className="text-brand"
               href="https://blog.penx.me/posts/39252f1c-1ee4-4da4-977a-43ee47ea1d24"
               target="_blank"
             >

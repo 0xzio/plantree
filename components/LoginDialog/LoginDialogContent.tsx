@@ -60,7 +60,7 @@ export function LoginDialogContent() {
             setIsOpen(false)
           }}
         >
-          <span className="i-[token--ethm] w-6 h-5"></span>
+          <span className="icon-[token--ethm] w-6 h-5"></span>
           <span>Wallet login </span>
         </WalletConnectButton>
       </div>

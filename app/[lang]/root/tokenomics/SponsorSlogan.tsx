@@ -9,12 +9,12 @@ export function SponsorSlogan() {
         <a
           href="https://www.penx.io/"
           target="_blank"
-          className="underline decoration-brand-500 text-brand-500"
+          className="underline decoration-brand text-brand"
         >
           penx.io
         </a>{' '}
         project, you can sponsor the PenX project, and you will receive{' '}
-        <span className="text-brand-500">$PEN</span> tokens.
+        <span className="text-brand">$PEN</span> tokens.
       </div>
     </div>
   )

@@ -47,7 +47,7 @@ export function LinkWalletButton() {
         {isLoading && <LoadingDots className="bg-foreground/50" />}
         {!isLoading && (
           <>
-            <span className="i-[token--ethm] w-4 h-4"></span>
+            <span className="icon-[token--ethm] w-4 h-4"></span>
             <div className="">Link Wallet</div>
           </>
         )}

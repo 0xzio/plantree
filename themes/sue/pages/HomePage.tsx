@@ -51,7 +51,7 @@ export function HomePage({ posts = [], tags, site }: Props) {
                 <li key={t.id} className="">
                   <Link
                     href={`/tags/${slug(t.name)}`}
-                    className="text-foreground/80 font-medium hover:text-brand-500 dark:hover:text-brand-500 rounded-full"
+                    className="text-foreground/80 font-medium hover:text-brand dark:hover:text-brand rounded-full"
                     aria-label={`View posts tagged ${t.name}`}
                   >
                     #{`${t.name}`}
@@ -71,7 +71,7 @@ export function HomePage({ posts = [], tags, site }: Props) {
 
           <Link
             href="/posts"
-            className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
+            className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
           >
             All posts &rarr;
           </Link>

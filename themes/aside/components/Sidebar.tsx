@@ -53,7 +53,7 @@ export const Sidebar = ({ site, tags }: Props) => {
                 key={link.pathname}
                 href={link.pathname}
                 className={cn(
-                  'font-medium hover:text-brand-500 dark:hover:text-brand-400 text-foreground/90',
+                  'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/90',
                 )}
               >
                 {link.title}
@@ -65,8 +65,8 @@ export const Sidebar = ({ site, tags }: Props) => {
             <Link
               href="/membership"
               className={cn(
-                'font-medium hover:text-brand-500 text-foreground/90',
-                'border border-brand-500 text-brand-500 rounded-full px-2 py-1 hover:bg-brand-500 hover:text-background text-sm',
+                'font-medium hover:text-brand text-foreground/90',
+                'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
               )}
             >
               Membership
@@ -82,7 +82,7 @@ export const Sidebar = ({ site, tags }: Props) => {
                 <li key={t.id} className="">
                   <Link
                     href={`/tags/${slug(t.name)}`}
-                    className="text-foreground/60 py-0 hover:text-brand-500 dark:hover:text-brand-500 rounded-full text-right"
+                    className="text-foreground/60 py-0 hover:text-brand dark:hover:text-brand rounded-full text-right"
                     aria-label={`View posts tagged ${t.name}`}
                   >
                     #{`${t.name}`}

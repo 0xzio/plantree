@@ -46,7 +46,7 @@ export default function Page() {
         <div className="text-4xl font-thin text-foreground/60 space-y-1">
           <div className="">
             Tip token for{' '}
-            <span className="text-brand-500 font-bold">individual Blog</span>
+            <span className="text-brand font-bold">individual Blog</span>
           </div>
           <div>
             Tip token for{' '}
@@ -149,7 +149,7 @@ export default function Page() {
                   Contribute code to{' '}
                   <a
                     href="https://github.com/penx-lab/penx"
-                    className="text-brand-500"
+                    className="text-brand"
                   >
                     github.com/penx-lab/penx
                   </a>
@@ -160,7 +160,7 @@ export default function Page() {
                   <a
                     href="https://github.com/penx-lab/penx"
                     target="_blank"
-                    className="text-brand-500"
+                    className="text-brand"
                   >
                     github.com/penx-lab/penx
                   </a>
@@ -171,7 +171,7 @@ export default function Page() {
                   <a
                     href="https://github.com/penx-lab/penx-docs"
                     target="_blank"
-                    className="text-brand-500"
+                    className="text-brand"
                   >
                     https:/github.com/penx-lab/penx-docs
                   </a>
@@ -182,7 +182,7 @@ export default function Page() {
                   <a
                     href="https://github.com/penx-lab/penx-themes"
                     target="_blank"
-                    className="text-brand-500"
+                    className="text-brand"
                   >
                     github.com/penx-lab/penx-themes
                   </a>

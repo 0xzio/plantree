@@ -18,11 +18,11 @@ export function TagList({ tags = [] }: PostListWithTagProps) {
         return (
           <li key={t.id} className="my-3">
             {decodeURI(pathname.split('/tags/')[1]) === slug(t.name) ? (
-              <h3 className="inline py-2 text-brand-500">#{`${t.name}`}</h3>
+              <h3 className="inline py-2 text-brand">#{`${t.name}`}</h3>
             ) : (
               <Link
                 href={`/tags/${slug(t.name)}`}
-                className="py-2 text-foreground/60 hover:text-brand-500 dark:hover:text-brand-500 rounded-full"
+                className="py-2 text-foreground/60 hover:text-brand dark:hover:text-brand rounded-full"
                 aria-label={`View posts tagged ${t.name}`}
               >
                 #{`${t.name}`}

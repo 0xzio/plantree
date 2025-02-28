@@ -137,7 +137,7 @@ function ImagePreview({ value, onChange, onFinishedEditing }: PreviewProps) {
       <div className={cn('flex items-center justify-center')}>
         <a
           onClick={handleClick}
-          className="text-foreground/50 bg-transparent w-full flex items-center gap-2 text-sm hover:text-brand-500 cursor-pointer"
+          className="text-foreground/50 bg-transparent w-full flex items-center gap-2 text-sm hover:text-brand cursor-pointer"
         >
           {!uploading && <UploadCloud size={20} />}
           {!uploading && <div>Upload a image</div>}

@@ -26,7 +26,7 @@ export function Footer({ site, className }: Props) {
             <a
               href="https://penx.io"
               target="_blank"
-              className="text-brand-500"
+              className="text-brand"
             >
               PenX
             </a>
