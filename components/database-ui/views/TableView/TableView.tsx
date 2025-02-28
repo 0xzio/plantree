@@ -50,7 +50,7 @@ export const TableView = ({ height, width }: Props) => {
     canRedo,
     canUndo,
     redo,
-  } = useUndoRedo(gridRef, getContent, setCellValue)
+  } = useUndoRedo(gridRef as any, getContent, setCellValue)
 
   const { setColumnMenu, columnMenuUI } = useColumnMenu(sortedFields)
   const { setCellMenu, cellMenuUI } = useCellMenu()

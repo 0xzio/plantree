@@ -1,4 +1,4 @@
-import { findNodePath, selectEditor } from '@udecode/plate-common/react'
+// import { findNodePath, selectEditor } from '@udecode/plate-common/react'
 import { PlusIcon } from 'lucide-react'
 import { Path } from 'slate'
 import { insertEmptyParagraph } from './editor/lib/insertEmptyParagraph'
@@ -10,11 +10,11 @@ interface Props {
 
 export function AddNodeBtn({ editor }: Props) {
   function add() {
-    const node = editor.children[editor.children.length - 1]
-    const nodePath = findNodePath(editor, node)!
-    const at = Path.next(nodePath)
-    insertEmptyParagraph(editor as any, { at })
-    selectEditor(editor, { focus: true, at })
+    // const node = editor.children[editor.children.length - 1]
+    // const nodePath = findNodePath(editor, node)!
+    // const at = Path.next(nodePath)
+    // insertEmptyParagraph(editor as any, { at })
+    // selectEditor(editor, { focus: true, at })
     return
   }
 

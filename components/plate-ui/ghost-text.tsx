@@ -2,17 +2,17 @@
 
 import React from 'react';
 
-import type { CopilotPluginConfig } from '@udecode/plate-ai/react';
-
-import { useEditorPlugin, useElement } from '@udecode/plate-common/react';
+import { CopilotPlugin } from '@udecode/plate-ai/react';
+import { useElement, usePluginOption } from '@udecode/plate/react';
 
 export const GhostText = () => {
-  const { useOption } = useEditorPlugin<CopilotPluginConfig>({
-    key: 'copilot',
-  });
   const element = useElement();
 
-  const isSuggested = useOption('isSuggested', element.id as string);
+  const isSuggested = usePluginOption(
+    CopilotPlugin,
+    'isSuggested',
+    element.id as string
+  );
 
   if (!isSuggested) return null;
 
@@ -20,14 +20,13 @@ export const GhostText = () => {
 };
 
 export function GhostTextContent() {
-  const { useOption } = useEditorPlugin<CopilotPluginConfig>({
-    key: 'copilot',
-  });
-
-  const suggestionText = useOption('suggestionText');
+  const suggestionText = usePluginOption(CopilotPlugin, 'suggestionText');
 
   return (
-    <span className="text-muted-foreground/70" contentEditable={false}>
+    <span
+      className="pointer-events-none text-muted-foreground/70 max-sm:hidden"
+      contentEditable={false}
+    >
       {suggestionText && suggestionText}
     </span>
   );

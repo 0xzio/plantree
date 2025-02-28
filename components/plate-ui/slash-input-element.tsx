@@ -9,16 +9,18 @@ import { withRef } from '@udecode/cn'
 import { AIChatPlugin } from '@udecode/plate-ai/react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
-import { ParagraphPlugin, type PlateEditor } from '@udecode/plate-common/react'
 import { DatePlugin } from '@udecode/plate-date/react'
-import { ExcalidrawPlugin } from '@udecode/plate-excalidraw/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { TocPlugin } from '@udecode/plate-heading/react'
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list'
-import { insertImagePlaceholder } from '@udecode/plate-media'
-import { ImagePlugin } from '@udecode/plate-media/react'
+import { EquationPlugin, InlineEquationPlugin } from '@udecode/plate-math/react'
 import { TablePlugin } from '@udecode/plate-table/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
+import {
+  ParagraphPlugin,
+  PlateElement,
+  type PlateEditor,
+} from '@udecode/plate/react'
 import {
   CalendarIcon,
   ChevronRightIcon,
@@ -32,6 +34,7 @@ import {
   ListOrdered,
   PilcrowIcon,
   Quote,
+  RadicalIcon,
   SparklesIcon,
   Square,
   Table,
@@ -46,7 +49,7 @@ import {
   InlineComboboxInput,
   InlineComboboxItem,
 } from './inline-combobox'
-import { PlateElement } from './plate-element'
+import { ImagePlugin } from '@udecode/plate-media/react'
 
 type Group = {
   group: string
@@ -56,9 +59,9 @@ type Group = {
 interface Item {
   icon: React.ReactNode
 
-  onSelect: (editor: PlateEditor, value: string) => void
-
   value: string
+
+  onSelect: (editor: PlateEditor, value: string) => void
   className?: string
   focusEditor?: boolean
   keywords?: string[]
@@ -130,9 +133,7 @@ const groups: Group[] = [
         label: 'Toggle',
         value: TogglePlugin.key,
       },
-
       {
-        // eslint-disable-next-line jsx-a11y/alt-text
         icon: <Image />,
         keywords: ['image', 'img'],
         label: 'Image',
@@ -149,12 +150,6 @@ const groups: Group[] = [
         label: 'Table',
         value: TablePlugin.key,
       },
-
-      // {
-      //   icon: <Table />,
-      //   label: 'Excalidraw',
-      //   value: ExcalidrawPlugin.key,
-      // },
       {
         icon: <Quote />,
         keywords: ['citation', 'blockquote', 'quote', '>'],
@@ -182,6 +177,12 @@ const groups: Group[] = [
         label: '3 columns',
         value: 'action_three_columns',
       },
+      {
+        focusEditor: false,
+        icon: <RadicalIcon />,
+        label: 'Equation',
+        value: EquationPlugin.key,
+      },
     ].map((item) => ({
       ...item,
       onSelect: (editor, value) => {
@@ -198,6 +199,12 @@ const groups: Group[] = [
         keywords: ['time'],
         label: 'Date',
         value: DatePlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <RadicalIcon />,
+        label: 'Inline Equation',
+        value: InlineEquationPlugin.key,
       },
     ].map((item) => ({
       ...item,
@@ -216,6 +223,7 @@ export const SlashInputElement = withRef<typeof PlateElement>(
       <PlateElement
         ref={ref}
         as="span"
+        className={className}
         data-slate-value={element.value}
         {...props}
       >

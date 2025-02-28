@@ -9,21 +9,23 @@ import {
   StrikethroughPlugin,
   UnderlinePlugin,
 } from '@udecode/plate-basic-marks/react';
-import { useEditorReadOnly } from '@udecode/plate-common/react';
+import { useEditorReadOnly } from '@udecode/plate/react';
 import {
   BoldIcon,
   Code2Icon,
   ItalicIcon,
-  SparklesIcon,
   StrikethroughIcon,
   UnderlineIcon,
+  WandSparklesIcon,
 } from 'lucide-react';
 
 import { AIToolbarButton } from './ai-toolbar-button';
 import { CommentToolbarButton } from './comment-toolbar-button';
+import { InlineEquationToolbarButton } from './inline-equation-toolbar-button';
 import { LinkToolbarButton } from './link-toolbar-button';
 import { MarkToolbarButton } from './mark-toolbar-button';
 import { MoreDropdownMenu } from './more-dropdown-menu';
+import { SuggestionToolbarButton } from './suggestion-toolbar-button';
 import { ToolbarGroup } from './toolbar';
 import { TurnIntoDropdownMenu } from './turn-into-dropdown-menu';
 
@@ -35,11 +37,8 @@ export function FloatingToolbarButtons() {
       {!readOnly && (
         <>
           <ToolbarGroup>
-            <AIToolbarButton
-              className="gap-1.5 text-purple-600 hover:text-purple-700 dark:text-purple-400 dark:hover:text-purple-500"
-              tooltip="Edit, generate, and more"
-            >
-              <SparklesIcon className="!size-3.5" />
+            <AIToolbarButton tooltip="AI commands">
+              <WandSparklesIcon />
               Ask AI
             </AIToolbarButton>
           </ToolbarGroup>
@@ -76,6 +75,8 @@ export function FloatingToolbarButtons() {
               <Code2Icon />
             </MarkToolbarButton>
 
+            <InlineEquationToolbarButton />
+
             <LinkToolbarButton />
           </ToolbarGroup>
         </>
@@ -83,6 +84,7 @@ export function FloatingToolbarButtons() {
 
       <ToolbarGroup>
         <CommentToolbarButton />
+        <SuggestionToolbarButton />
 
         {!readOnly && <MoreDropdownMenu />}
       </ToolbarGroup>

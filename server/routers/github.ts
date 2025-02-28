@@ -86,8 +86,6 @@ export const githubRouter = router({
         console.log('GET /user/installations error:', error)
         return []
       }
-
-      return []
     }),
 
   searchRepo: protectedProcedure

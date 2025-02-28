@@ -5,7 +5,7 @@ import { cn, withRef } from '@udecode/cn';
 import { type VariantProps, cva } from 'class-variance-authority';
 
 export const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     defaultVariants: {
       size: 'sm',
@@ -17,7 +17,7 @@ export const buttonVariants = cva(
       },
       size: {
         icon: 'size-[28px] rounded-md px-1.5',
-        lg: 'h-10 rounded-md px-4',
+        lg: 'h-9 rounded-md px-4',
         md: 'h-8 px-3 text-sm',
         none: '',
         sm: 'h-[28px] rounded-md px-2.5',

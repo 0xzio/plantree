@@ -1,13 +1,14 @@
 'use client'
 
+import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { Link } from '@/lib/i18n'
-import { usePathname } from '@/lib/i18n'
 
 interface Props {}
 
 export function PostsNav({}: Props) {
   const pathname = usePathname()
+
+  console.log('=========pathname:', pathname)
 
   const Paths = {
     published: '/~/posts',
@@ -17,8 +18,9 @@ export function PostsNav({}: Props) {
 
   const linkClassName = (path: string) =>
     cn(
-      'inline-flex item-center justify-center py-1.5 border-b-2 -mb-[1px] border-transparent',
-      path === pathname && 'border-foreground/40',
+      'inline-flex item-center justify-center py-1.5 border-b-2 -mb-[1px]',
+      path !== pathname && 'border-transparent',
+      path === pathname && 'border-foreground/80',
     )
 
   return (

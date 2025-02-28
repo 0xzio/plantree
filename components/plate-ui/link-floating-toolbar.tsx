@@ -3,7 +3,6 @@
 import React from 'react';
 
 import { cn } from '@udecode/cn';
-import { useFormInputProps } from '@udecode/plate-common/react';
 import {
   type UseVirtualFloatingOptions,
   flip,
@@ -18,6 +17,7 @@ import {
   useFloatingLinkInsert,
   useFloatingLinkInsertState,
 } from '@udecode/plate-link/react';
+import { useFormInputProps } from '@udecode/plate/react';
 import { ExternalLink, Link, Text, Unlink } from 'lucide-react';
 
 import { buttonVariants } from './button';
@@ -77,23 +77,25 @@ export function LinkFloatingToolbar({ state }: LinkFloatingToolbarProps) {
   const input = (
     <div className="flex w-[330px] flex-col" {...inputProps}>
       <div className="flex items-center">
-        <div className="flex items-center pl-2 pr-1 text-muted-foreground">
+        <div className="flex items-center pr-1 pl-2 text-muted-foreground">
           <Link className="size-4" />
         </div>
 
         <FloatingLinkUrlInput
           className={inputVariants({ h: 'sm', variant: 'ghost' })}
           placeholder="Paste link"
+          data-plate-focus
         />
       </div>
       <Separator className="my-1" />
       <div className="flex items-center">
-        <div className="flex items-center pl-2 pr-1 text-muted-foreground">
+        <div className="flex items-center pr-1 pl-2 text-muted-foreground">
           <Text className="size-4" />
         </div>
         <input
           className={inputVariants({ h: 'sm', variant: 'ghost' })}
           placeholder="Text to display"
+          data-plate-focus
           {...textInputProps}
         />
       </div>

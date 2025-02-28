@@ -66,7 +66,7 @@ export function LoginDialogContent() {
       </div>
       {/* <Separator /> */}
 
-      <SignInButton
+      {/* <SignInButton
         // onStatusResponse={(res) => {
         //   alert(JSON.stringify(res))
         // }}
@@ -77,7 +77,7 @@ export function LoginDialogContent() {
           toast.error('Failed to sign in')
         }}
         onSignOut={() => logout()}
-      />
+      /> */}
       <div className="text-center text-foreground/40">or</div>
       <LoginForm />
     </div>

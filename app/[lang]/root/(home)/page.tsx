@@ -51,12 +51,10 @@ export default async function HomePage(props: { params: any }) {
         <SiteCount count={count} sites={sites} />
       </div>
 
-      <div className="rounded-xl shadow-lg border border-foreground/5 w-full h-700 overflow-hidden mt-20">
-        <Screenshots />
-      </div>
       <div className="flex items-center justify-between mt-10 mb-6">
         <div className="text-2xl font-semibold">
-          <Trans>Sites</Trans>
+          {/* <Trans>Sites</Trans> */}
+          Sites
         </div>
         {/* <Suspense fallback={''}>
           <LaunchButton />

@@ -1,13 +1,14 @@
 'use client'
 
-import Image from 'next/image'
-import { Link } from '@/lib/i18n'
-import { useSearchParams } from 'next/navigation'
-import { Node } from 'slate'
+import { JSX } from 'react'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { PostActions } from '@/components/theme-ui/PostActions'
+import { Link } from '@/lib/i18n'
 import { Post, PostType, User } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
+import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
+import { Node } from 'slate'
 import { getUserName } from '../lib/getUserName'
 import { AuthorAvatar } from './AuthorAvatar'
 

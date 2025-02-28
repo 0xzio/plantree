@@ -9,16 +9,16 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
-import { RewardRequest } from '@prisma/client'
+import { RequestStatus, RewardRequest } from '@prisma/client'
 
 interface Props {
-  rewardRequests: RewardRequest[] | []
+  rewardRequests: RewardRequest[] 
   isLoading: boolean
 }
 
 export const RewardHistory = ({ rewardRequests, isLoading }: Props) => {
   const pendingRequests = rewardRequests?.filter(
-    (reward) => reward.status === 'PENDING',
+    (reward) => reward.status === RequestStatus.PENDING,
   )
 
   return (

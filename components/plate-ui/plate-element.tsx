@@ -1,26 +1,24 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { cn } from '@udecode/cn'
-import type { PlateElementProps } from '@udecode/plate-common/react'
-import { PlateElement as PlateElementPrimitive } from '@udecode/plate-common/react'
-import { useBlockSelectableStore } from '@udecode/plate-selection/react'
-import { BlockSelection } from './block-selection'
+import React from 'react';
 
-export const PlateElement = React.forwardRef<HTMLDivElement, PlateElementProps>(
-  ({ children, className, ...props }: PlateElementProps, ref) => {
-    const selectable = useBlockSelectableStore().get.selectable()
+import type { PlateElementProps } from '@udecode/plate/react';
 
-    return (
-      <PlateElementPrimitive
-        ref={ref}
-        className={cn('relative', className)}
-        {...props}
-      >
-        {children}
+import { PlateElement as PlateElementPrimitive } from '@udecode/plate/react';
 
-        {selectable && <BlockSelection />}
-      </PlateElementPrimitive>
-    )
-  },
-)
+import { BlockSelection } from './block-selection';
+
+export const PlateElement = React.forwardRef<
+  HTMLDivElement,
+  PlateElementProps & { blockSelectionClassName?: string }
+>(({ blockSelectionClassName, children, ...props }, ref) => {
+  return (
+    <PlateElementPrimitive ref={ref} {...props}>
+      {children}
+
+      {props.className?.includes('slate-selectable') && (
+        <BlockSelection className={blockSelectionClassName} />
+      )}
+    </PlateElementPrimitive>
+  );
+});

@@ -42,7 +42,7 @@ export const UploadButton = ({
       </a>
       <Popover>
         <PopoverTrigger asChild>
-          <div className="text-sm flex-shrink-0">Edit link</div>
+          <div className="text-sm flex-shrink-0">External link</div>
         </PopoverTrigger>
         <PopoverContent className="flex items-center gap-2 w-96">
           <Input value={url} onChange={(e) => setUrl(e.target.value)} />

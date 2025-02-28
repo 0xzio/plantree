@@ -3,21 +3,24 @@
 import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
 
 export const blockSelectionPlugins = [
-  BlockSelectionPlugin.configure({
+  BlockSelectionPlugin.configure(({ editor }) => ({
     options: {
-      areaOptions: {
-        behaviour: {
-          scrolling: {
-            speedDivider: 1.5,
-          },
-          startThreshold: 10,
-        },
-        boundaries: '#scroll_container',
-        container: '#scroll_container',
-        selectables: '#scroll_container .slate-selectable',
-        selectionAreaClass: 'slate-selection-area',
-      },
       enableContextMenu: true,
+      isSelectable: (element, path) => {
+        return (
+          !['code_line', 'column', 'td'].includes(element.type) &&
+          !editor.api.block({ above: true, at: path, match: { type: 'tr' } })
+        );
+      },
     },
-  }),
+  })),
 ] as const;
+
+export const blockSelectionReadOnlyPlugin = BlockSelectionPlugin.configure({
+  api: {},
+  extendEditor: null,
+  handlers: {},
+  options: {},
+  render: {},
+  useHooks: null,
+});

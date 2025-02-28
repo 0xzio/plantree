@@ -373,8 +373,6 @@ export const databaseRouter = router({
         revalidateTag(`${siteId}-friends`)
       }
       return true
-
-      return true
     }),
 
   sortViewFields: protectedProcedure

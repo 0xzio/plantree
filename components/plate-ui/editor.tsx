@@ -1,55 +1,76 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { cn } from '@udecode/cn'
-import type { PlateContentProps } from '@udecode/plate-common/react'
-import { PlateContent } from '@udecode/plate-common/react'
-import type { VariantProps } from 'class-variance-authority'
-import { cva } from 'class-variance-authority'
+import React from 'react';
+
+import type { PlateContentProps } from '@udecode/plate/react';
+import type { VariantProps } from 'class-variance-authority';
+
+import { cn } from '@udecode/cn';
+import {
+  PlateContent,
+  useEditorContainerRef,
+  useEditorRef,
+} from '@udecode/plate/react';
+import { cva } from 'class-variance-authority';
 
 const editorContainerVariants = cva(
-  'relative flex cursor-text [&_.slate-selection-area]:border [&_.slate-selection-area]:border-brand/25 [&_.slate-selection-area]:bg-brand/15',
+  'relative w-full cursor-text overflow-y-auto caret-primary select-text5 focus-visible:outline-none [&_.slate-selection-area]:z-50 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-brand/25 [&_.slate-selection-area]:bg-brand/15',
+  // 'relative w-full cursor-text overflow-y-auto caret-primary select-text selection:bg-brand/25 focus-visible:outline-none [&_.slate-selection-area]:z-50 [&_.slate-selection-area]:border [&_.slate-selection-area]:border-brand/25 [&_.slate-selection-area]:bg-brand/15',
   {
     defaultVariants: {
       variant: 'default',
     },
     variants: {
       variant: {
-        default: 'w-full',
+        comment: cn(
+          'flex flex-wrap justify-between gap-1 px-1 py-0.5 text-sm',
+          'rounded-md border-[1.5px] border-transparent bg-transparent',
+          'has-[[data-slate-editor]:focus]:border-brand/50 has-[[data-slate-editor]:focus]:ring-2 has-[[data-slate-editor]:focus]:ring-brand/30',
+          'has-aria-disabled:border-input has-aria-disabled:bg-muted'
+        ),
+        default: 'h-full',
+        demo: 'h-[650px]',
+        select: cn(
+          'group rounded-md border border-input ring-offset-background focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+          'has-data-readonly:w-fit has-data-readonly:cursor-default has-data-readonly:border-transparent has-data-readonly:focus-within:[box-shadow:none]'
+        ),
       },
     },
-  },
-)
+  }
+);
 
-export const EditorContainer = React.forwardRef<
-  HTMLDivElement,
-  React.ComponentPropsWithoutRef<'div'> &
-    VariantProps<typeof editorContainerVariants>
->(({ className, variant, ...props }, ref) => {
+export const EditorContainer = ({
+  className,
+  variant,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement> &
+  VariantProps<typeof editorContainerVariants>) => {
+  const editor = useEditorRef();
+  const containerRef = useEditorContainerRef();
+
   return (
     <div
-      ref={ref}
+      id={editor.uid}
+      ref={containerRef}
       className={cn(
         'ignore-click-outside/toolbar',
         editorContainerVariants({ variant }),
-        className,
+        className
       )}
-      role="button"
       {...props}
     />
-  )
-})
+  );
+};
 
-EditorContainer.displayName = 'EditorContainer'
+EditorContainer.displayName = 'EditorContainer';
 
 const editorVariants = cva(
   cn(
     'group/editor',
-    'relative w-full whitespace-pre-wrap break-words',
-    'rounded-md ring-offset-background placeholder:text-muted-foreground/80 focus-visible:outline-none',
-    '[&_[data-slate-placeholder]]:text-muted-foreground/80 [&_[data-slate-placeholder]]:!opacity-100',
-    '[&_[data-slate-placeholder]]:top-[auto_!important]',
-    '[&_strong]:font-bold',
+    'relative w-full cursor-text overflow-x-hidden break-words whitespace-pre-wrap select-text',
+    'rounded-md ring-offset-background focus-visible:outline-none',
+    'placeholder:text-muted-foreground/80 **:data-slate-placeholder:top-[auto_!important] **:data-slate-placeholder:text-muted-foreground/80 **:data-slate-placeholder:opacity-100!',
+    '[&_strong]:font-bold'
   ),
   {
     defaultVariants: {
@@ -63,20 +84,23 @@ const editorVariants = cva(
         true: 'ring-2 ring-ring ring-offset-2',
       },
       variant: {
-        ai: 'w-full px-0 text-sm',
+        ai: 'w-full px-0 text-base md:text-sm',
         aiChat:
-          'max-h-[min(70vh,320px)] w-full max-w-[700px] overflow-y-auto px-3 py-2 text-sm',
-        default: 'w-full px-6 pt-4 text-base',
-        // 'w-full px-16 pb-72 pt-4 text-base sm:px-[max(64px,calc(50%-350px))] bg-amber-400',
-        demo: 'min-h-full w-full px-16 pb-72 pt-4 text-base sm:px-[max(64px,calc(50%-350px))]',
-        fullWidth: 'min-h-full w-full px-16 pb-72 pt-4 text-base sm:px-24',
+          'max-h-[min(70vh,320px)] w-full max-w-[700px] overflow-y-auto px-3 py-2 text-base md:text-sm',
+        comment: cn('rounded-none border-none bg-transparent text-sm'),
+        default:
+          'size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]',
+        post: 'size-full px-16 pt-4 pb-72 text-base sm:px-[max(64px,calc(50%-350px))]',
+        fullWidth: 'size-full px-16 pt-4 pb-72 text-base sm:px-24',
+        none: '',
+        select: 'px-3 py-2 text-base data-readonly:w-fit',
       },
     },
-  },
-)
+  }
+);
 
 export type EditorProps = PlateContentProps &
-  VariantProps<typeof editorVariants>
+  VariantProps<typeof editorVariants>;
 
 export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
   ({ className, disabled, focused, variant, ...props }, ref) => {
@@ -89,15 +113,14 @@ export const Editor = React.forwardRef<HTMLDivElement, EditorProps>(
             focused,
             variant,
           }),
-          className,
-          props.readOnly && 'px-0 pt-0'
+          className
         )}
         disabled={disabled}
         disableDefaultStyles
         {...props}
       />
-    )
-  },
-)
+    );
+  }
+);
 
-Editor.displayName = 'Editor'
+Editor.displayName = 'Editor';

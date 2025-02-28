@@ -1,16 +1,20 @@
 'use client'
 
 import React from 'react'
-import { getUrl } from '@/lib/utils'
 import { cn, withRef } from '@udecode/cn'
-import { withHOC } from '@udecode/plate-common/react'
+import { useDraggable } from '@udecode/plate-dnd'
 import { Image, ImagePlugin, useMediaState } from '@udecode/plate-media/react'
-import { ResizableProvider, useResizableStore } from '@udecode/plate-resizable'
+import { ResizableProvider, useResizableValue } from '@udecode/plate-resizable'
+import { PlateElement, withHOC } from '@udecode/plate/react'
 import { Caption, CaptionTextarea } from '../caption'
 import { MediaPopover } from '../media-popover'
-import { PlateElement } from '../plate-element'
-import { mediaResizeHandleVariants, Resizable, ResizeHandle } from './resizable'
+import {
+  mediaResizeHandleVariants,
+  Resizable,
+  ResizeHandle,
+} from '../resizable'
 import { UploadBox } from './UploadBox'
+import { getUrl } from '@/lib/utils'
 
 export const ImageElement = withHOC(
   ResizableProvider,
@@ -18,8 +22,11 @@ export const ImageElement = withHOC(
     const { children, className, nodeProps, ...rest } = props
     const { align = 'center', focused, readOnly, selected } = useMediaState()
 
-    const width = useResizableStore().get.width()
+    const width = useResizableValue('width')
 
+    const { isDragging, handleRef } = useDraggable({
+      element: props.element,
+    })
     if (!rest.element.url) {
       return (
         <PlateElement
@@ -35,7 +42,7 @@ export const ImageElement = withHOC(
 
     return (
       <MediaPopover plugin={ImagePlugin}>
-        <PlateElement ref={ref} className={cn('py-2.5', className)} {...rest}>
+        <PlateElement ref={ref} className={cn(className, 'py-2.5')} {...props}>
           <figure className="group relative m-0" contentEditable={false}>
             <Resizable
               align={align}
@@ -49,13 +56,15 @@ export const ImageElement = withHOC(
                 options={{ direction: 'left' }}
               />
               <Image
+                ref={handleRef}
                 className={cn(
                   'block w-full max-w-full cursor-pointer object-cover px-0',
                   'rounded-sm',
                   focused && selected && 'ring-2 ring-ring ring-offset-2',
+                  isDragging && 'opacity-50',
                 )}
-                alt=""
                 src={getUrl(rest.element.url as string)}
+                alt=""
                 {...nodeProps}
               />
               <ResizeHandle

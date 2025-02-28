@@ -71,27 +71,43 @@ export function Post() {
 
   return (
     <div className="w-full h-full">
-      <div className="relative min-h-[500px] max-w-screen-lg p-12 px-8 mx-auto z-0">
-        {post.type === PostType.ARTICLE && (
-          <div className="mb-5 flex flex-col space-y-3 ">
-            <CoverUpload post={post} />
-            {isJournal && (
-              <div className="flex items-center gap-4">
-                <span className="text-foreground text-4xl font-bold">
-                  {journalTitle}
-                </span>
-                <JournalNav date={post.date} />
-              </div>
-            )}
+      <div className="relative min-h-[500px] py-12 px-8 z-0">
+        <div className="w-full px-16 sm:px-[max(64px,calc(50%-350px))]">
+          {post.type === PostType.ARTICLE && (
+            <div className="mb-5 flex flex-col space-y-3 ">
+              <CoverUpload post={post} />
+              {isJournal && (
+                <div className="flex items-center gap-4">
+                  <span className="text-foreground text-4xl font-bold">
+                    {journalTitle}
+                  </span>
+                  <JournalNav date={post.date} />
+                </div>
+              )}
 
-            {!isJournal && (
+              {!isJournal && (
+                <TextareaAutosize
+                  className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
+                  placeholder="Title"
+                  value={title || ''}
+                  autoFocus
+                  onChange={(e) => {
+                    const newPost = updateTitle(e.target.value)
+                    debouncedUpdate(newPost)
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      e.preventDefault()
+                    }
+                  }}
+                />
+              )}
               <TextareaAutosize
-                className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
-                placeholder="Title"
-                value={title || ''}
-                autoFocus
+                className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
+                placeholder="Description"
+                value={description}
                 onChange={(e) => {
-                  const newPost = updateTitle(e.target.value)
+                  const newPost = updateDescription(e.target.value)
                   debouncedUpdate(newPost)
                 }}
                 onKeyDown={(e) => {
@@ -100,43 +116,31 @@ export function Post() {
                   }
                 }}
               />
-            )}
-            <TextareaAutosize
-              className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
-              placeholder="Description"
-              value={description}
-              onChange={(e) => {
-                const newPost = updateDescription(e.target.value)
-                debouncedUpdate(newPost)
-              }}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  e.preventDefault()
-                }
-              }}
-            />
-          </div>
-        )}
-
-        {!post.isPage && (
-          <div className="flex items-center justify-between">
-            <Authors post={post} />
-            <div className="flex items-center gap-2">
-              <Tags />
-              <PostLocales />
             </div>
-          </div>
-        )}
+          )}
 
-        <PlateEditor
-          className="w-full -mx-6"
-          value={content ? JSON.parse(content) : editorDefaultValue}
-          showAddButton
-          onChange={(v) => {
-            const newPost = updateContent(JSON.stringify(v))
-            debouncedUpdate(newPost)
-          }}
-        />
+          {!post.isPage && (
+            <div className="flex items-center justify-between">
+              <Authors post={post} />
+              <div className="flex items-center gap-2">
+                <Tags />
+                <PostLocales />
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="w-full" data-registry="plate">
+          <PlateEditor
+            className="w-full"
+            value={content ? JSON.parse(content) : editorDefaultValue}
+            showAddButton
+            onChange={(v) => {
+              const newPost = updateContent(JSON.stringify(v))
+              debouncedUpdate(newPost)
+            }}
+          />
+        </div>
       </div>
     </div>
   )

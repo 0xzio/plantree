@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { uploadFile } from '@/lib/uploadFile'
 import { cn } from '@/lib/utils'
-import { PlateElementProps } from '@udecode/plate-common/react'
+import { PlateElementProps, usePlateEditor } from '@udecode/plate/react'
 import { Editor, insertNodes, Path, setNodes, Transforms } from 'slate'
 import { ReactEditor, useFocused, useSelected, useSlate } from 'slate-react'
 import { toast } from 'sonner'
@@ -16,14 +16,14 @@ export const UploadBox = ({
   element,
 }: PlateElementProps<ImageElement>) => {
   const editor = useSlate()
+  // const editor = usePlateEditor()
   const selected = useSelected()
   const focused = useFocused()
   const [uploading, setUploading] = useState(false)
-  const path = ReactEditor.findPath(editor, element)
+  const path = ReactEditor.findPath(editor as any, element)
 
   function setFileNode(data: Partial<ImageElement>, file?: File) {
-    setNodes<ImageElement>(editor, data, { at: path })
-    // console.log('======data:', data)
+    setNodes<ImageElement>(editor as any, data, { at: path })
 
     // const captionPath = Path.next(path)
 
@@ -37,6 +37,8 @@ export const UploadBox = ({
 
     try {
       const data = await uploadFile(file)
+
+      // console.log('======data:', data.url)
       setFileNode(
         {
           mime: file.type,

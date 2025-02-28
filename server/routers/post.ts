@@ -322,9 +322,7 @@ export const postRouter = router({
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
-      setTimeout(async () => {
-        syncPostToHub(site, post)
-      }, 0)
+      syncPostToHub(site, post)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)

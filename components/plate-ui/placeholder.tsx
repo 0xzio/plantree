@@ -2,14 +2,14 @@
 
 import React from 'react'
 import { cn } from '@udecode/cn'
+import { HEADING_KEYS } from '@udecode/plate-heading'
 import {
   createNodeHOC,
   createNodesHOC,
   ParagraphPlugin,
   usePlaceholderState,
   type PlaceholderProps,
-} from '@udecode/plate-common/react'
-import { HEADING_KEYS } from '@udecode/plate-heading'
+} from '@udecode/plate/react'
 
 export const Placeholder = (props: PlaceholderProps) => {
   const { children, nodeProps, placeholder } = props
@@ -44,9 +44,9 @@ export const withPlaceholders = (
       key: ParagraphPlugin.key,
       hideOnBlur: true,
       placeholder,
-      // query: {
-      //   maxLevel: 1,
-      // },
+      query: {
+        maxLevel: 1,
+      },
     },
     {
       key: HEADING_KEYS.h1,

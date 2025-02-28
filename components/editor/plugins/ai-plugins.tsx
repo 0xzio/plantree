@@ -2,92 +2,12 @@
 
 import React from 'react';
 
-import { withProps } from '@udecode/cn';
 import { AIChatPlugin, AIPlugin } from '@udecode/plate-ai/react';
-import {
-  BoldPlugin,
-  CodePlugin,
-  ItalicPlugin,
-  StrikethroughPlugin,
-  UnderlinePlugin,
-} from '@udecode/plate-basic-marks/react';
-import { BlockquotePlugin } from '@udecode/plate-block-quote/react';
-import {
-  CodeBlockPlugin,
-  CodeLinePlugin,
-  CodeSyntaxPlugin,
-} from '@udecode/plate-code-block/react';
-import {
-  ParagraphPlugin,
-  PlateLeaf,
-  createPlateEditor,
-} from '@udecode/plate-common/react';
-import { HEADING_KEYS } from '@udecode/plate-heading';
-import { HorizontalRulePlugin } from '@udecode/plate-horizontal-rule/react';
-import { LinkPlugin } from '@udecode/plate-link/react';
 import { MarkdownPlugin } from '@udecode/plate-markdown';
-import { BlockSelectionPlugin } from '@udecode/plate-selection/react';
 
 import { AIMenu } from '@/components/plate-ui/ai-menu';
-import { BlockquoteElement } from '@/components/plate-ui/blockquote-element';
-import { CodeBlockElement } from '@/components/plate-ui/code-block-element';
-import { CodeLeaf } from '@/components/plate-ui/code-leaf';
-import { CodeLineElement } from '@/components/plate-ui/code-line-element';
-import { CodeSyntaxLeaf } from '@/components/plate-ui/code-syntax-leaf';
-import { SelectionOverlayPlugin } from '@/components/plate-ui/cursor-overlay';
-import { HeadingElement } from '@/components/plate-ui/heading-element';
-import { HrElement } from '@/components/plate-ui/hr-element';
-import { LinkElement } from '@/components/plate-ui/link-element';
-import { ParagraphElement } from '@/components/plate-ui/paragraph-element';
 
-import { basicNodesPlugins } from './basic-nodes-plugins';
-import { indentListPlugins } from './indent-list-plugins';
-import { linkPlugin } from './link-plugin';
-
-const createAIEditor = () => {
-  const editor = createPlateEditor({
-    id: 'ai',
-    override: {
-      components: {
-        [BlockquotePlugin.key]: BlockquoteElement,
-        [BoldPlugin.key]: withProps(PlateLeaf, { as: 'strong' }),
-        [CodeBlockPlugin.key]: CodeBlockElement,
-        [CodeLinePlugin.key]: CodeLineElement,
-        [CodePlugin.key]: CodeLeaf,
-        [CodeSyntaxPlugin.key]: CodeSyntaxLeaf,
-        [HEADING_KEYS.h1]: withProps(HeadingElement, { variant: 'h1' }),
-        [HEADING_KEYS.h2]: withProps(HeadingElement, { variant: 'h2' }),
-        [HEADING_KEYS.h3]: withProps(HeadingElement, { variant: 'h3' }),
-        [HorizontalRulePlugin.key]: HrElement,
-        [ItalicPlugin.key]: withProps(PlateLeaf, { as: 'em' }),
-        [LinkPlugin.key]: LinkElement,
-        [ParagraphPlugin.key]: ParagraphElement,
-        [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
-        [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
-      },
-    },
-    plugins: [
-      ParagraphPlugin,
-      ...basicNodesPlugins,
-      HorizontalRulePlugin,
-      linkPlugin,
-      ...indentListPlugins,
-      MarkdownPlugin.configure({ options: { indentList: true } }),
-      // FIXME
-      BlockSelectionPlugin.configure({
-        api: {},
-        extendEditor: null,
-        options: {},
-        render: {},
-        useHooks: null,
-        handlers: {},
-      }),
-    ],
-    value: [{ children: [{ text: '' }], type: 'p' }],
-  });
-
-  return editor;
-};
+import { cursorOverlayPlugin } from './cursor-overlay-plugin';
 
 const systemCommon = `\
 You are an advanced AI-powered note-taking assistant, designed to enhance productivity and creativity in note management.
@@ -171,12 +91,11 @@ export const PROMPT_TEMPLATES = {
 };
 
 export const aiPlugins = [
-  SelectionOverlayPlugin,
+  cursorOverlayPlugin,
   MarkdownPlugin.configure({ options: { indentList: true } }),
   AIPlugin,
   AIChatPlugin.configure({
     options: {
-      createAIEditor,
       promptTemplate: ({ isBlockSelecting, isSelecting }) => {
         return isBlockSelecting
           ? PROMPT_TEMPLATES.userBlockSelecting
@@ -184,7 +103,6 @@ export const aiPlugins = [
             ? PROMPT_TEMPLATES.userSelecting
             : PROMPT_TEMPLATES.userDefault;
       },
-      scrollContainerSelector: '#scroll_container',
       systemTemplate: ({ isBlockSelecting, isSelecting }) => {
         return isBlockSelecting
           ? PROMPT_TEMPLATES.systemBlockSelecting
