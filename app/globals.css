@@ -1,7 +1,6 @@
 @import 'tailwindcss';
 
 @plugin 'tailwind-scrollbar-hide';
-@plugin 'tailwindcss-animate';
 @plugin "@tailwindcss/typography";
 @plugin "@iconify/tailwind4";
 
