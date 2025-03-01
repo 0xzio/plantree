@@ -40,13 +40,14 @@ enum RequestStatus {
 
 enum PlanType {
   FREE
-  CREATOR
+  BASIC
+  PRO
   BELIEVER
 }
 
 enum BillingCycle {
   MONTHLY
-  ANNUAL
+  YEARLY
 }
 
 model Site {
@@ -66,6 +67,7 @@ model Site {
   sassCustomerId         String?        @unique @db.VarChar(50)
   sassProductId          String?        @db.VarChar(50)
   sassCurrentPeriodEnd   DateTime?
+  sassBelieverPeriodEnd  DateTime?
   authSecret             String?        @unique @db.VarChar(255)
   authType               AuthType       @default(RAINBOW_KIT)
   authConfig             Json?

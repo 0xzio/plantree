@@ -12,6 +12,7 @@ interface Props {
   annualPrice: number
   collaboratorCount?: number
   benefits: string[]
+  isBeliever?: boolean
 }
 
 export function PlanItem({

@@ -1,85 +1,39 @@
+import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import type { Stripe } from 'stripe'
 
 export async function handleEvent(event: Stripe.Event) {
   const session = event.data.object as Stripe.Checkout.Session
+  console.log('event session>>>>>>>>>>>>>>>>>>', session)
+
   if (event.type === 'checkout.session.completed') {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     )
 
-    const customerId =
-      typeof subscription.customer === 'string'
-        ? subscription.customer
-        : subscription.customer.id
-
-    const { userId } = subscription.metadata
-
-    if (!userId) {
-      throw new Error('Missing user id')
-    }
-
-    const customer = await db
-      .selectFrom('Customer')
-      .selectAll()
-      .where('authUserId', '=', userId)
-      .executeTakeFirst()
-
-    if (customer) {
-      return await db
-        .updateTable('Customer')
-        .where('id', '=', customer.id)
-        .set({
-          stripeCustomerId: customerId,
-          stripeSubscriptionId: subscription.id,
-          stripePriceId: subscription.items.data[0]?.price.id,
-        })
-        .execute()
-    }
+    await prisma.site.update({
+      where: { sassSubscriptionId: subscription.id },
+      data: {
+        sassCurrentPeriodEnd: new Date(
+          subscription.current_period_start * 1000,
+        ),
+      },
+    })
   }
 
   if (event.type === 'invoice.payment_succeeded') {
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     )
-    const customerId =
-      typeof subscription.customer === 'string'
-        ? subscription.customer
-        : subscription.customer.id
-    const { userId } = subscription.metadata
-    if (!userId) {
-      throw new Error('Missing user id')
-    }
-    const customer = await db
-      .selectFrom('Customer')
-      .selectAll()
-      .where('authUserId', '=', userId)
-      .executeTakeFirst()
 
-    /**
-     * User is already subscribed, update their info
-     */
-    if (customer) {
-      const priceId = subscription.items.data[0]?.price.id
-      if (!priceId) {
-        return
-      }
-
-      const plan = getSubscriptionPlan(priceId)
-      return await db
-        .updateTable('Customer')
-        .where('id', '=', customer.id)
-        .set({
-          stripeCustomerId: customerId,
-          stripeSubscriptionId: subscription.id,
-          stripePriceId: priceId,
-          stripeCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000,
-          ),
-          plan: plan || SubscriptionPlan.FREE,
-        })
-        .execute()
-    }
+    await prisma.site.update({
+      where: { sassSubscriptionId: subscription.id },
+      data: {
+        sassCurrentPeriodEnd: new Date(
+          subscription.current_period_start * 1000,
+        ),
+      },
+    })
   }
   if (event.type === 'customer.subscription.updated') {
     //add customer logic

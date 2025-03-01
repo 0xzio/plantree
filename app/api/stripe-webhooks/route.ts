@@ -1,13 +1,7 @@
 import { stripe } from '@/lib/stripe'
 import { BillingCycle, PlanType } from '@prisma/client'
 import { NextRequest, NextResponse } from 'next/server'
-import Stripe from 'stripe'
-import {
-  isCheckoutCompleted,
-  isSubscriptionActive,
-  isSubscriptionCanceled,
-  isSubscriptionPaid,
-} from './event.types'
+import { handleEvent } from './handleEvent'
 
 export async function POST(req: NextRequest) {
   const payload = await req.text()
@@ -19,7 +13,7 @@ export async function POST(req: NextRequest) {
       process.env.STRIPE_WEBHOOK_SECRET!,
     )
 
-    // await handleEvent(event)
+    await handleEvent(event)
 
     console.log('✅ Handled Stripe Event', event.type)
     return NextResponse.json({ received: true }, { status: 200 })

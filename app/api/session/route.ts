@@ -278,7 +278,13 @@ export async function PATCH(request: NextRequest) {
   }
 
   if (isCancelSubscription(json)) {
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { id: json.siteId },
+    })
     session.subscriptionStatus = 'canceled'
+    if (site.sassCurrentPeriodEnd) {
+      session.currentPeriodEnd = site.sassCurrentPeriodEnd.toISOString()
+    }
   }
 
   // session.updateConfig({

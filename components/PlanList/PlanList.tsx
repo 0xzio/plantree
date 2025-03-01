@@ -15,7 +15,7 @@ export function PlanList() {
           monthlyPrice={0}
           annualPrice={0}
           name="Free"
-          type="FREE"
+          type={PlanType.FREE}
           collaboratorCount={1}
           benefits={[
             '1 collaborators',
@@ -26,8 +26,8 @@ export function PlanList() {
         <PlanItem
           monthlyPrice={10}
           annualPrice={90}
-          name="Standard"
-          type={PlanType.CREATOR}
+          name="Basic"
+          type={PlanType.BASIC}
           collaboratorCount={3}
           benefits={[
             '3 collaborators',
@@ -38,11 +38,11 @@ export function PlanList() {
             'One-to-One support in discord',
           ]}
         />
-        {/* <PlanItem
+        <PlanItem
           monthlyPrice={20}
           annualPrice={180}
-          name="Professional"
-          type={PlanType.PROFESSIONAL}
+          name="Pro"
+          type={PlanType.PRO}
           collaboratorCount={10}
           benefits={[
             '10 collaborators',
@@ -53,7 +53,7 @@ export function PlanList() {
             'One-to-One support in discord',
             'Priority support',
           ]}
-        /> */}
+        />
       </div>
     </div>
   )

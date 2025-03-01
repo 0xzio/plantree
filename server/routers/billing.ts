@@ -1,8 +1,8 @@
 import {
-  CREEM_PRODUCT_PROFESSIONAL_ANNUAL,
-  CREEM_PRODUCT_PROFESSIONAL_MONTHLY,
-  CREEM_PRODUCT_STANDARD_ANNUAL,
-  CREEM_PRODUCT_STANDARD_MONTHLY,
+  STRIPE_BASIC_MONTHLY_PRICE_ID,
+  STRIPE_BASIC_YEARLY_PRICE_ID,
+  STRIPE_PRO_MONTHLY_PRICE_ID,
+  STRIPE_PRO_YEARLY_PRICE_ID,
 } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
@@ -14,23 +14,6 @@ import queryString from 'query-string'
 import Stripe from 'stripe'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
-
-interface CheckoutRes {
-  id: string
-  object: string
-  product: string
-  units: any
-  status: string
-  checkout_url: string
-  mode: string
-}
-
-interface CancelRes {
-  status: string
-  current_period_start_date: string
-  current_period_end_date: string
-  canceled_at: string
-}
 
 export const stripe = new Stripe(process.env.STRIPE_API_KEY!, {
   apiVersion: '2025-02-24.acacia',
@@ -47,17 +30,15 @@ export const billingRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const getProductId = () => {
-        // if (input.planType === PlanType.STANDARD) {
-        //   return input.billingCycle === BillingCycle.MONTHLY
-        //     ? CREEM_PRODUCT_STANDARD_MONTHLY
-        //     : CREEM_PRODUCT_STANDARD_ANNUAL
-        // } else {
-        //   return input.billingCycle === BillingCycle.MONTHLY
-        //     ? CREEM_PRODUCT_PROFESSIONAL_MONTHLY
-        //     : CREEM_PRODUCT_PROFESSIONAL_ANNUAL
-        // }
-        //
-        return process.env.NEXT_PUBLIC_STRIPE_CREATOR_MONTHLY_PLAN_ID
+        if (input.planType === PlanType.BASIC) {
+          return input.billingCycle === BillingCycle.MONTHLY
+            ? STRIPE_BASIC_MONTHLY_PRICE_ID
+            : STRIPE_BASIC_YEARLY_PRICE_ID
+        } else {
+          return input.billingCycle === BillingCycle.MONTHLY
+            ? STRIPE_PRO_MONTHLY_PRICE_ID
+            : STRIPE_PRO_YEARLY_PRICE_ID
+        }
       }
 
       const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
@@ -80,7 +61,12 @@ export const billingRouter = router({
         payment_method_types: ['card'],
         // customer_email: email,
         client_reference_id: ctx.activeSiteId,
-        subscription_data: { metadata: { userId } },
+        subscription_data: {
+          metadata: {
+            billingCycle: input.billingCycle,
+            planType: input.planType,
+          },
+        },
         success_url: `${return_url}?success=truesession_id={CHECKOUT_SESSION_ID}&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
         cancel_url: `${return_url}?success=false`,
         line_items: [{ price: getProductId(), quantity: 1 }],
@@ -96,39 +82,44 @@ export const billingRouter = router({
       where: { id: ctx.activeSiteId },
     })
 
-    const res: CancelRes = await fetch(
-      `${process.env.CREEM_API_HOST}/v1/subscriptions/${site.sassSubscriptionId}/cancel`,
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // 'x-api-key': apiKey,
+    const subscriptionId = site.sassSubscriptionId as string
+
+    try {
+      const subscription = await stripe.subscriptions.cancel(subscriptionId)
+      console.log('=========>>>>>>subscription:', subscription)
+
+      console.log(`Subscription ${subscriptionId} cancelled successfully.`)
+
+      const sassCurrentPeriodEnd = new Date(
+        subscription.current_period_end * 1000,
+      )
+      await prisma.site.update({
+        where: { id: ctx.activeSiteId },
+        data: {
+          // sassPlanType: PlanType.FREE,
+          // sassProductId: null,
+          // sassSubscriptionStatus: 'canceled',
+          sassSubscriptionStatus: subscription.status,
+          sassCurrentPeriodEnd: sassCurrentPeriodEnd,
+          // sassSubscriptionId: null,
         },
-      },
-    ).then((response) => response.json())
-    console.log('>>>>====res:', res)
+      })
 
-    await prisma.site.update({
-      where: { id: ctx.activeSiteId },
-      data: {
-        // sassPlanType: PlanType.FREE,
-        // sassProductId: null,
-        sassSubscriptionStatus: 'canceled',
-        sassCurrentPeriodEnd: new Date(res.current_period_end_date),
-        // sassSubscriptionId: null,
-      },
-    })
+      const sessionOptions = getSessionOptions()
+      const session = await getIronSession<SessionData>(
+        await cookies(),
+        sessionOptions,
+      )
 
-    const sessionOptions = getSessionOptions()
-    const session = await getIronSession<SessionData>(
-      await cookies(),
-      sessionOptions,
-    )
+      session.subscriptionStatus = 'canceled'
+      session.subscriptionEndedAt = sassCurrentPeriodEnd
 
-    session.subscriptionStatus = 'canceled'
+      await session.save()
 
-    await session.save()
-
-    return true
+      return true
+    } catch (err) {
+      console.error(`Error cancelling subscription: ${err}`)
+      return false
+    }
   }),
 })

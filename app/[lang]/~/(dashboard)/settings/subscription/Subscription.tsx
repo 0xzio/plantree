@@ -4,6 +4,7 @@ import { useMemo } from 'react'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { PlanListDialog } from '@/components/PlanList/PlanListDialog'
 import { usePlanListDialog } from '@/components/PlanList/usePlanListDialog'
+import { useSiteContext } from '@/components/SiteContext'
 import { useSubscriptionDialog } from '@/components/SubscriptionDialog/useSubscriptionDialog'
 import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Badge } from '@/components/ui/badge'
@@ -21,6 +22,7 @@ import { useAccount } from 'wagmi'
 interface Props {}
 
 export function Subscription({}: Props) {
+  const site = useSiteContext()
   const { setIsOpen } = useSubscriptionGuideDialog()
   const { data: session, update } = useSession()
   const isMember = useIsMember()
@@ -94,6 +96,7 @@ export function Subscription({}: Props) {
                 await api.billing.cancel.mutate()
                 await update({
                   type: 'cancel-subscription',
+                  siteId: site.id,
                 })
               }}
             >

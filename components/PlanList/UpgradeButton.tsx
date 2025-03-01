@@ -39,7 +39,7 @@ export function UpgradeButton({ type }: Props) {
     <Button
       size="lg"
       className="rounded-full px-8 w-32 h-12 font-bold"
-      // disabled={isPending || (isCurrentPlan && !isCanceled) || isFree}
+      disabled={isPending || (isCurrentPlan && !isCanceled) || isFree}
       onClick={async () => {
         if (isDashboard) {
           const data = await mutateAsync({

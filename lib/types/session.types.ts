@@ -131,10 +131,11 @@ export function isUpdateSubscription(
 
 export type CancelSubscriptionData = {
   type: 'cancel-subscription'
+  siteId: string
 }
 
 export function isCancelSubscription(
   value: any,
-): value is UpdateSubscriptionData {
+): value is CancelSubscriptionData {
   return typeof value === 'object' && value?.type === 'cancel-subscription'
 }
