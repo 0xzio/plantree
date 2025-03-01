@@ -129,7 +129,9 @@ export function Post() {
               </div>
             </div>
           )}
-          <AddPropButton />
+          <div className="pt-4 -ml-4">
+            <AddPropButton />
+          </div>
         </div>
 
         <div className="w-full" data-registry="plate">

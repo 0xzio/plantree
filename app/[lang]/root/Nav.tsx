@@ -1,9 +1,10 @@
-'use client'
+'use client';
 
-import { ReactNode } from 'react'
-import { Link } from '@/lib/i18n'
-import { ExternalLink } from 'lucide-react'
-import { toast } from 'sonner'
+import { ReactNode } from 'react';
+import { Link } from '@/lib/i18n';
+import { ExternalLink } from 'lucide-react';
+import { toast } from 'sonner';
+
 
 type NavItem = {
   text?: ReactNode
@@ -19,11 +20,6 @@ export const Nav = () => {
       text: 'Themes',
       to: '/themes',
     },
-
-    {
-      text: 'Themes',
-      to: '/themes',
-    },
     // {
     //   text: 'Marketplace',
     //   to: '/marketplace',
@@ -34,15 +30,21 @@ export const Nav = () => {
       to: '/self-hosted',
     },
 
+    {
+      text: 'Docs',
+      isExternal: true,
+      to: 'https://docs.penx.io/posts/35b019ce-e276-4886-a4a2-62d7ed390a99',
+    },
+
     // {
     //   text: 'Tokenomics',
     //   to: '/tokenomics',
     // },
 
-    {
-      text: 'Sponsor',
-      to: '/sponsor',
-    },
+    // {
+    //   text: 'Sponsor',
+    //   to: '/sponsor',
+    // },
     // {
     //   text: 'Pricing',
     //   to: '/pricing',
