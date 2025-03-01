@@ -1,27 +1,24 @@
-'use client'
+'use client';
 
-import { uniqueId } from '@/lib/unique-id'
-import { DndPlugin } from '@udecode/plate-dnd'
-import { ImagePlugin } from '@udecode/plate-media/react'
-import { NodeIdPlugin } from '@udecode/plate-node-id'
+import { DndPlugin } from '@udecode/plate-dnd';
+import { PlaceholderPlugin } from '@udecode/plate-media/react';
+import { NodeIdPlugin } from '@udecode/plate-node-id';
+
+import { DraggableAboveNodes } from '@/components/plate-ui/draggable';
 
 export const dndPlugins = [
-  NodeIdPlugin.configure({
-    options: {
-      idCreator: uniqueId,
-    },
-  }),
+  NodeIdPlugin,
   DndPlugin.configure({
     options: {
       enableScroller: true,
       onDropFiles: ({ dragItem, editor, target }) => {
         editor
-          .getTransforms(ImagePlugin)
-          .insert.imageFromFiles(dragItem.files, {
-            at: target,
-            nextBlock: false,
-          })
+          .getTransforms(PlaceholderPlugin)
+          .insert.media(dragItem.files, { at: target, nextBlock: false });
       },
     },
+    render: {
+      aboveNodes: DraggableAboveNodes,
+    },
   }),
-] as const
+] as const;

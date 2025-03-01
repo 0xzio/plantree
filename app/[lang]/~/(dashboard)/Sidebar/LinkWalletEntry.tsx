@@ -17,7 +17,7 @@ export function LinkWalletEntry() {
     >
       <div className="space-y-1 text-foreground/80">
         <div className="flex items-center gap-1">
-          <span className="i-[token--ethm] w-5 h-5"></span>
+          <span className="icon-[token--ethm] w-5 h-5"></span>
           <div className="font-bold text-base">Link wallet</div>
         </div>
         <div className="text-xs text-foreground/60 leading-normal">

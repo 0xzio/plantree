@@ -113,7 +113,7 @@ export function RegisterForm({}: Props) {
         Already have an account?{' '}
         <a
           href="#"
-          className="text-brand-500"
+          className="text-brand"
           onClick={() => setAuthStatus('login')}
         >
           Log in

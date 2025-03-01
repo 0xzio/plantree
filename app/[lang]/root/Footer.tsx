@@ -2,7 +2,6 @@ import { LangSwitcher } from '@/components/LangSwitcher'
 import { ModeToggle } from '@/components/ModeToggle'
 import { SocialNav } from '@/components/SocialNav'
 import { Link } from '@/lib/i18n'
-import { ExternalLink } from 'lucide-react'
 
 interface Props {}
 
@@ -18,7 +17,7 @@ export function Footer({}: Props) {
           <div className="flex items-center"></div>
           <div className="flex items-center">
             <a
-              href="https://github.com/penx-labs/penx"
+              href="https://docs.penx.io/posts/35b019ce-e276-4886-a4a2-62d7ed390a99"
               target="_blank"
               className="flex items-center gap-1"
             >
@@ -46,40 +45,34 @@ export function Footer({}: Props) {
               className="flex items-center gap-1"
             >
               <span>Blog</span>
-              {/* <div className="inline-flex">
-                <ExternalLink size={16}></ExternalLink>
-              </div> */}
             </a>
           </div>
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <a
               href="https://github.com/penx-labs/penx-desktop/releases"
               target="_blank"
               className="flex items-center gap-1"
             >
               <span>Download</span>
-              {/* <div className="inline-flex">
-                <ExternalLink size={16}></ExternalLink>
-              </div> */}
             </a>
-          </div>
-          <div className="flex items-center">
+          </div> */}
+          {/* <div className="flex items-center">
             <Link href="/privacy" className="">
               Privacy
             </Link>
-          </div>
+          </div> */}
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Link href="/refund-policy" className="">
               Refund policy
             </Link>
-          </div>
+          </div> */}
 
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <Link href="/terms" className="">
               Terms & Conditions
             </Link>
-          </div>
+          </div> */}
         </div>
         <div className="flex gap-2 text-sm justify-center item-center text-foreground/50">
           <div className="flex items-center">{`© ${new Date().getFullYear()}`}</div>

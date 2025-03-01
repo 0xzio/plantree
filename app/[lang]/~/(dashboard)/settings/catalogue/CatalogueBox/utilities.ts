@@ -64,7 +64,7 @@ export function findItemDeep(
 }
 
 export function removeItem(items: TreeItems, id: UniqueIdentifier) {
-  const newItems = []
+  const newItems: any = []
 
   for (const item of items) {
     if (item.id === id) {

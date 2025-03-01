@@ -4,7 +4,7 @@ import { Link } from '@/lib/i18n'
 import { Box } from '@fower/react'
 import { Editor, Path } from 'slate'
 import { FieldIcon } from '../database-ui/shared/FieldIcon'
-import { TTagElement } from '../editor/plugins/tag-plugin/lib/types'
+// import { TTagElement } from '../editor/plugins/tag-plugin/lib/types'
 import { LoadingDots } from '../icons/loading-dots'
 import { Button } from '../ui/button'
 
@@ -12,7 +12,7 @@ import { Button } from '../ui/button'
 // import { CellField } from './fields'
 
 interface Props {
-  element: TTagElement
+  element: any
 }
 
 export const TagForm = forwardRef<HTMLDivElement, Props>(function TagForm(

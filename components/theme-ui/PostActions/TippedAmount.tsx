@@ -50,7 +50,7 @@ export function TippedAmountInHome({ post, receivers, setIsOpen }: Props) {
       className="flex items-center justify-between text-foreground gap-1 cursor-pointer opacity-70 hover:opacity-100"
       onClick={() => setIsOpen(true)}
     >
-      {/* <span className="i-[ri--quill-pen-ai-fill]"></span> */}
+      {/* <span className="icon-[ri--quill-pen-ai-fill]"></span> */}
       <DollarSign size={18} />
       <div> {!data ? '0' : precision.toDecimal(item?.totalAmount)}</div>
     </div>

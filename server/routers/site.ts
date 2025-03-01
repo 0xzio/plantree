@@ -7,7 +7,6 @@ import { AuthType, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
-import { syncSiteToHub } from '../lib/syncSiteToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const siteRouter = router({
@@ -76,7 +75,6 @@ export const siteRouter = router({
 
   mySites: publicProcedure.query(async ({ ctx }) => {
     const userId = ctx.token.uid
-
     const cachedMySites = await cacheHelper.getCachedMySites(userId)
     if (cachedMySites) return cachedMySites
 
@@ -424,7 +422,6 @@ export const siteRouter = router({
         await tx.message.deleteMany({ where: { siteId } })
         await tx.channel.deleteMany({ where: { siteId } })
         await tx.author.deleteMany({ where: { siteId } })
-        await tx.node.deleteMany({ where: { userId } })
         await tx.post.deleteMany({ where: { siteId } })
         await tx.comment.deleteMany({ where: { userId } })
         await tx.postTag.deleteMany({ where: { siteId } })

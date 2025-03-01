@@ -120,7 +120,7 @@ export function LoginForm({}: Props) {
         No account?{' '}
         <a
           href="#"
-          className="text-brand-500"
+          className="text-brand"
           onClick={() => setAuthStatus('register')}
         >
           Create one

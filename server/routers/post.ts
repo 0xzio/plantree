@@ -1,3 +1,4 @@
+import { PostsNav } from '@/app/[lang]/~/(dashboard)/posts/components/PostsNav'
 import { cacheHelper } from '@/lib/cache-header'
 import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
@@ -23,7 +24,6 @@ import { revalidatePath, revalidateTag } from 'next/cache'
 import { Node as SlateNode } from 'slate'
 import { z } from 'zod'
 import { checkSitePermission } from '../lib/checkSitePermission'
-import { syncPostToHub } from '../lib/syncPostToHub'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const postRouter = router({
@@ -271,6 +271,7 @@ export const postRouter = router({
           include: { domains: true },
         })
         const domain = getSiteDomain(site) || site.domains[0]
+
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
@@ -312,7 +313,7 @@ export const postRouter = router({
         where: { siteId: input.siteId, status: PostStatus.PUBLISHED },
       })
 
-      await prisma.site.update({
+      const site = await prisma.site.update({
         where: { id: input.siteId },
         data: { postCount: publishedCount },
       })
@@ -365,10 +366,10 @@ export const postRouter = router({
       const siteId = input.siteId
       const posts = JSON.parse(input.postData) as Post[]
 
-      return prisma.$transaction(async (tx) => {
-        for (const p of posts) {
-          await tx.post.create({
-            data: {
+      return prisma.$transaction(
+        async (tx) => {
+          const newPosts = await tx.post.createManyAndReturn({
+            data: posts.map((p) => ({
               siteId,
               userId: ctx.token.uid,
               title: p.title,
@@ -376,33 +377,39 @@ export const postRouter = router({
               status: p.status,
               image: p.image,
               type: p.type,
-              authors: {
-                create: [
-                  {
-                    siteId,
-                    userId: ctx.token.uid,
-                  },
-                ],
-              },
+            })),
+          })
+
+          const ids = newPosts.map((i) => i.id)
+
+          await tx.author.createMany({
+            data: ids.map((postId) => ({
+              siteId,
+              userId: ctx.token.uid,
+              postId,
+            })),
+          })
+
+          const postCount = await tx.post.count({
+            where: {
+              siteId,
+              status: PostStatus.PUBLISHED,
             },
           })
-        }
 
-        const postCount = await tx.post.count({
-          where: {
-            siteId,
-            status: PostStatus.PUBLISHED,
-          },
-        })
+          await tx.site.update({
+            where: { id: siteId },
+            data: { postCount },
+          })
 
-        await tx.site.update({
-          where: { id: siteId },
-          data: { postCount },
-        })
-
-        await cacheHelper.updateCachedSitePosts(siteId, null)
-        return true
-      })
+          await cacheHelper.updateCachedSitePosts(siteId, null)
+          return true
+        },
+        {
+          maxWait: 10000, // default: 2000
+          timeout: 20000, // default: 5000
+        },
+      )
     }),
 
   archive: protectedProcedure

@@ -37,7 +37,7 @@ export function HomePage({ posts = [], site }: Props) {
         <div className="flex justify-center">
           <Link
             href="/posts"
-            className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
+            className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
           >
             <Button variant="secondary">All posts &rarr;</Button>
           </Link>

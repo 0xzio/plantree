@@ -6,10 +6,10 @@ export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
   'https://www.penx.io/api/link-google-account-oauth'
 
 export const PENX_URL = 'https://penx.io'
-export const STATIC_URL = 'https://static.penx.me'
+export const STATIC_URL = 'https://asset.penx.me'
 
 export const PENX_LOGO_URL =
-  'https://static.penx.me/6198953ddef817f4466460f15cb470fd766f9fda199918588792dcd0eb432e14'
+  'https://asset.penx.me/6198953ddef817f4466460f15cb470fd766f9fda199918588792dcd0eb432e14'
 
 // export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
 export const IPFS_UPLOAD_URL = '/api/ipfs-upload'

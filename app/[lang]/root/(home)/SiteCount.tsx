@@ -22,10 +22,11 @@ export function SiteCount({ count, sites }: Props) {
             .map((_, i) => (
               <span
                 key={i}
-                className="i-[material-symbols--star-rounded] w-6 h-6 leading-none bg-yellow-500 -bottom-1"
+                className="icon-[material-symbols--star-rounded] w-6 h-6 leading-none bg-yellow-500 -bottom-1"
               ></span>
             ))}
         </div>
+
         <div className="space-x-1">
           <span className="font-bold">{count}</span>
           <span className="text-sm">individual blogs created</span>

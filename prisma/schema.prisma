@@ -76,6 +76,8 @@ model Site {
   catalogue              Json?
   newsletterConfig       Json?
   notificationConfig     Json?
+  repo                   String?        @db.VarChar(100)
+  installationId         Int?           @db.Integer // github app installationId
   themeName              String?        @db.VarChar(50)
   themeConfig            Json?
   memberCount            Int            @default(0) @db.Integer
@@ -106,6 +108,7 @@ model Site {
   authors                Author[]
   assetLabels            AssetLabel[]
   assetAlbums            AssetAlbum[]
+  prop                   Prop[]
 
   @@index([userId])
   @@map("site")
@@ -148,6 +151,7 @@ model User {
   subscribers   Subscriber[]
   newsletters   Newsletter[]
   authors       Author[]
+  prop          Prop[]
 
   @@index([id])
   @@map("user")
@@ -213,24 +217,24 @@ model Coupon {
   @@map("coupon")
 }
 
-model Node {
-  id         String   @id @default(uuid()) @db.Uuid
-  userId     String?
-  parentId   String?
-  databaseId String?
-  type       String
-  element    Json?
-  props      Json?
-  collapsed  Boolean  @default(false)
-  folded     Boolean  @default(true)
-  children   Json?
-  date       String?  @db.VarChar(20)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+model Prop {
+  id          String   @id @default(uuid()) @db.Uuid
+  slug        String   @default(uuid())
+  displayName String   @default("")
+  description String   @default("") @db.VarChar(500)
+  type        String
+  config      Json?
+  options     Json?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.Uuid
+  site        Site     @relation(fields: [siteId], references: [id])
+  siteId      String   @db.Uuid
 
   @@index([userId])
-  @@index([type])
-  @@map("node")
+  @@index([siteId])
+  @@map("prop")
 }
 
 enum PostType {
@@ -269,6 +273,7 @@ model Post {
   image         String?       @default("") @db.VarChar(2183)
   content       String        @default("") @db.Text
   i18n          Json?
+  props         Json?
   cid           String        @default("") @db.VarChar(100)
   creationId    Int?          @db.Integer
   type          PostType      @default(ARTICLE)

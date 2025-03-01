@@ -75,7 +75,7 @@ export function PlanItem({ plan }: Props) {
           })
         }}
       >
-        <span className="i-[token--eth] h-6 w-6"></span>
+        <span className="icon-[token--eth] h-6 w-6"></span>
         {isMember && <div>Update subscription</div>}
         {!isMember && <div>Become a member</div>}
       </Button>

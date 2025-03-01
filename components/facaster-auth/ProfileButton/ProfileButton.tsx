@@ -22,7 +22,7 @@ export function ProfileButton({
 }) {
   const [showSignOutButton, setShowSignOutButton] = useState(false)
   const ref = useRef(null)
-  useDetectClickOutside(ref, () => setShowSignOutButton(false))
+  useDetectClickOutside(ref as any, () => setShowSignOutButton(false))
 
   const name = userData?.username ?? `!${userData?.fid}`
   const pfpUrl = userData?.pfpUrl ?? 'https://warpcast.com/avatar.png'

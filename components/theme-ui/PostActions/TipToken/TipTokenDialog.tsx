@@ -165,21 +165,21 @@ export function TipTokenDialog({
           <ul className="text-foreground list-disc list-inside">
             <li>
               Having a .eth name in{' '}
-              <a className="text-brand-500" href="https://ens.domains">
+              <a className="text-brand" href="https://ens.domains">
                 ens.domains
               </a>
               .
             </li>
             <li>
               Having an account in{' '}
-              <a className="text-brand-500" href="https://farcaster.xyz">
+              <a className="text-brand" href="https://farcaster.xyz">
                 farcaster.xyz
               </a>
               .
             </li>
             <li>
               Linking your socials account to{' '}
-              <a className="text-brand-500" href="https://farcaster.xyz">
+              <a className="text-brand" href="https://farcaster.xyz">
                 penx.io
               </a>
               .

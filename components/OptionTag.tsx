@@ -37,7 +37,7 @@ export function OptionTag({
       <div>{option ? option.name : ''}</div>
       {deletable && (
         <div
-          className="remove-option absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 rounded-full text-background bg-brand-500"
+          className="remove-option absolute -top-1 -right-1 flex items-center justify-center h-4 w-4 rounded-full text-background bg-brand"
           onClick={(e) => {
             e.stopPropagation()
             onDelete?.()

@@ -1,23 +1,16 @@
 'use client'
 
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { DndProvider } from 'react-dnd'
 import { HTML5Backend } from 'react-dnd-html5-backend'
-import { SettingsDialog } from '@/components/editor/use-chat'
+import { SettingsDialog } from '@/components/editor/settings'
 import {
   PlateEditorType,
   useCreateEditor,
 } from '@/components/editor/use-create-editor'
-import { CommentsPopover } from '@/components/plate-ui/comments-popover'
-import { CursorOverlay } from '@/components/plate-ui/cursor-overlay'
 import { Editor, EditorContainer } from '@/components/plate-ui/editor'
-import { FixedToolbar } from '@/components/plate-ui/fixed-toolbar'
-import { FixedToolbarButtons } from '@/components/plate-ui/fixed-toolbar-buttons'
-import { FloatingToolbar } from '@/components/plate-ui/floating-toolbar'
-import { FloatingToolbarButtons } from '@/components/plate-ui/floating-toolbar-buttons'
 import { cn } from '@/lib/utils'
-import { Plate } from '@udecode/plate-common/react'
-import { AddNodeBtn } from '../AddNodeBtn'
+import { Plate } from '@udecode/plate/react'
 
 interface Props {
   readonly?: boolean
@@ -40,8 +33,10 @@ export function PlateEditor({
   placeholder,
   onInit,
 }: Props) {
-  const containerRef = useRef(null)
-  const editor = useCreateEditor(value, draggable, placeholder)
+  const editor = useCreateEditor({
+    value,
+    placeholder,
+  })
 
   useEffect(() => {
     onInit?.(editor)
@@ -55,29 +50,15 @@ export function PlateEditor({
           onChange?.(value)
         }}
       >
-        {/* <FixedToolbar>
-          <FixedToolbarButtons />
-        </FixedToolbar> */}
-
-        <Editor
-          variant="default"
-          readOnly={readonly}
-          className={cn(className)}
-        />
-
-        <EditorContainer id="scroll_container" ref={containerRef}>
-          <FloatingToolbar>
-            <FloatingToolbarButtons />
-          </FloatingToolbar>
-
-          {showAddButton && <AddNodeBtn editor={editor} />}
-
-          {/* <CommentsPopover /> */}
-
-          <CursorOverlay containerRef={containerRef} />
+        <EditorContainer>
+          <Editor
+            variant="post"
+            readOnly={readonly}
+            className={cn(className)}
+          />
         </EditorContainer>
 
-        {/* <SettingsDialog /> */}
+        <SettingsDialog />
       </Plate>
     </DndProvider>
   )

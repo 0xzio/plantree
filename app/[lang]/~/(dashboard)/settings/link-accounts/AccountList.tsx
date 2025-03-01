@@ -63,7 +63,7 @@ function AccountItem({ account }: { account: Account }) {
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
           <Badge variant="secondary" className="gap-1">
-            <span className="i-[token--ethm] w-4 h-4"></span>
+            <span className="icon-[token--ethm] w-4 h-4"></span>
             <span>Wallet</span>
           </Badge>
           <Avatar className="w-6 h-6">

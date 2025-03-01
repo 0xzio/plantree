@@ -20,7 +20,7 @@ export function PaginationNav({ prev, next, className }: Props) {
           <div className="pt-4 xl:pt-8">
             <Link
               href={`/${prev.path}`}
-              className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
+              className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
               aria-label={`Previous post: ${prev.title}`}
             >
               &larr; {prev.title}
@@ -31,7 +31,7 @@ export function PaginationNav({ prev, next, className }: Props) {
           <div className="pt-4 xl:pt-8">
             <Link
               href={`/${next.path}`}
-              className="text-brand-500 hover:text-brand-600 dark:hover:text-brand-400"
+              className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
               aria-label={`Next post: ${next.title}`}
             >
               {next.title} &rarr;

@@ -133,6 +133,7 @@ export async function initUserByAddress(address: string) {
       })
     },
     {
+    
       maxWait: 5000, // default: 2000
       timeout: 10000, // default: 5000
     },

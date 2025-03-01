@@ -25,19 +25,19 @@ export function SummaryDashboard({ rewardRequests, isLoading }: Props) {
   const categories = [
     {
       label: 'Total Request',
-      icon: 'i-[fluent-emoji--pick]',
+      icon: 'icon-[fluent-emoji--pick]',
       value: totalRequest,
     },
-    { label: 'Pending', icon: 'i-[fluent-emoji--alarm-clock]', value: pending },
+    { label: 'Pending', icon: 'icon-[fluent-emoji--alarm-clock]', value: pending },
     {
       label: 'Completed',
-      icon: 'i-[fluent-emoji--triangular-flag]',
+      icon: 'icon-[fluent-emoji--triangular-flag]',
       value: completed,
     },
 
     {
       label: 'Rewards',
-      icon: 'i-[fluent-emoji--deciduous-tree]',
+      icon: 'icon-[fluent-emoji--deciduous-tree]',
       value: rewardsAmount,
     },
   ]
