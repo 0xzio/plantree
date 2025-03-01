@@ -10,6 +10,8 @@ import { SessionData } from '@/lib/types'
 import { BillingCycle, PlanType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
+import queryString from 'query-string'
+import Stripe from 'stripe'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
@@ -30,7 +32,10 @@ interface CancelRes {
   canceled_at: string
 }
 
-const apiKey = process.env.CREEM_API_KEY!
+export const stripe = new Stripe(process.env.STRIPE_API_KEY!, {
+  apiVersion: '2025-02-24.acacia',
+  typescript: true,
+})
 
 export const billingRouter = router({
   checkout: protectedProcedure
@@ -42,46 +47,48 @@ export const billingRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const getProductId = () => {
-        if (input.planType === PlanType.STANDARD) {
-          return input.billingCycle === BillingCycle.MONTHLY
-            ? CREEM_PRODUCT_STANDARD_MONTHLY
-            : CREEM_PRODUCT_STANDARD_ANNUAL
-        } else {
-          return input.billingCycle === BillingCycle.MONTHLY
-            ? CREEM_PRODUCT_PROFESSIONAL_MONTHLY
-            : CREEM_PRODUCT_PROFESSIONAL_ANNUAL
-        }
+        // if (input.planType === PlanType.STANDARD) {
+        //   return input.billingCycle === BillingCycle.MONTHLY
+        //     ? CREEM_PRODUCT_STANDARD_MONTHLY
+        //     : CREEM_PRODUCT_STANDARD_ANNUAL
+        // } else {
+        //   return input.billingCycle === BillingCycle.MONTHLY
+        //     ? CREEM_PRODUCT_PROFESSIONAL_MONTHLY
+        //     : CREEM_PRODUCT_PROFESSIONAL_ANNUAL
+        // }
         //
+        return process.env.NEXT_PUBLIC_STRIPE_CREATOR_MONTHLY_PLAN_ID
       }
 
-      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
+      const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
 
-      console.log('=====>>>success_url:', success_url)
+      console.log('=====>>>success_url:', return_url)
+      const userId = ctx.token.uid
 
-      const res: CheckoutRes = await fetch(
-        `${process.env.CREEM_API_HOST}/v1/checkouts`,
-        {
-          method: 'POST',
-          body: JSON.stringify({
-            product_id: getProductId(),
-            request_id: `${input.planType}___${input.billingCycle}___${ctx.token.uid}`,
-            success_url,
-            // customer: {
-            //   email: 'yourUserEmail@gmail.com',
-            // },
-            metadata: {
-              planType: input.planType,
-              userId: ctx.token.uid,
-            },
-          }),
-          headers: {
-            'Content-Type': 'application/json',
-            'x-api-key': apiKey,
-          },
-        },
-      ).then((response) => response.json())
+      const query = {
+        billingCycle: input.billingCycle,
+        planType: input.planType,
+        siteId: ctx.activeSiteId,
+      }
 
-      return res
+      console.log('=======query:', query)
+
+      const stringifiedQuery = queryString.stringify(query)
+
+      const session = await stripe.checkout.sessions.create({
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        // customer_email: email,
+        client_reference_id: ctx.activeSiteId,
+        subscription_data: { metadata: { userId } },
+        success_url: `${return_url}?success=truesession_id={CHECKOUT_SESSION_ID}&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
+        cancel_url: `${return_url}?success=false`,
+        line_items: [{ price: getProductId(), quantity: 1 }],
+      })
+
+      if (!session.url) return { success: false as const }
+
+      return { success: true, url: session.url }
     }),
 
   cancel: protectedProcedure.mutation(async ({ ctx, input }) => {
@@ -95,7 +102,7 @@ export const billingRouter = router({
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'x-api-key': apiKey,
+          // 'x-api-key': apiKey,
         },
       },
     ).then((response) => response.json())

@@ -40,8 +40,8 @@ enum RequestStatus {
 
 enum PlanType {
   FREE
-  STANDARD
-  PROFESSIONAL
+  CREATOR
+  BELIEVER
 }
 
 enum BillingCycle {
@@ -60,7 +60,7 @@ model Site {
   image                  String?        @default("") @db.VarChar(2183)
   email                  String?        @unique @db.VarChar(255)
   sassSubscriptionId     String?        @unique @db.VarChar(50)
-  sassSubscriptionStatus String?        @unique @db.VarChar(50)
+  sassSubscriptionStatus String?        @db.VarChar(50)
   sassBillingCycle       BillingCycle?
   sassPlanType           PlanType       @default(FREE)
   sassCustomerId         String?        @unique @db.VarChar(50)

@@ -206,6 +206,7 @@
     "socket.io-client": "^4.7.5",
     "sonner": "^1.7.0",
     "stook": "^1.17.0",
+    "stripe": "^17.7.0",
     "superjson": "^2.2.1",
     "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",

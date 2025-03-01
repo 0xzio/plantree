@@ -39,15 +39,15 @@ export function UpgradeButton({ type }: Props) {
     <Button
       size="lg"
       className="rounded-full px-8 w-32 h-12 font-bold"
-      disabled={isPending || (isCurrentPlan && !isCanceled) || isFree}
+      // disabled={isPending || (isCurrentPlan && !isCanceled) || isFree}
       onClick={async () => {
         if (isDashboard) {
           const data = await mutateAsync({
             planType: type,
             billingCycle: cycle,
           })
-          console.log('data===>>:', data)
-          location.href = data.checkout_url
+          console.log('data===>>:', data, data.url)
+          location.href = data.url!
           return
         }
 

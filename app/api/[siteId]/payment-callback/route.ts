@@ -1,89 +1,114 @@
-import crypto from 'crypto'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
+import { stripe } from '@/lib/stripe'
 import { SessionData } from '@/lib/types'
 import { BillingCycle } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
-
-const apiKey = process.env.CREEM_API_KEY!
+import type { Stripe } from 'stripe'
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
 
-  const siteId = url.pathname.split('/')[2]
+  const sessionId = url.searchParams.get('session_id')
+  const billingCycle = url.searchParams.get('billingCycle') || ''
+  const planType = url.searchParams.get('planType') || ''
+  const siteId = url.searchParams.get('siteId') || ''
 
-  const request_id = url.searchParams.get('request_id') || ''
-  const checkout_id = url.searchParams.get('checkout_id')!
-  const order_id = url.searchParams.get('order_id')!
-  const customer_id = url.searchParams.get('customer_id')!
-  const subscription_id = url.searchParams.get('subscription_id')!
-  const product_id = url.searchParams.get('product_id')!
-  const signature = url.searchParams.get('signature')!
-
-  const params = {
-    request_id,
-    checkout_id,
-    order_id,
-    customer_id,
-    subscription_id,
-    product_id,
+  if (!sessionId) {
+    throw new Error('Invalid sessionId.')
   }
 
-  console.log('=======>>>signature:', signature)
-  console.log('=======generateSignature:', generateSignature(params))
-  console.log('=======params:', params)
+  try {
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['customer', 'subscription'],
+    })
 
-  if (signature !== generateSignature(params)) {
-    throw new Error('INVALID_SIGNATURE')
+    if (!session.customer || typeof session.customer === 'string') {
+      throw new Error('Invalid customer data from Stripe.')
+    }
+
+    const customerId = session.customer.id
+
+    console.log('=========>>>>:', session)
+
+    const subscriptionId =
+      typeof session.subscription === 'string'
+        ? session.subscription
+        : session.subscription?.id
+
+    if (!subscriptionId) {
+      throw new Error('No subscription found for this session.')
+    }
+
+    const subscription = await stripe.subscriptions.retrieve(subscriptionId, {
+      expand: ['items.data.price.product'],
+    })
+
+    console.log('========>>>>subscription:', subscription)
+
+    const plan = subscription.items.data[0]?.price
+
+    console.log('==========>>>>plan:', plan)
+
+    if (!plan) {
+      throw new Error('No plan found for this subscription.')
+    }
+
+    const productId = (plan.product as Stripe.Product).id
+
+    if (!productId) {
+      throw new Error('No product ID found for this subscription.')
+    }
+
+    const siteId = session.client_reference_id
+    if (!siteId) {
+      throw new Error("No site ID found in session's client_reference_id.")
+    }
+
+    const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
+    const millisecondsPerYear = 12 * 30 * 24 * 60 * 60 * 1000
+
+    await prisma.site.update({
+      where: { id: siteId },
+      data: {
+        sassCustomerId: customerId,
+        sassSubscriptionId: subscriptionId,
+        sassSubscriptionStatus: subscription.status,
+        sassBillingCycle: billingCycle as any,
+        sassPlanType: planType as any,
+        sassProductId: productId,
+      },
+    })
+
+    /** auth session */
+    {
+      const sessionOptions = getSessionOptions()
+      const session = await getIronSession<SessionData>(
+        await cookies(),
+        sessionOptions,
+      )
+
+      session.planType = planType
+      session.subscriptionStatus = 'active'
+      session.billingCycle = billingCycle
+
+      session.currentPeriodEnd = new Date(
+        Date.now() +
+          (billingCycle === BillingCycle.MONTHLY
+            ? millisecondsPerMonth
+            : millisecondsPerYear),
+      ).toISOString()
+
+      await session.save()
+    }
+
+    return NextResponse.redirect(
+      `${url.protocol}//${url.host}/~/settings/subscription`,
+    )
+  } catch (error) {
+    console.error('Error handling successful checkout:', error)
+    return NextResponse.redirect(new URL('/error', req.url))
   }
-
-  const [planType, billingCycle] = request_id.split('___')
-
-  const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
-  const millisecondsPerYear = 12 * 30 * 24 * 60 * 60 * 1000
-
-  await prisma.site.update({
-    where: { id: siteId },
-    data: {
-      sassCustomerId: customer_id,
-      sassSubscriptionId: subscription_id,
-      sassSubscriptionStatus: 'active',
-      sassBillingCycle: billingCycle as any,
-      sassPlanType: planType as any,
-      sassProductId: product_id,
-    },
-  })
-
-  const sessionOptions = getSessionOptions()
-  const session = await getIronSession<SessionData>(
-    await cookies(),
-    sessionOptions,
-  )
-
-  session.planType = planType
-  session.subscriptionStatus = 'active'
-  session.billingCycle = billingCycle
-
-  session.currentPeriodEnd = new Date(
-    Date.now() +
-      (billingCycle === BillingCycle.MONTHLY
-        ? millisecondsPerMonth
-        : millisecondsPerYear),
-  ).toISOString()
-
-  await session.save()
-
-  return NextResponse.redirect(
-    `${url.protocol}//${url.host}/~/settings/subscription`,
-  )
-}
-
-function generateSignature(params: any): string {
-  const data = Object.entries(params)
-    .map(([key, value]) => `${key}=${value}`)
-    .concat(`salt=${apiKey}`)
-    .join('|')
-  return crypto.createHash('sha256').update(data).digest('hex')
 }

@@ -8,8 +8,6 @@ import {
   isSubscriptionPaid,
 } from './event.types'
 
-const apiKey = process.env.CREEM_API_KEY!
-
 export async function POST(req: NextRequest) {
   const json = await req.json()
   console.log('==============>>>>>>>>>>>>:', json)
