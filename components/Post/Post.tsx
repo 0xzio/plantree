@@ -129,9 +129,9 @@ export function Post() {
               </div>
             </div>
           )}
-          <div className="pt-4 -ml-4">
+          {/* <div className="pt-4 -ml-4">
             <AddPropButton />
-          </div>
+          </div> */}
         </div>
 
         <div className="w-full" data-registry="plate">

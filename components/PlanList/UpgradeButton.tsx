@@ -23,7 +23,8 @@ export function UpgradeButton({ type }: Props) {
 
   const { isPending, mutateAsync } = trpc.billing.checkout.useMutation()
 
-  const isCurrentPlan = type === session?.planType
+  const isCurrentPlan =
+    type === session?.planType && cycle === session?.billingCycle
   const isFree = type === PlanType.FREE
   const isCanceled = session?.subscriptionStatus === 'canceled'
   function getText() {

@@ -1,7 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
 import {
-  BASIC_PLAN_COLLABORATOR_LIMIT,
   PRO_PLAN_COLLABORATOR_LIMIT,
+  TEAM_PLAN_COLLABORATOR_LIMIT,
 } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { CollaboratorRole, PlanType, ProviderType } from '@prisma/client'
@@ -51,16 +51,6 @@ export const collaboratorRouter = router({
       const count = await prisma.collaborator.count({
         where: { siteId: input.siteId },
       })
-
-      if (
-        ctx.token.planType === PlanType.BASIC &&
-        count >= BASIC_PLAN_COLLABORATOR_LIMIT
-      ) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'You have reached the basic plan collaborator limit.',
-        })
-      }
 
       if (
         ctx.token.planType === PlanType.PRO &&

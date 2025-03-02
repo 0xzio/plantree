@@ -9,11 +9,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/popover'
 import { Plus } from 'lucide-react'
 import { Button } from '../ui/button'
 
@@ -21,7 +16,11 @@ export function AddPropButton() {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="flex items-center gap-1">
+        <Button
+          size="sm"
+          variant="ghost"
+          className="flex items-center gap-1 rounded text-foreground/40 text-sm"
+        >
           <Plus size={16} />
           <span>Add a property</span>
         </Button>

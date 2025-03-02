@@ -1,8 +1,8 @@
 import {
-  STRIPE_BASIC_MONTHLY_PRICE_ID,
-  STRIPE_BASIC_YEARLY_PRICE_ID,
   STRIPE_PRO_MONTHLY_PRICE_ID,
   STRIPE_PRO_YEARLY_PRICE_ID,
+  STRIPE_TEAM_MONTHLY_PRICE_ID,
+  STRIPE_TEAM_YEARLY_PRICE_ID,
 } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
@@ -30,15 +30,15 @@ export const billingRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const getProductId = () => {
-        if (input.planType === PlanType.BASIC) {
-          return input.billingCycle === BillingCycle.MONTHLY
-            ? STRIPE_BASIC_MONTHLY_PRICE_ID
-            : STRIPE_BASIC_YEARLY_PRICE_ID
-        } else {
+        if (input.planType === PlanType.PRO) {
           return input.billingCycle === BillingCycle.MONTHLY
             ? STRIPE_PRO_MONTHLY_PRICE_ID
             : STRIPE_PRO_YEARLY_PRICE_ID
         }
+
+        return input.billingCycle === BillingCycle.MONTHLY
+          ? STRIPE_TEAM_MONTHLY_PRICE_ID
+          : STRIPE_TEAM_YEARLY_PRICE_ID
       }
 
       const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
