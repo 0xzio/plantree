@@ -126,6 +126,8 @@ export const postRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      // const count = await prisma.post
+
       const post = await prisma.post.create({
         data: {
           userId: ctx.token.uid,

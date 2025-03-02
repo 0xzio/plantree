@@ -304,6 +304,7 @@ model Post {
   authors       Author[]
 
   @@unique([siteId, slug])
+  @@index([siteId, isPage])
   @@index([userId])
   @@index([siteId, status])
   @@index([type])

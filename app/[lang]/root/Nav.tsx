@@ -1,10 +1,9 @@
-'use client';
+'use client'
 
-import { ReactNode } from 'react';
-import { Link } from '@/lib/i18n';
-import { ExternalLink } from 'lucide-react';
-import { toast } from 'sonner';
-
+import { ReactNode } from 'react'
+import { Link } from '@/lib/i18n'
+import { ExternalLink } from 'lucide-react'
+import { toast } from 'sonner'
 
 type NavItem = {
   text?: ReactNode
@@ -45,10 +44,10 @@ export const Nav = () => {
     //   text: 'Sponsor',
     //   to: '/sponsor',
     // },
-    // {
-    //   text: 'Pricing',
-    //   to: '/pricing',
-    // },
+    {
+      text: 'Pricing',
+      to: '/pricing',
+    },
     // {
     //   text: 'Rewards',
     //   to: '/rewards',

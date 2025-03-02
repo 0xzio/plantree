@@ -13,14 +13,11 @@ import { useRouter } from '@/lib/i18n'
 import { toast } from 'sonner'
 
 export function CreateDatabaseButton() {
-  const isMember = useIsMember()
-  const { setIsOpen } = useSubscriptionGuideDialog()
   const { push } = useRouter()
   const site = useSiteContext()
   const { refetch } = useDatabases()
   const [isLoading, setLoading] = useState(false)
   async function createDatabase() {
-    if (!isMember) return setIsOpen(true)
     setLoading(true)
     try {
       const database = await api.database.create.mutate({

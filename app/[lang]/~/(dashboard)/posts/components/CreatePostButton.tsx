@@ -6,7 +6,6 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { AddNoteDialog } from '@/components/Post/AddNoteDialog/AddNoteDialog'
 import { useAddNoteDialog } from '@/components/Post/AddNoteDialog/useAddNoteDialog'
 import { useSiteContext } from '@/components/SiteContext'
-import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Button } from '@/components/ui/button'
 import {
   Popover,
@@ -30,13 +29,9 @@ export function CreatePostButton() {
   const [isLoading, setLoading] = useState(false)
   const [type, setType] = useState<PostType>('' as any)
   const [open, setOpen] = useState(false)
-  const isMember = useIsMember()
-  const { setIsOpen } = useSubscriptionGuideDialog()
   const addNoteDialog = useAddNoteDialog()
 
   async function createPost(type: PostType) {
-    if (!isMember) return setIsOpen(true)
-
     let content = JSON.stringify(editorDefaultValue)
     if (type === PostType.IMAGE || type === PostType.VIDEO) content = ''
 
@@ -84,7 +79,6 @@ export function CreatePostButton() {
             onClick={async () => {
               setType(PostType.ARTICLE)
               await createPost(PostType.ARTICLE)
-              setIsOpen(false)
             }}
           >
             <FileText size={16} />
@@ -95,7 +89,6 @@ export function CreatePostButton() {
             isLoading={isLoading && type == PostType.NOTE}
             onClick={async () => {
               addNoteDialog.setIsOpen(true)
-              setIsOpen(false)
             }}
           >
             <Pen size={16} />
@@ -107,7 +100,6 @@ export function CreatePostButton() {
             onClick={async () => {
               setType(PostType.IMAGE)
               await createPost(PostType.IMAGE)
-              setIsOpen(false)
             }}
           >
             <Image size={16} />
