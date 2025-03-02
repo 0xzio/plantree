@@ -15,25 +15,10 @@ type NavItem = {
 
 export const Nav = () => {
   const navData: NavItem[] = [
-    {
-      text: 'Themes',
-      to: '/themes',
-    },
     // {
     //   text: 'Marketplace',
     //   to: '/marketplace',
     // },
-
-    {
-      text: 'Self-Hosted',
-      to: '/self-hosted',
-    },
-
-    {
-      text: 'Docs',
-      isExternal: true,
-      to: 'https://docs.penx.io/posts/35b019ce-e276-4886-a4a2-62d7ed390a99',
-    },
 
     // {
     //   text: 'Tokenomics',
@@ -47,6 +32,19 @@ export const Nav = () => {
     {
       text: 'Pricing',
       to: '/pricing',
+    },
+    {
+      text: 'Themes',
+      to: '/themes',
+    },
+    {
+      text: 'Hosted',
+      to: '/self-hosted',
+    },
+    {
+      text: 'Docs',
+      isExternal: true,
+      to: 'https://docs.penx.io/posts/35b019ce-e276-4886-a4a2-62d7ed390a99',
     },
     // {
     //   text: 'Rewards',
@@ -87,9 +85,9 @@ export const Nav = () => {
               >
                 {item.text && <div>{item.text}</div>}
                 {!!item.icon && item.icon}
-                <div className="inline-flex">
+                {/* <div className="inline-flex">
                   <ExternalLink size={16}></ExternalLink>
-                </div>
+                </div> */}
               </a>
             </div>
           )

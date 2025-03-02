@@ -1,6 +1,10 @@
 import { cacheHelper } from '@/lib/cache-header'
+import {
+  BASIC_PLAN_COLLABORATOR_LIMIT,
+  PRO_PLAN_COLLABORATOR_LIMIT,
+} from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { CollaboratorRole, ProviderType } from '@prisma/client'
+import { CollaboratorRole, PlanType, ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
@@ -41,6 +45,30 @@ export const collaboratorRouter = router({
         throw new TRPCError({
           code: 'BAD_GATEWAY',
           message: 'No permission to add collaborator',
+        })
+      }
+
+      const count = await prisma.collaborator.count({
+        where: { siteId: input.siteId },
+      })
+
+      if (
+        ctx.token.planType === PlanType.BASIC &&
+        count >= BASIC_PLAN_COLLABORATOR_LIMIT
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'You have reached the basic plan collaborator limit.',
+        })
+      }
+
+      if (
+        ctx.token.planType === PlanType.PRO &&
+        count >= PRO_PLAN_COLLABORATOR_LIMIT
+      ) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'You have reached the pro plan collaborator limit.',
         })
       }
 

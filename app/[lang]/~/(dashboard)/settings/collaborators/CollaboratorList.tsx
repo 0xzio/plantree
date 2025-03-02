@@ -52,7 +52,7 @@ export default function CollaboratorList({}: Props) {
           {isLoading && (
             <TableRow>
               <TableCell colSpan={3} className="text-center">
-                <LoadingDots className="bg-background/60" />
+                <LoadingDots className="bg-foreground/60" />
               </TableCell>
             </TableRow>
           )}

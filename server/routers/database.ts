@@ -8,6 +8,7 @@ import {
 import { prisma } from '@/lib/prisma'
 import { FieldType, Option, ViewField, ViewType } from '@/lib/types'
 import { uniqueId } from '@/lib/unique-id'
+import { TRPCError } from '@trpc/server'
 import { arrayMoveImmutable } from 'array-move'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
@@ -89,6 +90,12 @@ export const databaseRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      // throw new TRPCError({
+      //   code: 'BAD_REQUEST',
+      //   message: 'You have reached the free plan post limit.',
+      // })
+      // }
+
       return prisma.$transaction(
         async (tx) => {
           const newDatabase = await tx.database.create({

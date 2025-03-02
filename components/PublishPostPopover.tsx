@@ -4,11 +4,14 @@ import { Dispatch, SetStateAction, useState } from 'react'
 import { usePost } from '@/hooks/usePost'
 import { usePublishPost } from '@/hooks/usePublishPost'
 import { useSite } from '@/hooks/useSite'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { GateType } from '@prisma/client'
 import { PopoverClose } from '@radix-ui/react-popover'
 import { LoadingDots } from './icons/loading-dots'
+import { usePlanListDialog } from './PlanList/usePlanListDialog'
 import { useSiteContext } from './SiteContext'
+import { Badge } from './ui/badge'
 import { Button } from './ui/button'
 import { Label } from './ui/label'
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
@@ -53,11 +56,13 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
   const { site } = useSite()
   const { post } = usePost()
   const { spaceId } = useSiteContext()
+  const { data: session } = useSession()
 
   const [gateType, setGateType] = useState<GateType>(GateType.FREE)
   const [collectible, setCollectible] = useState(post?.collectible || false)
   const [delivered, setDelivered] = useState(post?.delivered || false)
   const { isLoading, publishPost } = usePublishPost()
+  const { setIsOpen } = usePlanListDialog()
 
   if (!post) return null
 
@@ -98,7 +103,16 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
           </div>
           <div>
             <div className="flex items-center justify-between">
-              <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+              <div className="flex gap-2 items-center">
+                <Label htmlFor="post-delivered">Deliver your newsletter</Label>
+                <Badge
+                  size="sm"
+                  className="cursor-pointer h-6"
+                  onClick={() => setIsOpen(true)}
+                >
+                  Upgrade
+                </Badge>
+              </div>
               {post.delivered ? (
                 <div className="text-sm text-muted-foreground">
                   Already sent
@@ -106,6 +120,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
               ) : (
                 <Switch
                   id="post-delivered"
+                  disabled={session?.isFree}
                   checked={delivered}
                   onCheckedChange={(value) => {
                     setDelivered(value)

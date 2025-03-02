@@ -28,7 +28,11 @@ interface SiteLinkContentProps {
 
 function SiteLinkContent({ link }: SiteLinkContentProps) {
   return (
-    <a href={`${location.protocol}//${link}`} target="_blank">
+    <a
+      href={`${location.protocol}//${link}`}
+      target="_blank"
+      className="inline-flex"
+    >
       <Badge variant="secondary" className="space-x-2">
         <span>{link}</span>
         <ExternalLink size={16} className="text-foreground/50" />

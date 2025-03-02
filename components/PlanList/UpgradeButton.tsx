@@ -19,7 +19,7 @@ export function UpgradeButton({ type }: Props) {
   const { cycle } = useBillingCycle()
   const { push } = useRouter()
   const pathname = usePathname()
-  const isDashboard = pathname.includes('~/settings')
+  const isDashboard = pathname.includes('/~/')
 
   const { isPending, mutateAsync } = trpc.billing.checkout.useMutation()
 

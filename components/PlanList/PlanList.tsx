@@ -17,11 +17,7 @@ export function PlanList() {
           name="Free"
           type={PlanType.FREE}
           collaboratorCount={1}
-          benefits={[
-            '1 collaborators',
-            '5 free official themes',
-            'Custom domain',
-          ]}
+          benefits={['1 creators', '5 free official themes', 'Custom domain']}
         />
         <PlanItem
           monthlyPrice={10}
@@ -30,7 +26,7 @@ export function PlanList() {
           type={PlanType.BASIC}
           collaboratorCount={3}
           benefits={[
-            '3 collaborators',
+            '3 co-creators',
             'Unlimited custom themes',
             'Custom domain',
             'Sending newsletters',
@@ -43,9 +39,9 @@ export function PlanList() {
           annualPrice={180}
           name="Pro"
           type={PlanType.PRO}
-          collaboratorCount={10}
+          collaboratorCount={6}
           benefits={[
-            '10 collaborators',
+            '6 co-creators',
             'Unlimited custom themes',
             'Custom domain',
             'Sending newsletters',

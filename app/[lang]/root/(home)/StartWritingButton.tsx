@@ -2,8 +2,8 @@
 
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
-import { useSession } from '@/lib/useSession'
 import { useRouter } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 
 export function StartWritingButton() {
   const { data } = useSession()
@@ -23,7 +23,7 @@ export function StartWritingButton() {
           }
         }}
       >
-        <div>Writing on PenX cloud</div>
+        <div>Start Writing on PenX</div>
         {/* <div className="absolute top-0 right-0 text-xs bg-yellow-500 px-1 py-[1px] rounded-bl-lg text-white">
           Beta now
         </div> */}

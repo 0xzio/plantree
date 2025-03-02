@@ -135,5 +135,18 @@ export const STRIPE_PRO_MONTHLY_PRICE_ID =
 export const STRIPE_PRO_YEARLY_PRICE_ID =
   process.env.NEXT_PUBLIC_STRIPE_PRO_YEARLY_PRICE_ID
 
-export const FREE_PLAN_POST_LIMIT = process.env.FREE_PLAN_POST_LIMIT
-export const FREE_PLAN_PAGE_LIMIT = process.env.FREE_PLAN_PAGE_LIMIT
+export const FREE_PLAN_POST_LIMIT = Number(
+  process.env.FREE_PLAN_POST_LIMIT || 10,
+)
+
+export const FREE_PLAN_PAGE_LIMIT = Number(
+  process.env.FREE_PLAN_PAGE_LIMIT || 5,
+)
+
+export const BASIC_PLAN_COLLABORATOR_LIMIT = Number(
+  process.env.BASIC_PLAN_COLLABORATOR_LIMIT || 3,
+)
+
+export const PRO_PLAN_COLLABORATOR_LIMIT = Number(
+  process.env.PRO_PLAN_COLLABORATOR_LIMIT || 6,
+)

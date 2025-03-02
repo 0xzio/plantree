@@ -1,6 +1,6 @@
 import { PostsNav } from '@/app/[lang]/~/(dashboard)/posts/components/PostsNav'
 import { cacheHelper } from '@/lib/cache-header'
-import { IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import { FREE_PLAN_POST_LIMIT, IPFS_ADD_URL, PostStatus } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
@@ -126,7 +126,16 @@ export const postRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      // const count = await prisma.post
+      const count = await prisma.post.count({
+        where: { siteId: input.siteId, isPage: false },
+      })
+
+      if (count >= FREE_PLAN_POST_LIMIT) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'You have reached the free plan post limit.',
+        })
+      }
 
       const post = await prisma.post.create({
         data: {
@@ -211,6 +220,13 @@ export const postRouter = router({
     .mutation(async ({ ctx, input }) => {
       const userId = ctx.token.uid
       const { gateType, collectible, creationId } = input
+
+      if (input.delivered && ctx.isFree) {
+        throw new TRPCError({
+          code: 'FORBIDDEN',
+          message: 'Newsletters features is not supported on Free plan',
+        })
+      }
 
       let post = await prisma.post.findFirst({
         where: { id: input.postId },

@@ -1,4 +1,5 @@
 import { cacheHelper } from '@/lib/cache-header'
+import { FREE_PLAN_PAGE_LIMIT } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { PostStatus } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
@@ -124,6 +125,17 @@ export const pageRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const count = await prisma.post.count({
+        where: { siteId: input.siteId, isPage: true },
+      })
+
+      if (count >= FREE_PLAN_PAGE_LIMIT) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'You have reached the free plan page limit.',
+        })
+      }
+
       const page = await createPage({
         userId: ctx.token.uid,
         siteId: input.siteId,

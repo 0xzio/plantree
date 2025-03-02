@@ -61,25 +61,18 @@ export const protectedProcedure = t.procedure.use(
       })
     }
 
-    const isMember = () => {
-      if (!ctx.token.subscriptionEndedAt) return false
-      const endedAt = new Date(ctx.token.subscriptionEndedAt).getTime()
-      return endedAt > Date.now()
-    }
-
     if (
-      !isMember() &&
+      ctx.isFree &&
       [
-        'page.create',
         'database.create',
-        // 'asset.create',
-        'post.create',
+        'asset.create',
+        'collaborator.addCollaborator',
       ].includes(path)
     ) {
       throw new TRPCError({
         code: 'UNAUTHORIZED',
         message:
-          'You are not a member. Please upgrade your subscription to continue.',
+          'You are currently on the Free plan. Please upgrade your subscription to continue.',
       })
     }
 

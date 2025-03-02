@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import { SessionData } from '@/lib/types'
+import { PlanType } from '@prisma/client'
 import { FetchCreateContextFnOptions } from '@trpc/server/adapters/fetch'
 import type * as trpcNext from '@trpc/server/adapters/next'
 import { getIronSession } from 'iron-session'
@@ -22,6 +23,8 @@ type Token = {
   jti: string
   accessToken: string
   subscriptionEndedAt: string | null
+  planType: PlanType
+  isFree: boolean
 }
 
 let secret = ''
@@ -51,6 +54,7 @@ export async function createContextInner(_opts: CreateContextOptions) {
 export type Context = Awaited<ReturnType<typeof createContextInner>> & {
   token: Token
   activeSiteId: string
+  isFree: Boolean
 }
 
 /**
@@ -73,8 +77,18 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
     } catch (error) {}
   }
 
+  if (token) {
+    if (
+      token.currentPeriodEnd &&
+      Date.now() > new Date(token.currentPeriodEnd).getTime()
+    ) {
+      token.planType = PlanType.FREE
+    }
+  }
+
   return {
     token,
+    isFree: token?.planType === PlanType.FREE,
     activeSiteId: req.headers.get('X-ACTIVE-SITE-ID') || '',
   }
 }
