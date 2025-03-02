@@ -23,10 +23,7 @@ interface Props {}
 
 export function Subscription({}: Props) {
   const site = useSiteContext()
-  const { setIsOpen } = useSubscriptionGuideDialog()
   const { data: session, update } = useSession()
-  const isMember = useIsMember()
-  const subscriptionDialog = useSubscriptionDialog()
   const { isConnected } = useAccount()
   const { openConnectModal } = useConnectModal()
   const time = useMemo(() => {

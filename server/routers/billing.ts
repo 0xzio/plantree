@@ -63,6 +63,7 @@ export const billingRouter = router({
         client_reference_id: ctx.activeSiteId,
         subscription_data: {
           metadata: {
+            siteId: ctx.activeSiteId,
             billingCycle: input.billingCycle,
             planType: input.planType,
           },
