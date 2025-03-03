@@ -22,7 +22,7 @@ type Token = {
   exp: number
   jti: string
   accessToken: string
-  subscriptionEndedAt: string | null
+  sassBelieverPeriodEnd: string | null
   planType: PlanType
   isFree: boolean
 }
@@ -81,6 +81,13 @@ export async function createContext(opts: FetchCreateContextFnOptions) {
     if (
       token.currentPeriodEnd &&
       Date.now() > new Date(token.currentPeriodEnd).getTime()
+    ) {
+      token.planType = PlanType.FREE
+    }
+
+    if (
+      token.believerPeriodEnd &&
+      Date.now() > new Date(token.believerPeriodEnd).getTime()
     ) {
       token.planType = PlanType.FREE
     }

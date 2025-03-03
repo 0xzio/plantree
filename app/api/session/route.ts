@@ -59,11 +59,8 @@ async function updateSession(
   session.planType = site.sassPlanType
   session.subscriptionStatus = site.sassSubscriptionStatus || ''
   session.currentPeriodEnd = site?.sassCurrentPeriodEnd as any as string
+  session.believerPeriodEnd = site?.sassBelieverPeriodEnd as any as string
   session.billingCycle = site?.sassBillingCycle as any as string
-
-  session.subscriptionEndedAt = getSubscriptionEndedAt(
-    account.user.subscriptions,
-  )
 
   session.accessToken = jwt.sign(
     {
@@ -269,12 +266,7 @@ export async function PATCH(request: NextRequest) {
   }
 
   if (isUpdateSubscription(json)) {
-    const subscription = await prisma.subscription.findFirst({
-      where: { userId: session.uid as string },
-    })
-    if (subscription) {
-      session.subscriptionEndedAt = subscription.endedAt
-    }
+    // session.sassBelieverPeriodEnd = json.type
   }
 
   if (isCancelSubscription(json)) {

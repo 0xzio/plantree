@@ -34,12 +34,13 @@ export function PlanList() {
             'One-to-One support in discord',
           ]}
         />
-        {/* <PlanItem
+        <PlanItem
           monthlyPrice={20}
           annualPrice={180}
           name="Believer"
           type={PlanType.BELIEVER}
           collaboratorCount={3}
+          isBeliever
           benefits={[
             'everything in Pro Plan',
             '3 co-creators',
@@ -50,7 +51,7 @@ export function PlanList() {
             'One-to-One support in discord',
             'Priority support',
           ]}
-        /> */}
+        />
       </div>
     </div>
   )

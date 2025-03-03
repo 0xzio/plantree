@@ -8,7 +8,7 @@ import {
   UpdateActiveSiteData,
   UpdateSessionData,
 } from '@/lib/types'
-import { PlanType } from '@prisma/client'
+import { BillingCycle, PlanType } from '@prisma/client'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { queryClient } from './queryClient'
 
@@ -78,14 +78,27 @@ export function useSession() {
     }
 
     const isFree = planType === PlanType.FREE
-    const isBeliever = planType === PlanType.BELIEVER
     const isPro = planType === PlanType.PRO
+
+    const isSubscription = [BillingCycle.MONTHLY, BillingCycle.YEARLY].includes(
+      session?.billingCycle as any,
+    )
+
+    let isBeliever = false
+
+    if (
+      session.believerPeriodEnd &&
+      new Date(session.believerPeriodEnd).getTime() > Date.now()
+    ) {
+      isBeliever = true
+    }
 
     return {
       ...session,
       planType,
       isFree,
       isBeliever,
+      isSubscription,
       isPro,
     }
   }, [session])

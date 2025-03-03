@@ -12,7 +12,6 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useIsMember } from '@/hooks/useIsMember'
 import { loadPost } from '@/hooks/usePost'
 import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'

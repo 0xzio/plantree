@@ -32,7 +32,6 @@ export async function getMe(userId: string, needToken = false) {
     token: jwt.sign(
       {
         sub: userId,
-        subscriptionEndedAt: getSubscriptionEndedAt(user?.subscriptions),
       },
       process.env.NEXTAUTH_SECRET!,
       {

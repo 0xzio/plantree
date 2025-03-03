@@ -2,11 +2,14 @@ import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
 import { SessionData } from '@/lib/types'
-import { BillingCycle } from '@prisma/client'
+import { BillingCycle, PlanType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 import type { Stripe } from 'stripe'
+
+const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
+const millisecondsPerYear = 12 * 30 * 24 * 60 * 60 * 1000
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
@@ -21,6 +24,55 @@ export async function GET(req: NextRequest) {
   }
 
   try {
+    if (planType === PlanType.BELIEVER) {
+      const session = await stripe.checkout.sessions.retrieve(sessionId)
+      console.log('=======session:', session)
+
+      if (session.mode === 'payment') {
+        const siteId = session.client_reference_id!
+
+        const site = await prisma.site.findUniqueOrThrow({
+          where: { id: siteId },
+        })
+
+        const currentEndedAt = site.sassBelieverPeriodEnd
+          ? site.sassBelieverPeriodEnd.getTime()
+          : Date.now()
+
+        const believerPeriodEnd = new Date(
+          currentEndedAt + millisecondsPerYear * 5,
+        )
+
+        await prisma.site.update({
+          where: { id: siteId! },
+          data: {
+            sassBelieverPeriodEnd: believerPeriodEnd,
+            sassBillingCycle: BillingCycle.BELIEVER,
+            sassPlanType: PlanType.PRO,
+          },
+        })
+
+        /** auth session */
+        {
+          const sessionOptions = getSessionOptions()
+          const session = await getIronSession<SessionData>(
+            await cookies(),
+            sessionOptions,
+          )
+
+          session.planType = PlanType.PRO
+          session.billingCycle = BillingCycle.BELIEVER
+          session.believerPeriodEnd = believerPeriodEnd.toISOString()
+
+          await session.save()
+        }
+      }
+
+      return NextResponse.redirect(
+        `${url.protocol}//${url.host}/~/settings/subscription`,
+      )
+    }
+
     const session = await stripe.checkout.sessions.retrieve(sessionId, {
       expand: ['customer', 'subscription'],
     })
@@ -30,8 +82,6 @@ export async function GET(req: NextRequest) {
     }
 
     const customerId = session.customer.id
-
-    console.log('=========>>>>:', session)
 
     const subscriptionId =
       typeof session.subscription === 'string'
@@ -66,9 +116,6 @@ export async function GET(req: NextRequest) {
     if (!siteId) {
       throw new Error("No site ID found in session's client_reference_id.")
     }
-
-    const millisecondsPerMonth = 30 * 24 * 60 * 60 * 1000
-    const millisecondsPerYear = 12 * 30 * 24 * 60 * 60 * 1000
 
     await prisma.site.update({
       where: { id: siteId },

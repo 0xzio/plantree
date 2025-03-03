@@ -47,8 +47,11 @@ enum PlanType {
 }
 
 enum BillingCycle {
+  NONE
   MONTHLY
   YEARLY
+  BELIEVER
+  COUPON
 }
 
 model Site {
@@ -63,7 +66,7 @@ model Site {
   email                  String?        @unique @db.VarChar(255)
   sassSubscriptionId     String?        @unique @db.VarChar(50)
   sassSubscriptionStatus String?        @db.VarChar(50)
-  sassBillingCycle       BillingCycle?
+  sassBillingCycle       BillingCycle?  @default(NONE)
   sassPlanType           PlanType       @default(FREE)
   sassCustomerId         String?        @unique @db.VarChar(50)
   sassProductId          String?        @db.VarChar(50)

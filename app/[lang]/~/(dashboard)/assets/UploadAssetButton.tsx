@@ -5,7 +5,6 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSubscriptionGuideDialog } from '@/components/SubscriptionGuideDialog/useSubscriptionGuideDialog'
 import { Button } from '@/components/ui/button'
 import { useAssets } from '@/hooks/useAssets'
-import { useIsMember } from '@/hooks/useIsMember'
 import { calculateSHA256FromFile } from '@/lib/encryption'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { localDB } from '@/lib/local-db'
@@ -22,7 +21,6 @@ interface Props {
 
 export const UploadAssetButton = ({ className, ...rest }: Props) => {
   const hiddenFileInput = useRef<HTMLInputElement>(null)
-  const isMember = useIsMember()
   const { setIsOpen } = useSubscriptionGuideDialog()
 
   const handleClick = () => {
@@ -32,8 +30,6 @@ export const UploadAssetButton = ({ className, ...rest }: Props) => {
   const [uploading, setUploading] = useState(false)
   const { refetch } = useAssets()
   async function handleUpload(file: File) {
-    if (!isMember) return setIsOpen(true)
-
     setUploading(true)
     const fileHash = await calculateSHA256FromFile(file)
 

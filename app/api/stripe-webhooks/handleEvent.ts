@@ -4,7 +4,8 @@ import type { Stripe } from 'stripe'
 
 export async function handleEvent(event: Stripe.Event) {
   const session = event.data.object as Stripe.Checkout.Session
-  console.log('event session>>>>>>>>>>>>>>>>>>', event)
+
+  if (session?.mode === 'payment') return
 
   if (event.type === 'checkout.session.completed') {
     const subscription = await stripe.subscriptions.retrieve(

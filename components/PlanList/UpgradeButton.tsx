@@ -11,9 +11,10 @@ import { useBillingCycle } from './useBillingCycle'
 
 interface Props {
   type: PlanType
+  isBeliever?: boolean
 }
 
-export function UpgradeButton({ type }: Props) {
+export function UpgradeButton({ type, isBeliever }: Props) {
   const { setIsOpen } = useLoginDialog()
   const { data: session } = useSession()
   const { cycle } = useBillingCycle()
@@ -27,13 +28,14 @@ export function UpgradeButton({ type }: Props) {
     type === session?.planType && cycle === session?.billingCycle
   const isFree = type === PlanType.FREE
   const isCanceled = session?.subscriptionStatus === 'canceled'
+  const upgradableText = isBeliever ? 'Join' : 'Upgrade'
   function getText() {
     if (session?.subscriptionStatus === 'canceled' && !isFree) {
-      return 'Upgrade'
+      return upgradableText
     }
     if (isCurrentPlan) return 'Current plan'
     if (isFree) return 'Free'
-    return session?.isFree ? 'Upgrade' : 'Change plan'
+    return session?.isFree ? upgradableText : 'Change plan'
   }
 
   return (

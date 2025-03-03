@@ -21,7 +21,7 @@ export interface SessionData {
   billingCycle: string
   subscriptionStatus: string
   accessToken: string
-  subscriptionEndedAt: Date | null
+  believerPeriodEnd: string
   domain: {
     domain: string
     isSubdomain: boolean

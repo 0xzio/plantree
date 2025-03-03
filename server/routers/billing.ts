@@ -1,4 +1,5 @@
 import {
+  STRIPE_BELIEVER_PRICE_ID,
   STRIPE_PRO_MONTHLY_PRICE_ID,
   STRIPE_PRO_YEARLY_PRICE_ID,
   STRIPE_TEAM_MONTHLY_PRICE_ID,
@@ -29,7 +30,17 @@ export const billingRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const isBeliever = input.planType === PlanType.BELIEVER
+      console.log(
+        '======isBeliever:',
+        isBeliever,
+        'STRIPE_BELIEVER_PRICE_ID:',
+        STRIPE_BELIEVER_PRICE_ID,
+      )
+
       const getProductId = () => {
+        if (isBeliever) return STRIPE_BELIEVER_PRICE_ID
+
         if (input.planType === PlanType.PRO) {
           return input.billingCycle === BillingCycle.MONTHLY
             ? STRIPE_PRO_MONTHLY_PRICE_ID
@@ -57,17 +68,20 @@ export const billingRouter = router({
       const stringifiedQuery = queryString.stringify(query)
 
       const session = await stripe.checkout.sessions.create({
-        mode: 'subscription',
+        // mode: 'subscription',
+        mode: isBeliever ? 'payment' : 'subscription',
         payment_method_types: ['card'],
         // customer_email: email,
         client_reference_id: ctx.activeSiteId,
-        subscription_data: {
-          metadata: {
-            siteId: ctx.activeSiteId,
-            billingCycle: input.billingCycle,
-            planType: input.planType,
-          },
-        },
+        subscription_data: isBeliever
+          ? undefined
+          : {
+              metadata: {
+                siteId: ctx.activeSiteId,
+                billingCycle: input.billingCycle,
+                planType: input.planType,
+              },
+            },
         success_url: `${return_url}?success=truesession_id={CHECKOUT_SESSION_ID}&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
         cancel_url: `${return_url}?success=false`,
         line_items: [{ price: getProductId(), quantity: 1 }],
@@ -113,7 +127,7 @@ export const billingRouter = router({
       )
 
       session.subscriptionStatus = 'canceled'
-      session.subscriptionEndedAt = sassCurrentPeriodEnd
+      session.currentPeriodEnd = sassCurrentPeriodEnd.toISOString()
 
       await session.save()
 

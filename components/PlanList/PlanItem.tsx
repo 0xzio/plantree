@@ -22,18 +22,27 @@ export function PlanItem({
   annualPrice,
   benefits,
   collaboratorCount,
+  isBeliever,
 }: Props) {
   const { isMonthly } = useBillingCycle()
   return (
     <div className="space-y-8 bg-background rounded-2xl px-8 py-8 shadow dark:border w-full flex flex-col">
       <div className="flex flex-col items-center justify-center gap-8">
-        <div className="text-xl">{name}</div>
-        <div className="flex items-center gap-1">
-          <div className="text-3xl font-bold">
-            {isMonthly ? `$${monthlyPrice}` : `$${annualPrice}`}
+        <div className="text-xl font-bold">{name}</div>
+        {isBeliever && (
+          <div className="flex items-center gap-1">
+            <div className="text-3xl font-bold">$360</div>
+            <div className=""> / 5 years</div>
           </div>
-          <div className=""> / {isMonthly ? 'month' : 'year'}</div>
-        </div>
+        )}
+        {!isBeliever && (
+          <div className="flex items-center gap-1">
+            <div className="text-3xl font-bold">
+              {isMonthly ? `$${monthlyPrice}` : `$${annualPrice}`}
+            </div>
+            <div className=""> / {isMonthly ? 'month' : 'year'}</div>
+          </div>
+        )}
       </div>
       <div className="space-y-3 flex-1">
         {benefits.map((benefit, index) => (
@@ -41,7 +50,7 @@ export function PlanItem({
         ))}
       </div>
       <div className="text-center">
-        <UpgradeButton type={type} />
+        <UpgradeButton type={type} isBeliever={isBeliever} />
       </div>
     </div>
   )
