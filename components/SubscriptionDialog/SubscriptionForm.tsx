@@ -134,7 +134,7 @@ export function SubscriptionForm({}: Props) {
         duration: Number(increasingDuration),
       })
 
-      await update({ type: 'update-subscription' })
+      // await update({ type: 'update-subscription' })
       toast.success('Subscribe successfully!')
       setIsOpen(false)
     } catch (error) {

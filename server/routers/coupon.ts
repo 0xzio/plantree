@@ -1,12 +1,12 @@
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { prisma } from '@/lib/prisma'
 import { uniqueId } from '@/lib/unique-id'
-import { SubscriptionStatus } from '@prisma/client'
+import { BillingCycle, PlanType, SubscriptionStatus } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
 
-const ONE_MONTH = 60 * 60 * 24 * 30
+const ONE_MONTH_SECOND = 60 * 60 * 24 * 30
 
 export const couponRouter = router({
   list: protectedProcedure.query(async ({ ctx, input }) => {
@@ -34,7 +34,7 @@ export const couponRouter = router({
             data: {
               planId: '0',
               code: uniqueId(),
-              duration: ONE_MONTH * input.months,
+              duration: ONE_MONTH_SECOND * input.months,
             },
           })
         })
@@ -59,50 +59,46 @@ export const couponRouter = router({
           message: 'Coupon code is invalid',
         })
       }
-      await prisma.coupon.update({
-        where: { id: coupon.id },
-        data: {
-          isUsed: true,
-        },
-      })
 
-      const subscription = await prisma.subscription.findFirst({
-        where: { userId: ctx.token.uid },
-      })
-
-      if (subscription) {
-        const remainTime =
-          subscription.endedAt.getTime() > Date.now()
-            ? subscription.endedAt.getTime() - Date.now()
-            : 0
-
-        const startedAt = new Date()
-        const endedAt = startedAt.getTime() + ONE_MONTH * 1000 + remainTime
-
-        await prisma.subscription.update({
-          where: { id: subscription.id },
-          data: {
-            planId: '0',
-            status: SubscriptionStatus.ACTIVE,
-            startedAt,
-            endedAt: new Date(endedAt),
-            userId: ctx.token.uid,
-          },
-        })
-      } else {
-        const startedAt = new Date()
-        const endedAt = startedAt.getTime() + ONE_MONTH * 1000
-
-        await prisma.subscription.create({
-          data: {
-            planId: '0',
-            status: SubscriptionStatus.ACTIVE,
-            startedAt,
-            endedAt: new Date(endedAt),
-            userId: ctx.token.uid,
-          },
+      if (coupon.isUsed) {
+        throw new TRPCError({
+          code: 'BAD_GATEWAY',
+          message: 'Coupon code is used',
         })
       }
+
+      await prisma.coupon.update({
+        where: { id: coupon.id },
+        data: { isUsed: true },
+      })
+
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: ctx.activeSiteId },
+      })
+
+      const now = Date.now()
+      let endedAt = now + ONE_MONTH_SECOND * 1000
+
+      if (site.sassBelieverPeriodEnd) {
+        const remainTime =
+          site.sassBelieverPeriodEnd.getTime() > now
+            ? site.sassBelieverPeriodEnd.getTime() - now
+            : 0
+
+        endedAt = now + ONE_MONTH_SECOND * 1000 + remainTime
+      }
+
+      await prisma.site.update({
+        where: { id: ctx.activeSiteId },
+        data: {
+          sassBillingCycle:
+            site.sassBillingCycle === BillingCycle.BELIEVER
+              ? BillingCycle.BELIEVER
+              : BillingCycle.COUPON,
+          sassPlanType: PlanType.PRO,
+          sassBelieverPeriodEnd: new Date(endedAt),
+        },
+      })
 
       return true
     }),

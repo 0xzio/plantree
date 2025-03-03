@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { toast } from 'sonner'
@@ -36,11 +37,11 @@ export function UseCouponCode() {
           onClick={async () => {
             try {
               await mutateAsync({ code: couponCode.trim() })
-              await update({ type: 'update-subscription' })
+              await update({ type: 'use-coupon' })
               setIsOpen(false)
               toast.success('Coupon code applied successfully')
             } catch (error) {
-              toast.error('Invalid coupon code')
+              toast.error(extractErrorMessage(error) || 'Invalid coupon code')
             }
           }}
         >

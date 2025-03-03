@@ -42,7 +42,10 @@ export function Subscription({}: Props) {
           <div className="text-2xl font-bold">PenX</div>
           <Badge>{session?.planType || 'Free'}</Badge>
 
-          {session?.isBeliever && <Badge variant="success">Believer</Badge>}
+          {session?.isBeliever &&
+            session.billingCycle !== BillingCycle.COUPON && (
+              <Badge variant="success">Believer</Badge>
+            )}
 
           {!session?.isFree && session?.isSubscription && (
             <Badge variant="secondary">{session?.billingCycle}</Badge>
@@ -59,7 +62,7 @@ export function Subscription({}: Props) {
 
         {session?.isBeliever && (
           <div className="flex items-center gap-2">
-            <div className="text-foreground/50">Plan expires at</div>
+            <div className="text-foreground/50">Pro plan expires at</div>
             <div className="text-lg font-semibold">
               {format(new Date(session?.believerPeriodEnd!), 'LLL do, yyyy')}
             </div>
@@ -106,8 +109,8 @@ export function Subscription({}: Props) {
         </div>
       </div>
 
-      {/* <Separator className="my-6"></Separator> */}
-      {/* <UseCouponCode></UseCouponCode> */}
+      <Separator className="my-6"></Separator>
+      <UseCouponCode></UseCouponCode>
     </div>
   )
 }

@@ -18,14 +18,19 @@ import {
   isRegisterByEmail,
   isUpdateActiveSite,
   isUpdateProfile,
-  isUpdateSubscription,
+  isUseCoupon,
   isWalletLogin,
   SessionData,
 } from '@/lib/types'
 import { getAccountAddress } from '@/lib/utils'
 import { generateNonce } from '@/server/lib/generateNonce'
 import { createAppClient, viemConnector } from '@farcaster/auth-client'
-import { ProviderType, Subscription } from '@prisma/client'
+import {
+  BillingCycle,
+  PlanType,
+  ProviderType,
+  Subscription,
+} from '@prisma/client'
 import { compareSync } from 'bcrypt-edge'
 import { getIronSession, IronSession } from 'iron-session'
 import jwt from 'jsonwebtoken'
@@ -265,8 +270,15 @@ export async function PATCH(request: NextRequest) {
     if (json.image) session.picture = json.image
   }
 
-  if (isUpdateSubscription(json)) {
-    // session.sassBelieverPeriodEnd = json.type
+  if (isUseCoupon(json)) {
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { id: session.activeSiteId },
+    })
+
+    session.planType = PlanType.PRO
+    session.billingCycle = BillingCycle.COUPON
+    session.believerPeriodEnd =
+      site.sassBelieverPeriodEnd?.toISOString() as string
   }
 
   if (isCancelSubscription(json)) {

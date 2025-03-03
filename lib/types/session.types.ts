@@ -96,7 +96,7 @@ export function isFarcasterLogin(value: any): value is FarcasterLoginData {
 export type UpdateSessionData =
   | UpdateActiveSiteData
   | UpdateProfileData
-  | UpdateSubscriptionData
+  | UseCouponData
   | CancelSubscriptionData
 
 export type UpdateActiveSiteData = {
@@ -119,14 +119,12 @@ export function isUpdateProfile(value: any): value is UpdateProfileData {
   return typeof value === 'object' && value?.type === 'update-profile'
 }
 
-export type UpdateSubscriptionData = {
-  type: 'update-subscription'
+export type UseCouponData = {
+  type: 'use-coupon'
 }
 
-export function isUpdateSubscription(
-  value: any,
-): value is UpdateSubscriptionData {
-  return typeof value === 'object' && value?.type === 'update-subscription'
+export function isUseCoupon(value: any): value is UseCouponData {
+  return typeof value === 'object' && value?.type === 'use-coupon'
 }
 
 export type CancelSubscriptionData = {
