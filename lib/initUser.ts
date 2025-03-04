@@ -1,11 +1,16 @@
-import { defaultNavLinks, editorDefaultValue } from '@/lib/constants';
-import { prisma } from '@/lib/prisma';
-import { AccountWithUser } from '@/lib/types';
-import { hashPassword } from '@/server/lib/hashPassword';
-import { CollaboratorRole, PostStatus, PostType, ProviderType, SubdomainType, SubscriptionStatus } from '@prisma/client';
-import ky from 'ky';
-import { cacheHelper } from './cache-header';
-
+import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
+import { prisma } from '@/lib/prisma'
+import { AccountWithUser } from '@/lib/types'
+import { hashPassword } from '@/server/lib/hashPassword'
+import {
+  CollaboratorRole,
+  PostStatus,
+  PostType,
+  ProviderType,
+  SubdomainType,
+} from '@prisma/client'
+import ky from 'ky'
+import { cacheHelper } from './cache-header'
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7
 
@@ -17,7 +22,6 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -39,16 +43,6 @@ export async function initUserByAddress(address: string) {
               {
                 providerType: ProviderType.WALLET,
                 providerAccountId: address,
-              },
-            ],
-          },
-          subscriptions: {
-            create: [
-              {
-                planId: '0',
-                status: SubscriptionStatus.ACTIVE,
-                startedAt: new Date(),
-                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -121,7 +115,6 @@ export async function initUserByAddress(address: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -133,7 +126,6 @@ export async function initUserByAddress(address: string) {
       })
     },
     {
-    
       maxWait: 5000, // default: 2000
       timeout: 10000, // default: 5000
     },
@@ -155,7 +147,6 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -181,16 +172,6 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
                 providerAccountId: info.openid,
                 providerInfo: info,
                 email: info.email,
-              },
-            ],
-          },
-          subscriptions: {
-            create: [
-              {
-                planId: '0',
-                status: SubscriptionStatus.ACTIVE,
-                startedAt: new Date(),
-                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -263,7 +244,6 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -337,7 +317,6 @@ export async function initUserByFarcasterId(fid: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -369,16 +348,6 @@ export async function initUserByFarcasterId(fid: string) {
                 providerType: ProviderType.FARCASTER,
                 providerAccountId: fid,
                 providerInfo: fcUser,
-              },
-            ],
-          },
-          subscriptions: {
-            create: [
-              {
-                planId: '0',
-                status: SubscriptionStatus.ACTIVE,
-                startedAt: new Date(),
-                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -463,7 +432,6 @@ export async function initUserByFarcasterId(fid: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -489,7 +457,6 @@ export async function initUserByEmail(email: string, password: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,
@@ -515,16 +482,6 @@ export async function initUserByEmail(email: string, password: string) {
                 providerAccountId: email,
                 email: email,
                 accessToken: await hashPassword(password),
-              },
-            ],
-          },
-          subscriptions: {
-            create: [
-              {
-                planId: '0',
-                status: SubscriptionStatus.ACTIVE,
-                startedAt: new Date(),
-                endedAt: new Date(Date.now() + SEVEN_DAYS * 1000),
               },
             ],
           },
@@ -597,7 +554,6 @@ export async function initUserByEmail(email: string, password: string) {
         include: {
           user: {
             include: {
-              subscriptions: true,
               sites: {
                 include: {
                   domains: true,

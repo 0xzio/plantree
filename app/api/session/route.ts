@@ -78,14 +78,6 @@ async function updateSession(
     },
   )
 
-  session.subscriptions = Array.isArray(account.user.subscriptions)
-    ? account.user.subscriptions.map((i: any) => ({
-        planId: i.planId,
-        startTime: i.startTime,
-        duration: i.duration,
-      }))
-    : []
-
   await session.save()
 }
 
@@ -326,10 +318,4 @@ export async function DELETE() {
 
   session.destroy()
   return Response.json({ isLoggedIn: false })
-}
-
-function getSubscriptionEndedAt(subscriptions: Subscription[] = []) {
-  if (!subscriptions?.length) return null
-  const [subscription] = subscriptions
-  return subscription.endedAt
 }

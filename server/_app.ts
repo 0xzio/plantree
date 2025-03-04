@@ -23,9 +23,11 @@ import { postRouter } from './routers/post'
 import { rewardsRouter } from './routers/rewards'
 import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
+import { stripeRouter } from './routers/stripe'
 import { subscriberRouter } from './routers/subscriber'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
+import { tierRouter } from './routers/tier'
 import { userRouter } from './routers/user'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
@@ -56,6 +58,8 @@ export const appRouter = router({
   newsletter: newsletterRouter,
   billing: billingRouter,
   github: githubRouter,
+  stripe: stripeRouter,
+  tier: tierRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

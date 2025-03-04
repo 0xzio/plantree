@@ -7,19 +7,14 @@ import {
 } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
+import { stripe } from '@/lib/stripe'
 import { SessionData } from '@/lib/types'
 import { BillingCycle, PlanType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import queryString from 'query-string'
-import Stripe from 'stripe'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
-
-export const stripe = new Stripe(process.env.STRIPE_API_KEY!, {
-  apiVersion: '2025-02-24.acacia',
-  typescript: true,
-})
 
 export const billingRouter = router({
   checkout: protectedProcedure

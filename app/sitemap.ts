@@ -11,10 +11,31 @@ export default async function Sitemap() {
     {
       url: `https://${domain}`,
       lastModified: new Date(),
+      priority: 1,
     },
-    // ...posts.map(({ slug }) => ({
-    //   url: `https://${domain}/posts/${slug}`,
-    //   lastModified: new Date(),
-    // })),
+    {
+      url: `https://${domain}/about`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `https://${domain}/themes`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.6,
+    },
+    {
+      url: `https://${domain}/self-hosted`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.4,
+    },
+    {
+      url: 'https://docs.penx.io',
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.2,
+    },
   ]
 }

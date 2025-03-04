@@ -8,9 +8,14 @@ import {
   PlateEditorType,
   useCreateEditor,
 } from '@/components/editor/use-create-editor'
-import { Editor, EditorContainer } from '@/components/plate-ui/editor'
+import {
+  Editor,
+  EditorContainer,
+  editorVariants,
+} from '@/components/plate-ui/editor'
 import { cn } from '@/lib/utils'
 import { Plate } from '@udecode/plate/react'
+import { VariantProps } from 'class-variance-authority'
 
 interface Props {
   readonly?: boolean
@@ -32,7 +37,8 @@ export function PlateEditor({
   draggable = true,
   placeholder,
   onInit,
-}: Props) {
+  variant = 'none',
+}: Props & VariantProps<typeof editorVariants>) {
   const editor = useCreateEditor({
     value,
     placeholder,
@@ -52,7 +58,7 @@ export function PlateEditor({
       >
         <EditorContainer>
           <Editor
-            variant="post"
+            variant={variant}
             readOnly={readonly}
             className={cn(className)}
           />

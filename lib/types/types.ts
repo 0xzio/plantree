@@ -242,7 +242,6 @@ export type SiteWithDomain = Site & {
 export type AccountWithUser = Account & {
   user: User & {
     sites: SiteWithDomain[]
-    subscriptions: Subscription[]
   }
 }
 

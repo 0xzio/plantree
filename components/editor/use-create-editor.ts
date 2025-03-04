@@ -170,6 +170,10 @@ export const useCreateEditor = (
   } & Omit<CreatePlateEditorOptions, 'plugins'> = {},
   deps: any[] = [],
 ) => {
+  let editorValue = value as any
+  if (typeof editorValue === 'string') {
+    editorValue = JSON.parse(editorValue)
+  }
   return usePlateEditor<Value>(
     {
       override: {
@@ -187,7 +191,7 @@ export const useCreateEditor = (
         // FixedToolbarPlugin,
         FloatingToolbarPlugin,
       ],
-      value,
+      value: editorValue,
       ...options,
     },
     deps,

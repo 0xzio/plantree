@@ -34,7 +34,6 @@ export function PlanItem({ plan }: Props) {
     (m) => m.account === address && m.planId === plan.id,
   )
 
-
   return (
     <Card className="relative flex min-h-[520px] flex-col justify-between gap-4 rounded-xl p-4 shadow-none bg-background w-[300px]">
       {space.isFounder(address) && (
@@ -66,7 +65,6 @@ export function PlanItem({ plan }: Props) {
       <Button
         // variant="outline"
         onClick={() => {
-
           if (!isConnected) return openConnectModal?.()
           setMemberState({
             isOpen: true,

@@ -32,6 +32,7 @@ export function SettingNav({}: Props) {
     projects: '/~/settings/projects',
     friends: '/~/settings/friends',
     backup: '/~/settings/backup',
+    payment: '/~/settings/payment',
   }
 
   const linkClassName = (path: string) =>
@@ -76,6 +77,10 @@ export function SettingNav({}: Props) {
           className={linkClassName(Paths.subscription)}
         >
           Plan & Subscription
+        </Link>
+
+        <Link href={Paths.payment} className={linkClassName(Paths.payment)}>
+          Payment
         </Link>
 
         <Link href={Paths.tags} className={linkClassName(Paths.tags)}>
