@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { TierInterval } from '@prisma/client'
+import { revalidateTag } from 'next/cache'
 import Stripe from 'stripe'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
@@ -58,6 +59,7 @@ export const tierRouter = router({
         },
       })
 
+      revalidateTag(`${ctx.activeSiteId}-tiers`)
       return true
     }),
 
@@ -71,9 +73,13 @@ export const tierRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...rest } = input
-      return prisma.tier.update({
+
+      const tier = await prisma.tier.update({
         where: { id: input.id },
         data: rest,
       })
+
+      revalidateTag(`${ctx.activeSiteId}-tiers`)
+      return tier
     }),
 })

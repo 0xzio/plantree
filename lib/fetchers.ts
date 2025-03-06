@@ -392,3 +392,22 @@ function findManyPosts(siteId: string) {
     orderBy: [{ publishedAt: 'desc' }],
   })
 }
+
+export async function getTiers(siteId: string) {
+  const tiers = await unstable_cache(
+    async () => {
+      const tiers = await prisma.tier.findMany({
+        where: { siteId },
+      })
+
+      return tiers
+    },
+    [`${siteId}-tiers`],
+    {
+      revalidate: isProd ? REVALIDATE_TIME : 10,
+      tags: [`${siteId}-tiers`],
+    },
+  )()
+
+  return tiers
+}

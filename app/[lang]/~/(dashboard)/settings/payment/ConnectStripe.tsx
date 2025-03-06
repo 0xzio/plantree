@@ -32,7 +32,7 @@ export function ConnectStripe() {
           location.href = url
         }}
       >
-        {loading && <LoadingDots className="bg-foreground" />}
+        {loading && <LoadingDots className="bg-background" />}
         {!loading && <div className="">Connect stripe</div>}
       </Button>
     </div>
