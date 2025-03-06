@@ -4,7 +4,7 @@ import { UploadCloud } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 
 interface PlatformTabProps {
-  platform: 'penx' | 'paragraph' | 'substack'
+  platform: 'penx'
   isImporting: boolean
   onFileSelect: (file: File) => void
   description: string
