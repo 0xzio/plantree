@@ -68,9 +68,9 @@ export function SettingNav({}: Props) {
           Features
         </Link>
 
-        <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
+        {/* <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
           Web3
-        </Link>
+        </Link> */}
 
         <Link
           href={Paths.subscription}

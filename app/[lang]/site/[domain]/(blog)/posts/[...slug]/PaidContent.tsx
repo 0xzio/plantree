@@ -1,11 +1,13 @@
 'use client'
 
+import { useMemo } from 'react'
 import { loadTheme } from '@/lib/loadTheme'
 import { Site } from '@/lib/theme.types'
+import { trpc } from '@/lib/trpc'
 import { SubscriptionInSession } from '@/lib/types'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { Post } from '@prisma/client'
-import { useSession } from '@/lib/useSession'
 import dynamic from 'next/dynamic'
 import readingTime from 'reading-time'
 import { GateCover } from './GateCover'
@@ -73,7 +75,33 @@ export function PaidContent({ site, postId, post, next, prev }: Props) {
     )
   }
 
-  const hasMembership = checkMembership(session.subscriptions)
+  return (
+    <MyPaidContent
+      site={site}
+      postId={postId}
+      post={post}
+      next={next}
+      prev={prev}
+    />
+  )
+}
+
+export function MyPaidContent({ site, postId, post, next, prev }: Props) {
+  const { PostDetail } = loadTheme(site.themeName)
+  const { data: subscription } = trpc.tier.mySubscriptionBySiteId.useQuery({
+    siteId: site.id,
+  })
+
+  const isMember = useMemo(() => {
+    if (!subscription) return false
+    if (
+      !subscription.sassCurrentPeriodEnd ||
+      subscription.sassSubscriptionStatus === 'canceled'
+    ) {
+      return false
+    }
+    return new Date(subscription.sassCurrentPeriodEnd).getTime() > Date.now()
+  }, [subscription])
 
   return (
     <div className="">
@@ -81,15 +109,15 @@ export function PaidContent({ site, postId, post, next, prev }: Props) {
         site={site}
         post={{
           ...post,
-          content: hasMembership ? getContent(post) : getContent(post, true),
+          content: isMember ? getContent(post) : getContent(post, true),
           readingTime: readingTime(post.content),
         }}
-        readable={hasMembership}
+        readable={isMember}
         next={next}
         prev={prev}
-        className={cn(!hasMembership && 'min-h-[auto]')}
+        className={cn(!isMember && 'min-h-[auto]')}
       />
-      {!hasMembership && (
+      {!isMember && (
         <div className="mx-auto relative">
           <GateCover slug={post.slug} />
         </div>

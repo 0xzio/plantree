@@ -1,3 +1,4 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { TierInterval } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
@@ -13,6 +14,23 @@ export const tierRouter = router({
 
     return tiers
   }),
+
+  mySubscriptionBySiteId: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const subscription = await prisma.subscription.findFirst({
+        where: {
+          siteId: input.siteId,
+          userId: ctx.token.uid,
+        },
+      })
+      if (!subscription) return null
+      return subscription
+    }),
 
   addTier: protectedProcedure
     .input(
@@ -60,6 +78,7 @@ export const tierRouter = router({
       })
 
       revalidateTag(`${ctx.activeSiteId}-tiers`)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return true
     }),
 
@@ -80,6 +99,7 @@ export const tierRouter = router({
       })
 
       revalidateTag(`${ctx.activeSiteId}-tiers`)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
       return tier
     }),
 })

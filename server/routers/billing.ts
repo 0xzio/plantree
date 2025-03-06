@@ -77,7 +77,7 @@ export const billingRouter = router({
                 planType: input.planType,
               },
             },
-        success_url: `${return_url}?success=truesession_id={CHECKOUT_SESSION_ID}&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
+        success_url: `${return_url}?success=true&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
         cancel_url: `${return_url}?success=false`,
         line_items: [{ price: getProductId(), quantity: 1 }],
       })

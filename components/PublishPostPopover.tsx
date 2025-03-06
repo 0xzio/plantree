@@ -85,7 +85,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
               setGateType(value)
             }}
           />
-          <div>
+          {/* <div>
             <div className="flex items-center justify-between">
               <Label htmlFor="post-collectible">Collectible</Label>
               <Switch
@@ -100,7 +100,7 @@ function PublishPopoverContent({ setOpen }: PublishPopoverContentProps) {
             <div className="text-foreground/60 text-xs">
               Bind a space ID to enable collection.
             </div>
-          </div>
+          </div> */}
           <div>
             <div className="flex items-center justify-between">
               <div className="flex gap-2 items-center">

@@ -88,7 +88,11 @@ export const siteRouter = router({
           in: [...collaborators.map((c) => c.siteId)],
         },
       },
-      include: { domains: true, channels: true },
+      include: {
+        domains: true,
+        channels: true,
+        tiers: true,
+      },
     })
 
     await cacheHelper.updateCachedMySites(userId, sites)

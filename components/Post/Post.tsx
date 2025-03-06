@@ -136,6 +136,7 @@ export function Post() {
 
         <div className="w-full" data-registry="plate">
           <PlateEditor
+            variant="post"
             className="w-full"
             value={content ? JSON.parse(content) : editorDefaultValue}
             showAddButton

@@ -8,12 +8,6 @@ type Me = User & {
   site: Site
 }
 
-function getSubscriptionEndedAt(subscriptions: Subscription[] = []) {
-  if (!subscriptions?.length) return null
-  const [subscription] = subscriptions
-  return subscription.endedAt
-}
-
 export async function getMe(userId: string, needToken = false) {
   let user = await prisma.user.findUnique({
     where: { id: userId },

@@ -1,29 +1,12 @@
-import {
-  STRIPE_BELIEVER_PRICE_ID,
-  STRIPE_PRO_MONTHLY_PRICE_ID,
-  STRIPE_PRO_YEARLY_PRICE_ID,
-  STRIPE_TEAM_MONTHLY_PRICE_ID,
-  STRIPE_TEAM_YEARLY_PRICE_ID,
-} from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { getServerSession, getSessionOptions } from '@/lib/session'
 import { stripe } from '@/lib/stripe'
-import { SessionData } from '@/lib/types'
-import { BillingCycle, PlanType } from '@prisma/client'
-import { getIronSession, IronSession } from 'iron-session'
-import { cookies } from 'next/headers'
 import queryString from 'query-string'
 import Stripe from 'stripe'
 import { z } from 'zod'
+import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, router } from '../trpc'
 
 export const stripeRouter = router({
-  createAccount: protectedProcedure.mutation(async ({ ctx, input }) => {
-    const account = await stripe.accounts.create({})
-    console.log('====account:', account, account.id)
-    return account
-  }),
-
   authInfo: protectedProcedure.query(async ({ ctx, input }) => {
     const site = await prisma.site.findUniqueOrThrow({
       where: { id: ctx.activeSiteId },
@@ -58,8 +41,6 @@ export const stripeRouter = router({
         refresh_token: stripeOAuthToken.refresh_token!,
       })
 
-      console.log('=======newToken:', newToken)
-
       await prisma.site.update({
         where: { id: ctx.activeSiteId },
         data: {
@@ -82,4 +63,99 @@ export const stripeRouter = router({
       }
     }
   }),
+
+  checkout: protectedProcedure
+    .input(
+      z.object({
+        tierId: z.string(),
+        priceId: z.string(),
+        siteId: z.string(),
+        host: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const siteId = input.siteId
+      const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/subscribe-site-callback`
+      console.log('ctx=====:', ctx)
+
+      console.log('=====>>>success_url:', return_url)
+      const userId = ctx.token.uid
+
+      const query = {
+        siteId,
+        userId,
+        tierId: input.tierId,
+        host: input.host,
+      }
+
+      console.log('=======query:', query)
+
+      const stringifiedQuery = queryString.stringify(query)
+
+      const oauthStripe = await getOAuthStripe(siteId)
+      const session = await oauthStripe.checkout.sessions.create({
+        mode: 'subscription',
+        payment_method_types: ['card'],
+        // customer_email: email,
+        client_reference_id: siteId,
+        subscription_data: {
+          metadata: {
+            siteId,
+          },
+        },
+        success_url: `${return_url}?success=true&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
+        cancel_url: `${return_url}?success=false`,
+        line_items: [{ price: input.priceId, quantity: 1 }],
+      })
+
+      if (!session.url) return { success: false as const }
+
+      return { success: true, url: session.url }
+    }),
+
+  cancelSubscription: protectedProcedure
+    .input(
+      z.object({
+        siteId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { siteId } = input
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: siteId },
+      })
+
+      let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
+
+      const oauthStripe = new Stripe(stripeOAuthToken.access_token!, {
+        apiVersion: '2025-02-24.acacia',
+        typescript: true,
+      })
+
+      const { sassSubscriptionId, id } =
+        await prisma.subscription.findFirstOrThrow({
+          where: {
+            siteId: input.siteId,
+            userId: ctx.token.uid,
+          },
+        })
+
+      const subscription = await oauthStripe.subscriptions.cancel(
+        sassSubscriptionId!,
+      )
+
+      const sassCurrentPeriodEnd = new Date(
+        subscription.current_period_end * 1000,
+      )
+
+      await prisma.subscription.update({
+        where: { id },
+        data: {
+          sassSubscriptionStatus: subscription.status,
+          sassCurrentPeriodEnd: sassCurrentPeriodEnd,
+        },
+      })
+
+      return true
+    }),
 })
