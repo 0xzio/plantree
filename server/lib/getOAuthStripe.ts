@@ -1,11 +1,16 @@
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
+import { StripeType } from '@prisma/client'
 import Stripe from 'stripe'
 
 export async function getOAuthStripe(siteId: string) {
   const site = await prisma.site.findUniqueOrThrow({
     where: { id: siteId },
   })
+
+  if (site.stripeType === StripeType.PLATFORM) {
+    return stripe
+  }
 
   let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
 

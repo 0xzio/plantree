@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
+import { StripeType } from '@prisma/client'
 import queryString from 'query-string'
 import Stripe from 'stripe'
 import { z } from 'zod'
@@ -14,7 +15,7 @@ export const stripeRouter = router({
 
     let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
 
-    if (!stripeOAuthToken) {
+    if (!stripeOAuthToken?.access_token) {
       return {
         token: null,
         account: null,
@@ -101,6 +102,8 @@ export const stripeRouter = router({
         subscription_data: {
           metadata: {
             siteId,
+            priceId: input.priceId,
+            tierId: input.tierId,
           },
         },
         success_url: `${return_url}?success=true&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
@@ -127,7 +130,12 @@ export const stripeRouter = router({
 
       let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
 
-      const oauthStripe = new Stripe(stripeOAuthToken.access_token!, {
+      const apiKey =
+        site.stripeType === StripeType.PLATFORM
+          ? process.env.STRIPE_API_KEY!
+          : stripeOAuthToken.access_token!
+
+      const oauthStripe = new Stripe(apiKey, {
         apiVersion: '2025-02-24.acacia',
         typescript: true,
       })

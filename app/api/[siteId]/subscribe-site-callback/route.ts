@@ -1,7 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
 import { SessionData } from '@/lib/types'
-import { BillingCycle, PlanType } from '@prisma/client'
+import { BillingCycle, PlanType, StripeType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
@@ -33,7 +33,12 @@ export async function GET(req: NextRequest) {
 
     let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
 
-    const stripe = new Stripe(stripeOAuthToken.access_token!, {
+    const apiKey =
+      site.stripeType === StripeType.PLATFORM
+        ? process.env.STRIPE_API_KEY!
+        : stripeOAuthToken.access_token!
+
+    const stripe = new Stripe(apiKey, {
       apiVersion: '2025-02-24.acacia',
       typescript: true,
     })

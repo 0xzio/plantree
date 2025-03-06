@@ -140,6 +140,7 @@ export function TierForm() {
                           : editorDefaultValue
                       }
                       onChange={(v) => {
+                        // console.log('value:',v, JSON.stringify(v));
                         field.onChange(JSON.stringify(v))
                       }}
                     />

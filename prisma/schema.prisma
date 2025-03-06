@@ -54,6 +54,12 @@ enum BillingCycle {
   COUPON
 }
 
+enum StripeType {
+  NONE
+  OWN
+  PLATFORM
+}
+
 model Site {
   id                     String         @id @default(uuid()) @db.Uuid
   name                   String         @default("") @db.VarChar(100)
@@ -64,6 +70,7 @@ model Site {
   font                   String         @default("font-cal") @db.VarChar(50)
   image                  String?        @default("") @db.VarChar(2183)
   email                  String?        @unique @db.VarChar(255)
+  stripeType             StripeType     @default(NONE)
   sassSubscriptionId     String?        @unique @db.VarChar(50)
   sassSubscriptionStatus String?        @db.VarChar(50)
   sassBillingCycle       BillingCycle?  @default(NONE)
@@ -85,6 +92,7 @@ model Site {
   notificationConfig     Json?
   repo                   String?        @db.VarChar(100)
   installationId         Int?           @db.Integer // github app installationId
+  balance                Decimal        @default(0) @db.Decimal(10, 2)
   themeName              String?        @db.VarChar(50)
   themeConfig            Json?
   memberCount            Int            @default(0) @db.Integer
@@ -201,6 +209,7 @@ enum TierInterval {
 
 model Tier {
   id              String         @id @default(uuid()) @db.Uuid
+  stripeType      StripeType     @default(NONE)
   name            String         @default("") @db.VarChar(50)
   price           Decimal        @db.Decimal(10, 2)
   stripeProductId String?
@@ -218,6 +227,7 @@ model Tier {
   subscriptions   Subscription[]
 
   @@index([userId])
+  @@index([siteId, userId])
   @@map("tier")
 }
 

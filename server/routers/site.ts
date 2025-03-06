@@ -1,13 +1,46 @@
 import { cacheHelper } from '@/lib/cache-header'
+import { isProd } from '@/lib/constants'
 import { addDomainToVercel } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
+import { stripe } from '@/lib/stripe'
 import { MySite } from '@/lib/types'
-import { AuthType, SubdomainType } from '@prisma/client'
+import {
+  AuthType,
+  StripeType,
+  SubdomainType,
+  TierInterval,
+} from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
+
+const defaultBenefits = [
+  {
+    children: [{ text: 'Benefit 1' }],
+    id: '5RAj2vDe6E',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'disc',
+  },
+  {
+    id: 'bCGGTOgA9K',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'disc',
+    children: [{ text: 'Benefit 2' }],
+    listStart: 2,
+  },
+  {
+    id: 'jIzm5TXbMi',
+    type: 'p',
+    indent: 1,
+    listStyleType: 'disc',
+    listStart: 3,
+    children: [{ text: 'Benefi' }],
+  },
+]
 
 export const siteRouter = router({
   list: publicProcedure.query(async () => {
@@ -59,7 +92,7 @@ export const siteRouter = router({
     if (cachedSites) return cachedSites
     const sites = await prisma.site.findMany({
       where: {
-        postCount: { gte: 2 },
+        postCount: { gte: isProd ? 2 : 0 },
       },
       include: {
         domains: true,
@@ -407,6 +440,69 @@ export const siteRouter = router({
           message: 'Domain is already taken',
         })
       }
+    }),
+
+  selectStripeType: protectedProcedure
+    .input(
+      z.object({
+        stripeType: z.nativeEnum(StripeType),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const userId = ctx.token.uid
+      return prisma.$transaction(
+        async (tx) => {
+          await tx.site.update({
+            where: { id: ctx.activeSiteId },
+            data: { stripeType: input.stripeType },
+          })
+          console.log('=======>>>>>>xx')
+
+          if (input.stripeType === StripeType.PLATFORM) {
+            const tier = await tx.tier.findFirst({
+              where: {
+                stripeType: input.stripeType,
+                siteId: ctx.activeSiteId,
+              },
+            })
+
+            if (!tier) {
+              const product = await stripe.products.create({
+                name: 'Member',
+                description: 'Become a member',
+                tax_code: 'txcd_10103000',
+              })
+
+              const monthlyPrice = await stripe.prices.create({
+                unit_amount: parseInt((Number(5) * 100) as any), // $10
+                currency: 'usd',
+                recurring: { interval: 'month' },
+                product: product.id,
+              })
+              await tx.tier.create({
+                data: {
+                  stripeType: input.stripeType,
+                  name: 'Member',
+                  price: Number(5),
+                  interval: TierInterval.MONTHLY,
+                  stripeProductId: product.id,
+                  description: JSON.stringify(defaultBenefits),
+                  stripePriceId: monthlyPrice.id,
+                  siteId: ctx.activeSiteId,
+                  userId: ctx.token.uid,
+                },
+              })
+            }
+          }
+
+          await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+          await cacheHelper.updateCachedHomeSites(null)
+        },
+        {
+          maxWait: 5000, // default: 2000
+          timeout: 10000, // default: 5000
+        },
+      )
     }),
 
   deleteSite: publicProcedure.mutation(async ({ ctx, input }) => {

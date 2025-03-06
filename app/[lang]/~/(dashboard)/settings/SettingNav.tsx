@@ -91,9 +91,9 @@ export function SettingNav({}: Props) {
           Socials
         </Link>
 
-        <Link href={Paths.i18n} className={linkClassName(Paths.i18n)}>
+        {/* <Link href={Paths.i18n} className={linkClassName(Paths.i18n)}>
           i18n
-        </Link>
+        </Link> */}
         <Link href={Paths.projects} className={linkClassName(Paths.projects)}>
           Projects
         </Link>
