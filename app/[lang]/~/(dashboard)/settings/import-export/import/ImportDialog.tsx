@@ -13,10 +13,9 @@ import {
   TabsTrigger,
 } from '@/components/ui/tabs'
 import { PlatformTab } from './PlatformTab'
-import { SubstackImportTab } from './SubstackImportTab'
+import { URLImportTab } from './URLImportTab'
 import { useImport } from './useImport'
-import { AlertCircle } from 'lucide-react'
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
+import { Badge } from '@/components/ui/badge'
 
 interface ImportDialogProps {
   open: boolean
@@ -24,8 +23,8 @@ interface ImportDialogProps {
 }
 
 export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
-  const { isImporting, handlePenxImport, handleParagraphImport, handleSubstackImport } = useImport()
-  const [activeTab, setActiveTab] = useState<'penx' | 'paragraph' | 'substack'>('penx')
+  const { isImporting, handlePenxImport, handleUrlImport } = useImport()
+  const [activeTab, setActiveTab] = useState<'penx' | 'url'>('penx')
 
   const handlePenxFiles = async (file: File) => {
     const success = await handlePenxImport(file)
@@ -33,16 +32,9 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
       onOpenChange(false)
     }
   }
-
-  const handleParagraphFiles = async (file: File) => {
-    const success = await handleParagraphImport(file)
-    if (success) {
-      onOpenChange(false)
-    }
-  }
-
-  const handleSubstackFiles = async (csvFile: File, htmlFiles: FileList) => {
-    const success = await handleSubstackImport(csvFile, htmlFiles)
+  
+  const handleUrlImportAction = async (url: string) => {
+    const success = await handleUrlImport(url)
     if (success) {
       onOpenChange(false)
     }
@@ -53,19 +45,29 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
       <DialogHeader>
         <DialogTitle>Import Posts</DialogTitle>
         <DialogDescription>
-          Choose a platform to import posts from
+          Choose a method to import posts
         </DialogDescription>
       </DialogHeader>
       
       <Tabs 
         defaultValue="penx" 
+        value={activeTab}
         className="w-full"
-        onValueChange={(value) => setActiveTab(value as 'penx' | 'paragraph' | 'substack')}
+        onValueChange={(value) => setActiveTab(value as 'penx' | 'url')}
       >
-        <TabsList className="grid grid-cols-3 w-full">
+        <TabsList className="grid grid-cols-2 w-full">
           <TabsTrigger value="penx">PenX</TabsTrigger>
-          <TabsTrigger value="paragraph">Paragraph</TabsTrigger>
-          <TabsTrigger value="substack">Substack</TabsTrigger>
+          <TabsTrigger value="url" className="relative">
+            URL
+            {activeTab === 'url' && (
+              <Badge 
+                variant="outline" 
+                className="absolute -top-1 -right-1 text-[9px] px-1 py-0 h-auto bg-muted text-muted-foreground border-border"
+              >
+                BETA
+              </Badge>
+            )}
+          </TabsTrigger>
         </TabsList>
         
         <TabsContent value="penx" className="py-4">
@@ -79,21 +81,10 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
           />
         </TabsContent>
         
-        <TabsContent value="paragraph" className="py-4">
-          <PlatformTab
-            platform="paragraph"
+        <TabsContent value="url" className="py-4">
+          <URLImportTab
             isImporting={isImporting}
-            onFileSelect={handleParagraphFiles}
-            description="Select the CSV file exported from your Paragraph account."
-            acceptTypes="text/csv"
-            fileType="CSV"
-          />
-        </TabsContent>
-        
-        <TabsContent value="substack" className="py-4">
-          <SubstackImportTab
-            isImporting={isImporting}
-            onImport={handleSubstackFiles}
+            onImport={handleUrlImportAction}
           />
         </TabsContent>
       </Tabs>
