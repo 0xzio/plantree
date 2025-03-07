@@ -29,6 +29,7 @@ import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { tierRouter } from './routers/tier'
 import { userRouter } from './routers/user'
+import { postImportRouter } from './routers/post-import'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
 export const appRouter = router({
@@ -60,6 +61,7 @@ export const appRouter = router({
   github: githubRouter,
   stripe: stripeRouter,
   tier: tierRouter,
+  postImport: postImportRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

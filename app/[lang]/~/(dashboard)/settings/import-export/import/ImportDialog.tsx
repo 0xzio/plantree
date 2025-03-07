@@ -12,10 +12,11 @@ import {
   TabsList,
   TabsTrigger,
 } from '@/components/ui/tabs'
-import { PlatformTab } from './PlatformTab'
+import { FileImportTab } from './FileImportTab'
 import { URLImportTab } from './URLImportTab'
 import { useImport } from './useImport'
 import { Badge } from '@/components/ui/badge'
+import { PostData } from './useImport'
 
 interface ImportDialogProps {
   open: boolean
@@ -23,22 +24,35 @@ interface ImportDialogProps {
 }
 
 export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
-  const { isImporting, handlePenxImport, handleUrlImport } = useImport()
-  const [activeTab, setActiveTab] = useState<'penx' | 'url'>('penx')
+  const { 
+    isImporting, 
+    importTask, 
+    getImportProgress, 
+    importFromFile, 
+    importFromUrl,
+    importSelectedPosts 
+  } = useImport()
+  const [activeTab, setActiveTab] = useState<'file' | 'url'>('file')
 
-  const handlePenxFiles = async (file: File) => {
-    const success = await handlePenxImport(file)
+  const handleFileImport = async (file: File) => {
+    const success = await importFromFile(file)
     if (success) {
       onOpenChange(false)
     }
   }
   
-  const handleUrlImportAction = async (url: string) => {
-    const success = await handleUrlImport(url)
+  const handleUrlImport = async (url: string) => {
+    await importFromUrl(url)
+  }
+  
+  const handleSelectedPostsImport = async (posts: PostData[]) => {
+    const success = await importSelectedPosts(posts)
     if (success) {
       onOpenChange(false)
     }
   }
+  
+  const progress = getImportProgress()
 
   return (
     <DialogContent className="sm:max-w-md">
@@ -50,13 +64,13 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
       </DialogHeader>
       
       <Tabs 
-        defaultValue="penx" 
+        defaultValue="file" 
         value={activeTab}
         className="w-full"
-        onValueChange={(value) => setActiveTab(value as 'penx' | 'url')}
+        onValueChange={(value) => setActiveTab(value as 'file' | 'url')}
       >
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="penx">PenX</TabsTrigger>
+          <TabsTrigger value="file">File Import</TabsTrigger>
           <TabsTrigger value="url" className="relative">
             URL
             {activeTab === 'url' && (
@@ -70,12 +84,11 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
           </TabsTrigger>
         </TabsList>
         
-        <TabsContent value="penx" className="py-4">
-          <PlatformTab
-            platform="penx"
+        <TabsContent value="file" className="py-4">
+          <FileImportTab
             isImporting={isImporting}
-            onFileSelect={handlePenxFiles}
-            description="Import posts exported from PenX."
+            onFileSelect={handleFileImport}
+            description="Import posts from a JSON file."
             acceptTypes="application/json"
             fileType="JSON"
           />
@@ -84,7 +97,10 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
         <TabsContent value="url" className="py-4">
           <URLImportTab
             isImporting={isImporting}
-            onImport={handleUrlImportAction}
+            importTask={importTask}
+            progress={progress}
+            onImport={handleUrlImport}
+            onImportPosts={handleSelectedPostsImport}
           />
         </TabsContent>
       </Tabs>

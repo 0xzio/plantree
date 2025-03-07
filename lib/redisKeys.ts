@@ -30,4 +30,8 @@ export const redisKeys = {
   homeSites() {
     return `sites:home`
   },
+
+  postImportTasks(taskId: string) {
+    return `post-import-tasks:${taskId}`
+  },
 }
