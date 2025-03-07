@@ -1,3 +1,4 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Balance } from '@/lib/types'
@@ -36,13 +37,17 @@ export async function handleEvent(event: Stripe.Event) {
       session.subscription as string,
     )
 
+    console.log('event==========>>>:', event)
+
     const siteId = subscription.metadata.siteId
     const site = await prisma.site.findUniqueOrThrow({
       where: { id: siteId },
     })
 
+    await cacheHelper.updateCachedMySites(site.userId, null)
+
     let balance = site.balance as Balance
-    if (balance) {
+    if (!balance) {
       balance = {
         withdrawable: 0,
         withdrawing: 0,
@@ -53,12 +58,7 @@ export async function handleEvent(event: Stripe.Event) {
     const tierId = subscription.metadata.tierId
 
     if (site.stripeType === StripeType.PLATFORM && tierId) {
-      const { price } = await prisma.tier.findUniqueOrThrow({
-        where: { id: tierId },
-        select: { price: true },
-      })
-
-      balance.withdrawable += price
+      balance.withdrawable += event.data.object.amount_paid
 
       await prisma.invoice.create({
         data: {

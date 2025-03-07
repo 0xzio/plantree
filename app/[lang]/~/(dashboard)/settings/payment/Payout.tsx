@@ -13,14 +13,16 @@ import {
 import { Balance } from '@/lib/types'
 import { InputAddressDialog } from './InputAddressDialog/InputAddressDialog'
 import { useInputAddressDialog } from './InputAddressDialog/useInputAddressDialog'
+import { useWithdrawDialog } from './WithdrawDialog/useWithdrawDialog'
+import { WithdrawDialog } from './WithdrawDialog/WithdrawDialog'
 
 interface Props {}
 
 export function Payout({}: Props) {
   const site = useSiteContext()
-  const { setIsOpen } = useInputAddressDialog()
+  const inputAddressDialog = useInputAddressDialog()
+  const withdrawDialog = useWithdrawDialog()
   const limit = Number(process.env.NEXT_PUBLIC_MIN_WITHDRAWAL_LIMIT)
-  console.log('====site:', site)
 
   const balance = useMemo(() => {
     if (!site.balance) {
@@ -35,6 +37,7 @@ export function Payout({}: Props) {
   return (
     <div className="space-y-2">
       <InputAddressDialog />
+      <WithdrawDialog />
       <div className="text-2xl font-bold">Payout</div>
       <Card>
         <CardHeader>
@@ -51,12 +54,21 @@ export function Payout({}: Props) {
                 ${(balance.withdrawable / 100).toFixed(2)}
               </div>
               <div className="text-foreground/60 text-sm">
-                On hold: $
-                {((balance.withdrawing + balance.locked) / 100).toFixed(2)}
+                Locked: ${(balance.locked / 100).toFixed(2)}
+              </div>
+              <div className="text-foreground/60 text-sm">
+                Withdrawing: ${(balance.withdrawing / 100).toFixed(2)}
               </div>
             </div>
             <div>
-              <Button disabled={balance.withdrawable < limit}>Withdraw</Button>
+              <Button
+                disabled={balance.withdrawable < limit}
+                onClick={() => {
+                  withdrawDialog.setIsOpen(true)
+                }}
+              >
+                Withdraw
+              </Button>
               <div className="text-foreground/50 text-sm">Minimum $50</div>
             </div>
           </div>
@@ -79,7 +91,7 @@ export function Payout({}: Props) {
             )}
             <Button
               onClick={() => {
-                setIsOpen(true)
+                inputAddressDialog.setIsOpen(true)
               }}
             >
               {site.walletAddress ? 'Update address' : 'Set address'}
