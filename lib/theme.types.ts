@@ -1,4 +1,5 @@
 import { JSX, PropsWithChildren } from 'react'
+import { Author } from '@prisma/client'
 
 enum AuthType {
   GOOGLE = 'GOOGLE',
@@ -141,6 +142,11 @@ export type Post = {
   updatedAt: Date
   userId: string
   postTags: PostTag[]
+  authors: Array<
+    Author & {
+      user: User
+    }
+  >
   user: User
 }
 

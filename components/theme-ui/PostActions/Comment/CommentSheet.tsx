@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -30,7 +32,9 @@ export function CommentSheet({ post }: Props) {
           <SheetHeader>
             <SheetTitle>Comments</SheetTitle>
           </SheetHeader>
-          <CommentContent postId={post.id} />
+          <div className="px-4">
+            <CommentContent postId={post.id} />
+          </div>
         </SheetContent>
       </Sheet>
     </>

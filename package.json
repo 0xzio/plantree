@@ -224,6 +224,7 @@
     "swr": "^2.2.4",
     "tailwind-merge": "3.0.1",
     "tailwind-scrollbar-hide": "^2.0.0",
+    "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.4",
     "unist-util-visit": "^5.0.0",
     "uploadthing": "7.2.0",
@@ -286,16 +287,5 @@
     "slate": "~0.112.0",
     "slate-react": "~0.112.1"
   },
-  "packageManager": "pnpm@9.2.0",
-  "pnpm": {
-    "peerDependencyRules": {
-      "allowAny": [
-        "react",
-        "react-dom"
-      ],
-      "ignoreMissing": [
-        "scheduler"
-      ]
-    }
-  }
+  "packageManager": "pnpm@9.2.0"
 }

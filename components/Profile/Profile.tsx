@@ -3,8 +3,8 @@
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
-import { useSession } from '@/lib/useSession'
 import { useRouter } from '@/lib/i18n'
+import { useSession } from '@/lib/useSession'
 import { LoginButton } from '../LoginButton'
 import { LoginDialog } from '../LoginDialog/LoginDialog'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
@@ -12,9 +12,11 @@ import { Avatar, AvatarFallback } from '../ui/avatar'
 import { Button } from '../ui/button'
 import { ProfilePopover } from './ProfilePopover'
 
-interface Props {}
+interface Props {
+  showDashboard?: boolean
+}
 
-export function Profile({}: Props) {
+export function Profile({ showDashboard = false }: Props) {
   const { data, status } = useSession()
   const { site } = useSite()
   const { push } = useRouter()
@@ -34,20 +36,22 @@ export function Profile({}: Props) {
       {!authenticated && <LoginButton />}
       {authenticated && (
         <div className="flex items-center gap-2">
-          <Button
-            size="sm"
-            onClick={() => {
-              const path = getDashboardPath(site)
+          {showDashboard && (
+            <Button
+              size="sm"
+              onClick={() => {
+                const path = getDashboardPath(site)
 
-              if (location.host === ROOT_DOMAIN) {
-                push(path)
-                return
-              }
-              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
-            }}
-          >
-            Dashboard
-          </Button>
+                if (location.host === ROOT_DOMAIN) {
+                  push(path)
+                  return
+                }
+                location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
+              }}
+            >
+              Dashboard
+            </Button>
+          )}
           <ProfilePopover />
         </div>
       )}

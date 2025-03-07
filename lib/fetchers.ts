@@ -128,6 +128,11 @@ export async function getPost(siteId: string, slug: string) {
     async () => {
       const post = await prisma.post.findFirst({
         where: { slug, siteId },
+        include: {
+          authors: {
+            include: { user: true },
+          },
+        },
       })
 
       if (!post) return null
@@ -139,7 +144,7 @@ export async function getPost(siteId: string, slug: string) {
     },
     [`${siteId}-post-${slug}`],
     {
-      revalidate: REVALIDATE_TIME,
+      revalidate: 10,
       tags: [`${siteId}-post-${slug}`],
     },
   )()
