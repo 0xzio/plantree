@@ -1,41 +1,73 @@
-import { getPosts } from '@/lib/fetchers'
+import { getPosts, getSite } from '@/lib/fetchers'
 import { headers } from 'next/headers'
 
-export default async function Sitemap() {
+export default async function Sitemap(...arg: any) {
   const headersList = await headers()
-  const domain = headersList.get('host')
+  const hostname = headersList.get('host')
 
-  // const posts = await getPosts()
+  const isRoot =
+    hostname === 'localhost:4000' ||
+    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
+
+  if (isRoot) {
+    return [
+      {
+        url: `https://${hostname}`,
+        lastModified: new Date(),
+        priority: 1,
+      },
+      {
+        url: `https://${hostname}/about`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.8,
+      },
+      {
+        url: `https://${hostname}/themes`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.6,
+      },
+      {
+        url: `https://${hostname}/self-hosted`,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.4,
+      },
+      {
+        url: 'https://docs.penx.io',
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.2,
+      },
+    ]
+  }
+  const site = await getSite({ domain: hostname })
+  const posts = await getPosts(site.id)
 
   return [
     {
-      url: `https://${domain}`,
+      url: `https://${hostname}`,
       lastModified: new Date(),
-      priority: 1,
     },
     {
-      url: `https://${domain}/about`,
+      url: `https://${hostname}/about`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.8,
     },
     {
-      url: `https://${domain}/themes`,
+      url: `https://${hostname}/posts`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.6,
     },
     {
-      url: `https://${domain}/self-hosted`,
+      url: `https://${hostname}/tags`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
-      priority: 0.4,
     },
-    {
-      url: 'https://docs.penx.io',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.2,
-    },
+    ...posts.map((item) => ({
+      url: `https://${hostname}/posts/${item.slug}`,
+      lastModified: item.publishedAt,
+    })),
   ]
 }

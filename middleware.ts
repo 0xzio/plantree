@@ -100,7 +100,7 @@ export default async function middleware(req: NextRequest) {
   // return NextResponse.rewrite(new URL(`/${hostname}${path}`, req.url));
   // return NextResponse.next()
 
-  // console.log('>>>>>>>hostname:', hostname, 'path:', path, 'locale:', locale)
+  console.log('>>>>>>>hostname:', hostname, 'path:', path, 'locale:', locale)
 
   return NextResponse.rewrite(
     new URL(`/${locale}/site/${hostname}${path}`, req.url),
