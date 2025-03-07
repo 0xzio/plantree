@@ -25,7 +25,7 @@ export async function GET(req: NextRequest) {
   }
 
   try {
-    let siteId = url.searchParams.get('siteId') || ''
+    let siteId = url.searchParams.get('siteId') || url.pathname.split('/')[2]
 
     const site = await prisma.site.findUniqueOrThrow({
       where: { id: siteId },

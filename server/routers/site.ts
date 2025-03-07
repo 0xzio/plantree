@@ -193,6 +193,7 @@ export const siteRouter = router({
         description: z.string().optional(),
         about: z.string().optional(),
         themeName: z.string().optional(),
+        walletAddress: z.string().optional(),
         spaceId: z.string().optional(),
         navLinks: z
           .array(
@@ -331,7 +332,9 @@ export const siteRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        domain: z.string(),
+        domain: z.string().min(2, {
+          message: 'Subdomain should be at least 2 characters long.',
+        }),
       }),
     )
     .mutation(async ({ ctx, input }) => {
