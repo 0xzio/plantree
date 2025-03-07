@@ -47,6 +47,7 @@ export async function getSite(params: any) {
         include: {
           user: true,
           channels: true,
+          tiers: true,
         },
       })
 

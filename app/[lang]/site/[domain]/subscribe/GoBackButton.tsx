@@ -1,9 +1,16 @@
+'use client'
+
 import { Link } from '@/lib/i18n'
+import { useSearchParams } from 'next/navigation'
 
 export function GoBackButton() {
+  const searchParams = useSearchParams()
+  const source = searchParams?.get('source')
+  console.log('======source:', source)
+
   return (
     <Link
-      href="/"
+      href={decodeURIComponent(source || '/')}
       className="flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg bg-foreground/5"
     >
       <svg

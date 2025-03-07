@@ -1,5 +1,5 @@
 import { JSX, PropsWithChildren } from 'react'
-import { Author } from '@prisma/client'
+import { Author, Tier } from '@prisma/client'
 
 enum AuthType {
   GOOGLE = 'GOOGLE',
@@ -109,6 +109,7 @@ export type Site = {
   postCount: number
   message404: string | null
   themeName: string
+  tiers: Tier[]
   createdAt: Date
   updatedAt: Date
 }

@@ -46,6 +46,7 @@ export function MobileSidebarSheet({
             <>{children}</>
           ) : (
             <div
+              className="px-4"
               onClick={(e) => {
                 setIsOpen(false)
               }}

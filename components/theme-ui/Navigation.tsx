@@ -1,6 +1,7 @@
 import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import { MembershipEntry } from './MembershipEntry'
 
 interface Props {
   site: Site
@@ -19,7 +20,7 @@ export function Navigation({ site, className }: Props) {
   return (
     <div
       className={cn(
-        'hidden md:flex md:flex-row flex-col md:items-start items-center gap-x-4 gap-y-2',
+        'hidden md:flex md:flex-row flex-col items-center gap-x-4 gap-y-2',
         className,
       )}
     >
@@ -35,7 +36,7 @@ export function Navigation({ site, className }: Props) {
             key={link.pathname}
             href={link.pathname}
             className={cn(
-              'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/90',
+              'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/90 leading-none',
             )}
           >
             {link.title}
@@ -43,7 +44,9 @@ export function Navigation({ site, className }: Props) {
         )
       })}
 
-      {site.spaceId && (
+      {site.tiers.length > 0 && <MembershipEntry />}
+
+      {/* {site.spaceId && (
         <Link
           href="/membership"
           className={cn(
@@ -53,7 +56,7 @@ export function Navigation({ site, className }: Props) {
         >
           Membership
         </Link>
-      )}
+      )} */}
     </div>
   )
 }
