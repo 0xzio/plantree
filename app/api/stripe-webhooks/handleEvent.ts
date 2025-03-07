@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
+import { Balance } from '@/lib/types'
 import { StripeType } from '@prisma/client'
 import type { Stripe } from 'stripe'
 
@@ -40,7 +41,14 @@ export async function handleEvent(event: Stripe.Event) {
       where: { id: siteId },
     })
 
-    let newBalance = Number(site.balance) || 0
+    let balance = site.balance as Balance
+    if (balance) {
+      balance = {
+        withdrawable: 0,
+        withdrawing: 0,
+        locked: 0,
+      }
+    }
 
     const tierId = subscription.metadata.tierId
 
@@ -49,14 +57,27 @@ export async function handleEvent(event: Stripe.Event) {
         where: { id: tierId },
         select: { price: true },
       })
-      newBalance += Number(price)
+
+      balance.withdrawable += price
+
+      await prisma.invoice.create({
+        data: {
+          siteId,
+          amount: event.data.object.amount_paid,
+          currency: event.data.object.currency,
+          stripeInvoiceId: event.data.object.id,
+          stripeInvoiceNumber: event.data.object.number,
+          stripePeriodStart: event.data.object.period_start,
+          stripePeriodEnd: event.data.object.period_end,
+        },
+      })
     }
 
     await prisma.site.update({
       // where: { sassSubscriptionId: subscription.id },
       where: { id: siteId },
       data: {
-        balance: newBalance,
+        balance,
         sassSubscriptionId: subscription.id,
         sassCustomerId: subscription.customer as string,
         sassCurrentPeriodEnd: new Date(

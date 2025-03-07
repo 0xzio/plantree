@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
@@ -9,6 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Balance } from '@/lib/types'
 import { InputAddressDialog } from './InputAddressDialog/InputAddressDialog'
 import { useInputAddressDialog } from './InputAddressDialog/useInputAddressDialog'
 
@@ -17,6 +19,19 @@ interface Props {}
 export function Payout({}: Props) {
   const site = useSiteContext()
   const { setIsOpen } = useInputAddressDialog()
+  const limit = Number(process.env.NEXT_PUBLIC_MIN_WITHDRAWAL_LIMIT)
+  console.log('====site:', site)
+
+  const balance = useMemo(() => {
+    if (!site.balance) {
+      return {
+        withdrawable: 0,
+        withdrawing: 0,
+        locked: 0,
+      } as Balance
+    }
+    return site.balance as Balance
+  }, [site.balance])
   return (
     <div className="space-y-2">
       <InputAddressDialog />
@@ -31,18 +46,24 @@ export function Payout({}: Props) {
         <CardContent>
           <div className="text-foreground/60">Balances</div>
           <div className="flex items-center justify-between">
-            <div className="text-4xl font-bold">
-              ${(site.balance / 100).toFixed(2) || '0'}
+            <div>
+              <div className="text-4xl font-bold">
+                ${(balance.withdrawable / 100).toFixed(2)}
+              </div>
+              <div className="text-foreground/60 text-sm">
+                On hold: $
+                {((balance.withdrawing + balance.locked) / 100).toFixed(2)}
+              </div>
             </div>
             <div>
-              <Button disabled={site.balance < 5000}>Withdraw</Button>
+              <Button disabled={balance.withdrawable < limit}>Withdraw</Button>
               <div className="text-foreground/50 text-sm">Minimum $50</div>
             </div>
           </div>
         </CardContent>
       </Card>
 
-      <Card>
+      <Card className="mt-4">
         <CardHeader>
           <CardTitle>Crypto Wallet</CardTitle>
           <CardDescription>

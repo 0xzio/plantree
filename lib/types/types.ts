@@ -301,3 +301,9 @@ export type GithubInfo = {
   tokenExpiresAt: string
   refreshTokenExpiresAt: string
 }
+
+export type Balance = {
+  withdrawable: number
+  withdrawing: number
+  locked: number
+}

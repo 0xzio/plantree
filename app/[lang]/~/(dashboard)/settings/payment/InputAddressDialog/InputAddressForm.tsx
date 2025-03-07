@@ -46,7 +46,7 @@ export function InputAddressForm() {
 
       await api.site.updateSite.mutate({
         id: site.id,
-        ...data,
+        walletAddress: data.address,
       })
 
       queryClient.setQueriesData(

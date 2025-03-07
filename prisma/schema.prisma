@@ -93,7 +93,7 @@ model Site {
   notificationConfig     Json?
   repo                   String?        @db.VarChar(100)
   installationId         Int?           @db.Integer // github app installationId
-  balance                Int            @default(0)
+  balance                Json?
   themeName              String?        @db.VarChar(50)
   themeConfig            Json?
   memberCount            Int            @default(0) @db.Integer
@@ -124,10 +124,11 @@ model Site {
   authors                Author[]
   assetLabels            AssetLabel[]
   assetAlbums            AssetAlbum[]
-  prop                   Prop[]
+  props                  Prop[]
   tiers                  Tier[]
   subscriptions          Subscription[]
   payouts                Payout[]
+  invoices               Invoice[]
 
   @@index([userId])
   @@map("site")
@@ -157,7 +158,7 @@ model User {
   messages      Message[]
   sites         Site[]
   accounts      Account[]
-  theme         Theme[]
+  themes        Theme[]
   hostedSites   HostedSite[]
   assets        Asset[]
   labels        Label[]
@@ -170,9 +171,10 @@ model User {
   subscribers   Subscriber[]
   newsletters   Newsletter[]
   authors       Author[]
-  prop          Prop[]
+  props         Prop[]
   tiers         Tier[]
   payouts       Payout[]
+  invoices      Invoice[]
 
   @@index([id])
   @@map("user")
@@ -229,6 +231,7 @@ model Tier {
   userId          String         @db.Uuid
   subscriptions   Subscription[]
 
+  @@index([siteId])
   @@index([userId])
   @@index([siteId, userId])
   @@map("tier")
@@ -251,9 +254,29 @@ model Payout {
   user      User         @relation(fields: [userId], references: [id])
   userId    String       @db.Uuid
 
+  @@index([siteId])
   @@index([userId])
   @@index([siteId, userId])
   @@map("payout")
+}
+
+model Invoice {
+  id                  String   @id @default(uuid()) @db.Uuid
+  amount              Int      @default(0)
+  stripeInvoiceId     String?  @unique @db.VarChar(50)
+  stripeInvoiceNumber String?  @unique @db.VarChar(50)
+  stripePeriodStart   Int      @default(0)
+  stripePeriodEnd     Int      @default(0)
+  currency            String?  @db.VarChar(50)
+  locked              Boolean  @default(false)
+  createdAt           DateTime @default(now())
+  site                Site     @relation(fields: [siteId], references: [id])
+  siteId              String   @db.Uuid
+  User                User?    @relation(fields: [userId], references: [id])
+  userId              String?  @db.Uuid
+
+  @@index([siteId])
+  @@map("invoice")
 }
 
 enum SubscriptionStatus {
@@ -282,6 +305,7 @@ model Subscription {
   siteId                 String        @db.Uuid
 
   @@index([userId])
+  @@index([siteId])
   @@index([siteId, userId])
   @@map("subscription")
 }
