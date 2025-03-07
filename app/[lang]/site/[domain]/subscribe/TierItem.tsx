@@ -10,6 +10,7 @@ import { Site } from '@/lib/theme.types'
 import { trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { Tier } from '@prisma/client'
+import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 interface Props {
@@ -18,6 +19,8 @@ interface Props {
 }
 
 export function TierItem({ tier, site }: Props) {
+  const searchParams = useSearchParams()
+  const source = searchParams?.get('source')
   const checkout = trpc.stripe.checkout.useMutation()
   const cancelSubscription = trpc.stripe.cancelSubscription.useMutation()
   const { data: session, isLoading } = useSession()
@@ -104,6 +107,7 @@ export function TierItem({ tier, site }: Props) {
                   siteId: site.id,
                   priceId: tier.stripePriceId!,
                   host: window.location.host,
+                  pathname: encodeURIComponent(source || '/'),
                 })
                 console.log('=======res:', res)
                 window.location.href = res.url!

@@ -74,6 +74,7 @@ export const stripeRouter = router({
         priceId: z.string(),
         siteId: z.string(),
         host: z.string(),
+        pathname: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -89,6 +90,7 @@ export const stripeRouter = router({
         userId,
         tierId: input.tierId,
         host: input.host,
+        pathname: input.pathname,
       }
 
       console.log('=======query:', query)

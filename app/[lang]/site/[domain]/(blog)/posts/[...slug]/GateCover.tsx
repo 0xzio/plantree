@@ -27,7 +27,7 @@ export function GateCover({ slug }: Props) {
           size="lg"
           className="w-48 rounded-xl"
           onClick={() => {
-            push(`/subscribe?from=${pathname}`)
+            push(`/subscribe?source=${pathname}`)
             // if (!isConnected) {
             //   openConnectModal?.()
             // }

@@ -6,7 +6,6 @@ import { useSearchParams } from 'next/navigation'
 export function GoBackButton() {
   const searchParams = useSearchParams()
   const source = searchParams?.get('source')
-  console.log('======source:', source)
 
   return (
     <Link

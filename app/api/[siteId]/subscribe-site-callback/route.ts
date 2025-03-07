@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
   const userId = url.searchParams.get('userId') || ''
   const tierId = url.searchParams.get('tierId') || ''
   const host = url.searchParams.get('host') || ''
+  const pathname = url.searchParams.get('pathname') || ''
 
   console.log('url========>>:', url)
 
@@ -151,7 +152,9 @@ export async function GET(req: NextRequest) {
       await session.save()
     }
 
-    return NextResponse.redirect(`${url.protocol}//${host}/subscribe`)
+    return NextResponse.redirect(
+      `${url.protocol}//${host}${decodeURIComponent(pathname)}`,
+    )
   } catch (error) {
     console.error('Error handling successful checkout:', error)
     return NextResponse.redirect(new URL('/error', req.url))
