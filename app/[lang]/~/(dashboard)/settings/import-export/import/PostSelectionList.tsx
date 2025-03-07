@@ -67,19 +67,24 @@ export function PostSelectionList({ posts, isImporting, onImport }: PostSelectio
       </div>
 
       <div className="overflow-hidden">
-        <ScrollArea className="h-52 rounded-md border">
-          <div className="space-y-1 p-2">
+        <ScrollArea className="h-52 rounded-md">
+          <div className="space-y-2">
             {posts.map((post, index) => (
-              <Card key={index} className="overflow-hidden border-muted">
+              <Card 
+                key={index} 
+                className="overflow-hidden cursor-pointer hover:bg-muted/50 transition-colors"
+                onClick={() => handleTogglePost(index, !selectedPosts[index])}
+              >
                 <CardContent className="p-2 flex items-center">
                   <Checkbox 
                     id={`post-${index}`}
                     className="mr-2 flex-shrink-0"
                     checked={selectedPosts[index]}
                     onCheckedChange={(checked) => handleTogglePost(index, !!checked)}
+                    onClick={(e) => e.stopPropagation()}
                   />
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium truncate">
+                    <p className="text-sm font-medium">
                       {post.title || "Untitled Post"}
                     </p>
                   </div>
