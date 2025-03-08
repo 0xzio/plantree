@@ -15,7 +15,9 @@ import {
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
@@ -28,6 +30,7 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const FormSchema = z.object({
+  color: z.string().optional(),
   themeName: z.string().optional(),
 })
 
@@ -39,8 +42,12 @@ export function ThemeSettingForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
+  const themeConfig: any = site.themeConfig || {}
+  const brand = themeConfig?.__COMMON__?.color || 'oklch(0.656 0.241 354.308)'
+
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
+      color: brand,
       themeName: site.themeName || '',
     },
     resolver: zodResolver(FormSchema),
@@ -51,6 +58,11 @@ export function ThemeSettingForm({ site }: Props) {
       await mutateAsync({
         id: site.id,
         themeName: data.themeName,
+        themeConfig: {
+          __COMMON__: {
+            color: data.color,
+          },
+        },
       })
       refetch()
       toast.success('Updated successfully!')
@@ -64,6 +76,128 @@ export function ThemeSettingForm({ site }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="color"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Brand color</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a color" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="oklch(0.637 0.237 25.331)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-red-500"></div>
+                      <div>Red</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.705 0.213 47.604)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-orange-500"></div>
+                      <div>Orange</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.769 0.188 70.08)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-amber-500"></div>
+                      <div>Amber</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.795 0.184 86.047)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-yellow-500"></div>
+                      <div>Yellow</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.768 0.233 130.85)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-lime-500"></div>
+                      <div>Lime</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.723 0.219 149.579)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-green-500"></div>
+                      <div>Green</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.696 0.17 162.48)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-emerald-500"></div>
+                      <div>Emerald</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.704 0.14 182.503)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-teal-500"></div>
+                      <div>Teal</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.715 0.143 215.221)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-cyan-500"></div>
+                      <div>Cyan</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.685 0.169 237.323)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-sky-500"></div>
+                      <div>Sky</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.623 0.214 259.815)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-blue-500"></div>
+                      <div>Blue</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.585 0.233 277.117)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-indigo-500"></div>
+                      <div>Indigo</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.606 0.25 292.717)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-violet-500"></div>
+                      <div>Violet</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.627 0.265 303.9)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-purple-500"></div>
+                      <div>Purple</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.667 0.295 322.15)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-fuchsia-500"></div>
+                      <div>Fuchsia</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.656 0.241 354.308)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-pink-500"></div>
+                      <div>Pink</div>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="oklch(0.645 0.246 16.439)">
+                    <div className="flex items-center gap-2">
+                      <div className="size-5 rounded bg-pink-500"></div>
+                      <div>Pink</div>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="themeName"

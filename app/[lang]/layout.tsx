@@ -1,4 +1,4 @@
-import '../globals.css';
+import '../globals.css'
 import '@farcaster/auth-kit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 // import { setI18n } from '@lingui/react/server'
 import { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
+import Head from 'next/head'
 import { headers } from 'next/headers'
 import { allMessages, getI18nInstance } from '../../appRouterI18n'
 import { Providers } from './providers'

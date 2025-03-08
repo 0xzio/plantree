@@ -5,7 +5,7 @@ import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
-export const revalidate = 86400; // 3600 * 24
+export const revalidate = 86400 // 3600 * 24
 
 // export async function generateMetadata({ params }: any): Promise<Metadata> {
 //   const site = await getSite(params)
@@ -35,12 +35,22 @@ export default async function RootLayout({
   const tags = await getTags(site.id)
   const { SiteLayout } = loadTheme(site.themeName)
 
+  const brand =
+    site.themeConfig?.__COMMON__?.color || 'oklch(0.656 0.241 354.308)'
   return (
-    <SiteLayout site={site} tags={tags}>
-      <SiteProvider site={site as any}>
-        {children}
-        {site.spaceId && <ChatSheet />}
-      </SiteProvider>
-    </SiteLayout>
+    <div
+      style={
+        {
+          '--brand': brand,
+        } as any
+      }
+    >
+      <SiteLayout site={site} tags={tags}>
+        <SiteProvider site={site as any}>
+          {children}
+          {site.spaceId && <ChatSheet />}
+        </SiteProvider>
+      </SiteLayout>
+    </div>
   )
 }
