@@ -2,6 +2,7 @@ import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SiteProvider } from '@/components/SiteContext'
 import { getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -35,10 +36,17 @@ export default async function RootLayout({
   const tags = await getTags(site.id)
   const { SiteLayout } = loadTheme(site.themeName)
 
-  const brand =
-    site.themeConfig?.__COMMON__?.color || 'oklch(0.656 0.241 354.308)'
+  const config = site.themeConfig?.__COMMON__ || {}
+  const brand = config.color || 'oklch(0.656 0.241 354.308)'
+
+  const fontFamily = config.fontFamily
+  let font = 'font-mono'
+  if (fontFamily === 'serif') font = 'font-serif'
+  if (fontFamily === 'sans') font = 'font-sans'
+
   return (
     <div
+      className={cn(font)}
       style={
         {
           '--brand': brand,

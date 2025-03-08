@@ -30,8 +30,9 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 const FormSchema = z.object({
-  color: z.string().optional(),
   themeName: z.string().optional(),
+  color: z.string().optional(),
+  fontFamily: z.string().optional(),
 })
 
 interface Props {
@@ -42,13 +43,15 @@ export function ThemeSettingForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
-  const themeConfig: any = site.themeConfig || {}
-  const brand = themeConfig?.__COMMON__?.color || 'oklch(0.656 0.241 354.308)'
+  const config: any = site.themeConfig?.__COMMON__ || {}
+  const brand = config?.color || 'oklch(0.656 0.241 354.308)'
+  const fontFamily = config?.fontFamily || 'mono'
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
       color: brand,
       themeName: site.themeName || '',
+      fontFamily,
     },
     resolver: zodResolver(FormSchema),
   })
@@ -61,6 +64,7 @@ export function ThemeSettingForm({ site }: Props) {
         themeConfig: {
           __COMMON__: {
             color: data.color,
+            fontFamily: data.fontFamily,
           },
         },
       })
@@ -76,6 +80,34 @@ export function ThemeSettingForm({ site }: Props) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="themeName"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Theme</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a theme" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="minimal">Minimal</SelectItem>
+                  <SelectItem value="garden">Garden</SelectItem>
+                  <SelectItem value="publication">Publication</SelectItem>
+                  <SelectItem value="aside">Aside</SelectItem>
+                  <SelectItem value="docs">Docs</SelectItem>
+                  <SelectItem value="sue">Sue</SelectItem>
+                  <SelectItem value="micro">Micro</SelectItem>
+                  <SelectItem value="card">Card</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <FormField
           control={form.control}
           name="color"
@@ -187,8 +219,8 @@ export function ThemeSettingForm({ site }: Props) {
                   </SelectItem>
                   <SelectItem value="oklch(0.645 0.246 16.439)">
                     <div className="flex items-center gap-2">
-                      <div className="size-5 rounded bg-pink-500"></div>
-                      <div>Pink</div>
+                      <div className="size-5 rounded bg-rose-500"></div>
+                      <div>Rose</div>
                     </div>
                   </SelectItem>
                 </SelectContent>
@@ -200,25 +232,20 @@ export function ThemeSettingForm({ site }: Props) {
 
         <FormField
           control={form.control}
-          name="themeName"
+          name="fontFamily"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Theme</FormLabel>
+              <FormLabel>Font family</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a theme" />
+                    <SelectValue placeholder="Select a font family" />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="minimal">Minimal</SelectItem>
-                  <SelectItem value="garden">Garden</SelectItem>
-                  <SelectItem value="publication">Publication</SelectItem>
-                  <SelectItem value="aside">Aside</SelectItem>
-                  <SelectItem value="docs">Docs</SelectItem>
-                  <SelectItem value="sue">Sue</SelectItem>
-                  <SelectItem value="micro">Micro</SelectItem>
-                  <SelectItem value="card">Card</SelectItem>
+                  <SelectItem value="mono">mono</SelectItem>
+                  <SelectItem value="serif">Serif</SelectItem>
+                  <SelectItem value="sans">Sans</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
