@@ -8,8 +8,6 @@ interface Props {}
 export function PostsNav({}: Props) {
   const pathname = usePathname()
 
-  console.log('=========pathname:', pathname)
-
   const Paths = {
     published: '/~/posts',
     drafts: '/~/posts/drafts',
