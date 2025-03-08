@@ -8,22 +8,22 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { TierForm } from './TierForm'
-import { useTierDialog } from './useTierDialog'
+import { PriceForm } from './PriceForm'
+import { usePriceDialog } from './usePriceDialog'
 
-export function TierDialog() {
-  const { isOpen, setIsOpen, tier } = useTierDialog()
+export function PriceDialog() {
+  const { isOpen, setIsOpen, tier } = usePriceDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogHeader className="hidden">
         <DialogDescription></DialogDescription>
       </DialogHeader>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[460px]">
         <DialogHeader>
-          <DialogTitle>{!!tier ? 'Update tier' : 'Add tier'}</DialogTitle>
+          <DialogTitle>Update price</DialogTitle>
         </DialogHeader>
-        <TierForm />
+        <PriceForm />
       </DialogContent>
     </Dialog>
   )

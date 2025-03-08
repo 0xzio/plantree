@@ -150,6 +150,10 @@ export const protectedProcedure = t.procedure.use(
         'subscriber.importSubscribers',
         'delivery.list',
         'delivery.updateStatus',
+        'tier.addTier',
+        'tier.updateTier',
+        'tier.updatePrice',
+        'stripe.withdraw',
       ].includes(path)
     ) {
       // TODO: improve performance by caching the result of this query

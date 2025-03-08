@@ -38,7 +38,7 @@ const defaultBenefits = [
     indent: 1,
     listStyleType: 'disc',
     listStart: 3,
-    children: [{ text: 'Benefi' }],
+    children: [{ text: 'Benefit 2' }],
   },
 ]
 

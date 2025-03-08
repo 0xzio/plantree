@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
-import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -17,10 +16,7 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useCheckChain } from '@/hooks/useCheckChain'
 import { useEthPrice } from '@/hooks/useEthPrice'
-import { usePlans } from '@/hooks/usePlans'
-import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
@@ -38,7 +34,6 @@ const FormSchema = z.object({
 export function TierForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen, tier } = useTierDialog()
-  const { ethPrice } = useEthPrice()
   const { refetch } = trpc.tier.listSiteTiers.useQuery()
 
   const isEdit = !!tier
@@ -86,7 +81,7 @@ export function TierForm() {
           name="name"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Tier name</FormLabel>
+              <FormLabel>Name</FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />
               </FormControl>
@@ -95,28 +90,30 @@ export function TierForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Monthly price</FormLabel>
-              <FormControl>
-                <div className="relative">
-                  <span className="absolute top-2 left-3">$</span>
-                  <NumberInput
-                    disabled={isEdit}
-                    placeholder=""
-                    precision={2}
-                    {...field}
-                    className="w-full pl-7"
-                  />
-                </div>
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!isEdit && (
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel>Monthly price</FormLabel>
+                <FormControl>
+                  <div className="relative">
+                    <span className="absolute top-2 left-3">$</span>
+                    <NumberInput
+                      disabled={isEdit}
+                      placeholder=""
+                      precision={2}
+                      {...field}
+                      className="w-full pl-7"
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        )}
 
         <FormField
           control={form.control}
@@ -156,7 +153,7 @@ export function TierForm() {
           <Button
             type="submit"
             className="w-24"
-            disabled={isLoading || !form.formState.isValid || !ethPrice}
+            disabled={isLoading || !form.formState.isValid}
           >
             {isLoading ? (
               <LoadingDots />

@@ -10,16 +10,20 @@ import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
 import { StripeType } from '@prisma/client'
 import { Edit, Plus } from 'lucide-react'
+import { PriceDialog } from './PriceDialog/PriceDialog'
+import { usePriceDialog } from './PriceDialog/usePriceDialog'
 import { TierDialog } from './TierDialog/TierDialog'
 import { useTierDialog } from './TierDialog/useTierDialog'
 
 interface Props {
   type: StripeType
 }
+
 export function MembershipTiers({ type }: Props) {
   const [loading, setLoading] = useState(false)
   const site = useSiteContext()
   const tierDialog = useTierDialog()
+  const priceDialog = usePriceDialog()
   const {
     data: tiers = [],
     isLoading,
@@ -31,6 +35,7 @@ export function MembershipTiers({ type }: Props) {
   return (
     <div className="space-y-3">
       <TierDialog />
+      <PriceDialog />
       <div className="flex items-center gap-2">
         <div className="text-2xl font-bold">Paid membership settings</div>
         <Badge>
@@ -60,7 +65,22 @@ export function MembershipTiers({ type }: Props) {
                   <Edit size={18} />
                 </Button>
               </div>
-              <div>${Number(item.price)} / month</div>
+              <div className="flex items-center gap-1">
+                <div>${Number(item.price / 100).toFixed(2)} / month</div>
+                <Button
+                  variant="secondary"
+                  className="cursor-pointer rounded-full"
+                  size="xs"
+                  onClick={() => {
+                    priceDialog.setState({
+                      isOpen: true,
+                      tier: item,
+                    })
+                  }}
+                >
+                  Update price
+                </Button>
+              </div>
               <ContentRender content={item.description || editorDefaultValue} />
             </div>
           ))}

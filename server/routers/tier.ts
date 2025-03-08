@@ -1,6 +1,6 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
-import { TierInterval } from '@prisma/client'
+import { StripeType, TierInterval } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
 import Stripe from 'stripe'
 import { z } from 'zod'
@@ -58,8 +58,10 @@ export const tierRouter = router({
         tax_code: 'txcd_10103000',
       })
 
+      const price = parseInt((Number(input.price) * 100) as any)
+
       const monthlyPrice = await oauthStripe.prices.create({
-        unit_amount: parseInt((Number(input.price) * 100) as any), // $10
+        unit_amount: price, // $10
         currency: 'usd',
         recurring: { interval: 'month' },
         product: product.id,
@@ -68,7 +70,7 @@ export const tierRouter = router({
       await prisma.tier.create({
         data: {
           ...input,
-          price: Number(input.price),
+          price,
           interval: TierInterval.MONTHLY,
           stripeProductId: product.id,
           stripePriceId: monthlyPrice.id,
@@ -96,6 +98,59 @@ export const tierRouter = router({
       const tier = await prisma.tier.update({
         where: { id: input.id },
         data: rest,
+      })
+
+      revalidateTag(`${ctx.activeSiteId}-tiers`)
+      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      return tier
+    }),
+
+  updatePrice: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        price: z.string().min(1, { message: 'Price is required' }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id } = input
+      const siteId = ctx.activeSiteId
+
+      const price = parseInt((Number(input.price) * 100) as any)
+
+      const tier = await prisma.tier.findUniqueOrThrow({
+        where: { id: input.id },
+      })
+
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: siteId },
+      })
+
+      let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
+
+      const apiKey =
+        site.stripeType === StripeType.PLATFORM
+          ? process.env.STRIPE_API_KEY!
+          : stripeOAuthToken.access_token!
+
+      const oauthStripe = new Stripe(apiKey, {
+        apiVersion: '2025-02-24.acacia',
+        typescript: true,
+      })
+
+      const monthlyPrice = await oauthStripe.prices.create({
+        unit_amount: price, // $10
+        currency: 'usd',
+        recurring: { interval: 'month' },
+        product: tier.stripeProductId!,
+      })
+
+      await prisma.tier.update({
+        where: { id: input.id },
+        data: {
+          price,
+          stripePriceId: monthlyPrice.id,
+        },
       })
 
       revalidateTag(`${ctx.activeSiteId}-tiers`)
