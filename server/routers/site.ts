@@ -256,8 +256,15 @@ export const siteRouter = router({
       //   await syncSiteToHub(newSite)
       // } catch (error) {}
 
+      const collaborators = await prisma.collaborator.findMany({
+        where: { siteId: id },
+      })
+
       revalidateSite(newSite.domains)
-      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+
+      for (const item of collaborators) {
+        await cacheHelper.updateCachedMySites(item.userId, null)
+      }
       await cacheHelper.updateCachedHomeSites(null)
       return newSite
     }),
