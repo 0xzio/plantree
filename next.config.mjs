@@ -3,17 +3,17 @@ import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 const withVanillaExtract = createVanillaExtractPlugin()
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  // experimental: {
-  //   swcPlugins: [['@lingui/swc-plugin', {}]],
-  //   turbo: {
-  //     rules: {
-  //       '*.po': {
-  //         loaders: ['@lingui/loader'],
-  //         as: '*.js',
-  //       },
-  //     },
-  //   },
-  // },
+  experimental: {
+    swcPlugins: [['@lingui/swc-plugin', {}]],
+    turbo: {
+      rules: {
+        '*.po': {
+          loaders: ['@lingui/loader'],
+          as: '*.js',
+        },
+      },
+    },
+  },
   async rewrites() {
     return [
       {
@@ -68,6 +68,18 @@ const nextConfig = {
     }
 
     config.externals.push('pino-pretty', 'lokijs', 'encoding', 'bcrypt')
+
+    // console.log('====>>>>>>>process.env.NODE_ENV:', process.env.NODE_ENV)
+
+    if (process.env.NODE_ENV === 'production') {
+      config.module.rules.push({
+        test: /\.po$/,
+        use: {
+          loader: '@lingui/loader',
+        },
+        type: 'javascript/auto',
+      })
+    }
 
     return config
   },

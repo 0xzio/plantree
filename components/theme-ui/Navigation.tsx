@@ -1,6 +1,9 @@
+import { ReactNode } from 'react'
 import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import { t } from '@lingui/core/macro'
+import { Trans } from '@lingui/react/macro'
 import { MembershipEntry } from './MembershipEntry'
 
 interface Props {
@@ -16,7 +19,19 @@ export function Navigation({ site, className }: Props) {
       title: 'CreatorFi',
       visible: true,
     },
-  ]
+  ].map((link) => {
+    let title = link.title as ReactNode
+    if (link.pathname === '/') title = <Trans>Home</Trans>
+    if (link.pathname === '/posts') title = <Trans>Posts</Trans>
+    if (link.pathname === '/projects') title = <Trans>Projects</Trans>
+    if (link.pathname === '/tags') title = <Trans>Tags</Trans>
+    if (link.pathname === '/about') title = <Trans>About</Trans>
+    return {
+      ...link,
+      title,
+    }
+  })
+
   return (
     <div
       className={cn(

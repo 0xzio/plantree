@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage(props: { params: any }) {
   const lang = (await props.params).lang
-  initLingui(lang)
+  initLingui(lang === 'pseudo' ? 'en' : lang)
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
   return (
     <div>
@@ -53,8 +53,7 @@ export default async function HomePage(props: { params: any }) {
 
       <div className="flex items-center justify-between mt-10 mb-6">
         <div className="text-2xl font-semibold">
-          {/* <Trans>Sites</Trans> */}
-          Sites
+          <Trans>Sites</Trans>
         </div>
         {/* <Suspense fallback={''}>
           <LaunchButton />

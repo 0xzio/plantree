@@ -2,6 +2,7 @@
 
 import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 
 export function MembershipEntry() {
   const pathname = usePathname()
@@ -13,7 +14,7 @@ export function MembershipEntry() {
         'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
       )}
     >
-      Membership
+      <Trans>Membership</Trans>
     </Link>
   )
 }

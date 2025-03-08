@@ -1,4 +1,4 @@
-import '../globals.css';
+import '../globals.css'
 import '@farcaster/auth-kit/styles.css'
 import '@rainbow-me/rainbowkit/styles.css'
 import 'react-datepicker/dist/react-datepicker.css'
@@ -10,6 +10,7 @@ import { cn } from '@/lib/utils'
 // import { setI18n } from '@lingui/react/server'
 import { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
+import Head from 'next/head'
 import { headers } from 'next/headers'
 import { allMessages, getI18nInstance } from '../../appRouterI18n'
 import { Providers } from './providers'
@@ -54,10 +55,11 @@ export default async function RootLayout({
   params: Promise<{ domain: string; lang: string }>
 }) {
   const lang = (await params).lang
-  initLingui(lang)
+  const locale = lang === 'pseudo' ? 'en' : lang
+  initLingui(locale)
+
   const headersList = await headers()
   const cookies = headersList.get('cookie')
-  const url = headersList.get('x-current-path') || ''
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -69,8 +71,8 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <LinguiClientProvider
-            initialLocale={lang}
-            initialMessages={allMessages[lang]!}
+            initialLocale={locale}
+            initialMessages={allMessages[locale]!}
           >
             <Providers cookies={cookies}>
               {children}

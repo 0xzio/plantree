@@ -16,7 +16,6 @@ export function SettingNav({}: Props) {
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
     i18n: '/~/settings/i18n',
-    theme: '/~/settings/theme',
     navigation: '/~/settings/navigation',
     catalogue: '/~/settings/catalogue',
     features: '/~/settings/features',
@@ -97,8 +96,11 @@ export function SettingNav({}: Props) {
       </Section>
 
       <Section title="Site - UI">
-        <Link href={Paths.theme} className={linkClassName(Paths.theme)}>
-          Theme
+        <Link
+          href={Paths.appearance}
+          className={linkClassName(Paths.appearance)}
+        >
+          Appearance
         </Link>
         <Link
           href={Paths.navigation}

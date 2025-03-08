@@ -1,5 +1,6 @@
 import 'server-only'
 import { I18n, Messages, setupI18n } from '@lingui/core'
+import { isProd } from './lib/constants'
 import linguiConfig from './lingui.config'
 
 const { locales } = linguiConfig
@@ -9,9 +10,12 @@ type SupportedLocales = string
 async function loadCatalog(locale: SupportedLocales): Promise<{
   [k: string]: Messages
 }> {
-  // const { messages } = await import(`./locales/${locale}.po`)
+  const { messages } = await import(`./locales/${locale}.po`)
   // const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
-  const messages = {}
+
+  // const { messages } = await (isProd
+  //   ? import(`@lingui/loader!./locales/${locale}.po`)
+  //   : import(`./locales/${locale}.po`))
 
   return {
     [locale]: messages,

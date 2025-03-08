@@ -1,5 +1,6 @@
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { Post } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostList } from '../components/PostList'
 
 interface Props {
@@ -18,7 +19,9 @@ export function BlogPage({
 }: Props) {
   return (
     <div className="space-y-6">
-      <PageTitle className="text-center">Blog</PageTitle>
+      <PageTitle className="text-center">
+        <Trans>Blog</Trans>
+      </PageTitle>
       <PostList
         posts={posts}
         pagination={pagination}

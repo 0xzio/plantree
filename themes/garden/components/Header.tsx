@@ -1,5 +1,6 @@
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
 import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
@@ -52,17 +53,7 @@ export const Header = ({ site }: Props) => {
               )
             })}
 
-            {site.spaceId && (
-              <Link
-                href="/membership"
-                className={cn(
-                  'font-medium hover:text-brand text-foreground/90',
-                  'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
-                )}
-              >
-                Membership
-              </Link>
-            )}
+            {site.tiers.length > 0 && <MembershipEntry />}
           </div>
         </div>
 
