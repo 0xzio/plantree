@@ -7,6 +7,7 @@ import { LinguiClientProvider } from '@/components/LinguiClientProvider'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
 import { cn } from '@/lib/utils'
+import linguiConfig from '@/lingui.config'
 // import { setI18n } from '@lingui/react/server'
 import { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
@@ -25,6 +26,10 @@ const title = 'PenX'
 const description = 'Modern blogging tools'
 
 // const image = 'https://vercel.pub/thumbnail.png'
+
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
 
 export const metadata: Metadata = {
   title,
@@ -62,7 +67,7 @@ export default async function RootLayout({
   const cookies = headersList.get('cookie')
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang={locale} suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background antialiased font-sans')}>
         <ThemeProvider
           attribute="class"

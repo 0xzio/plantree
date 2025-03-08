@@ -2,6 +2,7 @@ import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
 import { TextLogo } from '@/components/TextLogo'
+import { initLingui } from '@/initLingui'
 import { Link } from '@/lib/i18n'
 import { Philosopher } from 'next/font/google'
 import { Footer } from './Footer'
@@ -13,7 +14,16 @@ const logoFont = Philosopher({
   display: 'swap',
 })
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default async function Layout({
+  children,
+  params,
+}: {
+  children: React.ReactNode
+  params: Promise<{ domain: string; lang: string }>
+}) {
+  const lang = (await params).lang
+  const locale = lang === 'pseudo' ? 'en' : lang
+  initLingui(locale)
   return (
     <>
       <div className="flex flex-col gap-4 px-2 min-h-screen container mx-auto">

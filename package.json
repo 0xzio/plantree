@@ -16,7 +16,7 @@
     "deploy": "docker-compose -p penx -f docker-compose.yaml up --build -d",
     "format:write": "prettier --write \"**/*.{css,js,json,jsx,ts,tsx}\"",
     "format": "prettier \"**/*.{css,js,json,jsx,ts,tsx}\"",
-    "start": "next start",
+    "start": "next start -p 4000",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
