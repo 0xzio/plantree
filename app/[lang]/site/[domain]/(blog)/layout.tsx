@@ -2,6 +2,7 @@ import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SiteProvider } from '@/components/SiteContext'
 import { getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { AppearanceConfig } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Metadata } from 'next'
 
@@ -35,11 +36,12 @@ export default async function RootLayout({
   const site = await getSite(await params)
   const tags = await getTags(site.id)
   const { SiteLayout } = loadTheme(site.themeName)
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const brand = appearance?.color || 'oklch(0.656 0.241 354.308)'
+  const baseFont = appearance?.baseFont
 
-  const config = site.themeConfig?.__COMMON__ || {}
-  const brand = config.color || 'oklch(0.656 0.241 354.308)'
-
-  const baseFont = config.baseFont
   let font = 'font-mono'
   if (baseFont === 'serif') font = 'font-serif'
   if (baseFont === 'sans') font = 'font-sans'

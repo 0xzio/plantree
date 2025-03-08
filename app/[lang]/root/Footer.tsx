@@ -2,6 +2,7 @@ import { LangSwitcher } from '@/components/LangSwitcher'
 import { ModeToggle } from '@/components/ModeToggle'
 import { SocialNav } from '@/components/SocialNav'
 import { Link } from '@/lib/i18n'
+import { Trans } from '@lingui/react/macro'
 
 interface Props {}
 
@@ -44,7 +45,9 @@ export function Footer({}: Props) {
               target="_blank"
               className="flex items-center gap-1"
             >
-              <span>Blog</span>
+              <span>
+                <Trans>Blog</Trans>
+              </span>
             </a>
           </div>
           {/* <div className="flex items-center">

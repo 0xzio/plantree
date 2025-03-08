@@ -32,8 +32,6 @@ export function Navigation({ site, className }: Props) {
     }
   })
 
-  console.log('======links:', links)
-
   return (
     <div
       className={cn(

@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-02-20 15:12+0800\n"
+"POT-Creation-Date: 2025-03-08 18:18+0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,10 +17,47 @@ msgstr ""
 msgid "About"
 msgstr "About"
 
+#: components/theme-ui/Airdrop/AirdropButton.tsx:11
+msgid "Airdrop"
+msgstr "Airdrop"
+
+#: app/[lang]/root/Footer.tsx:49
+#: themes/sue/pages/BlogPage.tsx:23
+#: themes/publication/pages/BlogPage.tsx:23
+#: themes/minimal/pages/BlogPage.tsx:23
+#: themes/micro/pages/BlogPage.tsx:23
+#: themes/garden/pages/BlogPage.tsx:23
+#: themes/docs/pages/BlogPage.tsx:23
+#: themes/card/pages/BlogPage.tsx:23
+#: themes/aside/pages/BlogPage.tsx:23
+msgid "Blog"
+msgstr "Blog"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:150
+msgid "Coupons"
+msgstr "Coupons"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:124
+msgid "Databases"
+msgstr "Databases"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:104
+msgid "Gallery"
+msgstr "Gallery"
+
 #: components/theme-ui/Navigation.tsx:24
 msgid "Home"
 msgstr "Home"
 
+#: components/theme-ui/MembershipEntry.tsx:17
+msgid "Membership"
+msgstr "Membership"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:114
+msgid "Pages"
+msgstr "Pages"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:95
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr "Posts"
@@ -29,11 +66,22 @@ msgstr "Posts"
 msgid "Projects"
 msgstr "Projects"
 
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
+msgid "Settings"
+msgstr "Settings"
+
 #: app/[lang]/root/(home)/page.tsx:56
-#: components/theme-ui/Navigation.tsx:44
 msgid "Sites"
 msgstr "Sites"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:133
+msgid "Subscribers"
+msgstr "Subscribers"
 
 #: components/theme-ui/Navigation.tsx:27
 msgid "Tags"
 msgstr "Tags"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:86
+msgid "Today"
+msgstr "Today"

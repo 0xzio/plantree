@@ -23,6 +23,7 @@ import {
 } from '@/components/ui/select'
 import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { supportLanguages } from '@/lib/supportLanguages'
 import { trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Site } from '@prisma/client'
@@ -33,25 +34,26 @@ const FormSchema = z.object({
   themeName: z.string().optional(),
   color: z.string().optional(),
   baseFont: z.string().optional(),
+  locale: z.string().optional(),
 })
 
 interface Props {
   site: Site
 }
 
-export function ThemeSettingForm({ site }: Props) {
+export function AppearanceSettingForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
-
-  const config: any = (site.themeConfig as any)?.__COMMON__ || {}
-  const brand = config?.color || 'oklch(0.656 0.241 354.308)'
-  const baseFont = config?.baseFont || 'mono'
+  const { appearance } = (site.config || {}) as {
+    appearance: z.infer<typeof FormSchema>
+  }
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
-      color: brand,
       themeName: site.themeName || '',
-      baseFont: baseFont,
+      color: appearance?.color || 'oklch(0.656 0.241 354.308)',
+      baseFont: appearance?.baseFont || 'sans',
+      locale: appearance?.locale || 'en',
     },
     resolver: zodResolver(FormSchema),
   })
@@ -61,10 +63,12 @@ export function ThemeSettingForm({ site }: Props) {
       await mutateAsync({
         id: site.id,
         themeName: data.themeName,
-        themeConfig: {
-          __COMMON__: {
+        config: {
+          ...(site.config as any),
+          appearance: {
             color: data.color,
-            fontFamily: data.baseFont,
+            baseFont: data.baseFont,
+            locale: data.locale,
           },
         },
       })
@@ -101,6 +105,31 @@ export function ThemeSettingForm({ site }: Props) {
                   <SelectItem value="sue">Sue</SelectItem>
                   <SelectItem value="micro">Micro</SelectItem>
                   <SelectItem value="card">Card</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="locale"
+          render={({ field }) => (
+            <FormItem className="space-y-3">
+              <FormLabel>Default language</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a default" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  {supportLanguages.map(([code, name]) => (
+                    <SelectItem key={code} value={code}>
+                      {name}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
               <FormMessage />

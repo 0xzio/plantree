@@ -8,6 +8,7 @@
     "build": "prisma generate && npm run lingui:extract && next build",
     "db-generate": "prisma generate",
     "db-push": "prisma generate && prisma db push",
+    "lingui": "pnpm run lingui:extract",
     "lingui:extract": "lingui extract --clean",
     "lint": "next lint",
     "lint:fix": "next lint --fix && prettier --write . --log-level warn",

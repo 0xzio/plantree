@@ -99,6 +99,7 @@ export type Site = {
   catalogue: any
   config: {
     locales: string[]
+    appearance: AppearanceConfig
     features: Record<string, any>
   }
   themeConfig: Record<string, any>
@@ -207,4 +208,10 @@ export type Theme = {
   Home?: ({ posts }: HomeProps) => JSX.Element
   Post?: ({ post, isGated }: PostProps) => JSX.Element
   About?: ({}: AboutProps) => JSX.Element
+}
+
+export interface AppearanceConfig {
+  color: string
+  baseFont: string
+  locale: string
 }

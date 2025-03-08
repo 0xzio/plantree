@@ -6,6 +6,7 @@ import { Link } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { useSession } from '@/lib/useSession'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import {
   Calendar,
   CalendarDays,
@@ -82,7 +83,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             <SidebarItem
               isActive={isJournalActive}
               icon={<CalendarDays size={18} />}
-              label="Today"
+              label={<Trans>Today</Trans>}
             ></SidebarItem>
           </Link>
         )}
@@ -91,7 +92,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           <SidebarItem
             isActive={pathname.startsWith('/~/posts')}
             icon={<Feather size={18} />}
-            label="Posts"
+            label={<Trans>Posts</Trans>}
           ></SidebarItem>
         </Link>
 
@@ -100,7 +101,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             <SidebarItem
               isActive={pathname.startsWith('/~/assets')}
               icon={<ImageIcon size={18} />}
-              label="Gallery"
+              label={<Trans>Gallery</Trans>}
             ></SidebarItem>
           </Link>
         )}
@@ -110,7 +111,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             <SidebarItem
               isActive={pathname.startsWith('/~/pages')}
               icon={<FileText size={18} />}
-              label="pages"
+              label={<Trans>Pages</Trans>}
             ></SidebarItem>
           </Link>
         )}
@@ -120,7 +121,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             <SidebarItem
               isActive={pathname.startsWith('/~/databases')}
               icon={<TableProperties size={18} />}
-              label="Databases"
+              label={<Trans>Databases</Trans>}
             ></SidebarItem>
           </Link>
         )}
@@ -129,7 +130,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           <SidebarItem
             isActive={pathname.startsWith('/~/subscribers')}
             icon={<Users size={18} />}
-            label="Subscribers"
+            label={<Trans>Subscribers</Trans>}
           ></SidebarItem>
         </Link>
 
@@ -137,7 +138,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           <SidebarItem
             isActive={pathname === '/~/settings'}
             icon={<Settings size={18} />}
-            label="Settings"
+            label={<Trans>Settings</Trans>}
           />
         </Link>
 
@@ -146,7 +147,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             <SidebarItem
               isActive={pathname === '/~/coupons'}
               icon={<Gift size={18} />}
-              label="Coupons"
+              label={<Trans>Coupons</Trans>}
             />
           </Link>
         )}

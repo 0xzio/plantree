@@ -43,7 +43,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 export default async function HomePage(props: { params: any }) {
   const lang = (await props.params).lang
-  initLingui(lang)
+  initLingui(lang === 'pseudo' ? 'en' : lang)
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
   return (
     <div>
