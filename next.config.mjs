@@ -14,6 +14,14 @@ const nextConfig = {
   //     },
   //   },
   // },
+  async rewrites() {
+    return [
+      {
+        source: '/feed.xml',
+        destination: '/api/feed',
+      },
+    ]
+  },
 
   output: 'standalone',
   transpilePackages: [
@@ -63,6 +71,6 @@ const nextConfig = {
 
     return config
   },
-};
+}
 
 export default withVanillaExtract(nextConfig)
