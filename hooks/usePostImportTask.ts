@@ -1,19 +1,18 @@
-
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { toast } from 'sonner'
 
 export type ImportTaskStatus =
-  | 'pending'    // Waiting to be processed
+  | 'pending' // Waiting to be processed
   | 'extracting' // Extracting web content
-  | 'analyzing'  // Analyzing content
+  | 'analyzing' // Analyzing content
   | 'converting' // Converting format
-  | 'completed'  // Task completed
-  | 'failed'     // Task failed
+  | 'completed' // Task completed
+  | 'failed' // Task failed
 
-export interface PostData {
+export interface ImportPostData {
   title: string
   content: string
   contentFormat?: 'html' | 'markdown' | 'plate' // Format of the content
@@ -28,7 +27,7 @@ export interface ImportTask {
   progress: number
   error?: string
   total?: number // Total number of items to parse
-  result?: PostData[]
+  result?: ImportPostData[]
   createdAt: Date
   updatedAt: Date
 }
@@ -40,13 +39,13 @@ const STATUS_MESSAGES = {
   analyzing: 'Analyzing content...',
   converting: 'Converting to posts...',
   completed: 'Import completed!',
-  failed: 'Import failed'
+  failed: 'Import failed',
 }
 
-export function useImport() {
+export function useImportTask() {
   const site = useSiteContext()
-  const [isImporting, setIsImporting] = useState(false)
   const [importTask, setImportTask] = useState<ImportTask | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null)
 
   // Clean up polling on unmount
@@ -78,8 +77,8 @@ export function useImport() {
       // If the task is completed or failed, stop polling
       if (task.status === 'completed' || task.status === 'failed') {
         clearPolling()
-        setIsImporting(false)
-        
+        setIsLoading(false)
+
         if (task.status === 'completed') {
           if (task.result && task.result.length > 0) {
             toast.success(`Found ${task.result.length} posts from URL`)
@@ -89,16 +88,16 @@ export function useImport() {
         } else {
           toast.error(task.error || 'Import failed')
         }
-        
+
         return false
       }
-      
+
       // Continue polling for in-progress tasks
       return true
     } catch (error) {
       console.error('Error polling task status:', error)
       clearPolling()
-      setIsImporting(false)
+      setIsLoading(false)
       toast.error(extractErrorMessage(error) || 'Failed to check import status')
       return false
     }
@@ -112,73 +111,25 @@ export function useImport() {
     }
   }
 
-  // Import posts from JSON data
-  const importFileData = async (data: any): Promise<boolean> => {
-    setIsImporting(true)
-    try {
-      await api.post.importPosts.mutate({
-        siteId: site.id,
-        postData: JSON.stringify(data),
-      })
-
-      toast.success('Posts imported successfully!')
-      return true
-    } catch (error) {
-      console.error('Error importing posts:', error)
-      toast.error(extractErrorMessage(error) || 'Failed to import posts')
-      return false
-    } finally {
-      setIsImporting(false)
-    }
-  }
-
-  // Handle PenX file import
-  const importFromFile = async (file: File): Promise<boolean> => {
-    return new Promise((resolve) => {
-      const reader = new FileReader()
-      
-      reader.onload = async (e) => {
-        try {
-          const jsonData = JSON.parse(e.target?.result as string)
-          const success = await importFileData(jsonData)
-          resolve(success)
-        } catch (error) {
-          console.error('Error parsing file:', error)
-          toast.error(extractErrorMessage(error) || 'Failed to parse file')
-          setIsImporting(false)
-          resolve(false)
-        }
-      }
-      
-      reader.onerror = () => {
-        toast.error('Error reading file')
-        setIsImporting(false)
-        resolve(false)
-      }
-      
-      reader.readAsText(file)
-    })
-  }
-
-  // Handle URL import
-  const importFromUrl = async (url: string): Promise<boolean> => {
-    setIsImporting(true)
+  // Create a new import task
+  const createImportTask = async (url: string): Promise<boolean> => {
+    setIsLoading(true)
     setImportTask(null)
-    
+
     try {
       // Submit URL to start import task
       const task = await api.postImport.createImportTask.mutate({
         siteId: site.id,
-        url
+        url,
       })
-      
+
       setImportTask(task)
       startPolling(task.id)
       return true
     } catch (error) {
       console.error('Error starting URL import:', error)
       toast.error(extractErrorMessage(error) || 'Failed to start URL import')
-      setIsImporting(false)
+      setIsLoading(false)
       return false
     }
   }
@@ -186,40 +137,22 @@ export function useImport() {
   // Get progress percentage and status message
   const getImportProgress = () => {
     if (!importTask) return { progress: 0, message: 'Preparing import...' }
-    
-    const message = importTask.status === 'failed' 
-      ? `${STATUS_MESSAGES.failed}: ${importTask.error || 'Unknown error'}`
-      : STATUS_MESSAGES[importTask.status]
-    
+
+    const message =
+      importTask.status === 'failed'
+        ? `${STATUS_MESSAGES.failed}: ${importTask.error || 'Unknown error'}`
+        : STATUS_MESSAGES[importTask.status]
+
     return {
       progress: importTask.progress,
-      message
-    }
-  }
-
-  // Import selected posts
-  const importSelectedPosts = async (posts: PostData[]): Promise<boolean> => {
-    setIsImporting(true)
-    try {
-      // todo Convert post.content from markdown to plate format
-      // todo Call API to save to database
-      return true
-    } catch (error) {
-      console.error('Error importing selected posts:', error)
-      toast.error(extractErrorMessage(error) || 'Failed to import selected posts')
-      return false
-    } finally {
-      setIsImporting(false)
+      message,
     }
   }
 
   return {
-    isImporting,
     importTask,
+    isLoading,
+    createImportTask,
     getImportProgress,
-    importFromFile,
-    importFromUrl,
-    importSelectedPosts
   }
 }
-

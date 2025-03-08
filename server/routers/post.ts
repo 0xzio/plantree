@@ -377,17 +377,16 @@ export const postRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        postData: z.string(),
+        posts: z.array(z.any()),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const siteId = input.siteId
-      const posts = JSON.parse(input.postData) as Post[]
 
       return prisma.$transaction(
         async (tx) => {
           const newPosts = await tx.post.createManyAndReturn({
-            data: posts.map((p) => ({
+            data: input.posts.map((p: Post) => ({
               siteId,
               userId: ctx.token.uid,
               title: p.title,

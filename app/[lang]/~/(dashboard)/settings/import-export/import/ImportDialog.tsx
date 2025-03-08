@@ -1,22 +1,16 @@
 import { useState } from 'react'
+import { Badge } from '@/components/ui/badge'
 import {
-  Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
-import {
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/components/ui/tabs'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
+import { usePostImport } from '@/hooks/usePostImport'
+import { ImportPostData, useImportTask } from '@/hooks/usePostImportTask'
 import { FileImportTab } from './FileImportTab'
 import { URLImportTab } from './URLImportTab'
-import { useImport } from './useImport'
-import { Badge } from '@/components/ui/badge'
-import { PostData } from './useImport'
 
 interface ImportDialogProps {
   open: boolean
@@ -24,14 +18,21 @@ interface ImportDialogProps {
 }
 
 export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
-  const { 
-    isImporting, 
-    importTask, 
-    getImportProgress, 
-    importFromFile, 
-    importFromUrl,
-    importSelectedPosts 
-  } = useImport()
+  const {
+    importTask,
+    isLoading: isTaskLoading,
+    createImportTask,
+    getImportProgress,
+  } = useImportTask()
+
+  const {
+    isImporting: isPostImporting,
+    importFromFile,
+    importSelectedPosts,
+  } = usePostImport()
+
+  const isImporting = isTaskLoading || isPostImporting
+
   const [activeTab, setActiveTab] = useState<'file' | 'url'>('file')
 
   const handleFileImport = async (file: File) => {
@@ -40,31 +41,29 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
       onOpenChange(false)
     }
   }
-  
+
   const handleUrlImport = async (url: string) => {
-    await importFromUrl(url)
+    await createImportTask(url)
   }
-  
-  const handleSelectedPostsImport = async (posts: PostData[]) => {
+
+  const handleSelectedPostsImport = async (posts: ImportPostData[]) => {
     const success = await importSelectedPosts(posts)
     if (success) {
       onOpenChange(false)
     }
   }
-  
+
   const progress = getImportProgress()
 
   return (
     <DialogContent className="sm:max-w-md">
       <DialogHeader>
         <DialogTitle>Import Posts</DialogTitle>
-        <DialogDescription>
-          Choose a method to import posts
-        </DialogDescription>
+        <DialogDescription>Choose a method to import posts</DialogDescription>
       </DialogHeader>
-      
-      <Tabs 
-        defaultValue="file" 
+
+      <Tabs
+        defaultValue="file"
         value={activeTab}
         className="w-full"
         onValueChange={(value) => setActiveTab(value as 'file' | 'url')}
@@ -74,8 +73,8 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
           <TabsTrigger value="url" className="relative">
             URL
             {activeTab === 'url' && (
-              <Badge 
-                variant="outline" 
+              <Badge
+                variant="outline"
                 className="absolute -top-1 -right-1 text-[9px] px-1 py-0 h-auto bg-muted text-muted-foreground border-border"
               >
                 BETA
@@ -83,7 +82,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
             )}
           </TabsTrigger>
         </TabsList>
-        
+
         <TabsContent value="file" className="py-4">
           <FileImportTab
             isImporting={isImporting}
@@ -93,7 +92,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
             fileType="JSON"
           />
         </TabsContent>
-        
+
         <TabsContent value="url" className="py-4">
           <URLImportTab
             isImporting={isImporting}
@@ -106,4 +105,4 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
       </Tabs>
     </DialogContent>
   )
-} 
+}
