@@ -26,7 +26,6 @@ export interface SessionData {
     domain: string
     isSubdomain: boolean
   }
-  subscriptions: SubscriptionInSession[]
   message: string
 }
 

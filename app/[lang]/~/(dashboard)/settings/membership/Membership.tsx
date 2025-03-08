@@ -13,7 +13,7 @@ import { MembershipTiers } from './MembershipTiers'
 import { PlatformStrip } from './PlatformStrip'
 import { StripeTypeSelect } from './StripeTypeSelect'
 
-export function Payment() {
+export function Membership() {
   const site = useSiteContext()
 
   if (site.stripeType === StripeType.NONE) {

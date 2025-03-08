@@ -1,7 +1,7 @@
-import { Payment } from './Payment'
+import { Membership } from './Membership'
 
 export const dynamic = 'force-static'
 
 export default function Page() {
-  return <Payment />
+  return <Membership />
 }

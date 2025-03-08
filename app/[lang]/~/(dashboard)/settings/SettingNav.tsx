@@ -1,5 +1,6 @@
 'use client'
 
+import { PropsWithChildren } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
@@ -32,7 +33,7 @@ export function SettingNav({}: Props) {
     projects: '/~/settings/projects',
     friends: '/~/settings/friends',
     backup: '/~/settings/backup',
-    payment: '/~/settings/payment',
+    membership: '/~/settings/membership',
   }
 
   const linkClassName = (path: string) =>
@@ -44,8 +45,7 @@ export function SettingNav({}: Props) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
-        <div className="text-xs text-foreground/30">Account</div>
+      <Section title="Account">
         <Link href={Paths.profile} className={linkClassName(Paths.profile)}>
           Profile
         </Link>
@@ -55,12 +55,11 @@ export function SettingNav({}: Props) {
         >
           Link Accounts
         </Link>
-      </div>
+      </Section>
 
       <Separator className="w-3/4" />
 
-      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
-        <div className="text-xs text-foreground/30">Site - general</div>
+      <Section title="Site - general">
         <Link href={Paths.general} className={linkClassName(Paths.general)}>
           General
         </Link>
@@ -76,35 +75,28 @@ export function SettingNav({}: Props) {
           href={Paths.subscription}
           className={linkClassName(Paths.subscription)}
         >
-          Plan & Subscription
-        </Link>
-
-        <Link href={Paths.payment} className={linkClassName(Paths.payment)}>
-          Payment
+          PenX PRO
         </Link>
 
         <Link href={Paths.tags} className={linkClassName(Paths.tags)}>
           Tags
         </Link>
 
-        <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
-          Socials
-        </Link>
-
         {/* <Link href={Paths.i18n} className={linkClassName(Paths.i18n)}>
           i18n
         </Link> */}
-        <Link href={Paths.projects} className={linkClassName(Paths.projects)}>
-          Projects
-        </Link>
-        <Link href={Paths.friends} className={linkClassName(Paths.friends)}>
-          Friends
-        </Link>
-      </div>
+      </Section>
 
-      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
-        <div className="text-xs text-foreground/30">Site - UI</div>
+      <Section title="Site - membership">
+        <Link
+          href={Paths.membership}
+          className={linkClassName(Paths.membership)}
+        >
+          Membership
+        </Link>
+      </Section>
 
+      <Section title="Site - UI">
         <Link href={Paths.theme} className={linkClassName(Paths.theme)}>
           Theme
         </Link>
@@ -117,11 +109,19 @@ export function SettingNav({}: Props) {
         <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
           Catalogue
         </Link>
-      </div>
+        <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
+          Socials
+        </Link>
 
-      <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
-        <div className="text-xs text-foreground/30">Site - advanced</div>
+        <Link href={Paths.projects} className={linkClassName(Paths.projects)}>
+          Projects
+        </Link>
+        <Link href={Paths.friends} className={linkClassName(Paths.friends)}>
+          Friends
+        </Link>
+      </Section>
 
+      <Section title="Site - advanced">
         <Link
           href={Paths.collaborators}
           className={linkClassName(Paths.collaborators)}
@@ -152,7 +152,16 @@ export function SettingNav({}: Props) {
         >
           Import/Export
         </Link>
-      </div>
+      </Section>
+    </div>
+  )
+}
+
+function Section({ title, children }: PropsWithChildren<{ title: string }>) {
+  return (
+    <div className="flex flex-row md:flex-col items-center md:items-start border-b md:border-none gap-x-8 overflow-x-auto overflow-y-hidden -mx-3 px-3 md:w-[240px]">
+      <div className="text-xs text-foreground/30">{title}</div>
+      {children}
     </div>
   )
 }
