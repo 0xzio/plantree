@@ -9,9 +9,8 @@ type SupportedLocales = string
 async function loadCatalog(locale: SupportedLocales): Promise<{
   [k: string]: Messages
 }> {
-  // const { messages } = await import(`./locales/${locale}.po`)
+  const { messages } = await import(`./locales/${locale}.po`)
   // const { messages } = await import(`@lingui/loader!./locales/${locale}.po`)
-  const messages = {}
 
   return {
     [locale]: messages,

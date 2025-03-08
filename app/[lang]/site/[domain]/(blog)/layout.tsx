@@ -39,10 +39,10 @@ export default async function RootLayout({
   const config = site.themeConfig?.__COMMON__ || {}
   const brand = config.color || 'oklch(0.656 0.241 354.308)'
 
-  const fontFamily = config.fontFamily
+  const baseFont = config.baseFont
   let font = 'font-mono'
-  if (fontFamily === 'serif') font = 'font-serif'
-  if (fontFamily === 'sans') font = 'font-sans'
+  if (baseFont === 'serif') font = 'font-serif'
+  if (baseFont === 'sans') font = 'font-sans'
 
   return (
     <div

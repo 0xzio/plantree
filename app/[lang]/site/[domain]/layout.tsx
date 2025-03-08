@@ -1,8 +1,9 @@
+import { initLingui } from '@/initLingui'
 import { getSite } from '@/lib/fetchers'
 import { Metadata } from 'next'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 
-type Params = Promise<{ domain: string }>
+type Params = Promise<{ domain: string; lang: string }>
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
@@ -36,6 +37,9 @@ export default async function RootLayout({
   params: Params
 }) {
   const site = await getSite(await params)
+
+  const lang = (await params).lang
+  initLingui(lang)
 
   return (
     <>

@@ -5,15 +5,19 @@ const withVanillaExtract = createVanillaExtractPlugin()
 const nextConfig = {
   // experimental: {
   //   swcPlugins: [['@lingui/swc-plugin', {}]],
-  //   turbo: {
-  //     rules: {
-  //       '*.po': {
-  //         loaders: ['@lingui/loader'],
-  //         as: '*.js',
-  //       },
-  //     },
-  //   },
   // },
+
+  experimental: {
+    swcPlugins: [['@lingui/swc-plugin', {}]],
+    turbo: {
+      rules: {
+        '*.po': {
+          loaders: ['@lingui/loader'],
+          as: '*.js',
+        },
+      },
+    },
+  },
   async rewrites() {
     return [
       {

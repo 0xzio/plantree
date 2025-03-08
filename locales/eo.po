@@ -12,3 +12,28 @@ msgstr ""
 "Last-Translator: \n"
 "Language-Team: \n"
 "Plural-Forms: \n"
+
+#: components/theme-ui/Navigation.tsx:28
+msgid "About"
+msgstr ""
+
+#: components/theme-ui/Navigation.tsx:24
+msgid "Home"
+msgstr ""
+
+#: components/theme-ui/Navigation.tsx:25
+msgid "Posts"
+msgstr ""
+
+#: components/theme-ui/Navigation.tsx:26
+msgid "Projects"
+msgstr ""
+
+#: app/[lang]/root/(home)/page.tsx:56
+#: components/theme-ui/Navigation.tsx:44
+msgid "Sites"
+msgstr ""
+
+#: components/theme-ui/Navigation.tsx:27
+msgid "Tags"
+msgstr ""

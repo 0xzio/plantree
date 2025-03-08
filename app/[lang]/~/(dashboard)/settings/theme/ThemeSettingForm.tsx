@@ -32,7 +32,7 @@ import { z } from 'zod'
 const FormSchema = z.object({
   themeName: z.string().optional(),
   color: z.string().optional(),
-  fontFamily: z.string().optional(),
+  baseFont: z.string().optional(),
 })
 
 interface Props {
@@ -43,15 +43,15 @@ export function ThemeSettingForm({ site }: Props) {
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
-  const config: any = site.themeConfig?.__COMMON__ || {}
+  const config: any = (site.themeConfig as any)?.__COMMON__ || {}
   const brand = config?.color || 'oklch(0.656 0.241 354.308)'
-  const fontFamily = config?.fontFamily || 'mono'
+  const baseFont = config?.baseFont || 'mono'
 
   const form = useForm<z.infer<typeof FormSchema>>({
     defaultValues: {
       color: brand,
       themeName: site.themeName || '',
-      fontFamily,
+      baseFont: baseFont,
     },
     resolver: zodResolver(FormSchema),
   })
@@ -64,7 +64,7 @@ export function ThemeSettingForm({ site }: Props) {
         themeConfig: {
           __COMMON__: {
             color: data.color,
-            fontFamily: data.fontFamily,
+            fontFamily: data.baseFont,
           },
         },
       })
@@ -232,10 +232,10 @@ export function ThemeSettingForm({ site }: Props) {
 
         <FormField
           control={form.control}
-          name="fontFamily"
+          name="baseFont"
           render={({ field }) => (
             <FormItem className="space-y-3">
-              <FormLabel>Font family</FormLabel>
+              <FormLabel>Base font </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger>
@@ -243,9 +243,9 @@ export function ThemeSettingForm({ site }: Props) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="mono">mono</SelectItem>
-                  <SelectItem value="serif">Serif</SelectItem>
                   <SelectItem value="sans">Sans</SelectItem>
+                  <SelectItem value="serif">Serif</SelectItem>
+                  <SelectItem value="mono">mono</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
