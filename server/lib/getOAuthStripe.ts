@@ -1,12 +1,15 @@
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
-import { StripeType } from '@prisma/client'
+import { Site, StripeType } from '@prisma/client'
 import Stripe from 'stripe'
 
-export async function getOAuthStripe(siteId: string) {
-  const site = await prisma.site.findUniqueOrThrow({
-    where: { id: siteId },
-  })
+export async function getOAuthStripe(siteOrId: string | Site) {
+  let site: Site = siteOrId as Site
+  if (typeof siteOrId === 'string') {
+    site = await prisma.site.findUniqueOrThrow({
+      where: { id: siteOrId },
+    })
+  }
 
   console.log('======site:', site.stripeType, site.stripeOAuthToken)
 
@@ -31,7 +34,7 @@ export async function getOAuthStripe(siteId: string) {
     })
 
     await prisma.site.update({
-      where: { id: siteId },
+      where: { id: site.id },
       data: {
         stripeOAuthToken: newToken,
       },

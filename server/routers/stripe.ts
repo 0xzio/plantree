@@ -3,7 +3,7 @@ import { stripe } from '@/lib/stripe'
 import { Balance } from '@/lib/types'
 import { StripeType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
-import queryString from 'query-string'
+import qs from 'query-string'
 import Stripe from 'stripe'
 import { z } from 'zod'
 import { getOAuthStripe } from '../lib/getOAuthStripe'
@@ -67,7 +67,7 @@ export const stripeRouter = router({
     }
   }),
 
-  checkout: protectedProcedure
+  subscribeSiteCheckout: protectedProcedure
     .input(
       z.object({
         tierId: z.string(),
@@ -79,13 +79,18 @@ export const stripeRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const siteId = input.siteId
-      const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/subscribe-site-callback`
-      console.log('ctx=====:', ctx)
+      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/subscribe-site-callback`
+      const cancel_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/checkout-cancel-callback`
 
-      console.log('=====>>>success_url:', return_url)
+      console.log('=====>>>success_url:', success_url)
       const userId = ctx.token.uid
 
-      const query = {
+      const cancelQuery = {
+        host: input.host,
+        pathname: input.pathname,
+      }
+
+      const successQuery = {
         siteId,
         userId,
         tierId: input.tierId,
@@ -93,9 +98,7 @@ export const stripeRouter = router({
         pathname: input.pathname,
       }
 
-      console.log('=======query:', query)
-
-      const stringifiedQuery = queryString.stringify(query)
+      console.log('=======query:', successQuery)
 
       const oauthStripe = await getOAuthStripe(siteId)
       const session = await oauthStripe.checkout.sessions.create({
@@ -110,9 +113,62 @@ export const stripeRouter = router({
             tierId: input.tierId,
           },
         },
-        success_url: `${return_url}?success=true&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
-        cancel_url: `${return_url}?success=false`,
+        success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
+        cancel_url: `${success_url}?${qs.stringify(cancelQuery)}`,
         line_items: [{ price: input.priceId, quantity: 1 }],
+      })
+
+      if (!session.url) return { success: false as const }
+
+      return { success: true, url: session.url }
+    }),
+
+  buyProductCheckout: protectedProcedure
+    .input(
+      z.object({
+        productId: z.string(),
+        siteId: z.string(),
+        host: z.string(),
+        pathname: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const siteId = input.siteId
+      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/buy-product-callback`
+      const cancel_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/checkout-cancel-callback`
+
+      const product = await prisma.product.findUniqueOrThrow({
+        where: { id: input.productId },
+      })
+      const priceId = product.stripePriceId as string
+
+      console.log('=====>>>success_url:', success_url)
+      const userId = ctx.token.uid
+
+      const cancelQuery = {
+        host: input.host,
+        pathname: input.pathname,
+      }
+
+      const successQuery = {
+        ...cancelQuery,
+        siteId,
+        userId,
+        productId: input.productId,
+      }
+
+      const oauthStripe = await getOAuthStripe(siteId)
+      const session = await oauthStripe.checkout.sessions.create({
+        mode: 'payment',
+        payment_method_types: ['card'],
+        // customer_email: email,
+        client_reference_id: siteId,
+        success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
+        cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
+        line_items: [{ price: priceId, quantity: 1 }],
+        invoice_creation: {
+          enabled: true,
+        },
       })
 
       if (!session.url) return { success: false as const }

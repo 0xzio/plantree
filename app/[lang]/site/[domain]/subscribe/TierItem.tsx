@@ -21,7 +21,7 @@ interface Props {
 export function TierItem({ tier, site }: Props) {
   const searchParams = useSearchParams()
   const source = searchParams?.get('source')
-  const checkout = trpc.stripe.checkout.useMutation()
+  const checkout = trpc.stripe.subscribeSiteCheckout.useMutation()
   const cancelSubscription = trpc.stripe.cancelSubscription.useMutation()
   const { data: session, isLoading } = useSession()
   const { setIsOpen } = useLoginDialog()

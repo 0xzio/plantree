@@ -293,6 +293,7 @@ model Order {
   paidAmount    Int           @default(0) // money amount
   status        OrderStatus   @default(PENDING)
   paymentStatus PaymentStatus @default(UNPAID)
+  customer      Json?
   createdAt     DateTime      @default(now())
   updatedAt     DateTime      @updatedAt
   site          Site          @relation(fields: [siteId], references: [id])
