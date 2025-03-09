@@ -2,10 +2,8 @@
 
 import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { PlateEditor } from '@/components/editor/plate-editor'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
-import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -16,32 +14,26 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
-import { useCheckChain } from '@/hooks/useCheckChain'
-import { useEthPrice } from '@/hooks/useEthPrice'
-import { usePlans } from '@/hooks/usePlans'
-import { useWagmiConfig } from '@/hooks/useWagmiConfig'
-import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { usePriceDialog } from './usePriceDialog'
+import { useProductPriceDialog } from './useProductPriceDialog'
 
 const FormSchema = z.object({
   price: z.string().min(1, { message: 'Price is required' }),
 })
 
-export function PriceForm() {
+export function ProductPriceForm() {
   const [isLoading, setLoading] = useState(false)
-  const { setIsOpen, tier } = usePriceDialog()
-  const { refetch } = trpc.tier.listSiteTiers.useQuery()
+  const { setIsOpen, product } = useProductPriceDialog()
+  const { refetch } = trpc.product.list.useQuery()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      price: tier?.price.toString() || '',
+      price: (product?.price / 100).toString() || '',
     },
   })
 
@@ -49,8 +41,8 @@ export function PriceForm() {
     try {
       setLoading(true)
 
-      await api.tier.updatePrice.mutate({
-        id: tier.id,
+      await api.product.updatePrice.mutate({
+        id: product.id,
         price: data.price,
       })
 
@@ -73,7 +65,7 @@ export function PriceForm() {
           name="price"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Monthly price</FormLabel>
+              <FormLabel>Price</FormLabel>
               <FormControl>
                 <div className="relative">
                   <span className="absolute top-2 left-3">$</span>

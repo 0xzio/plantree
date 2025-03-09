@@ -8,6 +8,8 @@ export async function getOAuthStripe(siteId: string) {
     where: { id: siteId },
   })
 
+  console.log('======site:', site.stripeType, site.stripeOAuthToken)
+
   if (site.stripeType === StripeType.PLATFORM) {
     return stripe
   }

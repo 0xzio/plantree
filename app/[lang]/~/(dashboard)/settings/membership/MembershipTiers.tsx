@@ -10,8 +10,8 @@ import { editorDefaultValue } from '@/lib/constants'
 import { trpc } from '@/lib/trpc'
 import { StripeType } from '@prisma/client'
 import { Edit, Plus } from 'lucide-react'
-import { PriceDialog } from './PriceDialog/PriceDialog'
-import { usePriceDialog } from './PriceDialog/usePriceDialog'
+import { TierPriceDialog } from './TierPriceDialog/TierPriceDialog'
+import { useTierPriceDialog } from './TierPriceDialog/useTierPriceDialog'
 import { TierDialog } from './TierDialog/TierDialog'
 import { useTierDialog } from './TierDialog/useTierDialog'
 
@@ -23,7 +23,7 @@ export function MembershipTiers({ type }: Props) {
   const [loading, setLoading] = useState(false)
   const site = useSiteContext()
   const tierDialog = useTierDialog()
-  const priceDialog = usePriceDialog()
+  const priceDialog = useTierPriceDialog()
   const {
     data: tiers = [],
     isLoading,
@@ -35,7 +35,7 @@ export function MembershipTiers({ type }: Props) {
   return (
     <div className="space-y-3">
       <TierDialog />
-      <PriceDialog />
+      <TierPriceDialog />
       <div className="flex items-center gap-2">
         <div className="text-2xl font-bold">Paid membership settings</div>
         <Badge>

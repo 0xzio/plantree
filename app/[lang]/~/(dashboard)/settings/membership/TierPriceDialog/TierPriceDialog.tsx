@@ -8,11 +8,11 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { PriceForm } from './PriceForm'
-import { usePriceDialog } from './usePriceDialog'
+import { TierPriceForm } from './TierPriceForm'
+import { useTierPriceDialog } from './useTierPriceDialog'
 
-export function PriceDialog() {
-  const { isOpen, setIsOpen, tier } = usePriceDialog()
+export function TierPriceDialog() {
+  const { isOpen, setIsOpen, tier } = useTierPriceDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
@@ -23,7 +23,7 @@ export function PriceDialog() {
         <DialogHeader>
           <DialogTitle>Update price</DialogTitle>
         </DialogHeader>
-        <PriceForm />
+        <TierPriceForm />
       </DialogContent>
     </Dialog>
   )

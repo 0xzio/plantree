@@ -14,6 +14,7 @@ import { HEADING_KEYS } from '@udecode/plate-heading'
 import { TocPlugin } from '@udecode/plate-heading/react'
 import { INDENT_LIST_KEYS, ListStyleType } from '@udecode/plate-indent-list'
 import { EquationPlugin, InlineEquationPlugin } from '@udecode/plate-math/react'
+import { ImagePlugin } from '@udecode/plate-media/react'
 import { TablePlugin } from '@udecode/plate-table/react'
 import { TogglePlugin } from '@udecode/plate-toggle/react'
 import {
@@ -35,11 +36,13 @@ import {
   PilcrowIcon,
   Quote,
   RadicalIcon,
+  ShoppingBagIcon,
   SparklesIcon,
   Square,
   Table,
   TableOfContentsIcon,
 } from 'lucide-react'
+import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import {
   InlineCombobox,
   InlineComboboxContent,
@@ -49,7 +52,6 @@ import {
   InlineComboboxInput,
   InlineComboboxItem,
 } from './inline-combobox'
-import { ImagePlugin } from '@udecode/plate-media/react'
 
 type Group = {
   group: string
@@ -182,6 +184,12 @@ const groups: Group[] = [
         icon: <RadicalIcon />,
         label: 'Equation',
         value: EquationPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <ShoppingBagIcon />,
+        label: 'Product',
+        value: BaseProductPlugin.key,
       },
     ].map((item) => ({
       ...item,

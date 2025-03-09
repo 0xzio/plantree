@@ -65,7 +65,7 @@ export const protectedProcedure = t.procedure.use(
       ctx.isFree &&
       [
         'database.create',
-        'asset.create',
+        // 'asset.create',
         'collaborator.addCollaborator',
       ].includes(path)
     ) {
