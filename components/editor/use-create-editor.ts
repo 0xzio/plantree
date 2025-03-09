@@ -97,6 +97,8 @@ import {
   usePlateEditor,
   type CreatePlateEditorOptions,
 } from '@udecode/plate/react'
+import { BaseProductPlugin } from '../custom-plate-plugins/product'
+import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
 
 export const viewComponents = {
   [AudioPlugin.key]: MediaAudioElement,
@@ -142,6 +144,7 @@ export const viewComponents = {
   [TogglePlugin.key]: ToggleElement,
   [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
   [VideoPlugin.key]: MediaVideoElement,
+  [BaseProductPlugin.key]: ProductElement,
 }
 
 export const editorComponents = {

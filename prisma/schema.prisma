@@ -129,6 +129,8 @@ model Site {
   subscriptions          Subscription[]
   payouts                Payout[]
   invoices               Invoice[]
+  products               Product[]
+  orders                 Order[]
 
   @@index([userId])
   @@map("site")
@@ -175,6 +177,8 @@ model User {
   tiers         Tier[]
   payouts       Payout[]
   invoices      Invoice[]
+  products      Product[]
+  orders        Order[]
 
   @@index([id])
   @@map("user")
@@ -235,6 +239,75 @@ model Tier {
   @@index([userId])
   @@index([siteId, userId])
   @@map("tier")
+}
+
+enum ProductType {
+  COMMON
+  BOOK
+  AMA
+}
+
+model Product {
+  id              String     @id @default(uuid()) @db.Uuid
+  stripeType      StripeType @default(NONE)
+  name            String     @default("") @db.VarChar(50)
+  description     String     @default("") @db.Text
+  details         String     @default("") @db.Text
+  stock           Int        @default(0)
+  image           String?    @default("") @db.VarChar(2183)
+  price           Int        @default(0)
+  isActive        Boolean    @default(true)
+  stripeProductId String?
+  stripePriceId   String?
+  createdAt       DateTime   @default(now())
+  updatedAt       DateTime   @updatedAt
+  site            Site       @relation(fields: [siteId], references: [id])
+  siteId          String     @db.Uuid
+  user            User       @relation(fields: [userId], references: [id])
+  userId          String     @db.Uuid
+  orders          Order[]
+
+  @@index([siteId])
+  @@index([userId])
+  @@index([siteId, userId])
+  @@map("product")
+}
+
+enum OrderStatus {
+  PENDING
+  PROCESSING
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  UNPAID
+  PAID
+  REFUNDED
+}
+
+model Order {
+  id            String        @id @default(uuid()) @db.Uuid
+  productAmount Int           @default(0)
+  paidAmount    Int           @default(0) // money amount
+  status        OrderStatus   @default(PENDING)
+  paymentStatus PaymentStatus @default(UNPAID)
+  customer      Json?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  site          Site          @relation(fields: [siteId], references: [id])
+  siteId        String        @db.Uuid
+  user          User          @relation(fields: [userId], references: [id])
+  userId        String        @db.Uuid
+  product       Product       @relation(fields: [productId], references: [id])
+  productId     String        @db.Uuid
+
+  @@index([siteId])
+  @@index([userId])
+  @@index([productId])
+  @@index([siteId, productId])
+  @@map("order")
 }
 
 enum PayoutStatus {

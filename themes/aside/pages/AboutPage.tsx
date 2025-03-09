@@ -34,7 +34,7 @@ export function AboutPage({ site }: Props) {
               <SocialIcon kind="x" href={twitter} />
             </div> */}
           </div>
-          <div className="prose max-w-none pb-8 dark:prose-invert">
+          <div className="">
             <ContentRender content={site.about} />
           </div>
         </div>

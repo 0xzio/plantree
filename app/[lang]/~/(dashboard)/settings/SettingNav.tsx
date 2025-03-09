@@ -33,6 +33,8 @@ export function SettingNav({}: Props) {
     friends: '/~/settings/friends',
     backup: '/~/settings/backup',
     membership: '/~/settings/membership',
+    products: '/~/settings/products',
+    orders: '/~/settings/orders',
   }
 
   const linkClassName = (path: string) =>
@@ -86,12 +88,18 @@ export function SettingNav({}: Props) {
         </Link> */}
       </Section>
 
-      <Section title="Site - membership">
+      <Section title="Site - creator economy">
         <Link
           href={Paths.membership}
           className={linkClassName(Paths.membership)}
         >
           Membership
+        </Link>
+        <Link href={Paths.products} className={linkClassName(Paths.products)}>
+          Products
+        </Link>
+        <Link href={Paths.orders} className={linkClassName(Paths.orders)}>
+          Orders
         </Link>
       </Section>
 

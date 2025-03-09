@@ -52,6 +52,7 @@ export default async function RootLayout({
       style={
         {
           '--brand': brand,
+          '--primary': brand,
         } as any
       }
     >

@@ -11,7 +11,7 @@ const priceDialogAtom = atom<State>({
   tier: null as any,
 } as State)
 
-export function usePriceDialog() {
+export function useTierPriceDialog() {
   const [state, setState] = useAtom(priceDialogAtom)
   return {
     ...state,

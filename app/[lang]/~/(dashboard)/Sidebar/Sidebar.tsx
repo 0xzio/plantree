@@ -75,7 +75,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         <SitesPopover />
       </div>
 
-      <QuickSearchTrigger />
+      {/* <QuickSearchTrigger /> */}
 
       <div className="flex flex-col gap-1 px-2">
         {isFeatureActive('journal') && (

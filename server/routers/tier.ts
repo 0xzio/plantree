@@ -1,9 +1,9 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
-import { StripeType, TierInterval } from '@prisma/client'
+import { TierInterval } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
-import Stripe from 'stripe'
 import { z } from 'zod'
+import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, router } from '../trpc'
 
 export const tierRouter = router({
@@ -41,16 +41,9 @@ export const tierRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const site = await prisma.site.findUniqueOrThrow({
-        where: { id: ctx.activeSiteId },
-      })
+      const siteId = ctx.activeSiteId
 
-      let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
-
-      const oauthStripe = new Stripe(stripeOAuthToken.access_token!, {
-        apiVersion: '2025-02-24.acacia',
-        typescript: true,
-      })
+      const oauthStripe = await getOAuthStripe(siteId)
 
       const product = await oauthStripe.products.create({
         name: input.name,
@@ -74,7 +67,7 @@ export const tierRouter = router({
           interval: TierInterval.MONTHLY,
           stripeProductId: product.id,
           stripePriceId: monthlyPrice.id,
-          siteId: site.id,
+          siteId,
           userId: ctx.token.uid,
         },
       })
@@ -122,21 +115,7 @@ export const tierRouter = router({
         where: { id: input.id },
       })
 
-      const site = await prisma.site.findUniqueOrThrow({
-        where: { id: siteId },
-      })
-
-      let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
-
-      const apiKey =
-        site.stripeType === StripeType.PLATFORM
-          ? process.env.STRIPE_API_KEY!
-          : stripeOAuthToken.access_token!
-
-      const oauthStripe = new Stripe(apiKey, {
-        apiVersion: '2025-02-24.acacia',
-        typescript: true,
-      })
+      const oauthStripe = await getOAuthStripe(siteId)
 
       const monthlyPrice = await oauthStripe.prices.create({
         unit_amount: price, // $10

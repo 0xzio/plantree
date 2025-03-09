@@ -61,6 +61,7 @@ import {
   BaseCodeLinePlugin,
   BaseCodeSyntaxPlugin,
 } from '@udecode/plate-code-block'
+import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
 import { BaseCommentsPlugin } from '@udecode/plate-comments'
 import { BaseDatePlugin } from '@udecode/plate-date'
 import {
@@ -103,8 +104,10 @@ import {
 } from '@udecode/plate-table'
 import { BaseTogglePlugin } from '@udecode/plate-toggle'
 import Prism from 'prismjs'
+import { BaseProductPlugin } from '../custom-plate-plugins/product'
+import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
 
-const components = {
+export const serverSideComponents = {
   [BaseAudioPlugin.key]: MediaAudioElementStatic,
   [BaseBlockquotePlugin.key]: BlockquoteElementStatic,
   [BaseBoldPlugin.key]: withProps(SlateLeaf, { as: 'strong' }),
@@ -145,9 +148,10 @@ const components = {
   [HEADING_KEYS.h4]: withProps(HeadingElementStatic, { variant: 'h4' }),
   [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
   [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
+  [BaseProductPlugin.key]: ProductElementStatic,
 }
 
-export const ServerSideEditor = createSlateEditor({
+export const serverSideEditor = createSlateEditor({
   plugins: [
     BaseColumnPlugin,
     BaseColumnItemPlugin,
@@ -233,5 +237,6 @@ export const ServerSideEditor = createSlateEditor({
     BaseMentionPlugin,
     BaseCommentsPlugin,
     BaseTogglePlugin,
+    BaseProductPlugin,
   ],
 })

@@ -1,3 +1,4 @@
+import { SiteProvider } from '@/components/SiteContext'
 import { initLingui } from '@/initLingui'
 import { getSite } from '@/lib/fetchers'
 import { AppearanceConfig } from '@/lib/theme.types'
@@ -50,7 +51,7 @@ export default async function RootLayout({
   initLingui(locale)
 
   return (
-    <>
+    <SiteProvider site={site as any}>
       {children}
 
       {site.analytics?.umamiHost && site.analytics?.umamiWebsiteId && (
@@ -70,6 +71,6 @@ export default async function RootLayout({
           gaMeasurementId={site.analytics?.gaMeasurementId}
         />
       )}
-    </>
+    </SiteProvider>
   )
 }

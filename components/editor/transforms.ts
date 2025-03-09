@@ -42,6 +42,10 @@ import {
   TableRowPlugin,
 } from '@udecode/plate-table/react'
 import type { PlateEditor } from '@udecode/plate/react'
+import {
+  BaseProductPlugin,
+  insertProduct,
+} from '../custom-plate-plugins/product'
 
 export const STRUCTURAL_TYPES: string[] = [
   ColumnPlugin.key,
@@ -95,6 +99,7 @@ const insertBlockMap: Record<
   [TocPlugin.key]: (editor) => insertToc(editor, { select: true }),
   [VideoPlugin.key]: (editor) =>
     insertVideoPlaceholder(editor, { select: true }),
+  [BaseProductPlugin.key]: (editor) => insertProduct(editor, { select: true }),
 }
 
 const insertInlineMap: Record<

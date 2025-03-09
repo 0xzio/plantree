@@ -1,10 +1,25 @@
 'use client'
 
+import { BaseProductPlugin } from '@/components/custom-plate-plugins/product'
+import {
+  serverSideComponents,
+  serverSideEditor,
+} from '@/components/editor/server-side-editor'
 import { getUrl } from '@/lib/utils'
+import {
+  BaseParagraphPlugin,
+  createSlateEditor,
+  PlateStatic,
+} from '@udecode/plate'
 import Image from 'next/image'
-import { createEditor } from 'slate'
-import { Slate, withReact } from 'slate-react'
+import { components } from './components'
 import { SlateContent } from './SlateContent'
+
+interface Element {
+  type: string
+  id: string
+  [key: string]: any
+}
 
 interface Props {
   content: any
@@ -24,14 +39,19 @@ export function ContentRender({ content }: Props) {
       </div>
     )
   }
-  const editor = withReact(createEditor())
+
+  const value: Element[] = Array.isArray(content)
+    ? content
+    : JSON.parse(content)
 
   return (
-    <Slate
-      editor={editor}
-      initialValue={Array.isArray(content) ? content : JSON.parse(content)}
-    >
-      <SlateContent />
-    </Slate>
+    <PlateStatic
+      editor={serverSideEditor}
+      components={serverSideComponents}
+      // editor={editor}
+      // components={components}
+      value={value.map(({ id, ...rest }) => rest) as any}
+      className=""
+    />
   )
 }

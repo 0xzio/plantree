@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
@@ -35,7 +36,7 @@ export function CommentInput({
   const site = useSiteContext()
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
-
+  const loginDialog = useLoginDialog()
   const { data: session } = useSession()
   const authenticated = !!session
 
@@ -100,9 +101,15 @@ export function CommentInput({
           )}
 
           {!authenticated ? (
-            <WalletConnectButton className="w-30 text-xs h-8">
+            <Button
+              className="w-32 text-xs h-8"
+              size="sm"
+              onClick={() => {
+                loginDialog.setIsOpen(true)
+              }}
+            >
               Log in to comment
-            </WalletConnectButton>
+            </Button>
           ) : (
             <Button onClick={handleSubmit} className="w-20 text-xs h-8">
               {isPending ? <LoadingDots /> : <p>Comment</p>}

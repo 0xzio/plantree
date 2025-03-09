@@ -17,9 +17,12 @@ import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
 import { messageRouter } from './routers/message'
 import { newsletterRouter } from './routers/newsletter'
+import { orderRouter } from './routers/order'
 import { pageRouter } from './routers/page'
 import { planRouter } from './routers/plan'
 import { postRouter } from './routers/post'
+import { postImportRouter } from './routers/post-import'
+import { productRouter } from './routers/product'
 import { rewardsRouter } from './routers/rewards'
 import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
@@ -29,7 +32,6 @@ import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { tierRouter } from './routers/tier'
 import { userRouter } from './routers/user'
-import { postImportRouter } from './routers/post-import'
 import { createCallerFactory, publicProcedure, router } from './trpc'
 
 export const appRouter = router({
@@ -62,6 +64,8 @@ export const appRouter = router({
   stripe: stripeRouter,
   tier: tierRouter,
   postImport: postImportRouter,
+  product: productRouter,
+  order: orderRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

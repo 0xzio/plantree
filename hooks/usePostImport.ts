@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ServerSideEditor } from '@/components/editor/server-side-editor'
+import { serverSideEditor } from '@/components/editor/server-side-editor'
 import { useSiteContext } from '@/components/SiteContext'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
@@ -84,7 +84,7 @@ export function usePostImport() {
     
     // Convert from markdown if needed
     if (post.contentFormat === 'markdown') {
-      content = await deserializeMd(ServerSideEditor, post.content)
+      content = await deserializeMd(serverSideEditor, post.content)
       if (typeof content === 'object') {
         content = JSON.stringify(content)
       }

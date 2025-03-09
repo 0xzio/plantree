@@ -14,11 +14,11 @@ interface Props {
 export function Navigation({ site, className }: Props) {
   const links = [
     ...site?.navLinks,
-    {
-      pathname: '/creator-fi',
-      title: 'CreatorFi',
-      visible: true,
-    },
+    // {
+    //   pathname: '/creator-fi',
+    //   title: 'CreatorFi',
+    //   visible: true,
+    // },
   ].map((link) => {
     let title = link.title as ReactNode
     if (link.pathname === '/') title = <Trans>Home</Trans>

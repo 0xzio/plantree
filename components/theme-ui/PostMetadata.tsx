@@ -22,7 +22,7 @@ export function PostMetadata({ site, post, className }: Props) {
               key={item.id}
               address={item.user.name}
               className={cn('ring-2 ring-background', index > 0 && '-ml-3')}
-              image={getUrl(item.user.image!)}
+              image={getUrl(item.user.image || '')}
             ></UserAvatar>
           ))}
         </div>

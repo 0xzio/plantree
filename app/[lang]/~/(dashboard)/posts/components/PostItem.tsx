@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { ConfirmDialog } from '@/components/ConfirmDialog'
 import { PlateEditor } from '@/components/editor/plate-editor'
+import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Calendar } from '@/components/ui/calendar'
@@ -16,6 +17,7 @@ import { Post } from '@/hooks/usePost'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { getSiteDomain } from '@/lib/getSiteDomain'
 import { Link } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
@@ -39,10 +41,12 @@ interface PostItemProps {
 
 export function PostItem({ post, status }: PostItemProps) {
   const { refetch } = usePosts()
-  const { data } = useSession()
   const isPublished = post.status === PostStatus.PUBLISHED
   const [date, setDate] = useState<Date>(post.publishedAt || new Date())
   const [open, setOpen] = useState(false)
+  const site = useSiteContext()
+  const { isSubdomain, domain } = getSiteDomain(site as any)
+  const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   function getContent() {
     if (post.type === PostType.NOTE) {
@@ -86,16 +90,14 @@ export function PostItem({ post, status }: PostItemProps) {
     return null
   }
 
+  const postUrl = `${location.protocol}//${host}/posts/${post.slug}`
+
   return (
     <div className={cn('flex flex-col gap-2 py-[6px]')}>
       <div>
-        <Link
+        <a
           target={isPublished ? '_blank' : '_self'}
-          href={
-            isPublished
-              ? `${location.protocol}//${data?.domain.domain}.${ROOT_DOMAIN}/posts/${post.slug}`
-              : `/~/post?id=${post.id}`
-          }
+          href={isPublished ? postUrl : `/~/post?id=${post.id}`}
           className="inline-flex items-center hover:scale-105 transition-transform gap-2"
         >
           {getPostType()}
@@ -103,7 +105,7 @@ export function PostItem({ post, status }: PostItemProps) {
           {isPublished && post.type === PostType.ARTICLE && (
             <ExternalLink size={14} className="text-foreground/40" />
           )}
-        </Link>
+        </a>
       </div>
       <div className="flex gap-2">
         {post.postTags.map((item) => (
