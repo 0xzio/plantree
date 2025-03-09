@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
@@ -29,6 +29,10 @@ export function PostSelectionList({
   )
   const [importing, setImporting] = useState(false)
 
+  useEffect(() => {
+    setSelectedPosts(posts.reduce((acc, _, index) => ({ ...acc, [index]: true }), {}))
+  }, [posts])
+
   const handleToggleAll = (checked: boolean) => {
     setSelectedPosts(
       posts.reduce((acc, _, index) => ({ ...acc, [index]: checked }), {}),
@@ -56,11 +60,12 @@ export function PostSelectionList({
             id="select-all"
             checked={selectedCount === posts.length}
             onCheckedChange={(checked) => handleToggleAll(!!checked)}
+            aria-label={`Select all ${posts.length} posts`}
             className="data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
           />
           <label
             htmlFor="select-all"
-            className="text-sm font-medium flex items-center"
+            className="text-sm font-medium flex items-center cursor-pointer"
           >
             <FileText className="h-3.5 w-3.5 mr-1.5 text-primary/70" />
             <span>Select all posts</span>

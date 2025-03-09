@@ -87,7 +87,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
           <FileImportTab
             isImporting={isImporting}
             onFileSelect={handleFileImport}
-            description="Import posts from a JSON file."
+            description="Import JSON file exported from PenX."
             acceptTypes="application/json"
             fileType="JSON"
           />

@@ -12,87 +12,148 @@ export function usePostImport() {
   const site = useSiteContext()
   const [isImporting, setIsImporting] = useState(false)
 
-  const importPosts = async (posts: Post[]): Promise<boolean> => {
-    setIsImporting(true)
+  /**
+   * Save posts to database
+   */
+  const savePosts = async (posts: Post[]): Promise<boolean> => {
+    if (!posts.length) {
+      toast.error('No posts to import')
+      return false
+    }
+
     try {
       await api.post.importPosts.mutate({
         siteId: site.id,
         posts: posts,
       })
 
-      toast.success('Posts imported successfully!')
       return true
     } catch (error) {
       console.error('Error importing posts:', error)
-      toast.error(extractErrorMessage(error) || 'Failed to import posts')
+      return false
+    }
+  }
+
+  /**
+   * Import posts from a JSON file
+   */
+  const importFromFile = async (file: File): Promise<boolean> => {
+    setIsImporting(true)
+
+    try {
+      const fileContent = await readFileAsText(file)
+      const jsonData = JSON.parse(fileContent)
+      const posts = Array.isArray(jsonData) ? jsonData : JSON.parse(jsonData)
+      
+      if (!Array.isArray(posts)) {
+        throw new Error('Invalid file format. Expected an array of posts.')
+      }
+      
+      const success = await savePosts(posts)
+      if (success) {
+        toast.success(`Successfully imported ${posts.length} posts`)
+      }
+
+      return success
+    } catch (error) {
+      console.error('Error parsing file:', error)
+      toast.error(extractErrorMessage(error) || 'Failed to parse file')
       return false
     } finally {
       setIsImporting(false)
     }
   }
 
-  // Handle file import
-  const importFromFile = async (file: File): Promise<boolean> => {
-    return new Promise((resolve) => {
+  /**
+   * Read file as text
+   */
+  const readFileAsText = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
       const reader = new FileReader()
-
-      reader.onload = async (e) => {
-        try {
-          const jsonData = JSON.parse(e.target?.result as string)
-          const posts = JSON.parse(jsonData) as Post[]
-          const success = await importPosts(posts)
-          resolve(success)
-        } catch (error) {
-          console.error('Error parsing file:', error)
-          toast.error(extractErrorMessage(error) || 'Failed to parse file')
-          setIsImporting(false)
-          resolve(false)
-        }
-      }
-
-      reader.onerror = () => {
-        toast.error('Error reading file')
-        setIsImporting(false)
-        resolve(false)
-      }
-
+      reader.onload = (e) => resolve(e.target?.result as string)
+      reader.onerror = () => reject(new Error('Error reading file'))
       reader.readAsText(file)
     })
   }
 
-  // Import selected posts
-  const importSelectedPosts = async (
-    posts: ImportPostData[],
-  ): Promise<boolean> => {
-    setIsImporting(true)
-    try {
-      // Convert post.content from markdown to plate format
-      const convertedPosts = await Promise.all(
-        posts.map(async (post: Post) => {
-          let content = await deserializeMd(ServerSideEditor, post.content)
-          if (typeof content === 'object') {
-            content = JSON.stringify(content)
-          }
-          return {
-            title: post.title,
-            content: content,
-            status: 'DRAFT',
-            type: 'ARTICLE',
-          }
-        }),
-      )
-
-      // Call API to save to database
-      const success = await importPosts(convertedPosts as Post[])
-      if (!success) {
-        toast.error('Failed to import posts')
+  /**
+   * Convert content format to Plate JSON
+   */
+  const convertToPlateFormat = async (post: ImportPostData): Promise<Post> => {
+    let content = post.content
+    
+    // Convert from markdown if needed
+    if (post.contentFormat === 'markdown') {
+      content = await deserializeMd(ServerSideEditor, post.content)
+      if (typeof content === 'object') {
+        content = JSON.stringify(content)
       }
-      return success
+    }
+    
+    return {
+      title: post.title,
+      content: content,
+      status: 'DRAFT',
+      type: 'ARTICLE',
+    } as Post
+  }
+
+  /**
+   * Import selected posts from URL import
+   */
+  const importSelectedPosts = async (posts: ImportPostData[]): Promise<boolean> => {
+    if (!posts.length) {
+      toast.error('No posts selected')
+      return false
+    }
+
+    setIsImporting(true)
+    
+    // Create a single toast that we'll update with progress
+    const toastId = toast.loading(`Preparing to import ${posts.length} posts...`)
+    
+    try {
+      // Process large number of posts in batches
+      const BATCH_SIZE = 5
+      let successCount = 0
+      let lastProgressUpdate = 0
+      
+      for (let i = 0; i < posts.length; i += BATCH_SIZE) {
+        const batch = posts.slice(i, i + BATCH_SIZE)
+        
+        // Convert current batch
+        const convertedBatch = await Promise.all(
+          batch.map(convertToPlateFormat)
+        )
+        
+        // Save current batch
+        const success = await savePosts(convertedBatch)
+        if (success) {
+          successCount += batch.length
+          
+          // Only update progress toast when progress increases by at least 10%
+          // This reduces the number of updates for large imports
+          const progressPercent = Math.floor((successCount / posts.length) * 100)
+          if (progressPercent >= lastProgressUpdate + 10 || successCount === posts.length) {
+            lastProgressUpdate = progressPercent
+            toast.loading(`Importing: ${successCount}/${posts.length} posts (${progressPercent}%)`, { id: toastId })
+          }
+        }
+      }
+      
+      // Final success or partial success message
+      if (successCount === posts.length) {
+        toast.success(`Successfully imported all ${posts.length} posts`, { id: toastId })
+      } else if (successCount > 0) {
+        toast.success(`Imported ${successCount} out of ${posts.length} posts`, { id: toastId })
+      } else {
+        toast.error('Failed to import any posts', { id: toastId })
+      }
+      
+      return successCount > 0
     } catch (error) {
       console.error('Error importing selected posts:', error)
-      toast.error(
-        extractErrorMessage(error) || 'Failed to import selected posts',
-      )
+      toast.error(extractErrorMessage(error) || 'Failed to import selected posts', { id: toastId })
       return false
     } finally {
       setIsImporting(false)

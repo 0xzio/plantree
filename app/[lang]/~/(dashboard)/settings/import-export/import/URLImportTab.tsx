@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Alert, AlertDescription } from '@/components/ui/alert'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
@@ -12,8 +12,12 @@ import {
   Info,
   Link,
   Search,
+  AlertCircle,
 } from 'lucide-react'
 import { PostSelectionList } from './PostSelectionList'
+
+// Define stages for the import process
+const STAGES = ['pending', 'extracting', 'analyzing', 'converting', 'completed'];
 
 interface URLImportTabProps {
   isImporting: boolean
@@ -60,6 +64,37 @@ export function URLImportTab({
   const shouldDisplayEmptyResult =
     importTask?.status === 'completed' &&
     (!importTask.result || importTask.result.length === 0)
+
+  const getErrorMessage = (error?: string): { message: string, suggestion: string } => {
+    if (!error) return { 
+      message: 'Unknown error occurred', 
+      suggestion: 'Please try again or use a different URL' 
+    };
+    
+    if (error.includes('timeout')) {
+      return {
+        message: 'The import process took too long',
+        suggestion: 'Try a URL with fewer posts or import directly from a file'
+      };
+    }
+    
+    if (error.includes('not found') || error.includes('404')) {
+      return {
+        message: 'The URL could not be accessed',
+        suggestion: 'Check if the URL is correct and publicly accessible'
+      };
+    }
+    
+    // Handle more error types
+    if (error.includes('parse') || error.includes('format')) {
+      return {
+        message: 'Content format not supported',
+        suggestion: 'This URL may not contain standard blog content'
+      };
+    }
+    
+    return { message: error, suggestion: 'Please try again with a different URL' };
+  }
 
   return (
     <div className="w-full flex flex-col space-y-5">
@@ -115,29 +150,24 @@ export function URLImportTab({
           </Button>
         </div>
 
-        {error && (
-          <Alert variant="destructive" className="py-2">
-            <AlertDescription className="text-xs flex items-center">
-              <AlertTriangle className="h-3 w-3 mr-1" />
-              {error}
+        {importTask?.status === 'failed' && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>{getErrorMessage(importTask.error).message}</AlertTitle>
+            <AlertDescription>
+              {getErrorMessage(importTask.error).suggestion}
             </AlertDescription>
           </Alert>
         )}
       </div>
 
       {isImporting && !shouldDisplayPostSelection && (
-        <div className="space-y-3 border border-muted rounded-lg p-4 bg-muted/5">
-          <div className="flex items-center space-x-2">
-            <Search className="h-4 w-4 text-primary animate-pulse" />
-            <p className="text-sm font-medium">{progress.message}</p>
+        <div className="space-y-2">
+          <div className="flex justify-between text-xs text-muted-foreground">
+            <span>{progress.message}</span>
+            <span>{Math.round(progress.progress)}%</span>
           </div>
-          <Progress value={progress.progress} className="h-2" />
-
-          {importTask?.status === 'extracting' && (
-            <p className="text-xs text-muted-foreground italic">
-              This may take a few minutes for large blogs
-            </p>
-          )}
+          <Progress value={progress.progress} className="h-1.5" />
         </div>
       )}
 
