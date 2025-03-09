@@ -468,7 +468,6 @@ export const siteRouter = router({
             where: { id: ctx.activeSiteId },
             data: { stripeType: input.stripeType },
           })
-          console.log('=======>>>>>>xx')
 
           if (input.stripeType === StripeType.PLATFORM) {
             const tier = await tx.tier.findFirst({
@@ -485,8 +484,10 @@ export const siteRouter = router({
                 tax_code: 'txcd_10103000',
               })
 
+              const price = 1000
+
               const monthlyPrice = await stripe.prices.create({
-                unit_amount: parseInt((Number(5) * 100) as any), // $10
+                unit_amount: price, // $10
                 currency: 'usd',
                 recurring: { interval: 'month' },
                 product: product.id,
@@ -495,7 +496,7 @@ export const siteRouter = router({
                 data: {
                   stripeType: input.stripeType,
                   name: 'Member',
-                  price: Number(5),
+                  price: price,
                   interval: TierInterval.MONTHLY,
                   stripeProductId: product.id,
                   description: JSON.stringify(defaultBenefits),
