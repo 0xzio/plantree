@@ -125,7 +125,7 @@ export function Post() {
               <Authors post={post} />
               <div className="flex items-center gap-2">
                 <Tags />
-                <PostLocales />
+                {/* <PostLocales /> */}
               </div>
             </div>
           )}

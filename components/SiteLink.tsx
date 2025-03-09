@@ -12,14 +12,14 @@ import { useSiteContext } from './SiteContext'
 export function SiteLink() {
   const site = useSiteContext()
 
-  const { isSubdomain, domain } = getSiteDomain(site as any)
+  const { isSubdomain, domain, subdomain } = getSiteDomain(site as any)
   const link = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   if (isSubdomain) {
     return <SiteLinkContent link={link!} />
   }
 
-  return <CustomDomainSiteLink customDomain={domain!} subdomain={domain!} />
+  return <CustomDomainSiteLink customDomain={domain!} subdomain={subdomain!} />
 }
 
 interface SiteLinkContentProps {

@@ -176,7 +176,6 @@ model User {
   props         Prop[]
   tiers         Tier[]
   payouts       Payout[]
-  invoices      Invoice[]
   products      Product[]
   orders        Order[]
 
@@ -345,8 +344,6 @@ model Invoice {
   createdAt           DateTime @default(now())
   site                Site     @relation(fields: [siteId], references: [id])
   siteId              String   @db.Uuid
-  User                User?    @relation(fields: [userId], references: [id])
-  userId              String?  @db.Uuid
 
   @@index([siteId])
   @@map("invoice")

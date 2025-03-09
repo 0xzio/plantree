@@ -259,12 +259,12 @@ export const siteRouter = router({
       const collaborators = await prisma.collaborator.findMany({
         where: { siteId: id },
       })
-
-      revalidateSite(newSite.domains)
-
       for (const item of collaborators) {
         await cacheHelper.updateCachedMySites(item.userId, null)
       }
+
+      revalidateSite(newSite.domains)
+
       await cacheHelper.updateCachedHomeSites(null)
       return newSite
     }),
@@ -352,6 +352,29 @@ export const siteRouter = router({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: `"${input.domain}" is reserved and cannot be used.`,
+        })
+      }
+
+      if (input.domain.length < 6 && ctx.isFree) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message:
+            'You are in free plan, subdomain should be at least 6 characters long, you can upgrade to pro to get short subdomain',
+        })
+      }
+
+      const customSubdomainCount = await prisma.domain.count({
+        where: {
+          siteId,
+          isSubdomain: true,
+          subdomainType: SubdomainType.Custom,
+        },
+      })
+
+      if (customSubdomainCount > 0) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'A custom subdomain already exists for this site.',
         })
       }
 

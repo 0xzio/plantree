@@ -1,20 +1,20 @@
-import { NavLink } from '@/lib/theme.types'
+import { Product } from '@prisma/client'
 import { atom, useAtom } from 'jotai'
 
 type State = {
   isOpen: boolean
   index: number
-  navLink: NavLink
+  product: Product
 }
 
-const navLinkDialogAtom = atom<State>({
+const productDialogAtom = atom<State>({
   isOpen: false,
   index: 0,
-  navLink: null as any,
+  product: null as any,
 } as State)
 
-export function useNavLinkDialog() {
-  const [state, setState] = useAtom(navLinkDialogAtom)
+export function useProductDialog() {
+  const [state, setState] = useAtom(productDialogAtom)
   return {
     ...state,
     setIsOpen: (isOpen: boolean) => setState({ ...state, isOpen }),

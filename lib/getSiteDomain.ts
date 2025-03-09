@@ -9,15 +9,16 @@ export type UserWithDomains = User & {
 export function getSiteDomain(site: SiteWithDomains, isCustomDomain = true) {
   const domains = site.domains
   const customDomain = domains.find((d) => !d.isSubdomain)
+  const sortedDomains = sortDomains(domains.filter((f) => f.isSubdomain))
+  const subdomain = sortedDomains.find((d) => d.isSubdomain)
 
   if (customDomain && isCustomDomain) {
     return {
       domain: customDomain.domain,
+      subdomain: subdomain?.domain,
       isSubdomain: false,
     }
   }
-
-  const sortedDomains = sortDomains(domains.filter((f) => f.isSubdomain))
 
   return {
     domain: sortedDomains[0]?.domain,

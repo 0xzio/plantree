@@ -8,20 +8,20 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
-import { NavLinkForm } from './NavLinkForm'
-import { useNavLinkDialog } from './useNavLinkDialog'
+import { ProductForm } from './ProductForm'
+import { useProductDialog } from './useProductDialog'
 
-export function NavLinkDialog() {
-  const { isOpen, setIsOpen } = useNavLinkDialog()
+export function ProductDialog() {
+  const { isOpen, setIsOpen, product } = useProductDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogDescription className="hidden"></DialogDescription>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle>Add Navigation</DialogTitle>
+          <DialogTitle>{!!product ? 'Edit' : 'Add'} Product</DialogTitle>
         </DialogHeader>
-        <NavLinkForm />
+        <ProductForm />
       </DialogContent>
     </Dialog>
   )

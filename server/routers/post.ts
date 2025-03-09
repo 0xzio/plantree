@@ -545,7 +545,7 @@ export const postRouter = router({
 
 function findSitePosts(siteId: string) {
   return prisma.post.findMany({
-    where: { siteId },
+    where: { siteId, isPage: false },
     include: {
       postTags: { include: { tag: true } },
       user: {
