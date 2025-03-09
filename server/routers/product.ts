@@ -7,7 +7,7 @@ import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 // f558c387-10ab-4f83-919d-5e66e0ec9f38
 export const productRouter = router({
-  byId: protectedProcedure.input(z.string().uuid()).query(async ({ input }) => {
+  byId: publicProcedure.input(z.string().uuid()).query(async ({ input }) => {
     const product = await prisma.product.findFirst({
       where: { id: input },
     })

@@ -11,7 +11,7 @@ interface LayoutProps {
 export function PageDetail({ content, className }: LayoutProps) {
   return (
     <article className="mt-10 sm:mt-20 mx-auto w-full lg:max-w-3xl">
-      <div className="prose max-w-none pb-8 dark:prose-invert">
+      <div className="">
         <ContentRender content={content} />
       </div>
     </article>

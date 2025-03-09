@@ -44,7 +44,7 @@ export function PostDetail({ site, post, className, next, prev }: LayoutProps) {
       )}
 
       <div className="grid-rows-[auto_1fr]">
-        <div className="prose max-w-none pb-8 dark:prose-invert">
+        <div className="">
           <ContentRender content={post.content} />
           <SubscribeNewsletterCard site={site} />
         </div>

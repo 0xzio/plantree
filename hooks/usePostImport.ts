@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ServerSideEditor } from '@/components/editor/server-side-editor'
+import { serverSideEditor } from '@/components/editor/server-side-editor'
 import { useSiteContext } from '@/components/SiteContext'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
@@ -69,7 +69,7 @@ export function usePostImport() {
       // Convert post.content from markdown to plate format
       const convertedPosts = await Promise.all(
         posts.map(async (post: Post) => {
-          let content = await deserializeMd(ServerSideEditor, post.content)
+          let content = await deserializeMd(serverSideEditor, post.content)
           if (typeof content === 'object') {
             content = JSON.stringify(content)
           }
