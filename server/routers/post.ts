@@ -341,6 +341,8 @@ export const postRouter = router({
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
+      revalidateTag(`${post.siteId}-page-${post.slug}`)
+      revalidatePath(`/pages/${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
       return newPost
@@ -367,8 +369,10 @@ export const postRouter = router({
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
-      revalidateTag(`posts-${post.slug}`)
+      revalidateTag(`${post.siteId}-posts-${post.slug}`)
+      revalidateTag(`${post.siteId}-pages-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
+      revalidatePath(`/pages/${post.slug}`)
 
       return post
     }),
