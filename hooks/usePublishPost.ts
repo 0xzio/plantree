@@ -17,7 +17,17 @@ import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
 import { Address } from 'viem'
 import { useAccount, useWriteContract } from 'wagmi'
+import { z } from 'zod'
 import { useSiteContext } from '../components/SiteContext'
+
+export const PublishPostFormSchema = z.object({
+  slug: z.string().min(1, { message: 'Slug is required' }),
+  gateType: z.nativeEnum(GateType),
+  collectible: z.any(),
+  delivered: z.any(),
+})
+
+export type PublishPostOptions = z.infer<typeof PublishPostFormSchema>
 
 export function usePublishPost() {
   const site = useSiteContext()
@@ -30,12 +40,8 @@ export function usePublishPost() {
 
   return {
     isLoading,
-    publishPost: async (
-      gateType: GateType,
-      collectible: boolean,
-      delivered: boolean,
-      currentPost?: Post,
-    ) => {
+    publishPost: async (opt: PublishPostOptions, currentPost?: Post) => {
+      const { gateType, collectible, delivered, slug } = opt
       setLoading(true)
       const post = currentPost || store.get(postAtom)
 
@@ -64,12 +70,12 @@ export function usePublishPost() {
         await api.post.publish.mutate({
           siteId: id,
           type: post?.type || PostType.ARTICLE,
+          slug,
           postId: post?.id,
           gateType,
           collectible,
           creationId,
           delivered,
-          content: post.content,
         })
 
         setLoading(false)

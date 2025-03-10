@@ -2,6 +2,7 @@
 
 import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
+import { Button } from '@/components/ui/button'
 import { Link, usePathname } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { useSession } from '@/lib/useSession'
@@ -27,6 +28,7 @@ import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
 import { SitesPopover } from './SitesPopover/SitesPopover'
 import { UpgradeButton } from './UpgradeButton'
+import { VisitSiteButton } from './VisitSiteButton'
 
 const LinkAccountEntry = dynamic(() => import('./LinkAccountEntry'), {
   ssr: false,
@@ -157,7 +159,10 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         {/* {!spaceId && <EnableWeb3Entry />} */}
         {/* <LinkAccountEntry /> */}
       </div>
-      <UpgradeButton />
+      <div>
+        <VisitSiteButton />
+        <UpgradeButton />
+      </div>
     </div>
   )
 }

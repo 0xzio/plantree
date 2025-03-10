@@ -16,7 +16,7 @@ export function UpgradeButton({}: Props) {
       <div className="px-4 mb-4">
         <Button
           size="lg"
-          className="rounded-full px-8  h-12 font-bold w-full"
+          className="rounded-full font-bold w-full"
           onClick={async () => {
             setIsOpen(true)
           }}
