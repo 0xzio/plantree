@@ -869,7 +869,53 @@ export const databaseRouter = router({
             },
           })
 
-          const newFields = [nameField, introductionField, iconField, urlField]
+          const statusField = await tx.field.create({
+            data: {
+              databaseId: newDatabase.id,
+              fieldType: FieldType.SINGLE_SELECT,
+              name: 'status',
+              displayName: 'Status',
+              config: {},
+              options: [],
+              siteId: input.siteId,
+              userId: ctx.token.uid,
+            },
+          })
+
+          const approvedId = uniqueId()
+          const options = [
+            {
+              id: uniqueId(),
+              fieldId: statusField.id,
+              name: 'pending',
+              color: getRandomColorName(),
+            },
+            {
+              id: uniqueId(),
+              fieldId: statusField.id,
+              name: 'rejected',
+              color: getRandomColorName(),
+            },
+            {
+              id: approvedId,
+              fieldId: statusField.id,
+              name: 'approved',
+              color: getRandomColorName(),
+            },
+          ]
+
+          await tx.field.update({
+            where: { id: statusField.id },
+            data: { options },
+          })
+
+          const newFields = [
+            nameField,
+            introductionField,
+            iconField,
+            urlField,
+            statusField,
+          ]
 
           const viewFields = newFields.map((field) => ({
             fieldId: field.id,
@@ -902,11 +948,12 @@ export const databaseRouter = router({
 
           const recordFields = newFields.reduce(
             (acc, field, index) => {
-              let value = ''
+              let value: any = ''
               if (index === 0) value = 'Zio'
               if (index === 1) value = 'Creator of PenX'
               if (index === 2) value = PENX_LOGO_URL
               if (index === 3) value = 'https://zio.penx.io'
+              if (index === 4) value = [approvedId]
               return {
                 ...acc,
                 [field.id]: value,

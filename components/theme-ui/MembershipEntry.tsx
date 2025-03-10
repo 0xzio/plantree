@@ -1,8 +1,9 @@
 'use client'
 
-import { Link, usePathname } from '@/lib/i18n'
+import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
+import { usePathname } from 'next/navigation'
 
 export function MembershipEntry() {
   const pathname = usePathname()

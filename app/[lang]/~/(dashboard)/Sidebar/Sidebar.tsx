@@ -2,7 +2,7 @@
 
 import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
-import { Link } from '@/lib/i18n'
+import { Link, usePathname } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { useSession } from '@/lib/useSession'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
@@ -19,7 +19,7 @@ import {
   Users,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
