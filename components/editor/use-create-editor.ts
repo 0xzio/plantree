@@ -99,6 +99,8 @@ import {
 } from '@udecode/plate/react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { CommentBoxElement } from '../custom-plate-plugins/comment-box/react/comment-box-element'
+import { FriendLinksPlugin } from '../custom-plate-plugins/friend-links/react'
+import { FriendLinksElement } from '../custom-plate-plugins/friend-links/react/friend-links-element'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
 
@@ -148,6 +150,7 @@ export const viewComponents = {
   [VideoPlugin.key]: MediaVideoElement,
   [ProductPlugin.key]: ProductElement,
   [CommentBoxPlugin.key]: CommentBoxElement,
+  [FriendLinksPlugin.key]: FriendLinksElement,
 }
 
 export const editorComponents = {

@@ -1,5 +1,6 @@
-import { getFriends, getSite } from '@/lib/fetchers'
-import { loadTheme } from '@/lib/loadTheme'
+import { FriendsProvider } from '@/components/FriendsContext'
+import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { getFriends, getPage, getSite } from '@/lib/fetchers'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -24,11 +25,12 @@ export default async function Page({
 }) {
   const site = await getSite(await params)
   const friends = await getFriends(site.id)
-  const { FriendsPage } = loadTheme(site.themeName)
 
-  if (!FriendsPage) {
-    return <div>Theme not found</div>
-  }
+  const page = await getPage(site.id, 'friend-links')
 
-  return <FriendsPage site={site} friends={friends} />
+  return (
+    <FriendsProvider friends={friends}>
+      <ContentRender content={page!.content} />
+    </FriendsProvider>
+  )
 }

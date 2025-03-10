@@ -106,6 +106,8 @@ import { BaseTogglePlugin } from '@udecode/plate-toggle'
 import Prism from 'prismjs'
 import { BaseCommentBoxPlugin } from '../custom-plate-plugins/comment-box'
 import { CommentBoxElementStatic } from '../custom-plate-plugins/comment-box/react/comment-box-element-static'
+import { BaseFriendLinksPlugin } from '../custom-plate-plugins/friend-links'
+import { FriendLinksElementStatic } from '../custom-plate-plugins/friend-links/react/friend-links-element-static'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
 
@@ -152,6 +154,7 @@ export const serverSideComponents = {
   [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
   [BaseProductPlugin.key]: ProductElementStatic,
   [BaseCommentBoxPlugin.key]: CommentBoxElementStatic,
+  [BaseFriendLinksPlugin.key]: FriendLinksElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -242,5 +245,6 @@ export const serverSideEditor = createSlateEditor({
     BaseTogglePlugin,
     BaseProductPlugin,
     BaseCommentBoxPlugin,
+    BaseFriendLinksPlugin,
   ],
 })

@@ -42,8 +42,10 @@ import {
   Square,
   Table,
   TableOfContentsIcon,
+  UserRoundIcon,
 } from 'lucide-react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
+import { FriendLinksPlugin } from '../custom-plate-plugins/friend-links/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import {
@@ -197,8 +199,14 @@ const groups: Group[] = [
       {
         focusEditor: false,
         icon: <MessageCircleMoreIcon />,
-        label: 'Comment',
+        label: 'Comment Box',
         value: CommentBoxPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <UserRoundIcon />,
+        label: 'Friend Links',
+        value: FriendLinksPlugin.key,
       },
     ].map((item) => ({
       ...item,

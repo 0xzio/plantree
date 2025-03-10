@@ -9,8 +9,13 @@ type UploadReturn = {
   url?: string
   cid?: string
 }
+interface UploadOptions {
+  isPublic?: boolean
+  saveToDB?: boolean
+}
 
-export async function uploadFile(file: File, isPublic = true) {
+export async function uploadFile(file: File, opt = {} as UploadOptions) {
+  const { isPublic = true, saveToDB = true } = opt
   const fileHash = await calculateSHA256FromFile(file)
   let data: UploadReturn = {}
   const site = window.__SITE__
@@ -39,15 +44,17 @@ export async function uploadFile(file: File, isPublic = true) {
     url,
   }
 
-  await api.asset.create.mutate({
-    siteId: site.id,
-    url,
-    filename: file.name,
-    contentType: file.type,
-    size: file.size,
-    isPublic,
-    createdAt: file.lastModified ? new Date(file.lastModified) : new Date(),
-  })
+  if (saveToDB) {
+    await api.asset.create.mutate({
+      siteId: site.id,
+      url,
+      filename: file.name,
+      contentType: file.type,
+      size: file.size,
+      isPublic,
+      createdAt: file.lastModified ? new Date(file.lastModified) : new Date(),
+    })
+  }
 
   return data as UploadReturn
 }

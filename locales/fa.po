@@ -78,6 +78,10 @@ msgstr ""
 msgid "Sites"
 msgstr ""
 
+#: components/custom-plate-plugins/friend-links/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
+msgid "Submit Link"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:135
 msgid "Subscribers"
 msgstr ""

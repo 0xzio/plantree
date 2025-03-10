@@ -1,7 +1,7 @@
 'use client'
 
 import { CommentBoxPlugin } from '@/components/custom-plate-plugins/comment-box/react'
-import { BaseProductPlugin } from '@/components/custom-plate-plugins/product'
+import { FriendLinksPlugin } from '@/components/custom-plate-plugins/friend-links/react'
 import { ProductPlugin } from '@/components/custom-plate-plugins/product/react'
 import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
 import emojiMartData from '@emoji-mart/data'
@@ -54,4 +54,5 @@ export const editorPlugins = [
   // BaseProductPlugin,
   ProductPlugin,
   CommentBoxPlugin,
+  FriendLinksPlugin,
 ]

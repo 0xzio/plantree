@@ -38,7 +38,7 @@ export const UploadAssetButton = ({ className, ...rest }: Props) => {
     formData.append('from', 'ASSET')
 
     try {
-      await uploadFile(file, false)
+      await uploadFile(file, { isPublic: false })
 
       toast.success('Image uploaded successfully!')
 
