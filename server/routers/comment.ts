@@ -4,14 +4,37 @@ import { z } from 'zod'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const commentRouter = router({
-  // Fetch comments by postId
   listByPostId: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input: postId }) => {
       const comments = await prisma.comment.findMany({
-        where: { postId, parentId: null }, // Only top-level comments (parentId === null) need to be queried
+        // where: { postId, parentId: null }, // Only top-level comments (parentId === null) need to be queried
+        where: { postId },
         include: {
-          user: true, // Assuming you want to include user details in comments
+          user: true,
+          // parent: true,
+        },
+        orderBy: { createdAt: 'desc' },
+      })
+      return comments
+    }),
+
+  listByPostSlug: publicProcedure
+    .input(
+      z.object({
+        slug: z.string(),
+        siteId: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      const post = await prisma.post.findUniqueOrThrow({
+        where: { siteId_slug: input },
+      })
+
+      const comments = await prisma.comment.findMany({
+        where: { postId: post.id },
+        include: {
+          user: true,
         },
         orderBy: { createdAt: 'asc' },
       })
@@ -48,17 +71,17 @@ export const commentRouter = router({
                 replyCount: { increment: 1 },
               },
             })
-          } else {
-            const updatedPost = await tx.post.update({
-              where: { id: input.postId },
-              data: {
-                commentCount: { increment: 1 },
-              },
-            })
-
-            revalidatePath(`/posts/${updatedPost.slug}`)
-            revalidatePath(`/`)
           }
+
+          const updatedPost = await tx.post.update({
+            where: { id: input.postId },
+            data: {
+              commentCount: { increment: 1 },
+            },
+          })
+
+          revalidatePath(`/posts/${updatedPost.slug}`)
+          revalidatePath(`/`)
 
           return newComment
         },

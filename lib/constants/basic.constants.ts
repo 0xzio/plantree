@@ -110,7 +110,7 @@ export const defaultNavLinks: NavLink[] = [
     title: 'Friends',
     pathname: '/friends',
     type: NavLinkType.BUILTIN,
-    visible: false,
+    visible: true,
   },
   {
     title: 'Tags',

@@ -21,19 +21,14 @@ interface Props {
   postId: string
   // For reply
   parentId?: string
-  refetchComments: () => void
   onCancel?: () => void
 }
 
 const maxCharacters = 1000
 
-export function CommentInput({
-  postId,
-  parentId,
-  refetchComments,
-  onCancel,
-}: Props) {
+export function CommentInput({ postId, parentId, onCancel }: Props) {
   const site = useSiteContext()
+  const { refetch } = trpc.comment.listByPostId.useQuery(postId)
   const [content, setContent] = useState('')
   const { isPending, mutateAsync } = trpc.comment.create.useMutation()
   const loginDialog = useLoginDialog()
@@ -63,7 +58,7 @@ export function CommentInput({
 
       setContent('')
       onCancel && onCancel()
-      refetchComments()
+      refetch()
       toast.success('Comment submitted successfully!')
     } catch (error) {
       console.log('Failed to submit comment.', 'color:red', error)
@@ -87,14 +82,15 @@ export function CommentInput({
           </span>
         </div>
 
-        <div className="flex justify-end">
+        <div className="flex justify-end gap-1">
           {parentId && (
             <Button
+              variant="secondary"
+              size="sm"
               onClick={() => {
                 setContent('')
                 onCancel && onCancel()
               }}
-              className="w-20 text-xs h-8 mr-1"
             >
               <p>Cancel</p>
             </Button>
@@ -102,7 +98,6 @@ export function CommentInput({
 
           {!authenticated ? (
             <Button
-              className="w-32 text-xs h-8"
               size="sm"
               onClick={() => {
                 loginDialog.setIsOpen(true)

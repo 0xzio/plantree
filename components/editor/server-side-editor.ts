@@ -104,6 +104,8 @@ import {
 } from '@udecode/plate-table'
 import { BaseTogglePlugin } from '@udecode/plate-toggle'
 import Prism from 'prismjs'
+import { BaseCommentBoxPlugin } from '../custom-plate-plugins/comment-box'
+import { CommentBoxElementStatic } from '../custom-plate-plugins/comment-box/react/comment-box-element-static'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
 
@@ -149,6 +151,7 @@ export const serverSideComponents = {
   [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
   [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
   [BaseProductPlugin.key]: ProductElementStatic,
+  [BaseCommentBoxPlugin.key]: CommentBoxElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -238,5 +241,6 @@ export const serverSideEditor = createSlateEditor({
     BaseCommentsPlugin,
     BaseTogglePlugin,
     BaseProductPlugin,
+    BaseCommentBoxPlugin,
   ],
 })

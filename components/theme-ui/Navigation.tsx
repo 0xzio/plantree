@@ -24,6 +24,7 @@ export function Navigation({ site, className }: Props) {
     if (link.pathname === '/') title = <Trans>Home</Trans>
     if (link.pathname === '/posts') title = <Trans>Posts</Trans>
     if (link.pathname === '/projects') title = <Trans>Projects</Trans>
+    if (link.pathname === '/friends') title = <Trans>Friends</Trans>
     if (link.pathname === '/tags') title = <Trans>Tags</Trans>
     if (link.pathname === '/about') title = <Trans>About</Trans>
     return {

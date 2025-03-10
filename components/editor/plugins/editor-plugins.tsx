@@ -1,6 +1,8 @@
 'use client'
 
+import { CommentBoxPlugin } from '@/components/custom-plate-plugins/comment-box/react'
 import { BaseProductPlugin } from '@/components/custom-plate-plugins/product'
+import { ProductPlugin } from '@/components/custom-plate-plugins/product/react'
 import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
 import emojiMartData from '@emoji-mart/data'
 import { DocxPlugin } from '@udecode/plate-docx'
@@ -49,5 +51,7 @@ export const editorPlugins = [
   // FixedToolbarPlugin,
   FloatingToolbarPlugin,
 
-  BaseProductPlugin,
+  // BaseProductPlugin,
+  ProductPlugin,
+  CommentBoxPlugin,
 ]

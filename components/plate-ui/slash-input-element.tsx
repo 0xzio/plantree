@@ -33,6 +33,7 @@ import {
   Image,
   ListIcon,
   ListOrdered,
+  MessageCircleMoreIcon,
   PilcrowIcon,
   Quote,
   RadicalIcon,
@@ -42,7 +43,9 @@ import {
   Table,
   TableOfContentsIcon,
 } from 'lucide-react'
+import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
+import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import {
   InlineCombobox,
   InlineComboboxContent,
@@ -189,7 +192,13 @@ const groups: Group[] = [
         focusEditor: false,
         icon: <ShoppingBagIcon />,
         label: 'Product',
-        value: BaseProductPlugin.key,
+        value: ProductPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <MessageCircleMoreIcon />,
+        label: 'Comment',
+        value: CommentBoxPlugin.key,
       },
     ].map((item) => ({
       ...item,

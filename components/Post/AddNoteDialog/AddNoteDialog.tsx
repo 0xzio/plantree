@@ -41,7 +41,12 @@ export function AddNoteDialog() {
         title: '',
         content: JSON.stringify(value),
       })
-      await publishPost(GateType.FREE, false, false, post as any)
+      await publishPost({
+        slug: post.slug,
+        gateType: GateType.FREE,
+        collectible: false,
+        delivered: false,
+      })
       refetch()
       setIsOpen(false)
     } catch (error) {

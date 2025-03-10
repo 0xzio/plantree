@@ -1,11 +1,6 @@
+import { PostProvider } from '@/components/PostContext'
 import { PageDefaultUI } from '@/components/theme-ui/PageDefaultUI'
-import {
-  getFirstSite,
-  getPage,
-  getPost,
-  getPosts,
-  getSite,
-} from '@/lib/fetchers'
+import { getPage, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
@@ -41,5 +36,9 @@ export default async function Page(props: { params: Params }) {
   const { PageDetail } = loadTheme(site.themeName)
   if (!PageDetail) return <PageDefaultUI content={page!.content} />
 
-  return <PageDetail content={page!.content} page={page} />
+  return (
+    <PostProvider post={page as any}>
+      <PageDetail content={page!.content} page={page} />
+    </PostProvider>
+  )
 }

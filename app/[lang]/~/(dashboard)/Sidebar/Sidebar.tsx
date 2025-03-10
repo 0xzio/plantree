@@ -159,7 +159,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         {/* {!spaceId && <EnableWeb3Entry />} */}
         {/* <LinkAccountEntry /> */}
       </div>
-      <div>
+      <div className="">
         <VisitSiteButton />
         <UpgradeButton />
       </div>

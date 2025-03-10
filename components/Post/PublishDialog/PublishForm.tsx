@@ -184,7 +184,7 @@ export function PublishForm() {
           )}
         />
 
-        <div className="space-x-2 text-right">
+        <div className="flex items-center justify-end gap-2">
           <DialogClose asChild>
             <Button variant="secondary">Cancel</Button>
           </DialogClose>

@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/theme-ui/Navigation.tsx:28
+#: components/theme-ui/Navigation.tsx:29
 msgid "About"
 msgstr "About"
 
@@ -33,15 +33,19 @@ msgstr "Airdrop"
 msgid "Blog"
 msgstr "Blog"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:150
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
 msgid "Coupons"
 msgstr "Coupons"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:124
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:126
 msgid "Databases"
 msgstr "Databases"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:104
+#: components/theme-ui/Navigation.tsx:27
+msgid "Friends"
+msgstr "Friends"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:106
 msgid "Gallery"
 msgstr "Gallery"
 
@@ -49,15 +53,15 @@ msgstr "Gallery"
 msgid "Home"
 msgstr "Home"
 
-#: components/theme-ui/MembershipEntry.tsx:17
+#: components/theme-ui/MembershipEntry.tsx:18
 msgid "Membership"
 msgstr "Membership"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:114
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
 msgid "Pages"
 msgstr "Pages"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:95
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:97
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr "Posts"
@@ -66,7 +70,7 @@ msgstr "Posts"
 msgid "Projects"
 msgstr "Projects"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
 msgid "Settings"
 msgstr "Settings"
 
@@ -74,14 +78,14 @@ msgstr "Settings"
 msgid "Sites"
 msgstr "Sites"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:133
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:135
 msgid "Subscribers"
 msgstr "Subscribers"
 
-#: components/theme-ui/Navigation.tsx:27
+#: components/theme-ui/Navigation.tsx:28
 msgid "Tags"
 msgstr "Tags"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:86
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:88
 msgid "Today"
 msgstr "Today"
