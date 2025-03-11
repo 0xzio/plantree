@@ -1,9 +1,7 @@
 import { bindFirst, createSlatePlugin, type TElement } from '@udecode/plate'
 import { insertFriendLinks } from './transforms'
 
-export interface TFriendLinksElement extends TElement {
-  postId?: string
-}
+export interface TFriendLinksElement extends TElement {}
 
 export const BaseFriendLinksPlugin = createSlatePlugin({
   key: 'friend-links',

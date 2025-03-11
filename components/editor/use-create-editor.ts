@@ -103,6 +103,8 @@ import { FriendLinksPlugin } from '../custom-plate-plugins/friend-links/react'
 import { FriendLinksElement } from '../custom-plate-plugins/friend-links/react/friend-links-element'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
+import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
+import { ProjectsElement } from '../custom-plate-plugins/projects/react/projects-element'
 
 export const viewComponents = {
   [AudioPlugin.key]: MediaAudioElement,
@@ -151,6 +153,7 @@ export const viewComponents = {
   [ProductPlugin.key]: ProductElement,
   [CommentBoxPlugin.key]: CommentBoxElement,
   [FriendLinksPlugin.key]: FriendLinksElement,
+  [ProjectsPlugin.key]: ProjectsElement,
 }
 
 export const editorComponents = {

@@ -1,4 +1,8 @@
-import { getProjects, getSite } from '@/lib/fetchers'
+import { FriendsProvider } from '@/components/FriendsContext'
+import { ProjectsProvider } from '@/components/ProjectsContext'
+import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { editorDefaultValue } from '@/lib/constants'
+import { getPage, getProjects, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
@@ -24,11 +28,13 @@ export default async function Page({
 }) {
   const site = await getSite(await params)
   const projects = await getProjects(site.id)
-  const { ProjectsPage } = loadTheme(site.themeName)
+  const page = await getPage(site.id, 'projects')
 
-  if (!ProjectsPage) {
-    return <div>Theme not found</div>
-  }
-
-  return <ProjectsPage site={site} projects={projects} />
+  return (
+    <div className="mx-auto max-w-3xl">
+      <ProjectsProvider projects={projects}>
+        <ContentRender content={page?.content || editorDefaultValue} />
+      </ProjectsProvider>
+    </div>
+  )
 }

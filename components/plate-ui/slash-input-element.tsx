@@ -31,6 +31,7 @@ import {
   Heading2Icon,
   Heading3Icon,
   Image,
+  Lightbulb,
   ListIcon,
   ListOrdered,
   MessageCircleMoreIcon,
@@ -48,6 +49,7 @@ import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { FriendLinksPlugin } from '../custom-plate-plugins/friend-links/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
+import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
 import {
   InlineCombobox,
   InlineComboboxContent,
@@ -207,6 +209,12 @@ const groups: Group[] = [
         icon: <UserRoundIcon />,
         label: 'Friend Links',
         value: FriendLinksPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <Lightbulb />,
+        label: 'My Projects',
+        value: ProjectsPlugin.key,
       },
     ].map((item) => ({
       ...item,

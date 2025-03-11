@@ -51,7 +51,7 @@ export function PostNav({ className }: PostHeaderProps) {
               target="_blank"
               className="text-foreground/40 hover:text-foreground/80 flex items-center gap-1 text-sm"
             >
-              <span>{`/posts/${post.slug}`}</span>
+              <span>{`/${post.isPage ? 'pages' : 'posts'}/${post.slug}`}</span>
               <ExternalLink size={14} />
             </a>
           </div>

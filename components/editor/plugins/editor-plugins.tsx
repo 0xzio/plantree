@@ -3,6 +3,7 @@
 import { CommentBoxPlugin } from '@/components/custom-plate-plugins/comment-box/react'
 import { FriendLinksPlugin } from '@/components/custom-plate-plugins/friend-links/react'
 import { ProductPlugin } from '@/components/custom-plate-plugins/product/react'
+import { ProjectsPlugin } from '@/components/custom-plate-plugins/projects/react'
 import { FloatingToolbarPlugin } from '@/components/editor/plugins/floating-toolbar-plugin'
 import emojiMartData from '@emoji-mart/data'
 import { DocxPlugin } from '@udecode/plate-docx'
@@ -55,4 +56,5 @@ export const editorPlugins = [
   ProductPlugin,
   CommentBoxPlugin,
   FriendLinksPlugin,
+  ProjectsPlugin,
 ]

@@ -1,5 +1,6 @@
 import { FriendsProvider } from '@/components/FriendsContext'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { editorDefaultValue } from '@/lib/constants'
 import { getFriends, getPage, getSite } from '@/lib/fetchers'
 import { Metadata } from 'next'
 
@@ -25,12 +26,13 @@ export default async function Page({
 }) {
   const site = await getSite(await params)
   const friends = await getFriends(site.id)
-
   const page = await getPage(site.id, 'friend-links')
 
   return (
-    <FriendsProvider friends={friends}>
-      <ContentRender content={page!.content} />
-    </FriendsProvider>
+    <div className="mx-auto max-w-2xl">
+      <FriendsProvider friends={friends}>
+        <ContentRender content={page?.content || editorDefaultValue} />
+      </FriendsProvider>
+    </div>
   )
 }

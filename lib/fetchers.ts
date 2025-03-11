@@ -393,6 +393,7 @@ function findManyPosts(siteId: string) {
     },
     where: {
       siteId,
+      isPage: false,
       status: PostStatus.PUBLISHED,
     },
     orderBy: [{ publishedAt: 'desc' }],
@@ -417,4 +418,3 @@ export async function getTiers(siteId: string) {
 
   return tiers
 }
-

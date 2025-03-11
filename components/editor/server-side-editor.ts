@@ -110,6 +110,8 @@ import { BaseFriendLinksPlugin } from '../custom-plate-plugins/friend-links'
 import { FriendLinksElementStatic } from '../custom-plate-plugins/friend-links/react/friend-links-element-static'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
+import { BaseProjectsPlugin } from '../custom-plate-plugins/projects'
+import { ProjectsElementStatic } from '../custom-plate-plugins/projects/react/projects-element-static'
 
 export const serverSideComponents = {
   [BaseAudioPlugin.key]: MediaAudioElementStatic,
@@ -155,6 +157,7 @@ export const serverSideComponents = {
   [BaseProductPlugin.key]: ProductElementStatic,
   [BaseCommentBoxPlugin.key]: CommentBoxElementStatic,
   [BaseFriendLinksPlugin.key]: FriendLinksElementStatic,
+  [BaseProjectsPlugin.key]: ProjectsElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -246,5 +249,6 @@ export const serverSideEditor = createSlateEditor({
     BaseProductPlugin,
     BaseCommentBoxPlugin,
     BaseFriendLinksPlugin,
+    BaseProjectsPlugin,
   ],
 })
