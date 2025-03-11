@@ -73,7 +73,7 @@ export function Post() {
   return (
     <div className="w-full h-full">
       <div className="relative min-h-[500px] py-12 px-8 z-0">
-        <div className="w-full px-16 sm:px-[max(64px,calc(50%-350px))]">
+        <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
           {post.type === PostType.ARTICLE && (
             <div className="mb-5 flex flex-col space-y-3 ">
               <CoverUpload post={post} />

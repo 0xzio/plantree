@@ -37,7 +37,7 @@ export const withPlaceholdersPrimitive = createNodesHOC(Placeholder)
 
 export const withPlaceholders = (
   components: any,
-  placeholder = 'Type a paragraph',
+  placeholder = `Type '/' for commands`,
 ) =>
   withPlaceholdersPrimitive(components, [
     {
