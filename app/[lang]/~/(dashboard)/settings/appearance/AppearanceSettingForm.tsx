@@ -88,7 +88,7 @@ export function AppearanceSettingForm({ site }: Props) {
           control={form.control}
           name="themeName"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Theme</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -116,7 +116,7 @@ export function AppearanceSettingForm({ site }: Props) {
           control={form.control}
           name="locale"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Default language</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -141,7 +141,7 @@ export function AppearanceSettingForm({ site }: Props) {
           control={form.control}
           name="color"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Brand color</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
@@ -263,7 +263,7 @@ export function AppearanceSettingForm({ site }: Props) {
           control={form.control}
           name="baseFont"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Base font </FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>

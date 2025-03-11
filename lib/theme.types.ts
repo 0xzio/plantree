@@ -54,10 +54,16 @@ export enum NavLinkType {
   CUSTOM = 'CUSTOM',
 }
 
+export enum NavLinkLocation {
+  HEADER = 'HEADER',
+  FOOTER = 'FOOTER',
+}
+
 export type NavLink = {
   title: string
   pathname: string
   type: NavLinkType
+  location: NavLinkLocation
   visible: boolean
 }
 

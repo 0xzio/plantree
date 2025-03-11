@@ -153,3 +153,11 @@ export const PRO_PLAN_COLLABORATOR_LIMIT = Number(
 export const TEAM_PLAN_COLLABORATOR_LIMIT = Number(
   process.env.TEAM_PLAN_COLLABORATOR_LIMIT || 6,
 )
+
+export enum BuiltinPages {
+  ABOUT = '/about',
+  POSTS = '/posts',
+  PROJECTS = '/projects',
+  FRIENDS = '/friends',
+  TAGS = '/tags',
+}

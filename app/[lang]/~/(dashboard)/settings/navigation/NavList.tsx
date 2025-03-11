@@ -15,6 +15,7 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { NavLink, NavLinkType } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { Site } from '@prisma/client'
 import { arrayMoveImmutable } from 'array-move'
 import { produce } from 'immer'
@@ -38,16 +39,29 @@ export function NavList({ site }: Props) {
     navLinks.push(defaultNavLinks[3])
   }
 
+  console.log('=======navLinks:', navLinks)
+
   return (
     <>
       <NavLinkDialog />
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Path</TableHead>
-            <TableHead>Operation</TableHead>
+            <TableHead>
+              <Trans>Title</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Type</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Location</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Path</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Operation</Trans>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,6 +104,7 @@ export function NavList({ site }: Props) {
               <TableRow key={index}>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.type}</TableCell>
+                <TableCell>{item.location}</TableCell>
                 <TableCell>{item.pathname}</TableCell>
                 <TableCell className="flex items-center gap-1 text-foreground/70">
                   <ArrowUp

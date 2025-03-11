@@ -203,6 +203,7 @@ export const siteRouter = router({
               title: z.string().optional(),
               pathname: z.string().optional(),
               type: z.string().optional(),
+              location: z.string().optional(),
               visible: z.boolean().optional(),
             }),
           )

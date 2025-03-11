@@ -75,7 +75,7 @@ export function AuthTypeSettingForm({}: Props) {
           control={form.control}
           name="authType"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <FormLabel>Auth type</FormLabel>
               <FormControl>
                 <RadioGroup
