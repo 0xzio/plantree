@@ -4,6 +4,7 @@ import { SocialNav } from '@/components/SocialNav'
 import { TextLogo } from '@/components/TextLogo'
 import { initLingui } from '@/initLingui'
 import { Link } from '@/lib/i18n'
+import linguiConfig from '@/lingui.config'
 import { Philosopher } from 'next/font/google'
 import { Footer } from './Footer'
 import { Nav } from './Nav'
@@ -13,6 +14,10 @@ const logoFont = Philosopher({
   subsets: ['latin'],
   display: 'swap',
 })
+
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
 
 export default async function Layout({
   children,
@@ -26,7 +31,7 @@ export default async function Layout({
   initLingui(locale)
   return (
     <>
-      <div className="flex flex-col gap-4 px-2 min-h-screen container mx-auto">
+      <div className="flex flex-col gap-4 px-2 min-h-screen container 2xl:max-w-[1120px] mx-auto">
         <div className="z-10 h-14 py-3 relative flex justify-between">
           <div className="flex items-center">
             <Link href="/" className="cursor-pointer flex items-center">

@@ -13,7 +13,7 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/theme-ui/Navigation.tsx:29
+#: components/theme-ui/Navigation.tsx:31
 msgid "About"
 msgstr "About"
 
@@ -32,6 +32,10 @@ msgstr "Add navigation"
 #: components/theme-ui/Airdrop/AirdropButton.tsx:11
 msgid "Airdrop"
 msgstr "Airdrop"
+
+#: components/theme-ui/Navigation.tsx:28
+msgid "AMA"
+msgstr "AMA"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
 msgid "Analytics"
@@ -106,6 +110,10 @@ msgstr "Gallery"
 msgid "General"
 msgstr "General"
 
+#: components/theme-ui/Navigation.tsx:29
+msgid "Guestbook"
+msgstr "Guestbook"
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:162
 msgid "Header"
 msgstr "Header"
@@ -122,7 +130,7 @@ msgstr "Import/Export"
 msgid "Link accounts"
 msgstr "Link accounts"
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:57
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:52
 msgid "Location"
 msgstr "Location"
 
@@ -135,7 +143,7 @@ msgstr "Membership"
 msgid "Navigation"
 msgstr "Navigation"
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:63
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:58
 msgid "Operation"
 msgstr "Operation"
 
@@ -147,7 +155,7 @@ msgstr "Orders"
 msgid "Pages"
 msgstr "Pages"
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:60
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:55
 msgid "Path"
 msgstr "Path"
 
@@ -194,10 +202,6 @@ msgstr "SEO"
 msgid "Settings"
 msgstr "Settings"
 
-#: app/[lang]/root/(home)/page.tsx:56
-msgid "Sites"
-msgstr "Sites"
-
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:122
 msgid "Socials"
 msgstr "Socials"
@@ -211,11 +215,11 @@ msgid "Subscribers"
 msgstr "Subscribers"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:85
-#: components/theme-ui/Navigation.tsx:28
+#: components/theme-ui/Navigation.tsx:30
 msgid "Tags"
 msgstr "Tags"
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:51
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:46
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:106
 msgid "Title"
 msgstr "Title"
@@ -224,7 +228,7 @@ msgstr "Title"
 msgid "Today"
 msgstr "Today"
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:54
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:49
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:122
 msgid "Type"
 msgstr "Type"
@@ -232,3 +236,7 @@ msgstr "Type"
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:89
 msgid "Updated successfully!"
 msgstr "Updated successfully!"
+
+#: app/[lang]/~/(dashboard)/posts/layout.tsx:31
+msgid "Your Posts"
+msgstr "Your Posts"

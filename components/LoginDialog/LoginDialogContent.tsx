@@ -15,6 +15,7 @@ import {
   useProfile,
   useSignIn,
 } from '@farcaster/auth-kit'
+import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { LoginForm } from './LoginForm'
 import { useLoginDialog } from './useLoginDialog'
@@ -22,6 +23,8 @@ import { useLoginDialog } from './useLoginDialog'
 export function LoginDialogContent() {
   const { setIsOpen } = useLoginDialog()
   const { login, logout } = useSession()
+  const searchParams = useSearchParams()
+  const showWalletLogin = searchParams?.get('wallet') === 'true'
 
   const handleSuccess = useCallback(
     async (res: StatusAPIResponse) => {
@@ -50,20 +53,22 @@ export function LoginDialogContent() {
           className="w-full border-foreground"
         />
       </div>
-      <div className="space-y-1">
-        {/* <div className="text-foreground/40">Wallet login</div> */}
-        <WalletConnectButton
-          variant="outline"
-          size="lg"
-          className="w-full border-foreground"
-          onClick={() => {
-            setIsOpen(false)
-          }}
-        >
-          <span className="icon-[token--ethm] w-6 h-5"></span>
-          <span>Wallet login </span>
-        </WalletConnectButton>
-      </div>
+      {showWalletLogin && (
+        <div className="space-y-1">
+          {/* <div className="text-foreground/40">Wallet login</div> */}
+          <WalletConnectButton
+            variant="outline"
+            size="lg"
+            className="w-full border-foreground"
+            onClick={() => {
+              setIsOpen(false)
+            }}
+          >
+            <span className="icon-[token--ethm] w-6 h-5"></span>
+            <span>Wallet login </span>
+          </WalletConnectButton>
+        </div>
+      )}
       {/* <Separator /> */}
 
       {/* <SignInButton

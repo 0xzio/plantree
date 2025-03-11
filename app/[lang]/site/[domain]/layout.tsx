@@ -1,10 +1,12 @@
-import { SiteProvider } from '@/components/SiteContext'
-import { initLingui } from '@/initLingui'
-import { getSite } from '@/lib/fetchers'
-import { AppearanceConfig } from '@/lib/theme.types'
-import { Metadata } from 'next'
-import { headers } from 'next/headers'
-import { GoogleAnalytics } from 'nextjs-google-analytics'
+import { SiteProvider } from '@/components/SiteContext';
+import { initLingui } from '@/initLingui';
+import { getSite } from '@/lib/fetchers';
+import { AppearanceConfig } from '@/lib/theme.types';
+import linguiConfig from '@/lingui.config';
+import { Metadata } from 'next';
+import { headers } from 'next/headers';
+import { GoogleAnalytics } from 'nextjs-google-analytics';
+
 
 type Params = Promise<{ domain: string; lang: string }>
 
@@ -30,6 +32,10 @@ export async function generateMetadata({
       description,
     },
   }
+}
+
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
 }
 
 export default async function RootLayout({

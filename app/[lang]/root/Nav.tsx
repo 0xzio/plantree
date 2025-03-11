@@ -1,6 +1,7 @@
 'use client'
 
 import { ReactNode } from 'react'
+import SocialIcon from '@/components/theme-ui/SocialIcon'
 import { Link } from '@/lib/i18n'
 import { ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
@@ -101,6 +102,11 @@ export const Nav = () => {
           </div>
         )
       })}
+      <SocialIcon
+        kind="discord"
+        href="https://discord.gg/nyVpH9njDu"
+        size={6}
+      />
     </div>
   )
 }

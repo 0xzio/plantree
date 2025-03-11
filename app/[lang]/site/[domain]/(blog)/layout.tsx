@@ -42,9 +42,10 @@ export default async function RootLayout({
   const brand = appearance?.color || 'oklch(0.656 0.241 354.308)'
   const baseFont = appearance?.baseFont
 
-  let font = 'font-mono'
+  let font = 'font-sans'
   if (baseFont === 'serif') font = 'font-serif'
   if (baseFont === 'sans') font = 'font-sans'
+  if (baseFont === 'mono') font = 'font-mono'
 
   return (
     <div

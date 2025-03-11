@@ -3,6 +3,7 @@ import { initLingui } from '@/initLingui'
 import { getHomeSites, getSiteCount } from '@/lib/fetchers'
 import { Trans } from '@lingui/react/macro'
 import { Metadata } from 'next'
+import { FeatureList } from './FeatureList'
 import { LaunchButton } from './LaunchButton'
 import { Screenshots } from './Screenshots'
 import { SiteCount } from './SiteCount'
@@ -51,15 +52,17 @@ export default async function HomePage(props: { params: any }) {
         <SiteCount count={count} sites={sites} />
       </div>
 
-      <div className="flex items-center justify-between mt-10 mb-6">
+      <FeatureList />
+
+      {/* <div className="flex items-center justify-between mt-10 mb-6">
         <div className="text-2xl font-semibold">
           <Trans>Sites</Trans>
         </div>
-        {/* <Suspense fallback={''}>
+        <Suspense fallback={''}>
           <LaunchButton />
-        </Suspense> */}
+        </Suspense>
       </div>
-      <SiteList />
+      <SiteList /> */}
     </div>
   )
 }
