@@ -18,8 +18,8 @@ export async function generateMetadata(props: {
   const page = await getPage(site.id, slug)
 
   return {
-    title: page?.title,
-    description: page?.title,
+    title: page?.title || site.seoTitle,
+    description: page?.title || site.seoDescription,
   }
 }
 

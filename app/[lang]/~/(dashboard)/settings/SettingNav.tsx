@@ -35,6 +35,7 @@ export function SettingNav({}: Props) {
     membership: '/~/settings/membership',
     products: '/~/settings/products',
     orders: '/~/settings/orders',
+    seo: '/~/settings/seo',
   }
 
   const linkClassName = (path: string) =>
@@ -144,6 +145,11 @@ export function SettingNav({}: Props) {
         >
           Access token
         </Link>
+
+        <Link href={Paths.seo} className={linkClassName(Paths.seo)}>
+          SEO
+        </Link>
+
         <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
           Analytics
         </Link>

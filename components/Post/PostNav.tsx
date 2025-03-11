@@ -43,9 +43,6 @@ export function PostNav({ className }: PostHeaderProps) {
 
         {post?.status === PostStatus.PUBLISHED && (
           <div className="hidden md:flex items-center gap-1">
-            <Badge size="sm" className="text-xs">
-              Published
-            </Badge>
             <a
               href={`${location.protocol}//${host}/${post.isPage ? 'pages' : 'posts'}/${post.slug}`}
               target="_blank"

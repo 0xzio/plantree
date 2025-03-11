@@ -14,8 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const site = await getSite(await params)
   return {
-    title: `Friends | ${site.name}`,
-    description: site.description,
+    title: `Friends | ${site.seoTitle}`,
+    description: site.seoDescription,
   }
 }
 

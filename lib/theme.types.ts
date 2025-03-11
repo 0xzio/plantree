@@ -98,6 +98,10 @@ export type Site = {
   analytics: Analytics
   catalogue: any
   config: {
+    seo?: {
+      title?: string
+      description?: string
+    }
     locales: string[]
     appearance: AppearanceConfig
     features: Record<string, any>
@@ -110,6 +114,8 @@ export type Site = {
   postCount: number
   message404: string | null
   themeName: string
+  seoTitle: string
+  seoDescription: string
   tiers: Tier[]
   createdAt: Date
   updatedAt: Date

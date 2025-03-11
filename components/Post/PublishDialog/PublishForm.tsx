@@ -33,7 +33,7 @@ import { api, trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { GateType } from '@prisma/client'
+import { GateType, PostStatus } from '@prisma/client'
 import { DialogClose } from '@radix-ui/react-dialog'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -67,6 +67,7 @@ export function PublishForm() {
     await publishPost(opt)
     setPost({
       ...post,
+      status: PostStatus.PUBLISHED,
       ...opt,
     })
     setIsOpen(false)

@@ -59,6 +59,7 @@ export async function getSite(params: any) {
           return editorDefaultValue
         }
       }
+      const config = site.config as any as Site['config']
 
       return {
         ...site,
@@ -68,6 +69,8 @@ export async function getSite(params: any) {
         image: getUrl(site.image || ''),
         about: getAbout(),
         navLinks: site.navLinks || defaultNavLinks,
+        seoTitle: config?.seo?.title || site?.name || '',
+        seoDescription: config?.seo?.description || site?.description || '',
       } as any as Site
     },
     [`site-${domain}`],

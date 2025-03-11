@@ -14,8 +14,8 @@ export async function generateMetadata({
   const site = await getSite(await params)
 
   return {
-    title: site.name,
-    description: site.description,
+    title: site.seoTitle,
+    description: site.seoDescription,
   }
 }
 

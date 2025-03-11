@@ -4,7 +4,7 @@ import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
-export const revalidate = 86400; // 3600 * 24
+export const revalidate = 86400 // 3600 * 24
 
 export async function generateMetadata({
   params,
@@ -13,8 +13,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const site = await getSite(await params)
   return {
-    title: `Blog | ${site.name}`,
-    description: site.description,
+    title: `Blog | ${site.seoTitle}`,
+    description: site.seoDescription,
   }
 }
 
