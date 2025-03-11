@@ -4,7 +4,7 @@ import React from 'react'
 import { cn, withRef } from '@udecode/cn'
 import { PlateElement } from '@udecode/plate/react'
 
-export const FriendLinksElement = withRef<typeof PlateElement>((props, ref) => {
+export const FriendsElement = withRef<typeof PlateElement>((props, ref) => {
   const { children, className, nodeProps, ...rest } = props
 
   return (

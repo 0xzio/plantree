@@ -477,13 +477,13 @@ model Post {
 
   @@unique([siteId, slug])
   @@index([siteId, isPage])
-  @@index([userId])
   @@index([siteId, status])
-  @@index([type])
-  @@index([gateType])
   @@index([userId, status])
   @@index([userId, type])
   @@index([siteId])
+  @@index([userId])
+  @@index([gateType])
+  @@index([type])
   @@map("post")
 }
 

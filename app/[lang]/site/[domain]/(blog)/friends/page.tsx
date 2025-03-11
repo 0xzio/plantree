@@ -26,7 +26,7 @@ export default async function Page({
 }) {
   const site = await getSite(await params)
   const friends = await getFriends(site.id)
-  const page = await getPage(site.id, 'friend-links')
+  const page = await getPage(site.id, 'friends')
 
   return (
     <div className="mx-auto max-w-2xl">

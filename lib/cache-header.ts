@@ -114,7 +114,7 @@ export const cacheHelper = {
   },
 
   async updateCachedSitePages(siteId: string, pages: Post[] | null) {
-    const key = redisKeys.sitePosts(siteId)
+    const key = redisKeys.sitePages(siteId)
     if (!pages) {
       redis.del(key)
     } else {

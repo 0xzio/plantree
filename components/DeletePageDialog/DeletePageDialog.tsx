@@ -17,6 +17,7 @@ import { localDB } from '@/lib/local-db'
 import { api } from '@/lib/trpc'
 import { toast } from 'sonner'
 import { useDeletePageDialog } from './useDeleteDatabaseDialog'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 
 interface Props {}
 
@@ -34,7 +35,7 @@ export function DeletePageDialog({}: Props) {
       toast.success('Page deleted successfully')
       setIsOpen(false)
     } catch (error) {
-      toast.error('Failed to delete')
+      toast.error(extractErrorMessage(error) || 'Failed to delete')
     }
     setLoading(false)
   }

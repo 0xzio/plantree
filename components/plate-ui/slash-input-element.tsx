@@ -46,7 +46,7 @@ import {
   UserRoundIcon,
 } from 'lucide-react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
-import { FriendLinksPlugin } from '../custom-plate-plugins/friend-links/react'
+import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
@@ -208,7 +208,7 @@ const groups: Group[] = [
         focusEditor: false,
         icon: <UserRoundIcon />,
         label: 'Friend Links',
-        value: FriendLinksPlugin.key,
+        value: FriendsPlugin.key,
       },
       {
         focusEditor: false,

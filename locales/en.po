@@ -17,9 +17,33 @@ msgstr ""
 msgid "About"
 msgstr "About"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
+msgid "Access token"
+msgstr "Access token"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:201
+msgid "Add"
+msgstr "Add"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:25
+msgid "Add navigation"
+msgstr "Add navigation"
+
 #: components/theme-ui/Airdrop/AirdropButton.tsx:11
 msgid "Airdrop"
 msgstr "Airdrop"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+msgid "Analytics"
+msgstr "Analytics"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
+msgid "Appearance"
+msgstr "Appearance"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+msgid "Backup"
+msgstr "Backup"
 
 #: app/[lang]/root/Footer.tsx:49
 #: themes/sue/pages/BlogPage.tsx:23
@@ -33,6 +57,18 @@ msgstr "Airdrop"
 msgid "Blog"
 msgstr "Blog"
 
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:136
+msgid "Builtin"
+msgstr "Builtin"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
+msgid "Catalogue"
+msgstr "Catalogue"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
+msgid "Collaborators"
+msgstr "Collaborators"
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
 msgid "Coupons"
 msgstr "Coupons"
@@ -41,6 +77,23 @@ msgstr "Coupons"
 msgid "Databases"
 msgstr "Databases"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+msgid "Domain"
+msgstr "Domain"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:27
+msgid "Edit navigation"
+msgstr "Edit navigation"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
+msgid "Features"
+msgstr "Features"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:165
+msgid "Footer"
+msgstr "Footer"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:129
 #: components/theme-ui/Navigation.tsx:27
 msgid "Friends"
 msgstr "Friends"
@@ -49,27 +102,94 @@ msgstr "Friends"
 msgid "Gallery"
 msgstr "Gallery"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:67
+msgid "General"
+msgstr "General"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:162
+msgid "Header"
+msgstr "Header"
+
 #: components/theme-ui/Navigation.tsx:24
 msgid "Home"
 msgstr "Home"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
+msgid "Import/Export"
+msgstr "Import/Export"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:59
+msgid "Link accounts"
+msgstr "Link accounts"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:57
+msgid "Location"
+msgstr "Location"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:98
 #: components/theme-ui/MembershipEntry.tsx:18
 msgid "Membership"
 msgstr "Membership"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
+msgid "Navigation"
+msgstr "Navigation"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:63
+msgid "Operation"
+msgstr "Operation"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
+msgid "Orders"
+msgstr "Orders"
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
 msgid "Pages"
 msgstr "Pages"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:60
+msgid "Path"
+msgstr "Path"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:81
+msgid "PenX Pro"
+msgstr "PenX Pro"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:97
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr "Posts"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
+msgid "Products"
+msgstr "Products"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:53
+msgid "Profile"
+msgstr "Profile"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
 #: components/theme-ui/Navigation.tsx:26
 msgid "Projects"
 msgstr "Projects"
 
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:201
+msgid "Save"
+msgstr "Save"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:157
+msgid "Select a location"
+msgstr "Select a location"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:131
+msgid "Select a type"
+msgstr "Select a type"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
+msgid "SEO"
+msgstr "SEO"
+
+#: app/[lang]/~/(dashboard)/settings/layout.tsx:15
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
 msgid "Settings"
 msgstr "Settings"
@@ -78,7 +198,11 @@ msgstr "Settings"
 msgid "Sites"
 msgstr "Sites"
 
-#: components/custom-plate-plugins/friend-links/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:122
+msgid "Socials"
+msgstr "Socials"
+
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
 msgid "Submit Link"
 msgstr "Submit Link"
 
@@ -86,10 +210,25 @@ msgstr "Submit Link"
 msgid "Subscribers"
 msgstr "Subscribers"
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:85
 #: components/theme-ui/Navigation.tsx:28
 msgid "Tags"
 msgstr "Tags"
 
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:51
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:106
+msgid "Title"
+msgstr "Title"
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:88
 msgid "Today"
 msgstr "Today"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:54
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:122
+msgid "Type"
+msgstr "Type"
+
+#: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:89
+msgid "Updated successfully!"
+msgstr "Updated successfully!"

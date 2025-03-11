@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { editorPlugins } from '@/components/editor/plugins/editor-plugins'
+import { usePublishDialog } from '@/components/Post/PublishDialog/usePublishDialog'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { loadPost, Post, postAtom, usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
@@ -33,6 +34,7 @@ export function usePublishPost() {
   const site = useSiteContext()
   const { spaceId, id } = site
   const { address } = useAccount()
+  const { setIsOpen } = usePublishDialog()
   const [isLoading, setLoading] = useState(false)
   const checkChain = useCheckChain()
   const { writeContractAsync } = useWriteContract()
@@ -96,11 +98,13 @@ export function usePublishPost() {
             toast.error(msg)
           })
         }
+        setIsOpen(false)
       } catch (error) {
         console.log('========error:', error)
         const msg = extractErrorMessage(error)
         toast.error(msg)
         setLoading(false)
+        throw error
       }
     },
   }

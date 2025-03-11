@@ -27,7 +27,7 @@ import { usePlans } from '@/hooks/usePlans'
 import { usePost } from '@/hooks/usePost'
 import { PublishPostFormSchema, usePublishPost } from '@/hooks/usePublishPost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
-import { editorDefaultValue } from '@/lib/constants'
+import { BUILTIN_PAGE_SLUGS, editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
@@ -64,13 +64,14 @@ export function PublishForm() {
       slug: data.slug.replace(/^\/|\/$/g, ''),
     }
 
-    await publishPost(opt)
-    setPost({
-      ...post,
-      status: PostStatus.PUBLISHED,
-      ...opt,
-    })
-    setIsOpen(false)
+    try {
+      await publishPost(opt)
+      setPost({
+        ...post,
+        status: PostStatus.PUBLISHED,
+        ...opt,
+      })
+    } catch (error) {}
   }
 
   return (
@@ -88,7 +89,12 @@ export function PublishForm() {
             <FormItem className="w-full">
               <FormLabel>slug</FormLabel>
               <FormControl>
-                <Input placeholder="" {...field} className="w-full" />
+                <Input
+                  placeholder=""
+                  {...field}
+                  className="w-full"
+                  disabled={BUILTIN_PAGE_SLUGS.includes(post.slug)}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

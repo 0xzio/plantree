@@ -108,7 +108,7 @@ export function PostItem({ post, status }: PostItemProps) {
         </a>
       </div>
       <div className="flex gap-2">
-        {post.postTags.map((item) => (
+        {post.postTags?.map((item) => (
           <Badge key={item.id} variant="outline">
             {item.tag.name}
           </Badge>

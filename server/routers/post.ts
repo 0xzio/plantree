@@ -1,6 +1,11 @@
 import { PostsNav } from '@/app/[lang]/~/(dashboard)/posts/components/PostsNav'
 import { cacheHelper } from '@/lib/cache-header'
-import { FREE_PLAN_POST_LIMIT, IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import {
+  BUILTIN_PAGE_SLUGS,
+  FREE_PLAN_POST_LIMIT,
+  IPFS_ADD_URL,
+  PostStatus,
+} from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
@@ -35,7 +40,6 @@ export const postRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId } = input
-
       const cachedMySites = await cacheHelper.getCachedSitePosts(siteId)
       if (cachedMySites) return cachedMySites
 
@@ -180,6 +184,7 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
       return post
     }),
 
@@ -230,6 +235,13 @@ export const postRouter = router({
       let post = await prisma.post.findUniqueOrThrow({
         where: { id: input.postId },
       })
+
+      if (BUILTIN_PAGE_SLUGS.includes(post.slug) && post.slug !== input.slug) {
+        throw new TRPCError({
+          code: 'BAD_GATEWAY',
+          message: 'You can not update builtin page slug.',
+        })
+      }
 
       let shouldCreateNewsletter = false
 
@@ -293,6 +305,7 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
@@ -322,6 +335,7 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-posts-${post.slug}`)
@@ -379,6 +393,7 @@ export const postRouter = router({
           })
 
           await cacheHelper.updateCachedSitePosts(siteId, null)
+          await cacheHelper.updateCachedSitePages(siteId, null)
           return true
         },
         {
@@ -410,8 +425,19 @@ export const postRouter = router({
     .input(z.string())
     .mutation(async ({ ctx, input: id }) => {
       return prisma.$transaction(async (tx) => {
+        const post = await tx.post.findUniqueOrThrow({
+          where: { id },
+        })
+
+        if (BUILTIN_PAGE_SLUGS.includes(post.slug)) {
+          throw new TRPCError({
+            code: 'BAD_GATEWAY',
+            message: 'You can not delete builtin page.',
+          })
+        }
+
         await tx.author.deleteMany({ where: { postId: id } })
-        const post = await prisma.post.delete({
+        await prisma.post.delete({
           where: { id: id },
         })
         await cacheHelper.updateCachedPost(post.id, null)

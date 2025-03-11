@@ -2,12 +2,13 @@ import { cacheHelper } from '@/lib/cache-header'
 import { FREE_PLAN_PAGE_LIMIT, FRIEND_DATABASE_NAME } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { Option } from '@/lib/types'
-import { PostStatus } from '@prisma/client'
+import { Post, PostStatus } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { slug } from 'github-slugger'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { createPage } from '../lib/createPage'
+import { initPages } from '../lib/initPages'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const pageRouter = router({
@@ -18,16 +19,37 @@ export const pageRouter = router({
       }),
     )
     .query(async ({ ctx, input }) => {
+      let pages: Post[] = []
       const cachedPages = await cacheHelper.getCachedSitePages(input.siteId)
-      if (cachedPages) return cachedPages
-      const pages = await prisma.post.findMany({
-        where: {
-          siteId: input.siteId,
-          isJournal: false,
-          isPage: true,
-        },
-        orderBy: { createdAt: 'desc' },
-      })
+      if (cachedPages) {
+        pages = cachedPages
+      } else {
+        pages = await prisma.post.findMany({
+          where: {
+            siteId: input.siteId,
+            isJournal: false,
+            isPage: true,
+          },
+          orderBy: { createdAt: 'desc' },
+        })
+      }
+
+      const hasBuiltin = pages.some((p) => p.slug === 'friends')
+
+      if (!hasBuiltin) {
+        await initPages(input.siteId, ctx.token.uid)
+        pages = await prisma.post.findMany({
+          where: {
+            siteId: input.siteId,
+            isJournal: false,
+            isPage: true,
+          },
+          orderBy: { createdAt: 'desc' },
+        })
+      }
+
+      await cacheHelper.updateCachedSitePages(input.siteId, pages)
+
       return pages
     }),
 

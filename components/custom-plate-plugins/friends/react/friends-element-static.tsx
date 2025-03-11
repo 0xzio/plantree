@@ -7,7 +7,7 @@ import type { SlateElementProps } from '@udecode/plate'
 import { SlateElement } from '@udecode/plate'
 import { FriendsBlock } from './FriendsBlock'
 
-export const FriendLinksElementStatic = ({
+export const FriendsElementStatic = ({
   children,
   className,
   ...props
