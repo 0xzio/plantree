@@ -137,7 +137,7 @@ export function Post() {
         <div className="w-full" data-registry="plate">
           <PlateEditor
             variant="post"
-            className="w-full"
+            className="w-full dark:caret-brand"
             value={content ? JSON.parse(content) : editorDefaultValue}
             showAddButton
             onChange={(v) => {

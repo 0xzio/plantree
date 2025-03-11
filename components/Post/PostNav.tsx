@@ -2,7 +2,7 @@
 
 import { usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
-import { ROOT_DOMAIN } from '@/lib/constants'
+import { BUILTIN_PAGE_SLUGS, ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
@@ -26,6 +26,11 @@ export function PostNav({ className }: PostHeaderProps) {
   const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
   const { setIsOpen } = usePublishDialog()
 
+  let prefix = post?.isPage ? '/pages' : '/posts'
+  if (BUILTIN_PAGE_SLUGS.includes(post?.slug)) {
+    prefix = ''
+  }
+
   return (
     <div
       className={cn(
@@ -44,11 +49,11 @@ export function PostNav({ className }: PostHeaderProps) {
         {post?.status === PostStatus.PUBLISHED && (
           <div className="hidden md:flex items-center gap-1">
             <a
-              href={`${location.protocol}//${host}/${post.isPage ? 'pages' : 'posts'}/${post.slug}`}
+              href={`${location.protocol}//${host}${prefix}/${post.slug}`}
               target="_blank"
               className="text-foreground/40 hover:text-foreground/80 flex items-center gap-1 text-sm"
             >
-              <span>{`/${post.isPage ? 'pages' : 'posts'}/${post.slug}`}</span>
+              <span>{`${prefix}/${post.slug}`}</span>
               <ExternalLink size={14} />
             </a>
           </div>

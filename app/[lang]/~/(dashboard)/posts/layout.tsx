@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 import { SiteLink } from '@/components/SiteLink'
+import { Trans } from '@lingui/react/macro'
 import { CreatePostButton } from './components/CreatePostButton'
 import { PostsNav } from './components/PostsNav'
 
@@ -10,7 +11,9 @@ export default function Layout({ children }: { children: ReactNode }) {
     <div className="flex flex-col gap-8 p-3 md:p-0">
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <div className="text-3xl font-bold">Your Posts</div>
+          <div className="text-3xl font-bold">
+            <Trans>Your Posts</Trans>
+          </div>
           <CreatePostButton />
         </div>
         <div>
