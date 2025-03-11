@@ -47,7 +47,7 @@ export default async function HomePage(props: { params: any }) {
   initLingui(lang === 'pseudo' ? 'en' : lang)
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
   return (
-    <div>
+    <div className="flex flex-col gap-y-10">
       <div className="flex justify-center mt-8">
         <SiteCount count={count} sites={sites} />
       </div>
@@ -55,14 +55,17 @@ export default async function HomePage(props: { params: any }) {
       <FeatureList />
 
       {/* <div className="flex items-center justify-between mt-10 mb-6">
-        <div className="text-2xl font-semibold">
-          <Trans>Sites</Trans>
-        </div>
         <Suspense fallback={''}>
           <LaunchButton />
         </Suspense>
+      </div> */}
+
+      <div className="space-y-2">
+        <div className="text-3xl font-bold">
+          <Trans>Sites</Trans>
+        </div>
+        <SiteList />
       </div>
-      <SiteList /> */}
     </div>
   )
 }

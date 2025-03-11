@@ -16,7 +16,7 @@ export function SiteList({ sites }: Props) {
   if (isLoading || !data)
     return (
       <div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-lg">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-md">
           {Array(9)
             .fill('')
             .map((_, i) => (
@@ -32,7 +32,7 @@ export function SiteList({ sites }: Props) {
     )
 
   return (
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-lg">
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full">
       {data.map((site) => (
         <SiteItem key={site.id} site={site} />
       ))}
