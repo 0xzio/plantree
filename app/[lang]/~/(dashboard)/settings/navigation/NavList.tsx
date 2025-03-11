@@ -29,17 +29,12 @@ interface Props {
 }
 
 export function NavList({ site }: Props) {
-  const navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
+  let navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
   const { setState } = useNavLinkDialog()
   const { refetch } = useSite()
 
-  // TODO: fallback
-  if (!navLinks.some((link) => link.pathname === '/friends')) {
-    navLinks.push(defaultNavLinks[2])
-    navLinks.push(defaultNavLinks[3])
-  }
-
-  console.log('=======navLinks:', navLinks)
+  const isNavLinkValid = navLinks.some((i) => i.pathname === '/ama')
+  navLinks = isNavLinkValid ? navLinks : defaultNavLinks
 
   return (
     <>

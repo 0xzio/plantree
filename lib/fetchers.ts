@@ -1,5 +1,5 @@
 import prisma from '@/lib/prisma'
-import { Friend, Project, Site } from '@/lib/theme.types'
+import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
 import { post } from '@farcaster/auth-client'
 import { PostType } from '@prisma/client'
@@ -61,6 +61,9 @@ export async function getSite(params: any) {
       }
       const config = site.config as any as Site['config']
 
+      const isNavLinkValid = ((site?.navLinks || []) as NavLink[])?.some(
+        (i) => i.pathname === '/ama',
+      )
       return {
         ...site,
         // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
@@ -68,7 +71,7 @@ export async function getSite(params: any) {
         logo: getUrl(site.logo || ''),
         image: getUrl(site.image || ''),
         about: getAbout(),
-        navLinks: site.navLinks || defaultNavLinks,
+        navLinks: isNavLinkValid ? site.navLinks : defaultNavLinks,
         seoTitle: config?.seo?.title || site?.name || '',
         seoDescription: config?.seo?.description || site?.description || '',
       } as any as Site
