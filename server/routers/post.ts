@@ -408,15 +408,16 @@ export const postRouter = router({
 
   delete: protectedProcedure
     .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      const post = await prisma.post.delete({
-        where: { id: input },
+    .mutation(async ({ ctx, input: id }) => {
+      return prisma.$transaction(async (tx) => {
+        await tx.author.deleteMany({ where: { postId: id } })
+        const post = await prisma.post.delete({
+          where: { id: id },
+        })
+        await cacheHelper.updateCachedPost(post.id, null)
+        await cacheHelper.updateCachedSitePosts(post.siteId, null)
+        return post
       })
-
-      await cacheHelper.updateCachedPost(post.id, null)
-      await cacheHelper.updateCachedSitePosts(post.siteId, null)
-
-      return post
     }),
 
   deleteSitePosts: protectedProcedure

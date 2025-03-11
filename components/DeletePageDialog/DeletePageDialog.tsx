@@ -25,7 +25,7 @@ export function DeletePageDialog({}: Props) {
   const [loading, setLoading] = useState(false)
   const { refetch } = usePages()
 
-  async function deleteField() {
+  async function deletePage() {
     setLoading(true)
     try {
       await api.post.delete.mutate(pageId)
@@ -62,7 +62,7 @@ export function DeletePageDialog({}: Props) {
             className="w-20"
             disabled={loading}
             variant="destructive"
-            onClick={deleteField}
+            onClick={deletePage}
           >
             {loading ? <LoadingDots className="bg-white" /> : 'Delete'}
           </Button>

@@ -95,95 +95,93 @@ export function PublishForm() {
           )}
         />
 
-        <FormField
-          control={form.control}
-          name="gateType"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Access control</FormLabel>
-              <FormDescription>
-                Gate this post, config who can read this post.
-              </FormDescription>
-              <FormControl>
-                <GateTypeSelect
-                  {...field}
-                  // value={gateType}
-                  // onSelect={(value) => {
-                  //   setGateType(value)
-                  // }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+        {!post.isPage && (
+          <>
+            <FormField
+              control={form.control}
+              name="gateType"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel>Access control</FormLabel>
+                  <FormDescription>
+                    Gate this post, config who can read this post.
+                  </FormDescription>
+                  <FormControl>
+                    <GateTypeSelect {...field} />
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-        <FormField
-          control={form.control}
-          name="collectible"
-          render={({ field }) => (
-            <FormItem className="w-full flex items-center">
-              <FormLabel htmlFor="post-collectible">collectible</FormLabel>
-              <FormControl>
-                <Switch
-                  id="post-collectible"
-                  checked={field.value}
-                  disabled={!spaceId}
-                  onCheckedChange={(value) => {
-                    field.onChange(value)
-                  }}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="delivered"
-          render={({ field }) => (
-            <div>
-              <FormItem className="w-full flex items-center">
-                <div className="flex gap-2 items-center">
-                  <FormLabel htmlFor="post-delivered">
-                    Deliver your newsletter
-                  </FormLabel>
-                  <Badge
-                    size="sm"
-                    className="cursor-pointer h-6"
-                    onClick={() => setIsOpen(true)}
-                  >
-                    Upgrade
-                  </Badge>
-                </div>
-                <FormControl>
-                  {post.delivered ? (
-                    <div className="text-sm text-muted-foreground">
-                      Already sent
-                    </div>
-                  ) : (
+            <FormField
+              control={form.control}
+              name="collectible"
+              render={({ field }) => (
+                <FormItem className="w-full flex items-center">
+                  <FormLabel htmlFor="post-collectible">collectible</FormLabel>
+                  <FormControl>
                     <Switch
-                      id="post-delivered"
-                      disabled={session?.isFree}
+                      id="post-collectible"
                       checked={field.value}
+                      disabled={!spaceId}
                       onCheckedChange={(value) => {
                         field.onChange(value)
                       }}
                     />
-                  )}
-                </FormControl>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-                <FormMessage />
-              </FormItem>
-              <div className="text-foreground/60 text-xs">
-                {post.delivered
-                  ? 'This newsletter has been sent to subscribers.'
-                  : 'Send your newsletter to subscribers.'}
-              </div>
-            </div>
-          )}
-        />
+            <FormField
+              control={form.control}
+              name="delivered"
+              render={({ field }) => (
+                <div>
+                  <FormItem className="w-full flex items-center">
+                    <div className="flex gap-2 items-center">
+                      <FormLabel htmlFor="post-delivered">
+                        Deliver your newsletter
+                      </FormLabel>
+                      <Badge
+                        size="sm"
+                        className="cursor-pointer h-6"
+                        onClick={() => setIsOpen(true)}
+                      >
+                        Upgrade
+                      </Badge>
+                    </div>
+                    <FormControl>
+                      {post.delivered ? (
+                        <div className="text-sm text-muted-foreground">
+                          Already sent
+                        </div>
+                      ) : (
+                        <Switch
+                          id="post-delivered"
+                          disabled={session?.isFree}
+                          checked={field.value}
+                          onCheckedChange={(value) => {
+                            field.onChange(value)
+                          }}
+                        />
+                      )}
+                    </FormControl>
+
+                    <FormMessage />
+                  </FormItem>
+                  <div className="text-foreground/60 text-xs">
+                    {post.delivered
+                      ? 'This newsletter has been sent to subscribers.'
+                      : 'Send your newsletter to subscribers.'}
+                  </div>
+                </div>
+              )}
+            />
+          </>
+        )}
 
         <div className="flex items-center justify-end gap-2">
           <DialogClose asChild>
