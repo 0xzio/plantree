@@ -1,6 +1,7 @@
-import axios from 'axios'
-import * as cheerio from 'cheerio'
-import { ExtractResult, PostLink } from './types'
+import axios from 'axios';
+import * as cheerio from 'cheerio';
+import { ExtractResult, PostLink } from './types';
+
 
 export class WebExtractor {
   /**
@@ -67,7 +68,21 @@ export class WebExtractor {
       // Select all anchor elements with href attributes
       $('a[href]').each((_, element) => {
         const href = $(element).attr('href')
-        const title = $(element).text().trim().split('\n')[0]
+
+        const getTitle = () => {
+          const h1 = $(element).find('h1').text()
+          if (h1) return h1
+          const h2 = $(element).find('h2').text()
+          if (h2) return h2
+          const h3 = $(element).find('h3').text()
+          if (h3) return h3
+          const h4 = $(element).find('h4').text()
+          if (h4) return h4
+
+          return $(element).text().trim().split('\n')[0]
+        }
+
+        const title = getTitle()
 
         if (href) {
           // Resolve relative URLs if baseUrl is provided

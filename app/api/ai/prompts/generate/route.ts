@@ -58,5 +58,3 @@ ${prompt}
     )
   }
 }
-
-export const Get = GET

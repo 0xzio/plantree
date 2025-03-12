@@ -73,11 +73,11 @@ msgstr ""
 msgid "Collaborators"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:153
 msgid "Coupons"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:126
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:127
 msgid "Databases"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgstr ""
 msgid "Friends"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:106
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:107
 msgid "Gallery"
 msgstr ""
 
@@ -151,7 +151,7 @@ msgstr ""
 msgid "Orders"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:117
 msgid "Pages"
 msgstr ""
 
@@ -163,7 +163,7 @@ msgstr ""
 msgid "PenX Pro"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:97
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:98
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr ""
@@ -198,7 +198,7 @@ msgid "SEO"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:144
 msgid "Settings"
 msgstr ""
 
@@ -214,7 +214,7 @@ msgstr ""
 msgid "Submit Link"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:135
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:136
 msgid "Subscribers"
 msgstr ""
 
@@ -228,7 +228,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:88
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:89
 msgid "Today"
 msgstr ""
 
