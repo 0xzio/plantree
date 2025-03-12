@@ -1,3 +1,4 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { Balance } from '@/lib/types'
 import { getOAuthStripe } from '@/server/lib/getOAuthStripe'
@@ -55,6 +56,7 @@ export async function GET(req: NextRequest) {
         userId,
         siteId,
         productId,
+        customer: session.customer!,
       },
     })
 
@@ -84,6 +86,15 @@ export async function GET(req: NextRequest) {
         stripePeriodEnd: invoice.period_end,
       },
     })
+
+    await prisma.site.update({
+      where: { id: siteId },
+      data: {
+        balance,
+      },
+    })
+
+    await cacheHelper.updateCachedMySites(site.userId, null)
 
     return NextResponse.redirect(
       `${url.protocol}//${host}${decodeURIComponent(pathname)}`,

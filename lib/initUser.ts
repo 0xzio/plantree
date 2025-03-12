@@ -66,7 +66,7 @@ export async function initUserByAddress(address: string) {
           },
           about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
-          themeName: 'garden',
+          themeName: 'sue',
           navLinks: defaultNavLinks,
           domains: {
             create: [
@@ -195,7 +195,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           },
           about: JSON.stringify(editorDefaultValue),
           logo: info.picture,
-          themeName: 'garden',
+          themeName: 'sue',
           navLinks: defaultNavLinks,
           domains: {
             create: [
@@ -383,7 +383,7 @@ export async function initUserByFarcasterId(fid: string) {
           },
           about: JSON.stringify(editorDefaultValue),
           logo: newUser.image,
-          themeName: 'garden',
+          themeName: 'sue',
           navLinks: defaultNavLinks,
           domains: {
             create: [
@@ -505,7 +505,7 @@ export async function initUserByEmail(email: string, password: string) {
           },
           about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
-          themeName: 'garden',
+          themeName: 'sue',
           navLinks: defaultNavLinks,
           domains: {
             create: [

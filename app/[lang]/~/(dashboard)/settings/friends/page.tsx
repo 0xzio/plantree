@@ -19,7 +19,7 @@ export default function Page() {
     )
   }
   return (
-    <div>
+    <div className="w-full max-w-[760px]">
       <FullPageDatabase
         slug={FRIEND_DATABASE_NAME}
         fetcher={async () => {

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { editorPlugins } from '@/components/editor/plugins/editor-plugins'
+import { usePublishDialog } from '@/components/Post/PublishDialog/usePublishDialog'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { loadPost, Post, postAtom, usePost } from '@/hooks/usePost'
 import { useWagmiConfig } from '@/hooks/useWagmiConfig'
@@ -17,12 +18,23 @@ import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
 import { Address } from 'viem'
 import { useAccount, useWriteContract } from 'wagmi'
+import { z } from 'zod'
 import { useSiteContext } from '../components/SiteContext'
+
+export const PublishPostFormSchema = z.object({
+  slug: z.string().min(1, { message: 'Slug is required' }),
+  gateType: z.nativeEnum(GateType),
+  collectible: z.any(),
+  delivered: z.any(),
+})
+
+export type PublishPostOptions = z.infer<typeof PublishPostFormSchema>
 
 export function usePublishPost() {
   const site = useSiteContext()
   const { spaceId, id } = site
   const { address } = useAccount()
+  const { setIsOpen } = usePublishDialog()
   const [isLoading, setLoading] = useState(false)
   const checkChain = useCheckChain()
   const { writeContractAsync } = useWriteContract()
@@ -30,12 +42,8 @@ export function usePublishPost() {
 
   return {
     isLoading,
-    publishPost: async (
-      gateType: GateType,
-      collectible: boolean,
-      delivered: boolean,
-      currentPost?: Post,
-    ) => {
+    publishPost: async (opt: PublishPostOptions, currentPost?: Post) => {
+      const { gateType, collectible, delivered, slug } = opt
       setLoading(true)
       const post = currentPost || store.get(postAtom)
 
@@ -64,12 +72,12 @@ export function usePublishPost() {
         await api.post.publish.mutate({
           siteId: id,
           type: post?.type || PostType.ARTICLE,
+          slug,
           postId: post?.id,
           gateType,
           collectible,
           creationId,
           delivered,
-          content: post.content,
         })
 
         setLoading(false)
@@ -90,11 +98,13 @@ export function usePublishPost() {
             toast.error(msg)
           })
         }
+        setIsOpen(false)
       } catch (error) {
         console.log('========error:', error)
         const msg = extractErrorMessage(error)
         toast.error(msg)
         setLoading(false)
+        throw error
       }
     },
   }

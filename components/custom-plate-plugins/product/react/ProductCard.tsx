@@ -27,7 +27,7 @@ export function ProductCard({ productId }: { productId: string }) {
   }
 
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5">
+    <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background">
       <div className="flex items-center gap-2">
         {data.image && (
           <Image
@@ -39,7 +39,7 @@ export function ProductCard({ productId }: { productId: string }) {
           />
         )}
         <div>
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 text-foreground">
             <div className="text-2xl font-bold">{data.name}</div>
             <div className="text-sm text-brand">
               (${(data.price / 100).toFixed(2)} USD)

@@ -97,8 +97,14 @@ import {
   usePlateEditor,
   type CreatePlateEditorOptions,
 } from '@udecode/plate/react'
-import { BaseProductPlugin } from '../custom-plate-plugins/product'
+import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
+import { CommentBoxElement } from '../custom-plate-plugins/comment-box/react/comment-box-element'
+import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
+import { FriendsElement } from '../custom-plate-plugins/friends/react/friends-element'
+import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
+import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
+import { ProjectsElement } from '../custom-plate-plugins/projects/react/projects-element'
 
 export const viewComponents = {
   [AudioPlugin.key]: MediaAudioElement,
@@ -144,7 +150,10 @@ export const viewComponents = {
   [TogglePlugin.key]: ToggleElement,
   [UnderlinePlugin.key]: withProps(PlateLeaf, { as: 'u' }),
   [VideoPlugin.key]: MediaVideoElement,
-  [BaseProductPlugin.key]: ProductElement,
+  [ProductPlugin.key]: ProductElement,
+  [CommentBoxPlugin.key]: CommentBoxElement,
+  [FriendsPlugin.key]: FriendsElement,
+  [ProjectsPlugin.key]: ProjectsElement,
 }
 
 export const editorComponents = {

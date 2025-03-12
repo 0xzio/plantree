@@ -27,7 +27,7 @@ export function LinkGoogleEntry() {
           Link to google account for easier mobile login.
         </div>
       </div>
-      <ArrowRight size={20} className="text-foreground/50 flex-shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50shrink-0" />
     </Link>
   )
 }

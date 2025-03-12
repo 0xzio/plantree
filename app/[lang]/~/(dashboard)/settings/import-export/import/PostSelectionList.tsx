@@ -117,7 +117,7 @@ export function PostSelectionList({
               >
                 <Checkbox
                   id={`post-${index}`}
-                  className="mt-1 mr-3 flex-shrink-0 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
+                  className="mt-1 mr-3shrink-0 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground"
                   checked={selectedPosts[index]}
                   onCheckedChange={(checked) =>
                     handleTogglePost(index, !!checked)

@@ -17,6 +17,7 @@ import { localDB } from '@/lib/local-db'
 import { api } from '@/lib/trpc'
 import { toast } from 'sonner'
 import { useDeletePageDialog } from './useDeleteDatabaseDialog'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 
 interface Props {}
 
@@ -25,7 +26,7 @@ export function DeletePageDialog({}: Props) {
   const [loading, setLoading] = useState(false)
   const { refetch } = usePages()
 
-  async function deleteField() {
+  async function deletePage() {
     setLoading(true)
     try {
       await api.post.delete.mutate(pageId)
@@ -34,7 +35,7 @@ export function DeletePageDialog({}: Props) {
       toast.success('Page deleted successfully')
       setIsOpen(false)
     } catch (error) {
-      toast.error('Failed to delete')
+      toast.error(extractErrorMessage(error) || 'Failed to delete')
     }
     setLoading(false)
   }
@@ -62,7 +63,7 @@ export function DeletePageDialog({}: Props) {
             className="w-20"
             disabled={loading}
             variant="destructive"
-            onClick={deleteField}
+            onClick={deletePage}
           >
             {loading ? <LoadingDots className="bg-white" /> : 'Delete'}
           </Button>

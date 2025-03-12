@@ -25,9 +25,10 @@ import {
 import { useSite } from '@/hooks/useSite'
 import { defaultNavLinks } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { NavLink, NavLinkType } from '@/lib/theme.types'
+import { NavLink, NavLinkLocation, NavLinkType } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { produce } from 'immer'
 import { toast } from 'sonner'
 import { z } from 'zod'
@@ -36,6 +37,7 @@ import { useNavLinkDialog } from './useNavLinkDialog'
 const FormSchema = z.object({
   title: z.string().min(1, { message: 'Title is required' }),
   type: z.nativeEnum(NavLinkType),
+  location: z.nativeEnum(NavLinkLocation),
   pathname: z.string(),
 })
 
@@ -44,6 +46,7 @@ export function NavLinkForm() {
   const { setIsOpen, navLink, index } = useNavLinkDialog()
   const site = useSiteContext()
   const { refetch } = useSite()
+  const { t } = useLingui()
   const navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
   const isEdit = !!navLink
 
@@ -52,6 +55,7 @@ export function NavLinkForm() {
     defaultValues: {
       title: isEdit ? navLink.title : '',
       type: isEdit ? navLink.type : ('' as NavLinkType),
+      location: isEdit ? navLink.location : ('' as NavLinkLocation),
       pathname: isEdit ? navLink.pathname : '',
     },
   })
@@ -61,6 +65,7 @@ export function NavLinkForm() {
   useEffect(() => {
     form.setValue('title', isEdit ? navLink.title : '')
     form.setValue('type', (isEdit ? navLink.type : '') as any)
+    form.setValue('location', (isEdit ? navLink.location : '') as any)
     form.setValue('pathname', isEdit ? navLink.pathname : '')
   }, [navLink])
 
@@ -69,16 +74,9 @@ export function NavLinkForm() {
       setLoading(true)
       const newLinks = produce(navLinks, (draft) => {
         if (isEdit) {
-          draft[index] = {
-            ...navLink,
-            ...data,
-          }
+          draft[index] = { ...navLink, ...data }
         } else {
-          //
-          draft.push({
-            ...data,
-            visible: true,
-          })
+          draft.push({ ...data, visible: true })
         }
       })
       await api.site.updateSite.mutate({
@@ -88,7 +86,7 @@ export function NavLinkForm() {
       await refetch()
       form.reset()
       setIsOpen(false)
-      toast.success('Updated successfully!')
+      toast.success(t`Updated successfully!`)
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg)
@@ -104,7 +102,9 @@ export function NavLinkForm() {
           name="title"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Title</FormLabel>
+              <FormLabel>
+                <Trans>Title</Trans>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />
               </FormControl>
@@ -117,8 +117,10 @@ export function NavLinkForm() {
           control={form.control}
           name="type"
           render={({ field }) => (
-            <FormItem className="space-y-3">
-              <FormLabel>Type</FormLabel>
+            <FormItem>
+              <FormLabel>
+                <Trans>Type</Trans>
+              </FormLabel>
               <Select
                 onValueChange={field.onChange}
                 defaultValue={field.value}
@@ -126,16 +128,42 @@ export function NavLinkForm() {
               >
                 <FormControl>
                   <SelectTrigger>
-                    <SelectValue placeholder="Select a type" />
+                    <SelectValue placeholder={t`Select a type`} />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
                   <SelectItem disabled={!isEdit} value={NavLinkType.BUILTIN}>
-                    Builtin
+                    <Trans>Builtin</Trans>
                   </SelectItem>
                   <SelectItem value={NavLinkType.PAGE}>Page</SelectItem>
                   <SelectItem value={NavLinkType.TAG}>Tag</SelectItem>
                   <SelectItem value={NavLinkType.CUSTOM}>Custom</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder={t`Select a location`} />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value={NavLinkLocation.HEADER}>
+                    <Trans>Header</Trans>
+                  </SelectItem>
+                  <SelectItem value={NavLinkLocation.FOOTER}>
+                    <Trans>Footer</Trans>
+                  </SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
@@ -167,7 +195,11 @@ export function NavLinkForm() {
           className="w-full"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots /> : <span>{isEdit ? 'Save' : 'Add'}</span>}
+          {isLoading ? (
+            <LoadingDots />
+          ) : (
+            <span>{isEdit ? <Trans>Save</Trans> : <Trans>Add</Trans>}</span>
+          )}
         </Button>
       </form>
     </Form>

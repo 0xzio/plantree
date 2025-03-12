@@ -3,6 +3,7 @@ import { initLingui } from '@/initLingui'
 import { getHomeSites, getSiteCount } from '@/lib/fetchers'
 import { Trans } from '@lingui/react/macro'
 import { Metadata } from 'next'
+import { FeatureList } from './FeatureList'
 import { LaunchButton } from './LaunchButton'
 import { Screenshots } from './Screenshots'
 import { SiteCount } from './SiteCount'
@@ -46,20 +47,25 @@ export default async function HomePage(props: { params: any }) {
   initLingui(lang === 'pseudo' ? 'en' : lang)
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
   return (
-    <div>
+    <div className="flex flex-col gap-y-10">
       <div className="flex justify-center mt-8">
         <SiteCount count={count} sites={sites} />
       </div>
 
-      <div className="flex items-center justify-between mt-10 mb-6">
-        <div className="text-2xl font-semibold">
+      <FeatureList />
+
+      {/* <div className="flex items-center justify-between mt-10 mb-6">
+        <Suspense fallback={''}>
+          <LaunchButton />
+        </Suspense>
+      </div> */}
+
+      <div className="space-y-2">
+        <div className="text-3xl font-bold">
           <Trans>Sites</Trans>
         </div>
-        {/* <Suspense fallback={''}>
-          <LaunchButton />
-        </Suspense> */}
+        <SiteList />
       </div>
-      <SiteList />
     </div>
   )
 }

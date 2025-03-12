@@ -15,9 +15,7 @@ export default async function HomePage() {
 
   return (
     <div className="mt-10 sm:mt-20 mx-auto w-full lg:max-w-3xl">
-      <div className="prose max-w-none pb-8 dark:prose-invert w-full">
-        <ContentRender content={page.content} />
-      </div>
+      <ContentRender content={page.content} />
     </div>
   )
 }

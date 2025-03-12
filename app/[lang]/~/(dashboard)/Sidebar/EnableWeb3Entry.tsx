@@ -19,7 +19,7 @@ export function EnableWeb3Entry() {
           <li>Make post collectible</li>
         </ul>
       </div>
-      <ArrowRight size={20} className="text-foreground/50 flex-shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50shrink-0" />
     </Link>
   )
 }

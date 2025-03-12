@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma'
-import { Friend, Project, Site } from '@/lib/theme.types'
+import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
+import { initPages } from '@/server/lib/initPages'
 import { post } from '@farcaster/auth-client'
 import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
@@ -20,6 +21,7 @@ import {
   SUBGRAPH_URL,
 } from './constants'
 import { SpaceType } from './types'
+import { uniqueId } from './unique-id'
 import { getUrl } from './utils'
 
 const REVALIDATE_TIME = process.env.REVALIDATE_TIME
@@ -59,7 +61,11 @@ export async function getSite(params: any) {
           return editorDefaultValue
         }
       }
+      const config = site.config as any as Site['config']
 
+      const isNavLinkValid = ((site?.navLinks || []) as NavLink[])?.some(
+        (i) => i.pathname === '/ama',
+      )
       return {
         ...site,
         // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
@@ -67,7 +73,9 @@ export async function getSite(params: any) {
         logo: getUrl(site.logo || ''),
         image: getUrl(site.image || ''),
         about: getAbout(),
-        navLinks: site.navLinks || defaultNavLinks,
+        navLinks: isNavLinkValid ? site.navLinks : defaultNavLinks,
+        seoTitle: config?.seo?.title || site?.name || '',
+        seoDescription: config?.seo?.description || site?.description || '',
       } as any as Site
     },
     [`site-${domain}`],
@@ -271,20 +279,42 @@ export async function getSpaceIds() {
   )()
 }
 
-export async function getPage(siteId: string, slug: string) {
+export async function getPage(siteId = '', slug = '') {
   return await unstable_cache(
     async () => {
-      const page = await prisma.post.findFirst({
-        where: { slug, siteId },
+      const page = await prisma.post.findUnique({
+        where: {
+          siteId_slug: {
+            siteId: siteId || uniqueId(),
+            slug: slug || uniqueId(),
+          },
+        },
       })
 
-      if (!page) return null
+      if (!page) {
+        try {
+          const site = await prisma.site.findUniqueOrThrow({
+            where: { id: siteId },
+          })
+          await initPages(siteId, site.userId)
+          const page = await prisma.post.findUnique({
+            where: {
+              siteId_slug: {
+                siteId: siteId || uniqueId(),
+                slug: slug || uniqueId(),
+              },
+            },
+          })
+          return page
+        } catch (error) {}
+      }
 
       return page
     },
     [`${siteId}-page-${slug}`],
     {
-      revalidate: REVALIDATE_TIME,
+      // revalidate: REVALIDATE_TIME,
+      revalidate: 10,
       tags: [`${siteId}-page-${slug}`],
     },
   )()
@@ -393,6 +423,7 @@ function findManyPosts(siteId: string) {
     },
     where: {
       siteId,
+      isPage: false,
       status: PostStatus.PUBLISHED,
     },
     orderBy: [{ publishedAt: 'desc' }],

@@ -1,6 +1,11 @@
 import { PostsNav } from '@/app/[lang]/~/(dashboard)/posts/components/PostsNav'
 import { cacheHelper } from '@/lib/cache-header'
-import { FREE_PLAN_POST_LIMIT, IPFS_ADD_URL, PostStatus } from '@/lib/constants'
+import {
+  BUILTIN_PAGE_SLUGS,
+  FREE_PLAN_POST_LIMIT,
+  IPFS_ADD_URL,
+  PostStatus,
+} from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
@@ -35,7 +40,6 @@ export const postRouter = router({
     )
     .query(async ({ ctx, input }) => {
       const { siteId } = input
-
       const cachedMySites = await cacheHelper.getCachedSitePosts(siteId)
       if (cachedMySites) return cachedMySites
 
@@ -180,6 +184,7 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
       return post
     }),
 
@@ -207,14 +212,13 @@ export const postRouter = router({
     .input(
       z.object({
         siteId: z.string(),
-        postId: z.string().optional(),
+        postId: z.string(),
+        slug: z.string(),
         creationId: z.number().optional(),
         type: z.nativeEnum(PostType),
         gateType: z.nativeEnum(GateType),
         collectible: z.boolean(),
         delivered: z.boolean(),
-        image: z.string().optional(),
-        content: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -228,60 +232,22 @@ export const postRouter = router({
         })
       }
 
-      let post = await prisma.post.findFirst({
+      let post = await prisma.post.findUniqueOrThrow({
         where: { id: input.postId },
       })
 
-      function getPostInfo() {
-        if (input.postId) {
-          return { title: post?.title, content: input.content }
-        }
-
-        const [title, ...nodes] = JSON.parse(input.content)
-
-        return {
-          title: SlateNode.string(title),
-          content: JSON.stringify(nodes),
-        }
+      if (BUILTIN_PAGE_SLUGS.includes(post.slug) && post.slug !== input.slug) {
+        throw new TRPCError({
+          code: 'BAD_GATEWAY',
+          message: 'You can not update builtin page slug.',
+        })
       }
 
-      const info = getPostInfo()
       let shouldCreateNewsletter = false
 
-      if (!post) {
-        post = await prisma.post.create({
-          data: {
-            siteId: input.siteId,
-            userId,
-            title: info.title,
-            type: input.type,
-            status: PostStatus.PUBLISHED,
-            image: input.image,
-            gateType: input.gateType,
-            collectible: input.collectible,
-            content: info.content,
-            delivered: input.delivered,
-          },
-        })
-        shouldCreateNewsletter = input.delivered
-      } else {
-        const wasDelivered = post.delivered
-        post = await prisma.post.update({
-          where: { id: post.id },
-          data: {
-            slug: post.isPage ? slug(post.title) : post.id,
-            title: info.title,
-            type: input.type,
-            image: input.image,
-            status: PostStatus.PUBLISHED,
-            gateType: input.gateType,
-            collectible: input.collectible,
-            content: info.content,
-            delivered: wasDelivered ? wasDelivered : input.delivered,
-          },
-        })
-        shouldCreateNewsletter = input.delivered && !wasDelivered
-      }
+      const wasDelivered = post.delivered
+
+      shouldCreateNewsletter = input.delivered && !wasDelivered
 
       if (shouldCreateNewsletter) {
         const site = await prisma.site.findUniqueOrThrow({
@@ -293,11 +259,11 @@ export const postRouter = router({
         await createNewsletterWithDelivery({
           siteId: input.siteId,
           postId: post.id,
-          title: info.title || '',
+          title: post.title || '',
           // content: renderSlateToHtml(JSON.parse(info.content)),
           content: getPostEmailTpl(
-            info.title || '',
-            renderSlateToHtml(JSON.parse(info.content)),
+            post.title || '',
+            renderSlateToHtml(JSON.parse(post.content)),
             `https://${domain.domain}.penx.io/posts/${post.slug}`,
             post.image ? getUrl(post.image) : '',
           ),
@@ -305,26 +271,27 @@ export const postRouter = router({
         })
       }
 
+      post = await prisma.post.update({
+        where: { id: post.id },
+        data: {
+          slug: input.slug,
+          type: input.type,
+          status: PostStatus.PUBLISHED,
+          gateType: input.gateType,
+          creationId,
+          // cid: res.cid,
+          collectible: input.collectible,
+          delivered: wasDelivered ? wasDelivered : input.delivered,
+          publishedAt: new Date(),
+        },
+      })
+
       const newPost = await prisma.post.findUnique({
         include: {
           postTags: { include: { tag: true } },
           comments: true,
         },
         where: { id: post.id },
-      })
-
-      await prisma.post.update({
-        where: { id: post.id },
-        data: {
-          status: PostStatus.PUBLISHED,
-          slug: post.isPage ? slug(post.title) : post.id,
-          collectible,
-          creationId,
-          // cid: res.cid,
-          cid: '',
-          publishedAt: new Date(),
-          gateType,
-        },
       })
 
       const publishedCount = await prisma.post.count({
@@ -338,9 +305,12 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
+      revalidateTag(`${post.siteId}-page-${post.slug}`)
+      revalidatePath(`/pages/${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
 
       return newPost
@@ -365,10 +335,13 @@ export const postRouter = router({
 
       await cacheHelper.updateCachedPost(post.id, null)
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
 
       revalidateTag(`${post.siteId}-posts`)
-      revalidateTag(`posts-${post.slug}`)
+      revalidateTag(`${post.siteId}-posts-${post.slug}`)
+      revalidateTag(`${post.siteId}-pages-${post.slug}`)
       revalidatePath(`/posts/${post.slug}`)
+      revalidatePath(`/pages/${post.slug}`)
 
       return post
     }),
@@ -378,6 +351,7 @@ export const postRouter = router({
       z.object({
         siteId: z.string(),
         posts: z.array(z.any()),
+        postStatus: z.nativeEnum(PostStatus).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -391,7 +365,9 @@ export const postRouter = router({
               userId: ctx.token.uid,
               title: p.title,
               content: p.content,
-              status: p.status,
+              status: Reflect.has(input, 'postStatus')
+                ? input.postStatus
+                : p.status,
               image: p.image,
               type: p.type,
             })),
@@ -420,6 +396,9 @@ export const postRouter = router({
           })
 
           await cacheHelper.updateCachedSitePosts(siteId, null)
+          await cacheHelper.updateCachedSitePages(siteId, null)
+
+          revalidateTag(`${siteId}-posts`)
           return true
         },
         {
@@ -449,15 +428,27 @@ export const postRouter = router({
 
   delete: protectedProcedure
     .input(z.string())
-    .mutation(async ({ ctx, input }) => {
-      const post = await prisma.post.delete({
-        where: { id: input },
+    .mutation(async ({ ctx, input: id }) => {
+      return prisma.$transaction(async (tx) => {
+        const post = await tx.post.findUniqueOrThrow({
+          where: { id },
+        })
+
+        if (BUILTIN_PAGE_SLUGS.includes(post.slug)) {
+          throw new TRPCError({
+            code: 'BAD_GATEWAY',
+            message: 'You can not delete builtin page.',
+          })
+        }
+
+        await tx.author.deleteMany({ where: { postId: id } })
+        await prisma.post.delete({
+          where: { id: id },
+        })
+        await cacheHelper.updateCachedPost(post.id, null)
+        await cacheHelper.updateCachedSitePosts(post.siteId, null)
+        return post
       })
-
-      await cacheHelper.updateCachedPost(post.id, null)
-      await cacheHelper.updateCachedSitePosts(post.siteId, null)
-
-      return post
     }),
 
   deleteSitePosts: protectedProcedure
@@ -545,7 +536,7 @@ export const postRouter = router({
 
 function findSitePosts(siteId: string) {
   return prisma.post.findMany({
-    where: { siteId },
+    where: { siteId, isPage: false },
     include: {
       postTags: { include: { tag: true } },
       user: {

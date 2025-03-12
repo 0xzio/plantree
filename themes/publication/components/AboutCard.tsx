@@ -1,12 +1,14 @@
 'use client'
 
-import Image from 'next/image'
-import { useAccount } from 'wagmi'
+import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Button } from '@/components/ui/button'
 import { Post, Site } from '@/lib/theme.types'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useSession } from '@/lib/useSession'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
+import Image from 'next/image'
+import { usePathname } from 'next/navigation'
+import { useAccount } from 'wagmi'
 
 interface Props {
   site: Site
@@ -16,9 +18,11 @@ export const AboutCard = ({ site }: Props) => {
   const { openConnectModal } = useConnectModal()
   const { isConnected } = useAccount()
   const { data } = useSession()
+  const { setIsOpen } = useLoginDialog()
+  const pathname = usePathname()
   return (
     <div className="mb-10 hover:text-foreground text-foreground/80">
-      <div className="flex flex-col flex-shrink-0">
+      <div className="flex flex-colshrink-0">
         {site.logo && (
           <Image
             src={site.logo}
@@ -41,11 +45,15 @@ export const AboutCard = ({ site }: Props) => {
         size="lg"
         className="w-full rounded-xl"
         onClick={() => {
-          if (!isConnected) {
-            openConnectModal?.()
+          // if (!isConnected) {
+          //   openConnectModal?.()
+          // }
+
+          if (!data) {
+            setIsOpen(true)
           }
           if (data) {
-            location.href = `/membership`
+            location.href = `/subscribe?source=${pathname}`
           }
         }}
       >

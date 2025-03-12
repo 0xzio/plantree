@@ -4,6 +4,7 @@ import { PropsWithChildren } from 'react'
 import { Separator } from '@/components/ui/separator'
 import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 
 interface Props {}
 
@@ -35,11 +36,12 @@ export function SettingNav({}: Props) {
     membership: '/~/settings/membership',
     products: '/~/settings/products',
     orders: '/~/settings/orders',
+    seo: '/~/settings/seo',
   }
 
   const linkClassName = (path: string) =>
     cn(
-      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparent flex-shrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
+      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparentshrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
       path === pathname && 'border-foreground/60',
       path === pathname && 'text-foreground font-bold',
     )
@@ -48,13 +50,13 @@ export function SettingNav({}: Props) {
     <div className="space-y-6">
       <Section title="Account">
         <Link href={Paths.profile} className={linkClassName(Paths.profile)}>
-          Profile
+          <Trans>Profile</Trans>
         </Link>
         <Link
           href={Paths.linkAccounts}
           className={linkClassName(Paths.linkAccounts)}
         >
-          Link Accounts
+          <Trans>Link accounts</Trans>
         </Link>
       </Section>
 
@@ -62,10 +64,10 @@ export function SettingNav({}: Props) {
 
       <Section title="Site - general">
         <Link href={Paths.general} className={linkClassName(Paths.general)}>
-          General
+          <Trans>General</Trans>
         </Link>
         <Link href={Paths.features} className={linkClassName(Paths.features)}>
-          Features
+          <Trans>Features</Trans>
         </Link>
 
         {/* <Link href={Paths.web3} className={linkClassName(Paths.web3)}>
@@ -76,15 +78,15 @@ export function SettingNav({}: Props) {
           href={Paths.subscription}
           className={linkClassName(Paths.subscription)}
         >
-          PenX PRO
+          <Trans>PenX Pro</Trans>
         </Link>
 
         <Link href={Paths.tags} className={linkClassName(Paths.tags)}>
-          Tags
+          <Trans>Tags</Trans>
         </Link>
 
         {/* <Link href={Paths.i18n} className={linkClassName(Paths.i18n)}>
-          i18n
+          <Trans>i18n</Trans>
         </Link> */}
       </Section>
 
@@ -93,13 +95,13 @@ export function SettingNav({}: Props) {
           href={Paths.membership}
           className={linkClassName(Paths.membership)}
         >
-          Membership
+          <Trans>Membership</Trans>
         </Link>
         <Link href={Paths.products} className={linkClassName(Paths.products)}>
-          Products
+          <Trans>Products</Trans>
         </Link>
         <Link href={Paths.orders} className={linkClassName(Paths.orders)}>
-          Orders
+          <Trans>Orders</Trans>
         </Link>
       </Section>
 
@@ -108,26 +110,26 @@ export function SettingNav({}: Props) {
           href={Paths.appearance}
           className={linkClassName(Paths.appearance)}
         >
-          Appearance
+          <Trans>Appearance</Trans>
         </Link>
         <Link
           href={Paths.navigation}
           className={linkClassName(Paths.navigation)}
         >
-          Navigation
-        </Link>
-        <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
-          Catalogue
+          <Trans>Navigation</Trans>
         </Link>
         <Link href={Paths.socials} className={linkClassName(Paths.socials)}>
-          Socials
+          <Trans>Socials</Trans>
         </Link>
 
         <Link href={Paths.projects} className={linkClassName(Paths.projects)}>
-          Projects
+          <Trans>Projects</Trans>
         </Link>
         <Link href={Paths.friends} className={linkClassName(Paths.friends)}>
-          Friends
+          <Trans>Friends</Trans>
+        </Link>
+        <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
+          <Trans>Catalogue</Trans>
         </Link>
       </Section>
 
@@ -136,31 +138,36 @@ export function SettingNav({}: Props) {
           href={Paths.collaborators}
           className={linkClassName(Paths.collaborators)}
         >
-          Collaborators
+          <Trans>Collaborators</Trans>
         </Link>
         <Link
           href={Paths.accessToken}
           className={linkClassName(Paths.accessToken)}
         >
-          Access token
+          <Trans>Access token</Trans>
         </Link>
+
+        <Link href={Paths.seo} className={linkClassName(Paths.seo)}>
+          <Trans>SEO</Trans>
+        </Link>
+
         <Link href={Paths.analytics} className={linkClassName(Paths.analytics)}>
-          Analytics
+          <Trans>Analytics</Trans>
         </Link>
 
         <Link href={Paths.domain} className={linkClassName(Paths.domain)}>
-          Domain
+          <Trans>Domain</Trans>
         </Link>
 
         <Link href={Paths.backup} className={linkClassName(Paths.backup)}>
-          Backup
+          <Trans>Backup</Trans>
         </Link>
 
         <Link
           href={Paths.importExport}
           className={linkClassName(Paths.importExport)}
         >
-          Import/Export
+          <Trans>Import/Export</Trans>
         </Link>
       </Section>
     </div>

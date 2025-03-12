@@ -15,6 +15,7 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { NavLink, NavLinkType } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { Site } from '@prisma/client'
 import { arrayMoveImmutable } from 'array-move'
 import { produce } from 'immer'
@@ -28,15 +29,12 @@ interface Props {
 }
 
 export function NavList({ site }: Props) {
-  const navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
+  let navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
   const { setState } = useNavLinkDialog()
   const { refetch } = useSite()
 
-  // TODO: fallback
-  if (!navLinks.some((link) => link.pathname === '/friends')) {
-    navLinks.push(defaultNavLinks[2])
-    navLinks.push(defaultNavLinks[3])
-  }
+  const isNavLinkValid = navLinks.some((i) => i.pathname === '/ama')
+  navLinks = isNavLinkValid ? navLinks : defaultNavLinks
 
   return (
     <>
@@ -44,10 +42,21 @@ export function NavList({ site }: Props) {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Title</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Path</TableHead>
-            <TableHead>Operation</TableHead>
+            <TableHead>
+              <Trans>Title</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Type</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Location</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Path</Trans>
+            </TableHead>
+            <TableHead>
+              <Trans>Operation</Trans>
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -90,6 +99,7 @@ export function NavList({ site }: Props) {
               <TableRow key={index}>
                 <TableCell>{item.title}</TableCell>
                 <TableCell>{item.type}</TableCell>
+                <TableCell>{item.location}</TableCell>
                 <TableCell>{item.pathname}</TableCell>
                 <TableCell className="flex items-center gap-1 text-foreground/70">
                   <ArrowUp

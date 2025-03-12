@@ -1,5 +1,7 @@
-import { getFriends, getSite } from '@/lib/fetchers'
-import { loadTheme } from '@/lib/loadTheme'
+import { FriendsProvider } from '@/components/FriendsContext'
+import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { editorDefaultValue } from '@/lib/constants'
+import { getFriends, getPage, getSite } from '@/lib/fetchers'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -12,8 +14,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const site = await getSite(await params)
   return {
-    title: `Friends | ${site.name}`,
-    description: site.description,
+    title: `Friends | ${site.seoTitle}`,
+    description: site.seoDescription,
   }
 }
 
@@ -24,11 +26,13 @@ export default async function Page({
 }) {
   const site = await getSite(await params)
   const friends = await getFriends(site.id)
-  const { FriendsPage } = loadTheme(site.themeName)
+  const page = await getPage(site.id, 'friends')
 
-  if (!FriendsPage) {
-    return <div>Theme not found</div>
-  }
-
-  return <FriendsPage site={site} friends={friends} />
+  return (
+    <div className="mx-auto max-w-2xl">
+      <FriendsProvider friends={friends}>
+        <ContentRender content={page?.content || editorDefaultValue} />
+      </FriendsProvider>
+    </div>
+  )
 }

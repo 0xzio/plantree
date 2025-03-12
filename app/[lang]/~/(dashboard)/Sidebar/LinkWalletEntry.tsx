@@ -24,7 +24,7 @@ export function LinkWalletEntry() {
           Link to wallet for easier claiming airdrop.
         </div>
       </div>
-      <ArrowRight size={20} className="text-foreground/50 flex-shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50shrink-0" />
     </Link>
   )
 }

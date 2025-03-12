@@ -1,4 +1,4 @@
-import { NavLink, NavLinkType } from '../theme.types'
+import { NavLink, NavLinkLocation, NavLinkType } from '../theme.types'
 
 export const isServer = typeof window === 'undefined'
 export const isBrowser = typeof window !== 'undefined'
@@ -92,35 +92,55 @@ export const defaultNavLinks: NavLink[] = [
     title: 'Home',
     pathname: '/',
     type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
     visible: true,
   },
   {
     title: 'Posts',
     pathname: '/posts',
     type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
     visible: true,
   },
   {
     title: 'Projects',
     pathname: '/projects',
     type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
+    visible: true,
+  },
+  {
+    title: 'Tags',
+    pathname: '/tags',
+    type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
     visible: true,
   },
   {
     title: 'Friends',
     pathname: '/friends',
     type: NavLinkType.BUILTIN,
-    visible: false,
+    location: NavLinkLocation.HEADER,
+    visible: true,
   },
   {
-    title: 'Tags',
-    pathname: '/tags',
+    title: 'Guestbook',
+    pathname: '/guestbook',
     type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
+    visible: true,
+  },
+  {
+    title: 'AMA',
+    pathname: '/ama',
+    type: NavLinkType.BUILTIN,
+    location: NavLinkLocation.HEADER,
     visible: true,
   },
   {
     title: 'About',
     pathname: '/about',
+    location: NavLinkLocation.HEADER,
     type: NavLinkType.BUILTIN,
     visible: true,
   },
@@ -153,3 +173,5 @@ export const PRO_PLAN_COLLABORATOR_LIMIT = Number(
 export const TEAM_PLAN_COLLABORATOR_LIMIT = Number(
   process.env.TEAM_PLAN_COLLABORATOR_LIMIT || 6,
 )
+
+export const BUILTIN_PAGE_SLUGS = ['projects', 'friends', 'guestbook', 'ama']

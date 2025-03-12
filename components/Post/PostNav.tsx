@@ -2,16 +2,18 @@
 
 import { usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
-import { ROOT_DOMAIN } from '@/lib/constants'
+import { BUILTIN_PAGE_SLUGS, ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { PostStatus } from '@prisma/client'
 import { ChevronLeft, ExternalLink } from 'lucide-react'
-import { PublishPostPopover } from '../PublishPostPopover'
 import { useSiteContext } from '../SiteContext'
 import { Badge } from '../ui/badge'
+import { Button } from '../ui/button'
 import { MoreMenu } from './MoreMenu'
+import { PublishDialog } from './PublishDialog/PublishDialog'
+import { usePublishDialog } from './PublishDialog/usePublishDialog'
 
 interface PostHeaderProps {
   className?: string
@@ -22,6 +24,12 @@ export function PostNav({ className }: PostHeaderProps) {
   const site = useSiteContext()
   const { isSubdomain, domain } = getSiteDomain(site as any)
   const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
+  const { setIsOpen } = usePublishDialog()
+
+  let prefix = post?.isPage ? '/pages' : '/posts'
+  if (BUILTIN_PAGE_SLUGS.includes(post?.slug)) {
+    prefix = ''
+  }
 
   return (
     <div
@@ -32,23 +40,20 @@ export function PostNav({ className }: PostHeaderProps) {
     >
       <div className="flex items-center gap-6">
         <Link
-          href="/~/posts"
-          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer flex-shrink-0"
+          href={post?.isPage ? '/~/pages' : '/~/posts'}
+          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointershrink-0"
         >
           <ChevronLeft size={20} />
         </Link>
 
         {post?.status === PostStatus.PUBLISHED && (
           <div className="hidden md:flex items-center gap-1">
-            <Badge size="sm" className="text-xs">
-              Published
-            </Badge>
             <a
-              href={`${location.protocol}//${host}/posts/${post.slug}`}
+              href={`${location.protocol}//${host}${prefix}/${post.slug}`}
               target="_blank"
               className="text-foreground/40 hover:text-foreground/80 flex items-center gap-1 text-sm"
             >
-              <span>{`/posts/${post.slug}`}</span>
+              <span>{`${prefix}/${post.slug}`}</span>
               <ExternalLink size={14} />
             </a>
           </div>
@@ -60,7 +65,17 @@ export function PostNav({ className }: PostHeaderProps) {
           <div className="rounded-lg bg-accent px-2 py-1 text-sm text-foreground/40">
             {isPostSaving ? 'Saving...' : 'Saved'}
           </div>
-          <PublishPostPopover className="" />
+          <PublishDialog />
+          <Button
+            size="sm"
+            // variant="secondary"
+            className={cn('w-24', className)}
+            onClick={() => {
+              setIsOpen(true)
+            }}
+          >
+            Publish
+          </Button>
           <MoreMenu post={post} />
         </div>
       )}

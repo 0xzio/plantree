@@ -31,7 +31,7 @@ export function CreatorFiLayout({ children }: PropsWithChildren<Props>) {
           {children}
         </div>
 
-        <div className="flex flex-col w-full lg:w-[360px] flex-shrink-0">
+        <div className="flex flex-col w-full lg:w-[360px]shrink-0">
           <Transaction />
           <div className="mt-8 lg:block">
             <Tabs

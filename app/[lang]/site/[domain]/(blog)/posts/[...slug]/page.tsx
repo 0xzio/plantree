@@ -28,10 +28,10 @@ export async function generateMetadata(props: {
   const site = await getSite(params)
   const slug = decodeURI(params.slug.join('/'))
   const lang = params.lang
-  const page = await getPost(site.id, slug)
+  const post = await getPost(site.id, slug)
   return {
-    title: page?.title,
-    description: page?.description,
+    title: post?.title || site.seoTitle,
+    description: post?.description || site.seoDescription,
   }
 }
 

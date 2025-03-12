@@ -87,7 +87,7 @@ export function FeaturesSettingForm({ site }: Props) {
           control={form.control}
           name="journal"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="feature-journal"
@@ -107,7 +107,7 @@ export function FeaturesSettingForm({ site }: Props) {
           control={form.control}
           name="page"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="feature-page"
@@ -127,7 +127,7 @@ export function FeaturesSettingForm({ site }: Props) {
           control={form.control}
           name="database"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="feature-database"
@@ -147,7 +147,7 @@ export function FeaturesSettingForm({ site }: Props) {
           control={form.control}
           name="gallery"
           render={({ field }) => (
-            <FormItem className="space-y-3">
+            <FormItem>
               <div className="flex items-center space-x-2">
                 <Switch
                   id="feature-gallery"

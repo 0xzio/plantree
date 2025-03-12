@@ -28,7 +28,7 @@ export function ImportCard() {
     <div>
       <h2 className="text-2xl font-semibold">Import</h2>
       <div className="text-foreground/60 mb-4">
-        Export your data: subscribers, posts. everything else.
+        Import your data: subscribers, posts. everything else.
       </div>
       <div className="space-y-1">
         <ImportPosts />

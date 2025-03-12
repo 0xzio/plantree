@@ -104,8 +104,14 @@ import {
 } from '@udecode/plate-table'
 import { BaseTogglePlugin } from '@udecode/plate-toggle'
 import Prism from 'prismjs'
+import { BaseCommentBoxPlugin } from '../custom-plate-plugins/comment-box'
+import { CommentBoxElementStatic } from '../custom-plate-plugins/comment-box/react/comment-box-element-static'
+import { BaseFriendsPlugin } from '../custom-plate-plugins/friends'
+import { FriendsElementStatic } from '../custom-plate-plugins/friends/react/friends-element-static'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
+import { BaseProjectsPlugin } from '../custom-plate-plugins/projects'
+import { ProjectsElementStatic } from '../custom-plate-plugins/projects/react/projects-element-static'
 
 export const serverSideComponents = {
   [BaseAudioPlugin.key]: MediaAudioElementStatic,
@@ -149,6 +155,9 @@ export const serverSideComponents = {
   [HEADING_KEYS.h5]: withProps(HeadingElementStatic, { variant: 'h5' }),
   [HEADING_KEYS.h6]: withProps(HeadingElementStatic, { variant: 'h6' }),
   [BaseProductPlugin.key]: ProductElementStatic,
+  [BaseCommentBoxPlugin.key]: CommentBoxElementStatic,
+  [BaseFriendsPlugin.key]: FriendsElementStatic,
+  [BaseProjectsPlugin.key]: ProjectsElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -238,5 +247,8 @@ export const serverSideEditor = createSlateEditor({
     BaseCommentsPlugin,
     BaseTogglePlugin,
     BaseProductPlugin,
+    BaseCommentBoxPlugin,
+    BaseFriendsPlugin,
+    BaseProjectsPlugin,
   ],
 })

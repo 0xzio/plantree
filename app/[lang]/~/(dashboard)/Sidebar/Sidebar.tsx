@@ -2,7 +2,8 @@
 
 import { useMemo } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
-import { Link } from '@/lib/i18n'
+import { Button } from '@/components/ui/button'
+import { Link, usePathname } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { useSession } from '@/lib/useSession'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
@@ -19,14 +20,16 @@ import {
   Users,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import { usePathname, useSearchParams } from 'next/navigation'
+import { useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
+import { ImportPostEntry } from './ImportPostEntry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
 import { QuickSearchTrigger } from './QuickSearchTrigger'
 import { SidebarItem } from './SidebarItem'
 import { SitesPopover } from './SitesPopover/SitesPopover'
 import { UpgradeButton } from './UpgradeButton'
+import { VisitSiteButton } from './VisitSiteButton'
 
 const LinkAccountEntry = dynamic(() => import('./LinkAccountEntry'), {
   ssr: false,
@@ -156,8 +159,12 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       <div className="px-2 pb-2 flex-1">
         {/* {!spaceId && <EnableWeb3Entry />} */}
         {/* <LinkAccountEntry /> */}
+        <ImportPostEntry />
       </div>
-      <UpgradeButton />
+      <div className="">
+        <VisitSiteButton />
+        <UpgradeButton />
+      </div>
     </div>
   )
 }

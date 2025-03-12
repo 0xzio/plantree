@@ -1,8 +1,7 @@
-import * as React from 'react';
-
-import { Slot } from '@radix-ui/react-slot';
-import { cn, withRef } from '@udecode/cn';
-import { type VariantProps, cva } from 'class-variance-authority';
+import * as React from 'react'
+import { Slot } from '@radix-ui/react-slot'
+import { cn, withRef } from '@udecode/cn'
+import { cva, type VariantProps } from 'class-variance-authority'
 
 export const buttonVariants = cva(
   'inline-flex cursor-pointer items-center justify-center gap-2 rounded-md text-sm font-medium whitespace-nowrap ring-offset-background transition-colors focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
@@ -36,16 +35,16 @@ export const buttonVariants = cva(
           'bg-secondary text-secondary-foreground hover:bg-secondary/80',
       },
     },
-  }
-);
+  },
+)
 
 export const Button = withRef<
   'button',
   {
-    asChild?: boolean;
+    asChild?: boolean
   } & VariantProps<typeof buttonVariants>
 >(({ asChild = false, className, isMenu, size, variant, ...props }, ref) => {
-  const Comp = asChild ? Slot : 'button';
+  const Comp = asChild ? Slot : 'button'
 
   return (
     <Comp
@@ -53,5 +52,5 @@ export const Button = withRef<
       className={cn(buttonVariants({ className, isMenu, size, variant }))}
       {...props}
     />
-  );
-});
+  )
+})

@@ -1,8 +1,9 @@
 'use client'
 
 import { ReactNode } from 'react'
+import SocialIcon from '@/components/theme-ui/SocialIcon'
 import { Link } from '@/lib/i18n'
-import { ExternalLink } from 'lucide-react'
+import { ArrowUpRight, ExternalLink } from 'lucide-react'
 import { toast } from 'sonner'
 
 type NavItem = {
@@ -55,6 +56,11 @@ export const Nav = () => {
     //   isExternal: true,
     //   to: 'https://github.com/penx-labs/penx-desktop/releases',
     // },
+    {
+      text: 'Discord',
+      isExternal: true,
+      to: 'https://discord.gg/nyVpH9njDu',
+    },
   ]
 
   return (
@@ -85,9 +91,9 @@ export const Nav = () => {
               >
                 {item.text && <div>{item.text}</div>}
                 {!!item.icon && item.icon}
-                {/* <div className="inline-flex">
-                  <ExternalLink size={16}></ExternalLink>
-                </div> */}
+                <div className="inline-flex">
+                  <ArrowUpRight size={12} className="text-foreground/60" />
+                </div>
               </a>
             </div>
           )

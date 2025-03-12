@@ -7,12 +7,13 @@ import Image from 'next/image'
 import { toast } from 'sonner'
 
 interface Props {
+  saveToDB?: boolean
   value?: string
   onChange?: (value: string) => void
 }
 
 export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
-  { value, onChange },
+  { value, onChange, saveToDB = true },
   ref,
 ) {
   const inputRef = useRef<HTMLInputElement>(null)
@@ -25,7 +26,7 @@ export const FileUpload = forwardRef<HTMLDivElement, Props>(function FileUpload(
       // onChange?.(src)
 
       try {
-        const data = await uploadFile(file)
+        const data = await uploadFile(file, { saveToDB })
         console.log('==========data:', data)
         toast.success('Image uploaded successfully!')
         onChange?.(data.url!)

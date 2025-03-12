@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { CommentWidget } from '@/components/CommentWidget'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
@@ -16,7 +17,6 @@ import {
 } from '@/components/ui/sheet'
 import { Post } from '@/lib/theme.types'
 import { CommentAmount } from './CommentAmount'
-import { CommentContent } from './CommentContent'
 
 interface Props {
   post: Post
@@ -33,7 +33,7 @@ export function CommentSheet({ post }: Props) {
             <SheetTitle>Comments</SheetTitle>
           </SheetHeader>
           <div className="px-4">
-            <CommentContent postId={post.id} />
+            <CommentWidget postId={post.id} isInPage={false} />
           </div>
         </SheetContent>
       </Sheet>

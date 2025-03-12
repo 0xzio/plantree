@@ -33,7 +33,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
 
   const isImporting = isTaskLoading || isPostImporting
 
-  const [activeTab, setActiveTab] = useState<'file' | 'url'>('file')
+  const [activeTab, setActiveTab] = useState<'file' | 'url'>('url')
 
   const handleFileImport = async (file: File) => {
     const success = await importFromFile(file)
@@ -69,7 +69,6 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
         onValueChange={(value) => setActiveTab(value as 'file' | 'url')}
       >
         <TabsList className="grid grid-cols-2 w-full">
-          <TabsTrigger value="file">File Import</TabsTrigger>
           <TabsTrigger value="url" className="relative">
             URL
             {activeTab === 'url' && (
@@ -81,6 +80,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
               </Badge>
             )}
           </TabsTrigger>
+          <TabsTrigger value="file">File Import</TabsTrigger>
         </TabsList>
 
         <TabsContent value="file" className="py-4">

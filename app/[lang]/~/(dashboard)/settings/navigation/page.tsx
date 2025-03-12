@@ -24,29 +24,25 @@ export default function Page() {
 
   return (
     <div className="grid gap-4">
-      <Card>
-        <CardHeader>
-          <CardTitle className="flex justify-between items-center">
-            <div>Navigation links</div>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => {
-                setState({
-                  isOpen: true,
-                  navLink: null as any,
-                  index: -1,
-                })
-              }}
-            >
-              Add
-            </Button>
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <NavList site={site} />
-        </CardContent>
-      </Card>
+      <div>
+        <CardTitle className="flex justify-between items-center">
+          <div>Navigation links</div>
+          <Button
+            variant="secondary"
+            size="sm"
+            onClick={() => {
+              setState({
+                isOpen: true,
+                navLink: null as any,
+                index: -1,
+              })
+            }}
+          >
+            Add
+          </Button>
+        </CardTitle>
+      </div>
+      <NavList site={site} />
     </div>
   )
 }

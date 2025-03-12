@@ -58,7 +58,7 @@ export function PlanItem({
 
 function BenefitItem({ text }: { text: string }) {
   return (
-    <div className="flex items-center gap-3 flex-shrink-0">
+    <div className="flex items-center gap-3shrink-0">
       <Check className="text-green-500" size={16} />
       <div className="text-foreground/70">{text}</div>
     </div>

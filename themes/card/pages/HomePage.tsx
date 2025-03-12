@@ -14,7 +14,7 @@ export function HomePage({ posts = [], site }: Props) {
   return (
     <div className="mt-12">
       <div className="max-w-none mb-10 hover:text-foreground text-foreground/80">
-        <div className="flex flex-col items-center flex-shrink-0">
+        <div className="flex flex-col items-centershrink-0">
           {site.logo && (
             <Image
               src={site.logo}

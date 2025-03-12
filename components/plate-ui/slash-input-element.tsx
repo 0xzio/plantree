@@ -31,8 +31,10 @@ import {
   Heading2Icon,
   Heading3Icon,
   Image,
+  Lightbulb,
   ListIcon,
   ListOrdered,
+  MessageCircleMoreIcon,
   PilcrowIcon,
   Quote,
   RadicalIcon,
@@ -41,8 +43,13 @@ import {
   Square,
   Table,
   TableOfContentsIcon,
+  UserRoundIcon,
 } from 'lucide-react'
+import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
+import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
+import { ProductPlugin } from '../custom-plate-plugins/product/react'
+import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
 import {
   InlineCombobox,
   InlineComboboxContent,
@@ -189,7 +196,25 @@ const groups: Group[] = [
         focusEditor: false,
         icon: <ShoppingBagIcon />,
         label: 'Product',
-        value: BaseProductPlugin.key,
+        value: ProductPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <MessageCircleMoreIcon />,
+        label: 'Comment Box',
+        value: CommentBoxPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <UserRoundIcon />,
+        label: 'Friend Links',
+        value: FriendsPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <Lightbulb />,
+        label: 'My Projects',
+        value: ProjectsPlugin.key,
       },
     ].map((item) => ({
       ...item,

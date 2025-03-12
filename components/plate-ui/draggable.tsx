@@ -127,7 +127,7 @@ export const Draggable = withRef<'div', PlateRenderElementProps>(
                   HEADING_KEYS.h3,
                   HEADING_KEYS.h4,
                   HEADING_KEYS.h5,
-                ]) && 'h-[1.3em]',
+                ]) && 'h-[1em] leading-1',
                 isInColumn && 'h-4'
               )}
             >
