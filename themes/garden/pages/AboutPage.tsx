@@ -33,7 +33,7 @@ export function AboutPage({ site }: Props) {
               <SocialIcon kind="x" href={twitter} />
             </div> */}
         </div>
-        <div className="prose max-w-none pb-8 pt-8 dark:prose-invert xl:col-span-2 mx-auto lg:max-w-3xl">
+        <div className="max-w-none pb-8 pt-8 xl:col-span-2 mx-auto lg:max-w-3xl">
           <ContentRender content={site.about} />
         </div>
       </div>

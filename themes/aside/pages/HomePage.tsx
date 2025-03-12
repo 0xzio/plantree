@@ -17,7 +17,7 @@ export function HomePage({ posts = [], site }: Props) {
         <div className="flex flex-col">
           <PageTitle className="mt-0">{site.name}</PageTitle>
         </div>
-        <div className="prose dark:prose-invert max-w-none mb-10 text-foreground/70">
+        <div className="max-w-none mb-10">
           <ContentRender content={site.about} />
         </div>
       </div>

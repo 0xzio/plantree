@@ -131,7 +131,7 @@ export function GeneralSettingForm({}: Props) {
                   About this site, used in about page. results
                 </FormDescription>
                 <FormControl>
-                  <div className="h-[360px]  border border-foreground/20 rounded-lg overflow-auto prose-neutral prose-p:leading-none">
+                  <div className="h-[360px] border border-foreground/20 rounded-lg overflow-auto">
                     <PlateEditor
                       variant="default"
                       className="h-full min-h-[300px]"

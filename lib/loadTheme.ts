@@ -4,6 +4,7 @@ import * as docs from '@/themes/docs'
 import * as garden from '@/themes/garden'
 import * as micro from '@/themes/micro'
 import * as minimal from '@/themes/minimal'
+import * as paper from '@/themes/paper'
 import * as publication from '@/themes/publication'
 import * as sue from '@/themes/sue'
 
@@ -16,8 +17,9 @@ const map: Record<string, any> = {
   docs,
   aside,
   sue,
+  paper,
 }
 
-export function loadTheme(name = 'garden'): any {
-  return map[name] || garden
+export function loadTheme(name = 'sue'): any {
+  return map[name] || sue
 }

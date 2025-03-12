@@ -161,7 +161,7 @@ export function ProductForm() {
               <FormItem className="w-full">
                 <FormLabel>Details</FormLabel>
                 <FormControl>
-                  <div className="h-[250px]  border border-foreground/20 rounded-lg overflow-auto prose-neutral prose-p:leading-none">
+                  <div className="h-[250px]  border border-foreground/20 rounded-lg overflow-auto">
                     <PlateEditor
                       variant="default"
                       className="min-h-[240px]"

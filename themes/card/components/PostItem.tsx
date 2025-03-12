@@ -1,6 +1,6 @@
-import { Node } from 'slate'
 import { Post, PostType } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
+import { Node } from 'slate'
 import Image from './Image'
 import Link from './Link'
 import Tag from './Tag'
@@ -101,7 +101,6 @@ export function PostItem({ post }: PostItemProps) {
             </Link>
           </h2>
         </div>
-        {/* <div className="prose max-w-none text-foreground/70">{summary}</div> */}
       </div>
     </article>
   )

@@ -1,9 +1,11 @@
 import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SiteProvider } from '@/components/SiteContext'
+import { initLingui } from '@/initLingui'
 import { getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { AppearanceConfig } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -26,13 +28,21 @@ export const revalidate = 86400 // 3600 * 24
 //   }
 // }
 
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
+
 export default async function RootLayout({
   params,
   children,
 }: {
   children: React.ReactNode
-  params: Promise<{ domain: string }>
+  params: Promise<{ domain: string; lang: string }>
 }) {
+  const lang = (await params).lang
+  const locale = lang === 'pseudo' ? 'en' : lang
+  initLingui(locale)
+
   const site = await getSite(await params)
   const tags = await getTags(site.id)
   const { SiteLayout } = loadTheme(site.themeName)

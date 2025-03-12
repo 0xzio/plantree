@@ -1,6 +1,8 @@
+import { initLingui } from '@/initLingui'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -18,11 +20,18 @@ export async function generateMetadata({
   }
 }
 
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
+
 export default async function Page({
   params,
 }: {
-  params: Promise<{ domain: string }>
+  params: Promise<{ domain: string; lang: string }>
 }) {
+  const lang = (await params).lang
+  const locale = lang === 'pseudo' ? 'en' : lang
+  initLingui(locale)
   const site = await getSite(await params)
   const posts = await getPosts(site.id)
   const pageNumber = 1

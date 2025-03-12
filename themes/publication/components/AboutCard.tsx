@@ -37,7 +37,7 @@ export const AboutCard = ({ site }: Props) => {
         </h3>
         <div className="text-foreground/60">{site.description}</div>
       </div>
-      <div className="prose max-w-none dark:prose-invert xl:col-span-2">
+      <div className="max-w-none xl:col-span-2">
         <ContentRender content={site.about} />
       </div>
 

@@ -33,7 +33,7 @@ export function PostDetail({
     <div className={cn(className)}>
       <header className="space-y-4 pb-4">
         <div className="mb-4">
-          <PageTitle className="mb-2">{post.title}</PageTitle>
+          <PageTitle>{post.title}</PageTitle>
           {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
         </div>
         <PostMetadata site={site} post={post} />

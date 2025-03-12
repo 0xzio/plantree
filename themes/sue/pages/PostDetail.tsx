@@ -28,10 +28,10 @@ export function PostDetail({
   children,
 }: LayoutProps) {
   return (
-    <div className={cn(className)}>
+    <div className={cn('', className)}>
       <header className="space-y-4 pb-4">
         <div className="mb-4">
-          <PageTitle className="mb-2">{post.title}</PageTitle>
+          <PageTitle className="text-center">{post.title}</PageTitle>
           {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
         </div>
 

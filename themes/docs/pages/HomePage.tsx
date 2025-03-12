@@ -24,7 +24,7 @@ export function HomePage({ posts = [], site }: Props) {
           )}
           <PageTitle className="mt-4">{site.name}</PageTitle>
         </div>
-        <div className="prose dark:prose-invert max-w-none mb-10 text-foreground/70">
+        <div className="max-w-none mb-10">
           <ContentRender content={site.about} />
         </div>
       </div>
