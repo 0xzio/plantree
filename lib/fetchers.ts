@@ -1,6 +1,7 @@
 import prisma from '@/lib/prisma'
 import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
+import { initPages } from '@/server/lib/initPages'
 import { post } from '@farcaster/auth-client'
 import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
@@ -290,7 +291,23 @@ export async function getPage(siteId = '', slug = '') {
         },
       })
 
-      if (!page) return null
+      if (!page) {
+        try {
+          const site = await prisma.site.findUniqueOrThrow({
+            where: { id: siteId },
+          })
+          await initPages(siteId, site.userId)
+          const page = await prisma.post.findUnique({
+            where: {
+              siteId_slug: {
+                siteId: siteId || uniqueId(),
+                slug: slug || uniqueId(),
+              },
+            },
+          })
+          return page
+        } catch (error) {}
+      }
 
       return page
     },

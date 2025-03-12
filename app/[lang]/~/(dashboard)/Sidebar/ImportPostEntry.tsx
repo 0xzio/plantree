@@ -11,12 +11,7 @@ import { ArrowRight, XIcon } from 'lucide-react'
 const key = 'HAVE_IMPORTED_POSTS'
 
 export function ImportPostEntry() {
-  const { data: accounts = [], isLoading } = useMyAccounts()
-  const hasWallet = accounts.some((a) => a.providerType === ProviderType.WALLET)
-
   const [visible, setVisible] = useState(localStorage.getItem(key) !== 'true')
-
-  if (hasWallet || isLoading) return null
 
   if (!visible) return null
 
@@ -36,7 +31,7 @@ export function ImportPostEntry() {
           <span className="mr-1 text-foreground/50">I have imported</span>
           <XIcon
             size={14}
-            className='text-foreground/60 hover:text-foreground/90'
+            className="text-foreground/60 hover:text-foreground/90"
             onClick={() => {
               localStorage.setItem(key, 'true')
               setVisible(false)
