@@ -1,16 +1,6 @@
 import axios from 'axios'
 import * as cheerio from 'cheerio'
-
-export type ExtractResult = {
-  url: string
-  timestamp: Date
-  items: PostLink[]
-}
-
-export type PostLink = {
-  href: string
-  title: string
-}
+import { ExtractResult, PostLink } from './types'
 
 export class WebExtractor {
   /**
@@ -22,16 +12,16 @@ export class WebExtractor {
     try {
       // Set realistic request headers to mimic browser behavior
       const headers = {
-        'User-Agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
-        Accept:
-          'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.9',
-        'Cache-Control': 'no-cache',
-        Pragma: 'no-cache',
-        Referer: 'https://www.google.com/',
-        'Accept-Encoding': 'gzip, deflate, br',
-        Connection: 'keep-alive',
+        // 'User-Agent':
+        //   'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36',
+        // Accept:
+        //   'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
+        // 'Accept-Language': 'en-US,en;q=0.9',
+        // 'Cache-Control': 'no-cache',
+        // Pragma: 'no-cache',
+        // Referer: 'https://www.google.com/',
+        // 'Accept-Encoding': 'gzip, deflate, br',
+        // Connection: 'keep-alive',
       }
 
       // Fetch webpage content using axios
@@ -77,7 +67,7 @@ export class WebExtractor {
       // Select all anchor elements with href attributes
       $('a[href]').each((_, element) => {
         const href = $(element).attr('href')
-        const title = $(element).text().trim()
+        const title = $(element).text().trim().split('\n')[0]
 
         if (href) {
           // Resolve relative URLs if baseUrl is provided

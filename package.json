@@ -20,6 +20,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@ai-sdk/deepseek": "^0.1.13",
     "@ai-sdk/openai": "^1.1.9",
     "@ariakit/react": "^0.4.13",
     "@aws-sdk/client-ses": "^3.749.0",
