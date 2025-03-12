@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { isServer, ROOT_DOMAIN } from '@/lib/constants'
 import { getSiteDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { Link } from '@/lib/i18n'
@@ -32,11 +33,10 @@ export function SiteItem({ site }: Props) {
       )}
     >
       <div className="flex items-center gap-2">
-        <img
-          src={getUrl(site.logo || '')}
-          alt=""
-          className="w-12 h-12 rounded-lg"
-        />
+        <Avatar className="w-12 h-12 rounded-lg">
+          <AvatarImage src={getUrl(site.logo || '')} />
+          <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
+        </Avatar>
 
         <div className="grid gap-1">
           <div className="flex items-center gap-2">

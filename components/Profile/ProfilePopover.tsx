@@ -19,7 +19,7 @@ import {
 import { useSite } from '@/hooks/useSite'
 import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
-import { useRouter } from '@/lib/i18n'
+import { usePathname, useRouter } from '@/lib/i18n'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
@@ -36,7 +36,6 @@ import {
   UserRound,
   Wallet,
 } from 'lucide-react'
-import { usePathname } from '@/lib/i18n'
 import { ProfileAvatar } from './ProfileAvatar'
 import { WalletInfo } from './WalletInfo'
 
@@ -72,7 +71,7 @@ export const ProfilePopover = memo(function ProfilePopover({
       <DropdownMenuContent align="end" className="w-56">
         <DropdownMenuLabel className="grid gap-2">
           <ProfileAvatar showName showCopy image={data?.image || ''} />
-          {data.address && <WalletInfo />}
+          {/* {data.address && <WalletInfo />} */}
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
 

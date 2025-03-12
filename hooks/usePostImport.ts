@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { serverSideEditor } from '@/components/editor/server-side-editor'
 import { useSiteContext } from '@/components/SiteContext'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { PostStatus } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { Post } from '@prisma/client'
 import { deserializeMd } from '@udecode/plate-markdown'
@@ -18,6 +19,7 @@ export function usePostImport() {
       await api.post.importPosts.mutate({
         siteId: site.id,
         posts: posts,
+        postStatus: PostStatus.PUBLISHED,
       })
 
       toast.success('Posts imported successfully!')

@@ -30,6 +30,8 @@ export default async function Page({
   const projects = await getProjects(site.id)
   const page = await getPage(site.id, 'projects')
 
+  if (!page) return <div>No project page</div>
+
   return (
     <div className="mx-auto max-w-3xl">
       <ProjectsProvider projects={projects}>

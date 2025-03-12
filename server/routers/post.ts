@@ -351,6 +351,7 @@ export const postRouter = router({
       z.object({
         siteId: z.string(),
         posts: z.array(z.any()),
+        postStatus: z.nativeEnum(PostStatus).optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -364,7 +365,9 @@ export const postRouter = router({
               userId: ctx.token.uid,
               title: p.title,
               content: p.content,
-              status: p.status,
+              status: Reflect.has(input, 'postStatus')
+                ? input.postStatus
+                : p.status,
               image: p.image,
               type: p.type,
             })),

@@ -20,6 +20,7 @@ import {
   SUBGRAPH_URL,
 } from './constants'
 import { SpaceType } from './types'
+import { uniqueId } from './unique-id'
 import { getUrl } from './utils'
 
 const REVALIDATE_TIME = process.env.REVALIDATE_TIME
@@ -277,11 +278,16 @@ export async function getSpaceIds() {
   )()
 }
 
-export async function getPage(siteId: string, slug: string) {
+export async function getPage(siteId = '', slug = '') {
   return await unstable_cache(
     async () => {
-      const page = await prisma.post.findFirst({
-        where: { slug, siteId },
+      const page = await prisma.post.findUnique({
+        where: {
+          siteId_slug: {
+            siteId: siteId || uniqueId(),
+            slug: slug || uniqueId(),
+          },
+        },
       })
 
       if (!page) return null
@@ -290,7 +296,8 @@ export async function getPage(siteId: string, slug: string) {
     },
     [`${siteId}-page-${slug}`],
     {
-      revalidate: REVALIDATE_TIME,
+      // revalidate: REVALIDATE_TIME,
+      revalidate: 10,
       tags: [`${siteId}-page-${slug}`],
     },
   )()

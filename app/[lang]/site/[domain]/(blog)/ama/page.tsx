@@ -24,7 +24,7 @@ export default async function Page({
   params: Promise<{ domain: string }>
 }) {
   const site = await getSite(await params)
-  const page = await getPage(site.id, 'guestbook')
+  const page = await getPage(site.id, 'ama')
 
   return (
     <div className="mx-auto max-w-3xl">
