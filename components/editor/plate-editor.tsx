@@ -61,7 +61,7 @@ export function PlateEditor({
           <Editor
             variant={variant}
             readOnly={readonly}
-            className={cn(className)}
+            className={cn('text-lg', className)}
           />
           {showAddButton && (
             <div className="size-full px-16 pt-4 text-base sm:px-[max(10px,calc(50%-350px))]">

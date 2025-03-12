@@ -6,18 +6,18 @@ import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
 import { ImportPostData, ImportTask } from '@/hooks/usePostImportTask'
 import {
+  AlertCircle,
   AlertTriangle,
   ArrowRight,
   Globe,
   Info,
   Link,
   Search,
-  AlertCircle,
 } from 'lucide-react'
 import { PostSelectionList } from './PostSelectionList'
 
 // Define stages for the import process
-const STAGES = ['pending', 'extracting', 'analyzing', 'converting', 'completed'];
+const STAGES = ['pending', 'extracting', 'analyzing', 'converting', 'completed']
 
 interface URLImportTabProps {
   isImporting: boolean
@@ -65,35 +65,41 @@ export function URLImportTab({
     importTask?.status === 'completed' &&
     (!importTask.result || importTask.result.length === 0)
 
-  const getErrorMessage = (error?: string): { message: string, suggestion: string } => {
-    if (!error) return { 
-      message: 'Unknown error occurred', 
-      suggestion: 'Please try again or use a different URL' 
-    };
-    
+  const getErrorMessage = (
+    error?: string,
+  ): { message: string; suggestion: string } => {
+    if (!error)
+      return {
+        message: 'Unknown error occurred',
+        suggestion: 'Please try again or use a different URL',
+      }
+
     if (error.includes('timeout')) {
       return {
         message: 'The import process took too long',
-        suggestion: 'Try a URL with fewer posts or import directly from a file'
-      };
+        suggestion: 'Try a URL with fewer posts or import directly from a file',
+      }
     }
-    
+
     if (error.includes('not found') || error.includes('404')) {
       return {
         message: 'The URL could not be accessed',
-        suggestion: 'Check if the URL is correct and publicly accessible'
-      };
+        suggestion: 'Check if the URL is correct and publicly accessible',
+      }
     }
-    
+
     // Handle more error types
     if (error.includes('parse') || error.includes('format')) {
       return {
         message: 'Content format not supported',
-        suggestion: 'This URL may not contain standard blog content'
-      };
+        suggestion: 'This URL may not contain standard blog content',
+      }
     }
-    
-    return { message: error, suggestion: 'Please try again with a different URL' };
+
+    return {
+      message: error,
+      suggestion: 'Please try again with a different URL',
+    }
   }
 
   return (
@@ -227,7 +233,7 @@ export function URLImportTab({
           </div>
         )}
       <div className="text-sm text-foreground/60">
-        If you import post failed, get help from{' '}
+        If import fails, seek help from{' '}
         <a
           href="https://discord.gg/nyVpH9njDu"
           target="_blank"

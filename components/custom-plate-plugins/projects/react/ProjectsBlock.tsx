@@ -27,7 +27,9 @@ export function ProjectsBlock({ projects, className }: Props) {
                 </Avatar>
                 <div className="flex-col gap-1">
                   <h2 className="text-base font-semibold">{item.name}</h2>
-                  <div className="text-foreground/80">{item.introduction}</div>
+                  <div className="text-foreground/80 leading-normal">
+                    {item.introduction}
+                  </div>
                 </div>
               </div>
               {item.url && (
