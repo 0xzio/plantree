@@ -397,6 +397,8 @@ export const postRouter = router({
 
           await cacheHelper.updateCachedSitePosts(siteId, null)
           await cacheHelper.updateCachedSitePages(siteId, null)
+
+          revalidateTag(`${siteId}-posts`)
           return true
         },
         {

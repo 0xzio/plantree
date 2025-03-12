@@ -1,12 +1,12 @@
 import { useState } from 'react'
+import TextareaAutosize from 'react-textarea-autosize'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
-import { Textarea } from '@/components/ui/textarea'
-import { WalletConnectButton } from '@/components/WalletConnectButton'
 import { trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
+import { SendIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 
@@ -67,26 +67,25 @@ export function CommentInput({ postId, parentId, onCancel }: Props) {
   }
 
   return (
-    <div>
-      <Textarea
-        placeholder="Write your comment..."
+    <div className="relative">
+      <TextareaAutosize
+        placeholder="Write something here..."
         value={content}
         onChange={(e) => setContent(e.target.value)}
         maxLength={maxCharacters}
-        className="w-full"
+        className="w-full min-h-28 pt-4 px-4 pb-8 border border-foreground/5 shadow-md rounded-xl"
       />
-      <div className="flex items-center justify-between text-sm mt-2 text-foreground/50">
-        <div>
-          <span>
-            {content.length}/{maxCharacters} characters
-          </span>
+      <div className="flex items-center justify-between text-sm mt-2 text-foreground/50 absolute bottom-3 px-2 w-full resize-none">
+        <div className="text-xs -mb-3 pl-1">
+          {content.length}/{maxCharacters}
         </div>
 
         <div className="flex justify-end gap-1">
           {parentId && (
             <Button
-              variant="secondary"
-              size="sm"
+              variant="ghost"
+              size="xs"
+              className="w-16 text-xs rounded-lg h-8"
               onClick={() => {
                 setContent('')
                 onCancel && onCancel()
@@ -98,16 +97,28 @@ export function CommentInput({ postId, parentId, onCancel }: Props) {
 
           {!authenticated ? (
             <Button
-              size="sm"
+              size="xs"
+              className="w-16 text-xs rounded-lg h-8"
               onClick={() => {
                 loginDialog.setIsOpen(true)
               }}
             >
-              Log in to comment
+              Login
             </Button>
           ) : (
-            <Button onClick={handleSubmit} className="w-20 text-xs h-8">
-              {isPending ? <LoadingDots /> : <p>Comment</p>}
+            <Button
+              size="xs"
+              onClick={handleSubmit}
+              className="w-16 text-xs rounded-lg h-8"
+            >
+              {isPending ? (
+                <LoadingDots />
+              ) : (
+                <>
+                  <SendIcon size={14} />
+                  <span>Send</span>
+                </>
+              )}
             </Button>
           )}
         </div>
