@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
 import { Dialog, DialogTrigger } from '@/components/ui/dialog'
+import { cn } from '@/lib/utils'
 import { ImportDialog } from './import/ImportDialog'
 
 interface Props {
@@ -15,7 +15,7 @@ export const ImportPostsButton = ({ className, ...rest }: Props) => {
     <div {...rest} className={cn('flex items-center', className)}>
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Button>Import</Button>
+          <Button variant="brand">Import posts</Button>
         </DialogTrigger>
         <ImportDialog open={open} onOpenChange={setOpen} />
       </Dialog>

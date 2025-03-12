@@ -22,6 +22,7 @@ import {
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
+import { ImportPostEntry } from './ImportPostEntry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
 import { LinkWalletEntry } from './LinkWalletEntry'
 import { QuickSearchTrigger } from './QuickSearchTrigger'
@@ -158,6 +159,7 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       <div className="px-2 pb-2 flex-1">
         {/* {!spaceId && <EnableWeb3Entry />} */}
         {/* <LinkAccountEntry /> */}
+        <ImportPostEntry />
       </div>
       <div className="">
         <VisitSiteButton />

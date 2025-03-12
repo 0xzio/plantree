@@ -49,8 +49,8 @@ export function URLImportTab({
   }
 
   const exampleUrls = [
-    { name: 'Zio', url: 'https://zio.penx.io/posts' },
-    { name: 'Leen', url: 'https://leen.penx.io/posts' },
+    { name: 'Dan abramov', url: 'https://overreacted.io' },
+    { name: 'Vitalik Buterin', url: 'https://vitalik.eth.limo' },
   ]
 
   const shouldDisplayPostSelection =
@@ -196,6 +196,17 @@ export function URLImportTab({
             </div>
           </div>
         )}
+      <div className="text-sm text-foreground/60">
+        If you import post failed, get help from{' '}
+        <a
+          href="https://discord.gg/nyVpH9njDu"
+          target="_blank"
+          className="text-brand"
+        >
+          our discord
+        </a>
+        .
+      </div>
     </div>
   )
 }
