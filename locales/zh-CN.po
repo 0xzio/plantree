@@ -43,11 +43,11 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
 msgid "Appearance"
-msgstr ""
+msgstr "外观"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Backup"
-msgstr ""
+msgstr "备份"
 
 #: app/[lang]/root/Footer.tsx:49
 #: themes/sue/pages/BlogPage.tsx:23
@@ -63,7 +63,7 @@ msgstr "博客"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:136
 msgid "Builtin"
-msgstr ""
+msgstr "内置"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
 msgid "Catalogue"
@@ -71,7 +71,7 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 msgid "Collaborators"
-msgstr ""
+msgstr "写作者"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
 msgid "Coupons"
@@ -83,7 +83,7 @@ msgstr "数据库"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "Domain"
-msgstr ""
+msgstr "域名"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:27
 msgid "Edit navigation"
@@ -91,7 +91,7 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
 msgid "Features"
-msgstr ""
+msgstr "功能"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:165
 msgid "Footer"
@@ -112,7 +112,7 @@ msgstr ""
 
 #: components/theme-ui/Navigation.tsx:29
 msgid "Guestbook"
-msgstr ""
+msgstr "留言墙"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:162
 msgid "Header"
@@ -124,7 +124,7 @@ msgstr "首页"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Import/Export"
-msgstr ""
+msgstr "导入/导出"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:59
 msgid "Link accounts"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:52
 msgid "Location"
-msgstr ""
+msgstr "位置"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:98
 #: components/theme-ui/MembershipEntry.tsx:18
@@ -145,11 +145,11 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:58
 msgid "Operation"
-msgstr ""
+msgstr "操作"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
 msgid "Orders"
-msgstr ""
+msgstr "订单"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
 msgid "Pages"
@@ -170,7 +170,7 @@ msgstr "文章"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
 msgid "Products"
-msgstr ""
+msgstr "产品"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:53
 msgid "Profile"
@@ -183,7 +183,7 @@ msgstr "项目"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:201
 msgid "Save"
-msgstr ""
+msgstr "保存"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:157
 msgid "Select a location"

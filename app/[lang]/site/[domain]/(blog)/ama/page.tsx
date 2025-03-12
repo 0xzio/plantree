@@ -23,8 +23,6 @@ export default async function Page({
 }: {
   params: Promise<{ domain: string }>
 }) {
-  console.log('====>>>eheh')
-
   const site = await getSite(await params)
   const page = await getPage(site.id, 'guestbook')
 

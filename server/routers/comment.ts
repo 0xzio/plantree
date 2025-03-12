@@ -7,6 +7,8 @@ export const commentRouter = router({
   listByPostId: publicProcedure
     .input(z.string())
     .query(async ({ ctx, input: postId }) => {
+      console.log('post========>>>>id:', postId)
+
       const comments = await prisma.comment.findMany({
         // where: { postId, parentId: null }, // Only top-level comments (parentId === null) need to be queried
         where: { postId },

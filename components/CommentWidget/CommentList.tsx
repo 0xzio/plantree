@@ -25,6 +25,7 @@ export function CommentList({ postId, isInPage }: Props) {
     isLoading,
     refetch,
   } = trpc.comment.listByPostId.useQuery(postId)
+  console.log('========:postId', postId)
 
   const { isPending, mutateAsync: listRepliesByCommentId } =
     trpc.comment.listRepliesByCommentId.useMutation()

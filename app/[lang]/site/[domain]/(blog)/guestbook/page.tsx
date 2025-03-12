@@ -1,3 +1,4 @@
+import { PostProvider } from '@/components/PostContext'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { editorDefaultValue } from '@/lib/constants'
 import { getPage, getSite } from '@/lib/fetchers'
@@ -28,7 +29,9 @@ export default async function Page({
 
   return (
     <div className="mx-auto max-w-3xl">
-      <ContentRender content={page?.content || editorDefaultValue} />
+      <PostProvider post={page as any}>
+        <ContentRender content={page?.content || editorDefaultValue} />
+      </PostProvider>
     </div>
   )
 }
