@@ -38,7 +38,7 @@ export function Navigation({ site, className }: Props) {
   return (
     <div
       className={cn(
-        'hidden md:flex md:flex-row flex-col items-center gap-x-4 gap-y-2',
+        'hidden md:flex md:flex-row flex-col items-center gap-x-4 gap-y-4',
         className,
       )}
     >

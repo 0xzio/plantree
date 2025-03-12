@@ -100,7 +100,7 @@ export function AppearanceSettingForm({ site }: Props) {
                   <SelectItem value="minimal">Minimal</SelectItem>
                   <SelectItem value="garden">Garden</SelectItem>
                   <SelectItem value="aside">Aside</SelectItem>
-                  <SelectItem value="aside">Paper</SelectItem>
+                  <SelectItem value="paper">Paper</SelectItem>
                   <SelectItem value="sue">Sue</SelectItem>
                   <SelectItem value="micro">Micro</SelectItem>
                   <SelectItem value="card">Card</SelectItem>

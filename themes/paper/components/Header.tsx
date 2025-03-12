@@ -12,20 +12,27 @@ interface Props {
 
 export const Header = ({ site, className }: Props) => {
   return (
-    <header
-      className={cn(
-        'flex items-center justify-between w-full py-4 h-16 z-40',
-        className,
-      )}
-    >
-      <MobileSidebarSheet site={site} />
-      <Navigation site={site} />
-
-      <div className="flex item-center gap-2">
-        <div className="flex items-center">
-          <Airdrop />
+    <header className="-mx-10">
+      <div className="flex item-center gap-2 justify-between p-4">
+        <div>
+          <MobileSidebarSheet site={site} />
         </div>
+        {/* <div className="flex items-center">
+          <Airdrop />
+        </div> */}
         <Profile></Profile>
+      </div>
+      <div className="flex flex-col items-center pt-2 pb-10 px-10">
+        <h1 className="text-3xl font-bold">{site.name}</h1>
+        <div className="text-foreground/70">{site.description}</div>
+      </div>
+      <div
+        className={cn(
+          'items-center justify-center w-full py-4 h-12 z-40 border-t border-b border-foreground/5 hidden md:flex',
+          className,
+        )}
+      >
+        <Navigation site={site} />
       </div>
     </header>
   )

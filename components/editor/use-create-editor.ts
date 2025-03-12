@@ -173,15 +173,19 @@ export const useCreateEditor = (
     readOnly,
     value,
     placeholder,
+    showFixedToolbar,
     ...options
   }: {
     components?: Record<string, any>
     plugins?: any[]
     readOnly?: boolean
+    showFixedToolbar?: boolean
     placeholder?: string
   } & Omit<CreatePlateEditorOptions, 'plugins'> = {},
   deps: any[] = [],
 ) => {
+  console.log('=======showFixedToolbar:', showFixedToolbar)
+
   let editorValue = value as any
   if (typeof editorValue === 'string') {
     editorValue = JSON.parse(editorValue)
@@ -200,8 +204,8 @@ export const useCreateEditor = (
       plugins: [
         ...copilotPlugins,
         ...editorPlugins,
-        // FixedToolbarPlugin,
         FloatingToolbarPlugin,
+        ...(showFixedToolbar ? [FixedToolbarPlugin] : []),
       ],
       value: editorValue,
       ...options,

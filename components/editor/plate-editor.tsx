@@ -23,6 +23,7 @@ interface Props {
   value: any
   className?: string
   showAddButton?: boolean
+  showFixedToolbar?: boolean
   draggable?: boolean
   placeholder?: string
   onInit?: (editor: PlateEditorType) => void
@@ -34,6 +35,7 @@ export function PlateEditor({
   value,
   className,
   showAddButton = false,
+  showFixedToolbar = false,
   readonly = false,
   draggable = true,
   placeholder,
@@ -43,6 +45,7 @@ export function PlateEditor({
   const editor = useCreateEditor({
     value,
     placeholder,
+    showFixedToolbar,
   })
 
   useEffect(() => {

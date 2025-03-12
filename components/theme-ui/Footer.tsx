@@ -28,14 +28,14 @@ export function Footer({ site, className }: Props) {
               PenX
             </a>
           </div>
-          <div className="flex items-center">{` • `}</div>
-          <div className="flex items-center">
+          <div className="hidden md:flex items-center">{` • `}</div>
+          <div className="hidden md:flex items-center">
             <Link href={`/feed.xml`} target="_blank">
               RSS
             </Link>
           </div>
-          <ModeToggle />
-          <LangSwitcher site={site} />
+          <ModeToggle className="hidden md:flex" />
+          <LangSwitcher className="hidden md:flex" site={site} />
         </div>
       </div>
     </footer>

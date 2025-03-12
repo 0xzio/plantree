@@ -140,6 +140,7 @@ export function Post() {
             className="w-full dark:caret-brand"
             value={content ? JSON.parse(content) : editorDefaultValue}
             showAddButton
+            showFixedToolbar
             onChange={(v) => {
               const newPost = updateContent(JSON.stringify(v))
               debouncedUpdate(newPost)
