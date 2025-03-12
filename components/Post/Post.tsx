@@ -134,7 +134,7 @@ export function Post() {
           </div> */}
         </div>
 
-        <div className="w-full" data-registry="plate">
+        <div className="w-full mt-4" data-registry="plate">
           <PlateEditor
             variant="post"
             className="w-full dark:caret-brand"

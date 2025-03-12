@@ -11,7 +11,7 @@ interface Props {
 export function ProjectsBlock({ projects, className }: Props) {
   return (
     <section className={cn(className)}>
-      <div className="grid grid-1 sm:grid-cols-2 gap-x-14 gap-y-10 pt-6">
+      <div className="grid grid-1 sm:grid-cols-2 gap-x-14 gap-y-6 pt-6">
         {projects.map((item, index) => {
           return (
             <a

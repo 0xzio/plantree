@@ -66,6 +66,10 @@ export async function getSite(params: any) {
       const isNavLinkValid = ((site?.navLinks || []) as NavLink[])?.some(
         (i) => i.pathname === '/ama',
       )
+
+      const themeConfig = (site.themeConfig || {}) as any
+      const currentThemeConfig = themeConfig[site.themeName || 'sue'] || {}
+
       return {
         ...site,
         // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
@@ -76,6 +80,9 @@ export async function getSite(params: any) {
         navLinks: isNavLinkValid ? site.navLinks : defaultNavLinks,
         seoTitle: config?.seo?.title || site?.name || '',
         seoDescription: config?.seo?.description || site?.description || '',
+        theme: {
+          ...currentThemeConfig,
+        } as Site['theme'],
       } as any as Site
     },
     [`site-${domain}`],

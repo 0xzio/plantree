@@ -112,14 +112,26 @@ export type Site = {
     appearance: AppearanceConfig
     features: Record<string, any>
   }
+  themeName: string
   themeConfig: Record<string, any>
+  theme: {
+    common: {
+      postListStyle: any
+    }
+    home: {
+      showAbout: boolean
+      showLatestPosts: boolean
+      showProjects: boolean
+      showFeatured: boolean
+      showTags: boolean
+    }
+  }
   navLinks: NavLink[]
   subdomain: string | null
   customDomain: string | null
   memberCount: number
   postCount: number
   message404: string | null
-  themeName: string
   seoTitle: string
   seoDescription: string
   tiers: Tier[]
@@ -226,4 +238,9 @@ export interface AppearanceConfig {
   color: string
   baseFont: string
   locale: string
+}
+
+export enum PostListStyle {
+  SIMPLE = 'SIMPLE',
+  CARD = 'CARD',
 }

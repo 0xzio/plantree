@@ -1,6 +1,14 @@
-import { getFriends, getPosts, getSite, getTags } from '@/lib/fetchers'
+import { FriendsProvider } from '@/components/FriendsContext'
+import { ProjectsProvider } from '@/components/ProjectsContext'
+import {
+  getFriends,
+  getPosts,
+  getProjects,
+  getSite,
+  getTags,
+} from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
-import { Metadata, ResolvingMetadata } from 'next'
+import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
 // export const revalidate = 86400; // 3600 * 24
@@ -25,10 +33,11 @@ export default async function HomePage(props: {
   const params = await props.params
 
   const site = await getSite(params)
-  const [posts, tags, friends] = await Promise.all([
+  const [posts, tags, friends, projects] = await Promise.all([
     getPosts(site.id),
     getTags(site.id),
     getFriends(site.id),
+    getProjects(site.id),
   ])
 
   const { HomePage } = loadTheme(site.themeName)
@@ -38,12 +47,17 @@ export default async function HomePage(props: {
   }
 
   return (
-    <HomePage
-      posts={posts}
-      tags={tags}
-      friends={friends}
-      authors={[]}
-      site={site}
-    />
+    <ProjectsProvider projects={projects}>
+      <FriendsProvider friends={friends}>
+        <HomePage
+          posts={posts}
+          tags={tags}
+          friends={friends}
+          projects={projects}
+          authors={[]}
+          site={site}
+        />
+      </FriendsProvider>
+    </ProjectsProvider>
   )
 }

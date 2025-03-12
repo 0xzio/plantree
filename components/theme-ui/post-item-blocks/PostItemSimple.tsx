@@ -1,15 +1,15 @@
 import { PlateEditor } from '@/components/editor/plate-editor'
-import { Post, PostType } from '@/lib/theme.types'
+import { Link } from '@/lib/i18n'
+import { Post, PostListStyle, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
 import Image from 'next/image'
-import Link from './Link'
 import Tag from './Tag'
 
-interface PostItemProps {
+interface Props {
   post: Post
 }
 
-export function PostItem({ post }: PostItemProps) {
+export function PostItemSimple({ post }: Props) {
   const { slug, title } = post
 
   const getContent = () => {

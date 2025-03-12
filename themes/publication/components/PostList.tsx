@@ -1,5 +1,5 @@
 import { Pagination } from '@/components/theme-ui/Pagination'
-import { Post } from '@/lib/theme.types'
+import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { PostItem } from './PostItem'
 
@@ -8,6 +8,7 @@ interface PaginationProps {
   currentPage: number
 }
 interface PostListProps {
+  site: Site
   posts: Post[]
   initialDisplayPosts?: Post[]
   pagination?: PaginationProps

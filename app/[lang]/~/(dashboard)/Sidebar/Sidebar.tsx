@@ -15,6 +15,7 @@ import {
   FileText,
   Gift,
   ImageIcon,
+  MicroscopeIcon,
   Settings,
   TableProperties,
   Users,
@@ -134,6 +135,13 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             isActive={pathname.startsWith('/~/subscribers')}
             icon={<Users size={18} />}
             label={<Trans>Subscribers</Trans>}
+          ></SidebarItem>
+        </Link>
+        <Link href="/~/design">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/design')}
+            icon={<MicroscopeIcon size={18} />}
+            label={<Trans>Design</Trans>}
           ></SidebarItem>
         </Link>
 

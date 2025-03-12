@@ -46,6 +46,7 @@ export default async function HomePage(props: { params: any }) {
   const lang = (await props.params).lang
   initLingui(lang === 'pseudo' ? 'en' : lang)
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
+
   return (
     <div className="flex flex-col gap-y-10">
       <div className="flex justify-center mt-8">

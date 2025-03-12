@@ -50,14 +50,15 @@ msgid "Backup"
 msgstr "Backup"
 
 #: app/[lang]/root/Footer.tsx:49
-#: themes/sue/pages/BlogPage.tsx:23
-#: themes/publication/pages/BlogPage.tsx:23
-#: themes/minimal/pages/BlogPage.tsx:23
-#: themes/micro/pages/BlogPage.tsx:23
-#: themes/garden/pages/BlogPage.tsx:23
-#: themes/docs/pages/BlogPage.tsx:23
-#: themes/card/pages/BlogPage.tsx:23
-#: themes/aside/pages/BlogPage.tsx:23
+#: themes/sue/pages/BlogPage.tsx:25
+#: themes/publication/pages/BlogPage.tsx:25
+#: themes/paper/pages/BlogPage.tsx:25
+#: themes/minimal/pages/BlogPage.tsx:25
+#: themes/micro/pages/BlogPage.tsx:25
+#: themes/garden/pages/BlogPage.tsx:25
+#: themes/docs/pages/BlogPage.tsx:25
+#: themes/card/pages/BlogPage.tsx:25
+#: themes/aside/pages/BlogPage.tsx:25
 msgid "Blog"
 msgstr "Blog"
 
@@ -73,13 +74,17 @@ msgstr "Catalogue"
 msgid "Collaborators"
 msgstr "Collaborators"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:153
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:161
 msgid "Coupons"
 msgstr "Coupons"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:127
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:128
 msgid "Databases"
 msgstr "Databases"
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:144
+msgid "Design"
+msgstr "Design"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "Domain"
@@ -102,7 +107,7 @@ msgstr "Footer"
 msgid "Friends"
 msgstr "Friends"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:107
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:108
 msgid "Gallery"
 msgstr "Gallery"
 
@@ -151,7 +156,7 @@ msgstr "Operation"
 msgid "Orders"
 msgstr "Orders"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:117
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:118
 msgid "Pages"
 msgstr "Pages"
 
@@ -163,7 +168,7 @@ msgstr "Path"
 msgid "PenX Pro"
 msgstr "PenX Pro"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:98
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:99
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr "Posts"
@@ -198,11 +203,11 @@ msgid "SEO"
 msgstr "SEO"
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:144
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
 msgid "Settings"
 msgstr "Settings"
 
-#: app/[lang]/root/(home)/page.tsx:65
+#: app/[lang]/root/(home)/page.tsx:66
 msgid "Sites"
 msgstr "Sites"
 
@@ -214,7 +219,7 @@ msgstr "Socials"
 msgid "Submit Link"
 msgstr "Submit Link"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:136
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:137
 msgid "Subscribers"
 msgstr "Subscribers"
 
@@ -228,7 +233,7 @@ msgstr "Tags"
 msgid "Title"
 msgstr "Title"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:89
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:90
 msgid "Today"
 msgstr "Today"
 
