@@ -134,6 +134,7 @@
     "axios": "^1.7.9",
     "bcrypt-edge": "^0.1.0",
     "big.js": "^6.2.1",
+    "cheerio": "^1.0.0",
     "class-variance-authority": "0.7.1",
     "cloudflare": "^3.5.0",
     "clsx": "^2.1.1",
