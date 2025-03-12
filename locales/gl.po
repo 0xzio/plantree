@@ -202,6 +202,10 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
+#: app/[lang]/root/(home)/page.tsx:65
+msgid "Sites"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:122
 msgid "Socials"
 msgstr ""

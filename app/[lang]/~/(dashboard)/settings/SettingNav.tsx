@@ -41,7 +41,7 @@ export function SettingNav({}: Props) {
 
   const linkClassName = (path: string) =>
     cn(
-      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparent flex-shrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
+      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparentshrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
       path === pathname && 'border-foreground/60',
       path === pathname && 'text-foreground font-bold',
     )

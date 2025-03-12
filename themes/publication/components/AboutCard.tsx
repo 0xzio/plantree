@@ -22,7 +22,7 @@ export const AboutCard = ({ site }: Props) => {
   const pathname = usePathname()
   return (
     <div className="mb-10 hover:text-foreground text-foreground/80">
-      <div className="flex flex-col flex-shrink-0">
+      <div className="flex flex-colshrink-0">
         {site.logo && (
           <Image
             src={site.logo}

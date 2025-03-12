@@ -20,7 +20,7 @@ export const Toc = ({ content }: Props) => {
 
   return (
     <aside
-      className="sidebar w-56 sticky top-16 flex-shrink-0 py-8 overflow-y-auto hidden xl:block"
+      className="sidebar w-56 sticky top-16shrink-0 py-8 overflow-y-auto hidden xl:block"
       style={{
         height: 'calc(100vh - 4rem)',
       }}

@@ -68,7 +68,7 @@ export const Header = ({ site }: Props) => {
               )}
               <div
                 className={cn(
-                  'font-normal text-2xl flex-shrink-0',
+                  'font-normal text-2xlshrink-0',
                   lobster.className,
                 )}
               >

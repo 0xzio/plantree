@@ -41,7 +41,7 @@ export function PostNav({ className }: PostHeaderProps) {
       <div className="flex items-center gap-6">
         <Link
           href={post?.isPage ? '/~/pages' : '/~/posts'}
-          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer flex-shrink-0"
+          className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointershrink-0"
         >
           <ChevronLeft size={20} />
         </Link>

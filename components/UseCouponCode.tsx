@@ -18,7 +18,7 @@ export function UseCouponCode() {
   return (
     <div className="space-y-3">
       <div className="font-bold text-2xl">Using coupon code</div>
-      <div className="text-foreground/60 flex-shrink-0">
+      <div className="text-foreground/60shrink-0">
         I have a coupon code, apply it now.
       </div>
       <div className="flex items-center gap-2">

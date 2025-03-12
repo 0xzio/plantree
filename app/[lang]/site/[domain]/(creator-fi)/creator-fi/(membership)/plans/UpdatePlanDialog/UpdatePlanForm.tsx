@@ -112,7 +112,7 @@ export function UpdatePlanForm() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="">
         <div className="flex gap-8">
-          <div className="flex-1 flex-shrink-0 space-y-6">
+          <div className="flex-1shrink-0 space-y-6">
             <FormField
               control={form.control}
               name="name"
@@ -186,7 +186,7 @@ export function UpdatePlanForm() {
             />
           </div>
 
-          <div className="flex-1 flex-shrink-0">
+          <div className="flex-1shrink-0">
             <FormField
               control={form.control}
               name="benefits"
