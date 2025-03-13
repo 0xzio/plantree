@@ -175,3 +175,6 @@ export const TEAM_PLAN_COLLABORATOR_LIMIT = Number(
 )
 
 export const BUILTIN_PAGE_SLUGS = ['projects', 'friends', 'guestbook', 'ama']
+
+export const LATEST_POSTS_LIMIT = 2
+export const HOME_PROJECT_LIMIT = 4

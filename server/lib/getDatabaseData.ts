@@ -1,5 +1,6 @@
 import { editorDefaultValue, ELEMENT_P } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { Option } from '@/lib/types'
 
 interface Input {
   siteId: string
@@ -27,9 +28,15 @@ export async function getDatabaseData<T = any>(input: Input) {
   const data = database.records.map((record) => {
     return database.fields.reduce(
       (acc, item) => {
+        let value = (record.fields as any)[item.id]
+        if (item.name === 'status') {
+          const options = item.options as any as Option[]
+          const option = options?.find((o) => o.id === value?.[0])
+          value = option?.name || 'pending'
+        }
         return {
           ...acc,
-          [item.name]: (record.fields as any)[item.id],
+          [item.name]: value,
         }
       },
       {} as Record<string, any>,

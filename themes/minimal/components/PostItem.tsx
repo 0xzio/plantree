@@ -1,7 +1,7 @@
-import Image from 'next/image'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { Post, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
+import Image from 'next/image'
 import Link from './Link'
 
 interface PostItemProps {
@@ -39,7 +39,7 @@ export function PostItem({ post }: PostItemProps) {
       )
     }
 
-    return <div className="text-lg">{title}</div>
+    return <div className="text-lg hover:scale-105 transition-all">{title}</div>
   }
 
   return (

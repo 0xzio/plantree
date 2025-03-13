@@ -82,6 +82,7 @@ export type Friend = {
   introduction: string
   avatar: string
   url: string
+  status: string
   [key: string]: string
 }
 

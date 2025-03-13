@@ -334,6 +334,7 @@ export async function getFriends(siteId: string) {
         siteId,
         slug: FRIEND_DATABASE_NAME,
       })
+
       return friends.map((friend) => ({
         ...friend,
         avatar: getUrl(friend.avatar || ''),
@@ -341,7 +342,7 @@ export async function getFriends(siteId: string) {
     },
     [`${siteId}-friends`],
     {
-      revalidate: REVALIDATE_TIME,
+      revalidate: 10,
       tags: [`${siteId}-friends`],
     },
   )()

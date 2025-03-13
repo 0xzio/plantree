@@ -40,13 +40,13 @@ export function FeatureList() {
   return (
     <div className="mt-10 space-y-4">
       <div className="text-4xl font-bold">Features</div>
-      <div className="bg-background">
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 rounded-md border-foreground/5 overflow-hidden shadow">
+      <div className="bg-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 rounded-md border-foreground/5 overflow-hidden border">
           {features.map((feature, index) => (
             <div
               key={index}
               className={cn(
-                'p-8 border-foreground/5 space-y-2',
+                'p-8 border-foreground/5 space-y-2 bg-background',
                 (index + 1) % 3 !== 0 && 'xl:border-r',
                 index < 3 && 'xl:border-b',
                 index < 5 && 'sm:border-b md:border-b',

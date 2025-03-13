@@ -2,12 +2,13 @@ import { ProjectsBlock } from '@/components/custom-plate-plugins/projects/react/
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostItem } from '@/components/theme-ui/post-item-blocks'
-import { POSTS_PER_PAGE } from '@/lib/constants'
+import {
+  HOME_PROJECT_LIMIT,
+  LATEST_POSTS_LIMIT,
+  POSTS_PER_PAGE,
+} from '@/lib/constants'
 import { Post, PostListStyle, Project, Site } from '@/lib/theme.types'
 import Link from '../components/Link'
-
-const LATEST_POSTS_LIMIT = 2
-const HOME_POSTS_LIMIT = 4
 
 interface Props {
   site: Site
@@ -62,14 +63,14 @@ export function HomePage({ posts = [], site, projects }: Props) {
         </section>
       )}
 
-      {showProjects && (
+      {showProjects && projects.length > 0 && (
         <div>
           <div className="pb-6 pt-6 flex items-center justify-between">
             <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
               Projects
             </h1>
 
-            {posts.length > LATEST_POSTS_LIMIT && (
+            {projects.length > HOME_PROJECT_LIMIT && (
               <Link
                 href="/projects"
                 className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
@@ -78,7 +79,7 @@ export function HomePage({ posts = [], site, projects }: Props) {
               </Link>
             )}
           </div>
-          <ProjectsBlock projects={projects.slice(0, 4)} />
+          <ProjectsBlock projects={projects.slice(0, HOME_PROJECT_LIMIT)} />
         </div>
       )}
     </div>
