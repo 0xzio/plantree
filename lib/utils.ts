@@ -1,3 +1,4 @@
+import { css } from '@fower/react'
 import { ProviderType } from '@prisma/client'
 import { clsx, type ClassValue } from 'clsx'
 import { twMerge } from 'tailwind-merge'
@@ -7,6 +8,12 @@ import { AccountWithUser } from './types'
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
+
+export function getBlockClassName(props: any) {
+  const style = props.element?.style as string
+  return style || ''
+}
+
 export async function fetcher<JSON = any>(
   input: RequestInfo,
   init?: RequestInit,

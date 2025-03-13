@@ -1,4 +1,5 @@
 import React from 'react'
+import { getBlockClassName } from '@/lib/utils'
 import { cn } from '@udecode/cn'
 import type { SlateElementProps } from '@udecode/plate'
 import { SlateElement } from '@udecode/plate'
@@ -10,7 +11,11 @@ export const ParagraphElementStatic = ({
 }: SlateElementProps) => {
   return (
     <SlateElement
-      className={cn(className, 'm-0 px-0 py-1 leading-relaxed')}
+      className={cn(
+        className,
+        'm-0 px-0 py-1 leading-relaxed',
+        getBlockClassName(props),
+      )}
       {...props}
     >
       {children}

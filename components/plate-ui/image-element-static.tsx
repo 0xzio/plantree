@@ -1,5 +1,5 @@
 import React from 'react'
-import { getUrl } from '@/lib/utils'
+import { getBlockClassName, getUrl } from '@/lib/utils'
 import { cn } from '@udecode/cn'
 import type { SlateElementProps } from '@udecode/plate'
 import { NodeApi, SlateElement } from '@udecode/plate'
@@ -37,6 +37,7 @@ export function ImageElementStatic({
             className={cn(
               'w-full max-w-full cursor-default object-cover px-0',
               'rounded-sm',
+              getBlockClassName(props),
             )}
             alt=""
             src={getUrl(url || '')}

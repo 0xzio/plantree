@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { cn } from '@/lib/utils'
-import { UploadCloud } from 'lucide-react'
+import { PenIcon, UploadCloud } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../popover'
 
 interface Props {
@@ -42,7 +42,14 @@ export const UploadButton = ({
       </a>
       <Popover>
         <PopoverTrigger asChild>
-          <div className="text-smshrink-0">External link</div>
+          <Button
+            size="sm"
+            variant="ghost"
+            className="text-sm shrink-0 flex items-center gap-1"
+          >
+            <PenIcon size={12} />
+            <span>External link</span>
+          </Button>
         </PopoverTrigger>
         <PopoverContent className="flex items-center gap-2 w-96">
           <Input value={url} onChange={(e) => setUrl(e.target.value)} />

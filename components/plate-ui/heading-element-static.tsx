@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { getBlockClassName } from '@/lib/utils'
 import { cn } from '@udecode/cn'
 import type { SlateElementProps } from '@udecode/plate'
 import { SlateElement } from '@udecode/plate'
@@ -30,7 +31,11 @@ export const HeadingElementStatic = ({
   return (
     <SlateElement
       as={variant}
-      className={cn(className, headingVariants({ variant }))}
+      className={cn(
+        className,
+        headingVariants({ variant }),
+        getBlockClassName(props),
+      )}
       {...props}
     >
       {children}

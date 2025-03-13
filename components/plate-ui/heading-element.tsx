@@ -1,6 +1,8 @@
 'use client'
 
 import React from 'react'
+import { cn, getBlockClassName } from '@/lib/utils'
+import { css } from '@fower/react'
 import { withRef, withVariants } from '@udecode/cn'
 import { PlateElement } from '@udecode/plate/react'
 import { cva } from 'class-variance-authority'
@@ -30,6 +32,7 @@ export const HeadingElement = withRef<typeof HeadingElementVariants>(
         as={variant!}
         variant={variant}
         {...props}
+        className={cn(props.className, getBlockClassName(props))}
       >
         {children}
       </HeadingElementVariants>

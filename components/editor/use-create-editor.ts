@@ -184,8 +184,6 @@ export const useCreateEditor = (
   } & Omit<CreatePlateEditorOptions, 'plugins'> = {},
   deps: any[] = [],
 ) => {
-  console.log('=======showFixedToolbar:', showFixedToolbar)
-
   let editorValue = value as any
   if (typeof editorValue === 'string') {
     editorValue = JSON.parse(editorValue)

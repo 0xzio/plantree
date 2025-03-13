@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+import { getBlockClassName, getUrl } from '@/lib/utils'
 import { cn, withRef } from '@udecode/cn'
 import { useDraggable } from '@udecode/plate-dnd'
 import { Image, ImagePlugin, useMediaState } from '@udecode/plate-media/react'
@@ -14,7 +15,6 @@ import {
   ResizeHandle,
 } from '../resizable'
 import { UploadBox } from './UploadBox'
-import { getUrl } from '@/lib/utils'
 
 export const ImageElement = withHOC(
   ResizableProvider,
@@ -62,6 +62,7 @@ export const ImageElement = withHOC(
                   'rounded-sm',
                   focused && selected && 'ring-2 ring-ring ring-offset-2',
                   isDragging && 'opacity-50',
+                  getBlockClassName(props),
                 )}
                 src={getUrl(rest.element.url as string)}
                 alt=""

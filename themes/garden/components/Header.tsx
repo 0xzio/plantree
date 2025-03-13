@@ -45,7 +45,7 @@ export const Header = ({ site }: Props) => {
                   key={link.pathname}
                   href={link.pathname}
                   className={cn(
-                    'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/90',
+                    'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/40',
                   )}
                 >
                   {link.title}
