@@ -2,10 +2,10 @@ import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
 import { Navigation } from '@/components/theme-ui/Navigation'
+import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Merienda } from 'next/font/google'
-import Link from './Link'
 
 const merienda = Merienda({
   weight: ['400', '500', '600', '700'],
@@ -28,18 +28,6 @@ export const Header = ({ site }: Props) => {
     >
       <MobileSidebarSheet site={site} />
       <Navigation site={site} className="w-80" />
-      <div className="flex-1 flex justify-start md:justify-center">
-        <Link
-          href="/"
-          aria-label={site.name}
-          className={cn(
-            'h-6 text-lg md:text-2xl font-semibold',
-            merienda.className,
-          )}
-        >
-          {site.name}
-        </Link>
-      </div>
       <div className="flex items-center justify-end gap-4 w-80">
         <div className="space-x-4 flex items-center sm:space-x-6">
           {headerNavLinksRight.map((link) => {

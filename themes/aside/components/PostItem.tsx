@@ -1,8 +1,8 @@
 import { PlateEditor } from '@/components/editor/plate-editor'
+import { Link } from '@/lib/i18n'
 import { Post, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
 import Image from 'next/image'
-import Link from './Link'
 
 interface PostItemProps {
   post: Post

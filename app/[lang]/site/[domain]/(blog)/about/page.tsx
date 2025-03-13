@@ -1,20 +1,34 @@
-import { getSite } from '@/lib/fetchers'
-import { loadTheme } from '@/lib/loadTheme'
+import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { editorDefaultValue } from '@/lib/constants'
+import { getPage, getSite } from '@/lib/fetchers'
+import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ domain: string }>
+}): Promise<Metadata> {
+  const site = await getSite(await params)
+  return {
+    title: `About | ${site.seoTitle}`,
+    description: site.seoDescription,
+  }
+}
 
 export default async function HomePage({
   params,
 }: {
   params: Promise<{ domain: string }>
 }) {
-  const [site] = await Promise.all([getSite(await params)])
-  const { AboutPage } = loadTheme(site.themeName)
+  const site = await getSite(await params)
+  const page = await getPage(site.id, 'about')
 
-  if (!AboutPage) {
-    return <div>Theme not found</div>
-  }
-
-  return <AboutPage site={site} />
+  return (
+    <div className="mx-auto max-w-3xl">
+      <ContentRender content={page?.content || editorDefaultValue} />
+    </div>
+  )
 }

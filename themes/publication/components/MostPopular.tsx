@@ -5,7 +5,7 @@ import { format } from 'date-fns'
 import Image from 'next/image'
 import { getUserName } from '../lib/getUserName'
 import { AuthorAvatar } from './AuthorAvatar'
-import Link from './Link'
+import { Link } from '@/lib/i18n'
 
 interface Props {
   posts: Post[]

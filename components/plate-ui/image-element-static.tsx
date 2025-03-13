@@ -5,6 +5,7 @@ import type { SlateElementProps } from '@udecode/plate'
 import { NodeApi, SlateElement } from '@udecode/plate'
 import type { TCaptionElement } from '@udecode/plate-caption'
 import type { TImageElement } from '@udecode/plate-media'
+import { Image } from '../Image'
 
 export function ImageElementStatic({
   children,
@@ -33,12 +34,14 @@ export function ImageElementStatic({
           className="relative max-w-full min-w-[92px]"
           style={{ textAlign: align }}
         >
-          <img
+          <Image
             className={cn(
               'w-full max-w-full cursor-default object-cover px-0',
               'rounded-sm',
               getBlockClassName(props),
             )}
+            width={300}
+            height={300}
             alt=""
             src={getUrl(url || '')}
             {...nodeProps}

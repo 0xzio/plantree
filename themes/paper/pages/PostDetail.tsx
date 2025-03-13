@@ -9,7 +9,7 @@ import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
 import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
-import Link from '../components/Link'
+import { Link } from '@/lib/i18n'
 
 interface LayoutProps {
   site: Site

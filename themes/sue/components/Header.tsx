@@ -2,9 +2,9 @@ import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
 import { Navigation } from '@/components/theme-ui/Navigation'
+import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
-import Link from './Link'
 
 interface Props {
   site: Site

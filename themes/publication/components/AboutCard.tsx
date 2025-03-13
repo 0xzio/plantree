@@ -12,9 +12,10 @@ import { useAccount } from 'wagmi'
 
 interface Props {
   site: Site
+  about: any
 }
 
-export const AboutCard = ({ site }: Props) => {
+export const AboutCard = ({ site, about }: Props) => {
   const { openConnectModal } = useConnectModal()
   const { isConnected } = useAccount()
   const { data } = useSession()
@@ -22,7 +23,7 @@ export const AboutCard = ({ site }: Props) => {
   const pathname = usePathname()
   return (
     <div className="mb-10 hover:text-foreground text-foreground/80">
-      <div className="flex flex-colshrink-0">
+      <div className="flex flex-col shrink-0 mb-4">
         {site.logo && (
           <Image
             src={site.logo}
@@ -36,9 +37,6 @@ export const AboutCard = ({ site }: Props) => {
           {site.name}
         </h3>
         <div className="text-foreground/60">{site.description}</div>
-      </div>
-      <div className="max-w-none xl:col-span-2">
-        <ContentRender content={site.about} />
       </div>
 
       <Button

@@ -1,9 +1,8 @@
 'use client'
 
+import { Link, usePathname } from '@/lib/i18n'
 import { Tag } from '@/lib/theme.types'
 import { slug } from 'github-slugger'
-import { usePathname } from '@/lib/i18n'
-import Link from './Link'
 
 interface PostListWithTagProps {
   tags: Tag[]

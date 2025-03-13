@@ -1,17 +1,20 @@
 import { Button } from '@/components/ui/button'
-import { Post, Site } from '@/lib/theme.types'
+import { Link } from '@/lib/i18n'
+import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import FeaturedPost from '../components/FeaturedPost'
-import Link from '../components/Link'
 import { PostItem } from '../components/PostItem'
 import { Sidebar } from '../components/Sidebar'
 
 interface Props {
+  about: any
+  tags: Tag[]
   site: Site
   posts: Post[]
+  projects: Project[]
 }
 
-export function HomePage({ posts = [], site }: Props) {
+export function HomePage({ posts = [], site, about }: Props) {
   const { popularPosts, featuredPost, commonPosts } = extractPosts(posts)
 
   const displayedPosts = commonPosts.slice(0, 100)
@@ -44,7 +47,7 @@ export function HomePage({ posts = [], site }: Props) {
         </div>
       </div>
 
-      <Sidebar site={site} posts={popularPosts}></Sidebar>
+      <Sidebar site={site} posts={popularPosts} about={about}></Sidebar>
     </div>
   )
 }

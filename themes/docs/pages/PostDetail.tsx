@@ -11,7 +11,7 @@ import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewslett
 import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
-import Link from '../components/Link'
+import { Link } from '@/lib/i18n'
 import { Toc } from '../components/Toc'
 
 interface LayoutProps {

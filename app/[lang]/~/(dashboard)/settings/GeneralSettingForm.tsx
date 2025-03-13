@@ -1,7 +1,6 @@
 'use client'
 
 import { useForm } from 'react-hook-form'
-import { PlateEditor } from '@/components/editor/plate-editor'
 import { FileUpload } from '@/components/FileUpload'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
@@ -117,35 +116,6 @@ export function GeneralSettingForm({}: Props) {
               <FormMessage />
             </FormItem>
           )}
-        />
-
-        <FormField
-          control={form.control}
-          name="about"
-          render={({ field }) => {
-            return (
-              <FormItem className="w-full h-full">
-                <FormLabel>About site</FormLabel>
-
-                <FormDescription>
-                  About this site, used in about page. results
-                </FormDescription>
-                <FormControl>
-                  <div className="h-[360px] border border-foreground/20 rounded-lg overflow-auto">
-                    <PlateEditor
-                      variant="default"
-                      className="h-full min-h-[300px]"
-                      value={JSON.parse(field.value)}
-                      onChange={(v) => {
-                        field.onChange(JSON.stringify(v))
-                      }}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
         />
 
         <div>

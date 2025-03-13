@@ -1,9 +1,9 @@
+import { Image } from '@/components/Image'
 import { Post, PostType } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { Node } from 'slate'
-import Image from './Image'
-import Link from './Link'
 import Tag from './Tag'
+import { Link } from '@/lib/i18n'
 
 interface PostItemProps {
   post: Post

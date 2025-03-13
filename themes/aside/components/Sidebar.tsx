@@ -3,10 +3,10 @@ import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Link } from '@/lib/i18n'
 import { Site, Tag } from '@/lib/theme.types'
 import { cn, getUrl } from '@/lib/utils'
 import { slug } from 'github-slugger'
-import Link from './Link'
 
 interface Props {
   site: Site

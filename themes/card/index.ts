@@ -1,6 +1,5 @@
 export * from './layouts/SiteLayout'
 export * from './pages/PostDetail'
-export * from './pages/AboutPage'
 export * from './pages/HomePage'
 export * from './pages/TagDetailPage'
 export * from './pages/TagListPage'

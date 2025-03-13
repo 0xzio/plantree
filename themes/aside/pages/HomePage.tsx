@@ -1,26 +1,28 @@
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { POSTS_PER_PAGE } from '@/lib/constants'
-import { Post, Site } from '@/lib/theme.types'
+import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
+  about: any
+  tags: Tag[]
   site: Site
   posts: Post[]
+  projects: Project[]
 }
 
-export function HomePage({ posts = [], site }: Props) {
+export function HomePage({ about, posts = [], projects, tags, site }: Props) {
   const { popularPosts, featuredPost, commonPosts } = extractPosts(posts)
+  const showAbout = site.theme?.home?.showAbout ?? true
+  const showLatestPosts = site.theme?.home?.showLatestPosts ?? true
+  const showProjects = site.theme?.home?.showProjects ?? true
+  const showsFeatured = site.theme?.home?.showFeatured ?? false
+  const postListStyle =
+    site.theme?.common?.postListStyle ?? PostListStyle.SIMPLE
   return (
     <div className="mb-20">
-      <div className="flex flex-col">
-        <div className="flex flex-col">
-          <PageTitle className="mt-0">{site.name}</PageTitle>
-        </div>
-        <div className="max-w-none mb-10">
-          <ContentRender content={site.about} />
-        </div>
-      </div>
+      {showAbout && <ContentRender content={about.content} />}
 
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">

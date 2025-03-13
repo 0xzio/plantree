@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { Post, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
-import Link from './Link'
+import { Link } from '@/lib/i18n'
 
 interface PostItemProps {
   post: Post

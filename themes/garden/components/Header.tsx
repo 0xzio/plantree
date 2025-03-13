@@ -2,10 +2,10 @@ import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
 import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
+import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Lobster } from 'next/font/google'
-import Link from './Link'
 import { PostTypeNav } from './PostTypeNav'
 
 const lobster = Lobster({
@@ -68,7 +68,7 @@ export const Header = ({ site }: Props) => {
               )}
               <div
                 className={cn(
-                  'font-normal text-2xlshrink-0',
+                  'font-normal text-2xl shrink-0',
                   lobster.className,
                 )}
               >

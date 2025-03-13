@@ -17,6 +17,7 @@ interface PostListWithTagProps {
 
 export function PostListWithTag({
   site,
+
   posts,
   tags = [],
   initialDisplayPosts = [],

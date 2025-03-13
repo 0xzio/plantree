@@ -6,28 +6,16 @@ import { Post, Site } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
+  about: any
   site: Site
   posts: Post[]
 }
 
-export function HomePage({ posts = [], site }: Props) {
+export function HomePage({ posts = [], site, about }: Props) {
   const { popularPosts, featuredPost, commonPosts } = extractPosts(posts)
   return (
-    <div className="mb-20">
-      <div className="flex flex-col">
-        <div className="flex flex-col items-center mt-6">
-          {site.logo && (
-            <Avatar className="w-28 h-28">
-              <AvatarImage src={site.logo} />
-              <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
-            </Avatar>
-          )}
-          <PageTitle className="mt-4">{site.name}</PageTitle>
-        </div>
-        <div className="max-w-none mb-10">
-          <ContentRender content={site.about} />
-        </div>
-      </div>
+    <div className="mb-20 max-w-3xl mx-auto">
+      <ContentRender content={about.content} />
 
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">

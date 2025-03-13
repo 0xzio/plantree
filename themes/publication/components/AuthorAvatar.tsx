@@ -20,7 +20,7 @@ export const AuthorAvatar = ({ post, className }: Props) => {
   return (
     <div
       className={cn(
-        'bg-red-300 h-6 w-6 rounded-fullshrink-0',
+        'bg-red-300 h-6 w-6 rounded-full shrink-0',
         generateGradient(post.user.displayName || post.user.name),
         className,
       )}

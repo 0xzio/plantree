@@ -4,9 +4,9 @@ import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar/MobileSi
 import { Navigation } from '@/components/theme-ui/Navigation'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn, getUrl } from '@/lib/utils'
-import Link from './Link'
 import { Sidebar } from './Sidebar'
 
 interface Props {

@@ -7,16 +7,18 @@ import {
   LATEST_POSTS_LIMIT,
   POSTS_PER_PAGE,
 } from '@/lib/constants'
-import { Post, PostListStyle, Project, Site } from '@/lib/theme.types'
-import Link from '../components/Link'
+import { Link } from '@/lib/i18n'
+import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 
 interface Props {
+  about: any
+  tags: Tag[]
   site: Site
   posts: Post[]
   projects: Project[]
 }
 
-export function HomePage({ posts = [], site, projects }: Props) {
+export function HomePage({ about, posts = [], projects, tags, site }: Props) {
   const showAbout = site.theme?.home?.showAbout ?? true
   const showLatestPosts = site.theme?.home?.showLatestPosts ?? true
   const showProjects = site.theme?.home?.showProjects ?? true
@@ -24,13 +26,8 @@ export function HomePage({ posts = [], site, projects }: Props) {
     site.theme?.common?.postListStyle ?? PostListStyle.SIMPLE
 
   return (
-    <div className="space-y-16">
-      {showAbout && (
-        <section className="max-w-none">
-          <PageTitle>{site.name}</PageTitle>
-          <ContentRender content={site.about} />
-        </section>
-      )}
+    <div className="flex flex-col gap-16">
+      {showAbout && <ContentRender content={about.content} />}
 
       {showLatestPosts && (
         <section className="">

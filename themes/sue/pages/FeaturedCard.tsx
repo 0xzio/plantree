@@ -14,10 +14,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@/components/ui/carousel'
+import { Link } from '@/lib/i18n'
 import { Post, Site, Tag } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
 import { Node } from 'slate'
-import Link from '../components/Link'
 import { PostItem } from '../components/PostItem'
 
 interface Props {

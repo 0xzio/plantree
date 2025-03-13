@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Image } from '@/components/Image'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { IPFSLink } from '@/components/theme-ui/IPFSLink'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
@@ -6,9 +7,8 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
-import Image from '../components/Image'
-import Link from '../components/Link'
 
 interface LayoutProps {
   site: Site

@@ -3,8 +3,8 @@ import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Merienda } from 'next/font/google'
-import Link from './Link'
 import { Nav } from './Nav'
+import { Link } from '@/lib/i18n'
 
 const merienda = Merienda({
   weight: ['400', '500', '600', '700'],

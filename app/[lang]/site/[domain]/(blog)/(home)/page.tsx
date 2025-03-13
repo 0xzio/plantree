@@ -2,6 +2,7 @@ import { FriendsProvider } from '@/components/FriendsContext'
 import { ProjectsProvider } from '@/components/ProjectsContext'
 import {
   getFriends,
+  getPage,
   getPosts,
   getProjects,
   getSite,
@@ -33,11 +34,12 @@ export default async function HomePage(props: {
   const params = await props.params
 
   const site = await getSite(params)
-  const [posts, tags, friends, projects] = await Promise.all([
+  const [posts, tags, friends, projects, about] = await Promise.all([
     getPosts(site.id),
     getTags(site.id),
     getFriends(site.id),
     getProjects(site.id),
+    getPage(site.id, 'about'),
   ])
 
   const { HomePage } = loadTheme(site.themeName)
@@ -56,6 +58,7 @@ export default async function HomePage(props: {
           projects={projects}
           authors={[]}
           site={site}
+          about={about}
         />
       </FriendsProvider>
     </ProjectsProvider>

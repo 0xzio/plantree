@@ -3,29 +3,25 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { HOME_PROJECT_LIMIT, POSTS_PER_PAGE } from '@/lib/constants'
 import { Post, PostListStyle, Project, Site } from '@/lib/theme.types'
-import Link from '../components/Link'
+import { Link } from '@/lib/i18n'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
+  about: any
   site: Site
   posts: Post[]
   projects: Project[]
 }
 
-export function HomePage({ posts = [], site, projects }: Props) {
+export function HomePage({ posts = [], site, projects, about }: Props) {
   const showAbout = site.theme?.home?.showAbout ?? true
   const showLatestPosts = site.theme?.home?.showLatestPosts ?? true
   const showProjects = site.theme?.home?.showProjects ?? true
   const postListStyle =
     site.theme?.common?.postListStyle ?? PostListStyle.SIMPLE
   return (
-    <div className="space-y-16">
-      {showAbout && (
-        <section className="max-w-none">
-          <PageTitle>{site.name}</PageTitle>
-          <ContentRender content={site.about} />
-        </section>
-      )}
+    <div className="flex flex-col gap-16">
+      {showAbout && <ContentRender content={about.content} />}
 
       {showLatestPosts && (
         <section className="">

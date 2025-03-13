@@ -83,7 +83,7 @@ export const Sidebar = ({ site, className, height }: Props) => {
   return (
     <aside
       className={cn(
-        'sidebar md:w-60 md:sticky top-0 md:top-16shrink-0 pt-0 pb-16 md:overflow-y-auto md:pb-8',
+        'sidebar md:w-60 md:sticky top-0 md:top-16 shrink-0 pt-0 pb-16 md:overflow-y-auto md:pb-8',
         className,
       )}
       style={{

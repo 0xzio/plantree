@@ -1,38 +1,28 @@
+import { ProjectsBlock } from '@/components/custom-plate-plugins/projects/react/ProjectsBlock'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
-import { POSTS_PER_PAGE } from '@/lib/constants'
-import { Post, Site } from '@/lib/theme.types'
-import Image from '../components/Image'
-import Link from '../components/Link'
+import { HOME_PROJECT_LIMIT, POSTS_PER_PAGE } from '@/lib/constants'
+import { Link } from '@/lib/i18n'
+import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
+  about: any
+  tags: Tag[]
   site: Site
   posts: Post[]
+  projects: Project[]
 }
 
-export function HomePage({ posts = [], site }: Props) {
+export function HomePage({ about, posts = [], projects, tags, site }: Props) {
+  const showAbout = site.theme?.home?.showAbout ?? true
+  const showLatestPosts = site.theme?.home?.showLatestPosts ?? true
+  const showProjects = site.theme?.home?.showProjects ?? true
+  const showsFeatured = site.theme?.home?.showFeatured ?? false
+  const postListStyle =
+    site.theme?.common?.postListStyle ?? PostListStyle.SIMPLE
   return (
     <div className="mt-12">
-      <div className="max-w-none mb-10 hover:text-foreground text-foreground/80">
-        <div className="flex flex-col items-centershrink-0">
-          {site.logo && (
-            <Image
-              src={site.logo}
-              alt="avatar"
-              width={192}
-              height={192}
-              className="h-48 w-48 rounded-full"
-            />
-          )}
-          <h3 className="pb-2 pt-4 text-2xl font-bold leading-8 tracking-tight">
-            {site.name}
-          </h3>
-          <div className="text-foreground/60">{site.description}</div>
-        </div>
-        <div className="max-w-none pb-8 pt-8 xl:col-span-2">
-          <ContentRender content={site.about} />
-        </div>
-      </div>
+      {showAbout && <ContentRender content={about.content} />}
 
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">
@@ -57,6 +47,26 @@ export function HomePage({ posts = [], site }: Props) {
           })}
         </div>
       </div>
+
+      {showProjects && projects.length > 0 && (
+        <div>
+          <div className="pb-6 pt-6 flex items-center justify-between">
+            <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
+              Projects
+            </h1>
+
+            {projects.length > HOME_PROJECT_LIMIT && (
+              <Link
+                href="/projects"
+                className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
+              >
+                All projects &rarr;
+              </Link>
+            )}
+          </div>
+          <ProjectsBlock projects={projects.slice(0, HOME_PROJECT_LIMIT)} />
+        </div>
+      )}
     </div>
   )
 }

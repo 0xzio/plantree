@@ -1,6 +1,6 @@
+import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
-import Link from './Link'
 
 interface Props {
   site: Site

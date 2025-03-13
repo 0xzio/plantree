@@ -1,13 +1,13 @@
 'use client'
 
-import { Link } from '@/lib/i18n'
-import { useSearchParams } from 'next/navigation'
-import { Node } from 'slate'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { PostActions } from '@/components/theme-ui/PostActions/PostActions'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Link } from '@/lib/i18n'
 import { Post, PostType, User } from '@/lib/theme.types'
 import { cn, formatDate, isAddress } from '@/lib/utils'
+import { useSearchParams } from 'next/navigation'
+import { Node } from 'slate'
 
 interface PostItemProps {
   post: Post
@@ -83,7 +83,7 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
     return (
       <div
         className={cn(
-          'bg-red-300 h-6 w-6 rounded-fullshrink-0',
+          'bg-red-300 h-6 w-6 rounded-full shrink-0',
           generateGradient(post.user.displayName || post.user.name),
         )}
       ></div>
