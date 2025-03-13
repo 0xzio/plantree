@@ -1,7 +1,7 @@
 import prisma from '@/lib/prisma'
 import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
-import { initPages } from '@/server/lib/initPages'
+import { initAboutPage, initPages } from '@/server/lib/initPages'
 import { post } from '@farcaster/auth-client'
 import { PostType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
@@ -160,7 +160,7 @@ export async function getPost(siteId: string, slug: string) {
     },
     [`${siteId}-post-${slug}`],
     {
-      revalidate: 10,
+      revalidate: REVALIDATE_TIME,
       tags: [`${siteId}-post-${slug}`],
     },
   )()
@@ -312,16 +312,23 @@ export async function getPage(siteId = '', slug = '') {
               },
             },
           })
-          return page
+          return page!
         } catch (error) {}
       }
 
-      return page
+      if (!page && slug === 'about') {
+        const site = await prisma.site.findUniqueOrThrow({
+          where: { id: siteId },
+        })
+        const page = await initAboutPage(siteId, site.userId)
+        return page!
+      }
+
+      return page!
     },
     [`${siteId}-page-${slug}`],
     {
-      // revalidate: REVALIDATE_TIME,
-      revalidate: 10,
+      revalidate: REVALIDATE_TIME,
       tags: [`${siteId}-page-${slug}`],
     },
   )()
@@ -342,7 +349,7 @@ export async function getFriends(siteId: string) {
     },
     [`${siteId}-friends`],
     {
-      revalidate: 10,
+      revalidate: REVALIDATE_TIME,
       tags: [`${siteId}-friends`],
     },
   )()
