@@ -50,6 +50,7 @@ msgid "Backup"
 msgstr "备份"
 
 #: app/[lang]/root/Footer.tsx:49
+#: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
 #: themes/publication/pages/BlogPage.tsx:25
 #: themes/paper/pages/BlogPage.tsx:25
