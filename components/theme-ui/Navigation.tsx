@@ -54,7 +54,7 @@ export function Navigation({ site, className }: Props) {
             key={link.pathname}
             href={link.pathname}
             className={cn(
-              'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/90 leading-none shrink-0',
+              'text-base hover:text-brand dark:hover:text-brand/80 text-foreground/90 leading-none shrink-0',
             )}
           >
             {link.title}

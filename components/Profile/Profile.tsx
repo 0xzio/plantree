@@ -9,14 +9,15 @@ import { LoginButton } from '../LoginButton'
 import { LoginDialog } from '../LoginDialog/LoginDialog'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
 import { Avatar, AvatarFallback } from '../ui/avatar'
-import { Button } from '../ui/button'
+import { Button, ButtonProps } from '../ui/button'
 import { ProfilePopover } from './ProfilePopover'
 
 interface Props {
   showDashboard?: boolean
+  buttonProps?: ButtonProps
 }
 
-export function Profile({ showDashboard = false }: Props) {
+export function Profile({ showDashboard = false, buttonProps }: Props) {
   const { data, status } = useSession()
   const { site } = useSite()
   const { push } = useRouter()
@@ -33,7 +34,7 @@ export function Profile({ showDashboard = false }: Props) {
   return (
     <>
       <LoginDialog />
-      {!authenticated && <LoginButton />}
+      {!authenticated && <LoginButton {...buttonProps} />}
       {authenticated && (
         <div className="flex items-center gap-2">
           {showDashboard && (

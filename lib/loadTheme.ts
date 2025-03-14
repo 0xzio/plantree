@@ -7,6 +7,7 @@ import * as minimal from '@/themes/minimal'
 import * as paper from '@/themes/paper'
 import * as publication from '@/themes/publication'
 import * as sue from '@/themes/sue'
+import * as wide from '@/themes/wide'
 
 const map: Record<string, any> = {
   card,
@@ -18,6 +19,7 @@ const map: Record<string, any> = {
   aside,
   sue,
   paper,
+  wide,
 }
 
 export function loadTheme(name = 'sue'): any {

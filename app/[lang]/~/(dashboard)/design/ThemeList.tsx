@@ -1,6 +1,5 @@
 'use client'
 
-import { useEffect, useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Badge } from '@/components/ui/badge'
@@ -30,6 +29,10 @@ const themes = [
   {
     name: 'Micro',
     value: 'micro',
+  },
+  {
+    name: 'Wide',
+    value: 'Wide',
   },
   {
     name: 'Garden',
