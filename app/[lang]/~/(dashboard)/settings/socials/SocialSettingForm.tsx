@@ -96,24 +96,6 @@ export function SocialSettingForm({}: Props) {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="farcaster"
-          render={({ field }) => (
-            <FormItem className="w-full">
-              <FormLabel>Farcaster</FormLabel>
-              <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
           name="x"
           render={({ field }) => (
             <FormItem className="w-full">
@@ -226,6 +208,24 @@ export function SocialSettingForm({}: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>GitHub</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://..."
+                  {...field}
+                  className="w-full"
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="farcaster"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Farcaster</FormLabel>
               <FormControl>
                 <Input
                   placeholder="https://..."

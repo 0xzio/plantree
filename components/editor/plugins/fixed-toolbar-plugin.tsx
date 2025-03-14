@@ -9,7 +9,7 @@ export const FixedToolbarPlugin = createPlatePlugin({
   render: {
     beforeEditable: () => (
       <div className="sm:px-[max(10px,calc(50%-350px))]">
-        <FixedToolbar className="">
+        <FixedToolbar className="bg-background">
           <FixedToolbarButtons />
         </FixedToolbar>
       </div>

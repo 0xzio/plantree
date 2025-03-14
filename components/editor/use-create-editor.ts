@@ -1,5 +1,6 @@
 'use client'
 
+import { AIPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import { copilotPlugins } from '@/components/editor/plugins/copilot-plugins'
 import { editorPlugins } from '@/components/editor/plugins/editor-plugins'
 import { FixedToolbarPlugin } from '@/components/editor/plugins/fixed-toolbar-plugin'
@@ -45,7 +46,6 @@ import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 import { withProps } from '@udecode/cn'
 import type { Value } from '@udecode/plate'
-import { AIPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import {
   BoldPlugin,
   CodePlugin,
@@ -105,6 +105,8 @@ import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
 import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
 import { ProjectsElement } from '../custom-plate-plugins/projects/react/projects-element'
+import { SocialLinksPlugin } from '../custom-plate-plugins/social-links/react'
+import { SocialLinksElement } from '../custom-plate-plugins/social-links/react/social-links-element'
 
 export const viewComponents = {
   [AudioPlugin.key]: MediaAudioElement,
@@ -154,6 +156,7 @@ export const viewComponents = {
   [CommentBoxPlugin.key]: CommentBoxElement,
   [FriendsPlugin.key]: FriendsElement,
   [ProjectsPlugin.key]: ProjectsElement,
+  [SocialLinksPlugin.key]: SocialLinksElement,
 }
 
 export const editorComponents = {

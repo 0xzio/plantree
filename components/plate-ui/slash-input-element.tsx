@@ -1,12 +1,12 @@
 'use client'
 
 import React from 'react'
+import { AIChatPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import {
   insertBlock,
   insertInlineElement,
 } from '@/components/editor/transforms'
 import { withRef } from '@udecode/cn'
-import { AIChatPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
 import { DatePlugin } from '@udecode/plate-date/react'
@@ -50,6 +50,7 @@ import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
+import { SocialLinksPlugin } from '../custom-plate-plugins/social-links/react'
 import {
   InlineCombobox,
   InlineComboboxContent,
@@ -206,15 +207,21 @@ const groups: Group[] = [
       },
       {
         focusEditor: false,
+        icon: <Lightbulb />,
+        label: 'My Projects',
+        value: ProjectsPlugin.key,
+      },
+      {
+        focusEditor: false,
         icon: <UserRoundIcon />,
         label: 'Friend Links',
         value: FriendsPlugin.key,
       },
       {
         focusEditor: false,
-        icon: <Lightbulb />,
-        label: 'My Projects',
-        value: ProjectsPlugin.key,
+        icon: <UserRoundIcon />,
+        label: 'Social Links',
+        value: SocialLinksPlugin.key,
       },
     ].map((item) => ({
       ...item,

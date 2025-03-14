@@ -112,6 +112,8 @@ import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
 import { BaseProjectsPlugin } from '../custom-plate-plugins/projects'
 import { ProjectsElementStatic } from '../custom-plate-plugins/projects/react/projects-element-static'
+import { BaseSocialLinksPlugin } from '../custom-plate-plugins/social-links'
+import { SocialLinksElementStatic } from '../custom-plate-plugins/social-links/react/social-links-element-static'
 
 export const serverSideComponents = {
   [BaseAudioPlugin.key]: MediaAudioElementStatic,
@@ -158,6 +160,7 @@ export const serverSideComponents = {
   [BaseCommentBoxPlugin.key]: CommentBoxElementStatic,
   [BaseFriendsPlugin.key]: FriendsElementStatic,
   [BaseProjectsPlugin.key]: ProjectsElementStatic,
+  [BaseSocialLinksPlugin.key]: SocialLinksElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -250,5 +253,6 @@ export const serverSideEditor = createSlateEditor({
     BaseCommentBoxPlugin,
     BaseFriendsPlugin,
     BaseProjectsPlugin,
+    BaseSocialLinksPlugin,
   ],
 })
