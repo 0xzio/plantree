@@ -12,9 +12,9 @@ const link = httpBatchLink({
   async headers() {
     // console.log('=======window.__SITE_ID__:', window.__SITE_ID__)
 
-    if (window.__SITE_ID__) {
+    if (window.__SITE_ID__ && window.__SITE__) {
       return {
-        'X-ACTIVE-SITE-ID': window.__SITE_ID__,
+        'X-ACTIVE-SITE-ID': window.__SITE_ID__ || window.__SITE__?.id,
       }
     } else {
       return {}
