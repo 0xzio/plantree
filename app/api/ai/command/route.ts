@@ -1,8 +1,10 @@
+import { getServerSession } from '@/lib/session'
 import { anthropic, createAnthropic } from '@ai-sdk/anthropic'
 import { createDeepSeek, deepseek } from '@ai-sdk/deepseek'
 import { createGoogleGenerativeAI } from '@ai-sdk/google'
 import { createOpenAI } from '@ai-sdk/openai'
 import { createPerplexity, perplexity } from '@ai-sdk/perplexity'
+import { PlanType } from '@prisma/client'
 import { convertToCoreMessages, streamText } from 'ai'
 import type { NextRequest } from 'next/server'
 import { NextResponse } from 'next/server'
@@ -25,6 +27,29 @@ type Input = {
 
 export async function POST(req: NextRequest) {
   const input = (await req.json()) as Input
+  const session = await getServerSession()
+
+  console.log('=======session:', session)
+
+  if (session?.isLoggedIn !== true) {
+    throw new Error('Unauthorized')
+  }
+
+  let planType = session?.planType
+
+  if (
+    session.currentPeriodEnd &&
+    Date.now() > new Date(session.currentPeriodEnd).getTime()
+  ) {
+    planType = PlanType.FREE
+  }
+
+  const isPro = planType === PlanType.PRO
+  // console.log('=====isPro:', isPro)
+
+  if (!isPro) {
+    throw new Error('This AI-assistant is for Pro users only.')
+  }
 
   if (input.provider === AIProvider.Google) {
     console.log('google.....')
@@ -42,7 +67,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (input.provider === AIProvider.Anthropic) {
-    console.log('claud...');
+    console.log('claud...')
     const anthropic = createAnthropic({
       apiKey: input.apiKey || process.env.ANTHROPIC_API_KEY,
     })
@@ -58,7 +83,7 @@ export async function POST(req: NextRequest) {
   }
 
   if (input.provider === AIProvider.Perplexity) {
-    console.log('pp...:', process.env.PERPLEXITY_API_KEY);
+    console.log('pp...:', process.env.PERPLEXITY_API_KEY)
     const perplexity = createPerplexity({
       apiKey: input.apiKey || process.env.PERPLEXITY_API_KEY,
     })

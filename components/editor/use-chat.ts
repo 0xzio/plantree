@@ -1,11 +1,14 @@
 'use client'
 
 import { useSettings } from '@/components/editor/settings'
+import { useSession } from '@/lib/useSession'
 import { faker } from '@faker-js/faker'
 import { useChat as useBaseChat } from 'ai/react'
+import { toast } from 'sonner'
 
 export const useChat = () => {
   const { keys, model } = useSettings()
+  const { session } = useSession()
 
   return useBaseChat({
     id: 'editor',
@@ -17,6 +20,11 @@ export const useChat = () => {
       provider: process.env.NEXT_PUBLIC_API_PROVIDER!,
     },
     fetch: async (input, init) => {
+      if (!session?.isPro) {
+        toast.info('This AI-assistant is for Pro users only.')
+        throw new Error('This AI-assistant is for Pro users only.')
+      }
+
       const res = await fetch(input, init)
 
       if (!res.ok) {
@@ -40,7 +48,7 @@ export const useChat = () => {
 
 // Used for testing. Remove it after implementing useChat api.
 const fakeStreamText = ({
-  chunkCount = 10,
+  chunkCount = 1,
   streamProtocol = 'data',
 }: {
   chunkCount?: number
@@ -50,16 +58,21 @@ const fakeStreamText = ({
   const blocks = [
     Array.from({ length: chunkCount }, () => ({
       delay: faker.number.int({ max: 100, min: 30 }),
-      texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
+      texts: 'This AI-assistant is for Pro users only.',
     })),
-    Array.from({ length: chunkCount + 2 }, () => ({
-      delay: faker.number.int({ max: 100, min: 30 }),
-      texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
-    })),
-    Array.from({ length: chunkCount + 4 }, () => ({
-      delay: faker.number.int({ max: 100, min: 30 }),
-      texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
-    })),
+    // Array.from({ length: chunkCount }, () => ({
+    //   delay: faker.number.int({ max: 100, min: 30 }),
+    //   texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
+
+    // })),
+    // Array.from({ length: chunkCount + 2 }, () => ({
+    //   delay: faker.number.int({ max: 100, min: 30 }),
+    //   texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
+    // })),
+    // Array.from({ length: chunkCount + 4 }, () => ({
+    //   delay: faker.number.int({ max: 100, min: 30 }),
+    //   texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
+    // })),
   ]
 
   const encoder = new TextEncoder()
