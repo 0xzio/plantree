@@ -8,10 +8,10 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
-import { Link } from '@/lib/i18n'
 
 interface LayoutProps {
   site: Site
@@ -39,7 +39,7 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
             <PostMetadata site={site} post={post} />
             <PostActions post={post} />
           </header>
-          <div className="grid-rows-[auto_1fr]">
+          <div className="pt-2 md:pt-4">
             <div className="">
               <ContentRender content={post.content} />
               <SubscribeNewsletterCard site={site} />

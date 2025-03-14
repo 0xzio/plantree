@@ -1,12 +1,11 @@
-'use client';
+'use client'
 
-import { faker } from '@faker-js/faker';
-import { useChat as useBaseChat } from 'ai/react';
-
-import { useSettings } from '@/components/editor/settings';
+import { useSettings } from '@/components/editor/settings'
+import { faker } from '@faker-js/faker'
+import { useChat as useBaseChat } from 'ai/react'
 
 export const useChat = () => {
-  const { keys, model } = useSettings();
+  const { keys, model } = useSettings()
 
   return useBaseChat({
     id: 'editor',
@@ -15,36 +14,37 @@ export const useChat = () => {
       // !!! DEMO ONLY: don't use API keys client-side
       apiKey: keys.openai,
       model: model.value,
+      provider: process.env.NEXT_PUBLIC_API_PROVIDER!,
     },
     fetch: async (input, init) => {
-      const res = await fetch(input, init);
+      const res = await fetch(input, init)
 
       if (!res.ok) {
         // Mock the API response. Remove it when you implement the route /api/ai/command
-        await new Promise((resolve) => setTimeout(resolve, 400));
+        await new Promise((resolve) => setTimeout(resolve, 400))
 
-        const stream = fakeStreamText();
+        const stream = fakeStreamText()
 
         return new Response(stream, {
           headers: {
             Connection: 'keep-alive',
             'Content-Type': 'text/plain',
           },
-        });
+        })
       }
 
-      return res;
+      return res
     },
-  });
-};
+  })
+}
 
 // Used for testing. Remove it after implementing useChat api.
 const fakeStreamText = ({
   chunkCount = 10,
   streamProtocol = 'data',
 }: {
-  chunkCount?: number;
-  streamProtocol?: 'data' | 'text';
+  chunkCount?: number
+  streamProtocol?: 'data' | 'text'
 } = {}) => {
   // Create 3 blocks with different lengths
   const blocks = [
@@ -60,34 +60,34 @@ const fakeStreamText = ({
       delay: faker.number.int({ max: 100, min: 30 }),
       texts: faker.lorem.words({ max: 3, min: 1 }) + ' ',
     })),
-  ];
+  ]
 
-  const encoder = new TextEncoder();
+  const encoder = new TextEncoder()
 
   return new ReadableStream({
     async start(controller) {
       for (let i = 0; i < blocks.length; i++) {
-        const block = blocks[i];
+        const block = blocks[i]
 
         // Stream the block content
         for (const chunk of block) {
-          await new Promise((resolve) => setTimeout(resolve, chunk.delay));
+          await new Promise((resolve) => setTimeout(resolve, chunk.delay))
 
           if (streamProtocol === 'text') {
-            controller.enqueue(encoder.encode(chunk.texts));
+            controller.enqueue(encoder.encode(chunk.texts))
           } else {
             controller.enqueue(
-              encoder.encode(`0:${JSON.stringify(chunk.texts)}\n`)
-            );
+              encoder.encode(`0:${JSON.stringify(chunk.texts)}\n`),
+            )
           }
         }
 
         // Add double newline after each block except the last one
         if (i < blocks.length - 1) {
           if (streamProtocol === 'text') {
-            controller.enqueue(encoder.encode('\n\n'));
+            controller.enqueue(encoder.encode('\n\n'))
           } else {
-            controller.enqueue(encoder.encode(`0:${JSON.stringify('\n\n')}\n`));
+            controller.enqueue(encoder.encode(`0:${JSON.stringify('\n\n')}\n`))
           }
         }
       }
@@ -96,12 +96,12 @@ const fakeStreamText = ({
         controller.enqueue(
           `d:{"finishReason":"stop","usage":{"promptTokens":0,"completionTokens":${blocks.reduce(
             (sum, block) => sum + block.length,
-            0
-          )}}}\n`
-        );
+            0,
+          )}}}\n`,
+        )
       }
 
-      controller.close();
+      controller.close()
     },
-  });
-};
+  })
+}

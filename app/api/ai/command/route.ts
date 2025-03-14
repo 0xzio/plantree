@@ -1,41 +1,105 @@
-import type { NextRequest } from 'next/server';
+import { anthropic, createAnthropic } from '@ai-sdk/anthropic'
+import { createDeepSeek, deepseek } from '@ai-sdk/deepseek'
+import { createGoogleGenerativeAI } from '@ai-sdk/google'
+import { createOpenAI } from '@ai-sdk/openai'
+import { createPerplexity, perplexity } from '@ai-sdk/perplexity'
+import { convertToCoreMessages, streamText } from 'ai'
+import type { NextRequest } from 'next/server'
+import { NextResponse } from 'next/server'
 
-import { createOpenAI } from '@ai-sdk/openai';
-import { convertToCoreMessages, streamText } from 'ai';
-import { NextResponse } from 'next/server';
+enum AIProvider {
+  OpenAI = 'OpenAI',
+  DeepSeek = 'DeepSeek',
+  Perplexity = 'Perplexity',
+  Google = 'Google',
+  Anthropic = 'Anthropic',
+}
+
+type Input = {
+  provider: AIProvider
+  apiKey: string
+  messages: any
+  model: string
+  system: any
+}
 
 export async function POST(req: NextRequest) {
+  const input = (await req.json()) as Input
+
+  if (input.provider === AIProvider.Google) {
+    console.log('google.....')
+    const google = createGoogleGenerativeAI({
+      apiKey: input.apiKey || process.env.GOOGLE_AI_API_KEY,
+    })
+    return generate(input, google('gemini-1.5-flash'))
+  }
+
+  if (input.provider === AIProvider.DeepSeek) {
+    const deepseek = createDeepSeek({
+      apiKey: input.apiKey || process.env.DEEPSEEK_API_KEY,
+    })
+    return generate(input, deepseek('deepseek-chat'))
+  }
+
+  if (input.provider === AIProvider.Anthropic) {
+    console.log('claud...');
+    const anthropic = createAnthropic({
+      apiKey: input.apiKey || process.env.ANTHROPIC_API_KEY,
+    })
+
+    return generate(input, anthropic('claude-3-haiku-20240307'))
+  }
+
+  if (input.provider === AIProvider.OpenAI) {
+    const openai = createOpenAI({
+      apiKey: input.apiKey || process.env.OPENAI_API_KEY,
+    })
+    return generate(input, openai('gpt-4o-mini'))
+  }
+
+  if (input.provider === AIProvider.Perplexity) {
+    console.log('pp...:', process.env.PERPLEXITY_API_KEY);
+    const perplexity = createPerplexity({
+      apiKey: input.apiKey || process.env.PERPLEXITY_API_KEY,
+    })
+    return generate(input, perplexity('sonar-pro'))
+  }
+
+  const deepseek = createDeepSeek({
+    apiKey: input.apiKey || process.env.DEEPSEEK_API_KEY,
+  })
+  return generate(input, deepseek('deepseek-chat'))
+}
+
+async function generate(input: Input, llm: any) {
   const {
+    provider = AIProvider.OpenAI,
     apiKey: key,
     messages,
     model = 'gpt-4o-mini',
     system,
-  } = await req.json();
+  } = input
 
-  const apiKey = key || process.env.OPENAI_API_KEY;
-
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: 'Missing OpenAI API key.' },
-      { status: 401 }
-    );
-  }
-
-  const openai = createOpenAI({ apiKey });
+  // if (!apiKey) {
+  //   return NextResponse.json(
+  //     { error: 'Missing OpenAI API key.' },
+  //     { status: 401 },
+  //   )
+  // }
 
   try {
-    const result = await streamText({
+    const result = streamText({
       maxTokens: 2048,
       messages: convertToCoreMessages(messages),
-      model: openai(model),
+      model: llm,
       system: system,
-    });
+    })
 
-    return result.toDataStreamResponse();
+    return result.toDataStreamResponse()
   } catch {
     return NextResponse.json(
       { error: 'Failed to process AI request' },
-      { status: 500 }
-    );
+      { status: 500 },
+    )
   }
 }

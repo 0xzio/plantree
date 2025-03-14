@@ -43,7 +43,7 @@ export function PostDetail({ site, post, className, next, prev }: LayoutProps) {
         />
       )}
 
-      <div className="grid-rows-[auto_1fr]">
+      <div className="pt-2 md:pt-4">
         <div className="">
           <ContentRender content={post.content} />
           <SubscribeNewsletterCard site={site} />
