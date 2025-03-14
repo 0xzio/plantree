@@ -11,8 +11,6 @@ interface Props {
 }
 
 export function FriendsBlock({ friends, className }: Props) {
-  console.log('======friends:', friends)
-
   const reviewedFriends = friends.filter(
     (friend) => friend.status === 'approved',
   )

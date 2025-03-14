@@ -51,7 +51,7 @@ export function ContentRender({ content }: Props) {
       // editor={editor}
       // components={components}
       value={value.map(({ id, ...rest }) => rest) as any}
-      className="text-lg"
+      className="text-base"
     />
   )
 }

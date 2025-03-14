@@ -30,7 +30,7 @@ export function Footer({ site, className }: Props) {
           </div>
           <div className="hidden md:flex items-center">{` • `}</div>
           <div className="hidden md:flex items-center">
-            <Link href={`/feed.xml`} target="_blank">
+            <Link href="/feed.xml" target="_blank">
               RSS
             </Link>
           </div>

@@ -24,6 +24,14 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl
   const { pathname } = url
 
+  if (pathname.endsWith('feed.xml')) {
+    return NextResponse.rewrite(new URL('/feed.xml', req.url))
+  }
+
+  if (pathname.endsWith('sitemap.xml')) {
+    return NextResponse.rewrite(new URL('/sitemap.xml', req.url))
+  }
+
   const pathnameHasLocale = locales.some(
     (locale) => pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`,
   )

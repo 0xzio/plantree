@@ -30,7 +30,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
       {showsFeatured && <FeaturedCard posts={featuredPosts} />}
 
       {tags.length > 0 && (
-        <div>
+        <div className="space-y-6">
           <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
             Tags
           </h1>

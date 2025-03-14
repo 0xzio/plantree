@@ -114,6 +114,8 @@ Start writing a new paragraph AFTER <Document> ONLY ONE SENTENCE`
     label: 'Improve writing',
     value: 'improveWriting',
     onSelect: ({ editor }) => {
+      console.log('improve the writing......')
+
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Improve the writing',
       })
@@ -132,6 +134,7 @@ Start writing a new paragraph AFTER <Document> ONLY ONE SENTENCE`
     label: 'Make longer',
     value: 'makeLonger',
     onSelect: ({ editor }) => {
+      console.log('Make longer......')
       void editor.getApi(AIChatPlugin).aiChat.submit({
         prompt: 'Make longer',
       })
