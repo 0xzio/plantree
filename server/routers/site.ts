@@ -1,6 +1,6 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { isProd } from '@/lib/constants'
-import { addDomainToVercel } from '@/lib/domains'
+import { addDomainToVercel, removeDomainFromVercelProject } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
 import { stripe } from '@/lib/stripe'
@@ -437,12 +437,16 @@ export const siteRouter = router({
       })
 
       if (customDomain) {
+        try {
+          await removeDomainFromVercelProject(input.domain)
+        } catch (error) {}
+        const res = await addDomainToVercel(input.domain)
+
         await prisma.domain.update({
           where: { id: customDomain.id },
           data: { domain: input.domain },
         })
 
-        const res = await addDomainToVercel(input.domain)
         const domains = await prisma.domain.findMany({
           where: { siteId: siteId },
         })
@@ -474,6 +478,41 @@ export const siteRouter = router({
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Domain is already taken',
+        })
+      }
+    }),
+
+  deleteDomain: protectedProcedure
+    .input(
+      z.object({
+        domain: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const customDomain = await prisma.domain.findFirstOrThrow({
+        where: {
+          isSubdomain: false,
+          domain: input.domain,
+        },
+      })
+
+      try {
+        const res = await removeDomainFromVercelProject(customDomain.domain)
+        await prisma.domain.delete({ where: { id: customDomain.id } })
+
+        const domains = await prisma.domain.findMany({
+          where: { siteId: customDomain.siteId },
+        })
+        revalidateSite(domains)
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+        await cacheHelper.updateCachedHomeSites(null)
+        return res
+      } catch (error) {
+        console.log('===error:', error)
+
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Failed to delete domain',
         })
       }
     }),

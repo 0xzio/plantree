@@ -5,6 +5,7 @@ import { Separator } from '@/components/ui/separator'
 import { useSite } from '@/hooks/useSite'
 import { getSiteCustomDomain } from '@/lib/getSiteDomain'
 import { CustomDomainForm } from './CustomDomainForm'
+import DeleteDomain from './DeleteDomain'
 import { DomainConfiguration } from './DomainConfiguration'
 import { SubdomainDomainForm } from './SubdomainDomainForm'
 import { SubdomainList } from './SubdomainList'
@@ -32,7 +33,12 @@ export default function Page() {
       </div>
       <Separator></Separator>
       <CustomDomainForm site={site!} />
-      {customDomain && <DomainConfiguration domain={customDomain} />}
+      {customDomain && (
+        <div>
+          <DomainConfiguration domain={customDomain} />
+          <DeleteDomain domain={customDomain} />
+        </div>
+      )}
     </div>
   )
 }
