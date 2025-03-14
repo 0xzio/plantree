@@ -114,7 +114,7 @@ export const stripeRouter = router({
           },
         },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
-        cancel_url: `${success_url}?${qs.stringify(cancelQuery)}`,
+        cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
         line_items: [{ price: input.priceId, quantity: 1 }],
       })
 

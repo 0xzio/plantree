@@ -40,7 +40,7 @@ export function getSiteCustomDomain(site: SiteWithDomains) {
   return item?.domain || ''
 }
 
-function sortDomains(domains: Domain[]): Domain[] {
+export function sortDomains(domains: Domain[]): Domain[] {
   const sortKeys = [
     SubdomainType.Custom,
     SubdomainType.EnsName,
@@ -64,4 +64,13 @@ function sortDomains(domains: Domain[]): Domain[] {
 
     return 0 // If both are not found, maintain original order
   })
+}
+
+export function getSiteCustomSubdomain(site: SiteWithDomains) {
+  const customSubdomain = site.domains.find(
+    (d) => d.isSubdomain && d.subdomainType === SubdomainType.Custom,
+  )
+  if (customSubdomain) return customSubdomain
+
+  return site.domains.find((d) => d.isSubdomain)
 }

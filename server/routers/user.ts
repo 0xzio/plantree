@@ -24,6 +24,17 @@ export const userRouter = router({
     return prisma.user.findMany({ take: 20 })
   }),
 
+  byId: publicProcedure.input(z.string()).query(async ({ ctx, input }) => {
+    return prisma.user.findUniqueOrThrow({
+      where: { id: input },
+      include: {
+        sites: {
+          include: { domains: true },
+        },
+      },
+    })
+  }),
+
   search: publicProcedure
     .input(
       z.object({

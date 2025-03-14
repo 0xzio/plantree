@@ -68,7 +68,7 @@ export function TierItem({ tier, site }: Props) {
           <div>{tier.name}</div>
         </div>
         <div className="flex items-center gap-1">
-          <div className="text-2xl font-bold">${Number(tier.price)}</div>
+          <div className="text-2xl font-bold">${Number(tier.price / 100)}</div>
           <div>/ month</div>
         </div>
       </div>
