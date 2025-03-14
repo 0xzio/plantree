@@ -42,7 +42,6 @@ export const Header = ({ site }: Props) => {
         <div className="flex items-center">
           <Airdrop />
         </div>
-
         <Profile></Profile>
       </div>
     </header>

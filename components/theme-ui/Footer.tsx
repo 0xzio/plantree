@@ -2,6 +2,7 @@ import { ModeToggle } from '@/components/ModeToggle'
 import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
+import { ContributeButton } from './ContributeButton'
 import { LangSwitcher } from './LangSwitcher'
 import { SocialNav } from './SocialNav'
 
@@ -34,8 +35,10 @@ export function Footer({ site, className }: Props) {
               RSS
             </Link>
           </div>
+
           <ModeToggle className="hidden md:flex" />
           <LangSwitcher className="hidden md:flex" site={site} />
+          <ContributeButton site={site} />
         </div>
       </div>
     </footer>

@@ -1,6 +1,7 @@
-import { editorDefaultValue, ELEMENT_P } from '@/lib/constants'
-import { prisma } from '@/lib/prisma'
-import { PostStatus, PostType } from '@prisma/client'
+import { editorDefaultValue, ELEMENT_P } from '@/lib/constants';
+import { prisma } from '@/lib/prisma';
+import { PostStatus, PostType } from '@prisma/client';
+
 
 export async function initPages(siteId: string, userId: string) {
   await prisma.post.createMany({

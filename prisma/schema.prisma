@@ -430,6 +430,7 @@ enum GateType {
 
 enum PostStatus {
   PUBLISHED
+  CONTRIBUTED
   DRAFT
   ARCHIVED
 }

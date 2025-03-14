@@ -43,6 +43,7 @@ export enum PostStatus {
   PUBLISHED = 'PUBLISHED',
   DRAFT = 'DRAFT',
   ARCHIVED = 'ARCHIVED',
+  CONTRIBUTED = 'CONTRIBUTED',
 }
 
 export enum WorkerEvents {

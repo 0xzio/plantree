@@ -278,6 +278,7 @@ export const siteRouter = router({
         gallery: z.boolean(),
         page: z.boolean(),
         database: z.boolean(),
+        contribute: z.boolean(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

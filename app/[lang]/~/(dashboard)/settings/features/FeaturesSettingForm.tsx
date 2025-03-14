@@ -36,6 +36,7 @@ const FormSchema = z.object({
   gallery: z.boolean(),
   page: z.boolean(),
   database: z.boolean(),
+  contribute: z.boolean(),
 })
 
 interface Props {
@@ -55,6 +56,7 @@ export function FeaturesSettingForm({ site }: Props) {
       gallery: features?.gallery || false,
       page: features?.page || false,
       database: features?.database || false,
+      contribute: features?.contribute || false,
     },
     resolver: zodResolver(FormSchema),
   })
@@ -157,6 +159,29 @@ export function FeaturesSettingForm({ site }: Props) {
                   }}
                 />
                 <Label htmlFor="feature-gallery">Gallery</Label>
+              </div>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="contribute"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center space-x-2">
+                <Switch
+                  id="feature-contribute"
+                  checked={field.value}
+                  onCheckedChange={(checked) => {
+                    field.onChange(checked)
+                  }}
+                />
+                <Label htmlFor="feature-contribute">Contribute</Label>
+                <FormDescription>
+                  Allow other users submit posts.
+                </FormDescription>
               </div>
               <FormMessage />
             </FormItem>

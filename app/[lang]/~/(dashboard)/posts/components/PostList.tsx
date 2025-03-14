@@ -3,7 +3,6 @@
 import { useSiteContext } from '@/components/SiteContext'
 import { usePosts } from '@/hooks/usePosts'
 import { PostStatus } from '@/lib/constants'
-import { trpc } from '@/lib/trpc'
 import { PostItem } from './PostItem'
 
 interface PostListProps {
@@ -17,7 +16,12 @@ export function PostList({ status }: PostListProps) {
 
   if (isLoading) return <div className="text-foreground/60">Loading...</div>
 
-  const posts = data.filter((post) => post.status === status)
+  const posts = data.filter((post) => {
+    if (status === PostStatus.DRAFT) {
+      return post.status === status || post.status === PostStatus.CONTRIBUTED
+    }
+    return post.status === status
+  })
 
   if (!posts.length) {
     return <div className="text-foreground/60">No posts yet.</div>

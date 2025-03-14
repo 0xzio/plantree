@@ -4,7 +4,6 @@ import {
   BUILTIN_PAGE_SLUGS,
   FREE_PLAN_POST_LIMIT,
   IPFS_ADD_URL,
-  PostStatus,
 } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { prisma } from '@/lib/prisma'
@@ -19,6 +18,7 @@ import {
   GateType,
   NewsletterStatus,
   Post,
+  PostStatus,
   PostType,
   Prisma,
   SubscriberStatus,
@@ -126,7 +126,10 @@ export const postRouter = router({
         siteId: z.string(),
         type: z.nativeEnum(PostType),
         title: z.string(),
+        description: z.string().optional(),
         content: z.string(),
+        status: z.nativeEnum(PostStatus).optional(),
+        userId: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -143,14 +146,14 @@ export const postRouter = router({
 
       const post = await prisma.post.create({
         data: {
-          userId: ctx.token.uid,
+          userId: input.userId || ctx.token.uid,
           i18n: {},
           ...input,
           authors: {
             create: [
               {
                 siteId: ctx.activeSiteId,
-                userId: ctx.token.uid,
+                userId: input.userId || ctx.token.uid,
               },
             ],
           },

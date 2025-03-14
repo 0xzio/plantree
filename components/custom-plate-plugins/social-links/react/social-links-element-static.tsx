@@ -20,7 +20,7 @@ export const SocialLinksElementStatic = ({
       {...props}
       className={cn(className, getBlockClassName(props), 'm-0 px-0 py-1')}
     >
-      <div className="flex justify-center items-center h-full bg-amber-200">
+      <div className="flex justify-center items-center h-full">
         <SocialNav site={site as any} size={5} />
       </div>
       {children}
