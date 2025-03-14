@@ -2,7 +2,7 @@
 
 import { useCallback, useState } from 'react'
 import { useIsTouchDevice } from '@/hooks/use-is-touch-device'
-import { AIChatPlugin } from '@udecode/plate-ai/react'
+import { AIChatPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { HEADING_KEYS } from '@udecode/plate-heading'
 import { IndentListPlugin } from '@udecode/plate-indent-list/react'

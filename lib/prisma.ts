@@ -9,7 +9,9 @@ declare global {
   var prisma: typeof extendedPrisma | undefined
 }
 
-if (process.env.NODE_ENV === 'development') global.prisma = extendedPrisma
+if (process.env.NODE_ENV === 'development') {
+  global.prisma = extendedPrisma
+}
 
 export default extendedPrisma
 export { extendedPrisma as prisma }

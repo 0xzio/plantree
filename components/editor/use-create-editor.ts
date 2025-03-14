@@ -45,7 +45,7 @@ import { TocElement } from '@/components/plate-ui/toc-element'
 import { ToggleElement } from '@/components/plate-ui/toggle-element'
 import { withProps } from '@udecode/cn'
 import type { Value } from '@udecode/plate'
-import { AIPlugin } from '@udecode/plate-ai/react'
+import { AIPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import {
   BoldPlugin,
   CodePlugin,

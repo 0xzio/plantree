@@ -6,7 +6,7 @@ import {
   insertInlineElement,
 } from '@/components/editor/transforms'
 import { withRef } from '@udecode/cn'
-import { AIChatPlugin } from '@udecode/plate-ai/react'
+import { AIChatPlugin } from '@/components/custom-plate-plugins/plate-ai/react'
 import { BlockquotePlugin } from '@udecode/plate-block-quote/react'
 import { CodeBlockPlugin } from '@udecode/plate-code-block/react'
 import { DatePlugin } from '@udecode/plate-date/react'

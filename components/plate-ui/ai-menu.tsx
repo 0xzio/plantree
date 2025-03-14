@@ -7,7 +7,7 @@ import {
   AIChatPlugin,
   useEditorChat,
   useLastAssistantMessage,
-} from '@udecode/plate-ai/react';
+} from '@/components/custom-plate-plugins/plate-ai/react';
 import {
   BlockSelectionPlugin,
   useIsSelecting,
