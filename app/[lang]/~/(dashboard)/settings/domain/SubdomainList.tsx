@@ -46,9 +46,9 @@ function DomainItem({ domain, site }: DomainItemProps) {
         size="sm"
         className="w-16"
         disabled={isPending || domain.subdomainType !== SubdomainType.Custom}
-        onClick={() => {
-          mutateAsync({ siteId: domain.id, domainId: domain.id })
-          refetch()
+        onClick={async () => {
+          await mutateAsync({ siteId: domain.id, domainId: domain.id })
+          await refetch()
         }}
       >
         {isPending ? <LoadingDots className="bg-white" /> : 'Delete'}

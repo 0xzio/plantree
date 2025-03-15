@@ -48,9 +48,10 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const { data: site, isLoading } = useQuery({
     queryKey: ['current_site'],
     queryFn: async () => {
-      window.__SITE_ID__ = session?.activeSiteId || ''
       const site = sites.find((s) => s.id === session?.activeSiteId)
-      return site || sites[0]
+      const currentSite = site || sites[0]
+      window.__SITE_ID__ = currentSite.id
+      return currentSite
     },
     enabled: !!session && sites.length > 0,
   })

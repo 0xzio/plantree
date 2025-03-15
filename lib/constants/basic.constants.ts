@@ -136,7 +136,7 @@ export const defaultNavLinks: NavLink[] = [
     pathname: '/ama',
     type: NavLinkType.BUILTIN,
     location: NavLinkLocation.HEADER,
-    visible: true,
+    visible: false,
   },
   {
     title: 'About',

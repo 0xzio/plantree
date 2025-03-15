@@ -1,56 +1,67 @@
-'use client'
+import { Link } from '@/lib/i18n'
+import { cn } from '@/lib/utils'
+import {
+  ArrowUpRight,
+  BotIcon,
+  BugIcon,
+  MailIcon,
+  MessageCircleMore,
+  PaletteIcon,
+  PencilIcon,
+  RocketIcon,
+  UserIcon,
+  ZapIcon,
+} from 'lucide-react'
 
-import { STATIC_URL } from '@/lib/constants'
-import { trpc } from '@/lib/trpc'
-import { ExternalLink } from 'lucide-react'
-import Image from 'next/image'
+const themes: string[] = [
+  'minimal',
+  'micro',
+  'publication',
+  'aside',
+  'sue',
+  'paper',
+  'wide',
+  'garden',
+  'card',
+  'docs',
+]
 
 export function ThemeList() {
-  const { data = [], isLoading } = trpc.theme.all.useQuery()
-  if (isLoading) return <div></div>
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-10">
-      {data?.map((item) => {
-        const manifest = JSON.parse(item.manifest)
-
-        return (
-          <article
-            key={item.id}
-            className="flex flex-col space-y-5  bg-background rounded-lg overflow-hidden hover:scale-105 transition-all shadow-sm border border-foreground/5"
-          >
-            <div className="w-full h-52 border-b border-b-popover-foreground/10">
-              <Image
-                src={`${STATIC_URL}/${manifest.screenshots[0]}`}
-                alt=""
-                width={400}
-                height={400}
-                className="object-cover w-full h-52"
-              />
-            </div>
-            <div className="space-y-2 p-4">
-              <div className="text-xs text-foreground/50">
-                Install theme: npx penx theme install {item.name}
-              </div>
-              <h2 className="text-xl font-semibold">
-                {manifest.title || manifest.name}
-              </h2>
-              <div className="text-sm flex items-center justify-between">
-                {manifest.author && <div>By {manifest.author}</div>}
-                {manifest.previewUrl && (
-                  <a
-                    href={manifest.previewUrl}
-                    target="_blank"
-                    className="flex items-center gap-1 text-foreground/60"
-                  >
-                    <div>Preview</div>
-                    <ExternalLink size={16}></ExternalLink>
-                  </a>
+    <div className="mt-10 space-y-10">
+      <div className="text-center space-y-4">
+        <div className="text-6xl font-bold">Themes</div>
+        <div className="text-xl text-foreground/60">
+          Some beautiful themes for PenX.
+        </div>
+      </div>
+      <div className="bg-transparent">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 border-foreground/10 overflow-hidden border-l border-t justify-center">
+          {themes.map((theme, index) => {
+            let host = `theme-${theme}.penx.io`
+            if (theme === 'docs') host = 'docs.penx.io'
+            const link = `https://${host}`
+            return (
+              <div
+                key={index}
+                className={cn(
+                  'p-8 border-foreground/10 space-y-3 bg-background/30 border-r border-b group transition-all',
                 )}
+              >
+                <div className="text-5xl font-bold">{theme.toUpperCase()}</div>
+                <Link
+                  href={link}
+                  target="_blank"
+                  className="text-base text-foreground/50 hover:text-foreground/90 transition-all group-hover:scale-105 flex gap-0.5"
+                >
+                  <span>{host}</span>
+                  <ArrowUpRight size={16} className="text-foreground/60" />
+                </Link>
               </div>
-            </div>
-          </article>
-        )
-      })}
+            )
+          })}
+        </div>
+      </div>
     </div>
   )
 }
