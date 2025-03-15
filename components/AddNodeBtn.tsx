@@ -20,7 +20,7 @@ export function AddNodeBtn({ editor }: Props) {
 
   return (
     <div
-      className="inline-flex bg-foreground/5 hover:bg-foreground/10 rounded-full items-center justify-center text-foreground/40 cursor-pointer w-4 h-4 -ml-2"
+      className="inline-flex bg-foreground/5 dark:bg-background/80 hover:bg-foreground/10 rounded-full items-center justify-center text-foreground/40 dark:text-foreground cursor-pointer w-4 h-4 -ml-2"
       onClick={add}
     >
       <PlusIcon size={14} strokeWidth={1.5} />
