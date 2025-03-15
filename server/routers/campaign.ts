@@ -47,7 +47,7 @@ export const campaignRouter = router({
     .mutation(({ ctx, input }) => {
       return prisma.$transaction(
         async (tx) => {
-          const priceUnit = 1000
+          const priceUnit = 100
           const siteId = ctx.activeSiteId
           const oauthStripe = await getOAuthStripe(siteId)
 

@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
   const sessionId = url.searchParams.get('session_id')
   const userId = url.searchParams.get('userId') || ''
-  const productId = url.searchParams.get('productId') || ''
+  const campaignId = url.searchParams.get('campaignId') || ''
   const host = url.searchParams.get('host') || ''
   const pathname = url.searchParams.get('pathname') || ''
   const amount = url.searchParams.get('amount') || ''
@@ -40,37 +40,20 @@ export async function GET(req: NextRequest) {
       throw new Error('Invalid session.')
     }
 
-    const product = await prisma.product.findUniqueOrThrow({
-      where: { id: productId },
-    })
-
     console.log('========.invoice:', session.invoice)
 
     const productAmount = Number(amount)
-    const paidAmount = product.price * productAmount
-    await prisma.order.create({
+    const paidAmount = productAmount * 100
+    await prisma.pledge.create({
       data: {
-        productAmount,
         paidAmount,
         status: OrderStatus.PENDING,
-        paymentStatus: PaymentStatus.PAID,
         userId,
         siteId,
-        productId,
+        campaignId,
         customer: session.customer!,
       },
     })
-
-    let balance = site.balance as Balance
-    if (!balance) {
-      balance = {
-        withdrawable: 0,
-        withdrawing: 0,
-        locked: 0,
-      }
-    }
-
-    balance.withdrawable += paidAmount
 
     const invoice = await stripe.invoices.retrieve(session.invoice as string)
 
@@ -79,9 +62,9 @@ export async function GET(req: NextRequest) {
     await prisma.invoice.create({
       data: {
         siteId,
+        campaignId,
+        type: InvoiceType.CAMPAIGN,
         amount: paidAmount,
-        productId,
-        type: InvoiceType.PRODUCT,
         currency: invoice.currency,
         stripeInvoiceId: invoice.id,
         stripeInvoiceNumber: invoice.number,
@@ -90,14 +73,17 @@ export async function GET(req: NextRequest) {
       },
     })
 
-    await prisma.site.update({
-      where: { id: siteId },
-      data: {
-        balance,
-      },
+    const campaign = await prisma.campaign.findUniqueOrThrow({
+      where: { id: campaignId },
     })
 
-    await cacheHelper.updateCachedMySites(site.userId, null)
+    await prisma.campaign.update({
+      where: { id: campaignId },
+      data: {
+        currentAmount: campaign.currentAmount + paidAmount,
+        backerCount: campaign.backerCount + 1,
+      },
+    })
 
     return NextResponse.redirect(
       `${url.protocol}//${host}${decodeURIComponent(pathname)}`,

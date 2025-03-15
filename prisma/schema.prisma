@@ -238,6 +238,7 @@ model Tier {
   user            User           @relation(fields: [userId], references: [id])
   userId          String         @db.Uuid
   subscriptions   Subscription[]
+  invoices        Invoice[]
 
   @@index([siteId])
   @@index([userId])
@@ -270,6 +271,7 @@ model Product {
   user            User       @relation(fields: [userId], references: [id])
   userId          String     @db.Uuid
   orders          Order[]
+  invoices        Invoice[]
 
   @@index([siteId])
   @@index([userId])
@@ -337,18 +339,32 @@ model Payout {
   @@map("payout")
 }
 
+enum InvoiceType {
+  NONE
+  SUBSCRIPTION
+  CAMPAIGN
+  PRODUCT
+}
+
 model Invoice {
-  id                  String   @id @default(uuid()) @db.Uuid
-  amount              Int      @default(0)
-  stripeInvoiceId     String?  @unique @db.VarChar(50)
-  stripeInvoiceNumber String?  @unique @db.VarChar(50)
-  stripePeriodStart   Int      @default(0)
-  stripePeriodEnd     Int      @default(0)
-  currency            String?  @db.VarChar(50)
-  locked              Boolean  @default(false)
-  createdAt           DateTime @default(now())
-  site                Site     @relation(fields: [siteId], references: [id])
-  siteId              String   @db.Uuid
+  id                  String      @id @default(uuid()) @db.Uuid
+  type                InvoiceType @default(NONE)
+  amount              Int         @default(0)
+  stripeInvoiceId     String?     @unique @db.VarChar(50)
+  stripeInvoiceNumber String?     @unique @db.VarChar(50)
+  stripePeriodStart   Int         @default(0)
+  stripePeriodEnd     Int         @default(0)
+  currency            String?     @db.VarChar(50)
+  locked              Boolean     @default(false)
+  createdAt           DateTime    @default(now())
+  site                Site        @relation(fields: [siteId], references: [id])
+  siteId              String      @db.Uuid
+  product             Product?    @relation(fields: [productId], references: [id])
+  productId           String?     @db.Uuid
+  campaign            Campaign?   @relation(fields: [campaignId], references: [id])
+  campaignId          String?     @db.Uuid
+  tier                Tier?       @relation(fields: [tierId], references: [id])
+  tierId              String?     @db.Uuid
 
   @@index([siteId])
   @@map("invoice")
@@ -1098,6 +1114,7 @@ model Campaign {
   user            User       @relation(fields: [userId], references: [id])
   userId          String     @db.Uuid
   pledges         Pledge[]
+  invoices        Invoice[]
 
   @@index([siteId])
   @@index([userId])

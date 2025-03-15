@@ -1,6 +1,6 @@
 import React, { forwardRef } from 'react'
 import { matchNumber } from '@/lib/utils'
-import { Input } from './ui/input'
+import { Input, InputProps } from './ui/input'
 
 export interface NumberInputProps
   extends Omit<
@@ -11,31 +11,32 @@ export interface NumberInputProps
   onChange?: (value: string) => void
 }
 
-export const NumberInput = forwardRef<HTMLInputElement, NumberInputProps>(
-  function NumberInput({ onChange, precision = 6, ...rest }, ref) {
-    return (
-      <Input
-        ref={ref}
-        placeholder="0.0"
-        {...rest}
-        onChange={(e) => {
-          let value = e.target.value
-          if ((e.nativeEvent as any)?.data === '。') {
-            value = value.replace('。', '.')
+export const NumberInput = forwardRef<
+  HTMLInputElement,
+  NumberInputProps & InputProps
+>(function NumberInput({ onChange, precision = 6, ...rest }, ref) {
+  return (
+    <Input
+      ref={ref}
+      placeholder="0.0"
+      {...rest}
+      onChange={(e) => {
+        let value = e.target.value
+        if ((e.nativeEvent as any)?.data === '。') {
+          value = value.replace('。', '.')
+        }
+
+        if (!matchNumber(value, precision) && value.length) {
+          if (/^\.\d+$/.test(value)) {
+            onChange?.('0' + value)
+            e.preventDefault()
           }
 
-          if (!matchNumber(value, precision) && value.length) {
-            if (/^\.\d+$/.test(value)) {
-              onChange?.('0' + value)
-              e.preventDefault()
-            }
+          return
+        }
 
-            return
-          }
-
-          onChange?.(value)
-        }}
-      />
-    )
-  },
-)
+        onChange?.(value)
+      }}
+    />
+  )
+})

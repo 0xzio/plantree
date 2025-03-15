@@ -2,7 +2,7 @@ import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Balance } from '@/lib/types'
-import { StripeType } from '@prisma/client'
+import { InvoiceType, StripeType } from '@prisma/client'
 import type { Stripe } from 'stripe'
 
 export async function handleEvent(event: Stripe.Event) {
@@ -63,6 +63,8 @@ export async function handleEvent(event: Stripe.Event) {
         await prisma.invoice.create({
           data: {
             siteId,
+            tierId,
+            type: InvoiceType.SUBSCRIPTION,
             amount: event.data.object.amount_paid,
             currency: event.data.object.currency,
             stripeInvoiceId: event.data.object.id,

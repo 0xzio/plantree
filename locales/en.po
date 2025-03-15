@@ -17,7 +17,7 @@ msgstr ""
 msgid "About"
 msgstr "About"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
 msgid "Access token"
 msgstr "Access token"
 
@@ -37,15 +37,15 @@ msgstr "Airdrop"
 msgid "AMA"
 msgstr "AMA"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "Analytics"
 msgstr "Analytics"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:117
 msgid "Appearance"
 msgstr "Appearance"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
 msgid "Backup"
 msgstr "Backup"
 
@@ -67,11 +67,15 @@ msgstr "Blog"
 msgid "Builtin"
 msgstr "Builtin"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:108
+msgid "Campaign"
+msgstr "Campaign"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:136
 msgid "Catalogue"
 msgstr "Catalogue"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:145
 msgid "Collaborators"
 msgstr "Collaborators"
 
@@ -87,7 +91,7 @@ msgstr "Databases"
 msgid "Design"
 msgstr "Design"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Domain"
 msgstr "Domain"
 
@@ -95,7 +99,7 @@ msgstr "Domain"
 msgid "Edit navigation"
 msgstr "Edit navigation"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:71
 msgid "Features"
 msgstr "Features"
 
@@ -103,7 +107,7 @@ msgstr "Features"
 msgid "Footer"
 msgstr "Footer"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:129
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:133
 #: components/theme-ui/Navigation.tsx:27
 msgid "Friends"
 msgstr "Friends"
@@ -112,7 +116,7 @@ msgstr "Friends"
 msgid "Gallery"
 msgstr "Gallery"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:67
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
 msgid "General"
 msgstr "General"
 
@@ -128,11 +132,11 @@ msgstr "Header"
 msgid "Home"
 msgstr "Home"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Import/Export"
 msgstr "Import/Export"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:59
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:60
 msgid "Link accounts"
 msgstr "Link accounts"
 
@@ -140,12 +144,12 @@ msgstr "Link accounts"
 msgid "Location"
 msgstr "Location"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:98
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
 #: components/theme-ui/MembershipEntry.tsx:18
 msgid "Membership"
 msgstr "Membership"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:123
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -153,7 +157,7 @@ msgstr "Navigation"
 msgid "Operation"
 msgstr "Operation"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:105
 msgid "Orders"
 msgstr "Orders"
 
@@ -165,7 +169,7 @@ msgstr "Pages"
 msgid "Path"
 msgstr "Path"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:81
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
 msgid "PenX Pro"
 msgstr "PenX Pro"
 
@@ -174,15 +178,15 @@ msgstr "PenX Pro"
 msgid "Posts"
 msgstr "Posts"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:102
 msgid "Products"
 msgstr "Products"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:53
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:54
 msgid "Profile"
 msgstr "Profile"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:130
 #: components/theme-ui/Navigation.tsx:26
 msgid "Projects"
 msgstr "Projects"
@@ -199,7 +203,7 @@ msgstr "Select a location"
 msgid "Select a type"
 msgstr "Select a type"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
 msgid "SEO"
 msgstr "SEO"
 
@@ -212,7 +216,7 @@ msgstr "Settings"
 msgid "Sites"
 msgstr "Sites"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:122
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
 msgid "Socials"
 msgstr "Socials"
 
@@ -224,7 +228,7 @@ msgstr "Submit Link"
 msgid "Subscribers"
 msgstr "Subscribers"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:85
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:86
 #: components/theme-ui/Navigation.tsx:30
 msgid "Tags"
 msgstr "Tags"

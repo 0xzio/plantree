@@ -17,7 +17,7 @@ msgstr ""
 msgid "About"
 msgstr "关于"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
 msgid "Access token"
 msgstr ""
 
@@ -37,15 +37,15 @@ msgstr "空投"
 msgid "AMA"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "Analytics"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:117
 msgid "Appearance"
 msgstr "外观"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
 msgid "Backup"
 msgstr "备份"
 
@@ -67,11 +67,15 @@ msgstr "博客"
 msgid "Builtin"
 msgstr "内置"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:108
+msgid "Campaign"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:136
 msgid "Catalogue"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:145
 msgid "Collaborators"
 msgstr "写作者"
 
@@ -87,7 +91,7 @@ msgstr "数据库"
 msgid "Design"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Domain"
 msgstr "域名"
 
@@ -95,7 +99,7 @@ msgstr "域名"
 msgid "Edit navigation"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:71
 msgid "Features"
 msgstr "功能"
 
@@ -103,7 +107,7 @@ msgstr "功能"
 msgid "Footer"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:129
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:133
 #: components/theme-ui/Navigation.tsx:27
 msgid "Friends"
 msgstr "朋友"
@@ -112,7 +116,7 @@ msgstr "朋友"
 msgid "Gallery"
 msgstr "相册"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:67
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
 msgid "General"
 msgstr ""
 
@@ -128,11 +132,11 @@ msgstr ""
 msgid "Home"
 msgstr "首页"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Import/Export"
 msgstr "导入/导出"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:59
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:60
 msgid "Link accounts"
 msgstr ""
 
@@ -140,12 +144,12 @@ msgstr ""
 msgid "Location"
 msgstr "位置"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:98
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
 #: components/theme-ui/MembershipEntry.tsx:18
 msgid "Membership"
 msgstr "会员"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:123
 msgid "Navigation"
 msgstr ""
 
@@ -153,7 +157,7 @@ msgstr ""
 msgid "Operation"
 msgstr "操作"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:105
 msgid "Orders"
 msgstr "订单"
 
@@ -165,7 +169,7 @@ msgstr "页面"
 msgid "Path"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:81
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
 msgid "PenX Pro"
 msgstr ""
 
@@ -174,15 +178,15 @@ msgstr ""
 msgid "Posts"
 msgstr "文章"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:102
 msgid "Products"
 msgstr "产品"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:53
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:54
 msgid "Profile"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:130
 #: components/theme-ui/Navigation.tsx:26
 msgid "Projects"
 msgstr "项目"
@@ -199,7 +203,7 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
 msgid "SEO"
 msgstr ""
 
@@ -212,7 +216,7 @@ msgstr "设置"
 msgid "Sites"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:122
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
 msgid "Socials"
 msgstr ""
 
@@ -224,7 +228,7 @@ msgstr ""
 msgid "Subscribers"
 msgstr "订阅者"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:85
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:86
 #: components/theme-ui/Navigation.tsx:30
 msgid "Tags"
 msgstr "标签"

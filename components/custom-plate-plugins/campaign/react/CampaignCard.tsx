@@ -1,22 +1,23 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import { LoadingDots } from '@/components/icons/loading-dots'
+import { NumberInput } from '@/components/NumberInput'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
 import { Progress } from '@/components/ui/progress'
 import { Skeleton } from '@/components/ui/skeleton'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { usePathname } from '@/lib/i18n'
 import { trpc } from '@/lib/trpc'
 import { getUrl } from '@/lib/utils'
 import { Campaign } from '@prisma/client'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 export function CampaignCard({ campaignId }: { campaignId: string }) {
   const { data, isLoading } = trpc.campaign.byId.useQuery(campaignId)
-  const [loading, setLoading] = useState(false)
-  const checkout = trpc.stripe.buyProductCheckout.useMutation()
-  const pathname = usePathname()
-  const site = useSiteContext()
 
   if (isLoading) {
     return (
@@ -48,10 +49,13 @@ export function CampaignCard({ campaignId }: { campaignId: string }) {
 }
 
 export function CampaignCardContent({ campaign }: { campaign: Campaign }) {
+  const [inputting, setInputting] = useState(false)
   const [progress, setProgress] = useState(0)
-
+  const [amount, setAmount] = useState('')
   const percent = (100 * campaign.currentAmount) / campaign.goal
-  // const percent = 40
+  const checkout = trpc.stripe.buyCampaignCheckout.useMutation()
+  const pathname = usePathname()
+  const site = useSiteContext()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -100,11 +104,57 @@ export function CampaignCardContent({ campaign }: { campaign: Campaign }) {
           <strong className="">${campaign.goal / 100}</strong> goal
         </div>
       </div>
-      <div className="w-full flex-col items-end justify-end mt-auto">
-        <Button className="w-full" size="xl">
+      {!inputting && (
+        <Button className="w-full" size="xl" onClick={() => setInputting(true)}>
           Support this project
         </Button>
-      </div>
+      )}
+      {inputting && (
+        <div className="flex gap-2">
+          <div className="relative flex-2">
+            <span className="absolute top-3 left-3">$</span>
+            <NumberInput
+              size="xl"
+              value={amount}
+              onChange={(v) => setAmount(v)}
+              placeholder=""
+              precision={0}
+              className="w-full pl-7"
+            />
+          </div>
+
+          <Button
+            className="flex-1"
+            size="xl"
+            disabled={checkout.isPending || !amount}
+            onClick={async () => {
+              if (!amount) {
+                return toast.info('Amount is required')
+              }
+
+              try {
+                const res = await checkout.mutateAsync({
+                  campaignId: campaign.id,
+                  siteId: site.id,
+                  host: window.location.host,
+                  pathname: pathname!,
+                  amount: Number(amount),
+                })
+                console.log('=======res:', res)
+                window.location.href = res.url!
+              } catch (error) {
+                toast.error(extractErrorMessage(error))
+              }
+            }}
+          >
+            {checkout.isPending ? (
+              <LoadingDots className="bg-background" />
+            ) : (
+              'Confirm'
+            )}
+          </Button>
+        </div>
+      )}
     </div>
   )
 }
