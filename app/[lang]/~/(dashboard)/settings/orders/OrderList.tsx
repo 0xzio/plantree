@@ -10,25 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useSite } from '@/hooks/useSite'
 import { api, trpc } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { Site } from '@prisma/client'
 import { format } from 'date-fns'
 import { produce } from 'immer'
-import { Edit3, Eye, EyeOff } from 'lucide-react'
-import { toast } from 'sonner'
-import { ProductDialog } from './ProductDialog/ProductDialog'
-import { useProductDialog } from './ProductDialog/useProductDialog'
-import { useProductPriceDialog } from './ProductPriceDialog/useProductPriceDialog'
 
 interface Props {
   site: Site
 }
 
 export function OrderList({ site }: Props) {
-  const { setState } = useProductDialog()
-  const productPriceDialog = useProductPriceDialog()
   const { data = [], isLoading } = trpc.order.list.useQuery()
 
   if (isLoading) {
@@ -40,7 +32,6 @@ export function OrderList({ site }: Props) {
   }
   return (
     <>
-      <ProductDialog />
       <Table>
         <TableHeader>
           <TableRow>

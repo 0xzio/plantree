@@ -5,6 +5,7 @@ import { inferRouterInputs, inferRouterOutputs } from '@trpc/server'
 import { accessTokenRouter } from './routers/access-token'
 import { assetRouter } from './routers/asset'
 import { billingRouter } from './routers/billing'
+import { campaignRouter } from './routers/campaign'
 import { cliRouter } from './routers/cli'
 import { collaboratorRouter } from './routers/collaborator'
 import { commentRouter } from './routers/comment'
@@ -20,6 +21,7 @@ import { newsletterRouter } from './routers/newsletter'
 import { orderRouter } from './routers/order'
 import { pageRouter } from './routers/page'
 import { planRouter } from './routers/plan'
+import { pledgeRouter } from './routers/pledge'
 import { postRouter } from './routers/post'
 import { postImportRouter } from './routers/post-import'
 import { productRouter } from './routers/product'
@@ -66,6 +68,8 @@ export const appRouter = router({
   postImport: postImportRouter,
   product: productRouter,
   order: orderRouter,
+  campaign: campaignRouter,
+  pledge: pledgeRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

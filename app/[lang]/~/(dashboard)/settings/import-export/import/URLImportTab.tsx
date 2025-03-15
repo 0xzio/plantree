@@ -115,7 +115,7 @@ export function URLImportTab({
           className="border-amber-200/30 bg-amber-50/30 dark:border-amber-400/10 dark:bg-amber-900/10"
         >
           <AlertDescription className="text-xs flex items-start">
-            <Info className="h-3 w-3 mr-1.5 mt-0.5 text-amber-600 dark:text-amber-400shrink-0" />
+            <Info className="h-3 w-3 mr-1.5 mt-0.5 text-amber-600 dark:text-amber-400 shrink-0" />
             <span className="text-amber-800 dark:text-amber-200">
               For best results, enter a blog's directory page rather than a
               single article. For paginated blogs, import each page separately.

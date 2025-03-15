@@ -28,7 +28,7 @@ export function BillingCycleSelect() {
         className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background w-36 flex"
       >
         Yearly
-        <Badge className="flex-shrink-0 ml-1">25% off</Badge>
+        <Badge className="shrink-0 ml-1">25% off</Badge>
       </ToggleGroupItem>
     </ToggleGroup>
   )

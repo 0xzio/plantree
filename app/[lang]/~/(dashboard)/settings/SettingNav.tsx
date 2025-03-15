@@ -37,11 +37,12 @@ export function SettingNav({}: Props) {
     products: '/~/settings/products',
     orders: '/~/settings/orders',
     seo: '/~/settings/seo',
+    campaign: '/~/settings/campaign',
   }
 
   const linkClassName = (path: string) =>
     cn(
-      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparentshrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
+      'inline-flex item-center justify-center md:justify-start py-1.5 border-b-2 md:border-none -mb-[1px] border-transparent shrink-0 text-foreground/60 hover:text-foreground hover:border-foreground/40',
       path === pathname && 'border-foreground/60',
       path === pathname && 'text-foreground font-bold',
     )
@@ -102,6 +103,9 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.orders} className={linkClassName(Paths.orders)}>
           <Trans>Orders</Trans>
+        </Link>
+        <Link href={Paths.campaign} className={linkClassName(Paths.campaign)}>
+          <Trans>Campaign</Trans>
         </Link>
       </Section>
 

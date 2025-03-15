@@ -95,7 +95,7 @@ export function I18nSettingForm({ site }: Props) {
                         htmlFor={`lang-${code}`}
                         className="flex items-center"
                       >
-                        <span className="flex-shrink-0">{name}</span>
+                        <span className="shrink-0">{name}</span>
                         <span className="text-foreground/50 text-xs">
                           ({code})
                         </span>

@@ -1,7 +1,7 @@
 'use client'
 
-import { ArrowRight, Bitcoin } from 'lucide-react'
 import { Link } from '@/lib/i18n'
+import { ArrowRight, Bitcoin } from 'lucide-react'
 
 export function EnableWeb3Entry() {
   return (
@@ -19,7 +19,7 @@ export function EnableWeb3Entry() {
           <li>Make post collectible</li>
         </ul>
       </div>
-      <ArrowRight size={20} className="text-foreground/50shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50 shrink-0" />
     </Link>
   )
 }

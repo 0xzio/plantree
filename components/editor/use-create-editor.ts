@@ -97,6 +97,8 @@ import {
   usePlateEditor,
   type CreatePlateEditorOptions,
 } from '@udecode/plate/react'
+import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
+import { CampaignElement } from '../custom-plate-plugins/campaign/react/campaign-element'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { CommentBoxElement } from '../custom-plate-plugins/comment-box/react/comment-box-element'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
@@ -157,6 +159,7 @@ export const viewComponents = {
   [FriendsPlugin.key]: FriendsElement,
   [ProjectsPlugin.key]: ProjectsElement,
   [SocialLinksPlugin.key]: SocialLinksElement,
+  [CampaignPlugin.key]: CampaignElement,
 }
 
 export const editorComponents = {

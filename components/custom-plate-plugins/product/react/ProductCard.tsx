@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
+import { Skeleton } from '@/components/ui/skeleton'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { getUrl } from '@/lib/utils'
@@ -20,14 +21,23 @@ export function ProductCard({ productId }: { productId: string }) {
 
   if (isLoading || !data) {
     return (
-      <div className="min-h-20 flex items-center justify-center">
-        <LoadingDots className="bg-foreground/60" />
+      <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background h-[100px]">
+        <div className="flex items-center gap-2">
+          <Skeleton className="h-16 w-16 rounded-xl shrink-0" />
+          <div className="space-y-1">
+            <div className="flex items-center gap-1 text-foreground">
+              <Skeleton className="h-8 w-40" />
+            </div>
+            <Skeleton className="h-6 w-full sm:w-64" />
+          </div>
+        </div>
+        <Skeleton className="w-20 h-10" />
       </div>
     )
   }
 
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background">
+    <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background h-[100px]">
       <div className="flex items-center gap-2">
         {data.image && (
           <Image
@@ -48,28 +58,36 @@ export function ProductCard({ productId }: { productId: string }) {
           <div className="text-foreground/60">{data.description}</div>
         </div>
       </div>
-      <Button
-        disabled={loading}
-        className="w-20"
-        onClick={async () => {
-          setLoading(true)
-          try {
-            const res = await checkout.mutateAsync({
-              productId,
-              siteId: site.id,
-              host: window.location.host,
-              pathname: pathname!,
-            })
-            console.log('=======res:', res)
-            window.location.href = res.url!
-          } catch (error) {
-            setLoading(false)
-            toast.error(extractErrorMessage(error))
-          }
-        }}
-      >
-        {loading ? <LoadingDots className="bg-background" /> : 'Buy'}
-      </Button>
+      <div>
+        <div className="flex items-center gap-1">
+          <div>1</div>
+          <div>2</div>
+          <div>3</div>
+        </div>
+
+        <Button
+          disabled={loading}
+          className="w-20"
+          onClick={async () => {
+            setLoading(true)
+            try {
+              const res = await checkout.mutateAsync({
+                productId,
+                siteId: site.id,
+                host: window.location.host,
+                pathname: pathname!,
+              })
+              console.log('=======res:', res)
+              window.location.href = res.url!
+            } catch (error) {
+              setLoading(false)
+              toast.error(extractErrorMessage(error))
+            }
+          }}
+        >
+          {loading ? <LoadingDots className="bg-background" /> : 'Buy'}
+        </Button>
+      </div>
     </div>
   )
 }

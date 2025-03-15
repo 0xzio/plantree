@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Site, StripeType } from '@prisma/client'
+import { TRPCError } from '@trpc/server'
 import Stripe from 'stripe'
 
 export async function getOAuthStripe(siteOrId: string | Site) {
@@ -11,13 +12,20 @@ export async function getOAuthStripe(siteOrId: string | Site) {
     })
   }
 
-  console.log('======site:', site.stripeType, site.stripeOAuthToken)
+  console.log('======site:', site, site.stripeType, site.stripeOAuthToken)
 
   if (site.stripeType === StripeType.PLATFORM) {
     return stripe
   }
 
   let stripeOAuthToken = site.stripeOAuthToken as Stripe.OAuthToken
+
+  if (!stripeOAuthToken) {
+    throw new TRPCError({
+      code: 'BAD_REQUEST',
+      message: 'Please setup your membership firstly.',
+    })
+  }
 
   try {
     const oauthStripe = new Stripe(stripeOAuthToken.access_token!, {

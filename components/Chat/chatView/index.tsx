@@ -59,7 +59,7 @@ export default function ChatView({
         <MessageContent channelId={channel.id} />
       </div>
 
-      <div className="flex-shrink-0 -mb-4">
+      <div className="shrink-0 -mb-4">
         <SendMessagePanel
           channelId={channel.id}
           siteId={siteId}

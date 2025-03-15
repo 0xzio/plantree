@@ -2,11 +2,9 @@
 
 import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { PlateEditor } from '@/components/editor/plate-editor'
 import { FileUpload } from '@/components/FileUpload'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
-import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -19,39 +17,35 @@ import {
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
-import { useSite } from '@/hooks/useSite'
-import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { NavLink, NavLinkType } from '@/lib/theme.types'
 import { api, trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { produce } from 'immer'
 import { toast } from 'sonner'
 import { z } from 'zod'
-import { useProductDialog } from './useProductDialog'
+import { useCampaignDialog } from './useCampaignDialog'
 
 const FormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
-  price: z.string().min(1, { message: 'Price is required' }),
   description: z.string().optional(),
+  goal: z.string().min(1, { message: 'Price is required' }),
   details: z.any().optional(),
   image: z.any().optional(),
 })
 
-export function ProductForm() {
+export function CampaignForm() {
   const [isLoading, setLoading] = useState(false)
-  const { setIsOpen, product, index } = useProductDialog()
-  const { refetch } = trpc.product.list.useQuery()
-  const isEdit = !!product
+  const { setIsOpen, campaign: campaign } = useCampaignDialog()
+  const { refetch } = trpc.campaign.myCampaign.useQuery()
+  const isEdit = !!campaign
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: isEdit ? product.name : '',
-      price: isEdit ? product.price.toString() : '',
-      description: isEdit ? product.description : '',
-      details: isEdit ? product.details : '',
-      image: isEdit ? product.image : '',
+      name: isEdit ? campaign.name : '',
+      description: isEdit ? campaign.description : '',
+      goal: isEdit ? (campaign.goal / 100).toFixed(2) : '',
+      details: isEdit ? campaign.details : '',
+      image: isEdit ? campaign.image : '',
     },
   })
 
@@ -59,16 +53,16 @@ export function ProductForm() {
     try {
       setLoading(true)
 
-      const { price, ...rest } = data
       if (isEdit) {
-        await api.product.updateProduct.mutate({
-          id: product.id,
+        const { goal, ...rest } = data
+        await api.campaign.update.mutate({
+          id: campaign.id,
           ...rest,
         })
       } else {
-        await api.product.create.mutate({
+        await api.campaign.create.mutate({
           ...data,
-          price: Number(data.price) * 100,
+          goal: parseInt((Number(data.goal) * 100) as any),
         })
       }
       await refetch()
@@ -76,8 +70,8 @@ export function ProductForm() {
       setIsOpen(false)
       toast.success(
         isEdit
-          ? 'Product updated successfully!'
-          : 'Product added successfully!',
+          ? 'Campaign updated successfully!'
+          : 'Campaign created successfully!',
       )
     } catch (error) {
       const msg = extractErrorMessage(error)
@@ -128,59 +122,27 @@ export function ProductForm() {
           )}
         />
 
-        {!isEdit && (
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <span className="absolute top-2 left-3">$</span>
-                    <NumberInput
-                      disabled={isEdit}
-                      placeholder=""
-                      precision={2}
-                      {...field}
-                      className="w-full pl-7"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-
         <FormField
           control={form.control}
-          name="details"
-          render={({ field }) => {
-            return (
-              <FormItem className="w-full">
-                <FormLabel>Details</FormLabel>
-                <FormControl>
-                  <div className="h-[250px]  border border-foreground/20 rounded-lg overflow-auto">
-                    <PlateEditor
-                      variant="default"
-                      className="min-h-[240px]"
-                      value={
-                        field.value
-                          ? JSON.parse(field.value)
-                          : editorDefaultValue
-                      }
-                      onChange={(v) => {
-                        // console.log('value:',v, JSON.stringify(v));
-                        field.onChange(JSON.stringify(v))
-                      }}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
+          name="goal"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Goal</FormLabel>
+              <FormControl>
+                <div className="relative">
+                  <span className="absolute top-2 left-3">$</span>
+                  <NumberInput
+                    disabled={isEdit}
+                    placeholder=""
+                    precision={2}
+                    {...field}
+                    className="w-full pl-7"
+                  />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
 
         <Button
@@ -191,7 +153,7 @@ export function ProductForm() {
           {isLoading ? (
             <LoadingDots />
           ) : (
-            <span>{isEdit ? 'Save' : 'Add product'}</span>
+            <span>{isEdit ? 'Save' : 'Create'}</span>
           )}
         </Button>
       </form>

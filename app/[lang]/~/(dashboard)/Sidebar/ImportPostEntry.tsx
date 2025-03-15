@@ -39,7 +39,7 @@ export function ImportPostEntry() {
           ></XIcon>
         </div>
       </div>
-      <ArrowRight size={20} className="text-foreground/50shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50 shrink-0" />
     </Link>
   )
 }

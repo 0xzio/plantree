@@ -35,7 +35,7 @@ export const ViewList = () => {
             }}
           >
             <ViewIcon viewType={view.viewType as any} />
-            <div className="flex-shrink-0">{view.name}</div>
+            <div className="shrink-0">{view.name}</div>
           </div>
         )
       })}

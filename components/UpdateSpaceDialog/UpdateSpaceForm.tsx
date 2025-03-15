@@ -127,7 +127,7 @@ export function UpdateSpaceForm() {
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <div className="flex gap-8">
-            <div className="w-72shrink-0">
+            <div className="w-72 shrink-0">
               <FormField
                 control={form.control}
                 name="logo"

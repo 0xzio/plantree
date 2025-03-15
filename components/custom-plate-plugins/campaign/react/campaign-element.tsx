@@ -5,30 +5,37 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
-import { getUrl, isValidUUIDv4 } from '@/lib/utils'
+import { isValidUUIDv4 } from '@/lib/utils'
 import { useMutation } from '@tanstack/react-query'
 import { cn, withRef } from '@udecode/cn'
-import { PlateElement, usePlateEditor } from '@udecode/plate/react'
-import Image from 'next/image'
+import { PlateElement } from '@udecode/plate/react'
 import { setNodes } from 'slate'
 import { ReactEditor, useSlate } from 'slate-react'
 import { toast } from 'sonner'
-import { TProductElement } from '../lib'
-import { ProductCard } from './ProductCard'
+import { TCampaignElement } from '../lib'
+import { CampaignCard } from './CampaignCard'
 
-export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
+export const CampaignElement = withRef<typeof PlateElement>((props, ref) => {
   // const editor = usePlateEditor()
   const editor = useSlate()
   const { children, className, nodeProps, ...rest } = props
   const [value, setValue] = useState('')
   const { isPending, mutateAsync } = useMutation({
-    mutationKey: ['product'],
+    mutationKey: ['campaign'],
     mutationFn: async (id: string) => {
-      return await api.product.byId.query(id)
+      return await api.campaign.byId.query(id)
     },
   })
 
-  if (!rest.element.productId) {
+  // if (isLoading) {
+  //   return (
+  //     <div>
+  //       <div>loading...</div>
+  //     </div>
+  //   )
+  // }
+
+  if (!rest.element.campaignId) {
     return (
       <PlateElement
         ref={ref}
@@ -39,10 +46,10 @@ export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
         {...rest}
         contentEditable={false}
       >
-        <div className="text-sm text-foreground/60">Enter product ID</div>
+        <div className="text-sm text-foreground/80">Enter product ID</div>
         <div className="flex items-center gap-1">
           <Input
-            placeholder="Product ID"
+            placeholder="Campaign ID"
             value={value}
             onChange={(e) => setValue(e.target.value.trim())}
           />
@@ -50,17 +57,18 @@ export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
             disabled={isPending || !value}
             onClick={async () => {
               try {
-                if (!isValidUUIDv4(value)) throw new Error('Invalid product ID')
+                if (!isValidUUIDv4(value))
+                  throw new Error('Invalid campaign ID')
                 await mutateAsync(value)
                 const path = ReactEditor.findPath(editor as any, props.element)
-                setNodes<TProductElement>(
+                setNodes<TCampaignElement>(
                   editor as any,
-                  { productId: value },
+                  { campaignId: value },
                   { at: path },
                 )
               } catch (error) {
                 toast.error(
-                  extractErrorMessage(error) || 'Failed to load product',
+                  extractErrorMessage(error) || 'Failed to load campaign',
                 )
               }
             }}
@@ -76,14 +84,10 @@ export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
     <PlateElement
       ref={ref}
       {...props}
-      className={cn(
-        props.className,
-        'rounded-2xl p-4 border space-y-1',
-        className,
-      )}
+      className={cn(props.className, 'py-2 flex justify-center', className)}
       contentEditable={false}
     >
-      <ProductCard productId={props.element.productId as string} />
+      <CampaignCard campaignId={props.element.campaignId as string} />
       {children}
     </PlateElement>
   )

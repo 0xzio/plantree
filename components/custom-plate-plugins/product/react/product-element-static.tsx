@@ -1,6 +1,4 @@
-'use client'
-
-import React, { useState } from 'react'
+import React from 'react'
 import { cn } from '@udecode/cn'
 import type { SlateElementProps } from '@udecode/plate'
 import { SlateElement } from '@udecode/plate'

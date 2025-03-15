@@ -14,7 +14,7 @@ export const MessageItem = ({ message }: Props) => {
   return (
     <div className="group flex items-start space-x-3 hover:bg-foreground/5 rounded-lg p-2 transition-colors">
       {/* User avatar */}
-      <div className="flex-shrink-0">
+      <div className="shrink-0">
         <div className="h-10 w-10 rounded-full overflow-hidden">
           {message.user?.image ? (
             <Image

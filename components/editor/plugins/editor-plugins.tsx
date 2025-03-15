@@ -1,5 +1,6 @@
 'use client'
 
+import { CampaignPlugin } from '@/components/custom-plate-plugins/campaign/react'
 import { CommentBoxPlugin } from '@/components/custom-plate-plugins/comment-box/react'
 import { FriendsPlugin } from '@/components/custom-plate-plugins/friends/react'
 import { ProductPlugin } from '@/components/custom-plate-plugins/product/react'
@@ -59,4 +60,5 @@ export const editorPlugins = [
   FriendsPlugin,
   ProjectsPlugin,
   SocialLinksPlugin,
+  CampaignPlugin,
 ]

@@ -2,9 +2,9 @@
 
 import { IconGoogle } from '@/components/icons/IconGoogle'
 import { useMyAccounts } from '@/hooks/useMyAccounts'
+import { Link } from '@/lib/i18n'
 import { ProviderType } from '@prisma/client'
 import { ArrowRight } from 'lucide-react'
-import { Link } from '@/lib/i18n'
 
 export function LinkWalletEntry() {
   const { data: accounts = [], isLoading } = useMyAccounts()
@@ -24,7 +24,7 @@ export function LinkWalletEntry() {
           Link to wallet for easier claiming airdrop.
         </div>
       </div>
-      <ArrowRight size={20} className="text-foreground/50shrink-0" />
+      <ArrowRight size={20} className="text-foreground/50 shrink-0" />
     </Link>
   )
 }

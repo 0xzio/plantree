@@ -27,6 +27,7 @@ import {
   ChevronRightIcon,
   Code2,
   Columns3Icon,
+  DollarSignIcon,
   Heading1Icon,
   Heading2Icon,
   Heading3Icon,
@@ -45,6 +46,7 @@ import {
   TableOfContentsIcon,
   UserRoundIcon,
 } from 'lucide-react'
+import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
@@ -208,8 +210,14 @@ const groups: Group[] = [
       {
         focusEditor: false,
         icon: <Lightbulb />,
-        label: 'My Projects',
+        label: 'Project',
         value: ProjectsPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <DollarSignIcon />,
+        label: 'Campaign',
+        value: CampaignPlugin.key,
       },
       {
         focusEditor: false,
