@@ -1,6 +1,7 @@
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@/lib/i18n'
@@ -59,18 +60,6 @@ export const Sidebar = ({ site, tags }: Props) => {
                   </Link>
                 )
               })}
-
-              {site.spaceId && (
-                <Link
-                  href="/membership"
-                  className={cn(
-                    'font-medium hover:text-brand text-foreground/90',
-                    'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
-                  )}
-                >
-                  Membership
-                </Link>
-              )}
             </div>
 
             <div className="space-y-2">
@@ -106,8 +95,17 @@ export const Sidebar = ({ site, tags }: Props) => {
           </div>
         </div>
         <div className="flex items-center justify-between">
+          {site.tiers.length > 0 && (
+            <div>
+              <MembershipEntry className="inline-flex" />
+            </div>
+          )}
+
           <SocialNav className="" site={site} size={4} />
-          <ModeToggle variant="outline" className="h-7 w-7" />
+          <ModeToggle
+            variant="outline"
+            className="h-7 w-7 fixed top-3 right-3"
+          />
         </div>
       </div>
     </aside>

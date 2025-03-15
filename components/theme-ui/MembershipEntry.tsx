@@ -5,7 +5,10 @@ import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { usePathname } from 'next/navigation'
 
-export function MembershipEntry() {
+interface Props {
+  className?: string
+}
+export function MembershipEntry({ className }: Props) {
   const pathname = usePathname()
   return (
     <Link
@@ -13,6 +16,7 @@ export function MembershipEntry() {
       className={cn(
         'font-medium hover:text-brand text-foreground/90',
         'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
+        className,
       )}
     >
       <Trans>Membership</Trans>

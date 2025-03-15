@@ -21,7 +21,7 @@ export function BlogPage({
 }: Props) {
   return (
     <div className="space-y-6">
-      <PageTitle className="mt-0">
+      <PageTitle className="mt-8">
         <Trans>Blog</Trans>
       </PageTitle>
       <PostList

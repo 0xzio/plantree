@@ -49,14 +49,14 @@ export function ThemeList() {
                 )}
               >
                 <div className="text-5xl font-bold">{theme.toUpperCase()}</div>
-                <Link
+                <a
                   href={link}
                   target="_blank"
                   className="text-base text-foreground/50 hover:text-foreground/90 transition-all group-hover:scale-105 flex gap-0.5"
                 >
                   <span>{host}</span>
                   <ArrowUpRight size={16} className="text-foreground/60" />
-                </Link>
+                </a>
               </div>
             )
           })}

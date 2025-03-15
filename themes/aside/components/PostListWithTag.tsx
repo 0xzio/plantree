@@ -27,7 +27,7 @@ export function PostListWithTag({
 
   return (
     <div className="flex flex-col">
-      <PageTitle className="mt-0">Tags</PageTitle>
+      <PageTitle className="mt-8">Tags</PageTitle>
       <TagList tags={tags} />
       <div className="mt-10">
         <PostList site={site} posts={displayPosts} />

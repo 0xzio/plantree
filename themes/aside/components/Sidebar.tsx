@@ -1,6 +1,7 @@
 import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
+import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@/lib/i18n'
@@ -24,23 +25,32 @@ export const Sidebar = ({ site, tags }: Props) => {
   ]
   return (
     <aside
-      className="sidebar w-52 sticky top-0 shrink-0 pt-14 pb-4 overflow-y-auto flex-col items-end pr-2 hidden md:flex"
+      className="sidebar w-64 sticky top-0 shrink-0 pt-24 pb-4 overflow-y-auto flex-col pr-2 hidden md:flex"
       style={{
         height: 'calc(100vh)',
       }}
     >
-      <div className="flex flex-col items-end space-y-6 flex-1 w-full">
-        <Link href="/" className="px-0 py-3 flex flex-col items-end gap-2">
-          <Avatar className="h-12 w-12">
-            <AvatarImage src={getUrl(site.logo || '')} />
-            <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
-          </Avatar>
-          <div className="text-lg font-bold">{site.name}</div>
-          {/* <div className="text-sm text-foreground/60 text-right">
+      <div className="flex flex-col space-y-6 flex-1 w-full">
+        <div>
+          <Link href="/" className="px-0 py-2 flex flex-col gap-2">
+            <Avatar className="h-32 w-32 rounded-2xl">
+              <AvatarImage src={getUrl(site.logo || '')} />
+              <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
+            </Avatar>
+            <div className="text-3xl font-bold">{site.name}</div>
+          </Link>
+          <div className="text-foreground/60 text-lg font-light">
             {site.description}
-          </div> */}
-        </Link>
-        <div className="flex flex-col items-end space-y-3">
+          </div>
+        </div>
+        {site.tiers.length > 0 && (
+          <div>
+            <MembershipEntry />
+          </div>
+        )}
+
+        <SocialNav className="" site={site} size={4} />
+        <div className="flex flex-col space-y-3">
           {links.map((link) => {
             if (link.pathname === '/creator-fi' && !site.spaceId) {
               return null
@@ -53,7 +63,7 @@ export const Sidebar = ({ site, tags }: Props) => {
                 key={link.pathname}
                 href={link.pathname}
                 className={cn(
-                  'text-base hover:text-brand dark:hover:text-brand/80 text-foreground/90',
+                  'text-base hover:text-brand dark:hover:text-brand/80 text-foreground/90 font-semibold',
                 )}
               >
                 {link.title}
@@ -74,31 +84,37 @@ export const Sidebar = ({ site, tags }: Props) => {
           )}
         </div>
 
-        <div className="space-y-2">
-          <div className="font-semibold text-right">Tags</div>
-          <ul className="flex flex-col items-end gap-1">
-            {tags.map((t) => {
-              return (
-                <li key={t.id} className="">
-                  <Link
-                    href={`/tags/${slug(t.name)}`}
-                    className="text-foreground/60 py-0 hover:text-brand dark:hover:text-brand rounded-full text-right"
-                    aria-label={`View posts tagged ${t.name}`}
-                  >
-                    #{`${t.name}`}
-                  </Link>
-                </li>
-              )
-            })}
-          </ul>
-        </div>
-
-        <SocialNav className="flex-col items-end" site={site} />
-        <ModeToggle variant="outline" />
+        {!!tags.length && (
+          <div className="space-y-2">
+            <div className="font-semibold">Tags</div>
+            <ul className="flex flex-col gap-1">
+              {tags.map((t) => {
+                return (
+                  <li key={t.id} className="">
+                    <Link
+                      href={`/tags/${slug(t.name)}`}
+                      className="text-foreground/60 py-0 hover:text-brand dark:hover:text-brand rounded-full text-right"
+                      aria-label={`View posts tagged ${t.name}`}
+                    >
+                      #{`${t.name}`}
+                    </Link>
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        )}
       </div>
-      <div className="flex flex-col items-end gap-2 mt-auto">
+      <div className="flex gap-2 mt-auto items-center justify-between">
         <Airdrop />
-        <Profile></Profile>
+        <Profile
+          buttonProps={{
+            size: 'sm',
+            variant: 'outline',
+            className: 'w-20',
+          }}
+        ></Profile>
+        <ModeToggle variant="outline" />
       </div>
     </aside>
   )

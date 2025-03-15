@@ -8,7 +8,7 @@ interface Props {
   size?: number
 }
 
-export function SocialNav({ site, className, size = 6 }: Props) {
+export function SocialNav({ site, className, size = 5 }: Props) {
   if (!site) return null
   const socials = site.socials
   return (

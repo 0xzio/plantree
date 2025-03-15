@@ -2,7 +2,7 @@ import { editorDefaultValue, ELEMENT_P } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { PostStatus, PostType } from '@prisma/client'
 
-const aboutContent = `[{"children":[{"text":""}],"type":"p","id":"YNzsQ59ze4"},{"type":"p","id":"z3o1Hql3-8","children":[{"text":""}],"width":154},{"children":[{"text":""}],"type":"img","url":"/56e813da9280fdf3b068b9b6e3a35cc95a7211241340d014435ff0f641bf48b8","id":"16HHbLVZYS","mime":"image/jpeg","width":186,"align":"center"},{"children":[{"text":"Zio"}],"type":"h2","id":"JG2FDjWpv_","align":"center"},{"children":[{"text":"A developer, designer, husband and father"}],"type":"p","id":"8Q5qxu3H3P","align":"center","style":""},{"children":[{"text":""}],"type":"social-links","id":"4CEre-OJlB"},{"children":[{"text":""}],"type":"p","id":"gIztV3DUgC"}]`
+const aboutContent = `[{"children":[{"text":""}],"type":"img","url":"/56e813da9280fdf3b068b9b6e3a35cc95a7211241340d014435ff0f641bf48b8","id":"16HHbLVZYS","mime":"image/jpeg","width":120,"align":"center"},{"children":[{"text":"Zio"}],"type":"h2","id":"JG2FDjWpv_","align":"center"},{"children":[{"text":"A developer, designer, husband and father"}],"type":"p","id":"8Q5qxu3H3P","align":"center","style":""},{"children":[{"text":""}],"type":"social-links","id":"4CEre-OJlB"},{"children":[{"text":""}],"type":"p","id":"gIztV3DUgC"}]`
 
 export async function initPages(siteId: string, userId: string) {
   await prisma.post.createMany({

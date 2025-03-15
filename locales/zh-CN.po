@@ -145,7 +145,7 @@ msgid "Location"
 msgstr "位置"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
-#: components/theme-ui/MembershipEntry.tsx:18
+#: components/theme-ui/MembershipEntry.tsx:22
 msgid "Membership"
 msgstr "会员"
 

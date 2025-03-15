@@ -9,7 +9,7 @@ interface Props {
 export function TagListPage({ tags }: Props) {
   return (
     <div className="flex flex-col">
-      <PageTitle className="mt-0">Tags</PageTitle>
+      <PageTitle className="mt-8">Tags</PageTitle>
       <div className="grid gap-y-3">
         {tags.length === 0 && 'No tags found.'}
         {tags.length > 0 && <TagList tags={tags} />}
