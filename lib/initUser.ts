@@ -55,6 +55,7 @@ export async function initUserByAddress(address: string) {
           description: 'My personal site',
           userId: newUser.id,
           socials: {},
+          themeConfig: {},
           config: {
             locales: ['en', 'zh-CN', 'ja'],
             features: {
@@ -184,6 +185,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           description: 'My personal site',
           userId: newUser.id,
           socials: {},
+          themeConfig: {},
           config: {
             locales: ['en', 'zh-CN', 'ja'],
             features: {
@@ -372,6 +374,7 @@ export async function initUserByFarcasterId(fid: string) {
           description: fcUser.profile.bio.text,
           userId: newUser.id,
           socials: {},
+          themeConfig: {},
           config: {
             locales: ['en', 'zh-CN', 'ja'],
             features: {
@@ -494,6 +497,7 @@ export async function initUserByEmail(email: string, password: string) {
           description: 'My personal site',
           userId: newUser.id,
           socials: {},
+          themeConfig: {},
           config: {
             locales: ['en', 'zh-CN', 'ja'],
             features: {

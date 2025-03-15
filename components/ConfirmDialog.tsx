@@ -1,28 +1,14 @@
-'use client'
+'use client';
 
-import * as React from 'react'
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from '@/components/ui/alert-dialog'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from '@/components/ui/tooltip'
-import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
-import { LoadingDots } from './icons/loading-dots'
-import { Button } from './ui/button'
+import * as React from 'react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
+import { extractErrorMessage } from '@/lib/extractErrorMessage';
+import { Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
+import { LoadingDots } from './icons/loading-dots';
+import { Button } from './ui/button';
+
 
 interface Props {
   title: string

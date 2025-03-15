@@ -45,9 +45,7 @@ export function HomeSettingForm({}: Props) {
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
   const { themeName } = useThemeName()
 
-  const { themeConfig = {} } = site as {
-    themeConfig: Record<string, any>
-  }
+  const themeConfig = (site.themeConfig || {}) as Record<string, any>
   console.log(
     '=========>>>>themeName:',
     themeName,
@@ -69,7 +67,7 @@ export function HomeSettingForm({}: Props) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      console.log()
+      console.log('====themeConfig:', themeConfig)
 
       const newThemeConfig = produce(themeConfig, (draft) => {
         if (!draft?.[themeName]) draft[themeName] = {}

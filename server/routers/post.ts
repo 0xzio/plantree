@@ -445,7 +445,10 @@ export const postRouter = router({
         }
 
         await tx.author.deleteMany({ where: { postId: id } })
-        await prisma.post.delete({
+        await tx.postTag.deleteMany({ where: { postId: id } })
+        await tx.newsletter.deleteMany({ where: { postId: id } })
+        await tx.comment.deleteMany({ where: { postId: id } })
+        await tx.post.delete({
           where: { id: id },
         })
         await cacheHelper.updateCachedPost(post.id, null)

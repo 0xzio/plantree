@@ -238,7 +238,6 @@ export class AiAnalyzer {
 
       const match = regex.exec(text)
       if (match) {
-        console.log()
         cleanedText = match[0].trim()
       }
 

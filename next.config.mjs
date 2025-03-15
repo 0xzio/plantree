@@ -3,6 +3,9 @@ import { createVanillaExtractPlugin } from '@vanilla-extract/next-plugin'
 const withVanillaExtract = createVanillaExtractPlugin()
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
   experimental: {
     swcPlugins: [['@lingui/swc-plugin', {}]],
     turbo: {
