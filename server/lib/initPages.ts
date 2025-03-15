@@ -62,7 +62,7 @@ export async function initPages(siteId: string, userId: string) {
         slug: 'ama',
         type: PostType.ARTICLE,
         content:
-          '[{"children":[{"text":"Ask Me Anything / One-on-One Consulting"}],"type":"h1","id":"asd85Q5mJp"},{"children":[{"text":"I offer one-on-one consulting services. With experience in front-end development, full-stack development, UI/UX design, and entrepreneurship, I can help answer your questions related to these areas."}],"type":"p","id":"1-GWJ52aqx"},{"type":"h2","id":"Bg26KXWSox","children":[{"text":"pricing"}]},{"type":"p","id":"0zA43m74R5","children":[{"text":"$50 / per hour"}]},{"type":"p","id":"qHMVkKeyjb","children":[{"text":""}]},{"children":[{"text":""}],"productId":"","type":"product","id":"PhOBNOltpc"},{"children":[{"text":""}],"type":"p","id":"qV6Vv0fK59"}]',
+          '[{"children":[{"text":"One-on-One Consulting"}],"type":"h1","id":"asd85Q5mJp"},{"children":[{"text":"I offer one-on-one consulting services. With experience in front-end development, full-stack development, UI/UX design, and entrepreneurship, I can help answer your questions related to these areas."}],"type":"p","id":"1-GWJ52aqx"},{"type":"h2","id":"Bg26KXWSox","children":[{"text":"pricing"}]},{"type":"p","id":"0zA43m74R5","children":[{"text":"$50 / per hour"}]},{"type":"p","id":"qHMVkKeyjb","children":[{"text":""}]},{"children":[{"text":""}],"productId":"","type":"product","id":"PhOBNOltpc"},{"children":[{"text":""}],"type":"p","id":"qV6Vv0fK59"}]',
       },
     ],
   })

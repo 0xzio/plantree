@@ -45,6 +45,7 @@ export function CampaignCard({ campaignId }: { campaignId: string }) {
     )
   }
 
+  if (!data) return null
   return <CampaignCardContent campaign={data!} />
 }
 

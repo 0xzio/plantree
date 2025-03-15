@@ -28,7 +28,7 @@ export function SiteItem({ site }: Props) {
       isSite
       target="_blank"
       className={cn(
-        'flex items-center justify-between p-5 gap-3 bg-background rounded-xl shadow hover:scale-105 cursor-pointer transition-all dark:bg-foreground/5',
+        'flex items-center justify-between p-5 gap-3 bg-background/30 hover:scale-105 cursor-pointer transition-all dark:bg-foreground/5 border border-foreground/10',
         // spaces.length !== index + 1 && 'border-b border-neutral-100/90',
       )}
     >

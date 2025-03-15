@@ -48,7 +48,7 @@ export default async function HomePage(props: { params: any }) {
   const [count, sites] = await Promise.all([getSiteCount(), getHomeSites()])
 
   return (
-    <div className="flex flex-col gap-y-10">
+    <div className="flex flex-col gap-y-32">
       <div className="flex justify-center mt-8">
         <SiteCount count={count} sites={sites} />
       </div>
@@ -61,8 +61,8 @@ export default async function HomePage(props: { params: any }) {
         </Suspense>
       </div> */}
 
-      <div className="space-y-2">
-        <div className="text-3xl font-bold">
+      <div className="space-y-10">
+        <div className="text-5xl font-bold text-center">
           <Trans>Sites</Trans>
         </div>
         <SiteList />

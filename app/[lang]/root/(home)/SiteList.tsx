@@ -16,14 +16,14 @@ export function SiteList({ sites }: Props) {
   if (isLoading || !data)
     return (
       <div>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full rounded-md">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 w-full gap-4 mx-auto sm:w-full">
           {Array(9)
             .fill('')
             .map((_, i) => (
               <Skeleton
                 key={i}
                 className={cn(
-                  'flex items-center justify-between p-5 gap-3 bg-background rounded-2xl shadow-sm hover:scale-105 cursor-pointer transition-all h-[96px] dark:bg-foreground/5',
+                  'flex items-center justify-between p-5 gap-3 bg-background hover:scale-105 cursor-pointer transition-all h-[96px] dark:bg-foreground/5',
                 )}
               ></Skeleton>
             ))}
