@@ -5,6 +5,7 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Skeleton } from '@/components/ui/skeleton'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
 import { getUrl } from '@/lib/utils'
@@ -17,6 +18,7 @@ export function ProductCard({ productId }: { productId: string }) {
   const [loading, setLoading] = useState(false)
   const checkout = trpc.stripe.buyProductCheckout.useMutation()
   const pathname = usePathname()
+  const [amount, setAmount] = useState('1')
   const site = useSiteContext()
 
   if (isLoading || !data) {
@@ -51,42 +53,67 @@ export function ProductCard({ productId }: { productId: string }) {
         <div>
           <div className="flex items-center gap-1 text-foreground">
             <div className="text-2xl font-bold">{data.name}</div>
-            <div className="text-sm text-brand">
-              (${(data.price / 100).toFixed(2)} USD)
-            </div>
           </div>
           <div className="text-foreground/60">{data.description}</div>
         </div>
       </div>
-      <div>
-        <div className="flex items-center gap-1">
-          <div>1</div>
-          <div>2</div>
-          <div>3</div>
-        </div>
-
-        <Button
-          disabled={loading}
-          className="w-20"
-          onClick={async () => {
-            setLoading(true)
-            try {
-              const res = await checkout.mutateAsync({
-                productId,
-                siteId: site.id,
-                host: window.location.host,
-                pathname: pathname!,
-              })
-              console.log('=======res:', res)
-              window.location.href = res.url!
-            } catch (error) {
-              setLoading(false)
-              toast.error(extractErrorMessage(error))
-            }
+      <div className="flex flex-col gap-1 items-end">
+        <ToggleGroup
+          size="sm"
+          value={amount}
+          className="flex"
+          variant="outline"
+          onValueChange={(v) => {
+            setAmount(v)
           }}
+          type="single"
         >
-          {loading ? <LoadingDots className="bg-background" /> : 'Buy'}
-        </Button>
+          <ToggleGroupItem value="1" className="">
+            1 hours
+          </ToggleGroupItem>
+          <ToggleGroupItem value="2" className="">
+            2 hours
+          </ToggleGroupItem>
+          <ToggleGroupItem value="3" className="">
+            3 hours
+          </ToggleGroupItem>
+        </ToggleGroup>
+
+        <div className="flex items-center justify-between gap-2">
+          {amount && (
+            <div className="text-sm">
+              ${((Number(amount) * data.price) / 100).toFixed(2)} USD
+            </div>
+          )}
+
+          <Button
+            disabled={loading}
+            className="w-20"
+            onClick={async () => {
+              if (!amount) {
+                return toast.info('Please select a duration')
+              }
+
+              setLoading(true)
+              try {
+                const res = await checkout.mutateAsync({
+                  productId,
+                  siteId: site.id,
+                  host: window.location.host,
+                  pathname: pathname!,
+                  amount: Number(amount),
+                })
+                console.log('=======res:', res)
+                window.location.href = res.url!
+              } catch (error) {
+                setLoading(false)
+                toast.error(extractErrorMessage(error))
+              }
+            }}
+          >
+            {loading ? <LoadingDots className="bg-background" /> : 'Buy'}
+          </Button>
+        </div>
       </div>
     </div>
   )

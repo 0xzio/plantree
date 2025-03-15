@@ -13,6 +13,7 @@ export async function GET(req: NextRequest) {
   const productId = url.searchParams.get('productId') || ''
   const host = url.searchParams.get('host') || ''
   const pathname = url.searchParams.get('pathname') || ''
+  const amount = url.searchParams.get('amount') || ''
 
   console.log('url========>>:', url)
 
@@ -45,7 +46,7 @@ export async function GET(req: NextRequest) {
 
     console.log('========.invoice:', session.invoice)
 
-    const productAmount = 1
+    const productAmount = Number(amount)
     const paidAmount = product.price * productAmount
     await prisma.order.create({
       data: {

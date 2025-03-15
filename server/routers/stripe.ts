@@ -130,9 +130,12 @@ export const stripeRouter = router({
         siteId: z.string(),
         host: z.string(),
         pathname: z.string(),
+        amount: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      console.log('=======>>>>input:', input)
+
       const siteId = input.siteId
       const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/buy-product-callback`
       const cancel_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/checkout-cancel-callback`
@@ -155,6 +158,7 @@ export const stripeRouter = router({
         siteId,
         userId,
         productId: input.productId,
+        amount: input.amount,
       }
 
       const oauthStripe = await getOAuthStripe(siteId)
@@ -165,7 +169,7 @@ export const stripeRouter = router({
         client_reference_id: siteId,
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
         cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
-        line_items: [{ price: priceId, quantity: 1 }],
+        line_items: [{ price: priceId, quantity: input.amount }],
         invoice_creation: {
           enabled: true,
         },
