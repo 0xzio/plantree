@@ -21,6 +21,7 @@ export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
   const editor = useSlate()
   const { children, className, nodeProps, ...rest } = props
   const [value, setValue] = useState('')
+
   const { isPending, mutateAsync } = useMutation({
     mutationKey: ['product'],
     mutationFn: async (id: string) => {

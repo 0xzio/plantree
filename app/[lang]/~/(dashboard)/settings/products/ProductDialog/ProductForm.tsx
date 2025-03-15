@@ -137,7 +137,7 @@ export function ProductForm() {
                 <FormLabel>Price</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <span className="absolute top-2 left-3">$</span>
+                    <span className="absolute top-2 left-3 text-foreground">$</span>
                     <NumberInput
                       disabled={isEdit}
                       placeholder=""

@@ -98,7 +98,7 @@ export function WithdrawForm() {
               </div>
               <FormControl>
                 <div className="relative">
-                  <span className="absolute top-2 left-3">$</span>
+                  <span className="absolute top-2 left-3 text-foreground">$</span>
                   <NumberInput
                     placeholder="0.00"
                     precision={2}

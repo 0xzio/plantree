@@ -7,6 +7,7 @@ import { useSite } from '@/hooks/useSite'
 import { queryClient } from '@/lib/queryClient'
 import { trpc } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
+import { useLoading } from './hooks/useLoading'
 import { useThemeName } from './hooks/useThemeName'
 
 const themes = [
@@ -32,7 +33,7 @@ const themes = [
   },
   {
     name: 'Wide',
-    value: 'Wide',
+    value: 'wide',
   },
   {
     name: 'Garden',
@@ -47,14 +48,17 @@ const themes = [
     value: 'aside',
   },
   {
-    name: 'docs',
-    value: 'Docs',
+    name: 'Docs',
+    value: 'docs',
   },
 ]
 
 export function ThemeList() {
   const site = useSiteContext()
-  const { themeName, setThemeName, setState } = useThemeName()
+  const { themeName, setThemeName } = useThemeName()
+  const { setLoading } = useLoading()
+
+  // console.log('site======>:', site.themeName)
 
   return (
     <div className="w-52">
@@ -69,17 +73,11 @@ export function ThemeList() {
               themeName === item.value && 'bg-foreground/5 text-foreground',
             )}
             onClick={() => {
-              setState({
-                themeName: item.value,
-                isLoading: true,
-              })
-
+              setThemeName(item.value)
+              setLoading(true)
               setTimeout(() => {
-                setState({
-                  themeName: item.value,
-                  isLoading: false,
-                })
-              }, 200)
+                setLoading(false)
+              })
             }}
           >
             <div className="text-lg font-bold">{item.name}</div>

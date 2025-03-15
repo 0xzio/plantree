@@ -46,12 +46,6 @@ export function HomeSettingForm({}: Props) {
   const { themeName } = useThemeName()
 
   const themeConfig = (site.themeConfig || {}) as Record<string, any>
-  console.log(
-    '=========>>>>themeName:',
-    themeName,
-    themeConfig,
-    themeConfig?.[themeName]?.home?.showTags,
-  )
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -67,8 +61,6 @@ export function HomeSettingForm({}: Props) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      console.log('====themeConfig:', themeConfig)
-
       const newThemeConfig = produce(themeConfig, (draft) => {
         if (!draft?.[themeName]) draft[themeName] = {}
         draft[themeName] = {

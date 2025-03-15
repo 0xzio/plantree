@@ -3,10 +3,10 @@
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { CommonSettingForm } from './forms/CommonSettingForm'
 import { HomeSettingForm } from './forms/HomeSettingForm'
-import { useThemeName } from './hooks/useThemeName'
+import { useLoading } from './hooks/useLoading'
 
 export function Design() {
-  const { isLoading } = useThemeName()
+  const { isLoading } = useLoading()
   return (
     <div className="flex-1 space-y-3">
       {isLoading && (

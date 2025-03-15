@@ -13,8 +13,8 @@ interface Props {}
 
 export function VisitSiteButton({}: Props) {
   const site = useSiteContext()
-  const { domain } = getSiteDomain(site as any)
-  const link = `${domain}.${ROOT_DOMAIN}`
+  const { domain, isSubdomain } = getSiteDomain(site as any)
+  const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   return (
     <div className="px-4 mb-4">
@@ -23,7 +23,7 @@ export function VisitSiteButton({}: Props) {
         size="lg"
         className="rounded-full font-bold w-full flex gap-1"
         onClick={async () => {
-          window.open(`${location.protocol}//${link}`)
+          window.open(`${location.protocol}//${host}`)
         }}
       >
         <span>Visit site</span>

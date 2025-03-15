@@ -66,7 +66,7 @@ export function CampaignCardContent({ campaign }: { campaign: Campaign }) {
   }, [])
 
   return (
-    <div className="border border-foreground/10 p-8 rounded-2xl flex flex-col gap-4 w-full sm:w-[500px] min-h-[310px] relative">
+    <div className="border border-foreground/10 p-8 rounded-2xl flex flex-col gap-4 w-full sm:w-[500px] min-h-[310px] relative bg-background">
       <div className="flex items-center gap-2">
         {campaign.image && (
           <Image
@@ -113,7 +113,7 @@ export function CampaignCardContent({ campaign }: { campaign: Campaign }) {
       {inputting && (
         <div className="flex gap-2">
           <div className="relative flex-2">
-            <span className="absolute top-3 left-3">$</span>
+            <span className="absolute top-3 left-3 text-foreground">$</span>
             <NumberInput
               size="xl"
               value={amount}
