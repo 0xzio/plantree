@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
 import linguiConfig from '@/lingui.config'
 import NextTopLoader from 'nextjs-toploader'
@@ -21,7 +22,12 @@ export default async function Layout({
   const locale = lang === 'pseudo' ? 'en' : lang
   initLingui(locale)
   return (
-    <>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
       <NextTopLoader
         color="#000"
         // crawlSpeed={0.08}
@@ -31,6 +37,6 @@ export default async function Layout({
       />
 
       <DashboardLayout>{children}</DashboardLayout>
-    </>
+    </ThemeProvider>
   )
 }

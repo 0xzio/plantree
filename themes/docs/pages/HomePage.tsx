@@ -1,7 +1,6 @@
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
-import { POSTS_PER_PAGE } from '@/lib/constants'
+import { LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
 
@@ -25,7 +24,7 @@ export function HomePage({ posts = [], site, about }: Props) {
         </div>
         <div className="grid grid-cols-1 gap-3">
           {!posts.length && 'No posts found.'}
-          {posts.slice(0, POSTS_PER_PAGE).map((post) => {
+          {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}
         </div>
@@ -39,7 +38,7 @@ export function HomePage({ posts = [], site, about }: Props) {
             </h1>
           </div>
           <div className="grid grid-cols-1 gap-3">
-            {popularPosts.slice(0, POSTS_PER_PAGE).map((post) => {
+            {popularPosts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
               return <PostItem key={post.slug} post={post} />
             })}
           </div>

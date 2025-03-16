@@ -183,5 +183,5 @@ export const BUILTIN_PAGE_SLUGS = [
   'ama',
 ]
 
-export const LATEST_POSTS_LIMIT = 2
+export const LATEST_POSTS_LIMIT = 6
 export const HOME_PROJECT_LIMIT = 4

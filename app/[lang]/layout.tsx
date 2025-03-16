@@ -4,7 +4,6 @@ import '@rainbow-me/rainbowkit/styles.css'
 import 'react-datepicker/dist/react-datepicker.css'
 import '@glideapps/glide-data-grid/dist/index.css'
 import { LinguiClientProvider } from '@/components/LinguiClientProvider'
-import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
 import { cn } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
@@ -69,22 +68,15 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background antialiased font-sans')}>
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="dark"
-          enableSystem
-          disableTransitionOnChange
+        <LinguiClientProvider
+          initialLocale={locale}
+          initialMessages={allMessages[locale]!}
         >
-          <LinguiClientProvider
-            initialLocale={locale}
-            initialMessages={allMessages[locale]!}
-          >
-            <Providers cookies={cookies}>
-              {children}
-              <div id="portal" />
-            </Providers>
-          </LinguiClientProvider>
-        </ThemeProvider>
+          <Providers cookies={cookies}>
+            {children}
+            <div id="portal" />
+          </Providers>
+        </LinguiClientProvider>
       </body>
     </html>
   )

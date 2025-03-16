@@ -2,6 +2,7 @@ import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { SocialNav } from '@/components/SocialNav'
 import { TextLogo } from '@/components/TextLogo'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
 import { Link } from '@/lib/i18n'
 import linguiConfig from '@/lingui.config'
@@ -30,7 +31,12 @@ export default async function Layout({
   const locale = lang === 'pseudo' ? 'en' : lang
   initLingui(locale)
   return (
-    <>
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="dark"
+      enableSystem
+      disableTransitionOnChange
+    >
       <div className="flex flex-col gap-4 px-2 min-h-screen container 2xl:max-w-[1120px] mx-auto">
         <div className="z-10 h-14 py-3 relative flex justify-between">
           <div className="flex items-center">
@@ -68,6 +74,6 @@ export default async function Layout({
           data-website-id={process.env.NEXT_PUBLIC_UMAMIC_WEBSITE_ID}
         ></script>
       )}
-    </>
+    </ThemeProvider>
   )
 }

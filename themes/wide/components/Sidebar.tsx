@@ -94,18 +94,19 @@ export const Sidebar = ({ site, tags }: Props) => {
             </div>
           </div>
         </div>
-        <div className="flex items-center justify-between">
+        <div className="space-y-3">
           {site.tiers.length > 0 && (
             <div>
               <MembershipEntry className="inline-flex" />
             </div>
           )}
-
-          <SocialNav className="" site={site} size={4} />
-          <ModeToggle
-            variant="outline"
-            className="h-7 w-7 fixed top-3 right-3"
-          />
+          <div className="flex items-center justify-between">
+            <SocialNav className="" site={site} size={4} />
+            <ModeToggle
+              variant="outline"
+              className="h-7 w-7 fixed top-3 right-3"
+            />
+          </div>
         </div>
       </div>
     </aside>

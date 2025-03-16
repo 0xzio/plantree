@@ -1,8 +1,8 @@
 import { ProjectsBlock } from '@/components/custom-plate-plugins/projects/react/ProjectsBlock'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
-import { HOME_PROJECT_LIMIT, POSTS_PER_PAGE } from '@/lib/constants'
-import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
+import { HOME_PROJECT_LIMIT, LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
+import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -30,7 +30,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
             Latest
           </h1>
 
-          {posts.length > POSTS_PER_PAGE && (
+          {posts.length > LATEST_POSTS_LIMIT && (
             <Link
               href="/posts"
               className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
@@ -41,7 +41,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
         </div>
         <div className="grid grid-cols-1 gap-3">
           {!posts.length && 'No posts found.'}
-          {posts.slice(0, POSTS_PER_PAGE).map((post) => {
+          {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}
         </div>

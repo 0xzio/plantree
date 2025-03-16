@@ -1,4 +1,5 @@
 import { ReactNode } from 'react'
+import { Footer } from '@/components/theme-ui/Footer'
 import { Site, Tag } from '@/lib/theme.types'
 import { Header } from '../components/Header'
 import { Sidebar } from '../components/Sidebar'
@@ -16,7 +17,10 @@ export function SiteLayout({ children, site, tags }: Props) {
       <main className="flex flex-1 w-full px-4 xl:px-0 gap-x-16 relative mx-auto">
         <Sidebar site={site} tags={tags} />
         <div className="flex-1">
-          <div className="max-w-2xl mx-auto pt-16">{children}</div>
+          <div className="max-w-2xl mx-auto pt-16">
+            {children}
+            <Footer site={site} />
+          </div>
         </div>
       </main>
     </div>

@@ -5,7 +5,6 @@ import { PostItem } from '@/components/theme-ui/post-item-blocks'
 import {
   HOME_PROJECT_LIMIT,
   LATEST_POSTS_LIMIT,
-  POSTS_PER_PAGE,
 } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'

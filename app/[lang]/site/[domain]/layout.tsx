@@ -1,4 +1,5 @@
 import { SiteProvider } from '@/components/SiteContext'
+import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
 import { getSite } from '@/lib/fetchers'
 import { AppearanceConfig } from '@/lib/theme.types'
@@ -56,26 +57,33 @@ export default async function RootLayout({
   initLingui(locale)
 
   return (
-    <SiteProvider site={site as any}>
-      {children}
+    <ThemeProvider
+      attribute="class"
+      defaultTheme="system"
+      enableSystem
+      disableTransitionOnChange
+    >
+      <SiteProvider site={site as any}>
+        {children}
+        {site.analytics?.umamiHost && site.analytics?.umamiWebsiteId && (
+          <script
+            async
+            defer
+            src={
+              `${site.analytics.umamiHost}/script.js` ||
+              'https://cloud.umami.is'
+            }
+            data-website-id={site.analytics.umamiWebsiteId}
+          ></script>
+        )}
 
-      {site.analytics?.umamiHost && site.analytics?.umamiWebsiteId && (
-        <script
-          async
-          defer
-          src={
-            `${site.analytics.umamiHost}/script.js` || 'https://cloud.umami.is'
-          }
-          data-website-id={site.analytics.umamiWebsiteId}
-        ></script>
-      )}
-
-      {site.analytics?.gaMeasurementId && (
-        <GoogleAnalytics
-          trackPageViews
-          gaMeasurementId={site.analytics?.gaMeasurementId}
-        />
-      )}
-    </SiteProvider>
+        {site.analytics?.gaMeasurementId && (
+          <GoogleAnalytics
+            trackPageViews
+            gaMeasurementId={site.analytics?.gaMeasurementId}
+          />
+        )}
+      </SiteProvider>
+    </ThemeProvider>
   )
 }

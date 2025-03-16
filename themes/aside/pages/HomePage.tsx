@@ -1,7 +1,7 @@
 import { ProjectsBlock } from '@/components/custom-plate-plugins/projects/react/ProjectsBlock'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { HOME_PROJECT_LIMIT, POSTS_PER_PAGE } from '@/lib/constants'
+import { HOME_PROJECT_LIMIT, LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
 import { PostItem } from '../components/PostItem'
@@ -34,26 +34,11 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
         </div>
         <div className="grid grid-cols-1 gap-3">
           {!posts.length && 'No posts found.'}
-          {posts.slice(0, POSTS_PER_PAGE).map((post) => {
+          {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}
         </div>
       </div>
-
-      {popularPosts.length > 0 && (
-        <div className="mt-10">
-          <div className="pb-6 pt-6 flex items-center justify-between">
-            <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-              Most Popular
-            </h1>
-          </div>
-          <div className="grid grid-cols-1 gap-3">
-            {popularPosts.slice(0, POSTS_PER_PAGE).map((post) => {
-              return <PostItem key={post.slug} post={post} />
-            })}
-          </div>
-        </div>
-      )}
 
       {showProjects && projects.length > 0 && (
         <div>
