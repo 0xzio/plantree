@@ -77,7 +77,7 @@ export const couponRouter = router({
       })
 
       const now = Date.now()
-      let endedAt = now + ONE_MONTH_SECOND * 1000
+      let endedAt = now + coupon.duration * 1000
 
       if (site.sassBelieverPeriodEnd) {
         const remainTime =
@@ -85,7 +85,7 @@ export const couponRouter = router({
             ? site.sassBelieverPeriodEnd.getTime() - now
             : 0
 
-        endedAt = now + ONE_MONTH_SECOND * 1000 + remainTime
+        endedAt = now + coupon.duration * 1000 + remainTime
       }
 
       await prisma.site.update({
