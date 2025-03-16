@@ -1,6 +1,5 @@
-import { cn } from '@/lib/utils';
-import { Merienda, Poppins } from 'next/font/google';
-
+import { cn } from '@/lib/utils'
+import { Merienda, Poppins } from 'next/font/google'
 
 const merienda = Merienda({
   weight: ['400', '500', '600', '700'],
@@ -21,8 +20,9 @@ export function Slogan() {
         <div className="">Modern blogging tools</div>
       </div>
 
-      <div className="text-2xl text-foreground/60">
-        The home for super individual
+      <div className="text-xl mx-auto max-w-lg text-foreground/80">
+        PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and
+        built for creators.
       </div>
     </div>
   )
