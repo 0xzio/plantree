@@ -75,7 +75,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
 
   return (
     <SiteProvider site={site as any}>
-      <div className="h-screen flex fixed top-0 left-0 bottom-0 right-0">
+      <div className="h-screen flex fixed top-0 left-0 bottom-0 right-0 bg-foreground/5">
         <SidebarSheet />
         <Navbar></Navbar>
         <CommandPanel />
@@ -83,20 +83,22 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <SubscriptionDialog />
         <PlanListDialog />
         <div
-          className={cn('h-screen sticky top-0 hidden md:flex')}
+          className={cn('h-screen sticky top-0 hidden md:flex shrink-0')}
           style={{ width: SIDEBAR_WIDTH }}
         >
-          <Sidebar />
+          <Sidebar bordered={false} />
         </div>
-        <div className="flex-1 pb-40 h-screen overflow-auto">
+        <div className="flex-1 h-[100vh] py-3 px-3">
           {/* <NavbarWrapper /> */}
           <CreationDialog />
-          <div
-            className={cn(
-              !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
-            )}
-          >
-            {children}
+          <div className="h-full bg-background overflow-auto rounded-lg shadow">
+            <div
+              className={cn(
+                !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
+              )}
+            >
+              {children}
+            </div>
           </div>
         </div>
       </div>
