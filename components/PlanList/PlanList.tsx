@@ -5,12 +5,12 @@ import { PricingSlogan } from './PricingSlogan'
 
 export function PlanList() {
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8 pb-20">
       <PricingSlogan />
 
       <BillingCycleSelect />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center border-l border-b border-foreground/10">
         <PlanItem
           monthlyPrice={0}
           annualPrice={0}

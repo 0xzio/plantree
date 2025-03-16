@@ -26,7 +26,7 @@ export function PlanItem({
 }: Props) {
   const { isMonthly } = useBillingCycle()
   return (
-    <div className="space-y-8 bg-background rounded-2xl px-8 py-8 shadow dark:border w-full flex flex-col">
+    <div className="space-y-8 bg-background/40 border-foreground/10 px-8 py-8 dark:border w-full flex flex-col border-r border-t">
       <div className="flex flex-col items-center justify-center gap-8">
         <div className="text-xl font-bold">{name}</div>
         {isBeliever && (

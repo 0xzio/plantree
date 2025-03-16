@@ -9,7 +9,7 @@ export function BillingCycleSelect() {
   const { cycle, setCycle } = useBillingCycle()
   return (
     <ToggleGroup
-      className="h-12 gap-3 rounded-lg bg-accent p-1"
+      className="h-12 rounded-lg bg-accent p-1"
       value={cycle}
       onValueChange={(v) => {
         setCycle(v as BillingCycle)
@@ -17,7 +17,7 @@ export function BillingCycleSelect() {
       type="single"
     >
       <ToggleGroupItem
-        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background w-32 flex"
+        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background w-32 flex cursor-pointer rounded-lg"
         value={BillingCycle.MONTHLY}
       >
         Monthly
@@ -25,7 +25,7 @@ export function BillingCycleSelect() {
 
       <ToggleGroupItem
         value={BillingCycle.YEARLY}
-        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background w-36 flex"
+        className="h-full flex-1 bg-accent text-sm font-semibold ring-foreground data-[state=on]:bg-background w-36 flex cursor-pointer rounded-lg"
       >
         Yearly
         <Badge className="shrink-0 ml-1">25% off</Badge>
