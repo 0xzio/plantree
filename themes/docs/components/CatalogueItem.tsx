@@ -24,12 +24,12 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
     const isCategory = item.type === CatalogueNodeType.CATEGORY
 
     const href = useMemo(() => {
-      if (item.type === CatalogueNodeType.PAGE) return `/pages/${item.uri}`
-      if (item.type === CatalogueNodeType.POST) return `/posts/${item.uri}`
+      if (item.type === CatalogueNodeType.PAGE) return `/docs/${item.uri}`
+      if (item.type === CatalogueNodeType.POST) return `/docs/${item.uri}`
       if (item.type === CatalogueNodeType.LINK) {
         return item.uri || ''
       }
-      return `/posts/${item.uri}`
+      return `/docs/${item.uri}`
     }, [item])
 
     const linkProps: Record<string, string> = {}
