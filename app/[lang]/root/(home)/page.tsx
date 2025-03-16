@@ -33,7 +33,7 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     title: 'PenX - the home for writing',
     description:
-      'PenX is a modern blogging tool that makes it easy for professional creators to build a personal site',
+      'PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators.',
     openGraph: {
       title: 'PenX',
       description: 'Modern blogging tools',

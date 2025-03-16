@@ -24,7 +24,7 @@ const roboto = Poppins({
 const title = 'PenX - the home for writing'
 
 const description =
-  'PenX is a modern blogging tool that makes it easy for professional creators to build a personal site'
+  'PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators.'
 
 // const image = 'https://vercel.pub/thumbnail.png'
 
