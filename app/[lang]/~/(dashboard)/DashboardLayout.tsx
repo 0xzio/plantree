@@ -91,7 +91,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
         <div className="flex-1 h-[100vh] py-3 px-3">
           {/* <NavbarWrapper /> */}
           <CreationDialog />
-          <div className="h-full bg-background overflow-auto rounded-lg shadow">
+          <div className="h-full bg-background overflow-auto rounded-lg shadow-xs">
             <div
               className={cn(
                 !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',

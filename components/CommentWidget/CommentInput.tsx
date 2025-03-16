@@ -73,9 +73,9 @@ export function CommentInput({ postId, parentId, onCancel }: Props) {
         value={content}
         onChange={(e) => setContent(e.target.value)}
         maxLength={maxCharacters}
-        className="w-full min-h-28 pt-4 px-4 pb-8 border border-foreground/5 shadow-md rounded-xl"
+        className="w-full min-h-28 pt-4 px-4 pb-8 border border-foreground/15 rounded-xl resize-none"
       />
-      <div className="flex items-center justify-between text-sm mt-2 text-foreground/50 absolute bottom-3 px-2 w-full resize-none">
+      <div className="flex items-center justify-between text-sm mt-2 text-foreground/50 absolute bottom-3 px-2 w-full">
         <div className="text-xs -mb-3 pl-1">
           {content.length}/{maxCharacters}
         </div>
