@@ -31,7 +31,9 @@ export const revalidate = 86400 // 3600 * 24 * 365
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'PenX',
+    title: 'PenX - the home for writing',
+    description:
+      'PenX is a modern blogging tool that makes it easy for professional creators to build a personal site',
     openGraph: {
       title: 'PenX',
       description: 'Modern blogging tools',
