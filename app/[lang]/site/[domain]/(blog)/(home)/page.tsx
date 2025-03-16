@@ -42,6 +42,7 @@ export default async function HomePage(props: {
     getPage(site.id, 'about'),
   ])
 
+
   const { HomePage } = loadTheme(site.themeName)
 
   if (!HomePage) {

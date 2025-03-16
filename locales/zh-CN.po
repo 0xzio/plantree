@@ -56,6 +56,7 @@ msgstr "备份"
 #: themes/paper/pages/BlogPage.tsx:25
 #: themes/minimal/pages/BlogPage.tsx:25
 #: themes/micro/pages/BlogPage.tsx:25
+#: themes/maple/pages/BlogPage.tsx:25
 #: themes/garden/pages/BlogPage.tsx:25
 #: themes/docs/pages/BlogPage.tsx:25
 #: themes/card/pages/BlogPage.tsx:25

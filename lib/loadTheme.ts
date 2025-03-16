@@ -2,6 +2,7 @@ import * as aside from '@/themes/aside'
 import * as card from '@/themes/card'
 import * as docs from '@/themes/docs'
 import * as garden from '@/themes/garden'
+import * as maple from '@/themes/maple'
 import * as micro from '@/themes/micro'
 import * as minimal from '@/themes/minimal'
 import * as paper from '@/themes/paper'
@@ -20,6 +21,7 @@ const map: Record<string, any> = {
   sue,
   paper,
   wide,
+  maple,
 }
 
 export function loadTheme(name = 'sue'): any {

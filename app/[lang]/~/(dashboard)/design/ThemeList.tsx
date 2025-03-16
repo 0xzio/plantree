@@ -36,8 +36,8 @@ const themes = [
     value: 'wide',
   },
   {
-    name: 'Garden',
-    value: 'garden',
+    name: 'Maple',
+    value: 'maple',
   },
   {
     name: 'Card',
@@ -46,6 +46,10 @@ const themes = [
   {
     name: 'Aside',
     value: 'aside',
+  },
+  {
+    name: 'Garden',
+    value: 'garden',
   },
   {
     name: 'Docs',

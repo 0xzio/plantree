@@ -1,4 +1,10 @@
-import { getFirstSite, getSite, getTags, getTagWithPost } from '@/lib/fetchers'
+import {
+  getFirstSite,
+  getPosts,
+  getSite,
+  getTags,
+  getTagWithPost,
+} from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { Metadata } from 'next'
 
@@ -31,7 +37,8 @@ export default async function TagPage({
   const tagName = decodeURI(p.tag)
 
   const site = await getSite(p)
-  const [tagWithPosts, tags] = await Promise.all([
+  const [allPosts, tagWithPosts, tags] = await Promise.all([
+    getPosts(site.id),
     getTagWithPost(site.id, tagName),
     getTags(site.id),
   ])
@@ -40,5 +47,7 @@ export default async function TagPage({
 
   const { TagDetailPage } = loadTheme(site.themeName)
 
-  return <TagDetailPage site={site} posts={posts} tags={tags} />
+  return (
+    <TagDetailPage site={site} allPosts={allPosts} posts={posts} tags={tags} />
+  )
 }

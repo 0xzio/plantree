@@ -14,7 +14,7 @@ interface Props {
 export function Footer({ site, className }: Props) {
   if (!site) return null
   return (
-    <footer className={cn('mt-auto mb-8', className)}>
+    <footer className={cn('mt-auto mb-4', className)}>
       <div className="mt-16 flex flex-col items-center">
         <div className="mb-3 flex space-x-4 item-center"></div>
         <SocialNav className="mb-3" site={site} />

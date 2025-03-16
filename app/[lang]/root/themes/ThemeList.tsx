@@ -22,6 +22,7 @@ const themes: string[] = [
   'paper',
   'wide',
   'garden',
+  'maple',
   'card',
   'docs',
 ]

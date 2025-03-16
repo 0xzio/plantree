@@ -119,7 +119,7 @@ export function PublishForm() {
                 </FormItem>
               )}
             />
-
+            {/* 
             <FormField
               control={form.control}
               name="collectible"
@@ -139,7 +139,7 @@ export function PublishForm() {
                   <FormMessage />
                 </FormItem>
               )}
-            />
+            /> */}
 
             <FormField
               control={form.control}

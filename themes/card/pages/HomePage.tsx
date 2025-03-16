@@ -21,7 +21,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
   const postListStyle =
     site.theme?.common?.postListStyle ?? PostListStyle.SIMPLE
   return (
-    <div className="mt-12">
+    <div className="mt-12 flex flex-col gap-16">
       {showAbout && <ContentRender content={about.content} />}
 
       <div className="">
@@ -64,7 +64,10 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
               </Link>
             )}
           </div>
-          <ProjectsBlock projects={projects.slice(0, HOME_PROJECT_LIMIT)} />
+          <ProjectsBlock
+            projects={projects.slice(0, HOME_PROJECT_LIMIT)}
+            className="md:grid-cols-3"
+          />
         </div>
       )}
     </div>
