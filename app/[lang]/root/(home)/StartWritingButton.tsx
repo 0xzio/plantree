@@ -14,7 +14,8 @@ export function StartWritingButton() {
       <Button
         size="lg"
         className="h-14 text-base w-52 relative overflow-hidden"
-        variant="outline-solid"
+        // variant="outline-solid"
+        variant="brand"
         onClick={() => {
           if (data) {
             push('/~/posts')

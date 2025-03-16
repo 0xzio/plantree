@@ -10,7 +10,8 @@ export function LoginButton({ ...rest }: Props) {
   const { setAuthStatus } = useAuthStatus()
   return (
     <Button
-      variant="secondary"
+      size="sm"
+      // variant="secondary"
       {...rest}
       onClick={() => {
         setIsOpen(true)

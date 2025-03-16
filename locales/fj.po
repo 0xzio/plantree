@@ -49,6 +49,10 @@ msgstr ""
 msgid "Backup"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
+msgid "Billing & plan"
+msgstr ""
+
 #: app/[lang]/root/Footer.tsx:49
 #: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
@@ -168,10 +172,6 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:55
 msgid "Path"
-msgstr ""
-
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
-msgid "PenX Pro"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:99
