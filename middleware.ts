@@ -60,10 +60,7 @@ export default async function middleware(req: NextRequest) {
     ? `${url.pathname.replace(`/${locale}`, '')}${postfix}`
     : `${url.pathname}${postfix}`
 
-  if (path.startsWith('/docs/') || path.startsWith('/posts/')) {
-    const newUrl = `https://docs.penx.io/${path.replace('/docs/', '/posts/')}`
-    return NextResponse.rewrite(newUrl)
-  }
+  console.log('======path:', path)
 
   // Redirect if there is no locale
 
@@ -89,6 +86,14 @@ export default async function middleware(req: NextRequest) {
   const isDashboard = path.startsWith('/~')
 
   if (isRoot) {
+    if (path.startsWith('/docs/') || path.startsWith('/posts/')) {
+      const newUrl = `https://docs.penx.io/${path.replace('/docs/', 'posts/')}`
+
+      console.log('=====newUrl:', newUrl)
+
+      return NextResponse.rewrite(newUrl)
+    }
+
     if (isDashboard) {
       const token = await getIronSession<SessionData>(
         req.cookies as any,
