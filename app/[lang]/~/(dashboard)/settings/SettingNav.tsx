@@ -79,7 +79,7 @@ export function SettingNav({}: Props) {
           href={Paths.subscription}
           className={linkClassName(Paths.subscription)}
         >
-          <Trans>PenX Pro</Trans>
+          <Trans>Billing & plan</Trans>
         </Link>
 
         <Link href={Paths.tags} className={linkClassName(Paths.tags)}>

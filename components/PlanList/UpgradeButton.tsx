@@ -48,6 +48,8 @@ export function UpgradeButton({ type, isBeliever }: Props) {
           const data = await mutateAsync({
             planType: type,
             billingCycle: cycle,
+            host: window.location.host,
+            pathname: encodeURIComponent('/~/settings/subscription'),
           })
           console.log('data===>>:', data, data.url)
           location.href = data.url!

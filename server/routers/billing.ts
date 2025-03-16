@@ -12,6 +12,7 @@ import { SessionData } from '@/lib/types'
 import { BillingCycle, PlanType } from '@prisma/client'
 import { getIronSession, IronSession } from 'iron-session'
 import { cookies } from 'next/headers'
+import qs from 'query-string'
 import queryString from 'query-string'
 import { z } from 'zod'
 import { protectedProcedure, router } from '../trpc'
@@ -22,6 +23,8 @@ export const billingRouter = router({
       z.object({
         planType: z.nativeEnum(PlanType),
         billingCycle: z.nativeEnum(BillingCycle),
+        host: z.string(),
+        pathname: z.string(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -47,38 +50,43 @@ export const billingRouter = router({
           : STRIPE_TEAM_YEARLY_PRICE_ID
       }
 
-      const return_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
+      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
+      const cancel_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/checkout-cancel-callback`
 
-      console.log('=====>>>success_url:', return_url)
+      console.log('=====>>>success_url:', success_url)
       const userId = ctx.token.uid
 
-      const query = {
+      const cancelQuery = {
+        host: input.host,
+        pathname: input.pathname,
+      }
+
+      const successQuery = {
+        ...cancelQuery,
         billingCycle: input.billingCycle,
         planType: input.planType,
         siteId: ctx.activeSiteId,
       }
-
-      console.log('=======query:', query)
-
-      const stringifiedQuery = queryString.stringify(query)
 
       const session = await stripe.checkout.sessions.create({
         // mode: 'subscription',
         mode: isBeliever ? 'payment' : 'subscription',
         payment_method_types: ['card'],
         // customer_email: email,
+        allow_promotion_codes: true,
         client_reference_id: ctx.activeSiteId,
         subscription_data: isBeliever
           ? undefined
           : {
+              // trial_period_days: 7,
               metadata: {
                 siteId: ctx.activeSiteId,
                 billingCycle: input.billingCycle,
                 planType: input.planType,
               },
             },
-        success_url: `${return_url}?success=true&session_id={CHECKOUT_SESSION_ID}&${stringifiedQuery}`,
-        cancel_url: `${return_url}?success=false`,
+        success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
+        cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
         line_items: [{ price: getProductId(), quantity: 1 }],
       })
 
