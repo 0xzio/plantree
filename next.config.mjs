@@ -30,6 +30,11 @@ const nextConfig = {
         source: '/:locale/feed.xml',
         destination: '/api/feed',
       },
+      {
+        source: '/blog/:path*',
+        destination: 'https://docs.penx.io/posts/:path*',
+        // https://my-blog.super.so/blog/:path*
+      },
     ]
   },
 

@@ -60,6 +60,11 @@ export default async function middleware(req: NextRequest) {
     ? `${url.pathname.replace(`/${locale}`, '')}${postfix}`
     : `${url.pathname}${postfix}`
 
+  if (path.startsWith('/docs/') || path.startsWith('/posts/')) {
+    const newUrl = `https://docs.penx.io/${path.replace('/docs/', '/posts/')}`
+    return NextResponse.rewrite(newUrl)
+  }
+
   // Redirect if there is no locale
 
   const isRoot =

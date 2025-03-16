@@ -44,8 +44,7 @@ export const Nav = () => {
     },
     {
       text: 'Docs',
-      isExternal: true,
-      to: 'https://docs.penx.io/posts/35b019ce-e276-4886-a4a2-62d7ed390a99',
+      to: '/docs/intouction',
     },
     // {
     //   text: 'Rewards',

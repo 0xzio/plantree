@@ -213,7 +213,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: app/[lang]/root/(home)/page.tsx:66
+#: app/[lang]/root/(home)/page.tsx:68
 msgid "Sites"
 msgstr ""
 
