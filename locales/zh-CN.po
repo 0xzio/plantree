@@ -84,15 +84,15 @@ msgstr ""
 msgid "Collaborators"
 msgstr "写作者"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:161
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:165
 msgid "Coupons"
 msgstr "优惠码"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:128
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:132
 msgid "Databases"
 msgstr "数据库"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:144
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:148
 msgid "Design"
 msgstr ""
 
@@ -117,7 +117,7 @@ msgstr ""
 msgid "Friends"
 msgstr "朋友"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:108
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:112
 msgid "Gallery"
 msgstr "相册"
 
@@ -166,7 +166,7 @@ msgstr "操作"
 msgid "Orders"
 msgstr "订单"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:118
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:122
 msgid "Pages"
 msgstr "页面"
 
@@ -174,7 +174,7 @@ msgstr "页面"
 msgid "Path"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:99
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:103
 #: components/theme-ui/Navigation.tsx:25
 msgid "Posts"
 msgstr "文章"
@@ -209,7 +209,7 @@ msgid "SEO"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:152
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
 msgid "Settings"
 msgstr "设置"
 
@@ -225,7 +225,7 @@ msgstr ""
 msgid "Submit Link"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:137
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
 msgid "Subscribers"
 msgstr "订阅者"
 
@@ -239,7 +239,7 @@ msgstr "标签"
 msgid "Title"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:90
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:94
 msgid "Today"
 msgstr "今日"
 

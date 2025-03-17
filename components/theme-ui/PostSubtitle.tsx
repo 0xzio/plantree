@@ -8,8 +8,6 @@ interface Props {
 
 export function PostSubtitle({ children, className }: Props) {
   return (
-    <p className={cn('text-lg text-foreground/50 -mt-4', className)}>
-      {children}
-    </p>
+    <p className={cn('text-lg text-foreground/50', className)}>{children}</p>
   )
 }

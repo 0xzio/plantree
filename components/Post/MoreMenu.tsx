@@ -39,7 +39,7 @@ export function MoreMenu({ post }: { post: Post }) {
       </PopoverTrigger>
 
       <PopoverContent align="end" side="bottom" className="p-2 w-48">
-        {post.type === PostType.ARTICLE && <CopyMarkdown />}
+        {post.type === PostType.ARTICLE && <CopyMarkdown post={post} />}
         <MenuItem
           onClick={() => {
             toast.info('Coming soon...')

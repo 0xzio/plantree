@@ -1,4 +1,4 @@
-import { forwardRef, useRef, useState } from 'react'
+import { forwardRef, useEffect, useRef, useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Post } from '@/hooks/usePost'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
@@ -7,7 +7,9 @@ import { uploadFile } from '@/lib/uploadFile'
 import { getUrl } from '@/lib/utils'
 import { AudioLinesIcon, ImageIcon, X } from 'lucide-react'
 import Image from 'next/image'
+import { Player } from 'shikwasa'
 import { toast } from 'sonner'
+import { Button } from '../ui/button'
 
 interface Props {
   post: Post
@@ -18,6 +20,36 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
     const [value, setValue] = useState((post.media as string) || '')
     const inputRef = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState(false)
+    const playerRef = useRef<any>(null)
+
+    // TODO: hack
+    const [mounted, setMounted] = useState(true)
+
+    useEffect(() => {
+      if (!value || !value.startsWith('/')) return
+      console.log('=======value:', value, getUrl(value))
+
+      playerRef.current = new Player({
+        container: () => document.querySelector('.podcast-audio'),
+        // fixed: {
+        //   type: 'fixed',
+        //   position: 'bottom',
+        // },
+        themeColor: 'black',
+        theme: 'light',
+        download: true,
+        preload: 'metadata',
+        audio: {
+          title: 'Hello World!',
+          artist: 'Shikwasa FM',
+          cover: 'image.png',
+          // src: 'https://r2.penx.me/8283074160_460535.mp3',
+          // src: 'https://v.typlog.com/sspai/8267989755_658478.mp3'
+          src: getUrl(value),
+        },
+      })
+    }, [value])
+
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
       if (e.target.files?.length) {
         setLoading(true)
@@ -43,24 +75,48 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
       }
     }
 
-    async function removeImage() {
+    async function removeAudio() {
       setValue('')
+      playerRef.current = null
       await api.post.update.mutate({
         id: post.id,
         media: '',
       })
     }
 
+    if (!mounted) return null
+
     if (value) {
       return (
         <div className="w-full h-auto relative space-y-2">
-          <audio controls className="w-full">
-            <source src={getUrl(post.media || '')} type="audio/mp3" />
-          </audio>
-          <X
-            className="absolute -top-0 -right-1 bg-foreground/10 rounded-full p-1 text-foreground/80 w-6 h-6 cursor-pointer"
-            onClick={removeImage}
-          />
+          <div className="podcast-audio"></div>
+          <div className="text-center">
+            <Button
+              variant="outline-solid"
+              onClick={() => {
+                setMounted(false)
+                removeAudio()
+                setTimeout(() => {
+                  setMounted(true)
+                }, 10)
+              }}
+            >
+              Reupload audio
+            </Button>
+          </div>
+          <a
+            href="#t=03:05"
+            onClick={(e) => {
+              const href = e.currentTarget.getAttribute('href')
+              const player = playerRef.current
+              player.seek(60 * 3)
+              if (player.audio.paused) {
+                player.play()
+              }
+            }}
+          >
+            GO
+          </a>
 
           {loading && (
             <div className="flex items-center justify-center gap-1">
@@ -76,7 +132,7 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
 
     return (
       <div ref={ref}>
-        <div className="w-full h-[200px] rounded-2xl bg-accent relative cursor-pointer flex items-center justify-center">
+        <div className="w-full h-[160px] rounded-2xl bg-accent relative cursor-pointer flex items-center justify-center">
           <div className="absolute left-0 top-0 w-full h-full cursor-pointer z-1 flex items-center justify-center gap-1 text-foreground/40 text-sm">
             <AudioLinesIcon size={18} />
             <div>Select audio</div>
@@ -85,6 +141,7 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
           <input
             ref={inputRef}
             type="file"
+            accept=".mp3"
             onChange={handleFileChange}
             className="absolute left-0 top-0 opacity-0 w-full h-full cursor-pointer z-10"
           />

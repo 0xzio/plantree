@@ -20,28 +20,42 @@ export async function uploadFile(file: File, opt = {} as UploadOptions) {
   let data: UploadReturn = {}
   const site = window.__SITE__
 
+  let filename = fileHash
+
+  let prefix = ''
   let qs = ''
+  let query = new URLSearchParams({})
   if (file.type === 'image/svg+xml') {
-    let query = new URLSearchParams({})
     query.set('contentType', 'image/svg+xml')
-    query.toString()
     qs = `?${query.toString()}`
   }
 
-  const res = await fetch(`${STATIC_URL}/${fileHash}${qs}`, {
-    method: 'PUT',
-    body: file,
-  })
-
-  if (!res.ok) {
-    throw new Error('Failed to upload file')
+  if (file.type === 'audio/mpeg' && file.name.endsWith('.mp3')) {
+    query.set('contentType', 'audio/mpeg')
+    qs = `?${query.toString()}`
+    prefix = 'audios/'
+    filename = `${filename}.mp3`
   }
 
-  data = await res.json()
-  const url = `/${fileHash}`
-  data = {
-    ...data,
-    url,
+  const pathname = `${prefix}${filename}`
+
+  const url = `/${pathname}`
+  const asset = await api.asset.getByUrl.query({ url })
+
+  if (!asset) {
+    const res = await fetch(`${STATIC_URL}/${pathname}${qs}`, {
+      method: 'PUT',
+      body: file,
+    })
+
+    if (!res.ok) {
+      throw new Error('Failed to upload file')
+    }
+
+    data = await res.json()
+    data = { ...data, url }
+  } else {
+    data = { ...data, url: asset.url }
   }
 
   if (saveToDB) {

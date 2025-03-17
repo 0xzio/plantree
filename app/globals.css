@@ -369,3 +369,11 @@
 @utility slide-out-to-right-* {
   --tw-exit-translate-x: --value([percentage], [length]);
 }
+
+.shk-player {
+  border: 1px solid #ddd;
+}
+.shk.shikwasa {
+  /* border-radius: 20px; */
+  /* overflow: hidden; */
+}

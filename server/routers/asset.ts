@@ -28,6 +28,18 @@ export const assetRouter = router({
       return list
     }),
 
+  getByUrl: protectedProcedure
+    .input(
+      z.object({
+        url: z.string(),
+      }),
+    )
+    .query(async ({ ctx, input }) => {
+      return await prisma.asset.findFirst({
+        where: { url: input.url },
+      })
+    }),
+
   trashedAssets: protectedProcedure
     .input(
       z.object({

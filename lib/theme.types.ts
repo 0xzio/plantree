@@ -162,6 +162,7 @@ export type Post = {
   collectible: boolean
   isPopular: boolean
   image: string | null
+  media: string | null
   commentCount: number
   publishedAt: Date
   archivedAt: Date

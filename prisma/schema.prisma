@@ -773,6 +773,7 @@ model Asset {
   assetAlbums   AssetAlbum[]
 
   @@index([userId])
+  @@index([url])
   @@index([contentType])
   @@map("asset")
 }

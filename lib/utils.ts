@@ -116,8 +116,9 @@ export function getUrl(value = '') {
     return `/api/ipfs-image?cid=${value}`
   }
 
+  const host = 'https://r2.penx.me'
   if (value.startsWith('/')) {
-    return `${STATIC_URL}${value}`
+    return `${host}${value}`
   }
 
   // return isIPFSCID(str) ? `${IPFS_GATEWAY}/ipfs/${str}` : str

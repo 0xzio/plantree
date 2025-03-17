@@ -38,7 +38,6 @@ export function Post() {
     updateContent,
   } = usePost()
 
-  console.log('=======>>>>>>>post:', post)
 
   useSiteTags()
   useSiteCollaborators()

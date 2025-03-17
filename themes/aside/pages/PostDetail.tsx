@@ -4,14 +4,17 @@ import { Footer } from '@/components/theme-ui/Footer'
 import { IPFSLink } from '@/components/theme-ui/IPFSLink'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PaginationNav } from '@/components/theme-ui/PaginationNav'
+import { PodcastPlayer } from '@/components/theme-ui/PodcastPlayer'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Skeleton } from '@/components/ui/skeleton'
+import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
-import { Link } from '@/lib/i18n'
+import dynamic from 'next/dynamic'
 
 interface LayoutProps {
   site: Site
@@ -40,7 +43,10 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
             <PostActions post={post} />
           </header>
           <div className="pt-2 md:pt-4">
-            <div className="">
+            <div className="flex flex-col gap-4">
+              <div className="h-[130px] flex items-center mb-2">
+                <PodcastPlayer post={post} />
+              </div>
               <ContentRender content={post.content} />
               <SubscribeNewsletterCard site={site} />
             </div>
@@ -49,7 +55,7 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
             <PaginationNav prev={prev} next={next} />
           </div>
         </div>
-        <Footer className="mt-auto" site={site} />
+        {/* <Footer className="mt-auto" site={site} /> */}
       </div>
     </div>
   )
