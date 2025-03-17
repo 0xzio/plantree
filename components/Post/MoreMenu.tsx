@@ -9,6 +9,7 @@ import {
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { Post, updatePost, usePost } from '@/hooks/usePost'
 import { editorDefaultValue } from '@/lib/constants'
+import { PostType } from '@prisma/client'
 import { Ellipsis } from 'lucide-react'
 import { toast } from 'sonner'
 import { useCreateEditor } from '../editor/use-create-editor'
@@ -18,16 +19,11 @@ import { MenuItem } from '../ui/menu'
 
 export function MoreMenu({ post }: { post: Post }) {
   const [isOpen, setIsOpen] = useState(false)
-  const { copy } = useCopyToClipboard()
   const { setLang } = usePost()
   const site = useSiteContext()
   const { locales = [] } = (site.config || {}) as {
     locales: string[]
   }
-
-  const editor = useCreateEditor({
-    value: post.content ? JSON.parse(post.content) : editorDefaultValue,
-  })
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen} modal>
@@ -41,22 +37,15 @@ export function MoreMenu({ post }: { post: Post }) {
           <Ellipsis size={18} className="text-foreground/60"></Ellipsis>
         </Button>
       </PopoverTrigger>
+
       <PopoverContent align="end" side="bottom" className="p-2 w-48">
+        {post.type === PostType.ARTICLE && <CopyMarkdown />}
         <MenuItem
           onClick={() => {
             toast.info('Coming soon...')
           }}
         >
           Copy link
-        </MenuItem>
-        <MenuItem
-          onClick={() => {
-            const content = (editor.api as any).markdown.serialize()
-            copy(content)
-            toast.success('Copied to clipboard')
-          }}
-        >
-          Copy markdown
         </MenuItem>
         <MenuItem
           onClick={() => {
@@ -67,5 +56,23 @@ export function MoreMenu({ post }: { post: Post }) {
         </MenuItem>
       </PopoverContent>
     </Popover>
+  )
+}
+
+function CopyMarkdown({ post }: { post: Post }) {
+  const { copy } = useCopyToClipboard()
+  const editor = useCreateEditor({
+    value: post.content ? JSON.parse(post.content) : editorDefaultValue,
+  })
+  return (
+    <MenuItem
+      onClick={() => {
+        const content = (editor.api as any).markdown.serialize()
+        copy(content)
+        toast.success('Copied to clipboard')
+      }}
+    >
+      Copy markdown
+    </MenuItem>
   )
 }
