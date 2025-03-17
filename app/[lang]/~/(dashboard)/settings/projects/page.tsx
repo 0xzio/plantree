@@ -23,9 +23,12 @@ export default function Page() {
       <FullPageDatabase
         slug={PROJECT_DATABASE_NAME}
         fetcher={async () => {
-          return await api.database.getOrCreateProjectsDatabase.mutate({
-            siteId: site.id,
-          })
+          const database =
+            await api.database.getOrCreateProjectsDatabase.mutate({
+              siteId: site.id,
+            })
+          console.log('======database:', database)
+          return database
         }}
       />
     </div>

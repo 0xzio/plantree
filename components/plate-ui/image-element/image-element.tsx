@@ -42,7 +42,11 @@ export const ImageElement = withHOC(
 
     return (
       <MediaPopover plugin={ImagePlugin}>
-        <PlateElement ref={ref} className={cn(className, 'py-2.5')} {...props}>
+        <PlateElement
+          ref={ref}
+          {...props}
+          className={cn(props.className, className, 'py-2.5')}
+        >
           <figure className="group relative m-0" contentEditable={false}>
             <Resizable
               align={align}

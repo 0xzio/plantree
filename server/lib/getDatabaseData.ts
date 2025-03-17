@@ -19,7 +19,11 @@ export async function getDatabaseData<T = any>(input: Input) {
     include: {
       views: true,
       fields: true,
-      records: true,
+      records: {
+        orderBy: {
+          sort: 'asc',
+        },
+      },
     },
     where,
   })

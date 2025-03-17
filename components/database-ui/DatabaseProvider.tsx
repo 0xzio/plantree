@@ -262,7 +262,6 @@ function DatabaseContent({
       id,
       siteId: site.id,
       databaseId: database.id,
-      sort: database.records.length,
       fields: newFields,
     })
   }
@@ -275,7 +274,10 @@ function DatabaseContent({
     })
 
     reloadDatabase(newDatabase)
-    await api.database.deleteRecord.mutate(recordId)
+    await api.database.deleteRecord.mutate({
+      databaseId: database.id,
+      recordId,
+    })
   }
 
   async function addColumn(fieldType: FieldType) {

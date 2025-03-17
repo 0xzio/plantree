@@ -12,6 +12,7 @@ import { TRPCError } from '@trpc/server'
 import { arrayMoveImmutable } from 'array-move'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
+import { fixRowSort } from '../lib/fixRowSort'
 import { getDatabaseData } from '../lib/getDatabaseData'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
@@ -36,7 +37,11 @@ export const databaseRouter = router({
       include: {
         views: true,
         fields: true,
-        records: true,
+        records: {
+          orderBy: {
+            sort: 'asc',
+          },
+        },
       },
       where: { id: input },
     })
@@ -73,7 +78,11 @@ export const databaseRouter = router({
       include: {
         views: true,
         fields: true,
-        records: true,
+        records: {
+          orderBy: {
+            sort: 'asc',
+          },
+        },
       },
       where: {
         id: input,
@@ -224,15 +233,17 @@ export const databaseRouter = router({
         siteId: z.string(),
         databaseId: z.string(),
         fields: z.record(z.unknown()),
-        sort: z.number(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const records = await fixRowSort(input.databaseId)
+
       await prisma.record.create({
         data: {
           userId: ctx.token.uid,
           ...input,
           fields: input.fields as any,
+          sort: records.length,
         },
       })
       return true
@@ -485,11 +496,29 @@ export const databaseRouter = router({
 
       return true
     }),
-
   deleteRecord: protectedProcedure
-    .input(z.string())
+    .input(
+      z.object({
+        databaseId: z.string(),
+        recordId: z.string(),
+      }),
+    )
     .mutation(async ({ ctx, input }) => {
-      const record = await prisma.record.delete({ where: { id: input } })
+      const records = await fixRowSort(input.databaseId)
+      const record = await prisma.record.delete({
+        where: {
+          id: input.recordId,
+        },
+      })
+
+      for (const item of records) {
+        if (item.sort > record.sort) {
+          await prisma.record.update({
+            where: { id: item.id },
+            data: { sort: item.sort - 1 },
+          })
+        }
+      }
 
       const { slug } = await prisma.database.findUniqueOrThrow({
         where: { id: record.databaseId },
@@ -616,7 +645,11 @@ export const databaseRouter = router({
             include: {
               views: true,
               fields: true,
-              records: true,
+              records: {
+                orderBy: {
+                  sort: 'asc',
+                },
+              },
             },
             where: {
               siteId: input.siteId,
@@ -771,7 +804,11 @@ export const databaseRouter = router({
             include: {
               views: true,
               fields: true,
-              records: true,
+              records: {
+                orderBy: {
+                  sort: 'asc',
+                },
+              },
             },
             where: { id: newDatabase.id },
           })
@@ -796,7 +833,11 @@ export const databaseRouter = router({
             include: {
               views: true,
               fields: true,
-              records: true,
+              records: {
+                orderBy: {
+                  sort: 'asc',
+                },
+              },
             },
             where: {
               siteId: input.siteId,
@@ -978,7 +1019,11 @@ export const databaseRouter = router({
             include: {
               views: true,
               fields: true,
-              records: true,
+              records: {
+                orderBy: {
+                  sort: 'asc',
+                },
+              },
             },
             where: { id: newDatabase.id },
           })
