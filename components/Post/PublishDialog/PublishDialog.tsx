@@ -19,7 +19,7 @@ export function PublishDialog() {
       <DialogHeader className="hidden">
         <DialogDescription></DialogDescription>
       </DialogHeader>
-      <DialogContent className="sm:max-w-[560px]">
+      <DialogContent className="sm:max-w-[500px]">
         <PublishForm />
       </DialogContent>
     </Dialog>

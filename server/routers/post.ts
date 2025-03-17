@@ -222,6 +222,7 @@ export const postRouter = router({
         gateType: z.nativeEnum(GateType),
         collectible: z.boolean(),
         delivered: z.boolean(),
+        publishedAt: z.date().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
@@ -285,7 +286,7 @@ export const postRouter = router({
           // cid: res.cid,
           collectible: input.collectible,
           delivered: wasDelivered ? wasDelivered : input.delivered,
-          publishedAt: new Date(),
+          publishedAt: input.publishedAt || post.publishedAt || new Date(),
         },
       })
 

@@ -24,8 +24,9 @@ import { useSiteContext } from '../components/SiteContext'
 export const PublishPostFormSchema = z.object({
   slug: z.string().min(1, { message: 'Slug is required' }),
   gateType: z.nativeEnum(GateType),
-  collectible: z.any(),
-  delivered: z.any(),
+  collectible: z.boolean(),
+  delivered: z.boolean(),
+  publishedAt: z.date().optional(),
 })
 
 export type PublishPostOptions = z.infer<typeof PublishPostFormSchema>
@@ -71,13 +72,11 @@ export function usePublishPost() {
 
         await api.post.publish.mutate({
           siteId: id,
-          type: post?.type || PostType.ARTICLE,
-          slug,
           postId: post?.id,
-          gateType,
-          collectible,
+          type: post?.type || PostType.ARTICLE,
+          ...opt,
           creationId,
-          delivered,
+          slug,
         })
 
         setLoading(false)

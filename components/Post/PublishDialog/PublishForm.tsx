@@ -9,6 +9,7 @@ import { useSiteContext } from '@/components/SiteContext'
 import { useSpaceContext } from '@/components/SpaceContext'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { Calendar } from '@/components/ui/calendar'
 import { DialogHeader, DialogTitle } from '@/components/ui/dialog'
 import {
   Form,
@@ -20,6 +21,11 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
 import { Switch } from '@/components/ui/switch'
 import { useCheckChain } from '@/hooks/useCheckChain'
 import { useEthPrice } from '@/hooks/useEthPrice'
@@ -35,6 +41,8 @@ import { cn } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { GateType, PostStatus } from '@prisma/client'
 import { DialogClose } from '@radix-ui/react-dialog'
+import { format } from 'date-fns'
+import { CalendarIcon } from 'lucide-react'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { usePublishDialog } from './usePublishDialog'
@@ -45,6 +53,7 @@ export function PublishForm() {
   const { spaceId, ...site } = useSiteContext()
   const { data: session } = useSession()
   const { isLoading, publishPost } = usePublishPost()
+  const [open, setOpen] = useState(false)
 
   const form = useForm<z.infer<typeof PublishPostFormSchema>>({
     resolver: zodResolver(PublishPostFormSchema),
@@ -53,12 +62,11 @@ export function PublishForm() {
       gateType: post?.gateType || GateType.FREE,
       collectible: post?.collectible || false,
       delivered: post?.delivered || false,
+      publishedAt: post?.publishedAt ? new Date(post?.publishedAt) : new Date(),
     },
   })
 
   async function onSubmit(data: z.infer<typeof PublishPostFormSchema>) {
-    console.log('======data:', data)
-
     const opt = {
       ...data,
       slug: data.slug.replace(/^\/|\/$/g, ''),
@@ -189,15 +197,59 @@ export function PublishForm() {
           </>
         )}
 
+        <FormField
+          control={form.control}
+          name="publishedAt"
+          render={({ field }) => {
+            console.log('fiellllllllll>>>>>>:', field)
+
+            return (
+              <FormItem className="w-full">
+                <FormLabel htmlFor="post-collectible">Publish date</FormLabel>
+                <FormControl>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className={cn(
+                          'justify-start text-xs px-3 rounded-md flex gap-1',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                        onClick={() => setOpen(!open)}
+                      >
+                        <CalendarIcon size={14} />
+                        {field.value ? (
+                          <span>{format(field.value, 'PPP')}</span>
+                        ) : (
+                          <span>Pick a date</span>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-auto p-0" align="start">
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={async (d) => {
+                          setOpen(false)
+                          if (d) {
+                            field.onChange(d!)
+                          }
+                        }}
+                      />
+                    </PopoverContent>
+                  </Popover>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
+        />
+
         <div className="flex items-center justify-end gap-2">
           <DialogClose asChild>
             <Button variant="secondary">Cancel</Button>
           </DialogClose>
-          <Button
-            type="submit"
-            className="w-24"
-            disabled={isLoading || !form.formState.isValid}
-          >
+          <Button type="submit" className="w-24" disabled={isLoading}>
             {isLoading ? <LoadingDots /> : <span>Publish</span>}
           </Button>
         </div>
