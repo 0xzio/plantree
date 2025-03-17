@@ -16,11 +16,9 @@ export function SiteLayout({ children, site, tags }: Props) {
       <Header site={site} className="px-4 md:hidden" />
       <main className="flex flex-1 w-full px-4 xl:px-0 gap-x-16 relative mx-auto">
         <Sidebar site={site} tags={tags} />
-        <div className="flex-1">
-          <div className="max-w-2xl mx-auto pt-16">
-            {children}
-            <Footer site={site} />
-          </div>
+        <div className="flex-1 flex flex-col">
+          <div className="max-w-2xl mx-auto pt-16 flex-1">{children}</div>
+          <Footer site={site} className="mt-auto" />
         </div>
       </main>
     </div>

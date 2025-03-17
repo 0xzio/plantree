@@ -1,81 +1,20 @@
 import { ReactNode } from 'react'
-import { Image } from '@/components/Image'
-import { ContentRender } from '@/components/theme-ui/ContentRender'
-import { IPFSLink } from '@/components/theme-ui/IPFSLink'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { PostActions } from '@/components/theme-ui/PostActions'
-import { PostMetadata } from '@/components/theme-ui/PostMetadata'
-import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
-import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
-import { Link } from '@/lib/i18n'
+import { PostPageWidget } from '@/components/theme-ui/PostPageWidget'
 import { Post, Site } from '@/lib/theme.types'
 
-interface LayoutProps {
+interface Props {
   site: Site
   post: Post
   children: ReactNode
   className?: string
-  next?: Post
-  prev?: Post
+  next?: { path: string; title: string }
+  prev?: { path: string; title: string }
 }
 
-export function PostDetail({ site, post, className, next, prev }: LayoutProps) {
+export function PostDetail(props: Props) {
   return (
-    <article className="mt-20 mx-auto w-full lg:max-w-3xl">
-      <header className="space-y-4 pb-4">
-        <div className="mb-4">
-          <PageTitle>{post.title}</PageTitle>
-          {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
-        </div>
-        <PostMetadata site={site} post={post} />
-        <PostActions post={post} />
-      </header>
-
-      {!!post.image && (
-        <Image
-          src={post.image || ''}
-          alt=""
-          width={1000}
-          height={800}
-          className="object-cover w-full max-h-96 rounded-2xl"
-        />
-      )}
-
-      <div className="pt-2 md:pt-4">
-        <div className="">
-          <ContentRender content={post.content} />
-          <SubscribeNewsletterCard site={site} />
-        </div>
-
-        <IPFSLink cid={post.cid} />
-
-        <footer>
-          <div className="flex flex-col text-sm font-medium sm:flex-row sm:justify-between sm:text-base">
-            {prev && prev?.slug && (
-              <div className="pt-4 xl:pt-8">
-                <Link
-                  href={`/posts/${prev.slug}`}
-                  className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
-                  aria-label={`Previous post: ${prev.title}`}
-                >
-                  &larr; {prev.title}
-                </Link>
-              </div>
-            )}
-            {next && next?.slug && (
-              <div className="pt-4 xl:pt-8">
-                <Link
-                  href={`/posts/${next.slug}`}
-                  className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
-                  aria-label={`Next post: ${next.title}`}
-                >
-                  {next.title} &rarr;
-                </Link>
-              </div>
-            )}
-          </div>
-        </footer>
-      </div>
-    </article>
+    <div className="mt-20 mx-auto w-full lg:max-w-3xl">
+      <PostPageWidget {...props} />
+    </div>
   )
 }

@@ -1,16 +1,8 @@
 import { ReactNode } from 'react'
-import { ContentRender } from '@/components/theme-ui/ContentRender'
-import { IPFSLink } from '@/components/theme-ui/IPFSLink'
-import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { PaginationNav } from '@/components/theme-ui/PaginationNav'
-import { PostActions } from '@/components/theme-ui/PostActions'
-import { PostMetadata } from '@/components/theme-ui/PostMetadata'
-import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
-import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { PostPageWidget } from '@/components/theme-ui/PostPageWidget'
 import { Post, Site } from '@/lib/theme.types'
-import { cn, formatDate } from '@/lib/utils'
 
-interface LayoutProps {
+interface Props {
   site: Site
   post: Post
   children: ReactNode
@@ -19,27 +11,10 @@ interface LayoutProps {
   prev?: { path: string; title: string }
 }
 
-export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
+export function PostDetail(props: Props) {
   return (
-    <article className={cn('mt-20 mx-auto w-full lg:max-w-3xl', className)}>
-      <header className="space-y-4 pb-4">
-        <div className="mb-4">
-          <PageTitle>{post.title}</PageTitle>
-          {post.description && <PostSubtitle>{post.description}</PostSubtitle>}
-        </div>
-        <PostMetadata site={site} post={post} />
-        <PostActions post={post} />
-      </header>
-      <div className="pt-2 md:pt-4">
-        <div className="">
-          <ContentRender content={post.content} />
-          <SubscribeNewsletterCard site={site} />
-        </div>
-
-        <IPFSLink cid={post.cid} />
-
-        <PaginationNav prev={prev} next={next} />
-      </div>
-    </article>
+    <div className="mt-20 mx-auto w-full lg:max-w-3xl">
+      <PostPageWidget {...props} />
+    </div>
   )
 }

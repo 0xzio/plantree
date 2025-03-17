@@ -8,10 +8,10 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
-import { Link } from '@/lib/i18n'
 import { Toc } from '../components/Toc'
 
 interface LayoutProps {
@@ -28,7 +28,7 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
     <div className="flex gap-x-16 pt-4">
       <div className={cn('flex-1 flex flex-col', className)}>
         <div className="mb-auto flex-1">
-          <header className="space-y-4 pb-4 ">
+          <header className="space-y-4 pb-4">
             <div className="mb-4">
               <PageTitle className="mb-2 mt-8">{post.title}</PageTitle>
               {post.description && (
@@ -41,7 +41,6 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
           <div className="pt-2 md:pt-4">
             <div className="">
               <ContentRender content={post.content} />
-              <SubscribeNewsletterCard site={site} />
             </div>
 
             <IPFSLink cid={post.cid} />
