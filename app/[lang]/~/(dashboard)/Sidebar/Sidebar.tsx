@@ -22,6 +22,7 @@ import {
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
+import { CreatePostButton } from '../posts/components/CreatePostButton'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { ImportPostEntry } from './ImportPostEntry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'
@@ -80,6 +81,9 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
       </div>
 
       {/* <QuickSearchTrigger /> */}
+      {/* <div className="px-3">
+        <CreatePostButton className="w-full" />
+      </div> */}
 
       <div className="flex flex-col gap-1 px-2">
         {isFeatureActive('journal') && (

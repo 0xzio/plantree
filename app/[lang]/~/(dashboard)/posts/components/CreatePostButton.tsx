@@ -19,10 +19,22 @@ import { useRouter } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { PostType } from '@prisma/client'
-import { ChevronDown, FileText, Image, Pen, Plus, Video } from 'lucide-react'
+import {
+  AudioLinesIcon,
+  BookAudioIcon,
+  ChevronDown,
+  FileText,
+  Image,
+  Pen,
+  Plus,
+  Video,
+} from 'lucide-react'
 import { toast } from 'sonner'
 
-export function CreatePostButton() {
+interface Props {
+  className?: string
+}
+export function CreatePostButton({ className }: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
   const [isLoading, setLoading] = useState(false)
@@ -32,7 +44,7 @@ export function CreatePostButton() {
 
   async function createPost(type: PostType) {
     let content = JSON.stringify(editorDefaultValue)
-    if (type === PostType.IMAGE || type === PostType.VIDEO) content = ''
+    if (type === PostType.IMAGE) content = ''
 
     setLoading(true)
     try {
@@ -45,6 +57,8 @@ export function CreatePostButton() {
       await loadPost(post.id)
       push(`/~/post?id=${post.id}`)
     } catch (error) {
+      console.log('=======error:', error)
+
       const msg = extractErrorMessage(error)
       toast.error(msg || 'Failed to create post')
     }
@@ -54,7 +68,10 @@ export function CreatePostButton() {
     <div className="flex items-center">
       <AddNoteDialog />
       <Button
-        className="w-24 flex gap-1 rounded-tr-none rounded-br-none"
+        className={cn(
+          'w-24 flex gap-1 rounded-tr-none rounded-br-none',
+          className,
+        )}
         disabled={isLoading}
         onClick={() => createPost(PostType.ARTICLE)}
       >
@@ -106,13 +123,14 @@ export function CreatePostButton() {
           </Item>
           <Item
             className="flex gap-2"
-            disabled
+            isLoading={isLoading && type == PostType.AUDIO}
             onClick={async () => {
-              toast.info('Coming soon...')
+              setType(PostType.AUDIO)
+              await createPost(PostType.AUDIO)
             }}
           >
-            <Video size={16} />
-            <span>Video</span>
+            <AudioLinesIcon size={16} />
+            <span>Podcast</span>
           </Item>
         </PopoverContent>
       </Popover>

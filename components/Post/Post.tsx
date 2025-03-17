@@ -15,6 +15,7 @@ import { useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
 import { AddPropButton } from './AddPropButton'
+import { AudioCreationUpload } from './AudioCreationUpload'
 import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
 import { JournalNav } from './JournalNav'
@@ -36,6 +37,8 @@ export function Post() {
     updateDescription,
     updateContent,
   } = usePost()
+
+  console.log('=======>>>>>>>post:', post)
 
   useSiteTags()
   useSiteCollaborators()
@@ -74,7 +77,7 @@ export function Post() {
     <div className="w-full h-full">
       <div className="relative min-h-[500px] py-12 px-8 z-0">
         <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
-          {post.type === PostType.ARTICLE && (
+          {[PostType.ARTICLE, PostType.AUDIO].includes(post.type as any) && (
             <div className="mb-5 flex flex-col space-y-3 ">
               <CoverUpload post={post} />
               {isJournal && (
@@ -132,13 +135,20 @@ export function Post() {
           {/* <div className="pt-4 -ml-4">
             <AddPropButton />
           </div> */}
+          <div className="mt-6">
+            <AudioCreationUpload post={post} />
+          </div>
         </div>
 
         <div className="w-full mt-4" data-registry="plate">
           <PlateEditor
             variant="post"
             className="w-full dark:caret-brand"
-            value={content ? JSON.parse(content) : editorDefaultValue}
+            value={
+              content && !content.startsWith('/')
+                ? JSON.parse(content)
+                : editorDefaultValue
+            }
             showAddButton
             showFixedToolbar={false}
             onChange={(v) => {

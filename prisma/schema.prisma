@@ -467,6 +467,7 @@ model Post {
   description   String        @default("") @db.VarChar(1000)
   icon          String        @default("") @db.VarChar(50)
   image         String?       @default("") @db.VarChar(2183)
+  media         String?       @default("") @db.VarChar(2183)
   content       String        @default("") @db.Text
   i18n          Json?
   props         Json?
