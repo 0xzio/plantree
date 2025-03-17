@@ -137,7 +137,7 @@ export const postRouter = router({
         where: { siteId: input.siteId, isPage: false },
       })
 
-      if (count >= FREE_PLAN_POST_LIMIT) {
+      if (count >= FREE_PLAN_POST_LIMIT && ctx.isFree) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'You have reached the free plan post limit.',
