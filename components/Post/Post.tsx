@@ -78,12 +78,7 @@ export function Post() {
     <div className="w-full h-full">
       <div className="relative min-h-[500px] py-12 px-8 z-0">
         <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
-          {[
-            PostType.ARTICLE,
-            PostType.AUDIO,
-            PostType.FRIEND,
-            PostType.PROJECT,
-          ].includes(post.type as any) && (
+          {[PostType.ARTICLE, PostType.AUDIO].includes(post.type as any) && (
             <div className="mb-5 flex flex-col space-y-3 ">
               <CoverUpload post={post} />
               {isJournal && (

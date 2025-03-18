@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
   const sessionId = url.searchParams.get('session_id')
   const billingCycle = url.searchParams.get('billingCycle') || ''
   const planType = url.searchParams.get('planType') || ''
-  const siteId = url.searchParams.get('siteId') || ''
+  const prevSubscriptionId = url.searchParams.get('prevSubscriptionId') || ''
 
   if (!sessionId) {
     throw new Error('Invalid sessionId.')
@@ -115,6 +115,20 @@ export async function GET(req: NextRequest) {
     const siteId = session.client_reference_id
     if (!siteId) {
       throw new Error("No site ID found in session's client_reference_id.")
+    }
+
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { id: siteId },
+    })
+
+    // console.log('=========site:', site)
+    if (prevSubscriptionId) {
+      try {
+        const canceledSubscription =
+          await stripe.subscriptions.cancel(prevSubscriptionId)
+
+        console.log('=======>>>>canceledSubscription:', canceledSubscription)
+      } catch (error) {}
     }
 
     await prisma.site.update({

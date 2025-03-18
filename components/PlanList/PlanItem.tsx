@@ -31,7 +31,7 @@ export function PlanItem({
         <div className="text-xl font-bold">{name}</div>
         {isBeliever && (
           <div className="flex items-center gap-1">
-            <div className="text-3xl font-bold">$360</div>
+            <div className="text-3xl font-bold">$512</div>
             <div className=""> / 5 years</div>
           </div>
         )}
@@ -58,9 +58,9 @@ export function PlanItem({
 
 function BenefitItem({ text }: { text: string }) {
   return (
-    <div className="flex items-center gap-3shrink-0">
+    <div className="flex items-center gap-2 shrink-0">
       <Check className="text-green-500" size={16} />
-      <div className="text-foreground/70">{text}</div>
+      <div className="text-foreground/70 text-sm">{text}</div>
     </div>
   )
 }

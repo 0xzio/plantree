@@ -1,4 +1,6 @@
 import {
+  STRIPE_BASIC_MONTHLY_PRICE_ID,
+  STRIPE_BASIC_YEARLY_PRICE_ID,
   STRIPE_BELIEVER_PRICE_ID,
   STRIPE_PRO_MONTHLY_PRICE_ID,
   STRIPE_PRO_YEARLY_PRICE_ID,
@@ -29,12 +31,9 @@ export const billingRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const isBeliever = input.planType === PlanType.BELIEVER
-      console.log(
-        '======isBeliever:',
-        isBeliever,
-        'STRIPE_BELIEVER_PRICE_ID:',
-        STRIPE_BELIEVER_PRICE_ID,
-      )
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: ctx.activeSiteId },
+      })
 
       const getProductId = () => {
         if (isBeliever) return STRIPE_BELIEVER_PRICE_ID
@@ -46,8 +45,8 @@ export const billingRouter = router({
         }
 
         return input.billingCycle === BillingCycle.MONTHLY
-          ? STRIPE_TEAM_MONTHLY_PRICE_ID
-          : STRIPE_TEAM_YEARLY_PRICE_ID
+          ? STRIPE_BASIC_MONTHLY_PRICE_ID
+          : STRIPE_BASIC_YEARLY_PRICE_ID
       }
 
       const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${ctx.activeSiteId}/payment-callback`
@@ -65,7 +64,8 @@ export const billingRouter = router({
         ...cancelQuery,
         billingCycle: input.billingCycle,
         planType: input.planType,
-        siteId: ctx.activeSiteId,
+        // siteId: ctx.activeSiteId,
+        prevSubscriptionId: site.sassSubscriptionId,
       }
 
       const session = await stripe.checkout.sessions.create({
@@ -111,6 +111,7 @@ export const billingRouter = router({
       const sassCurrentPeriodEnd = new Date(
         subscription.current_period_end * 1000,
       )
+
       await prisma.site.update({
         where: { id: ctx.activeSiteId },
         data: {

@@ -20,9 +20,9 @@ export const useChat = () => {
       provider: process.env.NEXT_PUBLIC_API_PROVIDER!,
     },
     fetch: async (input, init) => {
-      if (!session?.isPro) {
-        toast.info('This AI-assistant is for Pro users only.')
-        throw new Error('This AI-assistant is for Pro users only.')
+      if (!session?.isPro && !session?.isBasic) {
+        toast.info('This AI-assistant is for Basic/Pro users only.')
+        throw new Error('This AI-assistant is for Basic/Pro users only.')
       }
 
       const res = await fetch(input, init)

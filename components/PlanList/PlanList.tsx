@@ -10,7 +10,7 @@ export function PlanList() {
 
       <BillingCycleSelect />
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 justify-center border-l border-b border-foreground/10">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 justify-center border-l border-b border-foreground/10">
         <PlanItem
           monthlyPrice={0}
           annualPrice={0}
@@ -20,17 +20,34 @@ export function PlanList() {
           benefits={['1 creators', '5 free official themes', 'Custom domain']}
         />
         <PlanItem
-          monthlyPrice={10}
-          annualPrice={90}
+          monthlyPrice={10.24}
+          annualPrice={92.16}
+          name="Basic"
+          type={PlanType.BASIC}
+          collaboratorCount={3}
+          benefits={[
+            '2 co-creators',
+            'Unlimited themes',
+            'Custom domain',
+            'Sending newsletters',
+            'Podcast',
+            'AI assistance',
+          ]}
+        />
+        <PlanItem
+          monthlyPrice={25.6}
+          annualPrice={230.4}
           name="Pro"
           type={PlanType.PRO}
           collaboratorCount={3}
           benefits={[
-            '3 co-creators',
-            'Unlimited custom themes',
+            '5 co-creators',
+            'Unlimited themes',
             'Custom domain',
             'Sending newsletters',
             'AI assistance',
+            'Podcast',
+            'One-to-one custom theme',
             'One-to-One support in discord',
           ]}
         />
@@ -43,13 +60,8 @@ export function PlanList() {
           isBeliever
           benefits={[
             'everything in Pro Plan',
-            '3 co-creators',
-            'Unlimited custom themes',
-            'Custom domain',
-            'Sending newsletters',
-            'AI assistance',
-            'One-to-One support in discord',
             'Priority support',
+            'Early access for new features',
           ]}
         />
       </div>
