@@ -1,9 +1,10 @@
 import { Image } from '@/components/Image'
+import { PodcastTips } from '@/components/theme-ui/PodcastTips'
+import { Link } from '@/lib/i18n'
 import { Post, PostType } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { Node } from 'slate'
 import Tag from './Tag'
-import { Link } from '@/lib/i18n'
 
 interface PostItemProps {
   post: Post
@@ -97,7 +98,10 @@ export function PostItem({ post }: PostItemProps) {
               href={`/posts/${slug}`}
               className="hover:text-foreground transition-colors text-foreground/80"
             >
-              {title}
+              <div className="flex items-center gap-1 hover:scale-105 transition-all">
+                <PodcastTips post={post} />
+                <div className="">{title}</div>
+              </div>
             </Link>
           </h2>
         </div>

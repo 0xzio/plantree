@@ -3,6 +3,7 @@ import { Post, PostType } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import Image from 'next/image'
 import { Node } from 'slate'
+import { PodcastTips } from '../PodcastTips'
 import Tag from './Tag'
 
 interface PostItemProps {
@@ -97,7 +98,10 @@ export function PostItemCard({ post }: PostItemProps) {
               href={`/posts/${slug}`}
               className="hover:text-foreground transition-colors text-foreground/80"
             >
-              {title}
+              <div className="flex items-center gap-1 hover:scale-105 transition-all">
+                <PodcastTips post={post} />
+                <div className="text-lg ">{title}</div>
+              </div>
             </Link>
           </h2>
         </div>

@@ -1,6 +1,7 @@
 'use client'
 
 import { PlateEditor } from '@/components/editor/plate-editor'
+import { PodcastTips } from '@/components/theme-ui/PodcastTips'
 import { PostActions } from '@/components/theme-ui/PostActions/PostActions'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@/lib/i18n'
@@ -32,6 +33,9 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
     if (post.type === PostType.ARTICLE) {
       return <div className="">an article</div>
     }
+    if (post.type === PostType.AUDIO) {
+      return <div className="">Podcast</div>
+    }
     return <div></div>
   }
 
@@ -60,9 +64,10 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
 
     return (
       <Link href={`/posts/${slug}`} className="space-y-2">
-        <h2 className="text-2xl font-bold hover:scale-105 transition-all origin-left block">
-          {post.title}
-        </h2>
+        <div className="flex items-center gap-1 hover:scale-105 transition-all origin-left">
+          <PodcastTips post={post} />
+          <h2 className="text-2xl font-bold block">{post.title}</h2>
+        </div>
         <p className="text-foreground/70 hover:text-foreground transition-all hover:scale-105 line-clamp-2">
           {post.description || str?.slice(0, 200)}
         </p>

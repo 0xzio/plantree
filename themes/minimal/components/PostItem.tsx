@@ -1,8 +1,10 @@
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { Image } from '@/components/Image'
+import { PodcastTips } from '@/components/theme-ui/PodcastTips'
 import { Link } from '@/lib/i18n'
 import { Post, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
+import { PodcastIcon } from 'lucide-react'
 
 interface PostItemProps {
   post: Post
@@ -39,7 +41,12 @@ export function PostItem({ post }: PostItemProps) {
       )
     }
 
-    return <div className="text-lg hover:scale-105 transition-all">{title}</div>
+    return (
+      <div className="flex items-center gap-1 hover:scale-105 transition-all">
+        <PodcastTips post={post} />
+        <div className="text-lg ">{title}</div>
+      </div>
+    )
   }
 
   return (

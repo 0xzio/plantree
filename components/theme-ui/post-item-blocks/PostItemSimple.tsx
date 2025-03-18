@@ -3,6 +3,7 @@ import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, PostType } from '@/lib/theme.types'
 import { formatDate } from '@/lib/utils'
 import Image from 'next/image'
+import { PodcastTips } from '../PodcastTips'
 import Tag from './Tag'
 
 interface Props {
@@ -40,7 +41,12 @@ export function PostItemSimple({ post }: Props) {
       )
     }
 
-    return <div className="text-lg">{title}</div>
+    return (
+      <div className="flex items-center gap-1 hover:scale-105 transition-all">
+        <PodcastTips post={post} />
+        <div className="text-lg ">{title}</div>
+      </div>
+    )
   }
 
   return (
