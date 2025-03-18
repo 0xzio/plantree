@@ -14,7 +14,7 @@ export function PodcastTips({ post, className }: Props) {
   return (
     <div className="flex items-center gap-1">
       <PodcastIcon size={16} className="" />
-      {post.podcast.duration && (
+      {post?.podcast?.duration && (
         <div className="text-xs border border-foreground/10  rounded-full px-1 py-0.5 font-medium">
           {convertSecondsToTime(post.podcast.duration)}
         </div>
