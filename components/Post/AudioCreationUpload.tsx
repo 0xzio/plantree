@@ -17,7 +17,7 @@ interface Props {
 
 export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
   function AudioCreationUpload({ post }, ref) {
-    const [value, setValue] = useState((post.media as string) || '')
+    const [value, setValue] = useState(post?.podcast?.media || '')
     const inputRef = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState(false)
     const playerRef = useRef<any>(null)
@@ -63,20 +63,18 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
         const src = URL.createObjectURL(file)
         setValue(src)
 
-        const audio = new Audio(URL.createObjectURL(file))
-        console.log('======audio:', audio)
-
-        audio.addEventListener('canplaythrough', () => {
-          const duration = audio.duration
-          console.log('音频时长>>>>>>>>：', duration)
-        })
+        const duration = await getDuration(file)
 
         try {
           const data = await uploadFile(file)
           const uri = data.url || data.cid || ''
           await api.post.update.mutate({
             id: post.id,
-            media: uri,
+            podcast: {
+              ...post.podcast,
+              duration,
+              media: uri,
+            },
           })
           setValue(data.url!)
           toast.success('Audio uploaded successfully')
@@ -94,7 +92,7 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
       playerRef.current = null
       await api.post.update.mutate({
         id: post.id,
-        media: '',
+        podcast: {},
       })
     }
 
@@ -151,3 +149,20 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
     )
   },
 )
+
+function getDuration(file: File): Promise<number> {
+  return new Promise<number>((resolve, reject) => {
+    const audio = new Audio(URL.createObjectURL(file))
+    audio.addEventListener('canplaythrough', () => {
+      const duration = audio.duration
+      if (isNaN(duration)) {
+        reject(new Error('Failed to get audio duration'))
+      } else {
+        resolve(duration)
+      }
+    })
+    audio.addEventListener('error', () => {
+      reject(new Error('Failed to load audio'))
+    })
+  })
+}

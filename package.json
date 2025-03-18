@@ -188,6 +188,7 @@
     "openai-edge": "^1.2.2",
     "p-retry": "^6.2.0",
     "pdf-lib": "^1.17.1",
+    "podcast": "^2.0.1",
     "prisma-extension-pagination": "^0.7.5",
     "prismjs": "^1.29.0",
     "qrcode": "^1.5.4",

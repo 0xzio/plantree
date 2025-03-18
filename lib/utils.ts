@@ -214,3 +214,15 @@ export function convertTimeToSeconds(time: string): number {
     return 0
   }
 }
+
+export function convertSecondsToTime(seconds: number): string {
+  const hours = Math.floor(seconds / 3600)
+  const minutes = Math.floor((seconds % 3600) / 60)
+  const secs = parseInt((seconds % 60) as any)
+
+  if (hours > 0) {
+    return `${hours}:${String(minutes).padStart(2, '0')}:${String(secs).padStart(2, '0')}`
+  } else {
+    return `${minutes}:${String(secs).padStart(2, '0')}`
+  }
+}

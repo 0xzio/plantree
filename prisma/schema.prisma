@@ -468,8 +468,8 @@ model Post {
   description   String        @default("") @db.VarChar(1000)
   icon          String        @default("") @db.VarChar(50)
   image         String?       @default("") @db.VarChar(2183)
-  media         String?       @default("") @db.VarChar(2183)
   content       String        @default("") @db.Text
+  podcast       Json?
   i18n          Json?
   props         Json?
   cid           String        @default("") @db.VarChar(100)

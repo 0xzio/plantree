@@ -16,8 +16,6 @@ export function PodcastPlayer({ post, className }: Props) {
   const playerRef = useRef<any>(null)
   const site = useSiteContext()
 
-  console.log('====site.image ', site, post)
-
   useEffect(() => {
     playerRef.current = new Player({
       container: () => document.querySelector('.podcast-audio'),
@@ -38,9 +36,7 @@ export function PodcastPlayer({ post, className }: Props) {
         cover: post.image
           ? getUrl(post.image || '')
           : getUrl(site.logo || site.image || ''),
-        // src: 'https://r2.penx.me/8283074160_460535.mp3',
-        // src: 'https://v.typlog.com/sspai/8267989755_658478.mp3'
-        src: getUrl(post.media || ''),
+        src: getUrl(post?.podcast?.media || ''),
       },
     })
 

@@ -515,6 +515,9 @@ importers:
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
+      podcast:
+        specifier: ^2.0.1
+        version: 2.0.1
       prisma-extension-pagination:
         specifier: ^0.7.5
         version: 0.7.5(@prisma/client@6.4.1(prisma@6.4.1(typescript@5.7.3))(typescript@5.7.3))
@@ -7308,8 +7311,16 @@ packages:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
 
+  mime-db@1.25.0:
+    resolution: {integrity: sha512-5k547tI4Cy+Lddr/hdjNbBEWBwSl8EBc5aSdKvedav8DReADgWJzcYiktaRIw3GtGC1jjwldXtTzvqJZmtvC7w==}
+    engines: {node: '>= 0.6'}
+
   mime-db@1.52.0:
     resolution: {integrity: sha512-sPU4uV7dYlvtWJxwwxHD0PuihVNiE7TyAbQ5SWxDCB9mUYvOgroQOwYQQOKPJ8CIbE+1ETVlOoK1UC2nU3gYvg==}
+    engines: {node: '>= 0.6'}
+
+  mime-types@2.1.13:
+    resolution: {integrity: sha512-ryBDp1Z/6X90UvjUK3RksH0IBPM137T7cmg4OgD5wQBojlAiUwuok0QeELkim/72EtcYuNlmbkrcGuxj3Kl0YQ==}
     engines: {node: '>= 0.6'}
 
   mime-types@2.1.35:
@@ -7848,6 +7859,9 @@ packages:
   pngjs@5.0.0:
     resolution: {integrity: sha512-40QW5YalBNfQo5yRYmiw7Yz6TKKVr3h6970B2YE+3fQpsWcrbj1PzJgxeJ19DRQjhMbKPIuMY8rFaXc8moolVw==}
     engines: {node: '>=10.13.0'}
+
+  podcast@2.0.1:
+    resolution: {integrity: sha512-TWXe/zVziwJNksAn7RLkSre+Z6VQgbs/+gC7qQCKdkyw0hv2hdFGOY9rHgKqa4LI+UP+yZBa6Wr+b9a9vrYDYQ==}
 
   pofile@1.1.4:
     resolution: {integrity: sha512-r6Q21sKsY1AjTVVjOuU02VYKVNQGJNQHjTIvs4dEbeuuYfxgYk/DGD2mqqq4RDaVkwdSq0VEtmQUOPe/wH8X3g==}
@@ -8508,6 +8522,9 @@ packages:
 
   rpc-websockets@9.1.0:
     resolution: {integrity: sha512-HuOa2akHgKqncDOOd+ulHhwAKJI6aCtJeIz6B6wHGAzHmZLdLHiuSZCd5bhBIwKk8SN4wTPkKilwpB1nysn2Xg==}
+
+  rss@1.2.2:
+    resolution: {integrity: sha512-xUhRTgslHeCBeHAqaWSbOYTydN2f0tAzNXvzh3stjz7QDhQMzdgHf3pfgNIngeytQflrFPfy6axHilTETr6gDg==}
 
   rtl-css-js@1.16.1:
     resolution: {integrity: sha512-lRQgou1mu19e+Ya0LsTvKrVJ5TYUbqCVPAiImX3UfLTenarvPUl1QFdvu5Z3PYmHT9RCcwIfbjRQBntExyj3Zg==}
@@ -9748,6 +9765,9 @@ packages:
   xml-name-validator@4.0.0:
     resolution: {integrity: sha512-ICP2e+jsHvAj2E2lIHxa5tjXRlKDJo4IdvPvCXbXQGdzSfmSpNVyIKMvoZHjDY9DP0zV17iI85o90vRFXNccRw==}
     engines: {node: '>=12'}
+
+  xml@1.0.1:
+    resolution: {integrity: sha512-huCv9IH9Tcf95zuYCsQraZtWnJvBtLVE0QHMOs8bWyZAFZNDcYjsPq1nEx8jKA9y+Beo9v+7OBPRisQTjinQMw==}
 
   xmlchars@2.2.0:
     resolution: {integrity: sha512-JZnDKK8B0RCDw84FNdDAIpZK+JuJw+s7Lz8nksI7SIuU3UXJJslUthsi+uWBUYOwPFwW7W7PRLRfUKpxjtjFCw==}
@@ -18235,7 +18255,13 @@ snapshots:
       braces: 3.0.3
       picomatch: 2.3.1
 
+  mime-db@1.25.0: {}
+
   mime-db@1.52.0: {}
+
+  mime-types@2.1.13:
+    dependencies:
+      mime-db: 1.25.0
 
   mime-types@2.1.35:
     dependencies:
@@ -18784,6 +18810,10 @@ snapshots:
       find-up: 3.0.0
 
   pngjs@5.0.0: {}
+
+  podcast@2.0.1:
+    dependencies:
+      rss: 1.2.2
 
   pofile@1.1.4: {}
 
@@ -19473,6 +19503,11 @@ snapshots:
     optionalDependencies:
       bufferutil: 4.0.9
       utf-8-validate: 5.0.10
+
+  rss@1.2.2:
+    dependencies:
+      mime-types: 2.1.13
+      xml: 1.0.1
 
   rtl-css-js@1.16.1:
     dependencies:
@@ -20836,6 +20871,8 @@ snapshots:
       sax: 1.4.1
 
   xml-name-validator@4.0.0: {}
+
+  xml@1.0.1: {}
 
   xmlchars@2.2.0: {}
 

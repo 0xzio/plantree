@@ -61,7 +61,9 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
     }
 
     const nodes: any[] =
-      typeof post.content === 'string' ? JSON.parse(post.content) : post.content
+      typeof post.content === 'string' && post.content.length
+        ? JSON.parse(post.content)
+        : post.content || []
     const str = nodes.map((node) => Node.string(node)).join('') || ''
 
     return (

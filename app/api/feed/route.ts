@@ -37,6 +37,8 @@ export async function GET(req: Request) {
       // link: 'https://example.com/johndoe',
     },
   })
+
+
   posts.slice(0, 20).forEach((post) => {
     feed.addItem({
       title: post.title,

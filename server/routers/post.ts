@@ -170,7 +170,7 @@ export const postRouter = router({
         id: z.string(),
         title: z.string().optional(),
         content: z.string().optional(),
-        media: z.string().optional(),
+        podcast: z.any(),
         description: z.string().optional(),
         i18n: z.record(z.any()).optional(),
       }),
