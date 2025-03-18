@@ -23,12 +23,20 @@ const nextConfig = {
   async rewrites() {
     return [
       {
-        source: '/feed.xml',
-        destination: '/api/feed',
+        source: '/posts/feed.xml',
+        destination: '/api/feed/posts',
       },
       {
-        source: '/:locale/feed.xml',
-        destination: '/api/feed',
+        source: '/:locale/posts/feed.xml',
+        destination: '/api/feed/posts',
+      },
+      {
+        source: '/podcasts/feed.xml',
+        destination: '/api/feed/podcasts',
+      },
+      {
+        source: '/:locale/podcasts/feed.xml',
+        destination: '/api/feed/podcasts',
       },
       {
         source: '/blog/:path*',

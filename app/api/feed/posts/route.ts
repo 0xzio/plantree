@@ -1,4 +1,5 @@
 import { getPosts, getSite } from '@/lib/fetchers'
+import { PostType } from '@/lib/theme.types'
 import { Feed } from 'feed'
 import { headers } from 'next/headers'
 
@@ -38,17 +39,19 @@ export async function GET(req: Request) {
     },
   })
 
-
-  posts.slice(0, 20).forEach((post) => {
-    feed.addItem({
-      title: post.title,
-      id: post.slug,
-      link: `https://${hostname}/posts/${post.slug}`,
-      description: post.description,
-      // content: post.content,
-      date: new Date(post.publishedAt || post.createdAt),
+  posts
+    .filter((p) => p.type === PostType.ARTICLE)
+    .slice(0, 20)
+    .forEach((post) => {
+      feed.addItem({
+        title: post.title,
+        id: post.slug,
+        link: `https://${hostname}/posts/${post.slug}`,
+        description: post.description,
+        // content: post.content,
+        date: new Date(post.publishedAt || post.createdAt),
+      })
     })
-  })
 
   return new Response(feed.rss2(), {
     headers: {

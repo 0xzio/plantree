@@ -24,8 +24,12 @@ export default async function middleware(req: NextRequest) {
   const url = req.nextUrl
   const { pathname } = url
 
-  if (pathname.endsWith('feed.xml')) {
-    return NextResponse.rewrite(new URL('/feed.xml', req.url))
+  if (pathname.endsWith('/posts/feed.xml')) {
+    return NextResponse.rewrite(new URL('/posts/feed.xml', req.url))
+  }
+
+  if (pathname.endsWith('/podcasts/feed.xml')) {
+    return NextResponse.rewrite(new URL('/podcasts/feed.xml', req.url))
   }
 
   if (pathname.endsWith('sitemap.xml')) {

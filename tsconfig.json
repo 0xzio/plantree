@@ -13,9 +13,7 @@
     "noUncheckedIndexedAccess": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
-
     "isolatedModules": true,
-
     "allowJs": true,
     "checkJs": false,
 
