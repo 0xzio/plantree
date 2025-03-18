@@ -110,12 +110,14 @@ import { BaseCommentBoxPlugin } from '../custom-plate-plugins/comment-box'
 import { CommentBoxElementStatic } from '../custom-plate-plugins/comment-box/react/comment-box-element-static'
 import { BaseFriendsPlugin } from '../custom-plate-plugins/friends'
 import { FriendsElementStatic } from '../custom-plate-plugins/friends/react/friends-element-static'
+import { BasePodcastTimePlugin } from '../custom-plate-plugins/podcast-time'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductElementStatic } from '../custom-plate-plugins/product/react/product-element-static'
 import { BaseProjectsPlugin } from '../custom-plate-plugins/projects'
 import { ProjectsElementStatic } from '../custom-plate-plugins/projects/react/projects-element-static'
 import { BaseSocialLinksPlugin } from '../custom-plate-plugins/social-links'
 import { SocialLinksElementStatic } from '../custom-plate-plugins/social-links/react/social-links-element-static'
+import { PodcastTimeElementStatic } from '../plate-ui/podcast-time-element-static'
 
 export const serverSideComponents = {
   [BaseAudioPlugin.key]: MediaAudioElementStatic,
@@ -164,6 +166,7 @@ export const serverSideComponents = {
   [BaseProjectsPlugin.key]: ProjectsElementStatic,
   [BaseSocialLinksPlugin.key]: SocialLinksElementStatic,
   [BaseCampaignPlugin.key]: CampaignElementStatic,
+  [BasePodcastTimePlugin.key]: PodcastTimeElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -258,5 +261,6 @@ export const serverSideEditor = createSlateEditor({
     BaseProjectsPlugin,
     BaseSocialLinksPlugin,
     BaseCampaignPlugin,
+    BasePodcastTimePlugin,
   ],
 })

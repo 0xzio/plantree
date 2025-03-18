@@ -201,11 +201,9 @@ export function PublishForm() {
           control={form.control}
           name="publishedAt"
           render={({ field }) => {
-            console.log('fiellllllllll>>>>>>:', field)
-
             return (
               <FormItem className="w-full">
-                <FormLabel htmlFor="post-collectible">Publish date</FormLabel>
+                <FormLabel htmlFor="">Publish date</FormLabel>
                 <FormControl>
                   <Popover open={open} onOpenChange={setOpen}>
                     <PopoverTrigger asChild>

@@ -51,23 +51,25 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
 
     async function removeCover() {
       setValue('')
-      // await api.post.updateCover.mutate({
-      //   id: post.id,
-      //   image: '',
-      // })
+      await api.post.updateCover.mutate({
+        id: post.id,
+        image: '',
+      })
     }
-
-    console.log('=======value:', value)
 
     if (value) {
       return (
         <div className="w-full h-[360px] relative">
-          <audio controls>
-            <source src={getUrl(post.media || '')} type="audio/mp3" />
-          </audio>
+          <Image
+            src={getUrl(value)}
+            width={1000}
+            height={1000}
+            className="absolute left-0 top-0 w-full h-[360px] cursor-pointer object-cover"
+            alt=""
+          />
 
           <X
-            className="absolute top-1 right-1 bg-foreground/10 rounded-full p-1 text-foreground/80 w-8 h-8 cursor-pointer"
+            className="absolute top-1 right-1 bg-neutral-100 rounded-full p-1 text-neutral-800 w-8 h-8 cursor-pointer"
             onClick={removeCover}
           />
         </div>

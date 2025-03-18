@@ -1,14 +1,14 @@
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
-import { Post } from '@/hooks/usePost'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
+import { Post } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { uploadFile } from '@/lib/uploadFile'
 import { getUrl } from '@/lib/utils'
 import { AudioLinesIcon, ImageIcon, X } from 'lucide-react'
-import Image from 'next/image'
 import { Player } from 'shikwasa'
 import { toast } from 'sonner'
+import { useSiteContext } from '../SiteContext'
 import { Button } from '../ui/button'
 
 interface Props {
@@ -21,13 +21,13 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
     const inputRef = useRef<HTMLInputElement>(null)
     const [loading, setLoading] = useState(false)
     const playerRef = useRef<any>(null)
+    const site = useSiteContext()
 
     // TODO: hack
     const [mounted, setMounted] = useState(true)
 
     useEffect(() => {
       if (!value || !value.startsWith('/')) return
-      console.log('=======value:', value, getUrl(value))
 
       playerRef.current = new Player({
         container: () => document.querySelector('.podcast-audio'),
@@ -40,14 +40,20 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
         download: true,
         preload: 'metadata',
         audio: {
-          title: 'Hello World!',
-          artist: 'Shikwasa FM',
-          cover: 'image.png',
+          title: post.title,
+          artist:
+            post?.authors[0]?.user?.displayName ||
+            post?.authors[0]?.user?.name ||
+            '',
+          cover: post.image
+            ? getUrl(post.image || '')
+            : getUrl(site.logo || site.image || ''),
           // src: 'https://r2.penx.me/8283074160_460535.mp3',
           // src: 'https://v.typlog.com/sspai/8267989755_658478.mp3'
           src: getUrl(value),
         },
       })
+      window.__PLAYER__ = playerRef.current
     }, [value])
 
     const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,6 +62,14 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
         const file = e.target.files[0]
         const src = URL.createObjectURL(file)
         setValue(src)
+
+        const audio = new Audio(URL.createObjectURL(file))
+        console.log('======audio:', audio)
+
+        audio.addEventListener('canplaythrough', () => {
+          const duration = audio.duration
+          console.log('音频时长>>>>>>>>：', duration)
+        })
 
         try {
           const data = await uploadFile(file)
@@ -104,20 +118,6 @@ export const AudioCreationUpload = forwardRef<HTMLDivElement, Props>(
               Reupload audio
             </Button>
           </div>
-          <a
-            href="#t=03:05"
-            onClick={(e) => {
-              const href = e.currentTarget.getAttribute('href')
-              const player = playerRef.current
-              player.seek(60 * 3)
-              if (player.audio.paused) {
-                player.play()
-              }
-            }}
-          >
-            GO
-          </a>
-
           {loading && (
             <div className="flex items-center justify-center gap-1">
               <span className="text-sm text-foreground/50">

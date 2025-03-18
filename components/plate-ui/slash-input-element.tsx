@@ -44,11 +44,13 @@ import {
   Square,
   Table,
   TableOfContentsIcon,
+  TimerIcon,
   UserRoundIcon,
 } from 'lucide-react'
 import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
+import { PodcastTimePlugin } from '../custom-plate-plugins/podcast-time/react'
 import { BaseProductPlugin } from '../custom-plate-plugins/product'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
@@ -253,6 +255,12 @@ const groups: Group[] = [
         icon: <RadicalIcon />,
         label: 'Inline Equation',
         value: InlineEquationPlugin.key,
+      },
+      {
+        focusEditor: false,
+        icon: <TimerIcon />,
+        label: 'Podcast time',
+        value: PodcastTimePlugin.key,
       },
     ].map((item) => ({
       ...item,

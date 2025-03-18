@@ -103,12 +103,14 @@ import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { CommentBoxElement } from '../custom-plate-plugins/comment-box/react/comment-box-element'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { FriendsElement } from '../custom-plate-plugins/friends/react/friends-element'
+import { PodcastTimePlugin } from '../custom-plate-plugins/podcast-time/react'
 import { ProductPlugin } from '../custom-plate-plugins/product/react'
 import { ProductElement } from '../custom-plate-plugins/product/react/product-element'
 import { ProjectsPlugin } from '../custom-plate-plugins/projects/react'
 import { ProjectsElement } from '../custom-plate-plugins/projects/react/projects-element'
 import { SocialLinksPlugin } from '../custom-plate-plugins/social-links/react'
 import { SocialLinksElement } from '../custom-plate-plugins/social-links/react/social-links-element'
+import { PodcastTimeElement } from '../plate-ui/podcast-time-element'
 
 export const viewComponents = {
   [AudioPlugin.key]: MediaAudioElement,
@@ -160,6 +162,7 @@ export const viewComponents = {
   [ProjectsPlugin.key]: ProjectsElement,
   [SocialLinksPlugin.key]: SocialLinksElement,
   [CampaignPlugin.key]: CampaignElement,
+  [PodcastTimePlugin.key]: PodcastTimeElement,
 }
 
 export const editorComponents = {

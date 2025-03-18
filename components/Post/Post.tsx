@@ -38,7 +38,6 @@ export function Post() {
     updateContent,
   } = usePost()
 
-
   useSiteTags()
   useSiteCollaborators()
 
@@ -135,7 +134,7 @@ export function Post() {
             <AddPropButton />
           </div> */}
           <div className="mt-6">
-            <AudioCreationUpload post={post} />
+            <AudioCreationUpload post={post as any} />
           </div>
         </div>
 

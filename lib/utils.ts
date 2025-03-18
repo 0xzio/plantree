@@ -200,3 +200,17 @@ export const formatDate = (date: string | Date, locale = 'en-US') => {
 
   return now
 }
+
+export function convertTimeToSeconds(time: string): number {
+  const parts = time.split(':')
+
+  if (parts.length === 3) {
+    const [hours, minutes, seconds] = parts.map(Number)
+    return hours * 3600 + minutes * 60 + seconds
+  } else if (parts.length === 2) {
+    const [minutes, seconds] = parts.map(Number)
+    return minutes * 60 + seconds
+  } else {
+    return 0
+  }
+}

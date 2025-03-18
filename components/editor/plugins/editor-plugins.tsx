@@ -3,6 +3,7 @@
 import { CampaignPlugin } from '@/components/custom-plate-plugins/campaign/react'
 import { CommentBoxPlugin } from '@/components/custom-plate-plugins/comment-box/react'
 import { FriendsPlugin } from '@/components/custom-plate-plugins/friends/react'
+import { PodcastTimePlugin } from '@/components/custom-plate-plugins/podcast-time/react'
 import { ProductPlugin } from '@/components/custom-plate-plugins/product/react'
 import { ProjectsPlugin } from '@/components/custom-plate-plugins/projects/react'
 import { SocialLinksPlugin } from '@/components/custom-plate-plugins/social-links/react'
@@ -61,4 +62,5 @@ export const editorPlugins = [
   ProjectsPlugin,
   SocialLinksPlugin,
   CampaignPlugin,
+  PodcastTimePlugin,
 ]

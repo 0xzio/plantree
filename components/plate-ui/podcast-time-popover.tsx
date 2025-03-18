@@ -6,7 +6,6 @@ import TextareaAutosize, {
 } from 'react-textarea-autosize'
 import { cn } from '@udecode/cn'
 import type { TEquationElement } from '@udecode/plate-math'
-import { useEquationInput } from '@udecode/plate-math/react'
 import { BlockSelectionPlugin } from '@udecode/plate-selection/react'
 import {
   createPrimitiveComponent,
@@ -15,14 +14,15 @@ import {
   useReadOnly,
 } from '@udecode/plate/react'
 import { CornerDownLeftIcon } from 'lucide-react'
+import { usePointInput } from '../custom-plate-plugins/podcast-time/react'
 import { Button } from './button'
 import { PopoverContent } from './popover'
 
-const EquationInput = createPrimitiveComponent(TextareaAutosize)({
-  propsHook: useEquationInput,
+const PodcastTimeInput = createPrimitiveComponent(TextareaAutosize)({
+  propsHook: usePointInput,
 })
 
-const EquationPopoverContent = ({
+const PodcastTimePopoverContent = ({
   className,
   isInline,
   open,
@@ -66,7 +66,7 @@ const EquationPopoverContent = ({
       }}
       contentEditable={false}
     >
-      <EquationInput
+      <PodcastTimeInput
         className={cn('max-h-[50vh] grow resize-none p-2 text-sm', className)}
         state={{ isInline, open, onClose }}
         autoFocus
@@ -80,4 +80,4 @@ const EquationPopoverContent = ({
   )
 }
 
-export { EquationPopoverContent }
+export { PodcastTimePopoverContent }

@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import { Post } from '@/lib/theme.types'
 import { cn, getUrl } from '@/lib/utils'
 import { Player } from 'shikwasa'
+import { useSiteContext } from '../SiteContext'
 import { Skeleton } from '../ui/skeleton'
 
 interface Props {
@@ -13,6 +14,9 @@ interface Props {
 
 export function PodcastPlayer({ post, className }: Props) {
   const playerRef = useRef<any>(null)
+  const site = useSiteContext()
+
+  console.log('====site.image ', site, post)
 
   useEffect(() => {
     playerRef.current = new Player({
@@ -26,14 +30,21 @@ export function PodcastPlayer({ post, className }: Props) {
       download: true,
       preload: 'metadata',
       audio: {
-        title: 'Hello World!',
-        artist: 'Shikwasa FM',
-        cover: 'image.png',
+        title: post.title,
+        artist:
+          post?.authors[0]?.user?.displayName ||
+          post?.authors[0]?.user?.name ||
+          '',
+        cover: post.image
+          ? getUrl(post.image || '')
+          : getUrl(site.logo || site.image || ''),
         // src: 'https://r2.penx.me/8283074160_460535.mp3',
         // src: 'https://v.typlog.com/sspai/8267989755_658478.mp3'
         src: getUrl(post.media || ''),
       },
     })
+
+    window.__PLAYER__ = playerRef.current
   }, [])
 
   return (

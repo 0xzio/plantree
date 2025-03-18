@@ -42,6 +42,8 @@ import {
   TableRowPlugin,
 } from '@udecode/plate-table/react'
 import type { PlateEditor } from '@udecode/plate/react'
+import { insertPodcastTime } from '../custom-plate-plugins/podcast-time'
+import { PodcastTimePlugin } from '../custom-plate-plugins/podcast-time/react'
 import {
   BaseProductPlugin,
   insertProduct,
@@ -109,6 +111,8 @@ const insertInlineMap: Record<
   [DatePlugin.key]: (editor) => insertDate(editor, { select: true }),
   [InlineEquationPlugin.key]: (editor) =>
     insertInlineEquation(editor, '', { select: true }),
+  [PodcastTimePlugin.key]: (editor) =>
+    insertPodcastTime(editor, '', { select: true }),
   [LinkPlugin.key]: (editor) => triggerFloatingLink(editor, { focused: true }),
 }
 

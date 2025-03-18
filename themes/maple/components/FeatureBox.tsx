@@ -54,6 +54,8 @@ export function FeatureBox({ post }: Props) {
           </div>
         </div>
       </div>
+
     </Link>
+    
   )
 }
