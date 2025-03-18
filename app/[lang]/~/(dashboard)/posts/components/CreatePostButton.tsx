@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { Separator } from '@/components/ui/separator'
 import { loadPost } from '@/hooks/usePost'
 import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
@@ -25,8 +26,11 @@ import {
   ChevronDown,
   FileText,
   Image,
+  LightbulbIcon,
+  Link2Icon,
   Pen,
   Plus,
+  User,
   Video,
 } from 'lucide-react'
 import { toast } from 'sonner'
@@ -34,6 +38,7 @@ import { toast } from 'sonner'
 interface Props {
   className?: string
 }
+
 export function CreatePostButton({ className }: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
@@ -64,19 +69,20 @@ export function CreatePostButton({ className }: Props) {
     }
     setLoading(false)
   }
+
   return (
     <div className="flex items-center">
       <AddNoteDialog />
       <Button
         className={cn(
-          'w-24 flex gap-1 rounded-tr-none rounded-br-none',
+          'w-20 flex gap-1 rounded-tr-none rounded-br-none px-1',
           className,
         )}
         disabled={isLoading}
         onClick={() => createPost(PostType.ARTICLE)}
       >
         {isLoading ? <LoadingCircle></LoadingCircle> : <Plus size={16} />}
-        <span>Write</span>
+        <span>Create</span>
       </Button>
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>

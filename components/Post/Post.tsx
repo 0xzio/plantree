@@ -14,6 +14,7 @@ import { format } from 'date-fns'
 import { useSearchParams } from 'next/navigation'
 import { useDebouncedCallback } from 'use-debounce'
 import { PlateEditor } from '../editor/plate-editor'
+import { Separator } from '../ui/separator'
 import { AddPropButton } from './AddPropButton'
 import { AudioCreationUpload } from './AudioCreationUpload'
 import { Authors } from './Authors'
@@ -71,11 +72,18 @@ export function Post() {
     200,
   )
 
+  console.log('=========>>>>>>post:', post)
+
   return (
     <div className="w-full h-full">
       <div className="relative min-h-[500px] py-12 px-8 z-0">
         <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
-          {[PostType.ARTICLE, PostType.AUDIO].includes(post.type as any) && (
+          {[
+            PostType.ARTICLE,
+            PostType.AUDIO,
+            PostType.FRIEND,
+            PostType.PROJECT,
+          ].includes(post.type as any) && (
             <div className="mb-5 flex flex-col space-y-3 ">
               <CoverUpload post={post} />
               {isJournal && (
@@ -123,19 +131,24 @@ export function Post() {
 
           {!post.isPage && (
             <div className="flex items-center justify-between">
-              <Authors post={post} />
-              <div className="flex items-center gap-2">
-                <Tags />
-                {/* <PostLocales /> */}
+              <div className="flex items-center gap-4">
+                <Authors post={post} />
+                <Separator orientation="vertical" className="h-3" />
+                <div className="flex items-center gap-2">
+                  <Tags />
+                  {/* <PostLocales /> */}
+                </div>
               </div>
+
+              <AddPropButton />
             </div>
           )}
-          {/* <div className="pt-4 -ml-4">
-            <AddPropButton />
-          </div> */}
-          <div className="mt-6">
-            <AudioCreationUpload post={post as any} />
-          </div>
+
+          {post.type === PostType.AUDIO && (
+            <div className="mt-6">
+              <AudioCreationUpload post={post as any} />
+            </div>
+          )}
         </div>
 
         <div className="w-full mt-4" data-registry="plate">
