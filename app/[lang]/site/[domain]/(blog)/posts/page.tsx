@@ -2,6 +2,7 @@ import { initLingui } from '@/initLingui'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { AppearanceConfig } from '@/lib/theme.types'
 import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
 
@@ -29,10 +30,15 @@ export default async function Page({
 }: {
   params: Promise<{ domain: string; lang: string }>
 }) {
-  const lang = (await params).lang
-  const locale = lang === 'pseudo' ? 'en' : lang
-  initLingui(locale)
   const site = await getSite(await params)
+  const lang = (await params).lang
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+  initLingui(locale)
+
   const posts = await getPosts(site.id)
   const pageNumber = 1
   const initialDisplayPosts = posts.slice(

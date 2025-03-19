@@ -39,16 +39,19 @@ export default async function RootLayout({
   children: React.ReactNode
   params: Promise<{ domain: string; lang: string }>
 }) {
-  const lang = (await params).lang
-  const locale = lang === 'pseudo' ? 'en' : lang
-  initLingui(locale)
-
   const site = await getSite(await params)
-  const tags = await getTags(site.id)
-  const { SiteLayout } = loadTheme(site.themeName)
+
   const { appearance } = (site.config || {}) as {
     appearance: AppearanceConfig
   }
+  const lang = (await params).lang
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+
+  initLingui(locale)
+
+  const tags = await getTags(site.id)
+  const { SiteLayout } = loadTheme(site.themeName)
   const brand = appearance?.color || 'oklch(0.656 0.241 354.308)'
   const baseFont = appearance?.baseFont
 

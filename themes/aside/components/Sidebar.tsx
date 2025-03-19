@@ -47,12 +47,13 @@ export const Sidebar = ({ site, tags }: Props) => {
         </div>
         {site.tiers.length > 0 && (
           <div>
+            <Trans>Membership</Trans>
             <MembershipEntry />
           </div>
         )}
 
         <SocialNav className="" site={site} size={4} />
-        <div className="flex flex-col space-y-3">
+        <div className="flex flex-col gap-4">
           {links.map((link) => {
             if (link.pathname === '/creator-fi' && !site.spaceId) {
               return null
@@ -62,6 +63,7 @@ export const Sidebar = ({ site, tags }: Props) => {
 
             return (
               <NavigationItem
+                key={link.pathname}
                 link={link}
                 className="justify-start font-medium"
               />

@@ -2,7 +2,7 @@
 
 import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
-import { Trans } from '@lingui/react/macro'
+import { Trans, useLingui } from '@lingui/react/macro'
 import { usePathname } from 'next/navigation'
 
 interface Props {
@@ -10,6 +10,10 @@ interface Props {
 }
 export function MembershipEntry({ className }: Props) {
   const pathname = usePathname()
+  const { i18n } = useLingui()
+
+  console.log('=====i18n:', i18n)
+
   return (
     <Link
       href={`/subscribe?source=${pathname}`}

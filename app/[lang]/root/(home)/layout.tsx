@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { initLingui } from '@/initLingui'
 import { Link } from '@/lib/i18n'
+import linguiConfig from '@/lingui.config'
 import { DeployOwnButton } from './DeployOwnButton'
 import { SiteCount } from './SiteCount'
 import { Slogan } from './Slogan'
@@ -11,6 +12,10 @@ import { StartWritingButton } from './StartWritingButton'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24 * 365
+
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
 
 export default async function HomePage({
   children,

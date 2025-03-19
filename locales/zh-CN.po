@@ -186,7 +186,7 @@ msgstr ""
 
 #: components/theme-ui/ContributeButton.tsx:35
 msgid "Contribute"
-msgstr ""
+msgstr "投稿"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:165
 msgid "Coupons"
@@ -346,7 +346,7 @@ msgstr ""
 #: themes/card/pages/HomePage.tsx:31
 #: themes/aside/pages/HomePage.tsx:33
 msgid "Latest"
-msgstr ""
+msgstr "最新文章"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:60
 msgid "Link accounts"
@@ -569,7 +569,7 @@ msgstr "设置"
 
 #: components/LoginButton.tsx:22
 msgid "Sign in"
-msgstr ""
+msgstr "登录"
 
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:39
 msgid "Sign in to deploy"
@@ -593,7 +593,7 @@ msgstr ""
 
 #: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
 msgid "Submit Link"
-msgstr ""
+msgstr "提交友链"
 
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:125
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard.tsx:37

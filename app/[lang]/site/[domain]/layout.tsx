@@ -1,3 +1,5 @@
+import { allMessages } from '@/appRouterI18n'
+import { LinguiClientProvider } from '@/components/LinguiClientProvider'
 import { SiteProvider } from '@/components/SiteContext'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
@@ -52,38 +54,42 @@ export default async function RootLayout({
   }
   const defaultLocale = appearance?.locale || 'en'
   const locale = lang === 'pseudo' ? defaultLocale : lang
-  // console.log('=====locale:', locale, 'lang:', lang)
 
   initLingui(locale)
 
   return (
-    <ThemeProvider
-      attribute="class"
-      defaultTheme="system"
-      enableSystem
-      disableTransitionOnChange
+    <LinguiClientProvider
+      initialLocale={locale}
+      initialMessages={allMessages[locale]!}
     >
-      <SiteProvider site={site as any}>
-        {children}
-        {site.analytics?.umamiHost && site.analytics?.umamiWebsiteId && (
-          <script
-            async
-            defer
-            src={
-              `${site.analytics.umamiHost}/script.js` ||
-              'https://cloud.umami.is'
-            }
-            data-website-id={site.analytics.umamiWebsiteId}
-          ></script>
-        )}
+      <ThemeProvider
+        attribute="class"
+        defaultTheme="system"
+        enableSystem
+        disableTransitionOnChange
+      >
+        <SiteProvider site={site as any}>
+          {children}
+          {site.analytics?.umamiHost && site.analytics?.umamiWebsiteId && (
+            <script
+              async
+              defer
+              src={
+                `${site.analytics.umamiHost}/script.js` ||
+                'https://cloud.umami.is'
+              }
+              data-website-id={site.analytics.umamiWebsiteId}
+            ></script>
+          )}
 
-        {site.analytics?.gaMeasurementId && (
-          <GoogleAnalytics
-            trackPageViews
-            gaMeasurementId={site.analytics?.gaMeasurementId}
-          />
-        )}
-      </SiteProvider>
-    </ThemeProvider>
+          {site.analytics?.gaMeasurementId && (
+            <GoogleAnalytics
+              trackPageViews
+              gaMeasurementId={site.analytics?.gaMeasurementId}
+            />
+          )}
+        </SiteProvider>
+      </ThemeProvider>
+    </LinguiClientProvider>
   )
 }
