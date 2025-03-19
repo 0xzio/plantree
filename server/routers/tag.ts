@@ -1,3 +1,4 @@
+import { calculateSHA256FromString } from '@/lib/encryption'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { TRPCError } from '@trpc/server'
@@ -102,7 +103,9 @@ export const tagRouter = router({
       })
 
       revalidate(postTag.siteId)
-      revalidateTag(`${postTag.siteId}-tags-${postTag.tag.name}`)
+      revalidateTag(
+        `${postTag.siteId}-tags-${calculateSHA256FromString(postTag.tag.name)}`,
+      )
       return postTag
     }),
 
@@ -127,7 +130,9 @@ export const tagRouter = router({
           })
 
           revalidate(tag.siteId)
-          revalidateTag(`${tag.siteId}-tags-${tag.name}`)
+          revalidateTag(
+            `${tag.siteId}-tags-${calculateSHA256FromString(tag.name)}`,
+          )
           return true
         },
         {
@@ -146,7 +151,9 @@ export const tagRouter = router({
       })
 
       revalidate(postTag.siteId)
-      revalidateTag(`${postTag.siteId}-tags-${postTag.tag.name}`)
+      revalidateTag(
+        `${postTag.siteId}-tags-${calculateSHA256FromString(postTag.tag.name)}`,
+      )
       return postTag
     }),
 })

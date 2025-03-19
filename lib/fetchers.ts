@@ -20,6 +20,7 @@ import {
   ROOT_DOMAIN,
   SUBGRAPH_URL,
 } from './constants'
+import { calculateSHA256FromString } from './encryption'
 import { SpaceType } from './types'
 import { uniqueId } from './unique-id'
 import { getUrl } from './utils'
@@ -182,6 +183,7 @@ export async function getTags(siteId: string) {
 }
 
 export async function getTagWithPost(siteId: string, name: string) {
+  const key = `${siteId}-tags-${calculateSHA256FromString(name)}`
   return await unstable_cache(
     async () => {
       const tag = await prisma.tag.findFirstOrThrow({
@@ -218,10 +220,10 @@ export async function getTagWithPost(siteId: string, name: string) {
         })
       })
     },
-    [`${siteId}-tags-${name}`],
+    [key],
     {
       revalidate: REVALIDATE_TIME,
-      tags: [`${siteId}-tags-${name}`],
+      tags: [key],
     },
   )()
 }

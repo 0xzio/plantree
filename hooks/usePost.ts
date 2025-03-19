@@ -133,8 +133,6 @@ export function addPostTag(postTag: PostTagWithTag) {
     ...post,
     postTags: [...post.postTags, postTag as any],
   })
-  revalidateMetadata(`${postTag.siteId}-posts`)
-  revalidateMetadata(`${postTag.siteId}-tag-${postTag.tag.name}`)
 }
 
 export function removePostTag(postTag: PostTagWithTag) {
@@ -144,8 +142,6 @@ export function removePostTag(postTag: PostTagWithTag) {
     ...post,
     postTags: newTags,
   })
-  revalidateMetadata(`${postTag.siteId}-posts`)
-  revalidateMetadata(`${postTag.siteId}-tag-${postTag.tag.name}`)
 }
 
 export async function loadPost(id: string) {

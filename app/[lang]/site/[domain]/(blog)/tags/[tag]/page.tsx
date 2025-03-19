@@ -6,6 +6,7 @@ import {
   getTagWithPost,
 } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { slug } from 'github-slugger'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
