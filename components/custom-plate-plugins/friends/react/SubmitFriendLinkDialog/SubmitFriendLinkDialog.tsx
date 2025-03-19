@@ -33,7 +33,9 @@ export function SubmitFriendLinkDialog() {
       </DialogHeader>
       <DialogContent className="sm:max-w-[460px]">
         <DialogHeader>
-          <DialogTitle>Submit your link</DialogTitle>
+          <DialogTitle>
+            <Trans>Submit your link</Trans>
+          </DialogTitle>
         </DialogHeader>
         <SubmitFriendLinkForm />
       </DialogContent>

@@ -26,7 +26,7 @@ import { useSubmitFriendLinkDialog } from './useSubmitFriendLinkDialog'
 
 const FormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
-  introduction: z.string().min(5, { message: 'Name is required' }),
+  introduction: z.string().min(5, { message: 'Introduction too short' }),
   avatar: z.string(),
   url: z.string().url(),
 })

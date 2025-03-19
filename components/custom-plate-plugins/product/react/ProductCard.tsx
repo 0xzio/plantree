@@ -39,7 +39,7 @@ export function ProductCard({ productId }: { productId: string }) {
   }
 
   return (
-    <div className="flex items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background h-[100px]">
+    <div className="flex flex-col md:flex-row items-center justify-between p-4 rounded-2xl border border-foreground/5 bg-background h-auto md:h-[100px] gap-y-3">
       <div className="flex items-center gap-2">
         {data.image && (
           <Image

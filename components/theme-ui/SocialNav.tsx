@@ -12,7 +12,7 @@ export function SocialNav({ site, className, size = 5 }: Props) {
   if (!site) return null
   const socials = site.socials
   return (
-    <div className={cn('flex gap-4 item-center', className)}>
+    <div className={cn('flex gap-4 item-center text-foreground/70', className)}>
       <SocialIcon kind="x" href={socials.x} size={size} />
       <SocialIcon kind="twitter" href={socials.twitter} size={size} />
       <SocialIcon kind="facebook" href={socials.facebook} size={size} />
@@ -32,4 +32,3 @@ export function SocialNav({ site, className, size = 5 }: Props) {
     </div>
   )
 }
-

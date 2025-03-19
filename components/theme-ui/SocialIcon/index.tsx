@@ -49,8 +49,18 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
 
   let SocialSvg = components[kind]
 
+  let iconJsx: any = null
+
+  if (!!SocialIcon) {
+    iconJsx = (
+      <SocialSvg
+        className={`fill-current text-foreground/70 hover:text-brand dark:hover:text-brand/80 size-${size}`}
+      />
+    )
+  }
+
   if (kind === 'bilibili') {
-    return (
+    iconJsx = (
       <div className="h-full inline-flex">
         <span
           className={cn(`icon-[mingcute--bilibili-line] size-${size}`)}
@@ -60,7 +70,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   }
 
   if (kind === 'telegram') {
-    return (
+    iconJsx = (
       <div className="h-full inline-flex">
         <span className={`icon-[lineicons--telegram] size-${size}`}></span>
       </div>
@@ -68,7 +78,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   }
 
   if (kind === 'slack') {
-    return (
+    iconJsx = (
       <div className="h-full inline-flex">
         <span className={`icon-[mdi--slack] size-${size}`}></span>
       </div>
@@ -76,7 +86,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   }
 
   if (kind === 'farcaster') {
-    return (
+    iconJsx = (
       <div className="h-full inline-flex">
         <span className={`icon-[simple-icons--farcaster] size-${size}`}></span>
       </div>
@@ -84,14 +94,12 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
   }
 
   if (kind === 'medium') {
-    return (
+    iconJsx = (
       <div className="h-full inline-flex">
         <span className={`icon-[ri--medium-fill] size-${size}`}></span>
       </div>
     )
   }
-
-  if (!SocialSvg) return <span>{kind.slice(0, 1)}</span>
 
   return (
     <a
@@ -101,9 +109,7 @@ const SocialIcon = ({ kind, href, size = 8 }: SocialIconProps) => {
       href={href}
     >
       <span className="sr-only">{kind}</span>
-      <SocialSvg
-        className={`fill-current text-foreground/70 dark:text-background/60 hover:text-brand dark:hover:text-brand/80 size-${size}`}
-      />
+      {iconJsx}
     </a>
   )
 }

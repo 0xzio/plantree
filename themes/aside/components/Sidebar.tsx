@@ -35,10 +35,10 @@ export const Sidebar = ({ site, tags }: Props) => {
       <div className="flex flex-col space-y-6 flex-1 w-full">
         <div>
           <Link href="/" className="px-0 py-2 flex flex-col gap-2">
-            <Avatar className="h-32 w-32 rounded-2xl">
+            {/* <Avatar className="h-32 w-32 rounded-2xl">
               <AvatarImage src={getUrl(site.logo || '')} />
               <AvatarFallback>{site.name.slice(0, 1)}</AvatarFallback>
-            </Avatar>
+            </Avatar> */}
             <div className="text-3xl font-bold">{site.name}</div>
           </Link>
           <div className="text-foreground/60 text-lg font-light">
