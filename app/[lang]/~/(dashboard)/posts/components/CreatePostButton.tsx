@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import LoadingCircle from '@/components/icons/loading-circle'
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { usePlanListDialog } from '@/components/PlanList/usePlanListDialog'
 import { AddNoteDialog } from '@/components/Post/AddNoteDialog/AddNoteDialog'
 import { useAddNoteDialog } from '@/components/Post/AddNoteDialog/useAddNoteDialog'
 import { useSiteContext } from '@/components/SiteContext'
@@ -18,6 +19,7 @@ import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { useRouter } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import {
@@ -42,6 +44,8 @@ interface Props {
 export function CreatePostButton({ className }: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
+  const { session } = useSession()
+  const { setIsOpen } = usePlanListDialog()
   const [isLoading, setLoading] = useState(false)
   const [type, setType] = useState<PostType>('' as any)
   const [open, setOpen] = useState(false)
@@ -131,6 +135,7 @@ export function CreatePostButton({ className }: Props) {
             className="flex gap-2"
             isLoading={isLoading && type == PostType.AUDIO}
             onClick={async () => {
+              if (session?.isFree) return setIsOpen(true)
               setType(PostType.AUDIO)
               await createPost(PostType.AUDIO)
             }}

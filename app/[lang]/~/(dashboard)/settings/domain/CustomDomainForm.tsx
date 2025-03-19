@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoadingDots } from '@/components/icons/loading-dots'
+import { usePlanListDialog } from '@/components/PlanList/usePlanListDialog'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,6 +19,7 @@ import { useSite } from '@/hooks/useSite'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { getSiteCustomDomain, SiteWithDomains } from '@/lib/getSiteDomain'
 import { trpc } from '@/lib/trpc'
+import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Site } from '@prisma/client'
 import { toast } from 'sonner'
@@ -37,9 +39,10 @@ interface Props {
 }
 
 export function CustomDomainForm({ site }: Props) {
+  const { session } = useSession()
   const { refetch } = useSite()
   const { isPending, mutateAsync } = trpc.site.customDomain.useMutation()
-
+  const { setIsOpen } = usePlanListDialog()
   const customDomain = getSiteCustomDomain(site)
 
   const form = useForm<z.infer<typeof FormSchema>>({
@@ -58,6 +61,8 @@ export function CustomDomainForm({ site }: Props) {
   }, [domain, form])
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
+    if (session?.isFree) return setIsOpen(true)
+
     try {
       await mutateAsync({
         siteId: site.id,
