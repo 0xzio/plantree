@@ -5,6 +5,7 @@ import { ROOT_DOMAIN } from '@/lib/constants'
 import { getDashboardPath } from '@/lib/getDashboardPath'
 import { useRouter } from '@/lib/i18n'
 import { useSession } from '@/lib/useSession'
+import { Trans } from '@lingui/react/macro'
 import { LoginButton } from '../LoginButton'
 import { LoginDialog } from '../LoginDialog/LoginDialog'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
@@ -50,7 +51,7 @@ export function Profile({ showDashboard = false, buttonProps }: Props) {
                 location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
               }}
             >
-              Dashboard
+              <Trans>Dashboard</Trans>
             </Button>
           )}
           <ProfilePopover />

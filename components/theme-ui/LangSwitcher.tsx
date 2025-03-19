@@ -15,6 +15,7 @@ import { langMap } from '@/lib/supportLanguages'
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { useLingui } from '@lingui/react'
+import { Trans } from '@lingui/react/macro'
 import { useRouter } from 'next/navigation'
 
 type LOCALES = 'en' | 'ja' | 'ko' | 'fr' | 'ru' | 'zh-CN'
@@ -63,7 +64,9 @@ export function LangSwitcher({ className, site }: LangSwitcherProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectItem value={'default'}>Default</SelectItem>
+          <SelectItem value={'default'}>
+            <Trans>Default</Trans>
+          </SelectItem>
           {locales.map((locale) => {
             return (
               <SelectItem value={locale} key={locale}>

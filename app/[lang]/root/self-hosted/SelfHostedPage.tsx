@@ -5,6 +5,7 @@ import { LoginButton } from '@/components/LoginButton'
 import { Button } from '@/components/ui/button'
 import { api, trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
+import { Trans } from '@lingui/react/macro'
 import { ApiTokenDialog } from './ApiTokenDialog/ApiTokenDialog'
 import { useApiTokenDialog } from './ApiTokenDialog/useApiTokenDialog'
 import { DeployNewSiteDialog } from './DeployNewSiteDialog/DeployNewSiteDialog'
@@ -25,15 +26,17 @@ export function SelfHostedPage() {
   if (!data) {
     return (
       <div className="h-[80vh] flex flex-col items-center justify-center gap-3">
-        <h2 className="text-4xl font-bold">Deploy in 10 minutes</h2>
+        <h2 className="text-4xl font-bold">
+          <Trans>Deploy in 10 minutes</Trans>
+        </h2>
         <div className="text-base text-foreground/70">
-          Deploy your own site to Cloudflare Pages in 10 minutes.
+          <Trans>Deploy your own site to Cloudflare Pages in 10 minutes.</Trans>
         </div>
         <div className="text-sm text-foreground/50 -mt-1">
-          100% run on Cloudflare and deploy freely.
+          <Trans>100% run on Cloudflare and deploy freely.</Trans>
         </div>
         <LoginButton size="lg" variant="default">
-          Sign in to deploy
+          <Trans>Sign in to deploy</Trans>
         </LoginButton>
       </div>
     )
@@ -73,15 +76,17 @@ function Content() {
     <div className="max-w-3xl mx-auto mt-20">
       <div className="flex items-center justify-between mb-8">
         <div className="space-y-1">
-          <div className="text-3xl font-bold">My sites</div>
+          <div className="text-3xl font-bold">
+            <Trans>My sites</Trans>
+          </div>
           <div className="text-sm">
-            Read the deployment guide:{' '}
+            <Trans>Read the deployment guide</Trans>:{' '}
             <a
               className="text-brand"
-              href="https://blog.penx.me/posts/39252f1c-1ee4-4da4-977a-43ee47ea1d24"
+              href="https://docs.penx.io/en/posts/deploy-penx-with-one-click-tools"
               target="_blank"
             >
-              Deploy PenX with One-click tools
+              <Trans>Deploy PenX with One-click tools</Trans>
             </a>
             .
           </div>
@@ -94,7 +99,7 @@ function Content() {
               openApiTokenDialog(true)
             }}
           >
-            Update API token
+            <Trans>Update API token</Trans>
           </Button>
 
           <Button
@@ -103,7 +108,7 @@ function Content() {
               setIsOpen(true)
             }}
           >
-            Deploy new site
+            <Trans>Deploy new site</Trans>
           </Button>
         </div>
       </div>

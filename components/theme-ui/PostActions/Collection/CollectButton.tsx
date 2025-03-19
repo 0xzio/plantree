@@ -4,11 +4,12 @@ import { useState } from 'react'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
-import { cn } from '@/lib/utils'
 import { Post } from '@/lib/theme.types'
+import { useSession } from '@/lib/useSession'
+import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { AuthType } from '@prisma/client'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
-import { useSession } from '@/lib/useSession'
 import { useAccount } from 'wagmi'
 import { CollectDialog } from './CollectDialog'
 
@@ -55,7 +56,7 @@ export function CollectButton({ post, className }: Props) {
             setState((prev) => ({ ...prev, isOpen: true }))
           }}
         >
-          Collect
+          <Trans>Collect</Trans>
         </Button>
       ) : (
         <WalletConnectButton
@@ -63,7 +64,7 @@ export function CollectButton({ post, className }: Props) {
           variant="brand"
           className={cn('rounded-xl text-sm', className)}
         >
-          Collect
+          <Trans>Collect</Trans>
         </WalletConnectButton>
       )}
     </>

@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { MySite } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 
 interface Props {
   count: number
@@ -29,7 +30,9 @@ export function SiteCount({ count, sites }: Props) {
 
         <div className="space-x-1">
           <span className="font-bold">{count}</span>
-          <span className="text-sm">individual blogs created</span>
+          <span className="text-sm">
+            <Trans>individual blogs created</Trans>
+          </span>
         </div>
       </div>
     </div>

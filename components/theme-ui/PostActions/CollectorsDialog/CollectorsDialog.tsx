@@ -11,8 +11,9 @@ import {
 } from '@/components/ui/dialog'
 import { UserAvatar } from '@/components/UserAvatar'
 import { useCollectRecords } from '@/hooks/useCollectRecords'
-import { shortenAddress } from '@/lib/utils'
 import { Post } from '@/lib/theme.types'
+import { shortenAddress } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { Bookmark } from 'lucide-react'
 import { MintedAmount } from './MintedAmount'
 
@@ -35,12 +36,16 @@ export function CollectorsDialog({ post }: Props) {
       <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
         <DialogContent className="sm:max-w-[400px] min-h-96 flex flex-col gap-6">
           <DialogHeader>
-            <DialogTitle className="">Collectors</DialogTitle>
+            <DialogTitle className="">
+              <Trans>Collectors</Trans>
+            </DialogTitle>
           </DialogHeader>
 
           <div className="grid gap-2">
             {!records.length && (
-              <div className="text-foreground/50">Not tipper found</div>
+              <div className="text-foreground/50">
+                <Trans>Not tipper found</Trans>
+              </div>
             )}
             {records.map((record) => (
               <div

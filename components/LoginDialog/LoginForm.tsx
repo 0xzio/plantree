@@ -15,6 +15,7 @@ import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useAuthStatus } from './useAuthStatus'
@@ -111,19 +112,19 @@ export function LoginForm({}: Props) {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? <LoadingDots /> : <p>Login</p>}
+            {isLoading ? <LoadingDots /> : <Trans>Log in</Trans>}
           </Button>
         </div>
       </form>
 
       <div className="text-center text-sm">
-        No account?{' '}
+        <Trans>No account</Trans>?{' '}
         <a
           href="#"
           className="text-brand"
           onClick={() => setAuthStatus('register')}
         >
-          Create one
+          <Trans>Create one</Trans>
         </a>
       </div>
     </Form>

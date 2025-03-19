@@ -2,6 +2,7 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Post, Site } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -19,11 +20,11 @@ export function HomePage({ posts = [], site, about }: Props) {
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">
           <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-            Latest
+            <Trans>Latest</Trans>
           </h1>
         </div>
         <div className="grid grid-cols-1 gap-3">
-          {!posts.length && 'No posts found.'}
+          {!posts.length && <Trans>No posts found.</Trans>}
           {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}
@@ -34,7 +35,7 @@ export function HomePage({ posts = [], site, about }: Props) {
         <div className="mt-10">
           <div className="pb-6 pt-6 flex items-center justify-between">
             <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-              Most Popular
+              <Trans>Most Popular</Trans>
             </h1>
           </div>
           <div className="grid grid-cols-1 gap-3">

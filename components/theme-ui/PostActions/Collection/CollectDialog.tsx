@@ -18,6 +18,7 @@ import { addressMap } from '@/lib/address'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { precision } from '@/lib/math'
 import { Post } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { waitForTransactionReceipt } from '@wagmi/core'
 import { toast } from 'sonner'
 import { zeroAddress } from 'viem'
@@ -72,7 +73,7 @@ export function CollectDialog({ isLoading, isOpen, setState, post }: Props) {
         isLoading: false,
         isOpen: false,
       })
-      toast.success('Collect successfully')
+      toast.success(<Trans>Collect successfully</Trans>)
     } catch (error) {
       console.log('====error>>>:', error)
       setState((prev) => ({ ...prev, isLoading: false }))
@@ -91,10 +92,14 @@ export function CollectDialog({ isLoading, isOpen, setState, post }: Props) {
     >
       <DialogContent className="sm:max-w-[400px] grid gap-6">
         <DialogHeader>
-          <DialogTitle className="">Collect this post</DialogTitle>
+          <DialogTitle className="">
+            <Trans>Collect this post</Trans>
+          </DialogTitle>
           <DialogDescription>
-            You retain ownership of this post even if the author deletes it
-            after being collected.
+            <Trans>
+              You retain ownership of this post even if the author deletes it
+              after being collected.
+            </Trans>
           </DialogDescription>
         </DialogHeader>
 
@@ -106,7 +111,9 @@ export function CollectDialog({ isLoading, isOpen, setState, post }: Props) {
         />
 
         <div className="flex h-6 items-center justify-between -my-3">
-          <div className="text-sm text-foreground/60">Total cost</div>
+          <div className="text-sm text-foreground/60">
+            <Trans>Total cost</Trans>
+          </div>
           {!creation && <div className="text-sm">-</div>}
           {creation && (
             <div className="text-sm">
@@ -126,11 +133,13 @@ export function CollectDialog({ isLoading, isOpen, setState, post }: Props) {
           >
             {isLoading ? (
               <>
-                <span className="">Collecting</span>
+                <span className="">
+                  <Trans>Collecting</Trans>
+                </span>
                 <LoadingDots className="bg-white" />
               </>
             ) : (
-              'Collect'
+              <Trans>Collect</Trans>
             )}
           </Button>
         </div>

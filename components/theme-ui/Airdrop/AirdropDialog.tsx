@@ -18,8 +18,9 @@ import { useWagmiConfig } from '@/hooks/useWagmiConfig'
 import { dailyClaimAbi } from '@/lib/abi'
 import { addressMap } from '@/lib/address'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import { useSession } from '@/lib/useSession'
+import { Trans } from '@lingui/react/macro'
+import { readContract, waitForTransactionReceipt } from '@wagmi/core'
 import pRetry, { AbortError } from 'p-retry'
 import { toast } from 'sonner'
 import { useAccount, useReadContract, useWriteContract } from 'wagmi'
@@ -38,7 +39,7 @@ export function AirdropDialog({}: Props) {
         <DialogContent className="sm:max-w-[400px] min-h-96 flex flex-col gap-6">
           <DialogHeader className="text-center">
             <DialogTitle className="text-center">
-              Claim $PEN everyday!
+              <Trans>Claim $PEN everyday!</Trans>
             </DialogTitle>
           </DialogHeader>
           {data && <AuthenticatedContent />}
@@ -53,16 +54,22 @@ function UnauthenticatedContent() {
   return (
     <>
       <div className="w-11/12 text-foreground/60 text-center mx-auto">
-        ou can claim some $PEN every day. Connect your wallet to see how much
-        $PEN you’re eligible to claim.
+        <Trans>
+          ou can claim some $PEN every day. Connect your wallet to see how much
+          $PEN you’re eligible to claim.
+        </Trans>
       </div>
       <div className="flex items-center justify-center gap-2">
-        <div className="text-3xl font-bold text-center">*** $PEN</div>
-        <div className="text-foreground/50">claimable</div>
+        <div className="text-3xl font-bold text-center">
+          <Trans>*** $PEN</Trans>
+        </div>
+        <div className="text-foreground/50">
+          <Trans>claimable</Trans>
+        </div>
       </div>
       <div className="flex items-center justify-center flex-1 -mt-10">
         <WalletConnectButton size="lg">
-          Connect wallet to Claim $PEN
+          <Trans>Connect wallet to Claim $PEN</Trans>
         </WalletConnectButton>
       </div>
     </>
@@ -131,14 +138,18 @@ function AuthenticatedContent() {
   return (
     <>
       <div className="w-11/12 text-foreground/60 text-center mx-auto">
-        You can claim $PEN every day. Don’t miss out, claim today’s $PEN airdrop
-        now.
+        <Trans>
+          You can claim $PEN every day. Don’t miss out, claim today’s $PEN
+          airdrop now.
+        </Trans>
       </div>
       {isLoading && <Skeleton className="h-9 w-32 mx-auto" />}
       {data && (
         <div className="flex items-center justify-center gap-2 h-9">
           <div className="text-3xl font-bold text-center">{data.cap} $PEN</div>
-          <div className="text-foreground/50">claimable</div>
+          <div className="text-foreground/50">
+            <Trans>claimable</Trans>
+          </div>
         </div>
       )}
       <div className="flex items-center justify-center flex-1 -mt-10">
@@ -154,7 +165,7 @@ function AuthenticatedContent() {
               <LoadingDots />
             </>
           ) : (
-            'Claim $PEN'
+            <Trans>Claim $PEN</Trans>
           )}
         </Button>
       </div>

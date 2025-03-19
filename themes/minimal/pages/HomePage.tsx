@@ -4,6 +4,7 @@ import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { HOME_PROJECT_LIMIT, LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, Project, Site } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -40,7 +41,7 @@ export function HomePage({ posts = [], site, projects, about }: Props) {
             )}
           </div>
           <div className="grid grid-cols-1 gap-3">
-            {!posts.length && 'No posts found.'}
+            {!posts.length && <Trans>No posts found.</Trans>}
             {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
               return <PostItem key={post.slug} post={post} />
             })}

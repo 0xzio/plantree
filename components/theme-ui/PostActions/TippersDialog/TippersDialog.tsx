@@ -13,8 +13,9 @@ import { UserAvatar } from '@/components/UserAvatar'
 import { useCollectRecords } from '@/hooks/useCollectRecords'
 import { useTipRecords } from '@/hooks/useTipRecords'
 import { precision } from '@/lib/math'
-import { shortenAddress } from '@/lib/utils'
 import { Post } from '@/lib/theme.types'
+import { shortenAddress } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { TippedAmount } from '../TippedAmount'
 
 interface Props {
@@ -32,12 +33,16 @@ export function TippersDialog({ post, receivers }: Props) {
       <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
         <DialogContent className="sm:max-w-[400px] min-h-96 flex flex-col gap-6">
           <DialogHeader>
-            <DialogTitle className="">Tip records</DialogTitle>
+            <DialogTitle className="">
+              <Trans>Tip records</Trans>
+            </DialogTitle>
           </DialogHeader>
 
           <div className="grid gap-2">
             {!records.length && (
-              <div className="text-foreground/50">Not tipper found</div>
+              <div className="text-foreground/50">
+                <Trans>Not tipper found</Trans>
+              </div>
             )}
             {records.map((record) => (
               <div

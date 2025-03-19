@@ -2,6 +2,7 @@ import { PropsWithChildren } from 'react'
 import { SocialNav } from '@/components/SocialNav'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import { initLingui } from '@/initLingui'
 import { Link } from '@/lib/i18n'
 import { DeployOwnButton } from './DeployOwnButton'
 import { SiteCount } from './SiteCount'
@@ -11,7 +12,15 @@ import { StartWritingButton } from './StartWritingButton'
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24 * 365
 
-export default async function HomePage({ children }: PropsWithChildren) {
+export default async function HomePage({
+  children,
+  params,
+}: PropsWithChildren<{
+  params: Promise<{ domain: string; lang: string }>
+}>) {
+  const lang = (await params).lang
+  const locale = lang === 'pseudo' ? 'en' : lang
+  initLingui(locale)
   return (
     <div className="flex flex-col justify-center pt-5 md:pt-32 gap-8 relative pb-20">
       <div>

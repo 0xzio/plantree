@@ -2,11 +2,13 @@ import { ModeToggle } from '@/components/ModeToggle'
 import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
+import { NavigationItem } from '@/components/theme-ui/NavigationItem'
 import { SocialNav } from '@/components/theme-ui/SocialNav'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Link } from '@/lib/i18n'
-import { Site, Tag } from '@/lib/theme.types'
+import { NavLink, Site, Tag } from '@/lib/theme.types'
 import { cn, getUrl } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { slug } from 'github-slugger'
 
 interface Props {
@@ -22,7 +24,7 @@ export const Sidebar = ({ site, tags }: Props) => {
       title: 'CreatorFi',
       visible: true,
     },
-  ]
+  ] as NavLink[]
   return (
     <aside
       className="sidebar w-64 sticky top-0 shrink-0 pt-24 pb-4 overflow-y-auto flex-col pr-2 hidden md:flex"
@@ -59,15 +61,10 @@ export const Sidebar = ({ site, tags }: Props) => {
             if (!link.visible) return null
 
             return (
-              <Link
-                key={link.pathname}
-                href={link.pathname}
-                className={cn(
-                  'text-base hover:text-brand dark:hover:text-brand/80 text-foreground/90 font-semibold',
-                )}
-              >
-                {link.title}
-              </Link>
+              <NavigationItem
+                link={link}
+                className="justify-start font-medium"
+              />
             )
           })}
 
@@ -79,14 +76,16 @@ export const Sidebar = ({ site, tags }: Props) => {
                 'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
               )}
             >
-              Membership
+              <Trans>Membership</Trans>
             </Link>
           )}
         </div>
 
         {!!tags.length && (
           <div className="space-y-2">
-            <div className="font-semibold">Tags</div>
+            <div className="font-semibold">
+              <Trans>Tags</Trans>
+            </div>
             <ul className="flex flex-col gap-1">
               {tags.map((t) => {
                 return (

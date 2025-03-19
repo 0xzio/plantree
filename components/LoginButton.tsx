@@ -1,5 +1,6 @@
 'use client'
 
+import { Trans } from '@lingui/react/macro'
 import { useAuthStatus } from './LoginDialog/useAuthStatus'
 import { useLoginDialog } from './LoginDialog/useLoginDialog'
 import { Button, ButtonProps } from './ui/button'
@@ -18,7 +19,7 @@ export function LoginButton({ ...rest }: Props) {
         setAuthStatus('login')
       }}
     >
-      {rest.children ? rest.children : 'Sign in'}
+      {rest.children ? rest.children : <Trans>Sign in</Trans>}
     </Button>
   )
 }

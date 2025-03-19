@@ -13,7 +13,15 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/theme-ui/Navigation.tsx:31
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:64
+msgid "*** $PEN"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:36
+msgid "100% run on Cloudflare and deploy freely."
+msgstr ""
+
+#: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr "关于"
 
@@ -29,11 +37,28 @@ msgstr ""
 msgid "Add navigation"
 msgstr ""
 
+#: app/[lang]/root/(home)/FeatureList.tsx:27
+msgid "AI-assistants"
+msgstr ""
+
 #: components/theme-ui/Airdrop/AirdropButton.tsx:11
 msgid "Airdrop"
 msgstr "空投"
 
-#: components/theme-ui/Navigation.tsx:28
+#: themes/card/pages/HomePage.tsx:39
+msgid "All posts"
+msgstr ""
+
+#: themes/card/pages/HomePage.tsx:64
+#: themes/aside/pages/HomePage.tsx:56
+msgid "All projects"
+msgstr ""
+
+#: components/LoginDialog/RegisterForm.tsx:118
+msgid "Already have an account"
+msgstr ""
+
+#: components/theme-ui/NavigationItem.tsx:18
 msgid "AMA"
 msgstr ""
 
@@ -45,9 +70,21 @@ msgstr ""
 msgid "Appearance"
 msgstr "外观"
 
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:45
+msgid "Asset"
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:72
+msgid "Authorize CLI login"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
 msgid "Backup"
 msgstr "备份"
+
+#: app/[lang]/root/(home)/FeatureList.tsx:92
+msgid "Beautiful themes"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
 msgid "Billing & plan"
@@ -68,29 +105,149 @@ msgstr ""
 msgid "Blog"
 msgstr "博客"
 
+#: app/[lang]/root/(home)/FeatureList.tsx:36
+msgid "Build for super individual"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:136
 msgid "Builtin"
 msgstr "内置"
 
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:88
+msgid "By subscribing, you'll receive the latest posts directly in your inbox."
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:108
 msgid "Campaign"
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:51
+msgid "Cancel"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:136
 msgid "Catalogue"
 msgstr ""
 
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:168
+msgid "Claim $PEN"
+msgstr ""
+
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:42
+msgid "Claim $PEN everyday!"
+msgstr ""
+
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:67
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:151
+msgid "claimable"
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:63
+msgid "CLI login successfully"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:145
 msgid "Collaborators"
 msgstr "写作者"
+
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:142
+#: components/theme-ui/PostActions/Collection/CollectButton.tsx:59
+#: components/theme-ui/PostActions/Collection/CollectButton.tsx:67
+msgid "Collect"
+msgstr ""
+
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:76
+msgid "Collect successfully"
+msgstr ""
+
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:96
+msgid "Collect this post"
+msgstr ""
+
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:137
+msgid "Collecting"
+msgstr ""
+
+#: components/theme-ui/PostActions/CollectorsDialog/CollectorsDialog.tsx:40
+msgid "Collectors"
+msgstr ""
+
+#: components/theme-ui/PostActions/Comment/CommentSheet.tsx:35
+msgid "Comments"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:83
+msgid "Comments built-in"
+msgstr ""
+
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:72
+msgid "Connect wallet to Claim $PEN"
+msgstr ""
+
+#: components/theme-ui/ContributeButton.tsx:35
+msgid "Contribute"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:165
 msgid "Coupons"
 msgstr "优惠码"
 
+#: app/[lang]/root/(home)/LaunchButton.tsx:22
+msgid "Create a site"
+msgstr ""
+
+#: components/LoginDialog/LoginForm.tsx:127
+msgid "Create one"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:70
+msgid "Created At"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:94
+msgid "Customize your site with a variety of visually appealing themes."
+msgstr ""
+
+#: components/Profile/ProfilePopover.tsx:117
+#: components/Profile/Profile.tsx:54
+msgid "Dashboard"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:76
+msgid "Data ownership"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:132
 msgid "Databases"
 msgstr "数据库"
+
+#: components/theme-ui/LangSwitcher.tsx:68
+msgid "Default"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetDialog/DeleteButton.tsx:45
+msgid "Delete permanently"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:30
+msgid "Deploy in 10 minutes"
+msgstr ""
+
+#: app/[lang]/root/(home)/DeployOwnButton.tsx:21
+msgid "Deploy my own"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:111
+msgid "Deploy new site"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:89
+msgid "Deploy PenX with One-click tools"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:33
+msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:148
 msgid "Design"
@@ -100,20 +257,53 @@ msgstr ""
 msgid "Domain"
 msgstr "域名"
 
+#: app/[lang]/root/(home)/FeatureList.tsx:47
+msgid "Easily create and send newsletters to keep your audience engaged."
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:27
 msgid "Edit navigation"
 msgstr ""
 
+#: components/LoginDialog/RegisterForm.tsx:74
+msgid "Email"
+msgstr ""
+
+#: components/LoginDialog/LoginDialog.tsx:56
+msgid "Email validate Link sent"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:85
+msgid "Engage with your audience through integrated comment features."
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:29
+msgid "Enhance your content creation with AI-powered tools and suggestions."
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:70
+msgid "Enjoy a seamless writing experience with our intuitive editor."
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:70
+msgid "Failed to update public status!"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:71
+#: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr "功能"
+
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:50
+msgid "Filename"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:165
 msgid "Footer"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:133
-#: components/theme-ui/Navigation.tsx:27
+#: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr "朋友"
 
@@ -125,7 +315,7 @@ msgstr "相册"
 msgid "General"
 msgstr ""
 
-#: components/theme-ui/Navigation.tsx:29
+#: components/theme-ui/NavigationItem.tsx:19
 msgid "Guestbook"
 msgstr "留言墙"
 
@@ -133,13 +323,30 @@ msgstr "留言墙"
 msgid "Header"
 msgstr ""
 
-#: components/theme-ui/Navigation.tsx:24
+#: components/theme-ui/NavigationItem.tsx:14
+#: components/Profile/ProfilePopover.tsx:99
 msgid "Home"
 msgstr "首页"
+
+#: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:65
+msgid "Image public status updated successfully!"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Import/Export"
 msgstr "导入/导出"
+
+#: app/[lang]/root/(home)/SiteCount.tsx:34
+msgid "individual blogs created"
+msgstr ""
+
+#: themes/wide/pages/HomePage.tsx:37
+#: themes/paper/pages/HomePage.tsx:31
+#: themes/docs/pages/HomePage.tsx:23
+#: themes/card/pages/HomePage.tsx:31
+#: themes/aside/pages/HomePage.tsx:33
+msgid "Latest"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:60
 msgid "Link accounts"
@@ -149,35 +356,151 @@ msgstr ""
 msgid "Location"
 msgstr "位置"
 
+#: components/LoginDialog/RegisterForm.tsx:124
+#: components/LoginDialog/LoginForm.tsx:115
+msgid "Log in"
+msgstr ""
+
+#: components/Profile/ProfilePopover.tsx:161
+msgid "Log out"
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:28
+msgid "Login to PenX CLI"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:78
+msgid "Maintain full control over your content and data."
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
 #: components/theme-ui/MembershipEntry.tsx:22
+#: themes/aside/components/Sidebar.tsx:79
 msgid "Membership"
 msgstr "会员"
 
+#: app/[lang]/root/(home)/FeatureList.tsx:54
+msgid "Memberships built-in"
+msgstr ""
+
+#: app/[lang]/root/(home)/Slogan.tsx:22
+msgid "Modern blogging tools"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:68
+msgid "Modern editor"
+msgstr ""
+
+#: themes/docs/pages/HomePage.tsx:38
+msgid "Most Popular"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:80
+msgid "My sites"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:123
 msgid "Navigation"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:45
+msgid "Newsletters built-in"
+msgstr ""
+
+#: components/theme-ui/Pagination.tsx:48
+#: components/theme-ui/Pagination.tsx:53
+msgid "Next"
+msgstr ""
+
+#: components/LoginDialog/LoginForm.tsx:121
+msgid "No account"
+msgstr ""
+
+#: themes/wide/pages/HomePage.tsx:41
+#: themes/paper/pages/HomePage.tsx:44
+#: themes/minimal/pages/HomePage.tsx:44
+#: themes/micro/pages/HomePage.tsx:46
+#: themes/docs/pages/HomePage.tsx:27
+#: themes/card/pages/HomePage.tsx:45
+#: themes/aside/pages/HomePage.tsx:37
+msgid "No posts found."
+msgstr ""
+
+#: themes/aside/pages/TagListPage.tsx:17
+msgid "No tags found."
+msgstr ""
+
+#: components/theme-ui/PostActions/TippersDialog/TippersDialog.tsx:44
+#: components/theme-ui/PostActions/CollectorsDialog/CollectorsDialog.tsx:47
+msgid "Not tipper found"
+msgstr ""
+
+#: app/[lang]/root/(home)/FeatureList.tsx:56
+msgid "Offer exclusive content and benefits to loyal members."
+msgstr ""
+
+#: themes/aside/components/Toc.tsx:30
+msgid "On this page"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:58
 msgid "Operation"
 msgstr "操作"
 
+#: app/[lang]/root/(home)/FeatureList.tsx:63
+msgid "Optimize your content for search engines with ease."
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:105
 msgid "Orders"
 msgstr "订单"
+
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:57
+msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:122
 msgid "Pages"
 msgstr "页面"
 
+#: components/LoginDialog/RegisterForm.tsx:90
+msgid "Password"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:55
 msgid "Path"
 msgstr ""
 
+#: app/[lang]/root/(home)/Slogan.tsx:27
+msgid "PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators."
+msgstr ""
+
+#: components/LoginDialog/LoginDialog.tsx:59
+msgid "Please check your email for the verification link."
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:31
+msgid "Please confirm your authorization for this login."
+msgstr ""
+
+#: app/[lang]/root/cli-login/CliLogin.tsx:66
+msgid "please try again~"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/posts/layout.tsx:31
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:103
-#: components/theme-ui/Navigation.tsx:25
+#: components/theme-ui/NavigationItem.tsx:15
 msgid "Posts"
 msgstr "文章"
+
+#: app/[lang]/root/(home)/FeatureList.tsx:108
+msgid "Powerful features to build to modern individual blog"
+msgstr ""
+
+#: components/theme-ui/Pagination.tsx:25
+#: components/theme-ui/Pagination.tsx:37
+msgid "Previous"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:102
 msgid "Products"
@@ -188,9 +511,35 @@ msgid "Profile"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:130
-#: components/theme-ui/Navigation.tsx:26
+#: components/theme-ui/NavigationItem.tsx:16
+#: themes/card/pages/HomePage.tsx:56
+#: themes/aside/pages/HomePage.tsx:48
 msgid "Projects"
 msgstr "项目"
+
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:60
+msgid "Public"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:53
+msgid "Public visit"
+msgstr ""
+
+#: components/theme-ui/PostMetadata.tsx:43
+msgid "Published on"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:83
+msgid "Read the deployment guide"
+msgstr ""
+
+#: components/LoginDialog/RegisterForm.tsx:112
+msgid "Register"
+msgstr ""
+
+#: components/LoginDialog/LoginDialog.tsx:41
+msgid "Register to PenX"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:201
 msgid "Save"
@@ -208,21 +557,56 @@ msgstr ""
 msgid "SEO"
 msgstr ""
 
+#: app/[lang]/root/(home)/FeatureList.tsx:61
+msgid "SEO friendly"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
+#: components/Profile/ProfilePopover.tsx:134
 msgid "Settings"
 msgstr "设置"
 
+#: components/LoginButton.tsx:22
+msgid "Sign in"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:39
+msgid "Sign in to deploy"
+msgstr ""
+
 #: app/[lang]/root/(home)/page.tsx:68
 msgid "Sites"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:65
+msgid "Size"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
 msgid "Socials"
 msgstr ""
 
+#: app/[lang]/root/(home)/StartWritingButton.tsx:29
+msgid "Start writing"
+msgstr ""
+
 #: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
 msgid "Submit Link"
+msgstr ""
+
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:125
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard.tsx:37
+msgid "Subscribe"
+msgstr ""
+
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:85
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard.tsx:29
+msgid "Subscribe to"
+msgstr ""
+
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:64
+msgid "Subscribed successfully!"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
@@ -230,9 +614,31 @@ msgid "Subscribers"
 msgstr "订阅者"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:86
-#: components/theme-ui/Navigation.tsx:30
+#: components/theme-ui/NavigationItem.tsx:20
+#: themes/sue/components/PostListWithTag.tsx:32
+#: themes/paper/pages/TagListPage.tsx:14
+#: themes/paper/components/PostListWithTag.tsx:32
+#: themes/minimal/pages/TagListPage.tsx:14
+#: themes/minimal/components/PostListWithTag.tsx:32
+#: themes/micro/pages/TagListPage.tsx:14
+#: themes/micro/components/PostListWithTag.tsx:32
+#: themes/garden/pages/TagListPage.tsx:14
+#: themes/garden/components/PostListWithTag.tsx:32
+#: themes/docs/pages/TagListPage.tsx:14
+#: themes/docs/components/PostListWithTag.tsx:32
+#: themes/card/components/PostListWithTag.tsx:32
+#: themes/aside/pages/TagListPage.tsx:14
+#: themes/aside/components/Sidebar.tsx:87
 msgid "Tags"
 msgstr "标签"
+
+#: app/[lang]/root/(home)/FeatureList.tsx:38
+msgid "Tailored for individual creators to express themselves freely."
+msgstr ""
+
+#: components/theme-ui/PostActions/TippersDialog/TippersDialog.tsx:37
+msgid "Tip records"
+msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:46
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:106
@@ -243,15 +649,44 @@ msgstr ""
 msgid "Today"
 msgstr "今日"
 
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:115
+msgid "Total cost"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/assets/AssetDialog/DeleteButton.tsx:47
+msgid "Trash"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:49
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:122
+#: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:55
 msgid "Type"
+msgstr ""
+
+#: app/[lang]/root/self-hosted/SelfHostedPage.tsx:102
+msgid "Update API token"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:89
 msgid "Updated successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-msgid "Your Posts"
+#: components/LoginDialog/LoginDialogContent.tsx:70
+msgid "Wallet login "
+msgstr ""
+
+#: components/LoginDialog/LoginDialog.tsx:29
+msgid "Welcome to PenX"
+msgstr ""
+
+#: components/theme-ui/Airdrop/AirdropDialog.tsx:141
+msgid "You can claim $PEN every day. Don’t miss out, claim today’s $PEN airdrop now."
+msgstr ""
+
+#: components/theme-ui/PostActions/Collection/CollectDialog.tsx:99
+msgid "You retain ownership of this post even if the author deletes it after being collected."
+msgstr ""
+
+#: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:100
+msgid "Your email"
 msgstr ""

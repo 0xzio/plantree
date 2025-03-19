@@ -1,6 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate, formatUsername, getUrl } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { Separator } from '../ui/separator'
 import { UserAvatar } from '../UserAvatar'
 import { LangSwitcher } from './LangSwitcher'
@@ -38,7 +39,9 @@ export function PostMetadata({ site, post, className }: Props) {
             ))}
           </div>
           <dl className="flex items-center gap-2 text-foreground/50 text-sm">
-            <dt className="sr-only">Published on</dt>
+            <dt className="sr-only">
+              <Trans>Published on</Trans>
+            </dt>
             <dd className="">
               <time>{formatDate(post.updatedAt)}</time>
             </dd>

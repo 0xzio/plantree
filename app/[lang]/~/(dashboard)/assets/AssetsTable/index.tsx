@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { JSX, useCallback, useEffect, useRef, useState } from 'react'
 import { cellRenderers } from '@/components/cells'
 import { FileCell } from '@/components/cells/file-cell'
 import { SystemDateCell } from '@/components/cells/system-date-cell'
@@ -14,6 +14,7 @@ import DataEditor, {
   Item,
   type GridColumn,
 } from '@glideapps/glide-data-grid'
+import { Trans } from '@lingui/react/macro'
 import { useTheme } from 'next-themes'
 
 const defaultProps: Partial<DataEditorProps> = {
@@ -29,7 +30,7 @@ export interface AssetsTableProps {
 }
 
 interface IColumns {
-  title: string
+  title: string | JSX.Element
   id: string
   hasMenu?: boolean
   dataType?: 'Bubble' | 'Image' | 'DatePicker' | 'Number' | 'SingleDropdown'
@@ -41,32 +42,32 @@ export function AssetsTable({ assets }: AssetsTableProps) {
 
   const initialColumns = [
     {
-      title: 'Asset',
+      title: <Trans>Asset</Trans>,
       id: 'asset',
       hasMenu: false,
     },
     {
-      title: 'filename',
+      title: <Trans>Filename</Trans>,
       id: 'name',
       hasMenu: false,
     },
     {
-      title: 'Type',
+      title: <Trans>Type</Trans>,
       id: 'contentType',
       hasMenu: false,
     },
     {
-      title: 'Public',
+      title: <Trans>Public</Trans>,
       id: 'isPublic',
       hasMenu: false,
     },
     {
-      title: 'Size',
+      title: <Trans>Size</Trans>,
       id: 'size',
       hasMenu: false,
     },
     {
-      title: 'Created At',
+      title: <Trans>Created At</Trans>,
       id: 'createdAt',
       hasMenu: false,
     },
@@ -202,7 +203,7 @@ export function AssetsTable({ assets }: AssetsTableProps) {
         {...defaultProps}
         ref={ref}
         customRenderers={cellRenderers}
-        columns={columns}
+        columns={columns as any}
         getCellContent={getContent}
         theme={getDataEditorTheme(isDark)}
         onCellEdited={onCellEdited}

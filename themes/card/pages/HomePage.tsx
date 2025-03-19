@@ -3,6 +3,7 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { HOME_PROJECT_LIMIT, LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -27,7 +28,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">
           <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-            Latest
+            <Trans>Latest</Trans>
           </h1>
 
           {posts.length > LATEST_POSTS_LIMIT && (
@@ -35,13 +36,13 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
               href="/posts"
               className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
             >
-              All posts &rarr;
+              <Trans>All posts</Trans> &rarr;
             </Link>
           )}
         </div>
 
         <div className="grid grid-cols-3 gap-x-6 gap-y-10">
-          {!posts.length && 'No posts found.'}
+          {!posts.length && <Trans>No posts found.</Trans>}
           {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}
@@ -52,7 +53,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
         <div>
           <div className="pb-6 pt-6 flex items-center justify-between">
             <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-              Projects
+              <Trans>Projects</Trans>
             </h1>
 
             {projects.length > HOME_PROJECT_LIMIT && (
@@ -60,7 +61,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
                 href="/projects"
                 className="text-brand hover:text-brand/80 dark:hover:text-brand/80"
               >
-                All projects &rarr;
+                <Trans>All projects</Trans> &rarr;
               </Link>
             )}
           </div>

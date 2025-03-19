@@ -15,6 +15,7 @@ import {
   useProfile,
   useSignIn,
 } from '@farcaster/auth-kit'
+import { Trans } from '@lingui/react/macro'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { LoginForm } from './LoginForm'
@@ -65,7 +66,9 @@ export function LoginDialogContent() {
             }}
           >
             <span className="icon-[token--ethm] w-6 h-5"></span>
-            <span>Wallet login </span>
+            <span>
+              <Trans>Wallet login </Trans>
+            </span>
           </WalletConnectButton>
         </div>
       )}

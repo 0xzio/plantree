@@ -3,6 +3,7 @@ import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { HOME_PROJECT_LIMIT, LATEST_POSTS_LIMIT } from '@/lib/constants'
 import { Link } from '@/lib/i18n'
 import { Post, PostListStyle, Project, Site, Tag } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostItem } from '../components/PostItem'
 
 interface Props {
@@ -27,7 +28,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
       <div className="">
         <div className="pb-6 pt-6 flex items-center justify-between">
           <h1 className="text-xl font-medium tracking-tight text-foreground sm:text-3xl leading-none">
-            Latest
+            <Trans>Latest</Trans>
           </h1>
 
           {posts.length > LATEST_POSTS_LIMIT && (
@@ -40,7 +41,7 @@ export function HomePage({ about, posts = [], projects, tags, site }: Props) {
           )}
         </div>
         <div className="grid grid-cols-1 gap-3">
-          {!posts.length && 'No posts found.'}
+          {!posts.length && <Trans>No posts found.</Trans>}
           {posts.slice(0, LATEST_POSTS_LIMIT).map((post) => {
             return <PostItem key={post.slug} post={post} />
           })}

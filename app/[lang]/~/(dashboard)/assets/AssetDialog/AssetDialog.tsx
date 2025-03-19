@@ -14,6 +14,7 @@ import { useLoadAsset } from '@/hooks/useLoadAsset'
 import { placeholderBlurhash, STATIC_URL } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { trpc } from '@/lib/trpc'
+import { Trans } from '@lingui/react/macro'
 import { Asset } from '@prisma/client'
 import { ExternalLink, Trash2, X } from 'lucide-react'
 import { toast } from 'sonner'
@@ -48,7 +49,9 @@ export function AssetDialog({}: Props) {
           </div>
           <div className="flex items-center gap-2">
             <div className="flex items-center gap-1">
-              <div className="text-sm">Public visit</div>
+              <div className="text-sm">
+                <Trans>Public visit</Trans>
+              </div>
               <Switch
                 defaultChecked={!!asset.isPublic}
                 onCheckedChange={async (value) => {
@@ -58,11 +61,14 @@ export function AssetDialog({}: Props) {
                       isPublic: value,
                     })
                     refetch()
-                    toast.success('Image public status updated successfully!')
+                    toast.success(
+                      <Trans>Image public status updated successfully!</Trans>,
+                    )
                   } catch (error) {
                     toast.error(
-                      extractErrorMessage(error) ||
-                        'Failed to update public status!',
+                      extractErrorMessage(error) || (
+                        <Trans>Failed to update public status!</Trans>
+                      ),
                     )
                   }
                 }}

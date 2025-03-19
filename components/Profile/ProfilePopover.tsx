@@ -23,6 +23,7 @@ import { usePathname, useRouter } from '@/lib/i18n'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
+import { Trans } from '@lingui/react/macro'
 import { AuthType } from '@prisma/client'
 import {
   DatabaseBackup,
@@ -94,7 +95,9 @@ export const ProfilePopover = memo(function ProfilePopover({
               }}
             >
               <Home className="mr-2 h-4 w-4" />
-              <span>Home</span>
+              <span>
+                <Trans>Home</Trans>
+              </span>
             </DropdownMenuItem>
           )}
 
@@ -110,7 +113,9 @@ export const ProfilePopover = memo(function ProfilePopover({
             }}
           >
             <Gauge className="mr-2 h-4 w-4" />
-            <span>Dashboard</span>
+            <span>
+              <Trans>Dashboard</Trans>
+            </span>
           </DropdownMenuItem>
 
           <DropdownMenuItem
@@ -125,7 +130,9 @@ export const ProfilePopover = memo(function ProfilePopover({
             }}
           >
             <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
+            <span>
+              <Trans>Settings</Trans>
+            </span>
           </DropdownMenuItem>
 
           {/* <DropdownMenuItem
@@ -150,7 +157,9 @@ export const ProfilePopover = memo(function ProfilePopover({
           }}
         >
           <LogOut className="mr-2 h-4 w-4" />
-          <span>Log out</span>
+          <span>
+            <Trans>Log out</Trans>
+          </span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>

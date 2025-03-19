@@ -16,6 +16,7 @@ import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useAuthStatus } from './useAuthStatus'
@@ -69,7 +70,9 @@ export function RegisterForm({}: Props) {
           name="email"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Email</FormLabel>
+              <FormLabel>
+                <Trans>Email</Trans>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="Email" {...field} className="w-full" />
               </FormControl>
@@ -83,7 +86,9 @@ export function RegisterForm({}: Props) {
           name="password"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Password</FormLabel>
+              <FormLabel>
+                <Trans>Password</Trans>
+              </FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -104,19 +109,19 @@ export function RegisterForm({}: Props) {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? <LoadingDots /> : <p>Register</p>}
+            {isLoading ? <LoadingDots /> : <Trans>Register</Trans>}
           </Button>
         </div>
       </form>
 
       <div className="text-center text-sm mt-2">
-        Already have an account?{' '}
+        <Trans>Already have an account</Trans>?{' '}
         <a
           href="#"
           className="text-brand"
           onClick={() => setAuthStatus('login')}
         >
-          Log in
+          <Trans>Log in</Trans>
         </a>
       </div>
     </Form>

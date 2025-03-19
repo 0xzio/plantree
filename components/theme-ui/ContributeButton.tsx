@@ -3,6 +3,7 @@
 import { Link } from '@/lib/i18n'
 import { Site } from '@/lib/theme.types'
 import { useSession } from '@/lib/useSession'
+import { Trans } from '@lingui/react/macro'
 import { usePathname } from 'next/navigation'
 import { useLoginDialog } from '../LoginDialog/useLoginDialog'
 
@@ -31,7 +32,7 @@ export function ContributeButton({ site, className }: Props) {
           }
         }}
       >
-        Contribute
+        <Trans>Contribute</Trans>
       </Link>
     </div>
   )

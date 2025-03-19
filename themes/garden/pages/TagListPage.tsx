@@ -1,5 +1,6 @@
-import { Tag } from '@/lib/theme.types'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
+import { Tag } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { TagList } from '../components/TagList'
 
 interface Props {
@@ -9,7 +10,9 @@ interface Props {
 export function TagListPage({ tags }: Props) {
   return (
     <div className="flex flex-col justify-center items-center mx-auto max-w-3xl">
-      <PageTitle>Tags</PageTitle>
+      <PageTitle>
+        <Trans>Tags</Trans>
+      </PageTitle>
       <div className="grid gap-y-3">
         {tags.length === 0 && 'No tags found.'}
         {tags.length > 0 && <TagList tags={tags} />}

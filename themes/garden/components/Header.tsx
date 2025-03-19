@@ -2,8 +2,9 @@ import { Profile } from '@/components/Profile/Profile'
 import { Airdrop } from '@/components/theme-ui/Airdrop'
 import { MembershipEntry } from '@/components/theme-ui/MembershipEntry'
 import { MobileSidebarSheet } from '@/components/theme-ui/MobileSidebar'
+import { NavigationItem } from '@/components/theme-ui/NavigationItem'
 import { Link } from '@/lib/i18n'
-import { Site } from '@/lib/theme.types'
+import { NavLink, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { Lobster } from 'next/font/google'
 import { PostTypeNav } from './PostTypeNav'
@@ -26,7 +27,7 @@ export const Header = ({ site }: Props) => {
       title: 'CreatorFi',
       visible: true,
     },
-  ]
+  ] as NavLink[]
   return (
     <header className="">
       <div className="flex items-center md:items-start w-full justify-between py-4 z-40 bg-background/40 backdrop-blur-sm">
@@ -40,17 +41,7 @@ export const Header = ({ site }: Props) => {
 
               if (!link.visible) return null
 
-              return (
-                <Link
-                  key={link.pathname}
-                  href={link.pathname}
-                  className={cn(
-                    'font-medium hover:text-brand dark:hover:text-brand/80 text-foreground/40',
-                  )}
-                >
-                  {link.title}
-                </Link>
-              )
+              return <NavigationItem key={link.pathname} link={link} />
             })}
 
             {site.tiers.length > 0 && <MembershipEntry />}

@@ -7,6 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from '@/components/ui/dialog'
+import { Trans } from '@lingui/react/macro'
 import { LoginDialogContent } from './LoginDialogContent'
 import { RegisterForm } from './RegisterForm'
 import { useAuthStatus } from './useAuthStatus'
@@ -24,8 +25,10 @@ export function LoginDialog({}: Props) {
         {authStatus === 'login' && (
           <>
             <DialogHeader>
-              <DialogTitle className="">Login</DialogTitle>
-              <DialogDescription>Login to write post</DialogDescription>
+              <DialogTitle className="mb-4 text-2xl text-center">
+                <Trans>Welcome to PenX</Trans>
+              </DialogTitle>
+              <DialogDescription className="hidden"></DialogDescription>
             </DialogHeader>
             <LoginDialogContent />
           </>
@@ -34,8 +37,9 @@ export function LoginDialog({}: Props) {
         {authStatus === 'register' && (
           <div className="h-[290px]">
             <DialogHeader>
-              <DialogTitle className="">Register</DialogTitle>
-              <DialogDescription>Register to write post</DialogDescription>
+              <DialogTitle className="mb-6 text-2xl text-center">
+                <Trans>Register to PenX</Trans>
+              </DialogTitle>
             </DialogHeader>
             <RegisterForm />
           </div>
@@ -49,10 +53,12 @@ export function LoginDialog({}: Props) {
             </DialogHeader>
             <div className="flex-1 flex flex-col gap-4 justify-center item-center text-center">
               <h1 className="text-2xl font-semibold">
-                Email validate Link sent
+                <Trans>Email validate Link sent</Trans>
               </h1>
               <p className="text-green-500">
-                Please check your email for the verification link.
+                <Trans>
+                  Please check your email for the verification link.
+                </Trans>
               </p>
             </div>
           </div>

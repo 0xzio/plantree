@@ -16,6 +16,7 @@ import {
   SheetTrigger,
 } from '@/components/ui/sheet'
 import { Post } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { CommentAmount } from './CommentAmount'
 
 interface Props {
@@ -30,7 +31,9 @@ export function CommentSheet({ post }: Props) {
       <Sheet open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
         <SheetContent className="flex flex-col gap-6 overflow-y-auto">
           <SheetHeader>
-            <SheetTitle>Comments</SheetTitle>
+            <SheetTitle>
+              <Trans>Comments</Trans>
+            </SheetTitle>
           </SheetHeader>
           <div className="px-4">
             <CommentWidget postId={post.id} isInPage={false} />

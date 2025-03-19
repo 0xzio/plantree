@@ -1,7 +1,7 @@
 'use client'
 
-import { usePathname } from '@/lib/i18n'
-import { Link } from '@/lib/i18n'
+import { Link, usePathname } from '@/lib/i18n'
+import { Trans } from '@lingui/react/macro'
 
 interface PaginationProps {
   totalPages: number
@@ -22,7 +22,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             className="cursor-auto disabled:opacity-50"
             disabled={!prevPage}
           >
-            Previous
+            <Trans>Previous</Trans>
           </button>
         )}
         {prevPage && (
@@ -34,7 +34,7 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             }
             rel="prev"
           >
-            Previous
+            <Trans>Previous</Trans>
           </Link>
         )}
         <span>
@@ -45,12 +45,12 @@ export function Pagination({ totalPages, currentPage }: PaginationProps) {
             className="cursor-auto disabled:opacity-50"
             disabled={!nextPage}
           >
-            Next
+            <Trans>Next</Trans>
           </button>
         )}
         {nextPage && (
           <Link href={`/${basePath}/page/${currentPage + 1}`} rel="next">
-            Next
+            <Trans>Next</Trans>
           </Link>
         )}
       </nav>

@@ -1,5 +1,6 @@
 import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { Post, Site, Tag } from '@/lib/theme.types'
+import { Trans } from '@lingui/react/macro'
 import { PostList } from './PostList'
 import { TagList } from './TagList'
 
@@ -27,7 +28,9 @@ export function PostListWithTag({
 
   return (
     <div className="flex flex-col">
-      <PageTitle>Tags</PageTitle>
+      <PageTitle>
+        <Trans>Tags</Trans>
+      </PageTitle>
       <TagList tags={tags} />
       <div className="mt-10">
         <PostList posts={displayPosts} site={site} />

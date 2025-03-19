@@ -1,11 +1,12 @@
 'use client'
 
-import { Trash2 } from 'lucide-react'
-import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { useAssets } from '@/hooks/useAssets'
 import { useTrashedAssets } from '@/hooks/useTrashedAssets'
 import { trpc } from '@/lib/trpc'
+import { Trans } from '@lingui/react/macro'
+import { Trash2 } from 'lucide-react'
+import { toast } from 'sonner'
 import { useAssetDialog } from './useAssetDialog'
 
 interface Props {}
@@ -39,7 +40,13 @@ export function DeleteButton({}: Props) {
       }}
     >
       <Trash2 size={16} className="" />
-      <div>{asset.isTrashed ? 'Delete permanently' : 'Trash'}</div>
+      <div>
+        {asset.isTrashed ? (
+          <Trans>Delete permanently</Trans>
+        ) : (
+          <Trans>Trash</Trans>
+        )}
+      </div>
     </Button>
   )
 }

@@ -1,8 +1,9 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useRouter } from '@/lib/i18n'
+import { Trans } from '@lingui/react/macro'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 
 export function LaunchButton() {
@@ -18,7 +19,7 @@ export function LaunchButton() {
         push('/create-space')
       }}
     >
-      Create a site
+      <Trans>Create a site</Trans>
     </Button>
   )
 }

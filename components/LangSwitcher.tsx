@@ -26,7 +26,7 @@ interface LangSwitcherProps {
 
 export function LangSwitcher({
   className,
-  locales = ['en', 'zh-CN', 'ja', 'ru'],
+  locales = ['en', 'ja', 'ru', 'zh-CN'],
 }: LangSwitcherProps) {
   const router = useRouter()
   const { i18n } = useLingui()

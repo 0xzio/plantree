@@ -4,6 +4,7 @@ import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
 import { Link, useRouter } from '@/lib/i18n'
 import { useSession } from '@/lib/useSession'
+import { Trans } from '@lingui/react/macro'
 
 export function DeployOwnButton() {
   const { data } = useSession()
@@ -16,9 +17,12 @@ export function DeployOwnButton() {
       asChild
     >
       <Link href="/self-hosted" className="overflow-hidden">
-        <div>Deploy my own</div>
+        <div>
+          <Trans>Deploy my own</Trans>
+        </div>
         {/* <div className="absolute top-0 right-0 text-xs bg-emerald-500 px-1 py-[] rounded-bl-lg text-white">
-          Recommend
+        <Trans>Recommend</Trans>
+          
         </div> */}
       </Link>
     </Button>

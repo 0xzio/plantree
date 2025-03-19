@@ -28,7 +28,7 @@ export default async function Layout({
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between">
           <div className="text-3xl font-bold">
-            <Trans>Your Posts</Trans>
+            <Trans>Posts</Trans>
           </div>
           <CreatePostButton />
         </div>

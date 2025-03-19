@@ -1,6 +1,7 @@
 'use client'
 
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { slug } from 'github-slugger'
 import { Node } from 'slate'
 
@@ -25,7 +26,9 @@ export const Toc = ({ content }: Props) => {
         height: 'calc(100vh - 4rem)',
       }}
     >
-      <h2 className="font-semibold mb-4">On this page</h2>
+      <h2 className="font-semibold mb-4">
+        <Trans>On this page</Trans>
+      </h2>
 
       <div className="flex flex-col gap-2">
         {headings.map((node: any) => {

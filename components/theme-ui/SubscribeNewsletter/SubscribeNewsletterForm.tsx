@@ -20,6 +20,7 @@ import { Site } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useSubscribeNewsletterDialog } from './useSubscribeNewsletterDialog'
@@ -60,7 +61,7 @@ export function SubscribeNewsletterForm({ site }: Props) {
         source: 'user',
       })
 
-      toast.success('Subscribed successfully!')
+      toast.success(<Trans>Subscribed successfully!</Trans>)
       setIsOpen(false)
     } catch (error) {
       console.log('========error:', error)
@@ -81,11 +82,13 @@ export function SubscribeNewsletterForm({ site }: Props) {
           </Avatar>
 
           <div className="font-semibold text-2xl mt-6">
-            Subscribe to {site.name}
+            <Trans>Subscribe to</Trans> {site.name}
           </div>
           <div className="text-foreground/60 text-center w-8/12">
-            By subscribing, you'll receive the latest posts directly in your
-            inbox.
+            <Trans>
+              By subscribing, you'll receive the latest posts directly in your
+              inbox.
+            </Trans>
           </div>
         </div>
         <FormField
@@ -93,7 +96,9 @@ export function SubscribeNewsletterForm({ site }: Props) {
           name="email"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Your email</FormLabel>
+              <FormLabel>
+                <Trans>Your email</Trans>
+              </FormLabel>
               <FormControl>
                 <Input
                   placeholder="hello@penx.io"
@@ -113,7 +118,13 @@ export function SubscribeNewsletterForm({ site }: Props) {
             className="w-full"
             disabled={isLoading}
           >
-            {isLoading ? <LoadingDots /> : <p>Subscribe</p>}
+            {isLoading ? (
+              <LoadingDots />
+            ) : (
+              <p>
+                <Trans>Subscribe</Trans>
+              </p>
+            )}
           </Button>
         </div>
       </form>
