@@ -66,7 +66,7 @@ export function CampaignCardContent({ campaign }: { campaign: Campaign }) {
   }, [])
 
   return (
-    <div className="border border-foreground/10 p-8 rounded-2xl flex flex-col gap-4 w-full sm:w-[500px] min-h-[310px] relative bg-background">
+    <div className="border border-foreground/10 p-8 rounded-2xl flex flex-col gap-4 w-full sm:w-[500px] min-h-[310px] relative bg-background text-foreground">
       <div className="flex items-center gap-2">
         {campaign.image && (
           <Image

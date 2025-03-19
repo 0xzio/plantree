@@ -10,8 +10,12 @@ export const ParagraphElement = withRef<typeof PlateElement>(
     return (
       <PlateElement
         ref={ref}
-        className={cn(className, 'm-0 px-0 py-1', getBlockClassName(props))}
         {...props}
+        className={cn(
+          'm-0 px-0 py-2 leading-normal text-foreground/85',
+          className,
+          getBlockClassName(props),
+        )}
       >
         {children}
       </PlateElement>
