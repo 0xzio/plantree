@@ -47,12 +47,12 @@ msgstr "空投"
 
 #: themes/card/pages/HomePage.tsx:39
 msgid "All posts"
-msgstr ""
+msgstr "全部文章"
 
 #: themes/card/pages/HomePage.tsx:64
 #: themes/aside/pages/HomePage.tsx:56
 msgid "All projects"
-msgstr ""
+msgstr "全部项目"
 
 #: components/LoginDialog/RegisterForm.tsx:118
 msgid "Already have an account"
@@ -60,7 +60,7 @@ msgstr ""
 
 #: components/theme-ui/NavigationItem.tsx:18
 msgid "AMA"
-msgstr ""
+msgstr "咨询"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "Analytics"
@@ -374,8 +374,8 @@ msgid "Maintain full control over your content and data."
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
-#: components/theme-ui/MembershipEntry.tsx:22
-#: themes/aside/components/Sidebar.tsx:79
+#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:29
+#: themes/aside/components/Sidebar.tsx:80
 msgid "Membership"
 msgstr "会员"
 
@@ -628,7 +628,7 @@ msgstr "订阅者"
 #: themes/docs/components/PostListWithTag.tsx:32
 #: themes/card/components/PostListWithTag.tsx:32
 #: themes/aside/pages/TagListPage.tsx:14
-#: themes/aside/components/Sidebar.tsx:87
+#: themes/aside/components/Sidebar.tsx:88
 msgid "Tags"
 msgstr "标签"
 

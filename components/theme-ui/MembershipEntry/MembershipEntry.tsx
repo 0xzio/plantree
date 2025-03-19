@@ -11,8 +11,7 @@ interface Props {
 export function MembershipEntry({ className }: Props) {
   const pathname = usePathname()
   const { i18n } = useLingui()
-
-  console.log('=====i18n:', i18n)
+  const isCN = ['zh-CN', 'zh-TW'].includes(i18n.locale)
 
   return (
     <Link
@@ -20,10 +19,11 @@ export function MembershipEntry({ className }: Props) {
       className={cn(
         'font-medium hover:text-brand text-foreground/90',
         'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
+        isCN && 'py-1',
         className,
       )}
     >
-      <Trans>Membership</Trans>
+      {isCN ? '成为会员' : <Trans>Membership</Trans>}
     </Link>
   )
 }

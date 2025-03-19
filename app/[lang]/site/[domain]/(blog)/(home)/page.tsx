@@ -1,5 +1,6 @@
 import { FriendsProvider } from '@/components/FriendsContext'
 import { ProjectsProvider } from '@/components/ProjectsContext'
+import { initLingui } from '@/initLingui'
 import {
   getFriends,
   getPage,
@@ -9,6 +10,7 @@ import {
   getTags,
 } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { AppearanceConfig } from '@/lib/theme.types'
 import { Metadata } from 'next'
 
 type Params = Promise<{ domain: string; lang: string }>
@@ -24,8 +26,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const site = await getSite(await params)
 
-  console.log('await params====:', await params)
-
   return {
     title: site.seoTitle,
     description: site.seoDescription,
@@ -33,11 +33,19 @@ export async function generateMetadata({
 }
 
 export default async function HomePage(props: {
-  params: Promise<{ domain: string }>
+  params: Promise<{ domain: string; lang: string }>
 }) {
   const params = await props.params
-
   const site = await getSite(params)
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const lang = params.lang
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+
+  initLingui(locale)
+
   const [posts, tags, friends, projects, about] = await Promise.all([
     getPosts(site.id),
     getTags(site.id),

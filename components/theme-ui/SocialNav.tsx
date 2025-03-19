@@ -28,7 +28,8 @@ export function SocialNav({ site, className, size = 5 }: Props) {
       <SocialIcon kind="farcaster" href={socials.farcaster} size={size} />
       <SocialIcon kind="github" href={socials.github} size={size} />
       <SocialIcon kind="bilibili" href={socials.bilibili} size={size} />
-      <SocialIcon kind="mail" href={`mailto:${socials?.email}`} size={6} />
+      <SocialIcon kind="mail" href={`mailto:${socials?.email}`} size={size} />
     </div>
   )
 }
+

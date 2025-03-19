@@ -41,7 +41,13 @@ export const Header = ({ site }: Props) => {
 
               if (!link.visible) return null
 
-              return <NavigationItem key={link.pathname} link={link} />
+              return (
+                <NavigationItem
+                  key={link.pathname}
+                  link={link}
+                  className="text-sm text-foreground/50"
+                />
+              )
             })}
 
             {site.tiers.length > 0 && <MembershipEntry />}

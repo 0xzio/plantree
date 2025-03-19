@@ -1,5 +1,7 @@
+import { initLingui } from '@/initLingui'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { AppearanceConfig } from '@/lib/theme.types'
 import { GateType, Post } from '@prisma/client'
 import { produce } from 'immer'
 import { Metadata } from 'next'
@@ -27,7 +29,6 @@ export async function generateMetadata(props: {
   const params = await props.params
   const site = await getSite(params)
   const slug = decodeURI(params.slug.join('/'))
-  const lang = params.lang
   const post = await getPost(site.id, slug)
   return {
     title: post?.title || site.seoTitle,
@@ -42,9 +43,17 @@ export async function generateStaticParams() {
 
 export default async function Page(props: { params: Params }) {
   const params = await props.params
-  const slug = decodeURI(params.slug.join('/'))
-  const lang = params.lang
   const site = await getSite(params)
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const lang = params.lang
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+
+  initLingui(locale)
+
+  const slug = decodeURI(params.slug.join('/'))
   const posts = await getPosts(site.id)
   const rawPost = await getPost(site.id, slug)
 

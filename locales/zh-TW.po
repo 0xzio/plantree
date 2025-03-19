@@ -374,8 +374,8 @@ msgid "Maintain full control over your content and data."
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
-#: components/theme-ui/MembershipEntry.tsx:22
-#: themes/aside/components/Sidebar.tsx:79
+#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:29
+#: themes/aside/components/Sidebar.tsx:80
 msgid "Membership"
 msgstr "会员"
 
@@ -628,7 +628,7 @@ msgstr ""
 #: themes/docs/components/PostListWithTag.tsx:32
 #: themes/card/components/PostListWithTag.tsx:32
 #: themes/aside/pages/TagListPage.tsx:14
-#: themes/aside/components/Sidebar.tsx:87
+#: themes/aside/components/Sidebar.tsx:88
 msgid "Tags"
 msgstr "标签"
 

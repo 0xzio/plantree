@@ -47,13 +47,12 @@ export const Sidebar = ({ site, tags }: Props) => {
         </div>
         {site.tiers.length > 0 && (
           <div>
-            <Trans>Membership</Trans>
-            <MembershipEntry />
+            <MembershipEntry className="py-1.5 px-3" />
           </div>
         )}
 
         <SocialNav className="" site={site} size={4} />
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-3">
           {links.map((link) => {
             if (link.pathname === '/creator-fi' && !site.spaceId) {
               return null
@@ -62,11 +61,12 @@ export const Sidebar = ({ site, tags }: Props) => {
             if (!link.visible) return null
 
             return (
-              <NavigationItem
-                key={link.pathname}
-                link={link}
-                className="justify-start font-medium"
-              />
+              <div key={link.pathname}>
+                <NavigationItem
+                  link={link}
+                  className="justify-start font-medium inline-flex"
+                />
+              </div>
             )
           })}
 

@@ -11,23 +11,6 @@ import { Metadata } from 'next'
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
 
-// export async function generateMetadata({ params }: any): Promise<Metadata> {
-//   const site = await getSite(params)
-
-//   const title = site?.name || ''
-//   const description = site?.description || ''
-
-//   return {
-//     title,
-//     description,
-//     icons: [site.logo || 'https://penx.io/favicon.ico'],
-//     openGraph: {
-//       title,
-//       description,
-//     },
-//   }
-// }
-
 export async function generateStaticParams() {
   return linguiConfig.locales.map((lang: any) => ({ lang }))
 }
@@ -40,7 +23,6 @@ export default async function RootLayout({
   params: Promise<{ domain: string; lang: string }>
 }) {
   const site = await getSite(await params)
-
   const { appearance } = (site.config || {}) as {
     appearance: AppearanceConfig
   }

@@ -15,17 +15,20 @@ export function FriendsBlock({ friends, className }: Props) {
     (friend) => friend.status === 'approved',
   )
   const pendingFriends = friends.filter((friend) => friend.status === 'pending')
+
   return (
     <section className={cn('flex flex-col gap-6', className)}>
       <SubmitFriendLinkDialog />
       <div className="space-y-8">
         <FriendList friends={reviewedFriends} />
-        <div className="space-y-3">
-          <Badge variant="secondary">
-            <div className="text-sm">Reviewing</div>
-          </Badge>
-          <FriendList pending friends={pendingFriends} />
-        </div>
+        {pendingFriends.length > 0 && (
+          <div className="space-y-3">
+            <Badge variant="secondary">
+              <div className="text-sm">Reviewing</div>
+            </Badge>
+            <FriendList pending friends={pendingFriends} />
+          </div>
+        )}
       </div>
     </section>
   )

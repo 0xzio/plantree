@@ -12,7 +12,7 @@ interface Props {
 export function NavigationItem({ link, className }: Props) {
   let title = link.title as ReactNode
   if (link.pathname === '/') title = <Trans>Home</Trans>
-  if (link.pathname === '/posts') title = <Trans>Posts</Trans>
+  if (link.pathname === '/posts') title = <Trans>Blog</Trans>
   if (link.pathname === '/projects') title = <Trans>Projects</Trans>
   if (link.pathname === '/friends') title = <Trans>Friends</Trans>
   if (link.pathname === '/ama') title = <Trans>AMA</Trans>
