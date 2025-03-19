@@ -77,11 +77,7 @@ export const ProductElement = withRef<typeof PlateElement>((props, ref) => {
     <PlateElement
       ref={ref}
       {...props}
-      className={cn(
-        props.className,
-        'rounded-2xl p-4 border space-y-1',
-        className,
-      )}
+      className={cn(props.className, className)}
       contentEditable={false}
     >
       <ProductCard productId={props.element.productId as string} />

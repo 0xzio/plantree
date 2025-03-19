@@ -51,6 +51,7 @@ export default async function RootLayout({
           '--primary': brand,
         } as any
       }
+
     >
       <SiteLayout site={site} tags={tags}>
         <SiteProvider site={site as any}>
