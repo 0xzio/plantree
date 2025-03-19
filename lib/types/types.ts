@@ -165,6 +165,9 @@ export type Socials = {
   instagram: string
   discord: string
   medium: string
+  slack: string
+  telegram: string
+  bilibili: string
 }
 
 export type SubscriptionRaw = {

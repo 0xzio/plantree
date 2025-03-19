@@ -36,6 +36,10 @@ const FormSchema = z.object({
   instagram: z.string().optional(),
   medium: z.string().optional(),
   discord: z.string().optional(),
+  email: z.string().optional(),
+  slack: z.string().optional(),
+  telegram: z.string().optional(),
+  bilibili: z.string().optional(),
 })
 
 interface Props {}
@@ -45,7 +49,7 @@ export function SocialSettingForm({}: Props) {
   const site = useSiteContext()
   const { isPending, mutateAsync } = trpc.site.updateSite.useMutation()
 
-  const social = (site.socials || {}) as Socials
+  const social = (site.socials || {}) as z.infer<typeof FormSchema>
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -61,6 +65,9 @@ export function SocialSettingForm({}: Props) {
       instagram: social?.instagram || '',
       discord: social?.discord || '',
       medium: social?.medium || '',
+      slack: social?.slack || '',
+      telegram: social?.slack || '',
+      bilibili: social?.medium || '',
     },
   })
 
@@ -68,19 +75,7 @@ export function SocialSettingForm({}: Props) {
     try {
       await mutateAsync({
         id: site.id,
-        socials: {
-          farcaster: data.farcaster,
-          x: data.x,
-          mastodon: data.mastodon,
-          github: data.github,
-          facebook: data.facebook,
-          youtube: data.youtube,
-          linkedin: data.linkedin,
-          threads: data.threads,
-          instagram: data.instagram,
-          discord: data.discord,
-          medium: data.medium,
-        },
+        socials: data,
       })
       refetch()
       toast.success('Updated successfully!')
@@ -101,11 +96,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>X</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -119,11 +110,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Facebook</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -137,11 +124,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Youtube</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -155,11 +138,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Instagram</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -173,11 +152,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Discord</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -189,13 +164,79 @@ export function SocialSettingForm({}: Props) {
           name="linkedin"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>linkedin</FormLabel>
+              <FormLabel>Linkedin</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="slack"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Slack</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="threads"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Threads</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="mastodon"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Mastodon</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="medium"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Medium</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="telegram"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Telegram</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -209,11 +250,7 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>GitHub</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -227,11 +264,35 @@ export function SocialSettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Farcaster</FormLabel>
               <FormControl>
-                <Input
-                  placeholder="https://..."
-                  {...field}
-                  className="w-full"
-                />
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="bilibili"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Bilibili</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel>Email</FormLabel>
+              <FormControl>
+                <Input placeholder="" {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>

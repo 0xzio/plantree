@@ -215,12 +215,16 @@ export const siteRouter = router({
             mastodon: z.string().optional(),
             github: z.string().optional(),
             facebook: z.string().optional(),
-            youtube: z.string().optional(),
+            ymutube: z.string().optional(),
             linkedin: z.string().optional(),
             threads: z.string().optional(),
             instagram: z.string().optional(),
             discord: z.string().optional(),
             medium: z.string().optional(),
+            slack: z.string().optional(),
+            telegram: z.string().optional(),
+            bilibili: z.string().optional(),
+            email: z.string().optional(),
           })
           .optional(),
         analytics: z

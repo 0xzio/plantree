@@ -13,16 +13,22 @@ export function SocialNav({ site, className, size = 5 }: Props) {
   const socials = site.socials
   return (
     <div className={cn('flex gap-4 item-center', className)}>
-      <SocialIcon kind="mail" href={`mailto:${socials?.email}`} size={6} />
-      <SocialIcon kind="github" href={socials.github} size={size} />
-      <SocialIcon kind="discord" href={socials.discord} size={size} />
+      <SocialIcon kind="x" href={socials.x} size={size} />
       <SocialIcon kind="twitter" href={socials.twitter} size={size} />
       <SocialIcon kind="facebook" href={socials.facebook} size={size} />
       <SocialIcon kind="youtube" href={socials.youtube} size={size} />
       <SocialIcon kind="linkedin" href={socials.linkedin} size={size} />
-      <SocialIcon kind="x" href={socials.x} size={size} />
+      <SocialIcon kind="discord" href={socials.discord} size={size} />
       <SocialIcon kind="instagram" href={socials.instagram} size={size} />
+      <SocialIcon kind="mastodon" href={socials.mastodon} size={size} />
+      <SocialIcon kind="medium" href={socials.medium} size={size} />
       <SocialIcon kind="threads" href={socials.threads} size={size} />
+      <SocialIcon kind="slack" href={socials.slack} size={size} />
+      <SocialIcon kind="telegram" href={socials.telegram} size={size} />
+      <SocialIcon kind="farcaster" href={socials.farcaster} size={size} />
+      <SocialIcon kind="github" href={socials.github} size={size} />
+      <SocialIcon kind="bilibili" href={socials.bilibili} size={size} />
+      <SocialIcon kind="mail" href={`mailto:${socials?.email}`} size={6} />
     </div>
   )
 }
