@@ -2,6 +2,7 @@
 
 import { Link, usePathname } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 
 interface Props {}
 
@@ -24,15 +25,15 @@ export function PostsNav({}: Props) {
   return (
     <div className="flex border-b border-foreground/10 gap-8">
       <Link href={Paths.drafts} className={linkClassName(Paths.drafts)}>
-        Drafts
+        <Trans>Drafts</Trans>
       </Link>
 
       <Link href={Paths.published} className={linkClassName(Paths.published)}>
-        Published
+        <Trans>Published</Trans>
       </Link>
 
       <Link href={Paths.archived} className={linkClassName(Paths.archived)}>
-        Archived
+        <Trans>Archived</Trans>
       </Link>
     </div>
   )

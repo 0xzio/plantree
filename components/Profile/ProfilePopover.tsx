@@ -109,7 +109,7 @@ export const ProfilePopover = memo(function ProfilePopover({
                 push(path)
                 return
               }
-              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
+              window.open(`${location.protocol}//${ROOT_DOMAIN}${path}`)
             }}
           >
             <Gauge className="mr-2 h-4 w-4" />
@@ -126,7 +126,7 @@ export const ProfilePopover = memo(function ProfilePopover({
                 push(path)
                 return
               }
-              location.href = `${location.protocol}//${ROOT_DOMAIN}${path}`
+              window.open(`${location.protocol}//${ROOT_DOMAIN}${path}`)
             }}
           >
             <Settings className="mr-2 h-4 w-4" />

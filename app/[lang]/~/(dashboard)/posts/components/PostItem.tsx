@@ -45,7 +45,7 @@ export function PostItem({ post, status }: PostItemProps) {
   const [date, setDate] = useState<Date>(post.publishedAt || new Date())
   const [open, setOpen] = useState(false)
   const site = useSiteContext()
-  const { isSubdomain, domain } = getSiteDomain(site as any)
+  const { isSubdomain, domain } = getSiteDomain(site as any, false)
   const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   function getContent() {
