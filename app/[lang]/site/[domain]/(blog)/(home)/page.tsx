@@ -11,6 +11,7 @@ import {
 } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { AppearanceConfig } from '@/lib/theme.types'
+import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
 
 type Params = Promise<{ domain: string; lang: string }>
@@ -18,6 +19,10 @@ type Params = Promise<{ domain: string; lang: string }>
 export const dynamic = 'force-static'
 // export const revalidate = 86400; // 3600 * 24
 export const revalidate = 60
+
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
 
 export async function generateMetadata({
   params,

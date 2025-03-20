@@ -29,7 +29,7 @@ export default async function Page({
   const page = await getPage(site.id, 'friends')
 
   return (
-    <div className="mx-auto max-w-2xl">
+    <div className="mx-auto max-w-3xl w-full">
       <FriendsProvider friends={friends}>
         <ContentRender content={page?.content || editorDefaultValue} />
       </FriendsProvider>

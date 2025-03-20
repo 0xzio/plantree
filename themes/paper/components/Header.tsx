@@ -12,7 +12,7 @@ interface Props {
 
 export const Header = ({ site, className }: Props) => {
   return (
-    <header className="-mx-10">
+    <header className="-mx-4 sm:-mx-10">
       <div className="flex item-center gap-2 justify-between p-4">
         <div>
           <MobileSidebarSheet site={site} />
@@ -23,8 +23,8 @@ export const Header = ({ site, className }: Props) => {
         <Profile></Profile>
       </div>
       <div className="flex flex-col items-center pt-2 pb-10 px-10">
-        <h1 className="text-3xl font-bold">{site.name}</h1>
-        <div className="text-foreground/70">{site.description}</div>
+        <h1 className="text-3xl font-bold text-center">{site.name}</h1>
+        <div className="text-foreground/70 text-center">{site.description}</div>
       </div>
       <div
         className={cn(

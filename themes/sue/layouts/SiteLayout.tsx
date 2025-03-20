@@ -13,7 +13,7 @@ export function SiteLayout({ children, site }: Props) {
   return (
     <SectionContainer>
       <Header site={site} />
-      <main className="mb-auto px-4 mx-auto pt-0 md:pt-20 w-full max-w-2xl">
+      <main className="mb-auto px-4 mx-auto pt-0 sm:pt-20 w-full max-w-2xl">
         {children}
       </main>
       <Footer site={site} />

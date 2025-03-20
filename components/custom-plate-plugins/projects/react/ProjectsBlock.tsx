@@ -25,7 +25,7 @@ export function ProjectsBlock({ projects, className }: Props) {
               <AvatarImage src={item.icon} />
               <AvatarFallback>{item.name.slice(0, 1)}</AvatarFallback>
             </Avatar>
-            <div>
+            <div className="flex-1">
               <div className="space-y-3">
                 <div className="flex-col gap-2">
                   <h2 className="text-lg font-semibold">{item.name}</h2>

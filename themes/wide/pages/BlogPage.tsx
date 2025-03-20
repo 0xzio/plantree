@@ -20,7 +20,7 @@ export function BlogPage({
   initialDisplayPosts,
 }: Props) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-8">
       <PageTitle className="mt-0">
         <Trans>Blog</Trans>
       </PageTitle>
