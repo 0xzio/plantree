@@ -9,7 +9,9 @@ import { LinguiClientProvider } from '@/components/LinguiClientProvider'
 import { SiteProvider } from '@/components/SiteContext'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import { initLingui } from '@/initLingui'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSite } from '@/lib/fetchers'
+import { redirectTo404 } from '@/lib/redirectTo404'
 import { AppearanceConfig } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
@@ -18,6 +20,7 @@ import { Metadata } from 'next'
 import { Poppins, Roboto } from 'next/font/google'
 import Head from 'next/head'
 import { headers } from 'next/headers'
+import { redirect } from 'next/navigation'
 import { GoogleAnalytics } from 'nextjs-google-analytics'
 import { Providers } from '../../providers'
 
@@ -36,13 +39,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const site = await getSite(await params)
 
-  const title = site.seoTitle
-  const description = site.seoDescription
+  const title = site?.seoTitle || ''
+  const description = site?.seoDescription || ''
 
   return {
     title,
     description,
-    icons: [site.logo || 'https://penx.io/favicon.ico'],
+    icons: [site?.logo || 'https://penx.io/favicon.ico'],
     openGraph: {
       title,
       description,
@@ -63,6 +66,9 @@ export default async function RootLayout({
   params: Promise<{ domain: string; lang: string }>
 }) {
   const site = await getSite(await params)
+
+  if (!site) return redirectTo404()
+
   const lang = (await params).lang
   const { appearance } = (site.config || {}) as {
     appearance: AppearanceConfig

@@ -27,7 +27,7 @@ import { useSubmitFriendLinkDialog } from './useSubmitFriendLinkDialog'
 const FormSchema = z.object({
   name: z.string().min(1, { message: 'Name is required' }),
   introduction: z.string().min(5, { message: 'Introduction too short' }),
-  avatar: z.string(),
+  avatar: z.string().min(1, { message: 'Please upload your avatar' }),
   url: z.string().url(),
 })
 
@@ -64,7 +64,10 @@ export function SubmitFriendLinkForm() {
           name="avatar"
           render={({ field }) => (
             <FormItem>
-              <FileUpload saveToDB={false} {...field} />
+              <FormControl>
+                <FileUpload saveToDB={false} {...field} />
+              </FormControl>
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -119,3 +122,5 @@ export function SubmitFriendLinkForm() {
     </Form>
   )
 }
+
+

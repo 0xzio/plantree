@@ -40,13 +40,14 @@ export async function getSite(params: any) {
 
   return await unstable_cache(
     async () => {
-      const { siteId } = await prisma.domain.findUniqueOrThrow({
+      const domainRes = await prisma.domain.findUnique({
         where: { domain: domain, isSubdomain },
         select: { siteId: true, isSubdomain: true },
       })
+      if (!domainRes) return null as any as Site
 
       const site = await prisma.site.findUniqueOrThrow({
-        where: { id: siteId },
+        where: { id: domainRes.siteId },
         include: {
           user: true,
           channels: true,

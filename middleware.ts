@@ -87,6 +87,7 @@ export default async function middleware(req: NextRequest) {
 
   const isDashboard = path.startsWith('/~')
 
+  // console.log('====isRoot:', isRoot, path)
   if (isRoot) {
     if (path.startsWith('/docs/')) {
       const newUrl = `https://docs.penx.io/${path.replace('/docs/', 'posts/')}`

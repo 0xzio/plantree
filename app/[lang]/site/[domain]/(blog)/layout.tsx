@@ -1,12 +1,15 @@
 import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SiteProvider } from '@/components/SiteContext'
 import { initLingui } from '@/initLingui'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSite, getTags } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { redirectTo404 } from '@/lib/redirectTo404'
 import { AppearanceConfig } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
+import { redirect } from 'next/navigation'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
@@ -23,6 +26,8 @@ export default async function RootLayout({
   params: Promise<{ domain: string; lang: string }>
 }) {
   const site = await getSite(await params)
+  if (!site) return redirectTo404()
+
   const { appearance } = (site.config || {}) as {
     appearance: AppearanceConfig
   }
@@ -51,7 +56,6 @@ export default async function RootLayout({
           '--primary': brand,
         } as any
       }
-
     >
       <SiteLayout site={site} tags={tags}>
         <SiteProvider site={site as any}>

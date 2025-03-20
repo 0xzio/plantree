@@ -1,6 +1,7 @@
 import { FriendsProvider } from '@/components/FriendsContext'
 import { ProjectsProvider } from '@/components/ProjectsContext'
 import { initLingui } from '@/initLingui'
+import { ROOT_DOMAIN } from '@/lib/constants'
 import {
   getFriends,
   getPage,
@@ -10,6 +11,7 @@ import {
   getTags,
 } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { redirectTo404 } from '@/lib/redirectTo404'
 import { AppearanceConfig } from '@/lib/theme.types'
 import linguiConfig from '@/lingui.config'
 import { Metadata } from 'next'
@@ -32,8 +34,8 @@ export async function generateMetadata({
   const site = await getSite(await params)
 
   return {
-    title: site.seoTitle,
-    description: site.seoDescription,
+    title: site?.seoTitle || '',
+    description: site?.seoDescription || '',
   }
 }
 
@@ -42,6 +44,8 @@ export default async function HomePage(props: {
 }) {
   const params = await props.params
   const site = await getSite(params)
+  if (!site) return redirectTo404()
+
   const { appearance } = (site.config || {}) as {
     appearance: AppearanceConfig
   }
