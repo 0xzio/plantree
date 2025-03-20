@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { ModeToggle } from '@/components/ModeToggle'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { Link, usePathname } from '@/lib/i18n'
@@ -174,8 +175,11 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         <ImportPostEntry />
       </div>
       <div className="">
-        <VisitSiteButton />
         <UpgradeButton />
+        <div className="flex items-center justify-between gap-1 pl-4 mb-4 ">
+          <VisitSiteButton />
+          <ModeToggle />
+        </div>
       </div>
     </div>
   )

@@ -17,7 +17,7 @@ export function VisitSiteButton({}: Props) {
   const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
 
   return (
-    <div className="px-4 mb-4">
+    <div className="flex-1">
       <Button
         variant="outline"
         size="lg"

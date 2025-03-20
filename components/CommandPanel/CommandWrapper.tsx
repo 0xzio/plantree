@@ -1,10 +1,9 @@
 import { Dispatch, PropsWithChildren, SetStateAction } from 'react'
-import { Command } from 'cmdk'
-import { styled } from '@fower/react'
 import { DialogDescription, DialogTitle } from '@radix-ui/react-dialog'
+import { Command } from 'cmdk'
 
-const CommandDialog = styled(Command.Dialog)
-const StyledCommand = styled(Command)
+// const CommandDialog = styled(Command.Dialog)
+// const StyledCommand = styled(Command)
 
 interface CommandWrapperProps {
   isMobile?: boolean
@@ -22,18 +21,14 @@ export const CommandWrapper = ({
 }: PropsWithChildren<CommandWrapperProps>) => {
   if (isMobile) {
     return (
-      <StyledCommand
-        bgRed100
-        w-100p
-        left-50p
-        bgWhite
-        css={
+      <Command
+        style={
           {
             // height: 'fit-content',
           }
         }
         loop
-        className="command-panel"
+        className="command-panel bg-background left-[50%] w-full"
         onValueChange={(value) => {
           console.log(value)
         }}
@@ -50,24 +45,17 @@ export const CommandWrapper = ({
         }}
       >
         {children}
-      </StyledCommand>
+      </Command>
     )
   }
   return (
-    <CommandDialog
-      shadow="0 16px 70px rgba(0,0,0,.2)"
-      rounded2XL
-      w-640
-      fixed
-      left-50p
-      zIndex-10000
-      translateX="-50%"
-      bgWhite
-      css={{
+    <Command.Dialog
+      // shadow="0 16px 70px rgba(0,0,0,.2)"
+      style={{
         height: 'fit-content',
       }}
       loop
-      className="command-panel top-[20vh]"
+      className="command-panel top-[20vh] left-[50%] w-[640px] rounded-2xl fixed z-[10000] -translate-x-[50%] shadow-2xl border border-foreground/5 bg-background"
       open={open}
       onOpenChange={setOpen}
       onValueChange={(value) => {
@@ -88,6 +76,6 @@ export const CommandWrapper = ({
       <DialogTitle className="hidden"></DialogTitle>
       <DialogDescription className="hidden"></DialogDescription>
       {children}
-    </CommandDialog>
+    </Command.Dialog>
   )
 }

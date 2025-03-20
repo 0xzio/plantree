@@ -1,8 +1,9 @@
 import { Dispatch, SetStateAction, useMemo } from 'react'
 import { usePaletteDrawer } from '@/hooks'
 import { usePages } from '@/hooks/usePages'
-import { File } from 'lucide-react'
+import { usePosts } from '@/hooks/usePosts'
 import { useRouter } from '@/lib/i18n'
+import { File } from 'lucide-react'
 import { LoadingDots } from '../icons/loading-dots'
 import { CommandGroup, CommandItem } from './command-components'
 import { useOpen } from './hooks/useOpen'
@@ -15,8 +16,8 @@ interface Props {
 
 export function SearchPageList({ heading = '', isRecent = false }: Props) {
   const { close } = useOpen()
-  const { data = [], isLoading } = usePages()
-  const pages = isRecent ? data.slice(0, 3) : data
+  const { data = [], isLoading } = usePosts()
+  const pages = isRecent ? data.slice(0, 20) : data
   const { search, setSearch } = useSearch()
   const q = search.replace(/^@(\s+)?/, '') || ''
   const paletteDrawer = usePaletteDrawer()
