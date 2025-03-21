@@ -16,9 +16,14 @@ import { ProfilePopover } from './ProfilePopover'
 interface Props {
   showDashboard?: boolean
   buttonProps?: ButtonProps
+  appearance?: 'button' | 'icon'
 }
 
-export function Profile({ showDashboard = false, buttonProps }: Props) {
+export function Profile({
+  showDashboard = false,
+  buttonProps,
+  appearance = 'button',
+}: Props) {
   const { data, status } = useSession()
   const { site } = useSite()
   const { push } = useRouter()
@@ -35,7 +40,9 @@ export function Profile({ showDashboard = false, buttonProps }: Props) {
   return (
     <>
       <LoginDialog />
-      {!authenticated && <LoginButton {...buttonProps} />}
+      {!authenticated && (
+        <LoginButton {...buttonProps} appearance={appearance} />
+      )}
       {authenticated && (
         <div className="flex items-center gap-2">
           {showDashboard && (

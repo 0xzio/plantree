@@ -72,8 +72,6 @@ export function Post() {
     200,
   )
 
-  console.log('=========>>>>>>post:', post)
-
   return (
     <div className="w-full h-full">
       <div className="relative min-h-[500px] py-12 px-8 z-0">

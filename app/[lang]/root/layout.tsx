@@ -1,7 +1,7 @@
 import '../../globals.css'
 // import '@farcaster/auth-kit/styles.css'
 import 'shikwasa/dist/style.css'
-// import '@rainbow-me/rainbowkit/styles.css'
+import '@rainbow-me/rainbowkit/styles.css'
 // import 'react-datepicker/dist/react-datepicker.css'
 import { Link } from '@/lib/i18n'
 import '@glideapps/glide-data-grid/dist/index.css'

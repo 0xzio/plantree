@@ -20,12 +20,20 @@ const themes = [
     value: 'sue',
   },
   {
+    name: 'Aside',
+    value: 'aside',
+  },
+  {
     name: 'Paper',
     value: 'paper',
   },
   {
     name: 'Publication',
     value: 'publication',
+  },
+  {
+    name: 'Square',
+    value: 'square',
   },
   {
     name: 'Micro',
@@ -42,10 +50,6 @@ const themes = [
   {
     name: 'Card',
     value: 'card',
-  },
-  {
-    name: 'Aside',
-    value: 'aside',
   },
   {
     name: 'Garden',

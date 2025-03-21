@@ -1,6 +1,8 @@
+import { initLingui } from '@/initLingui'
 import { POSTS_PER_PAGE } from '@/lib/constants'
 import { getFirstSite, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
+import { AppearanceConfig } from '@/lib/theme.types'
 import { Metadata } from 'next'
 
 export const dynamic = 'force-static'
@@ -22,12 +24,20 @@ export const generateStaticParams = async () => {
   return []
 }
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ page: string; domain: string }>
+export default async function Page(props: {
+  params: Promise<{ page: string; domain: string; lang: string }>
 }) {
-  const site = await getSite(await params)
+  const params = await props.params
+  const site = await getSite(params)
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const lang = params.lang
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+
+  initLingui(locale)
+
   const posts = await getPosts(site.id)
 
   const pageNumber = parseInt((await params).page as string)

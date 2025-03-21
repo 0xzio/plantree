@@ -1,11 +1,13 @@
 import { forwardRef, useRef, useState } from 'react'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Post } from '@/hooks/usePost'
+import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { uploadFile } from '@/lib/uploadFile'
 import { getUrl, isIPFSCID } from '@/lib/utils'
 import { Edit3, ImageIcon, X } from 'lucide-react'
 import Image from 'next/image'
+import { toast } from 'sonner'
 
 interface Props {
   post: Post
@@ -41,8 +43,11 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
               ? `https://ipfs-gateway.spaceprotocol.xyz/ipfs/${uri}`
               : uri,
           )
+
+          toast.success('Image uploaded successfully!')
         } catch (error) {
           console.log('Failed to upload file:', error)
+          toast.error(extractErrorMessage(error) || 'Upload image failed')
         }
 
         setLoading(false)
@@ -60,6 +65,14 @@ export const CoverUpload = forwardRef<HTMLDivElement, Props>(
     if (value) {
       return (
         <div className="w-full h-[360px] relative">
+          {loading && (
+            <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center">
+              <div className="flex items-center justify-center h-8 w-20 z-100 rounded-md bg-foreground/40">
+                <LoadingDots className="bg-background" />
+              </div>
+            </div>
+          )}
+
           <Image
             src={getUrl(value)}
             width={1000}

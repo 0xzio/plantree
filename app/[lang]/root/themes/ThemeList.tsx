@@ -16,8 +16,9 @@ import {
 const themes: string[] = [
   'minimal',
   'micro',
-  'publication',
   'aside',
+  'publication',
+  'square',
   'sue',
   'paper',
   'wide',

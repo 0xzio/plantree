@@ -42,5 +42,5 @@ export function useRouter() {
 export function usePathname() {
   const { i18n } = useLingui()
   const pathname = usePathnameNext() || ''
-  return pathname.replace(`/${i18n.locale}`, '')
+  return pathname.replace(`/${i18n.locale}`, '') || '/'
 }
