@@ -55,6 +55,30 @@ export const postRouter = router({
       return sitePosts as SitePost[]
     }),
 
+  listAllPosts: protectedProcedure.query(async ({ ctx, input }) => {
+    return await prisma.post.findMany({
+      where: {
+        title: {
+          notIn: ['Welcome to PenX!', ''],
+        },
+        siteId: {
+          notIn: ['cc79cefe-0cf8-4cd7-9970-66740024b618'],
+        },
+        isPage: false,
+        status: PostStatus.PUBLISHED,
+      },
+      include: {
+        site: {
+          include: { domains: true },
+        },
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+      take: 1000,
+    })
+  }),
+
   publishedPosts: publicProcedure
     .input(
       z.object({

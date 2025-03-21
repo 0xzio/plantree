@@ -167,6 +167,15 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             />
           </Link>
         )}
+        {isSuperAdmin(data?.userId) && (
+          <Link href="/~/discover">
+            <SidebarItem
+              isActive={pathname === '/~/discover'}
+              icon={<Gift size={18} />}
+              label={<Trans>Discover</Trans>}
+            />
+          </Link>
+        )}
       </div>
 
       <div className="px-2 pb-2 flex-1">

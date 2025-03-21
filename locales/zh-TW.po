@@ -70,6 +70,10 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
+msgid "Archived"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:45
 msgid "Asset"
 msgstr ""
@@ -91,6 +95,7 @@ msgid "Billing & plan"
 msgstr ""
 
 #: app/[lang]/root/Footer.tsx:49
+#: components/theme-ui/NavigationItem.tsx:15
 #: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
 #: themes/publication/pages/BlogPage.tsx:25
@@ -188,7 +193,7 @@ msgstr ""
 msgid "Contribute"
 msgstr "投稿"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:165
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:166
 msgid "Coupons"
 msgstr "优惠码"
 
@@ -217,7 +222,7 @@ msgstr ""
 msgid "Data ownership"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:132
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:133
 msgid "Databases"
 msgstr ""
 
@@ -249,13 +254,17 @@ msgstr ""
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:148
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:149
 msgid "Design"
 msgstr "设计"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Domain"
 msgstr "域名"
+
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:28
+msgid "Drafts"
+msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:47
 msgid "Easily create and send newsletters to keep your audience engaged."
@@ -307,7 +316,7 @@ msgstr ""
 msgid "Friends"
 msgstr "友链"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:112
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:113
 msgid "Gallery"
 msgstr ""
 
@@ -374,8 +383,8 @@ msgid "Maintain full control over your content and data."
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
-#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:29
-#: themes/aside/components/Sidebar.tsx:80
+#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
+#: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
 msgstr "会员"
 
@@ -459,7 +468,7 @@ msgstr "订单"
 msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:122
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:123
 msgid "Pages"
 msgstr "页面"
 
@@ -488,8 +497,7 @@ msgid "please try again~"
 msgstr "请再试一遍"
 
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:103
-#: components/theme-ui/NavigationItem.tsx:15
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:104
 msgid "Posts"
 msgstr "文章"
 
@@ -523,6 +531,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:53
 msgid "Public visit"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
+msgid "Published"
 msgstr ""
 
 #: components/theme-ui/PostMetadata.tsx:43
@@ -562,7 +574,7 @@ msgid "SEO friendly"
 msgstr "SEO 友好"
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:157
 #: components/Profile/ProfilePopover.tsx:134
 msgid "Settings"
 msgstr "设置"
@@ -591,9 +603,14 @@ msgstr ""
 msgid "Start writing"
 msgstr ""
 
-#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:35
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:48
 msgid "Submit Link"
 msgstr "提交友链"
+
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:59
+msgid "Submit your link"
+msgstr ""
 
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:125
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard.tsx:37
@@ -609,7 +626,7 @@ msgstr "订阅"
 msgid "Subscribed successfully!"
 msgstr "订阅成功"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:142
 msgid "Subscribers"
 msgstr ""
 
@@ -628,7 +645,7 @@ msgstr ""
 #: themes/docs/components/PostListWithTag.tsx:32
 #: themes/card/components/PostListWithTag.tsx:32
 #: themes/aside/pages/TagListPage.tsx:14
-#: themes/aside/components/Sidebar.tsx:88
+#: themes/aside/components/Sidebar.tsx:89
 msgid "Tags"
 msgstr "标签"
 
@@ -645,7 +662,7 @@ msgstr ""
 msgid "Title"
 msgstr "标题"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:94
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:95
 msgid "Today"
 msgstr "今天"
 

@@ -70,6 +70,10 @@ msgstr "Analytics"
 msgid "Appearance"
 msgstr "Appearance"
 
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
+msgid "Archived"
+msgstr "Archived"
+
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:45
 msgid "Asset"
 msgstr "Asset"
@@ -91,6 +95,7 @@ msgid "Billing & plan"
 msgstr "Billing & plan"
 
 #: app/[lang]/root/Footer.tsx:49
+#: components/theme-ui/NavigationItem.tsx:15
 #: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
 #: themes/publication/pages/BlogPage.tsx:25
@@ -188,7 +193,7 @@ msgstr "Connect wallet to Claim $PEN"
 msgid "Contribute"
 msgstr "Contribute"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:165
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:166
 msgid "Coupons"
 msgstr "Coupons"
 
@@ -217,7 +222,7 @@ msgstr "Dashboard"
 msgid "Data ownership"
 msgstr "Data ownership"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:132
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:133
 msgid "Databases"
 msgstr "Databases"
 
@@ -249,13 +254,17 @@ msgstr "Deploy PenX with One-click tools"
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgstr "Deploy your own site to Cloudflare Pages in 10 minutes."
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:148
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:149
 msgid "Design"
 msgstr "Design"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Domain"
 msgstr "Domain"
+
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:28
+msgid "Drafts"
+msgstr "Drafts"
 
 #: app/[lang]/root/(home)/FeatureList.tsx:47
 msgid "Easily create and send newsletters to keep your audience engaged."
@@ -307,7 +316,7 @@ msgstr "Footer"
 msgid "Friends"
 msgstr "Friends"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:112
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:113
 msgid "Gallery"
 msgstr "Gallery"
 
@@ -374,8 +383,8 @@ msgid "Maintain full control over your content and data."
 msgstr "Maintain full control over your content and data."
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
-#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:29
-#: themes/aside/components/Sidebar.tsx:80
+#: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
+#: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
 msgstr "Membership"
 
@@ -459,7 +468,7 @@ msgstr "Orders"
 msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 msgstr "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:122
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:123
 msgid "Pages"
 msgstr "Pages"
 
@@ -488,8 +497,7 @@ msgid "please try again~"
 msgstr "please try again~"
 
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:103
-#: components/theme-ui/NavigationItem.tsx:15
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:104
 msgid "Posts"
 msgstr "Posts"
 
@@ -524,6 +532,10 @@ msgstr "Public"
 #: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:53
 msgid "Public visit"
 msgstr "Public visit"
+
+#: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
+msgid "Published"
+msgstr "Published"
 
 #: components/theme-ui/PostMetadata.tsx:43
 msgid "Published on"
@@ -562,7 +574,7 @@ msgid "SEO friendly"
 msgstr "SEO friendly"
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:157
 #: components/Profile/ProfilePopover.tsx:134
 msgid "Settings"
 msgstr "Settings"
@@ -591,9 +603,14 @@ msgstr "Socials"
 msgid "Start writing"
 msgstr "Start writing"
 
-#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:26
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:35
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:48
 msgid "Submit Link"
 msgstr "Submit Link"
+
+#: components/custom-plate-plugins/friends/react/SubmitFriendLinkDialog/SubmitFriendLinkDialog.tsx:59
+msgid "Submit your link"
+msgstr "Submit your link"
 
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterForm.tsx:125
 #: components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard.tsx:37
@@ -609,7 +626,7 @@ msgstr "Subscribe to"
 msgid "Subscribed successfully!"
 msgstr "Subscribed successfully!"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:141
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:142
 msgid "Subscribers"
 msgstr "Subscribers"
 
@@ -628,7 +645,7 @@ msgstr "Subscribers"
 #: themes/docs/components/PostListWithTag.tsx:32
 #: themes/card/components/PostListWithTag.tsx:32
 #: themes/aside/pages/TagListPage.tsx:14
-#: themes/aside/components/Sidebar.tsx:88
+#: themes/aside/components/Sidebar.tsx:89
 msgid "Tags"
 msgstr "Tags"
 
@@ -645,7 +662,7 @@ msgstr "Tip records"
 msgid "Title"
 msgstr "Title"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:94
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:95
 msgid "Today"
 msgstr "Today"
 
