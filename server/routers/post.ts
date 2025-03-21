@@ -345,6 +345,32 @@ export const postRouter = router({
       return newPost
     }),
 
+  unpublish: protectedProcedure
+    .input(
+      z.object({
+        postId: z.string(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const post = await prisma.post.update({
+        where: { id: input.postId },
+        data: {
+          status: PostStatus.DRAFT,
+          publishedAt: null,
+        },
+      })
+
+      await cacheHelper.updateCachedPost(post.id, null)
+      await cacheHelper.updateCachedSitePosts(post.siteId, null)
+      await cacheHelper.updateCachedSitePages(post.siteId, null)
+
+      revalidateTag(`${post.siteId}-posts`)
+      revalidateTag(`${post.siteId}-post-${post.slug}`)
+      revalidateTag(`${post.siteId}-page-${post.slug}`)
+      revalidatePath(`/pages/${post.slug}`)
+      revalidatePath(`/posts/${post.slug}`)
+    }),
+
   updatePublishedPost: protectedProcedure
     .input(
       z.object({

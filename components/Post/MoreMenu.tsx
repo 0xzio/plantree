@@ -9,6 +9,8 @@ import {
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { Post, updatePost, usePost } from '@/hooks/usePost'
 import { editorDefaultValue } from '@/lib/constants'
+import { api } from '@/lib/trpc'
+import { sleep } from '@/lib/utils'
 import { PostType } from '@prisma/client'
 import { Ellipsis } from 'lucide-react'
 import { toast } from 'sonner'
@@ -56,6 +58,26 @@ export function MoreMenu({ post }: { post: Post }) {
           }}
         >
           Copy html
+        </MenuItem>
+
+        <MenuItem
+          onClick={() => {
+            toast.promise(
+              async () => {
+                return await api.post.unpublish.mutate({
+                  postId: post.id,
+                })
+              },
+              {
+                loading: 'Unpublishing...',
+                success: 'Unpublished successfully!',
+                error: 'Failed to unpublish',
+              },
+            )
+            setIsOpen(false)
+          }}
+        >
+          Unpublish
         </MenuItem>
 
         <MenuItem
