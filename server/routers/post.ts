@@ -479,6 +479,7 @@ export const postRouter = router({
         })
         await cacheHelper.updateCachedPost(post.id, null)
         await cacheHelper.updateCachedSitePosts(post.siteId, null)
+        await cacheHelper.updateCachedSitePages(post.siteId, null)
         return post
       })
     }),

@@ -12,15 +12,18 @@ import { editorDefaultValue } from '@/lib/constants'
 import { PostType } from '@prisma/client'
 import { Ellipsis } from 'lucide-react'
 import { toast } from 'sonner'
+import { useDeletePageDialog } from '../DeletePageDialog/useDeleteDatabaseDialog'
 import { useCreateEditor } from '../editor/use-create-editor'
 import { useSiteContext } from '../SiteContext'
 import { Button } from '../ui/button'
 import { MenuItem } from '../ui/menu'
+import { useDeletePostDialog } from './DeletePostDialog/useDeletePostDialog'
 
 export function MoreMenu({ post }: { post: Post }) {
   const [isOpen, setIsOpen] = useState(false)
   const { setLang } = usePost()
   const site = useSiteContext()
+  const deletePostDialog = useDeletePostDialog()
   const { locales = [] } = (site.config || {}) as {
     locales: string[]
   }
@@ -53,6 +56,19 @@ export function MoreMenu({ post }: { post: Post }) {
           }}
         >
           Copy html
+        </MenuItem>
+
+        <MenuItem
+          className="text-red-500"
+          onClick={() => {
+            setIsOpen(false)
+            deletePostDialog.setState({
+              isOpen: true,
+              post,
+            })
+          }}
+        >
+          Delete
         </MenuItem>
       </PopoverContent>
     </Popover>

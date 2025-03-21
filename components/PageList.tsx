@@ -7,7 +7,6 @@ import { cn } from '@/lib/utils'
 import { Post } from '@prisma/client'
 import { format } from 'date-fns'
 import { Edit3Icon, Trash2 } from 'lucide-react'
-import { DeletePageDialog } from './DeletePageDialog/DeletePageDialog'
 import { useDeletePageDialog } from './DeletePageDialog/useDeleteDatabaseDialog'
 
 interface PageItemProps {
@@ -71,7 +70,6 @@ export function PageList() {
 
   return (
     <div className="grid gap-4">
-      <DeletePageDialog />
       {pages.map((page) => {
         return <PageItem key={page.id} page={page} />
       })}

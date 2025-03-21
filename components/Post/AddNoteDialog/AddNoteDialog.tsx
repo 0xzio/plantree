@@ -65,7 +65,7 @@ export function AddNoteDialog() {
             <DialogTitle>Add Note</DialogTitle>
           </DialogHeader>
 
-          <div className="flex-1 -mx-6">
+          <div className="flex-1">
             <PlateEditor
               className="flex-1"
               value={value}

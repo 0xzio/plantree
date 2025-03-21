@@ -19,6 +19,7 @@ import { AddPropButton } from './AddPropButton'
 import { AudioCreationUpload } from './AudioCreationUpload'
 import { Authors } from './Authors'
 import { CoverUpload } from './CoverUpload'
+import { DeletePostDialog } from './DeletePostDialog/DeletePostDialog'
 import { JournalNav } from './JournalNav'
 import { PostLocales } from './PostLocales'
 import { Tags } from './Tags'
@@ -73,29 +74,46 @@ export function Post() {
   )
 
   return (
-    <div className="w-full h-full">
-      <div className="relative min-h-[500px] py-12 px-8 z-0">
-        <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
-          {[PostType.ARTICLE, PostType.AUDIO].includes(post.type as any) && (
-            <div className="mb-5 flex flex-col space-y-3 ">
-              <CoverUpload post={post} />
-              {isJournal && (
-                <div className="flex items-center gap-4">
-                  <span className="text-foreground text-4xl font-bold">
-                    {journalTitle}
-                  </span>
-                  <JournalNav date={post.date} />
-                </div>
-              )}
+    <>
+      <DeletePostDialog />
+      <div className="w-full h-full">
+        <div className="relative min-h-[500px] py-12 px-8 z-0">
+          <div className="w-full px-16 sm:px-[max(10px,calc(50%-350px))]">
+            {[PostType.ARTICLE, PostType.AUDIO].includes(post.type as any) && (
+              <div className="mb-5 flex flex-col space-y-3 ">
+                <CoverUpload post={post} />
+                {isJournal && (
+                  <div className="flex items-center gap-4">
+                    <span className="text-foreground text-4xl font-bold">
+                      {journalTitle}
+                    </span>
+                    <JournalNav date={post.date} />
+                  </div>
+                )}
 
-              {!isJournal && (
+                {!isJournal && (
+                  <TextareaAutosize
+                    className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
+                    placeholder="Title"
+                    value={title || ''}
+                    autoFocus
+                    onChange={(e) => {
+                      const newPost = updateTitle(e.target.value)
+                      debouncedUpdate(newPost)
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault()
+                      }
+                    }}
+                  />
+                )}
                 <TextareaAutosize
-                  className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-foreground/40 focus:outline-none focus:ring-0 bg-transparent text-4xl font-bold"
-                  placeholder="Title"
-                  value={title || ''}
-                  autoFocus
+                  className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
+                  placeholder="Description"
+                  value={description}
                   onChange={(e) => {
-                    const newPost = updateTitle(e.target.value)
+                    const newPost = updateDescription(e.target.value)
                     debouncedUpdate(newPost)
                   }}
                   onKeyDown={(e) => {
@@ -104,64 +122,50 @@ export function Post() {
                     }
                   }}
                 />
-              )}
-              <TextareaAutosize
-                className="dark:placeholder-text-600 w-full resize-none border-none px-0 placeholder:text-stone-400 focus:outline-none focus:ring-0 bg-transparent"
-                placeholder="Description"
-                value={description}
-                onChange={(e) => {
-                  const newPost = updateDescription(e.target.value)
-                  debouncedUpdate(newPost)
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    e.preventDefault()
-                  }
-                }}
-              />
-            </div>
-          )}
-
-          {!post.isPage && (
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <Authors post={post} />
-                <Separator orientation="vertical" className="h-3" />
-                <div className="flex items-center gap-2">
-                  <Tags />
-                  {/* <PostLocales /> */}
-                </div>
               </div>
+            )}
 
-              <AddPropButton />
-            </div>
-          )}
+            {!post.isPage && (
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <Authors post={post} />
+                  <Separator orientation="vertical" className="h-3" />
+                  <div className="flex items-center gap-2">
+                    <Tags />
+                    {/* <PostLocales /> */}
+                  </div>
+                </div>
 
-          {post.type === PostType.AUDIO && (
-            <div className="mt-6">
-              <AudioCreationUpload post={post as any} />
-            </div>
-          )}
-        </div>
+                <AddPropButton />
+              </div>
+            )}
 
-        <div className="w-full mt-4" data-registry="plate">
-          <PlateEditor
-            variant="post"
-            className="w-full dark:caret-brand"
-            value={
-              content && !content.startsWith('/')
-                ? JSON.parse(content)
-                : editorDefaultValue
-            }
-            showAddButton
-            showFixedToolbar={false}
-            onChange={(v) => {
-              const newPost = updateContent(JSON.stringify(v))
-              debouncedUpdate(newPost)
-            }}
-          />
+            {post.type === PostType.AUDIO && (
+              <div className="mt-6">
+                <AudioCreationUpload post={post as any} />
+              </div>
+            )}
+          </div>
+
+          <div className="w-full mt-4" data-registry="plate">
+            <PlateEditor
+              variant="post"
+              className="w-full dark:caret-brand"
+              value={
+                content && !content.startsWith('/')
+                  ? JSON.parse(content)
+                  : editorDefaultValue
+              }
+              showAddButton
+              showFixedToolbar={false}
+              onChange={(v) => {
+                const newPost = updateContent(JSON.stringify(v))
+                debouncedUpdate(newPost)
+              }}
+            />
+          </div>
         </div>
       </div>
-    </div>
+    </>
   )
 }
