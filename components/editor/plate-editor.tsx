@@ -26,6 +26,7 @@ interface Props {
   showFixedToolbar?: boolean
   draggable?: boolean
   placeholder?: string
+  children?: React.ReactNode
   onInit?: (editor: PlateEditorType) => void
   onChange?: (value: any) => void
 }
@@ -41,6 +42,7 @@ export function PlateEditor({
   placeholder,
   onInit,
   variant = 'none',
+  children,
 }: Props & VariantProps<typeof editorVariants>) {
   const editor = useCreateEditor({
     value,
@@ -71,6 +73,7 @@ export function PlateEditor({
               <AddNodeBtn editor={editor} />
             </div>
           )}
+          {children}
         </EditorContainer>
 
         {/* <SettingsDialog /> */}

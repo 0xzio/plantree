@@ -109,6 +109,7 @@ export function isIPFSCID(str = '') {
 }
 
 export function getUrl(value = '') {
+  if (!value) return ''
   if (isIPFSCID(value)) {
     return `/api/ipfs-image?cid=${value}`
   }
