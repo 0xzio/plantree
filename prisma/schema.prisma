@@ -41,6 +41,7 @@ enum RequestStatus {
 enum PlanType {
   FREE
   BASIC
+  STANDARD
   PRO
   TEAM
   BELIEVER

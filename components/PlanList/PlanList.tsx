@@ -17,21 +17,52 @@ export function PlanList() {
           name="Free"
           type={PlanType.FREE}
           collaboratorCount={1}
-          benefits={['1 creators', '5 free official themes', 'Custom domain']}
+          benefits={[
+            { ok: true, text: '1 co-creators' },
+            { ok: true, text: '5 free official themes' },
+            { ok: true, text: 'Custom domain' },
+            { ok: true, text: '10k Pageviews/mo' },
+            { ok: false, text: 'Podcast' },
+            { ok: false, text: 'Sending newsletters' },
+            { ok: false, text: 'AI assistance' },
+            { ok: false, text: 'One-to-one custom theme' },
+            { ok: false, text: 'One-to-One support in meeting' },
+          ]}
+        />
+        <PlanItem
+          monthlyPrice={5.12}
+          annualPrice={46.08}
+          name="Basic"
+          type={PlanType.BASIC}
+          collaboratorCount={1}
+          benefits={[
+            { ok: true, text: '1 co-creators' },
+            { ok: true, text: 'Unlimited themes' },
+            { ok: true, text: 'Custom domain' },
+            { ok: true, text: '100k Pageviews/mo' },
+            { ok: false, text: 'Podcast' },
+            { ok: false, text: 'Sending newsletters' },
+            { ok: false, text: 'AI assistance' },
+            { ok: false, text: 'One-to-one custom theme' },
+            { ok: false, text: 'One-to-One support in meeting' },
+          ]}
         />
         <PlanItem
           monthlyPrice={10.24}
           annualPrice={92.16}
-          name="Basic"
-          type={PlanType.BASIC}
+          name="Standard"
+          type={PlanType.STANDARD}
           collaboratorCount={3}
           benefits={[
-            '2 co-creators',
-            'Unlimited themes',
-            'Custom domain',
-            'Sending newsletters',
-            'Podcast',
-            'AI assistance',
+            { ok: true, text: '3 co-creators' },
+            { ok: true, text: 'Unlimited themes' },
+            { ok: true, text: 'Custom domain' },
+            { ok: true, text: '500k Pageviews/mo' },
+            { ok: true, text: 'Podcast' },
+            { ok: true, text: 'Sending newsletters' },
+            { ok: false, text: 'AI assistance' },
+            { ok: false, text: 'One-to-one custom theme' },
+            { ok: false, text: 'One-to-One support in meeting' },
           ]}
         />
         <PlanItem
@@ -41,27 +72,15 @@ export function PlanList() {
           type={PlanType.PRO}
           collaboratorCount={3}
           benefits={[
-            '5 co-creators',
-            'Unlimited themes',
-            'Custom domain',
-            'Sending newsletters',
-            'AI assistance',
-            'Podcast',
-            'One-to-one custom theme',
-            'One-to-One support in discord',
-          ]}
-        />
-        <PlanItem
-          monthlyPrice={20}
-          annualPrice={180}
-          name="Believer"
-          type={PlanType.BELIEVER}
-          collaboratorCount={3}
-          isBeliever
-          benefits={[
-            'everything in Pro Plan',
-            'Priority support',
-            'Early access for new features',
+            { ok: true, text: '5 co-creators' },
+            { ok: true, text: 'Unlimited themes' },
+            { ok: true, text: 'Custom domain' },
+            { ok: true, text: '1000k Pageviews/mo' },
+            { ok: true, text: 'Sending newsletters' },
+            { ok: true, text: 'AI assistance' },
+            { ok: true, text: 'Podcast' },
+            { ok: true, text: 'One-to-one custom theme' },
+            { ok: true, text: 'One-to-One support in meeting' },
           ]}
         />
       </div>

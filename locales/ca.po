@@ -98,6 +98,7 @@ msgstr ""
 #: components/theme-ui/NavigationItem.tsx:15
 #: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
+#: themes/square/pages/BlogPage.tsx:25
 #: themes/publication/pages/BlogPage.tsx:25
 #: themes/paper/pages/BlogPage.tsx:25
 #: themes/minimal/pages/BlogPage.tsx:25
@@ -214,7 +215,7 @@ msgid "Customize your site with a variety of visually appealing themes."
 msgstr ""
 
 #: components/Profile/ProfilePopover.tsx:117
-#: components/Profile/Profile.tsx:54
+#: components/Profile/Profile.tsx:61
 msgid "Dashboard"
 msgstr ""
 
@@ -256,6 +257,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:149
 msgid "Design"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:175
+msgid "Discover"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
@@ -579,7 +584,7 @@ msgstr ""
 msgid "Settings"
 msgstr ""
 
-#: components/LoginButton.tsx:22
+#: components/LoginButton.tsx:28
 msgid "Sign in"
 msgstr ""
 
@@ -694,6 +699,10 @@ msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:29
 msgid "Welcome to PenX"
+msgstr ""
+
+#: themes/square/components/CreatePostButton.tsx:28
+msgid "Write"
 msgstr ""
 
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:141

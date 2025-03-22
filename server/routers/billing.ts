@@ -4,6 +4,8 @@ import {
   STRIPE_BELIEVER_PRICE_ID,
   STRIPE_PRO_MONTHLY_PRICE_ID,
   STRIPE_PRO_YEARLY_PRICE_ID,
+  STRIPE_STANDARD_MONTHLY_PRICE_ID,
+  STRIPE_STANDARD_YEARLY_PRICE_ID,
   STRIPE_TEAM_MONTHLY_PRICE_ID,
   STRIPE_TEAM_YEARLY_PRICE_ID,
 } from '@/lib/constants'
@@ -42,6 +44,12 @@ export const billingRouter = router({
           return input.billingCycle === BillingCycle.MONTHLY
             ? STRIPE_PRO_MONTHLY_PRICE_ID
             : STRIPE_PRO_YEARLY_PRICE_ID
+        }
+
+        if (input.planType === PlanType.STANDARD) {
+          return input.billingCycle === BillingCycle.MONTHLY
+            ? STRIPE_STANDARD_MONTHLY_PRICE_ID
+            : STRIPE_STANDARD_YEARLY_PRICE_ID
         }
 
         return input.billingCycle === BillingCycle.MONTHLY

@@ -33,7 +33,7 @@ export function useSession() {
     queryFn: () => fetchJson<SessionData>(sessionApiRoute),
   })
 
-  async function login(data: LoginData & { host: string }) {
+  async function login(data: LoginData & { host?: string }) {
     const res = await fetchJson<SessionData>(sessionApiRoute, {
       body: JSON.stringify({ ...data, host: location.host }),
       method: 'POST',

@@ -81,7 +81,7 @@ async function updateSession(
   await session.save()
 }
 
-export async function registerSiteUser(hostname: string, userId: string) {
+async function registerSiteUser(hostname: string, userId: string) {
   const isRoot =
     hostname === 'localhost:4000' ||
     hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
