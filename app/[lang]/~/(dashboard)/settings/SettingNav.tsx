@@ -48,7 +48,7 @@ export function SettingNav({}: Props) {
     )
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pb-10">
       <Section title="Account">
         <Link href={Paths.profile} className={linkClassName(Paths.profile)}>
           <Trans>Profile</Trans>

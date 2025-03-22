@@ -35,7 +35,7 @@ export default async function Sitemap(...arg: any) {
         priority: 0.4,
       },
       {
-        url: 'https://docs.penx.io',
+        url: `https://${hostname}/docs`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.2,
