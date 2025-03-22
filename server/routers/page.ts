@@ -152,7 +152,7 @@ export const pageRouter = router({
         where: { siteId: input.siteId, isPage: true },
       })
 
-      if (count >= FREE_PLAN_PAGE_LIMIT) {
+      if (ctx.isFree && count >= FREE_PLAN_PAGE_LIMIT) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'You have reached the free plan page limit.',

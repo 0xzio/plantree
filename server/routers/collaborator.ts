@@ -52,10 +52,7 @@ export const collaboratorRouter = router({
         where: { siteId: input.siteId },
       })
 
-      if (
-        ctx.token.planType === PlanType.PRO &&
-        count >= PRO_PLAN_COLLABORATOR_LIMIT
-      ) {
+      if (ctx.isFree && count >= PRO_PLAN_COLLABORATOR_LIMIT) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'You have reached the pro plan collaborator limit.',
