@@ -215,7 +215,7 @@ export const siteRouter = router({
             mastodon: z.string().optional(),
             github: z.string().optional(),
             facebook: z.string().optional(),
-            ymutube: z.string().optional(),
+            youtube: z.string().optional(),
             linkedin: z.string().optional(),
             threads: z.string().optional(),
             instagram: z.string().optional(),
