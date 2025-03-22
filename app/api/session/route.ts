@@ -81,18 +81,59 @@ async function updateSession(
   await session.save()
 }
 
+export async function registerSiteUser(hostname: string, userId: string) {
+  const isRoot =
+    hostname === 'localhost:4000' ||
+    hostname === process.env.NEXT_PUBLIC_ROOT_DOMAIN
+
+  if (isRoot) return
+
+  let domain = ''
+  const isSubdomain = hostname.endsWith(`.${ROOT_DOMAIN}`)
+
+  if (isSubdomain) {
+    domain = hostname.replace(`.${ROOT_DOMAIN}`, '')
+  } else {
+    domain = hostname
+  }
+
+  const domainRes = await prisma.domain.findUnique({
+    where: { domain },
+    select: { siteId: true },
+  })
+
+  if (!domainRes) return
+
+  const siteUser = await prisma.siteUser.findUnique({
+    where: {
+      userId_siteId: {
+        userId,
+        siteId: domainRes.siteId,
+      },
+    },
+  })
+
+  if (!siteUser) {
+    await prisma.siteUser.create({
+      data: { userId, siteId: domainRes.siteId },
+    })
+  }
+}
+
 // login
-export async function POST(request: NextRequest) {
+export async function POST(req: NextRequest) {
   const session = await getIronSession<SessionData>(
     await cookies(),
     getSessionOptions(),
   )
-  const json = await request.json()
+
+  const json = await req.json()
+  const hostname = json?.host || ''
 
   if (isGoogleLogin(json)) {
     const account = await initUserByGoogleInfo(json)
     await updateSession(session, account)
-
+    await registerSiteUser(hostname, account.userId)
     return Response.json(session)
   }
 
@@ -128,6 +169,7 @@ export async function POST(request: NextRequest) {
       const address = siweMessage.address.toLowerCase()
       const account = await initUserByAddress(address)
       await updateSession(session, account)
+      await registerSiteUser(hostname, account.userId)
       return Response.json(session)
     } catch (e) {
       console.log('wallet auth error======:', e)
@@ -145,6 +187,7 @@ export async function POST(request: NextRequest) {
       const password = decoded.password
       const account = await initUserByEmail(email, password)
       await updateSession(session, account)
+      await registerSiteUser(hostname, account.userId)
       return Response.json(session)
     } catch (error) {
       session.isLoggedIn = false
@@ -180,6 +223,7 @@ export async function POST(request: NextRequest) {
       })
 
       await updateSession(session, account)
+      await registerSiteUser(hostname, account.userId)
       return Response.json(session)
     } catch (error) {
       session.isLoggedIn = false
@@ -221,6 +265,7 @@ export async function POST(request: NextRequest) {
       if (!match) throw new Error('INVALID_PASSWORD')
 
       await updateSession(session, account)
+      await registerSiteUser(hostname, account.userId)
       return Response.json(session)
     } catch (error: any) {
       console.log('error.mess==:', error.message)

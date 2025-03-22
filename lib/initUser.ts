@@ -8,28 +8,66 @@ import {
   PostType,
   ProviderType,
   SubdomainType,
+  User,
 } from '@prisma/client'
 import ky from 'ky'
 import { cacheHelper } from './cache-header'
 
 const SEVEN_DAYS = 60 * 60 * 24 * 7
 
+const includeAccount = {
+  include: {
+    user: {
+      include: {
+        sites: {
+          include: {
+            domains: true,
+          },
+        },
+      },
+    },
+  },
+} as const
+
+const getSiteInfo = (newUser: User) => {
+  const siteInfo = {
+    userId: newUser.id,
+    socials: {},
+    themeName: 'sue',
+    themeConfig: {},
+    navLinks: defaultNavLinks,
+    about: JSON.stringify(editorDefaultValue),
+    config: {
+      locales: ['en', 'zh-CN', 'ja'],
+      features: {
+        journal: false,
+        gallery: false,
+        page: true,
+        database: false,
+      },
+    },
+    collaborators: {
+      create: {
+        userId: newUser.id,
+        role: CollaboratorRole.OWNER,
+      },
+    },
+    channels: {
+      create: {
+        name: 'general',
+        type: 'TEXT',
+      },
+    },
+  } as const
+  return siteInfo
+}
+
 export async function initUserByAddress(address: string) {
   return prisma.$transaction(
     async (tx) => {
       const account = await tx.account.findUnique({
         where: { providerAccountId: address },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
 
       if (account) return account
@@ -53,22 +91,7 @@ export async function initUserByAddress(address: string) {
         data: {
           name: address.slice(0, 6),
           description: 'My personal site',
-          userId: newUser.id,
-          socials: {},
-          themeConfig: {},
-          config: {
-            locales: ['en', 'zh-CN', 'ja'],
-            features: {
-              journal: false,
-              gallery: false,
-              page: true,
-              database: false,
-            },
-          },
-          about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
-          themeName: 'sue',
-          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -77,18 +100,7 @@ export async function initUserByAddress(address: string) {
               },
             ],
           },
-          collaborators: {
-            create: {
-              userId: newUser.id,
-              role: CollaboratorRole.OWNER,
-            },
-          },
-          channels: {
-            create: {
-              name: 'general',
-              type: 'TEXT',
-            },
-          },
+          ...getSiteInfo(newUser),
         },
       })
 
@@ -113,17 +125,7 @@ export async function initUserByAddress(address: string) {
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: address },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
     },
     {
@@ -145,17 +147,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
     async (tx) => {
       const account = await tx.account.findUnique({
         where: { providerAccountId: info.openid },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
 
       if (account) return account
@@ -183,22 +175,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
         data: {
           name: info.name,
           description: 'My personal site',
-          userId: newUser.id,
-          socials: {},
-          themeConfig: {},
-          config: {
-            locales: ['en', 'zh-CN', 'ja'],
-            features: {
-              journal: false,
-              gallery: false,
-              page: true,
-              database: false,
-            },
-          },
-          about: JSON.stringify(editorDefaultValue),
           logo: info.picture,
-          themeName: 'sue',
-          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -207,18 +184,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
               },
             ],
           },
-          collaborators: {
-            create: {
-              userId: newUser.id,
-              role: CollaboratorRole.OWNER,
-            },
-          },
-          channels: {
-            create: {
-              name: 'general',
-              type: 'TEXT',
-            },
-          },
+          ...getSiteInfo(newUser),
         },
       })
 
@@ -243,17 +209,7 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: info.openid },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
     },
     {
@@ -316,17 +272,7 @@ export async function initUserByFarcasterId(fid: string) {
     async (tx) => {
       const account = await tx.account.findUnique({
         where: { providerAccountId: fid },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
 
       if (account) return account
@@ -372,22 +318,7 @@ export async function initUserByFarcasterId(fid: string) {
         data: {
           name: newUser.displayName!,
           description: fcUser.profile.bio.text,
-          userId: newUser.id,
-          socials: {},
-          themeConfig: {},
-          config: {
-            locales: ['en', 'zh-CN', 'ja'],
-            features: {
-              journal: false,
-              gallery: false,
-              page: true,
-              database: false,
-            },
-          },
-          about: JSON.stringify(editorDefaultValue),
           logo: newUser.image,
-          themeName: 'sue',
-          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -396,18 +327,7 @@ export async function initUserByFarcasterId(fid: string) {
               },
             ],
           },
-          collaborators: {
-            create: {
-              userId: newUser.id,
-              role: CollaboratorRole.OWNER,
-            },
-          },
-          channels: {
-            create: {
-              name: 'general',
-              type: 'TEXT',
-            },
-          },
+          ...getSiteInfo(newUser),
         },
       })
 
@@ -432,17 +352,7 @@ export async function initUserByFarcasterId(fid: string) {
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: fid },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
     },
     {
@@ -457,17 +367,7 @@ export async function initUserByEmail(email: string, password: string) {
     async (tx) => {
       const account = await tx.account.findUnique({
         where: { providerAccountId: email },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
 
       if (account) return account
@@ -495,22 +395,7 @@ export async function initUserByEmail(email: string, password: string) {
         data: {
           name: name,
           description: 'My personal site',
-          userId: newUser.id,
-          socials: {},
-          themeConfig: {},
-          config: {
-            locales: ['en', 'zh-CN', 'ja'],
-            features: {
-              journal: false,
-              gallery: false,
-              page: true,
-              database: false,
-            },
-          },
-          about: JSON.stringify(editorDefaultValue),
           logo: 'https://penx.io/logo.png',
-          themeName: 'sue',
-          navLinks: defaultNavLinks,
           domains: {
             create: [
               {
@@ -519,18 +404,7 @@ export async function initUserByEmail(email: string, password: string) {
               },
             ],
           },
-          collaborators: {
-            create: {
-              userId: newUser.id,
-              role: CollaboratorRole.OWNER,
-            },
-          },
-          channels: {
-            create: {
-              name: 'general',
-              type: 'TEXT',
-            },
-          },
+          ...getSiteInfo(newUser),
         },
       })
 
@@ -555,17 +429,7 @@ export async function initUserByEmail(email: string, password: string) {
 
       return tx.account.findUniqueOrThrow({
         where: { providerAccountId: email },
-        include: {
-          user: {
-            include: {
-              sites: {
-                include: {
-                  domains: true,
-                },
-              },
-            },
-          },
-        },
+        ...includeAccount,
       })
     },
     {
