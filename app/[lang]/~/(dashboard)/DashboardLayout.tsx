@@ -60,14 +60,14 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const isPost = pathname?.includes('/~/post/')
   const isAssets = pathname?.includes('/~/assets')
   const isSettings = pathname?.includes('/~/settings')
-  const isDesign = pathname?.includes('/~/design')
   const isDiscover = pathname?.includes('/~/discover')
+  const isSeries = pathname?.includes('/~/series')
   const params = useSearchParams()!
   const isFullWidth =
     isPost ||
+    isSeries ||
     isAssets ||
     isSettings ||
-    isDesign ||
     isDiscover ||
     !!params.get('id')
 
@@ -100,6 +100,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           <div className="h-full bg-background overflow-auto rounded-lg shadow-xs pb-20">
             <div
               className={cn(
+                '[&_form]:max-w-xl',
                 !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
               )}
             >

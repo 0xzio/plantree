@@ -39,6 +39,7 @@ export function SettingNav({}: Props) {
     seo: '/~/settings/seo',
     campaign: '/~/settings/campaign',
     design: '/~/settings/design',
+    dangerous: '/~/settings/dangerous',
   }
 
   const linkClassName = (path: string) =>
@@ -176,6 +177,10 @@ export function SettingNav({}: Props) {
           className={linkClassName(Paths.importExport)}
         >
           <Trans>Import/Export</Trans>
+        </Link>
+
+        <Link href={Paths.dangerous} className={linkClassName(Paths.dangerous)}>
+          <Trans>Dangerous</Trans>
         </Link>
       </Section>
     </div>

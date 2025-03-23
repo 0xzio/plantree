@@ -136,18 +136,19 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           </Link>
         )}
 
-        <Link href="/~/subscribers">
-          <SidebarItem
-            isActive={pathname.startsWith('/~/subscribers')}
-            icon={<Users size={18} />}
-            label={<Trans>Subscribers</Trans>}
-          ></SidebarItem>
-        </Link>
         <Link href="/~/series">
           <SidebarItem
             isActive={pathname.startsWith('/~/series')}
             icon={<BookTextIcon size={18} />}
             label={<Trans>Series</Trans>}
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/subscribers">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/subscribers')}
+            icon={<Users size={18} />}
+            label={<Trans>Subscribers</Trans>}
           ></SidebarItem>
         </Link>
 

@@ -68,14 +68,14 @@ export function CreateTokenForm() {
 
   return (
     <div>
-      <Card>
-        <CardHeader>
-          <CardTitle>Create a new access token</CardTitle>
-        </CardHeader>
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)}>
+          <Card>
+            <CardHeader>
+              <CardTitle>Create a new access token</CardTitle>
+            </CardHeader>
 
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+            <CardContent className="space-y-8">
               <FormField
                 control={form.control}
                 name="title"
@@ -159,10 +159,10 @@ export function CreateTokenForm() {
                   'Create access token'
                 )}
               </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+            </CardContent>
+          </Card>
+        </form>
+      </Form>
     </div>
   )
 }

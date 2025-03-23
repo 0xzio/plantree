@@ -1,5 +1,6 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import { FullPageDatabase } from '@/components/database-ui'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { useSite } from '@/hooks/useSite'
@@ -10,6 +11,13 @@ export const dynamic = 'force-static'
 
 export default function Page() {
   const { isLoading, site, error } = useSite()
+  const ref = useRef<HTMLDivElement>(null)
+  const [width, setWith] = useState(0)
+
+  useEffect(() => {
+    if (!ref.current) return
+    setWith(ref.current!.getBoundingClientRect().width)
+  }, [ref])
 
   if (isLoading) {
     return (
@@ -18,19 +26,23 @@ export default function Page() {
       </div>
     )
   }
+
   return (
-    <div className="w-full max-w-[760px]">
-      <FullPageDatabase
-        slug={PROJECT_DATABASE_NAME}
-        fetcher={async () => {
-          const database =
-            await api.database.getOrCreateProjectsDatabase.mutate({
-              siteId: site.id,
-            })
-          console.log('======database:', database)
-          return database
-        }}
-      />
+    <div ref={ref} className="w-full">
+      <div className="border-b border-foreground/5" style={{ width }}>
+        {width > 0 && (
+          <FullPageDatabase
+            slug={PROJECT_DATABASE_NAME}
+            fetcher={async () => {
+              const database =
+                await api.database.getOrCreateProjectsDatabase.mutate({
+                  siteId: site.id,
+                })
+              return database
+            }}
+          />
+        )}
+      </div>
     </div>
   )
 }

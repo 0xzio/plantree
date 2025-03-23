@@ -32,7 +32,7 @@ export const SidebarItem = ({
       }}
     >
       <div className="flex items-center gap-2">
-        <div className="text-foreground/50">{icon}</div>
+        <div className="text-foreground/70">{icon}</div>
         <div>{label}</div>
       </div>
       {children}

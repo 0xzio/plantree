@@ -20,7 +20,7 @@ interface Props {
 export const FullPageDatabase = (props: Props) => {
   return (
     <DatabaseProvider {...props}>
-      <div className="flex flex-col px-0 sm:px-3">
+      <div className="flex flex-col">
         <div
           className="w-full flex items-center justify-between gap-8"
           style={{ height: DATABASE_TOOLBAR_HEIGHT }}
@@ -35,6 +35,7 @@ export const FullPageDatabase = (props: Props) => {
             <ViewToolBar />
           </div>
         </div>
+
         <ViewRenderer />
       </div>
     </DatabaseProvider>

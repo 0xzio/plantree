@@ -11,7 +11,6 @@ export const ParagraphElementStatic = ({
 }: SlateElementProps) => {
   return (
     <SlateElement
-      as="p"
       className={cn(
         className,
         'm-0 px-0 py-2 leading-relaxed text-foreground/85',
