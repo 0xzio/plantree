@@ -12,6 +12,7 @@ export function BillingCycleSelect() {
       className="h-12 rounded-lg bg-accent p-1"
       value={cycle}
       onValueChange={(v) => {
+        if (!v) return
         setCycle(v as BillingCycle)
       }}
       type="single"

@@ -26,7 +26,7 @@ import { useAccount, useWriteContract } from 'wagmi'
 import { z } from 'zod'
 
 const FormSchema = z.object({
-  image: z.string(),
+  image: z.string().min(1, { message: 'Please upload your avatar' }),
   displayName: z.string().min(1, {
     message: 'Display name must be at least 1 characters.',
   }),

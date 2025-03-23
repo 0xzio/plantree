@@ -21,7 +21,12 @@ export function SeriesDialog() {
       <DialogHeader className="hidden">
         <DialogDescription></DialogDescription>
       </DialogHeader>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent
+        className="sm:max-w-[600px]"
+        onInteractOutside={(e) => {
+          e.preventDefault()
+        }}
+      >
         <DialogHeader>
           <DialogTitle>{!!series ? 'Update series' : 'Add series'}</DialogTitle>
         </DialogHeader>

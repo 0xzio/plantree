@@ -93,7 +93,6 @@ export function SeoSettingForm({ site }: Props) {
           render={({ field }) => (
             <FormItem className="w-full">
               <FormLabel>Meta description</FormLabel>
-              <FormDescription></FormDescription>
               <FormDescription>Recommended: 156 characters</FormDescription>
               <FormControl>
                 <Textarea placeholder="" {...field} className="w-full" />

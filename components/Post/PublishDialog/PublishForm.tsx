@@ -95,7 +95,7 @@ export function PublishForm() {
           name="slug"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>slug</FormLabel>
+              <FormLabel>Slug</FormLabel>
               <FormControl>
                 <Input
                   placeholder=""
