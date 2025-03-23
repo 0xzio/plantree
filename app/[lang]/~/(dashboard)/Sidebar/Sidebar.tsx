@@ -10,6 +10,7 @@ import { useSession } from '@/lib/useSession'
 import { cn, isValidUUIDv4 } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import {
+  BookTextIcon,
   Calendar,
   CalendarDays,
   Feather,
@@ -142,11 +143,11 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
             label={<Trans>Subscribers</Trans>}
           ></SidebarItem>
         </Link>
-        <Link href="/~/design">
+        <Link href="/~/series">
           <SidebarItem
-            isActive={pathname.startsWith('/~/design')}
-            icon={<MicroscopeIcon size={18} />}
-            label={<Trans>Design</Trans>}
+            isActive={pathname.startsWith('/~/series')}
+            icon={<BookTextIcon size={18} />}
+            label={<Trans>Series</Trans>}
           ></SidebarItem>
         </Link>
 

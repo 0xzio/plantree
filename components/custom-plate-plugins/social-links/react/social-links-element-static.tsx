@@ -18,11 +18,13 @@ export const SocialLinksElementStatic = ({
   return (
     <SlateElement
       {...props}
-      className={cn(className, getBlockClassName(props), 'm-0 px-0 py-1')}
+      className={cn(
+        className,
+        getBlockClassName(props),
+        'm-0 px-0 py-1 flex justify-center items-center h-full',
+      )}
     >
-      <div className="flex justify-center items-center h-full">
-        <SocialNav site={site as any} size={5} />
-      </div>
+      <SocialNav site={site as any} size={5} />
       {children}
     </SlateElement>
   )
