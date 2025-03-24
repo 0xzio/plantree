@@ -128,7 +128,6 @@ model Site {
   assetLabels            AssetLabel[]
   assetAlbums            AssetAlbum[]
   props                  Prop[]
-  tiers                  Tier[]
   subscriptions          Subscription[]
   payouts                Payout[]
   invoices               Invoice[]
@@ -181,7 +180,6 @@ model User {
   newsletters   Newsletter[]
   authors       Author[]
   props         Prop[]
-  tiers         Tier[]
   payouts       Payout[]
   products      Product[]
   orders        Order[]
@@ -232,14 +230,9 @@ model SiteUser {
   @@map("site_user")
 }
 
-enum TierInterval {
-  MONTHLY
-  YEARLY
-}
-
 enum ChargeMode {
   FREE
-  PAID_ONE_OFF
+  PAID_ONE_TIME
   PAID_MONTHLY
   PAID_YEARLY
 }
@@ -262,13 +255,14 @@ model Series {
   chargeMode  ChargeMode @default(FREE)
   seriesType  SeriesType @default(COLUMN)
   props       Json?
-  price       Int        @default(0)
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
   user        User       @relation(fields: [userId], references: [id])
   userId      String     @db.Uuid
   site        Site       @relation(fields: [siteId], references: [id])
   siteId      String     @db.Uuid
+  product     Product    @relation(fields: [productId], references: [id])
+  productId   String     @db.Uuid
   Posts       Post[]
 
   @@index([siteId])
@@ -278,62 +272,43 @@ model Series {
   @@map("series")
 }
 
-model Tier {
-  id              String         @id @default(uuid()) @db.Uuid
-  stripeType      StripeType     @default(NONE)
-  name            String         @default("") @db.VarChar(50)
-  price           Int            @default(0)
-  stripeProductId String?
-  stripePriceId   String?
-  interval        TierInterval
-  description     String         @default("") @db.Text
-  benefits        Json?
-  maxMembers      Int?
-  createdAt       DateTime       @default(now())
-  updatedAt       DateTime       @updatedAt
-  site            Site           @relation(fields: [siteId], references: [id])
-  siteId          String         @db.Uuid
-  user            User           @relation(fields: [userId], references: [id])
-  userId          String         @db.Uuid
-  subscriptions   Subscription[]
-  invoices        Invoice[]
-
-  @@index([siteId])
-  @@index([userId])
-  @@index([siteId, userId])
-  @@map("tier")
-}
-
 enum ProductType {
   COMMON
+  COLUMN
   BOOK
+  COURSE
+  TIER
   AMA
 }
 
 model Product {
-  id              String     @id @default(uuid()) @db.Uuid
-  stripeType      StripeType @default(NONE)
-  name            String     @default("") @db.VarChar(50)
-  description     String     @default("") @db.Text
-  details         String     @default("") @db.Text
-  stock           Int        @default(0)
-  image           String?    @default("") @db.VarChar(2183)
-  price           Int        @default(0)
-  isActive        Boolean    @default(true)
-  stripeProductId String?
-  stripePriceId   String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  site            Site       @relation(fields: [siteId], references: [id])
-  siteId          String     @db.Uuid
-  user            User       @relation(fields: [userId], references: [id])
-  userId          String     @db.Uuid
-  orders          Order[]
-  invoices        Invoice[]
+  id            String         @id @default(uuid()) @db.Uuid
+  stripeType    StripeType     @default(NONE)
+  name          String         @default("") @db.VarChar(50)
+  description   String         @default("") @db.Text
+  details       String         @default("") @db.Text
+  type          ProductType    @default(COMMON)
+  stock         Int            @default(0)
+  image         String?        @default("") @db.VarChar(2183)
+  price         Int            @default(0)
+  isActive      Boolean        @default(true)
+  maxMembers    Int?
+  stripe        Json?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  site          Site           @relation(fields: [siteId], references: [id])
+  siteId        String         @db.Uuid
+  user          User           @relation(fields: [userId], references: [id])
+  userId        String         @db.Uuid
+  orders        Order[]
+  invoices      Invoice[]
+  subscriptions Subscription[]
+  series        Series[]
 
   @@index([siteId])
   @@index([userId])
   @@index([siteId, userId])
+  @@index([siteId, type])
   @@map("product")
 }
 
@@ -421,8 +396,6 @@ model Invoice {
   productId           String?     @db.Uuid
   campaign            Campaign?   @relation(fields: [campaignId], references: [id])
   campaignId          String?     @db.Uuid
-  tier                Tier?       @relation(fields: [tierId], references: [id])
-  tierId              String?     @db.Uuid
 
   @@index([siteId])
   @@map("invoice")
@@ -448,10 +421,10 @@ model Subscription {
   updatedAt              DateTime      @updatedAt
   user                   User          @relation(fields: [userId], references: [id])
   userId                 String        @db.Uuid
-  tier                   Tier          @relation(fields: [tierId], references: [id])
-  tierId                 String        @db.Uuid
   site                   Site          @relation(fields: [siteId], references: [id])
   siteId                 String        @db.Uuid
+  product                Product       @relation(fields: [productId], references: [id])
+  productId              String        @db.Uuid
 
   @@index([userId])
   @@index([siteId])

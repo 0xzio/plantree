@@ -204,8 +204,11 @@ export function SeriesForm() {
                     Free
                   </ToggleGroupItem>
 
-                  <ToggleGroupItem value={ChargeMode.PAID_ONE_OFF} className="">
-                    One off payment
+                  <ToggleGroupItem
+                    value={ChargeMode.PAID_ONE_TIME}
+                    className=""
+                  >
+                    One time payment
                   </ToggleGroupItem>
                   <ToggleGroupItem value={ChargeMode.PAID_MONTHLY}>
                     Monthly subscription

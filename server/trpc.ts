@@ -152,7 +152,6 @@ export const protectedProcedure = t.procedure.use(
         'delivery.updateStatus',
         'tier.addTier',
         'tier.updateTier',
-        'tier.updatePrice',
         'stripe.withdraw',
       ].includes(path)
     ) {

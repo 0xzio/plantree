@@ -1,6 +1,10 @@
+import { cacheHelper } from '@/lib/cache-header'
+import { StripeInfo } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
+import { ProductType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
@@ -58,8 +62,10 @@ export const productRouter = router({
           return await tx.product.create({
             data: {
               ...input,
-              stripeProductId: product.id,
-              stripePriceId: price.id,
+              stripe: {
+                productId: product.id,
+                priceId: price.id,
+              } as StripeInfo,
               siteId,
               userId: ctx.token.uid,
             },
@@ -109,23 +115,33 @@ export const productRouter = router({
 
       const oauthStripe = await getOAuthStripe(siteId)
 
-      await oauthStripe.prices.update(product.stripePriceId!, {
+      const stripeInfo = product.stripe as StripeInfo
+
+      await oauthStripe.prices.update(stripeInfo.priceId, {
         active: false,
       })
 
       const newPrice = await oauthStripe.prices.create({
         unit_amount: price, // $10
         currency: 'usd',
-        product: product.stripeProductId!,
+        product: stripeInfo.productId!,
       })
 
       await prisma.product.update({
         where: { id: input.id },
         data: {
           price,
-          stripePriceId: newPrice.id,
+          stripe: {
+            ...stripeInfo,
+            priceId: newPrice.id,
+          } as StripeInfo,
         },
       })
+
+      if (product.type === ProductType.TIER) {
+        revalidateTag(`${ctx.activeSiteId}-tiers`)
+        await cacheHelper.updateCachedMySites(ctx.token.uid, null)
+      }
 
       return product
     }),

@@ -26,6 +26,7 @@ import { postRouter } from './routers/post'
 import { postImportRouter } from './routers/post-import'
 import { productRouter } from './routers/product'
 import { rewardsRouter } from './routers/rewards'
+import { seriesRouter } from './routers/series'
 import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
 import { stripeRouter } from './routers/stripe'
@@ -70,6 +71,7 @@ export const appRouter = router({
   order: orderRouter,
   campaign: campaignRouter,
   pledge: pledgeRouter,
+  series: seriesRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

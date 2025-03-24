@@ -48,8 +48,7 @@ export function TierPriceForm() {
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
-
-      await api.tier.updatePrice.mutate({
+      await api.product.updatePrice.mutate({
         id: tier.id,
         price: data.price,
       })

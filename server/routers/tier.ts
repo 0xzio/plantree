@@ -1,6 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
+import { StripeInfo, TierInterval } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { TierInterval } from '@prisma/client'
+import { ProductType } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { getOAuthStripe } from '../lib/getOAuthStripe'
@@ -8,8 +9,11 @@ import { protectedProcedure, router } from '../trpc'
 
 export const tierRouter = router({
   listSiteTiers: protectedProcedure.query(async ({ ctx, input }) => {
-    const tiers = await prisma.tier.findMany({
-      where: { siteId: ctx.activeSiteId },
+    const tiers = await prisma.product.findMany({
+      where: {
+        siteId: ctx.activeSiteId,
+        type: ProductType.TIER,
+      },
     })
 
     return tiers
@@ -60,13 +64,15 @@ export const tierRouter = router({
         product: product.id,
       })
 
-      await prisma.tier.create({
+      await prisma.product.create({
         data: {
           ...input,
           price,
-          interval: TierInterval.MONTHLY,
-          stripeProductId: product.id,
-          stripePriceId: monthlyPrice.id,
+          stripe: {
+            productId: product.id,
+            priceId: monthlyPrice.id,
+            interval: TierInterval.MONTHLY,
+          } as StripeInfo,
           siteId,
           userId: ctx.token.uid,
         },
@@ -87,49 +93,9 @@ export const tierRouter = router({
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...rest } = input
-
-      const tier = await prisma.tier.update({
+      const tier = await prisma.product.update({
         where: { id: input.id },
         data: rest,
-      })
-
-      revalidateTag(`${ctx.activeSiteId}-tiers`)
-      await cacheHelper.updateCachedMySites(ctx.token.uid, null)
-      return tier
-    }),
-
-  updatePrice: protectedProcedure
-    .input(
-      z.object({
-        id: z.string(),
-        price: z.string().min(1, { message: 'Price is required' }),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      const { id } = input
-      const siteId = ctx.activeSiteId
-
-      const price = parseInt((Number(input.price) * 100) as any)
-
-      const tier = await prisma.tier.findUniqueOrThrow({
-        where: { id: input.id },
-      })
-
-      const oauthStripe = await getOAuthStripe(siteId)
-
-      const monthlyPrice = await oauthStripe.prices.create({
-        unit_amount: price, // $10
-        currency: 'usd',
-        recurring: { interval: 'month' },
-        product: tier.stripeProductId!,
-      })
-
-      await prisma.tier.update({
-        where: { id: input.id },
-        data: {
-          price,
-          stripePriceId: monthlyPrice.id,
-        },
       })
 
       revalidateTag(`${ctx.activeSiteId}-tiers`)

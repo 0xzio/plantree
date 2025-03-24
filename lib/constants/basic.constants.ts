@@ -108,7 +108,7 @@ export const defaultNavLinks: NavLink[] = [
     pathname: '/projects',
     type: NavLinkType.BUILTIN,
     location: NavLinkLocation.HEADER,
-    visible: true,
+    visible: false,
   },
   {
     title: 'Tags',
@@ -196,3 +196,16 @@ export const BUILTIN_PAGE_SLUGS = [
 
 export const LATEST_POSTS_LIMIT = 6
 export const HOME_PROJECT_LIMIT = 4
+
+export enum TierInterval {
+  MONTHLY = 'MONTHLY',
+  YEARLY = 'YEARLY',
+}
+
+export type StripeInfo = {
+  productId: string
+  priceId: string
+  isRecurring: boolean
+  interval?: TierInterval
+  currency?: string
+}
