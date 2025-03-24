@@ -70,9 +70,14 @@ msgstr "Analytics"
 msgid "Appearance"
 msgstr "Appearance"
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:128
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
 msgid "Archived"
 msgstr "Archived"
+
+#: components/CreatePostButton.tsx:120
+msgid "Article"
+msgstr "Article"
 
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:45
 msgid "Asset"
@@ -110,6 +115,10 @@ msgstr "Billing & plan"
 #: themes/aside/pages/BlogPage.tsx:25
 msgid "Blog"
 msgstr "Blog"
+
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:30
+msgid "Book"
+msgstr "Book"
 
 #: app/[lang]/root/(home)/FeatureList.tsx:36
 msgid "Build for super individual"
@@ -177,6 +186,10 @@ msgstr "Collecting"
 #: components/theme-ui/PostActions/CollectorsDialog/CollectorsDialog.tsx:40
 msgid "Collectors"
 msgstr "Collectors"
+
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:36
+msgid "Column"
+msgstr "Column"
 
 #: components/theme-ui/PostActions/Comment/CommentSheet.tsx:35
 msgid "Comments"
@@ -271,6 +284,10 @@ msgstr "Discover"
 msgid "Domain"
 msgstr "Domain"
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:116
+msgid "Draft"
+msgstr "Draft"
+
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:28
 msgid "Drafts"
 msgstr "Drafts"
@@ -278,6 +295,11 @@ msgstr "Drafts"
 #: app/[lang]/root/(home)/FeatureList.tsx:47
 msgid "Easily create and send newsletters to keep your audience engaged."
 msgstr "Easily create and send newsletters to keep your audience engaged."
+
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:148
+#: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:132
+msgid "Edit"
+msgstr "Edit"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:27
 msgid "Edit navigation"
@@ -345,6 +367,10 @@ msgstr "Header"
 #: components/Profile/ProfilePopover.tsx:99
 msgid "Home"
 msgstr "Home"
+
+#: components/CreatePostButton.tsx:149
+msgid "Image"
+msgstr "Image"
 
 #: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:65
 msgid "Image public status updated successfully!"
@@ -453,6 +479,10 @@ msgstr "No tags found."
 msgid "Not tipper found"
 msgstr "Not tipper found"
 
+#: components/CreatePostButton.tsx:133
+msgid "Note"
+msgstr "Note"
+
 #: app/[lang]/root/(home)/FeatureList.tsx:56
 msgid "Offer exclusive content and benefits to loyal members."
 msgstr "Offer exclusive content and benefits to loyal members."
@@ -505,6 +535,10 @@ msgstr "Please confirm your authorization for this login."
 msgid "please try again~"
 msgstr "please try again~"
 
+#: components/CreatePostButton.tsx:165
+msgid "Podcast"
+msgstr "Podcast"
+
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:105
 msgid "Posts"
@@ -542,6 +576,7 @@ msgstr "Public"
 msgid "Public visit"
 msgstr "Public visit"
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:122
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
 msgid "Published"
 msgstr "Published"

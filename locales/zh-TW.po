@@ -70,8 +70,13 @@ msgstr ""
 msgid "Appearance"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:128
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
 msgid "Archived"
+msgstr ""
+
+#: components/CreatePostButton.tsx:120
+msgid "Article"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:45
@@ -110,6 +115,10 @@ msgstr ""
 #: themes/aside/pages/BlogPage.tsx:25
 msgid "Blog"
 msgstr "博客"
+
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:30
+msgid "Book"
+msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:36
 msgid "Build for super individual"
@@ -176,6 +185,10 @@ msgstr ""
 
 #: components/theme-ui/PostActions/CollectorsDialog/CollectorsDialog.tsx:40
 msgid "Collectors"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:36
+msgid "Column"
 msgstr ""
 
 #: components/theme-ui/PostActions/Comment/CommentSheet.tsx:35
@@ -271,12 +284,21 @@ msgstr ""
 msgid "Domain"
 msgstr "域名"
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:116
+msgid "Draft"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:28
 msgid "Drafts"
 msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:47
 msgid "Easily create and send newsletters to keep your audience engaged."
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:148
+#: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:132
+msgid "Edit"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkDialog.tsx:27
@@ -344,6 +366,10 @@ msgstr ""
 #: components/theme-ui/NavigationItem.tsx:14
 #: components/Profile/ProfilePopover.tsx:99
 msgid "Home"
+msgstr ""
+
+#: components/CreatePostButton.tsx:149
+msgid "Image"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/assets/AssetDialog/AssetDialog.tsx:65
@@ -453,6 +479,10 @@ msgstr "暂无标签"
 msgid "Not tipper found"
 msgstr ""
 
+#: components/CreatePostButton.tsx:133
+msgid "Note"
+msgstr ""
+
 #: app/[lang]/root/(home)/FeatureList.tsx:56
 msgid "Offer exclusive content and benefits to loyal members."
 msgstr ""
@@ -505,6 +535,10 @@ msgstr ""
 msgid "please try again~"
 msgstr "请再试一遍"
 
+#: components/CreatePostButton.tsx:165
+msgid "Podcast"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:105
 msgid "Posts"
@@ -542,6 +576,7 @@ msgstr ""
 msgid "Public visit"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:122
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
 msgid "Published"
 msgstr ""

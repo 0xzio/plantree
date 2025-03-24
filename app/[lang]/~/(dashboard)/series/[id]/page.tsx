@@ -23,7 +23,7 @@ export default function Page() {
   return (
     <SeriesProvider series={data!}>
       <div className="h-full">
-        <SeriesNav series={data!} />
+        <SeriesNav />
         <div className="flex flex-col  gap-8 mx-auto max-w-3xl border p-8 rounded-xl h-ful">
           <SeriesInfo />
           <CatalogueBox />

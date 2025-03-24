@@ -1,7 +1,6 @@
-import { StripeInfo } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
-import { Balance } from '@/lib/types'
+import { Balance, StripeInfo } from '@/lib/types'
 import { StripeType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import qs from 'query-string'
