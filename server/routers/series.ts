@@ -7,6 +7,17 @@ import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, router } from '../trpc'
 
 export const seriesRouter = router({
+  getSeriesList: protectedProcedure.query(async ({ ctx, input }) => {
+    const tiers = await prisma.series.findMany({
+      where: {
+        siteId: ctx.activeSiteId,
+      },
+      include: { product: true },
+    })
+
+    return tiers
+  }),
+
   addSeries: protectedProcedure
     .input(
       z.object({
@@ -18,9 +29,17 @@ export const seriesRouter = router({
         slug: z.string().min(1, { message: 'Slug is required' }),
         description: z.string(),
         // about: z.string(),
-        chargeMode: z.nativeEnum(ChargeMode),
-        price: z.string().min(1, { message: 'Price is required' }),
+        chargeMode: z.nativeEnum(ChargeMode).optional(),
       }),
     )
-    .mutation(async ({ ctx, input }) => {}),
+    .mutation(async ({ ctx, input }) => {
+      const series = await prisma.series.create({
+        data: {
+          siteId: ctx.activeSiteId,
+          userId: ctx.token.uid,
+          ...input,
+        },
+      })
+      return series
+    }),
 })

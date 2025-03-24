@@ -231,6 +231,7 @@ model SiteUser {
 }
 
 enum ChargeMode {
+  NONE
   FREE
   PAID_ONE_TIME
   PAID_MONTHLY
@@ -252,7 +253,7 @@ model Series {
   logo        String?    @default("") @db.VarChar(2183)
   cover       String?    @default("") @db.VarChar(2183)
   catalogue   Json?
-  chargeMode  ChargeMode @default(FREE)
+  chargeMode  ChargeMode @default(NONE)
   seriesType  SeriesType @default(COLUMN)
   props       Json?
   createdAt   DateTime   @default(now())
@@ -261,8 +262,8 @@ model Series {
   userId      String     @db.Uuid
   site        Site       @relation(fields: [siteId], references: [id])
   siteId      String     @db.Uuid
-  product     Product    @relation(fields: [productId], references: [id])
-  productId   String     @db.Uuid
+  product     Product?   @relation(fields: [productId], references: [id])
+  productId   String?    @db.Uuid
   Posts       Post[]
 
   @@index([siteId])

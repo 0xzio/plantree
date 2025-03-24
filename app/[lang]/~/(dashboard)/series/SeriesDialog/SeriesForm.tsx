@@ -36,14 +36,14 @@ const FormSchema = z.object({
   slug: z.string().min(1, { message: 'Slug is required' }),
   description: z.string(),
   // about: z.string(),
-  chargeMode: z.nativeEnum(ChargeMode),
-  price: z.string().min(1, { message: 'Price is required' }),
+  chargeMode: z.nativeEnum(ChargeMode).optional(),
+  // price: z.string().optional(),
 })
 
 export function SeriesForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen, series } = useSeriesDialog()
-  const { refetch } = trpc.tier.listSiteTiers.useQuery()
+  const { refetch } = trpc.series.getSeriesList.useQuery()
 
   const isEdit = !!series
 
@@ -54,11 +54,12 @@ export function SeriesForm() {
       logo: series?.logo || '',
       name: series?.name || '',
       slug: series?.slug || '',
-      price: series?.product?.price?.toString() || '',
+      // price: series?.product?.price?.toString() || '',
       description: series?.description || '',
       chargeMode: series?.chargeMode || ChargeMode.PAID_MONTHLY,
     },
   })
+
   const chargeMode = form.watch('chargeMode')
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
@@ -66,21 +67,23 @@ export function SeriesForm() {
       setLoading(true)
 
       if (isEdit) {
-        await api.tier.updateTier.mutate({
-          id: series.id,
-          name: data.name,
-          description: data.description,
-        })
+        // await api.tier.updateTier.mutate({
+        //   id: series.id,
+        //   name: data.name,
+        //   description: data.description,
+        // })
       } else {
-        await api.tier.addTier.mutate(data)
+        await api.series.addSeries.mutate(data)
       }
       await refetch()
 
       setIsOpen(false)
       toast.success(
-        isEdit ? 'Tier updated successfully!' : 'Tier added successfully!',
+        isEdit ? 'Series updated successfully!' : 'Series added successfully!',
       )
     } catch (error) {
+      console.log('error:', error)
+
       const msg = extractErrorMessage(error)
       toast.error(msg)
     }
@@ -183,7 +186,7 @@ export function SeriesForm() {
           )}
         />
 
-        <FormField
+        {/* <FormField
           control={form.control}
           name="chargeMode"
           render={({ field }) => (
@@ -218,9 +221,9 @@ export function SeriesForm() {
               <FormMessage />
             </FormItem>
           )}
-        />
+        /> */}
 
-        {!isEdit && chargeMode !== ChargeMode.FREE && (
+        {/* {!isEdit && chargeMode !== ChargeMode.FREE && (
           <FormField
             control={form.control}
             name="price"
@@ -245,7 +248,7 @@ export function SeriesForm() {
               </FormItem>
             )}
           />
-        )}
+        )} */}
 
         <div>
           <Button
