@@ -53,8 +53,6 @@ export default async function Page(props: {
 
   const series = await getSeries(site.id, params.slug)
 
-  console.log('=======series.about:', series?.about)
-
   return (
     <div className="flex gap-x-16 pt-4 h-full">
       <div className={cn('flex-1 flex flex-col')}>
@@ -68,7 +66,6 @@ export default async function Page(props: {
           </header>
           <div className="pt-2 md:pt-4">
             <div className="">
-              eeer
               <ContentRender
                 content={
                   series?.about ? JSON.parse(series.about) : editorDefaultValue

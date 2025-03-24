@@ -21,6 +21,8 @@ msgstr ""
 msgid "100% run on Cloudflare and deploy freely."
 msgstr ""
 
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:65
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/book/AboutItem.tsx:34
 #: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr "关于"
@@ -117,8 +119,8 @@ msgid "Blog"
 msgstr "博客"
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:32
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:126
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:24
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
 msgstr ""
 
@@ -190,8 +192,8 @@ msgid "Collectors"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:38
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:122
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:30
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
 msgstr ""
 
@@ -215,7 +217,7 @@ msgstr "投稿"
 msgid "Coupons"
 msgstr "优惠码"
 
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:133
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:149
 msgid "Course"
 msgstr ""
 
@@ -280,7 +282,7 @@ msgstr ""
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:181
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:197
 msgid "Description"
 msgstr ""
 
@@ -425,7 +427,7 @@ msgstr ""
 msgid "Login to PenX CLI"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:198
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:114
 msgid "logo"
 msgstr ""
 
@@ -459,7 +461,7 @@ msgstr ""
 msgid "My sites"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:148
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:164
 msgid "Name"
 msgstr ""
 
@@ -664,7 +666,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:164
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:180
 msgid "Slug"
 msgstr ""
 

@@ -1,4 +1,6 @@
+import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
+import { revalidateSite } from '@/lib/revalidateSite'
 import { ChargeMode, SeriesType } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
@@ -92,6 +94,20 @@ export const seriesRouter = router({
       })
 
       revalidateTag(`${series.siteId}-series-${series.slug}`)
+
+      const site = await prisma.site.findUniqueOrThrow({
+        where: { id: ctx.activeSiteId },
+        include: { domains: true },
+      })
+
+      const collaborators = await prisma.collaborator.findMany({
+        where: { siteId: ctx.activeSiteId },
+      })
+      for (const item of collaborators) {
+        await cacheHelper.updateCachedMySites(item.userId, null)
+      }
+
+      revalidateSite(site.domains)
       return series
     }),
 })

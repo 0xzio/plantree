@@ -12,7 +12,7 @@ import {
 import { useSite } from '@/hooks/useSite'
 import { defaultNavLinks } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { NavLink, NavLinkType } from '@/lib/theme.types'
+import { NavLink, NavLinkLocation, NavLinkType } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
@@ -30,11 +30,24 @@ interface Props {
 
 export function NavList({ site }: Props) {
   let navLinks = (site.navLinks || defaultNavLinks) as NavLink[]
+
   const { setState } = useNavLinkDialog()
   const { refetch } = useSite()
 
   const isNavLinkValid = navLinks.some((i) => i.pathname === '/ama')
   navLinks = isNavLinkValid ? navLinks : defaultNavLinks
+
+  const series = navLinks.find((i) => i.pathname === '/series')
+
+  if (!series) {
+    navLinks.push({
+      title: 'Series',
+      pathname: '/series',
+      type: NavLinkType.BUILTIN,
+      location: NavLinkLocation.HEADER,
+      visible: false,
+    })
+  }
 
   return (
     <>
