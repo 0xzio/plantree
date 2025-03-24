@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
-import { SeriesWithPost } from '@/lib/theme.types'
+import { SeriesWithPosts } from '@/lib/theme.types'
 import { getUrl } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { SeriesType } from '@prisma/client'
 
 interface Props {
-  series: SeriesWithPost
+  series: SeriesWithPosts
 }
 export function SeriesInfo({ series }: Props) {
   return (

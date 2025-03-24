@@ -1,8 +1,8 @@
-import { SeriesWithPost } from '@/lib/theme.types'
+import { SeriesWithPosts } from '@/lib/theme.types'
 import { PostItem } from './PostItem'
 
 interface Props {
-  series: SeriesWithPost
+  series: SeriesWithPosts
 }
 export function SeriesPostList({ series }: Props) {
   return (

@@ -252,6 +252,6 @@ export enum PostListStyle {
   CARD = 'CARD',
 }
 
-export type SeriesWithPost = Series & {
+export type SeriesWithPosts = Series & {
   posts: Array<Post & { authors: Author[] }>
 }

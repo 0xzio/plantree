@@ -1,13 +1,21 @@
+import { SeriesProvider } from '@/components/SeriesContext'
+import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { Footer } from '@/components/theme-ui/Footer'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
-import { SeriesPageWidget } from '@/components/theme-ui/SeriesPageWidget'
 import { initLingui } from '@/initLingui'
+import { editorDefaultValue } from '@/lib/constants'
 import { getSeries, getSite } from '@/lib/fetchers'
 import { AppearanceConfig } from '@/lib/theme.types'
+import { cn } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
 import { Trans } from '@lingui/react/macro'
+import { SeriesType } from '@prisma/client'
 import { Metadata } from 'next'
-import { SeriesInfo } from './SeriesInfo'
-import { SeriesPostList } from './SeriesPostList'
+import { Header } from './book/Header'
+import { Sidebar } from './book/Sidebar'
+import { Toc } from './book/Toc'
+import { SeriesInfo } from './column/SeriesInfo'
+import { SeriesPostList } from './column/SeriesPostList'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
@@ -45,10 +53,35 @@ export default async function Page(props: {
 
   const series = await getSeries(site.id, params.slug)
 
+  console.log('=======series.about:', series?.about)
+
   return (
-    <div className="space-y-6  mx-auto max-w-3xl pt-20">
-      <SeriesInfo series={series as any} />
-      <SeriesPostList series={series as any} />
+    <div className="flex gap-x-16 pt-4 h-full">
+      <div className={cn('flex-1 flex flex-col')}>
+        <div className="mb-auto flex-1">
+          <header className="space-y-4 pb-4">
+            <div className="mb-4">
+              <PageTitle className="mb-2 mt-4">
+                <Trans>About</Trans>
+              </PageTitle>
+            </div>
+          </header>
+          <div className="pt-2 md:pt-4">
+            <div className="">
+              eeer
+              <ContentRender
+                content={
+                  series?.about ? JSON.parse(series.about) : editorDefaultValue
+                }
+              />
+            </div>
+          </div>
+        </div>
+        <Footer className="mt-auto" site={site} />
+      </div>
+      <Toc
+        content={series?.about ? JSON.parse(series.about) : editorDefaultValue}
+      ></Toc>
     </div>
   )
 }

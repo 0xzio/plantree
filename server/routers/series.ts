@@ -44,7 +44,7 @@ export const seriesRouter = router({
         }),
         slug: z.string().min(1, { message: 'Slug is required' }),
         description: z.string(),
-        // about: z.string(),
+        about: z.string().optional(),
         chargeMode: z.nativeEnum(ChargeMode).optional(),
       }),
     )
@@ -77,7 +77,7 @@ export const seriesRouter = router({
           .optional(),
         slug: z.string().min(1, { message: 'Slug is required' }).optional(),
         description: z.string().optional(),
-        // about: z.string(),
+        about: z.string().optional(),
         chargeMode: z.nativeEnum(ChargeMode).optional(),
         catalogue: z.any().optional(),
       }),

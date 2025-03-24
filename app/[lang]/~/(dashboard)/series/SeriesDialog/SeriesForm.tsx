@@ -19,6 +19,8 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
+import { useSeriesItem } from '@/hooks/useSeriesItem'
+import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -28,7 +30,6 @@ import { slug } from 'github-slugger'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useSeriesDialog } from './useSeriesDialog'
-import { useSeriesItem } from '@/hooks/useSeriesItem'
 
 const FormSchema = z.object({
   seriesType: z.nativeEnum(SeriesType),
@@ -38,7 +39,7 @@ const FormSchema = z.object({
   }),
   slug: z.string().min(1, { message: 'Slug is required' }),
   description: z.string(),
-  // about: z.string(),
+  about: z.string().optional(),
   chargeMode: z.nativeEnum(ChargeMode).optional(),
   // price: z.string().optional(),
 })
@@ -46,7 +47,8 @@ const FormSchema = z.object({
 export function SeriesForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen, series } = useSeriesDialog()
-  const { refetch } = useSeriesItem()
+  const { refetch: refetchItem } = useSeriesItem()
+  const { refetch: refetchList } = trpc.series.getSeriesList.useQuery()
 
   const isEdit = !!series
 
@@ -59,6 +61,7 @@ export function SeriesForm() {
       slug: series?.slug || '',
       // price: series?.product?.price?.toString() || '',
       description: series?.description || '',
+      about: series?.about || '',
       chargeMode: series?.chargeMode || ChargeMode.PAID_MONTHLY,
     },
   })
@@ -80,10 +83,11 @@ export function SeriesForm() {
           id: series.id,
           ...data,
         })
+        await refetchItem()
       } else {
         await api.series.addSeries.mutate(data)
+        await refetchList()
       }
-      await refetch()
 
       setIsOpen(false)
       toast.success(
@@ -101,6 +105,18 @@ export function SeriesForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="logo"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>
+                <Trans>logo</Trans>
+              </FormLabel>
+              <FileUpload {...field} />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="seriesType"
@@ -191,15 +207,32 @@ export function SeriesForm() {
 
         <FormField
           control={form.control}
-          name="logo"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>
-                <Trans>logo</Trans>
-              </FormLabel>
-              <FileUpload {...field} />
-            </FormItem>
-          )}
+          name="about"
+          render={({ field }) => {
+            return (
+              <FormItem className="w-full">
+                <FormLabel>About</FormLabel>
+                <FormControl>
+                  <div className="h-[250px]  border border-foreground/20 rounded-lg overflow-auto">
+                    <PlateEditor
+                      variant="default"
+                      className="min-h-[240px]"
+                      value={
+                        field.value
+                          ? JSON.parse(field.value)
+                          : editorDefaultValue
+                      }
+                      onChange={(v) => {
+                        // console.log('value:',v, JSON.stringify(v));
+                        field.onChange(JSON.stringify(v))
+                      }}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )
+          }}
         />
 
         {/* <FormField
