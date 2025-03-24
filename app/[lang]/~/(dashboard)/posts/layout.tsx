@@ -1,9 +1,9 @@
 import { ReactNode } from 'react'
+import { CreatePostButton } from '@/components/CreatePostButton'
 import { SiteLink } from '@/components/SiteLink'
 import { initLingui } from '@/initLingui'
 import linguiConfig from '@/lingui.config'
 import { Trans } from '@lingui/react/macro'
-import { CreatePostButton } from './components/CreatePostButton'
 import { PostsNav } from './components/PostsNav'
 
 export const dynamic = 'force-static'

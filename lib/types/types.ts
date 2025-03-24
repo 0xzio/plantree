@@ -12,6 +12,7 @@ import {
   User,
 } from '@prisma/client'
 import { Address } from 'viem'
+import { TierInterval } from '../constants'
 
 export type App = {
   id: string
@@ -309,4 +310,12 @@ export type Balance = {
   withdrawable: number
   withdrawing: number
   locked: number
+}
+
+export type StripeInfo = {
+  productId: string
+  priceId: string
+  isRecurring: boolean
+  interval?: TierInterval
+  currency?: string
 }

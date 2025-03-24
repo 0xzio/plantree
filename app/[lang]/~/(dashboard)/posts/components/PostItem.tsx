@@ -22,6 +22,7 @@ import { Link } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { cn, getUrl } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { PostType } from '@prisma/client'
 import { format } from 'date-fns'
 import {
@@ -127,7 +128,9 @@ export function PostItem({ post, status }: PostItemProps) {
             className="rounded-full text-xs h-7 gap-1 opacity-50"
           >
             <Edit3Icon size={14}></Edit3Icon>
-            <div>Edit</div>
+            <div>
+              <Trans>Edit</Trans>
+            </div>
           </Button>
         </Link>
 

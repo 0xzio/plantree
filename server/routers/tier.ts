@@ -1,6 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
-import { StripeInfo, TierInterval } from '@/lib/constants'
+import { TierInterval } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { StripeInfo } from '@/lib/types'
 import { ProductType } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
 import { z } from 'zod'

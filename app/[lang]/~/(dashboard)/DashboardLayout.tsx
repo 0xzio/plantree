@@ -100,7 +100,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
           <div className="h-full bg-background overflow-auto rounded-lg shadow-xs pb-20">
             <div
               className={cn(
-                '[&_form]:max-w-xl',
+                '[&_form]:max-w-xl h-full',
                 !isFullWidth && 'mx-auto px-4 md:px-0 md:max-w-3xl pt-16 pb-20',
               )}
             >

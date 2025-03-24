@@ -1,10 +1,10 @@
 import { cacheHelper } from '@/lib/cache-header'
-import { isProd, StripeInfo, TierInterval } from '@/lib/constants'
+import { isProd, TierInterval } from '@/lib/constants'
 import { addDomainToVercel, removeDomainFromVercelProject } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
 import { stripe } from '@/lib/stripe'
-import { MySite } from '@/lib/types'
+import { MySite, StripeInfo } from '@/lib/types'
 import {
   AuthType,
   ProductType,

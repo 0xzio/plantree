@@ -1,7 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
-import { StripeInfo } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
+import { StripeInfo } from '@/lib/types'
 import { ProductType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { revalidateTag } from 'next/cache'

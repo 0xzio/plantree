@@ -264,7 +264,7 @@ model Series {
   siteId      String     @db.Uuid
   product     Product?   @relation(fields: [productId], references: [id])
   productId   String?    @db.Uuid
-  Posts       Post[]
+  posts       Post[]
 
   @@index([siteId])
   @@index([siteId, seriesType])

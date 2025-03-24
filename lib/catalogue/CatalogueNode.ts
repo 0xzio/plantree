@@ -46,7 +46,7 @@ export class CatalogueNode {
       id: this.id,
       folded: this.folded,
       type: this.type,
-      uri: this.uri,
+      uri: this.uri || '',
       emoji: this.emoji,
       title: this.title,
       hasChildren: this.children.length > 0,

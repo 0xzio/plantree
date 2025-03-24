@@ -1,6 +1,7 @@
 'use client'
 
 import { useMemo } from 'react'
+import { CreatePostButton } from '@/components/CreatePostButton'
 import { ModeToggle } from '@/components/ModeToggle'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
@@ -24,7 +25,6 @@ import {
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
-import { CreatePostButton } from '../posts/components/CreatePostButton'
 import { EnableWeb3Entry } from './EnableWeb3Entry'
 import { ImportPostEntry } from './ImportPostEntry'
 import { LinkGoogleEntry } from './LinkGoogleEntry'

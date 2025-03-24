@@ -201,11 +201,3 @@ export enum TierInterval {
   MONTHLY = 'MONTHLY',
   YEARLY = 'YEARLY',
 }
-
-export type StripeInfo = {
-  productId: string
-  priceId: string
-  isRecurring: boolean
-  interval?: TierInterval
-  currency?: string
-}

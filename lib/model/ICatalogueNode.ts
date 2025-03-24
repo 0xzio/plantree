@@ -23,15 +23,15 @@ export interface ICatalogueNode {
 export interface CatalogueNodeJSON {
   id: string // nodeId
 
-  folded: boolean
-
   type: CatalogueNodeType
+
+  folded?: boolean
 
   emoji?: string
 
   title?: string
 
-  uri?: string // url or postId
+  uri: string // url or postId
 
-  hasChildren: boolean
+  hasChildren?: boolean
 }

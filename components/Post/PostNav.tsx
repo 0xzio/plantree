@@ -1,5 +1,6 @@
 'use client'
 
+import { useMemo } from 'react'
 import { usePost } from '@/hooks/usePost'
 import { usePostSaving } from '@/hooks/usePostSaving'
 import { BUILTIN_PAGE_SLUGS, ROOT_DOMAIN } from '@/lib/constants'
@@ -8,6 +9,7 @@ import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
 import { PostStatus } from '@prisma/client'
 import { ChevronLeft, ExternalLink } from 'lucide-react'
+import { useParams, useSearchParams } from 'next/navigation'
 import { useSiteContext } from '../SiteContext'
 import { Badge } from '../ui/badge'
 import { Button } from '../ui/button'
@@ -26,6 +28,14 @@ export function PostNav({ className }: PostHeaderProps) {
   const host = isSubdomain ? `${domain}.${ROOT_DOMAIN}` : domain
   const { setIsOpen } = usePublishDialog()
 
+  const searchParams = useSearchParams()!
+  const from = searchParams.get('from')
+
+  const href = useMemo(() => {
+    if (from) return decodeURIComponent(from)
+    return post?.isPage ? '/~/pages' : '/~/posts'
+  }, [post, from])
+
   let prefix = post?.isPage ? '/pages' : '/posts'
   if (BUILTIN_PAGE_SLUGS.includes(post?.slug)) {
     prefix = ''
@@ -40,7 +50,7 @@ export function PostNav({ className }: PostHeaderProps) {
     >
       <div className="flex items-center gap-6">
         <Link
-          href={post?.isPage ? '/~/pages' : '/~/posts'}
+          href={href}
           className="inline-flex w-8 h-8 text-foreground items-center justify-center bg-accent rounded-xl cursor-pointer shrink-0"
         >
           <ChevronLeft size={20} />

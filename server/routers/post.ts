@@ -1,4 +1,3 @@
-import { PostsNav } from '@/app/[lang]/~/(dashboard)/posts/components/PostsNav'
 import { cacheHelper } from '@/lib/cache-header'
 import {
   BUILTIN_PAGE_SLUGS,
@@ -6,10 +5,12 @@ import {
   IPFS_ADD_URL,
 } from '@/lib/constants'
 import { getSiteDomain } from '@/lib/getSiteDomain'
+import { CatalogueNodeJSON, CatalogueNodeType } from '@/lib/model'
 import { prisma } from '@/lib/prisma'
 import { redisKeys } from '@/lib/redisKeys'
 import { renderSlateToHtml } from '@/lib/slate-to-html'
 import { SitePost } from '@/lib/types'
+import { uniqueId } from '@/lib/unique-id'
 import { getUrl } from '@/lib/utils'
 import { getPostEmailTpl } from '@/server/lib/getPostEmailTpl'
 import {
@@ -154,38 +155,71 @@ export const postRouter = router({
         content: z.string(),
         status: z.nativeEnum(PostStatus).optional(),
         userId: z.string().optional(),
+        seriesId: z.string().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const count = await prisma.post.count({
-        where: { siteId: input.siteId, isPage: false },
-      })
+      return prisma.$transaction(
+        async (tx) => {
+          const count = await tx.post.count({
+            where: { siteId: input.siteId, isPage: false },
+          })
 
-      if (count >= FREE_PLAN_POST_LIMIT && ctx.isFree) {
-        throw new TRPCError({
-          code: 'BAD_REQUEST',
-          message: 'You have reached the free plan post limit.',
-        })
-      }
+          if (count >= FREE_PLAN_POST_LIMIT && ctx.isFree) {
+            throw new TRPCError({
+              code: 'BAD_REQUEST',
+              message: 'You have reached the free plan post limit.',
+            })
+          }
 
-      const post = await prisma.post.create({
-        data: {
-          userId: input.userId || ctx.token.uid,
-          i18n: {},
-          ...input,
-          authors: {
-            create: [
-              {
-                siteId: ctx.activeSiteId,
-                userId: input.userId || ctx.token.uid,
+          const post = await tx.post.create({
+            data: {
+              userId: input.userId || ctx.token.uid,
+              i18n: {},
+              ...input,
+              authors: {
+                create: [
+                  {
+                    siteId: ctx.activeSiteId,
+                    userId: input.userId || ctx.token.uid,
+                  },
+                ],
               },
-            ],
-          },
-        },
-      })
+            },
+          })
 
-      await cacheHelper.updateCachedSitePosts(post.siteId, null)
-      return post
+          if (input.seriesId) {
+            const series = await tx.series.findUniqueOrThrow({
+              where: { id: input.seriesId },
+            })
+
+            const catalogue = (series.catalogue ||
+              []) as any as CatalogueNodeJSON[]
+
+            catalogue.push({
+              id: uniqueId(),
+              type: CatalogueNodeType.POST,
+              uri: post.id,
+            })
+
+            await tx.series.update({
+              where: {
+                id: input.seriesId,
+              },
+              data: { catalogue },
+            })
+          }
+
+          if (!input.seriesId) {
+            await cacheHelper.updateCachedSitePosts(post.siteId, null)
+          }
+          return post
+        },
+        {
+          maxWait: 10000, // default: 2000
+          timeout: 20000, // default: 5000
+        },
+      )
     }),
 
   update: protectedProcedure

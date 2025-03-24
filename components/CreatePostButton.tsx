@@ -21,6 +21,7 @@ import { useRouter } from '@/lib/i18n'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { PostType } from '@prisma/client'
 import {
   AudioLinesIcon,
@@ -38,10 +39,12 @@ import {
 import { toast } from 'sonner'
 
 interface Props {
+  from?: string
   className?: string
+  seriesId?: string
 }
 
-export function CreatePostButton({ className }: Props) {
+export function CreatePostButton({ className, seriesId, from }: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
   const { session } = useSession()
@@ -58,13 +61,14 @@ export function CreatePostButton({ className }: Props) {
     setLoading(true)
     try {
       const post = await api.post.create.mutate({
+        seriesId: seriesId || undefined,
         siteId: site.id,
         type,
         title: '',
         content,
       })
       await loadPost(post.id)
-      push(`/~/post?id=${post.id}`)
+      push(`/~/post?id=${post.id}&from=${from}`)
     } catch (error) {
       console.log('=======error:', error)
 
@@ -85,7 +89,11 @@ export function CreatePostButton({ className }: Props) {
         disabled={isLoading}
         onClick={() => createPost(PostType.ARTICLE)}
       >
-        {isLoading ? <LoadingCircle></LoadingCircle> : <Plus size={16} />}
+        {isLoading && !type ? (
+          <LoadingCircle></LoadingCircle>
+        ) : (
+          <Plus size={16} />
+        )}
         <span>Create</span>
       </Button>
       <Popover open={open} onOpenChange={setOpen}>
@@ -108,29 +116,41 @@ export function CreatePostButton({ className }: Props) {
             }}
           >
             <FileText size={16} />
-            <span>Article</span>
+            <span>
+              <Trans>Article</Trans>
+            </span>
           </Item>
-          <Item
-            className="flex gap-2"
-            isLoading={isLoading && type == PostType.NOTE}
-            onClick={async () => {
-              addNoteDialog.setIsOpen(true)
-            }}
-          >
-            <Pen size={16} />
-            <span>Note</span>
-          </Item>
-          <Item
-            className="flex gap-2"
-            isLoading={isLoading && type == PostType.IMAGE}
-            onClick={async () => {
-              setType(PostType.IMAGE)
-              await createPost(PostType.IMAGE)
-            }}
-          >
-            <Image size={16} />
-            <span>Image</span>
-          </Item>
+          {!seriesId && (
+            <Item
+              className="flex gap-2"
+              isLoading={isLoading && type == PostType.NOTE}
+              onClick={async () => {
+                addNoteDialog.setIsOpen(true)
+              }}
+            >
+              <Pen size={16} />
+              <span>
+                <Trans>Note</Trans>
+              </span>
+            </Item>
+          )}
+
+          {!seriesId && (
+            <Item
+              className="flex gap-2"
+              isLoading={isLoading && type == PostType.IMAGE}
+              onClick={async () => {
+                setType(PostType.IMAGE)
+                await createPost(PostType.IMAGE)
+              }}
+            >
+              <Image size={16} />
+              <span>
+                <Trans>Image</Trans>
+              </span>
+            </Item>
+          )}
+
           <Item
             className="flex gap-2"
             isLoading={isLoading && type == PostType.AUDIO}
@@ -141,7 +161,9 @@ export function CreatePostButton({ className }: Props) {
             }}
           >
             <AudioLinesIcon size={16} />
-            <span>Podcast</span>
+            <span>
+              <Trans>Podcast</Trans>
+            </span>
           </Item>
         </PopoverContent>
       </Popover>

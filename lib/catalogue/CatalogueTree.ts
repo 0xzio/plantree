@@ -15,6 +15,8 @@ export class CatalogueTree {
   }
 
   static fromJSON(json: any = []): CatalogueTree {
+    json = typeof json === 'object' ? json : JSON.parse(json)
+
     function convert(nodes: ICatalogueNode[] = []): CatalogueNode[] {
       return nodes.map((node) => {
         if (!node.children?.length) return new CatalogueNode(node)
@@ -32,11 +34,13 @@ export class CatalogueTree {
   toJSON = () => {
     function convert(nodes: CatalogueNode[]): ICatalogueNode[] {
       return nodes.map<ICatalogueNode>((node) => {
-        if (!node.children?.length) return node.toJSON()
+        if (!node.children?.length) {
+          return node.toJSON() as ICatalogueNode
+        }
         return {
           ...node.toJSON(),
           children: convert(node.children),
-        }
+        } as ICatalogueNode
       })
     }
     return convert(this.nodes)

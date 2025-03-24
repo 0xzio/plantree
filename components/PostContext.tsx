@@ -15,5 +15,6 @@ export const PostProvider = ({ post, children }: PropsWithChildren<Props>) => {
 
 export function usePostContext() {
   const post = useContext(PostContext)
+
   return post
 }

@@ -2,6 +2,7 @@
 
 import { Image } from '@/components/Image'
 import { Button } from '@/components/ui/button'
+import { Link } from '@/lib/i18n'
 import { trpc } from '@/lib/trpc'
 import { getUrl } from '@/lib/utils'
 import { RouterOutputs } from '@/server/_app'
@@ -12,7 +13,8 @@ interface Props {
 
 export function SeriesItem({ series: series }: Props) {
   return (
-    <div
+    <Link
+      href={`/~/series/${series.id}`}
       key={series.id}
       className="bg-foreground/5 rounded-lg p-5 flex flex-col items-center gap-3"
     >
@@ -33,6 +35,6 @@ export function SeriesItem({ series: series }: Props) {
           <Button variant="outline-solid">Setup payment</Button>
         </div>
       </div> */}
-    </div>
+    </Link>
   )
 }

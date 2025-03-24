@@ -2,6 +2,7 @@ import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { ChargeMode, SeriesType } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
+import { labelhash } from 'viem'
 import { z } from 'zod'
 import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, router } from '../trpc'
@@ -17,6 +18,24 @@ export const seriesRouter = router({
 
     return tiers
   }),
+
+  getSeriesById: protectedProcedure
+    .input(z.string())
+    .query(async ({ ctx, input }) => {
+      const tiers = await prisma.series.findUniqueOrThrow({
+        where: { id: input },
+        include: {
+          posts: true,
+          // posts: {
+          //   select: {
+          //     id: true,
+          //   },
+          // },
+        },
+      })
+
+      return tiers
+    }),
 
   addSeries: protectedProcedure
     .input(
@@ -37,7 +56,26 @@ export const seriesRouter = router({
         data: {
           siteId: ctx.activeSiteId,
           userId: ctx.token.uid,
+          catalogue: [],
           ...input,
+        },
+      })
+      return series
+    }),
+
+  updateSeries: protectedProcedure
+    .input(
+      z.object({
+        id: z.string(),
+        catalogue: z.any(),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      const { id, ...rest } = input
+      const series = await prisma.series.update({
+        where: { id },
+        data: {
+          ...rest,
         },
       })
       return series
