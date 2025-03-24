@@ -114,8 +114,7 @@ export const Sidebar = ({ site, tags }: Props) => {
             variant: 'outline',
             className: 'w-20',
           }}
-        ></Profile>
-        <ModeToggle variant="outline" />
+        />
       </div>
     </aside>
   )

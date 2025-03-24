@@ -1,5 +1,5 @@
 import { JSX, PropsWithChildren } from 'react'
-import { Author, Product } from '@prisma/client'
+import { Author, Product, Series } from '@prisma/client'
 
 enum AuthType {
   GOOGLE = 'GOOGLE',
@@ -136,6 +136,7 @@ export type Site = {
   seoTitle: string
   seoDescription: string
   products: Product[]
+  series: Series[]
   createdAt: Date
   updatedAt: Date
 }
@@ -249,4 +250,8 @@ export interface AppearanceConfig {
 export enum PostListStyle {
   SIMPLE = 'SIMPLE',
   CARD = 'CARD',
+}
+
+export type SeriesWithPost = Series & {
+  posts: Array<Post & { authors: Author[] }>
 }

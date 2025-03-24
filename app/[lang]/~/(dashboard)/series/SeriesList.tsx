@@ -11,19 +11,17 @@ export function SeriesList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-between items-center h-96 w-full">
+      <div className="flex justify-center items-center h-96 w-full">
         <LoadingDots className="bg-foreground" />
       </div>
     )
   }
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
-        {data.map((item) => (
-          <SeriesItem key={item.id} series={item} />
-        ))}
-      </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-5 gap-3">
+      {data.map((item) => (
+        <SeriesItem key={item.id} series={item} />
+      ))}
     </div>
   )
 }

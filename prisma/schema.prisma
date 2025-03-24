@@ -266,6 +266,7 @@ model Series {
   productId   String?    @db.Uuid
   posts       Post[]
 
+  @@unique([siteId, slug])
   @@index([siteId])
   @@index([siteId, seriesType])
   @@index([siteId, chargeMode])
@@ -538,6 +539,8 @@ model Post {
   @@index([userId, status])
   @@index([userId, type])
   @@index([siteId])
+  @@index([seriesId])
+  @@index([siteId, slug, status])
   @@index([userId])
   @@index([gateType])
   @@index([type])

@@ -11,7 +11,7 @@ interface Props {
   series: RouterOutputs['series']['getSeriesList']['0']
 }
 
-export function SeriesItem({ series: series }: Props) {
+export function SeriesItem({ series }: Props) {
   return (
     <Link
       href={`/~/series/${series.id}`}

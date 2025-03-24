@@ -370,6 +370,14 @@ export const postRouter = router({
       await cacheHelper.updateCachedSitePosts(post.siteId, null)
       await cacheHelper.updateCachedSitePages(post.siteId, null)
 
+      if (post.seriesId) {
+        const { slug: seriesSlug } = await prisma.series.findUniqueOrThrow({
+          where: { id: post.seriesId },
+          select: { slug: true },
+        })
+        revalidateTag(`${post.siteId}-series-${seriesSlug}`)
+      }
+
       revalidateTag(`${post.siteId}-posts`)
       revalidateTag(`${post.siteId}-post-${post.slug}`)
       revalidateTag(`${post.siteId}-page-${post.slug}`)

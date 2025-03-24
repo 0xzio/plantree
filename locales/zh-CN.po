@@ -116,7 +116,9 @@ msgstr ""
 msgid "Blog"
 msgstr "博客"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:30
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:32
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:126
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:24
 msgid "Book"
 msgstr ""
 
@@ -187,7 +189,9 @@ msgstr ""
 msgid "Collectors"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:36
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:38
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:122
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:30
 msgid "Column"
 msgstr ""
 
@@ -210,6 +214,10 @@ msgstr "投稿"
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:168
 msgid "Coupons"
 msgstr "优惠码"
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:133
+msgid "Course"
+msgstr ""
 
 #: app/[lang]/root/(home)/LaunchButton.tsx:22
 msgid "Create a site"
@@ -270,6 +278,10 @@ msgstr ""
 
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:33
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:181
+msgid "Description"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
@@ -413,6 +425,10 @@ msgstr ""
 msgid "Login to PenX CLI"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:198
+msgid "logo"
+msgstr ""
+
 #: app/[lang]/root/(home)/FeatureList.tsx:78
 msgid "Maintain full control over your content and data."
 msgstr ""
@@ -441,6 +457,10 @@ msgstr ""
 
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:80
 msgid "My sites"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:148
+msgid "Name"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
@@ -618,6 +638,7 @@ msgid "SEO friendly"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+#: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr ""
 
@@ -641,6 +662,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:65
 msgid "Size"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:164
+msgid "Slug"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:128

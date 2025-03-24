@@ -26,9 +26,14 @@ export default function Page() {
       <SeriesDialog />
       <div className="h-full">
         <SeriesNav />
-        <div className="flex flex-col  gap-8 mx-auto max-w-3xl border p-8 rounded-xl h-ful">
+        <div className="flex flex-col  gap-8 mx-auto max-w-4xl border p-8 rounded-xl h-ful">
           <SeriesInfo />
-          <CatalogueBox />
+          {!!data?.posts?.length && <CatalogueBox />}
+          {!data?.posts?.length && (
+            <div>
+              <div className="text-foreground/50">No post yet!</div>
+            </div>
+          )}
         </div>
       </div>
     </SeriesProvider>

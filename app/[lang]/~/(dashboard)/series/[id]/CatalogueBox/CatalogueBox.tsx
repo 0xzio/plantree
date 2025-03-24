@@ -84,9 +84,7 @@ type UniqueIdentifier = string
 export const CatalogueBox = () => {
   const series = useSeriesContext()
   const catalogue = series?.catalogue as any
-  const tree = CatalogueTree.fromJSON(
-    Array.isArray(catalogue) ? catalogue : JSON.parse(catalogue),
-  )
+  const tree = CatalogueTree.fromJSON(Array.isArray(catalogue) ? catalogue : [])
   const posts = series?.posts || []
 
   const { setNodes } = useCatalogue()
@@ -142,7 +140,7 @@ export const CatalogueBox = () => {
   }, [activeItem])
 
   return (
-    <div className="w-full">
+    <div className="w-full flex flex-col gap-3">
       <AddPostNodeDialog />
       <AddPageNodeDialog />
       <CategoryNodeDialog />

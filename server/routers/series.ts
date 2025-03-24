@@ -1,10 +1,7 @@
-import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { ChargeMode, SeriesType } from '@prisma/client'
 import { revalidateTag } from 'next/cache'
-import { labelhash } from 'viem'
 import { z } from 'zod'
-import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, router } from '../trpc'
 
 export const seriesRouter = router({
@@ -93,6 +90,8 @@ export const seriesRouter = router({
           ...rest,
         },
       })
+
+      revalidateTag(`${series.siteId}-series-${series.slug}`)
       return series
     }),
 })

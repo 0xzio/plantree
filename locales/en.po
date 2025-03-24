@@ -116,7 +116,9 @@ msgstr "Billing & plan"
 msgid "Blog"
 msgstr "Blog"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:30
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:32
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:126
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:24
 msgid "Book"
 msgstr "Book"
 
@@ -187,7 +189,9 @@ msgstr "Collecting"
 msgid "Collectors"
 msgstr "Collectors"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:36
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:38
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:122
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/SeriesInfo.tsx:30
 msgid "Column"
 msgstr "Column"
 
@@ -210,6 +214,10 @@ msgstr "Contribute"
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:168
 msgid "Coupons"
 msgstr "Coupons"
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:133
+msgid "Course"
+msgstr "Course"
 
 #: app/[lang]/root/(home)/LaunchButton.tsx:22
 msgid "Create a site"
@@ -271,6 +279,10 @@ msgstr "Deploy PenX with One-click tools"
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:33
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgstr "Deploy your own site to Cloudflare Pages in 10 minutes."
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:181
+msgid "Description"
+msgstr "Description"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 msgid "Design"
@@ -413,6 +425,10 @@ msgstr "Log out"
 msgid "Login to PenX CLI"
 msgstr "Login to PenX CLI"
 
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:198
+msgid "logo"
+msgstr "logo"
+
 #: app/[lang]/root/(home)/FeatureList.tsx:78
 msgid "Maintain full control over your content and data."
 msgstr "Maintain full control over your content and data."
@@ -442,6 +458,10 @@ msgstr "Most Popular"
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:80
 msgid "My sites"
 msgstr "My sites"
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:148
+msgid "Name"
+msgstr "Name"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
 msgid "Navigation"
@@ -618,6 +638,7 @@ msgid "SEO friendly"
 msgstr "SEO friendly"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+#: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr "Series"
 
@@ -642,6 +663,10 @@ msgstr "Sites"
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:65
 msgid "Size"
 msgstr "Size"
+
+#: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:164
+msgid "Slug"
+msgstr "Slug"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:128
 msgid "Socials"

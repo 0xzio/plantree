@@ -19,8 +19,7 @@ import { Metadata } from 'next'
 type Params = Promise<{ domain: string; lang: string }>
 
 export const dynamic = 'force-static'
-// export const revalidate = 86400; // 3600 * 24
-export const revalidate = 60
+export const revalidate = 86400; // 3600 * 24
 
 export async function generateStaticParams() {
   return linguiConfig.locales.map((lang: any) => ({ lang }))

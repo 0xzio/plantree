@@ -1,5 +1,12 @@
 import prisma from '@/lib/prisma'
-import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
+import {
+  Friend,
+  NavLink,
+  NavLinkLocation,
+  NavLinkType,
+  Project,
+  Site,
+} from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
 import { initAboutPage, initPages } from '@/server/lib/initPages'
 import { post } from '@farcaster/auth-client'
@@ -51,6 +58,7 @@ export async function getSite(params: any) {
         include: {
           user: true,
           channels: true,
+          series: true,
           products: {
             where: {
               type: ProductType.TIER,
@@ -76,6 +84,26 @@ export async function getSite(params: any) {
       const themeConfig = (site.themeConfig || {}) as any
       const currentThemeConfig = themeConfig[site.themeName || 'sue'] || {}
 
+      const getNavLinks = () => {
+        const navLinks = isNavLinkValid
+          ? (site.navLinks as NavLink[])
+          : defaultNavLinks
+
+        const series = navLinks.find((i) => i.pathname === '/series')
+
+        if (!series) {
+          navLinks.push({
+            title: 'Series',
+            pathname: '/series',
+            type: NavLinkType.BUILTIN,
+            location: NavLinkLocation.HEADER,
+            visible: false,
+          })
+        }
+
+        return navLinks
+      }
+
       return {
         ...site,
         // spaceId: site.spaceId || process.env.NEXT_PUBLIC_SPACE_ID,
@@ -83,7 +111,7 @@ export async function getSite(params: any) {
         logo: getUrl(site.logo || ''),
         image: getUrl(site.image || ''),
         about: getAbout(),
-        navLinks: isNavLinkValid ? site.navLinks : defaultNavLinks,
+        navLinks: getNavLinks(),
         seoTitle: config?.seo?.title || site?.name || '',
         seoDescription: config?.seo?.description || site?.description || '',
         theme: {
@@ -143,6 +171,42 @@ export async function getPosts(siteId: string) {
   )()
 
   return posts
+}
+
+export async function getSeries(siteId: string, slug: string) {
+  const key = `${siteId}-series-${slug}`
+  const series = await unstable_cache(
+    async () => {
+      const series = await prisma.series.findFirst({
+        include: {
+          posts: {
+            where: {
+              status: PostStatus.PUBLISHED,
+            },
+            include: {
+              authors: {
+                include: {
+                  user: true,
+                },
+              },
+            },
+          },
+        },
+        where: {
+          siteId,
+          slug,
+        },
+      })
+      return series
+    },
+    [key],
+    {
+      revalidate: isProd ? REVALIDATE_TIME : 10,
+      tags: [key],
+    },
+  )()
+
+  return series
 }
 
 export async function getPost(siteId: string, slug: string) {
