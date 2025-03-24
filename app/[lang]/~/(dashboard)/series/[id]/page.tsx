@@ -3,6 +3,7 @@
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { SeriesProvider } from '@/components/SeriesContext'
 import { useSeriesItem } from '@/hooks/useSeriesItem'
+import { SeriesDialog } from '../SeriesDialog/SeriesDialog'
 import { CatalogueBox } from './CatalogueBox/CatalogueBox'
 import { SeriesInfo } from './SeriesInfo'
 import { SeriesNav } from './SeriesNav'
@@ -22,6 +23,7 @@ export default function Page() {
 
   return (
     <SeriesProvider series={data!}>
+      <SeriesDialog />
       <div className="h-full">
         <SeriesNav />
         <div className="flex flex-col  gap-8 mx-auto max-w-3xl border p-8 rounded-xl h-ful">

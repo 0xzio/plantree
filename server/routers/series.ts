@@ -67,7 +67,22 @@ export const seriesRouter = router({
     .input(
       z.object({
         id: z.string(),
-        catalogue: z.any(),
+        seriesType: z.nativeEnum(SeriesType).optional(),
+        logo: z
+          .string()
+          .min(1, { message: 'Please upload your avatar' })
+          .optional(),
+        name: z
+          .string()
+          .min(5, {
+            message: 'Name must be at least 1 characters.',
+          })
+          .optional(),
+        slug: z.string().min(1, { message: 'Slug is required' }).optional(),
+        description: z.string().optional(),
+        // about: z.string(),
+        chargeMode: z.nativeEnum(ChargeMode).optional(),
+        catalogue: z.any().optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

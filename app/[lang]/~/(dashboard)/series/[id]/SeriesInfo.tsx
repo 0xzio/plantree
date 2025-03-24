@@ -8,6 +8,7 @@ import { cn, getUrl } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { SeriesType } from '@prisma/client'
 import { PencilIcon } from 'lucide-react'
+import { useSeriesDialog } from '../SeriesDialog/useSeriesDialog'
 
 interface Props {
   className?: string
@@ -15,6 +16,7 @@ interface Props {
 
 export function SeriesInfo({ className }: Props) {
   const series = useSeriesContext()
+  const { setState } = useSeriesDialog()
   return (
     <div className={cn('flex justify-between', className)}>
       <div className="flex items-center gap-2">
@@ -37,10 +39,20 @@ export function SeriesInfo({ className }: Props) {
               </Badge>
             )}
           </div>
-          <div className="text-foreground/60">{series.name}</div>
+          <div className="text-foreground/60">{series.description}</div>
         </div>
       </div>
-      <Button variant="secondary" size="icon" className="size-9">
+      <Button
+        variant="secondary"
+        size="icon"
+        className="size-9"
+        onClick={() => {
+          setState({
+            isOpen: true,
+            series,
+          })
+        }}
+      >
         <PencilIcon size={20} className="text-foreground/60" />
       </Button>
     </div>

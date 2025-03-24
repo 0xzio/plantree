@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { PlateEditor } from '@/components/editor/plate-editor'
 import { FileUpload } from '@/components/FileUpload'
@@ -22,10 +22,13 @@ import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans } from '@lingui/react/macro'
 import { ChargeMode, SeriesType } from '@prisma/client'
+import { slug } from 'github-slugger'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useSeriesDialog } from './useSeriesDialog'
+import { useSeriesItem } from '@/hooks/useSeriesItem'
 
 const FormSchema = z.object({
   seriesType: z.nativeEnum(SeriesType),
@@ -43,7 +46,7 @@ const FormSchema = z.object({
 export function SeriesForm() {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen, series } = useSeriesDialog()
-  const { refetch } = trpc.series.getSeriesList.useQuery()
+  const { refetch } = useSeriesItem()
 
   const isEdit = !!series
 
@@ -61,17 +64,22 @@ export function SeriesForm() {
   })
 
   const chargeMode = form.watch('chargeMode')
+  const slugValue = form.watch('slug')
+
+  useEffect(() => {
+    if (slugValue === slug(slugValue)) return
+    form.setValue('slug', slug(slugValue))
+  }, [slugValue, form])
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
       setLoading(true)
 
       if (isEdit) {
-        // await api.tier.updateTier.mutate({
-        //   id: series.id,
-        //   name: data.name,
-        //   description: data.description,
-        // })
+        await api.series.updateSeries.mutate({
+          id: series.id,
+          ...data,
+        })
       } else {
         await api.series.addSeries.mutate(data)
       }
@@ -111,18 +119,18 @@ export function SeriesForm() {
                   type="single"
                 >
                   <ToggleGroupItem className="" value={SeriesType.COLUMN}>
-                    Column
+                    <Trans>Column</Trans>
                   </ToggleGroupItem>
 
                   <ToggleGroupItem value={SeriesType.BOOK} className="">
-                    Book
+                    <Trans>Book</Trans>
                   </ToggleGroupItem>
                   <ToggleGroupItem
                     value={SeriesType.COURSE}
                     className=""
                     disabled
                   >
-                    Course
+                    <Trans>Course</Trans>
                   </ToggleGroupItem>
                 </ToggleGroup>
               </FormControl>
@@ -136,7 +144,9 @@ export function SeriesForm() {
           name="name"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>
+                <Trans>Name</Trans>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />
               </FormControl>
@@ -150,7 +160,9 @@ export function SeriesForm() {
           name="slug"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Slug</FormLabel>
+              <FormLabel>
+                <Trans>Slug</Trans>
+              </FormLabel>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />
               </FormControl>
@@ -165,7 +177,9 @@ export function SeriesForm() {
           render={({ field }) => {
             return (
               <FormItem className="w-full">
-                <FormLabel>Description</FormLabel>
+                <FormLabel>
+                  <Trans>Description</Trans>
+                </FormLabel>
                 <FormControl>
                   <Textarea placeholder="" {...field} className="w-full" />
                 </FormControl>
@@ -180,7 +194,9 @@ export function SeriesForm() {
           name="logo"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>logo</FormLabel>
+              <FormLabel>
+                <Trans>logo</Trans>
+              </FormLabel>
               <FileUpload {...field} />
             </FormItem>
           )}
@@ -253,7 +269,7 @@ export function SeriesForm() {
         <div>
           <Button
             type="submit"
-            className="w-24"
+            className="w-32"
             disabled={isLoading || !form.formState.isValid}
           >
             {isLoading ? (
