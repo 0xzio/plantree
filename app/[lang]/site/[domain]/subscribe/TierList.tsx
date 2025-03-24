@@ -2,12 +2,12 @@
 
 import { Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
-import { Tier } from '@prisma/client'
+import { Product } from '@prisma/client'
 import { TierItem } from './TierItem'
 
 interface Props {
   site: Site
-  tiers: Tier[]
+  tiers: Product[]
 }
 
 export function TierList({ tiers, site }: Props) {

@@ -54,7 +54,7 @@ export function SeriesForm() {
       logo: series?.logo || '',
       name: series?.name || '',
       slug: series?.slug || '',
-      price: series?.price.toString() || '',
+      price: series?.product?.price?.toString() || '',
       description: series?.description || '',
       chargeMode: series?.chargeMode || ChargeMode.PAID_MONTHLY,
     },

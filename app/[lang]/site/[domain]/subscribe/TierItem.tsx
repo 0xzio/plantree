@@ -6,16 +6,17 @@ import { LoadingDots } from '@/components/icons/loading-dots'
 import { useLoginDialog } from '@/components/LoginDialog/useLoginDialog'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { StripeInfo } from '@/lib/constants'
 import { Site } from '@/lib/theme.types'
 import { trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
-import { Tier } from '@prisma/client'
+import { Product } from '@prisma/client'
 import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 interface Props {
   site: Site
-  tier: Tier
+  tier: Product
 }
 
 export function TierItem({ tier, site }: Props) {
@@ -51,7 +52,7 @@ export function TierItem({ tier, site }: Props) {
   const isMember = useMemo(() => {
     if (!subscriptionRes?.data) return false
     const subscription = subscriptionRes?.data
-    if (subscription.tierId !== tier.id) return false
+    if (subscription.productId !== tier.id) return false
     if (
       !subscription.sassCurrentPeriodEnd ||
       subscription.sassSubscriptionStatus === 'canceled'
@@ -89,7 +90,7 @@ export function TierItem({ tier, site }: Props) {
               if (!session) {
                 return setIsOpen(true)
               }
-              if (hasMember && subscriptionRes?.data?.tierId !== tier.id) {
+              if (hasMember && subscriptionRes?.data?.productId !== tier.id) {
                 toast.info(
                   'Please cancel subscription before upgrading to this tier.',
                 )
@@ -102,10 +103,11 @@ export function TierItem({ tier, site }: Props) {
                 await subscriptionRes.refetch()
                 toast.success('Subscription canceled successfully.')
               } else {
+                const stripeInfo = tier.stripe as StripeInfo
                 const res = await checkout.mutateAsync({
-                  tierId: tier.id,
+                  productId: tier.id,
                   siteId: site.id,
-                  priceId: tier.stripePriceId!,
+                  priceId: stripeInfo.priceId,
                   host: window.location.host,
                   pathname: encodeURIComponent(source || '/'),
                 })

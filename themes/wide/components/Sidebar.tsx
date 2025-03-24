@@ -95,7 +95,7 @@ export const Sidebar = ({ site, tags }: Props) => {
           </div>
         </div>
         <div className="space-y-3">
-          {site.tiers.length > 0 && (
+          {site.products.length > 0 && (
             <div>
               <MembershipEntry className="inline-flex" />
             </div>

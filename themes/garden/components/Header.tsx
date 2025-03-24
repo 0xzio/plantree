@@ -50,7 +50,7 @@ export const Header = ({ site }: Props) => {
               )
             })}
 
-            {site.tiers.length > 0 && <MembershipEntry />}
+            {site.products.length > 0 && <MembershipEntry />}
           </div>
         </div>
 

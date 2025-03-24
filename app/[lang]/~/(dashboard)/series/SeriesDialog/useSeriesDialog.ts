@@ -1,9 +1,13 @@
-import { Series, Tier } from '@prisma/client'
+import { Product, Series } from '@prisma/client'
 import { atom, useAtom } from 'jotai'
+
+export type SeriesWithProduct = Series & {
+  product?: Product
+}
 
 type State = {
   isOpen: boolean
-  series: Series
+  series: SeriesWithProduct
 }
 
 const seriesDialogAtom = atom<State>({

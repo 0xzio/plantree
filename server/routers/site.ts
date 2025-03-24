@@ -1,5 +1,5 @@
 import { cacheHelper } from '@/lib/cache-header'
-import { isProd } from '@/lib/constants'
+import { isProd, StripeInfo, TierInterval } from '@/lib/constants'
 import { addDomainToVercel, removeDomainFromVercelProject } from '@/lib/domains'
 import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
@@ -7,9 +7,9 @@ import { stripe } from '@/lib/stripe'
 import { MySite } from '@/lib/types'
 import {
   AuthType,
+  ProductType,
   StripeType,
   SubdomainType,
-  TierInterval,
 } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
@@ -124,7 +124,11 @@ export const siteRouter = router({
       include: {
         domains: true,
         channels: true,
-        tiers: true,
+        products: {
+          where: {
+            type: ProductType.TIER,
+          },
+        },
       },
     })
 
@@ -538,10 +542,11 @@ export const siteRouter = router({
           })
 
           if (input.stripeType === StripeType.PLATFORM) {
-            const tier = await tx.tier.findFirst({
+            const tier = await tx.product.findFirst({
               where: {
                 stripeType: input.stripeType,
                 siteId: ctx.activeSiteId,
+                type: ProductType.TIER,
               },
             })
 
@@ -560,15 +565,17 @@ export const siteRouter = router({
                 recurring: { interval: 'month' },
                 product: product.id,
               })
-              await tx.tier.create({
+              await tx.product.create({
                 data: {
                   stripeType: input.stripeType,
                   name: 'Member',
                   price: price,
-                  interval: TierInterval.MONTHLY,
-                  stripeProductId: product.id,
+                  stripe: {
+                    productId: product.id,
+                    priceId: monthlyPrice.id,
+                    interval: TierInterval.MONTHLY,
+                  } as StripeInfo,
                   description: JSON.stringify(defaultBenefits),
-                  stripePriceId: monthlyPrice.id,
                   siteId: ctx.activeSiteId,
                   userId: ctx.token.uid,
                 },

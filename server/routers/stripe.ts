@@ -1,3 +1,4 @@
+import { StripeInfo } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Balance } from '@/lib/types'
@@ -70,7 +71,7 @@ export const stripeRouter = router({
   subscribeSiteCheckout: protectedProcedure
     .input(
       z.object({
-        tierId: z.string(),
+        productId: z.string(),
         priceId: z.string(),
         siteId: z.string(),
         host: z.string(),
@@ -93,7 +94,7 @@ export const stripeRouter = router({
       const successQuery = {
         siteId,
         userId,
-        tierId: input.tierId,
+        productId: input.productId,
         host: input.host,
         pathname: input.pathname,
       }
@@ -110,7 +111,7 @@ export const stripeRouter = router({
           metadata: {
             siteId,
             priceId: input.priceId,
-            tierId: input.tierId,
+            productId: input.productId,
           },
         },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
@@ -141,7 +142,8 @@ export const stripeRouter = router({
       const product = await prisma.product.findUniqueOrThrow({
         where: { id: input.productId },
       })
-      const priceId = product.stripePriceId as string
+      const stripeInfo = product.stripe as StripeInfo
+      const priceId = stripeInfo.priceId as string
 
       console.log('=====>>>success_url:', success_url)
       const userId = ctx.token.uid

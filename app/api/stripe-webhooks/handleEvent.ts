@@ -55,15 +55,15 @@ export async function handleEvent(event: Stripe.Event) {
         }
       }
 
-      const tierId = subscription.metadata.tierId
+      const productId = subscription.metadata.productId
 
-      if (site.stripeType === StripeType.PLATFORM && tierId) {
+      if (site.stripeType === StripeType.PLATFORM && productId) {
         balance.withdrawable += event.data.object.amount_paid
 
         await prisma.invoice.create({
           data: {
             siteId,
-            tierId,
+            productId,
             type: InvoiceType.SUBSCRIPTION,
             amount: event.data.object.amount_paid,
             currency: event.data.object.currency,

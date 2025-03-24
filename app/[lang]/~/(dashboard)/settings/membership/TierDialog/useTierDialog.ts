@@ -1,9 +1,9 @@
-import { Tier } from '@prisma/client'
+import { Product } from '@prisma/client'
 import { atom, useAtom } from 'jotai'
 
 type State = {
   isOpen: boolean
-  tier: Tier
+  tier: Product
 }
 
 const tierDialogAtom = atom<State>({

@@ -25,7 +25,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:156
 msgid "Access token"
 msgstr ""
 
@@ -62,11 +62,11 @@ msgstr ""
 msgid "AMA"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:164
 msgid "Analytics"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:117
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
 msgid "Appearance"
 msgstr ""
 
@@ -82,7 +82,7 @@ msgstr ""
 msgid "Authorize CLI login"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:172
 msgid "Backup"
 msgstr ""
 
@@ -90,7 +90,7 @@ msgstr ""
 msgid "Beautiful themes"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:82
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:84
 msgid "Billing & plan"
 msgstr ""
 
@@ -123,7 +123,7 @@ msgstr ""
 msgid "By subscribing, you'll receive the latest posts directly in your inbox."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:108
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:110
 msgid "Campaign"
 msgstr ""
 
@@ -131,7 +131,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:136
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:138
 msgid "Catalogue"
 msgstr ""
 
@@ -152,7 +152,7 @@ msgstr ""
 msgid "CLI login successfully"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:145
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:150
 msgid "Collaborators"
 msgstr ""
 
@@ -194,7 +194,7 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:166
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:168
 msgid "Coupons"
 msgstr ""
 
@@ -214,6 +214,10 @@ msgstr ""
 msgid "Customize your site with a variety of visually appealing themes."
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:183
+msgid "Dangerous"
+msgstr ""
+
 #: components/Profile/ProfilePopover.tsx:117
 #: components/Profile/Profile.tsx:61
 msgid "Dashboard"
@@ -223,7 +227,7 @@ msgstr ""
 msgid "Data ownership"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:133
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:134
 msgid "Databases"
 msgstr ""
 
@@ -255,15 +259,15 @@ msgstr ""
 msgid "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:149
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 msgid "Design"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:175
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:177
 msgid "Discover"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:168
 msgid "Domain"
 msgstr ""
 
@@ -303,7 +307,7 @@ msgstr ""
 msgid "Failed to update public status!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:71
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:73
 #: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr ""
@@ -316,16 +320,16 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:133
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:135
 #: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:113
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:114
 msgid "Gallery"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
 msgid "General"
 msgstr ""
 
@@ -346,7 +350,7 @@ msgstr ""
 msgid "Image public status updated successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:179
 msgid "Import/Export"
 msgstr ""
 
@@ -362,7 +366,7 @@ msgstr ""
 msgid "Latest"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:60
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:62
 msgid "Link accounts"
 msgstr ""
 
@@ -387,7 +391,7 @@ msgstr ""
 msgid "Maintain full control over your content and data."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:99
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
 #: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
 #: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
@@ -413,7 +417,7 @@ msgstr ""
 msgid "My sites"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:123
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
 msgid "Navigation"
 msgstr ""
 
@@ -465,7 +469,7 @@ msgstr ""
 msgid "Optimize your content for search engines with ease."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:105
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:107
 msgid "Orders"
 msgstr ""
 
@@ -473,7 +477,7 @@ msgstr ""
 msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:123
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:124
 msgid "Pages"
 msgstr ""
 
@@ -502,7 +506,7 @@ msgid "please try again~"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:104
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:105
 msgid "Posts"
 msgstr ""
 
@@ -515,15 +519,15 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:102
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
 msgid "Products"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:54
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:56
 msgid "Profile"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:130
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
 #: components/theme-ui/NavigationItem.tsx:16
 #: themes/card/pages/HomePage.tsx:56
 #: themes/aside/pages/HomePage.tsx:48
@@ -570,7 +574,7 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:160
 msgid "SEO"
 msgstr ""
 
@@ -578,8 +582,12 @@ msgstr ""
 msgid "SEO friendly"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+msgid "Series"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:157
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:159
 #: components/Profile/ProfilePopover.tsx:134
 msgid "Settings"
 msgstr ""
@@ -600,7 +608,7 @@ msgstr ""
 msgid "Size"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:126
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:128
 msgid "Socials"
 msgstr ""
 
@@ -631,11 +639,11 @@ msgstr ""
 msgid "Subscribed successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:142
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:151
 msgid "Subscribers"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:86
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:88
 #: components/theme-ui/NavigationItem.tsx:20
 #: themes/sue/components/PostListWithTag.tsx:32
 #: themes/paper/pages/TagListPage.tsx:14
@@ -667,7 +675,7 @@ msgstr ""
 msgid "Title"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:95
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:96
 msgid "Today"
 msgstr ""
 

@@ -3,7 +3,7 @@ import { Friend, NavLink, Project, Site } from '@/lib/theme.types'
 import { getDatabaseData } from '@/server/lib/getDatabaseData'
 import { initAboutPage, initPages } from '@/server/lib/initPages'
 import { post } from '@farcaster/auth-client'
-import { PostType } from '@prisma/client'
+import { PostType, ProductType } from '@prisma/client'
 import { gql, request } from 'graphql-request'
 import { produce } from 'immer'
 import ky from 'ky'
@@ -51,7 +51,11 @@ export async function getSite(params: any) {
         include: {
           user: true,
           channels: true,
-          tiers: true,
+          products: {
+            where: {
+              type: ProductType.TIER,
+            },
+          },
         },
       })
 
@@ -451,8 +455,8 @@ function findManyPosts(siteId: string) {
 export async function getTiers(siteId: string) {
   const tiers = await unstable_cache(
     async () => {
-      const tiers = await prisma.tier.findMany({
-        where: { siteId },
+      const tiers = await prisma.product.findMany({
+        where: { siteId, type: ProductType.TIER },
       })
 
       return tiers

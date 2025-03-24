@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
 
   const sessionId = url.searchParams.get('session_id')
   const userId = url.searchParams.get('userId') || ''
-  const tierId = url.searchParams.get('tierId') || ''
+  const penxProductId = url.searchParams.get('productId') || ''
   const host = url.searchParams.get('host') || ''
   const pathname = url.searchParams.get('pathname') || ''
 
@@ -92,7 +92,7 @@ export async function GET(req: NextRequest) {
       await prisma.subscription.update({
         where: { id: dbSubscription.id },
         data: {
-          tierId,
+          productId: penxProductId,
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,
@@ -108,7 +108,7 @@ export async function GET(req: NextRequest) {
         data: {
           userId,
           siteId,
-          tierId,
+          productId: penxProductId,
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,

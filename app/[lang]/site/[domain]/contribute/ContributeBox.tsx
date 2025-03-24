@@ -9,14 +9,14 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { Site } from '@/lib/theme.types'
 import { api, trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
-import { PostStatus, PostType, Tier } from '@prisma/client'
+import { PostStatus, PostType, Product } from '@prisma/client'
 import { TextareaAutosize } from '@udecode/plate-caption/react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 
 interface Props {
   site: Site
-  tiers: Tier[]
+  tiers: Product[]
 }
 
 export function ContributeBox({ site }: Props) {

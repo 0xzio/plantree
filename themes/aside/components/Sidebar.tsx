@@ -45,7 +45,7 @@ export const Sidebar = ({ site, tags }: Props) => {
             {site.description}
           </div>
         </div>
-        {site.tiers.length > 0 && (
+        {site.products.length > 0 && (
           <div>
             <MembershipEntry className="py-1.5 px-3" />
           </div>

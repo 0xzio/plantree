@@ -39,7 +39,7 @@ export function Navigation({ site, className }: Props) {
         return <NavigationItem key={link.pathname} link={link} />
       })}
 
-      {site.tiers.length > 0 && <MembershipEntry />}
+      {site.products.length > 0 && <MembershipEntry />}
 
       {/* {site.spaceId && (
         <Link
