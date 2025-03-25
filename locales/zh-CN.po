@@ -72,12 +72,12 @@ msgstr ""
 msgid "Appearance"
 msgstr "外观"
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:128
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:155
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
 msgid "Archived"
 msgstr ""
 
-#: components/CreatePostButton.tsx:132
+#: components/CreatePostButton.tsx:135
 msgid "Article"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Blog"
 msgstr "博客"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:33
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:35
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
@@ -146,6 +146,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
 msgid "Catalogue"
+msgstr ""
+
+#: components/CreatePostButton.tsx:192
+msgid "Category"
 msgstr ""
 
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:168
@@ -191,7 +195,7 @@ msgstr ""
 msgid "Collectors"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:39
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:41
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
@@ -298,7 +302,7 @@ msgstr ""
 msgid "Domain"
 msgstr "域名"
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:116
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:143
 msgid "Draft"
 msgstr ""
 
@@ -310,7 +314,7 @@ msgstr ""
 msgid "Easily create and send newsletters to keep your audience engaged."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:148
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:177
 #: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:132
 msgid "Edit"
 msgstr ""
@@ -382,7 +386,7 @@ msgstr ""
 msgid "Home"
 msgstr "首页"
 
-#: components/CreatePostButton.tsx:161
+#: components/CreatePostButton.tsx:163
 msgid "Image"
 msgstr ""
 
@@ -501,7 +505,7 @@ msgstr ""
 msgid "Not tipper found"
 msgstr ""
 
-#: components/CreatePostButton.tsx:145
+#: components/CreatePostButton.tsx:148
 msgid "Note"
 msgstr ""
 
@@ -557,7 +561,7 @@ msgstr ""
 msgid "please try again~"
 msgstr ""
 
-#: components/CreatePostButton.tsx:177
+#: components/CreatePostButton.tsx:178
 msgid "Podcast"
 msgstr ""
 
@@ -598,7 +602,7 @@ msgstr ""
 msgid "Public visit"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:122
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:149
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
 msgid "Published"
 msgstr ""

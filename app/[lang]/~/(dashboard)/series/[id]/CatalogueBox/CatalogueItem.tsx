@@ -1,16 +1,24 @@
 import { CSSProperties, forwardRef, useState } from 'react'
+import { CreatePostButton } from '@/components/CreatePostButton'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Menu, MenuItem } from '@/components/ui/menu'
 import { CatalogueNode } from '@/lib/catalogue'
 import { Link } from '@/lib/i18n'
+import { CatalogueNodeType } from '@/lib/model'
 import { cn } from '@/lib/utils'
 import { useSortable } from '@dnd-kit/sortable'
 import { Box, CSSObject, FowerHTMLProps } from '@fower/react'
 import { Trans } from '@lingui/react/macro'
 import { Post, PostStatus } from '@prisma/client'
 import { format } from 'date-fns'
-import { ChevronDown, ChevronRight, Edit3Icon, Plus } from 'lucide-react'
+import {
+  ChevronDown,
+  ChevronRight,
+  Edit3Icon,
+  Plus,
+  PlusIcon,
+} from 'lucide-react'
 import { AddNodePopover } from './AddNodePopover'
 import { CatalogueIconPopover } from './CatalogueIconPopover'
 import { CatalogueMenuPopover } from './CatalogueMenuPopover'
@@ -47,13 +55,18 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
     const [open, setOpen] = useState(false)
     const { addNode } = useCatalogue()
     // console.log('====item:', item)
+    const isCategory = item.type === CatalogueNodeType.CATEGORY
+
+    if (isCategory) {
+      console.log('======item:', item.type, post, item.isCategory)
+    }
 
     return (
       <Box
         ref={ref}
         className={cn(
           'catalogueItem py-1 relative rounded pr-2 flex justify-between items-center mb-[1px] transition-colors',
-          sortable?.isOver && item.isCategory && 'bg-brand',
+          sortable?.isOver && isCategory && 'bg-foreground/5',
         )}
         pl={depth * 24 + 6}
         css={css}
@@ -100,55 +113,78 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
           </div> */}
 
           <div className="">
-            <Link
-              href={`/~/post?id=${item.uri}&from=/~/series/${post.seriesId!}`}
-              className="text-lg font-semibold hover:scale-105 origin-left transition-all hover:text-brand"
-            >
-              {name || 'Untitled'}
-            </Link>
-            <div className="flex items-center gap-2">
-              <div className="text-xs text-foreground/60">
-                {format(post.publishedAt || post.createdAt, 'yyyy-MM-dd')}
+            {isCategory && (
+              <div
+                className={cn(
+                  'text-lg font-semibold hover:scale-105 origin-left transition-all hover:text-brand',
+                )}
+              >
+                {name || 'Untitled'}
               </div>
-
-              {post.status === PostStatus.DRAFT && (
-                <div className="text-foreground/50 text-xs">
-                  <Trans>Draft</Trans>
+            )}
+            {post && (
+              <Link
+                href={`/~/post?id=${item.uri}&from=/~/series/${post.seriesId!}`}
+                className={cn(
+                  'text-base hover:scale-105 origin-left transition-all hover:text-brand',
+                )}
+              >
+                {name || 'Untitled'}
+              </Link>
+            )}
+            {post && (
+              <div className="flex items-center gap-2">
+                <div className="text-xs text-foreground/60">
+                  {format(post.publishedAt || post.createdAt, 'yyyy-MM-dd')}
                 </div>
-              )}
 
-              {post.status === PostStatus.PUBLISHED && (
-                <div className="text-green-500 text-xs">
-                  <Trans>Published</Trans>
-                </div>
-              )}
+                {post.status === PostStatus.DRAFT && (
+                  <div className="text-foreground/50 text-xs">
+                    <Trans>Draft</Trans>
+                  </div>
+                )}
 
-              {post.status === PostStatus.ARCHIVED && (
-                <div className="text-green-500 text-xs">
-                  <Trans>Archived</Trans>
-                </div>
-              )}
-            </div>
+                {post.status === PostStatus.PUBLISHED && (
+                  <div className="text-green-500 text-xs">
+                    <Trans>Published</Trans>
+                  </div>
+                )}
+
+                {post.status === PostStatus.ARCHIVED && (
+                  <div className="text-green-500 text-xs">
+                    <Trans>Archived</Trans>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
         <div className="flex items-center gap-1">
           {/* <CatalogueMenuPopover node={item} /> */}
           {/* <AddNodePopover parentId={item.id} /> */}
 
-          <Link
-            href={`/~/post?id=${item.uri}&from=/~/series/${post.seriesId!}`}
-          >
-            <Button
-              size="xs"
-              variant="ghost"
-              className="rounded-full text-xs h-7 gap-1 opacity-50"
+          {post && (
+            <Link
+              href={`/~/post?id=${item.uri}&from=/~/series/${post.seriesId!}`}
             >
-              <Edit3Icon size={14}></Edit3Icon>
-              <div>
-                <Trans>Edit</Trans>
-              </div>
+              <Button
+                size="xs"
+                variant="ghost"
+                className="rounded-full text-xs h-7 gap-1 opacity-50"
+              >
+                <Edit3Icon size={14}></Edit3Icon>
+                <div>
+                  <Trans>Edit</Trans>
+                </div>
+              </Button>
+            </Link>
+          )}
+
+          {/* <CreatePostButton>
+            <Button size="icon" className="size-8">
+              <PlusIcon size={20} className="" />
             </Button>
-          </Link>
+          </CreatePostButton> */}
         </div>
       </Box>
     )

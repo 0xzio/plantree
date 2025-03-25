@@ -29,7 +29,7 @@ export const CatalogueItem = forwardRef<HTMLDivElement, CatalogueItemProps>(
     const isCategory = item.type === CatalogueNodeType.CATEGORY
     const params = useParams() as Record<string, string>
     const postSlug = params.postSlug || ''
-    const isActive = postSlug === post.slug
+    const isActive = postSlug === post?.slug
 
     const href = useMemo(() => {
       return `/series/${series.slug}/${post?.slug}`

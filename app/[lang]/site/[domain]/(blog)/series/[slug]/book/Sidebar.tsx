@@ -93,12 +93,10 @@ export const Sidebar = ({ site, series, className, height }: Props) => {
 
       {flattenedItems.map((item) => {
         const post = series.posts.find((p) => p.id === item.uri)
-        if (!post) return null
-
         return (
           <CatalogueItem
             key={item.id}
-            name={post?.title || 'Untitled'}
+            name={item.title || post?.title || 'Untitled'}
             item={item as any}
             post={post as any}
             depth={item.depth}

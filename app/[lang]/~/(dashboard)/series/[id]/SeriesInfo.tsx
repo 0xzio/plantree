@@ -10,6 +10,7 @@ import { Trans } from '@lingui/react/macro'
 import { SeriesType } from '@prisma/client'
 import { PencilIcon, PlusIcon } from 'lucide-react'
 import { useSeriesDialog } from '../SeriesDialog/useSeriesDialog'
+import { useCategoryNodeDialog } from './CatalogueBox/CategoryNodeDialog/useCategoryNodeDialog'
 
 interface Props {
   className?: string
@@ -18,6 +19,7 @@ interface Props {
 export function SeriesInfo({ className }: Props) {
   const series = useSeriesContext()
   const { setState } = useSeriesDialog()
+  const categoryNodeDialog = useCategoryNodeDialog()
   return (
     <div className={cn('flex justify-between', className)}>
       <div className="flex items-center gap-2">
@@ -58,7 +60,16 @@ export function SeriesInfo({ className }: Props) {
           <PencilIcon size={20} className="text-foreground/60" />
         </Button>
 
-        <CreatePostButton seriesId={series.id}>
+        <CreatePostButton
+          seriesId={series.id}
+          onAddCategory={async () => {
+            console.log('gogo......xxxxxxxxxx')
+            categoryNodeDialog.setState({
+              parentId: '',
+              isOpen: true,
+            })
+          }}
+        >
           <Button size="icon" className="size-9">
             <PlusIcon size={20} className="" />
           </Button>

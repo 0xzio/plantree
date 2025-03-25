@@ -29,6 +29,7 @@ import {
   ChevronDown,
   FileText,
   Image,
+  LayoutListIcon,
   LightbulbIcon,
   Link2Icon,
   Pen,
@@ -43,13 +44,15 @@ interface Props {
   className?: string
   seriesId?: string
   children?: React.ReactNode
+  onAddCategory?: () => Promise<void>
 }
 
 export function CreatePostButton({
   className,
   seriesId,
-  from,
+  from = '/~/pages',
   children,
+  onAddCategory,
 }: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
@@ -146,7 +149,6 @@ export function CreatePostButton({
               </span>
             </Item>
           )}
-
           {!seriesId && (
             <Item
               className="flex gap-2"
@@ -162,7 +164,6 @@ export function CreatePostButton({
               </span>
             </Item>
           )}
-
           <Item
             className="flex gap-2"
             isLoading={isLoading && type == PostType.AUDIO}
@@ -177,6 +178,21 @@ export function CreatePostButton({
               <Trans>Podcast</Trans>
             </span>
           </Item>
+          <Separator className="my-1"></Separator>
+          {seriesId && (
+            <Item
+              className="flex gap-2"
+              onClick={async () => {
+                await onAddCategory?.()
+                setOpen(false)
+              }}
+            >
+              <LayoutListIcon size={16} />
+              <span>
+                <Trans>Category</Trans>
+              </span>
+            </Item>
+          )}
         </PopoverContent>
       </Popover>
     </div>

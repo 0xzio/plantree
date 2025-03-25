@@ -72,12 +72,12 @@ msgstr "Analytics"
 msgid "Appearance"
 msgstr "Appearance"
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:128
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:155
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:36
 msgid "Archived"
 msgstr "Archived"
 
-#: components/CreatePostButton.tsx:132
+#: components/CreatePostButton.tsx:135
 msgid "Article"
 msgstr "Article"
 
@@ -118,7 +118,7 @@ msgstr "Billing & plan"
 msgid "Blog"
 msgstr "Blog"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:33
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:35
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
@@ -147,6 +147,10 @@ msgstr "Cancel"
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
 msgid "Catalogue"
 msgstr "Catalogue"
+
+#: components/CreatePostButton.tsx:192
+msgid "Category"
+msgstr "Category"
 
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:168
 msgid "Claim $PEN"
@@ -191,7 +195,7 @@ msgstr "Collecting"
 msgid "Collectors"
 msgstr "Collectors"
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:39
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:41
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
@@ -298,7 +302,7 @@ msgstr "Discover"
 msgid "Domain"
 msgstr "Domain"
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:116
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:143
 msgid "Draft"
 msgstr "Draft"
 
@@ -310,7 +314,7 @@ msgstr "Drafts"
 msgid "Easily create and send newsletters to keep your audience engaged."
 msgstr "Easily create and send newsletters to keep your audience engaged."
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:148
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:177
 #: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:132
 msgid "Edit"
 msgstr "Edit"
@@ -382,7 +386,7 @@ msgstr "Header"
 msgid "Home"
 msgstr "Home"
 
-#: components/CreatePostButton.tsx:161
+#: components/CreatePostButton.tsx:163
 msgid "Image"
 msgstr "Image"
 
@@ -501,7 +505,7 @@ msgstr "No tags found."
 msgid "Not tipper found"
 msgstr "Not tipper found"
 
-#: components/CreatePostButton.tsx:145
+#: components/CreatePostButton.tsx:148
 msgid "Note"
 msgstr "Note"
 
@@ -557,7 +561,7 @@ msgstr "Please confirm your authorization for this login."
 msgid "please try again~"
 msgstr "please try again~"
 
-#: components/CreatePostButton.tsx:177
+#: components/CreatePostButton.tsx:178
 msgid "Podcast"
 msgstr "Podcast"
 
@@ -598,7 +602,7 @@ msgstr "Public"
 msgid "Public visit"
 msgstr "Public visit"
 
-#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:122
+#: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:149
 #: app/[lang]/~/(dashboard)/posts/components/PostsNav.tsx:32
 msgid "Published"
 msgstr "Published"
