@@ -5,11 +5,11 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { initLingui } from '@/initLingui'
-import { getPost, getPosts, getSite } from '@/lib/fetchers'
+import { getPost, getPosts, getSeries, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { AppearanceConfig } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
-import { GateType, Post } from '@prisma/client'
+import { GateType, Post, SeriesType } from '@prisma/client'
 import { produce } from 'immer'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
@@ -18,7 +18,7 @@ import { Toc } from '../book/Toc'
 
 type Params = Promise<{
   domain: string
-  slug: string[]
+  slug: string
   lang: string
   postSlug: string
 }>
@@ -66,8 +66,11 @@ export default async function Page(props: { params: Params }) {
 
   initLingui(locale)
 
-  const slug = decodeURI(params.postSlug)
-  const rawPost = await getPost(site.id, slug)
+  const postSlug = decodeURI(params.postSlug)
+  const [rawPost, series] = await Promise.all([
+    getPost(site.id, postSlug),
+    getSeries(site.id, params.slug),
+  ])
 
   if (!rawPost) {
     return notFound()
@@ -99,9 +102,14 @@ export default async function Page(props: { params: Params }) {
             </div>
           </div>
         </div>
-        <Footer className="mt-auto" site={site} />
+
+        {series?.seriesType === SeriesType.BOOK && (
+          <Footer className="mt-auto" site={site} />
+        )}
       </div>
-      <Toc content={post.content}></Toc>
+      {series?.seriesType === SeriesType.BOOK && (
+        <Toc content={post.content}></Toc>
+      )}
     </div>
   )
 }

@@ -8,7 +8,7 @@ export function SeriesPostList({ series }: Props) {
   return (
     <div>
       {series.posts.map((post) => (
-        <PostItem key={post.id} post={post} />
+        <PostItem key={post.id} series={series} post={post} />
       ))}
     </div>
   )

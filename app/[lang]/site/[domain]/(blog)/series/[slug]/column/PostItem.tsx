@@ -6,7 +6,7 @@ import { PodcastTips } from '@/components/theme-ui/PodcastTips'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { CommentSheet } from '@/components/theme-ui/PostActions/Comment/CommentSheet'
 import { Link } from '@/lib/i18n'
-import { Post, PostType, User } from '@/lib/theme.types'
+import { Post, PostType, SeriesWithPosts, User } from '@/lib/theme.types'
 import { cn, formatDate, getUrl } from '@/lib/utils'
 import Image from 'next/image'
 import { useSearchParams } from 'next/navigation'
@@ -14,13 +14,19 @@ import { Node } from 'slate'
 import { AuthorAvatar } from './AuthorAvatar'
 
 interface PostItemProps {
+  series: SeriesWithPosts
   post: Post
   receivers?: string[]
   className?: string
   ContentRender?: (props: { content: any[]; className?: string }) => JSX.Element
 }
 
-export function PostItem({ post, receivers = [], className }: PostItemProps) {
+export function PostItem({
+  post,
+  series,
+  receivers = [],
+  className,
+}: PostItemProps) {
   const { slug, title } = post
   const params = useSearchParams()!
   const type = params.get('type')
@@ -57,7 +63,7 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
     const str = nodes.map((node) => Node.string(node)).join('') || ''
 
     return (
-      <Link href={`/posts/${slug}`} className="space-y-2">
+      <Link href={`/series/${series.slug}/${slug}`} className="space-y-2">
         <div className="flex items-center gap-1 hover:scale-105 transition-all origin-left">
           <PodcastTips post={post} />
           <h2 className="text-2xl font-bold block">{post.title}</h2>
@@ -84,7 +90,7 @@ export function PostItem({ post, receivers = [], className }: PostItemProps) {
 
       {post.image && (
         <div className="max-w-[160px]">
-          <Link href={`/posts/${post.slug}`}>
+          <Link href={`/series/${series.slug}/${slug}`}>
             <Image
               src={getUrl(post.image || '')}
               className="w-full h-auto rounded"

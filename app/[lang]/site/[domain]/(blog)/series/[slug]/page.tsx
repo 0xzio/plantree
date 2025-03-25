@@ -53,6 +53,10 @@ export default async function Page(props: {
 
   const series = await getSeries(site.id, params.slug)
 
+  if (series?.seriesType === SeriesType.COLUMN) {
+    return <SeriesPostList series={series as any} />
+  }
+
   return (
     <div className="flex gap-x-16 pt-4 h-full">
       <div className={cn('flex-1 flex flex-col')}>

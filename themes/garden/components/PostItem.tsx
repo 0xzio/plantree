@@ -88,7 +88,7 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
     return (
       <div
         className={cn(
-          'bg-red-300 h-6 w-6 rounded-full shrink-0',
+          'h-6 w-6 rounded-full shrink-0',
           generateGradient(post.user.displayName || post.user.name),
         )}
       ></div>

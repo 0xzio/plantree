@@ -1,6 +1,7 @@
 import { ChatSheet } from '@/components/Chat/ChatSheet'
 import { SeriesProvider } from '@/components/SeriesContext'
 import { SiteProvider } from '@/components/SiteContext'
+import { Footer } from '@/components/theme-ui/Footer'
 import { initLingui } from '@/initLingui'
 import { getSeries, getSite, getTags } from '@/lib/fetchers'
 import { redirectTo404 } from '@/lib/redirectTo404'
@@ -9,8 +10,10 @@ import { cn } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
 import { SeriesType } from '@prisma/client'
 import { Metadata } from 'next'
-import { Header } from './book/Header'
+import { Header as BookHeader } from './book/Header'
 import { Sidebar } from './book/Sidebar'
+import { Header as ColumnHeader } from './column/Header'
+import { SeriesInfo } from './column/SeriesInfo'
 
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
@@ -48,7 +51,7 @@ export default async function RootLayout(props: {
 
   return (
     <div
-      className={cn(font)}
+      className={cn('min-h-screen flex flex-col', font)}
       style={
         {
           '--brand': brand,
@@ -60,7 +63,7 @@ export default async function RootLayout(props: {
         {series?.seriesType === SeriesType.BOOK && (
           <SeriesProvider series={series as any}>
             <div>
-              <Header site={site} series={series as any} />
+              <BookHeader site={site} series={series as any} />
               <main className="flex flex-1 w-full px-4 xl:px-0 gap-x-16 relative max-w-7xl mx-auto">
                 <Sidebar
                   series={series as any}
@@ -73,7 +76,18 @@ export default async function RootLayout(props: {
           </SeriesProvider>
         )}
 
-        {series?.seriesType === SeriesType.COLUMN && props.children}
+        {series?.seriesType === SeriesType.COLUMN && (
+          <>
+            <div className="flex-1 flex flex-col gap-6 h-full">
+              <ColumnHeader site={site} />
+              <SeriesInfo series={series as any} />
+              <div className="mx-auto max-w-3xl mt-10 flex-1">
+                {props.children}
+              </div>
+              <Footer site={site} className="mt-auto" />
+            </div>
+          </>
+        )}
       </SiteProvider>
     </div>
   )

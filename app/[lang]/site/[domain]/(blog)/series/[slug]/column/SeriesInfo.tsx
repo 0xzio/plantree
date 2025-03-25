@@ -1,5 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
+import { Link } from '@/lib/i18n'
 import { SeriesWithPosts } from '@/lib/theme.types'
 import { getUrl } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
@@ -18,18 +19,9 @@ export function SeriesInfo({ series }: Props) {
         </Avatar>
 
         <div className="flex items-center gap-2">
-          <h2 className="text-xl font-bold">{series.name}</h2>
-          {series.seriesType === SeriesType.BOOK && (
-            <Badge>
-              <Trans>Book</Trans>
-            </Badge>
-          )}
-
-          {series.seriesType === SeriesType.COLUMN && (
-            <Badge>
-              <Trans>Column</Trans>
-            </Badge>
-          )}
+          <Link href={`/series/${series.slug}`} className="text-xl font-bold">
+            {series.name}
+          </Link>
         </div>
         <div className="text-foreground/60">{series.description}</div>
       </div>
