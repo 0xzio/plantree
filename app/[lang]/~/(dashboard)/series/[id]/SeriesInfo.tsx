@@ -1,5 +1,6 @@
 'use client'
 
+import { CreatePostButton } from '@/components/CreatePostButton'
 import { useSeriesContext } from '@/components/SeriesContext'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Badge } from '@/components/ui/badge'
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button'
 import { cn, getUrl } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
 import { SeriesType } from '@prisma/client'
-import { PencilIcon } from 'lucide-react'
+import { PencilIcon, PlusIcon } from 'lucide-react'
 import { useSeriesDialog } from '../SeriesDialog/useSeriesDialog'
 
 interface Props {
@@ -42,19 +43,27 @@ export function SeriesInfo({ className }: Props) {
           <div className="text-foreground/60">{series.description}</div>
         </div>
       </div>
-      <Button
-        variant="secondary"
-        size="icon"
-        className="size-9"
-        onClick={() => {
-          setState({
-            isOpen: true,
-            series,
-          })
-        }}
-      >
-        <PencilIcon size={20} className="text-foreground/60" />
-      </Button>
+      <div className="flex gap-1">
+        <Button
+          variant="secondary"
+          size="icon"
+          className="size-9"
+          onClick={() => {
+            setState({
+              isOpen: true,
+              series,
+            })
+          }}
+        >
+          <PencilIcon size={20} className="text-foreground/60" />
+        </Button>
+
+        <CreatePostButton seriesId={series.id}>
+          <Button size="icon" className="size-9">
+            <PlusIcon size={20} className="" />
+          </Button>
+        </CreatePostButton>
+      </div>
     </div>
   )
 }

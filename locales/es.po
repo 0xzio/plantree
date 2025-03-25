@@ -77,7 +77,7 @@ msgstr ""
 msgid "Archived"
 msgstr ""
 
-#: components/CreatePostButton.tsx:120
+#: components/CreatePostButton.tsx:132
 msgid "Article"
 msgstr ""
 
@@ -118,7 +118,7 @@ msgstr ""
 msgid "Blog"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:32
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:33
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
@@ -191,7 +191,7 @@ msgstr ""
 msgid "Collectors"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:38
+#: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:39
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
@@ -382,7 +382,7 @@ msgstr ""
 msgid "Home"
 msgstr ""
 
-#: components/CreatePostButton.tsx:149
+#: components/CreatePostButton.tsx:161
 msgid "Image"
 msgstr ""
 
@@ -501,7 +501,7 @@ msgstr ""
 msgid "Not tipper found"
 msgstr ""
 
-#: components/CreatePostButton.tsx:133
+#: components/CreatePostButton.tsx:145
 msgid "Note"
 msgstr ""
 
@@ -557,7 +557,7 @@ msgstr ""
 msgid "please try again~"
 msgstr ""
 
-#: components/CreatePostButton.tsx:165
+#: components/CreatePostButton.tsx:177
 msgid "Podcast"
 msgstr ""
 

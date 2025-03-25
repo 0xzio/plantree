@@ -29,7 +29,6 @@ export function SeriesNav({ className }: Props) {
           <ChevronLeft size={20} />
         </Link>
       </div>
-      <CreatePostButton seriesId={series.id} from={pathname} />
     </div>
   )
 }

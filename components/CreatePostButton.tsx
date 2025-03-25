@@ -42,9 +42,15 @@ interface Props {
   from?: string
   className?: string
   seriesId?: string
+  children?: React.ReactNode
 }
 
-export function CreatePostButton({ className, seriesId, from }: Props) {
+export function CreatePostButton({
+  className,
+  seriesId,
+  from,
+  children,
+}: Props) {
   const site = useSiteContext()
   const { push } = useRouter()
   const { session } = useSession()
@@ -79,32 +85,38 @@ export function CreatePostButton({ className, seriesId, from }: Props) {
   }
 
   return (
-    <div className="flex items-center">
+    <div className={cn(!children && 'flex items-center')}>
       <AddNoteDialog />
-      <Button
-        className={cn(
-          'w-20 flex gap-1 rounded-tr-none rounded-br-none px-1',
-          className,
-        )}
-        disabled={isLoading}
-        onClick={() => createPost(PostType.ARTICLE)}
-      >
-        {isLoading && !type ? (
-          <LoadingCircle></LoadingCircle>
-        ) : (
-          <Plus size={16} />
-        )}
-        <span>Create</span>
-      </Button>
+      {!children && (
+        <Button
+          className={cn(
+            'w-20 flex gap-1 rounded-tr-none rounded-br-none px-1',
+            className,
+          )}
+          disabled={isLoading}
+          onClick={() => createPost(PostType.ARTICLE)}
+        >
+          {isLoading && !type ? (
+            <LoadingCircle></LoadingCircle>
+          ) : (
+            <Plus size={16} />
+          )}
+          <span>Create</span>
+        </Button>
+      )}
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
-          <Button
-            className="w-10 flex gap-1 rounded-tl-none rounded-bl-none p-0 border-l border-background/10"
-            disabled={isLoading}
-            onClick={() => setOpen(true)}
-          >
-            <ChevronDown size={20} />
-          </Button>
+          {children ? (
+            <div>{children}</div>
+          ) : (
+            <Button
+              className="w-10 flex gap-1 rounded-tl-none rounded-bl-none p-0 border-l border-background/10"
+              disabled={isLoading}
+              onClick={() => setOpen(true)}
+            >
+              <ChevronDown size={20} />
+            </Button>
+          )}
         </PopoverTrigger>
         <PopoverContent align="start" className="w-48 p-2">
           <Item

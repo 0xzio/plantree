@@ -532,6 +532,7 @@ model Post {
   @@index([siteId])
   @@index([seriesId])
   @@index([siteId, slug, status])
+  @@index([siteId, slug, status, seriesId])
   @@index([userId])
   @@index([gateType])
   @@index([type])
