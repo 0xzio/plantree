@@ -8,7 +8,6 @@ import { Post } from '@/lib/theme.types'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
-import { AuthType } from '@prisma/client'
 import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { CollectDialog } from './CollectDialog'
@@ -32,7 +31,6 @@ export function CollectButton({ post, className }: Props) {
     isLoading: false,
     isOpen: false,
   })
-  if (site.authType === AuthType.GOOGLE) return null
 
   const authenticated = !!data
 

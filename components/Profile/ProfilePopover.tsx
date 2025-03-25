@@ -24,7 +24,6 @@ import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { useSignIn } from '@farcaster/auth-kit'
 import { Trans } from '@lingui/react/macro'
-import { AuthType } from '@prisma/client'
 import {
   DatabaseBackup,
   FileText,

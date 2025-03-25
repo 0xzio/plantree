@@ -5,9 +5,8 @@ import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import { WalletConnectButton } from '@/components/WalletConnectButton'
 import { Post } from '@/lib/theme.types'
-import { AuthType } from '@prisma/client'
-import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useSession } from '@/lib/useSession'
+import { useConnectModal } from '@rainbow-me/rainbowkit'
 import { useAccount } from 'wagmi'
 import { TipTokenDialog } from './TipTokenDialog'
 
@@ -31,7 +30,6 @@ export function TipTokenButton({ post, receivers }: Props) {
   })
 
   const { openConnectModal } = useConnectModal()
-  if (site.authType === AuthType.GOOGLE) return null
 
   const authenticated = !!data
 

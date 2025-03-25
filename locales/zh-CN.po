@@ -21,13 +21,13 @@ msgstr ""
 msgid "100% run on Cloudflare and deploy freely."
 msgstr ""
 
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:65
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:63
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/book/AboutItem.tsx:34
 #: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr "关于"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:156
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
 msgid "Access token"
 msgstr ""
 
@@ -64,11 +64,11 @@ msgstr ""
 msgid "AMA"
 msgstr "咨询"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:164
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
 msgid "Analytics"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:118
 msgid "Appearance"
 msgstr "外观"
 
@@ -89,7 +89,7 @@ msgstr ""
 msgid "Authorize CLI login"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:172
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:171
 msgid "Backup"
 msgstr "备份"
 
@@ -97,7 +97,7 @@ msgstr "备份"
 msgid "Beautiful themes"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:84
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:83
 msgid "Billing & plan"
 msgstr ""
 
@@ -136,7 +136,7 @@ msgstr "内置"
 msgid "By subscribing, you'll receive the latest posts directly in your inbox."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:110
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:109
 msgid "Campaign"
 msgstr ""
 
@@ -144,7 +144,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:138
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
 msgid "Catalogue"
 msgstr ""
 
@@ -165,13 +165,13 @@ msgstr ""
 msgid "CLI login successfully"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:150
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:149
 msgid "Collaborators"
 msgstr "写作者"
 
 #: components/theme-ui/PostActions/Collection/CollectDialog.tsx:142
-#: components/theme-ui/PostActions/Collection/CollectButton.tsx:59
-#: components/theme-ui/PostActions/Collection/CollectButton.tsx:67
+#: components/theme-ui/PostActions/Collection/CollectButton.tsx:57
+#: components/theme-ui/PostActions/Collection/CollectButton.tsx:65
 msgid "Collect"
 msgstr ""
 
@@ -237,11 +237,11 @@ msgstr ""
 msgid "Customize your site with a variety of visually appealing themes."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:183
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
 msgid "Dangerous"
 msgstr ""
 
-#: components/Profile/ProfilePopover.tsx:117
+#: components/Profile/ProfilePopover.tsx:116
 #: components/Profile/Profile.tsx:61
 msgid "Dashboard"
 msgstr ""
@@ -286,7 +286,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:140
 msgid "Design"
 msgstr ""
 
@@ -294,7 +294,7 @@ msgstr ""
 msgid "Discover"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:168
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
 msgid "Domain"
 msgstr "域名"
 
@@ -343,7 +343,7 @@ msgstr ""
 msgid "Failed to update public status!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:73
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:72
 #: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr "功能"
@@ -356,7 +356,7 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:135
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
 #: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr "朋友"
@@ -365,7 +365,7 @@ msgstr "朋友"
 msgid "Gallery"
 msgstr "相册"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:70
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:69
 msgid "General"
 msgstr ""
 
@@ -378,7 +378,7 @@ msgid "Header"
 msgstr ""
 
 #: components/theme-ui/NavigationItem.tsx:14
-#: components/Profile/ProfilePopover.tsx:99
+#: components/Profile/ProfilePopover.tsx:98
 msgid "Home"
 msgstr "首页"
 
@@ -390,7 +390,7 @@ msgstr ""
 msgid "Image public status updated successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:179
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
 msgid "Import/Export"
 msgstr "导入/导出"
 
@@ -406,11 +406,11 @@ msgstr ""
 msgid "Latest"
 msgstr "最新文章"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:62
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:61
 msgid "Link accounts"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:52
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:65
 msgid "Location"
 msgstr "位置"
 
@@ -419,7 +419,7 @@ msgstr "位置"
 msgid "Log in"
 msgstr ""
 
-#: components/Profile/ProfilePopover.tsx:161
+#: components/Profile/ProfilePopover.tsx:160
 msgid "Log out"
 msgstr ""
 
@@ -435,7 +435,7 @@ msgstr ""
 msgid "Maintain full control over your content and data."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:101
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:100
 #: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
 #: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
@@ -465,7 +465,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:124
 msgid "Navigation"
 msgstr ""
 
@@ -513,7 +513,7 @@ msgstr ""
 msgid "On this page"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:58
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:71
 msgid "Operation"
 msgstr "操作"
 
@@ -521,7 +521,7 @@ msgstr "操作"
 msgid "Optimize your content for search engines with ease."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:107
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:106
 msgid "Orders"
 msgstr "订单"
 
@@ -537,7 +537,7 @@ msgstr "页面"
 msgid "Password"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:55
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:68
 msgid "Path"
 msgstr ""
 
@@ -575,15 +575,15 @@ msgstr ""
 msgid "Previous"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:104
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:103
 msgid "Products"
 msgstr "产品"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:56
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:55
 msgid "Profile"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:132
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:131
 #: components/theme-ui/NavigationItem.tsx:16
 #: themes/card/pages/HomePage.tsx:56
 #: themes/aside/pages/HomePage.tsx:48
@@ -631,7 +631,7 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:160
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
 msgid "SEO"
 msgstr ""
 
@@ -646,7 +646,7 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:159
-#: components/Profile/ProfilePopover.tsx:134
+#: components/Profile/ProfilePopover.tsx:133
 msgid "Settings"
 msgstr "设置"
 
@@ -670,7 +670,7 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:128
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:127
 msgid "Socials"
 msgstr ""
 
@@ -705,7 +705,7 @@ msgstr ""
 msgid "Subscribers"
 msgstr "订阅者"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:88
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:87
 #: components/theme-ui/NavigationItem.tsx:20
 #: themes/sue/components/PostListWithTag.tsx:32
 #: themes/paper/pages/TagListPage.tsx:14
@@ -732,7 +732,7 @@ msgstr ""
 msgid "Tip records"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:46
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:59
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:106
 msgid "Title"
 msgstr ""
@@ -749,7 +749,7 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:49
+#: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:62
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:122
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:55
 msgid "Type"

@@ -1,12 +1,6 @@
 import { JSX, PropsWithChildren } from 'react'
 import { Author, Product, Series } from '@prisma/client'
 
-enum AuthType {
-  GOOGLE = 'GOOGLE',
-  REOWN = 'REOWN',
-  PRIVY = 'PRIVY',
-}
-
 export enum PostType {
   ARTICLE = 'ARTICLE',
   IMAGE = 'IMAGE',
@@ -95,12 +89,6 @@ export type Site = {
   spaceId: string | null
   font: string
   image: string | null
-  privyAppId: string
-  privyAppSecret: string
-  authType: AuthType
-  authConfig?: {
-    [key: string]: string
-  }
   socials: Socials
   analytics: Analytics
   catalogue: any

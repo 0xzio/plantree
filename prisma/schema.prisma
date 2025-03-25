@@ -9,13 +9,6 @@ generator client {
   provider = "prisma-client-js"
 }
 
-enum AuthType {
-  GOOGLE
-  REOWN
-  RAINBOW_KIT
-  PRIVY
-}
-
 enum ContributionType {
   DEVELOPMENT
   CONTENT
@@ -84,8 +77,6 @@ model Site {
   sassBelieverPeriodEnd  DateTime?
   stripeOAuthToken       Json?
   authSecret             String?        @unique @db.VarChar(255)
-  authType               AuthType       @default(RAINBOW_KIT)
-  authConfig             Json?
   socials                Json?
   analytics              Json?
   config                 Json?

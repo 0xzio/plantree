@@ -5,12 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { revalidateSite } from '@/lib/revalidateSite'
 import { stripe } from '@/lib/stripe'
 import { MySite, StripeInfo } from '@/lib/types'
-import {
-  AuthType,
-  ProductType,
-  StripeType,
-  SubdomainType,
-} from '@prisma/client'
+import { ProductType, StripeType, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
@@ -240,13 +235,6 @@ export const siteRouter = router({
           .optional(),
         // catalogue: z.record(z.unknown()).optional(),
         catalogue: z.string().optional(),
-        authType: z.nativeEnum(AuthType).optional(),
-        authConfig: z
-          .object({
-            privyAppId: z.string().optional(),
-            privyAppSecret: z.string().optional(),
-          })
-          .optional(),
       }),
     )
     .mutation(async ({ ctx, input }) => {

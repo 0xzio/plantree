@@ -23,7 +23,6 @@ export function SettingNav({}: Props) {
     socials: '/~/settings/socials',
     domain: '/~/settings/domain',
     tags: '/~/settings/tags',
-    authType: '/~/settings/auth-type',
     web3: '/~/settings/web3',
     subscription: '/~/settings/subscription',
     collaborators: '/~/settings/collaborators',
