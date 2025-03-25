@@ -20,11 +20,13 @@ import { messageRouter } from './routers/message'
 import { newsletterRouter } from './routers/newsletter'
 import { orderRouter } from './routers/order'
 import { pageRouter } from './routers/page'
+import { payoutAccountRouter } from './routers/payout-account'
 import { planRouter } from './routers/plan'
 import { pledgeRouter } from './routers/pledge'
 import { postRouter } from './routers/post'
 import { postImportRouter } from './routers/post-import'
 import { productRouter } from './routers/product'
+import { referralRouter } from './routers/referral'
 import { rewardsRouter } from './routers/rewards'
 import { seriesRouter } from './routers/series'
 import { siteRouter } from './routers/site'
@@ -72,6 +74,8 @@ export const appRouter = router({
   campaign: campaignRouter,
   pledge: pledgeRouter,
   series: seriesRouter,
+  referral: referralRouter,
+  payoutAccount: payoutAccountRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

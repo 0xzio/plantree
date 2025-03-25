@@ -4,6 +4,8 @@ import { prisma } from '@/lib/prisma'
 import { ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import jwt from 'jsonwebtoken'
+import { customAlphabet } from 'nanoid'
+import { headers } from 'next/headers'
 import { createPublicClient, http } from 'viem'
 import { base, baseSepolia } from 'viem/chains'
 import { z } from 'zod'
@@ -13,6 +15,10 @@ import { getMe } from '../lib/getMe'
 import { getRegisterEmailTpl } from '../lib/getRegisterEmailTpl'
 import { hashPassword } from '../lib/hashPassword'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
+
+const alphabet =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+const nanoid = customAlphabet(alphabet, 10)
 
 export const userRouter = router({
   getNonce: publicProcedure.query(async ({ ctx, input }) => {
@@ -65,6 +71,26 @@ export const userRouter = router({
 
   me: protectedProcedure.query(async ({ ctx }) => {
     return prisma.user.findUnique({ where: { id: ctx.token.uid } })
+  }),
+
+  getReferralCode: protectedProcedure.query(async ({ ctx }) => {
+    const user = await prisma.user.findUnique({ where: { id: ctx.token.uid } })
+    if (user?.referralCode) return user?.referralCode
+    try {
+      const referralCode = nanoid()
+      await prisma.user.update({
+        where: { id: ctx.token.uid },
+        data: { referralCode },
+      })
+      return referralCode
+    } catch (error) {
+      const referralCode = nanoid()
+      await prisma.user.update({
+        where: { id: ctx.token.uid },
+        data: { referralCode },
+      })
+      return referralCode
+    }
   }),
 
   getAddressByUserId: publicProcedure
@@ -153,6 +179,7 @@ export const userRouter = router({
     .input(
       z.object({
         email: z.string().email(),
+        ref: z.string().optional(),
         password: z.string().min(6, {
           message: 'Password must be at least 6 characters.',
         }),
@@ -172,9 +199,16 @@ export const userRouter = router({
         })
       }
 
-      const token = jwt.sign(input, process.env.NEXTAUTH_SECRET!, {
-        expiresIn: '30d',
-      })
+      const token = jwt.sign(
+        {
+          ...input,
+          ref: input.ref || '',
+        },
+        process.env.NEXTAUTH_SECRET!,
+        {
+          expiresIn: '30d',
+        },
+      )
 
       const prefix = isProd ? 'https://' : 'http://'
       const content = getRegisterEmailTpl(

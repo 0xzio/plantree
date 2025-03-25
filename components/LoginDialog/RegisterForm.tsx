@@ -17,6 +17,7 @@ import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Trans } from '@lingui/react/macro'
+import { useSearchParams } from 'next/navigation'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useAuthStatus } from './useAuthStatus'
@@ -35,6 +36,7 @@ export function RegisterForm({}: Props) {
   const [isLoading, setLoading] = useState(false)
   const { setIsOpen } = useLoginDialog()
   const { setAuthStatus } = useAuthStatus()
+  const searchParams = useSearchParams()
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
@@ -46,8 +48,12 @@ export function RegisterForm({}: Props) {
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
+      const ref = searchParams?.get('ref') as string
       setLoading(true)
-      await api.user.registerByEmail.mutate(data)
+      await api.user.registerByEmail.mutate({
+        ...data,
+        ref,
+      })
       // setIsOpen(false)
       setAuthStatus('register-email-sent')
       toast.success(

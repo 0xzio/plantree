@@ -11,6 +11,7 @@ import { NextRequest, NextResponse } from 'next/server'
 export async function GET(req: NextRequest) {
   const url = new URL(req.url)
   const token = url.searchParams.get('token') as string
+  const ref = url.searchParams.get('ref') as string
 
   try {
     const decoded = jwt.verify(token, process.env.NEXTAUTH_SECRET!) as any

@@ -558,6 +558,7 @@ export const siteRouter = router({
                   stripeType: input.stripeType,
                   name: 'Member',
                   price: price,
+                  type: ProductType.TIER,
                   stripe: {
                     productId: product.id,
                     priceId: monthlyPrice.id,
@@ -595,11 +596,11 @@ export const siteRouter = router({
         }
 
         const siteId = site?.id
+
         await tx.message.deleteMany({ where: { siteId } })
         await tx.channel.deleteMany({ where: { siteId } })
         await tx.author.deleteMany({ where: { siteId } })
-        await tx.post.deleteMany({ where: { siteId } })
-        await tx.comment.deleteMany({ where: { userId } })
+        await tx.comment.deleteMany({ where: { siteId } })
         await tx.postTag.deleteMany({ where: { siteId } })
         await tx.tag.deleteMany({ where: { siteId } })
         await tx.collaborator.deleteMany({ where: { siteId } })
@@ -617,11 +618,22 @@ export const siteRouter = router({
         await tx.subscriber.deleteMany({ where: { siteId } })
         await tx.delivery.deleteMany({ where: { siteId } })
         await tx.newsletter.deleteMany({ where: { siteId } })
+        await tx.invoice.deleteMany({ where: { id: siteId } })
+        await tx.order.deleteMany({ where: { id: siteId } })
+        await tx.subscription.deleteMany({ where: { id: siteId } })
+        await tx.product.deleteMany({ where: { id: siteId } })
+        await tx.pledge.deleteMany({ where: { id: siteId } })
+        await tx.campaign.deleteMany({ where: { id: siteId } })
+        await tx.series.deleteMany({ where: { id: siteId } })
+        await tx.subscription.deleteMany({ where: { siteId } })
+        await tx.post.deleteMany({ where: { siteId } })
+        await tx.payout.deleteMany({ where: { siteId } })
+        await tx.prop.deleteMany({ where: { siteId } })
+
         await tx.site.delete({ where: { id: siteId } })
-        await tx.hostedSite.deleteMany({ where: { userId } })
-        await tx.subscription.deleteMany({ where: { userId } })
-        await tx.account.deleteMany({ where: { userId } })
-        await tx.user.delete({ where: { id: userId } })
+        // await tx.hostedSite.deleteMany({ where: { userId } })
+        // await tx.account.deleteMany({ where: { userId } })
+        // await tx.user.delete({ where: { id: userId } })
 
         await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         await cacheHelper.updateCachedHomeSites(null)

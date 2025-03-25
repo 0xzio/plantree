@@ -3,7 +3,8 @@
 import { ReactNode } from 'react'
 import SocialIcon from '@/components/theme-ui/SocialIcon'
 import { Link } from '@/lib/i18n'
-import { ArrowUpRight, ExternalLink } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { ArrowUpRight, ExternalLink, Flame } from 'lucide-react'
 import { toast } from 'sonner'
 
 type NavItem = {
@@ -31,8 +32,8 @@ export const Nav = () => {
     //   to: '/sponsor',
     // },
     {
-      text: 'Pricing',
-      to: '/pricing',
+      text: 'Docs',
+      to: '/docs/introduction',
     },
     {
       text: 'Themes',
@@ -43,8 +44,8 @@ export const Nav = () => {
       to: '/self-hosted',
     },
     {
-      text: 'Docs',
-      to: '/docs/intouction',
+      text: 'Pricing',
+      to: '/pricing',
     },
     // {
     //   text: 'Rewards',
@@ -56,9 +57,8 @@ export const Nav = () => {
     //   to: 'https://github.com/penx-labs/penx-desktop/releases',
     // },
     {
-      text: 'Discord',
-      isExternal: true,
-      to: 'https://discord.gg/nyVpH9njDu',
+      text: 'Partner program',
+      to: '/partner-program',
     },
   ]
 
@@ -100,8 +100,17 @@ export const Nav = () => {
 
         return (
           <div key={i}>
-            <Link href={item.to} className="text-foreground/80">
-              {item.text}
+            <Link
+              href={item.to}
+              className={cn(
+                'text-foreground/80 flex items-center gap-0',
+                item.to === '/partner-program' && 'text-pink-500 font-medium',
+              )}
+            >
+              {item.to === '/partner-program' && (
+                <span className="icon-[token--zap] size-6"></span>
+              )}
+              <span>{item.text}</span>
             </Link>
           </div>
         )

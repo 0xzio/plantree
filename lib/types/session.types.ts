@@ -34,6 +34,7 @@ export type GoogleLoginInfo = {
   openid: string
   picture: string
   name: string
+  ref: string
 }
 
 export type LoginData =

@@ -13,6 +13,7 @@ export function SettingNav({}: Props) {
 
   const Paths = {
     profile: '/~/settings/profile',
+    payoutAccount: '/~/settings/payout-account',
     general: '/~/settings',
     linkAccounts: '/~/settings/link-accounts',
     appearance: '/~/settings/appearance',
@@ -53,6 +54,12 @@ export function SettingNav({}: Props) {
       <Section title="Account">
         <Link href={Paths.profile} className={linkClassName(Paths.profile)}>
           <Trans>Profile</Trans>
+        </Link>
+        <Link
+          href={Paths.payoutAccount}
+          className={linkClassName(Paths.payoutAccount)}
+        >
+          <Trans>Payout account</Trans>
         </Link>
         <Link
           href={Paths.linkAccounts}
@@ -178,9 +185,9 @@ export function SettingNav({}: Props) {
           <Trans>Import/Export</Trans>
         </Link>
 
-        <Link href={Paths.dangerous} className={linkClassName(Paths.dangerous)}>
+        {/* <Link href={Paths.dangerous} className={linkClassName(Paths.dangerous)}>
           <Trans>Dangerous</Trans>
-        </Link>
+        </Link> */}
       </Section>
     </div>
   )

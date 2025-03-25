@@ -7,6 +7,7 @@ import { Link } from '@/lib/i18n'
 import '@glideapps/glide-data-grid/dist/index.css'
 import { allMessages } from '@/appRouterI18n'
 import { LinguiClientProvider } from '@/components/LinguiClientProvider'
+import { Logo } from '@/components/Logo'
 import { Profile } from '@/components/Profile/Profile'
 import { TextLogo } from '@/components/TextLogo'
 import { ThemeProvider } from '@/components/ThemeProvider'
@@ -90,21 +91,23 @@ export default async function RootLayout({
             >
               <div className="flex flex-col gap-4 px-2 min-h-screen container 2xl:max-w-[1120px] mx-auto">
                 <div className="z-10 h-14 py-3 relative flex justify-between">
-                  <div className="flex items-center">
+                  <div className="flex items-center gap-8">
                     <Link href="/" className="cursor-pointer flex items-center">
+                      {/* <Logo className="size-5" /> */}
                       <TextLogo />
                     </Link>
+                    <Nav />
                   </div>
-
-                  <Nav />
 
                   <div className="flex items-center gap-2">
                     <Profile />
                   </div>
                 </div>
 
-                <div className="relative">
-                  <div className="z-10 relative">{children}</div>
+                <div className="relative flex-1 flex flex-col">
+                  <div className="z-10 relative h-full flex-1 flex flex-col">
+                    {children}
+                  </div>
                   <div
                     className="fixed left-[30%] top-[400px] -z-10 w-[800px] h-[800px] opacity-30 dark:opacity-0"
                     style={{

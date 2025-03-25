@@ -142,7 +142,7 @@ type GoogleLoginInfo = {
   name: string
 }
 
-export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
+export async function initUserByGoogleInfo(info: GoogleLoginInfo, ref: string) {
   return prisma.$transaction(
     async (tx) => {
       const account = await tx.account.findUnique({
@@ -170,6 +170,20 @@ export async function initUserByGoogleInfo(info: GoogleLoginInfo) {
           },
         },
       })
+
+      if (ref) {
+        const inviter = await tx.user.findUnique({
+          where: { referralCode: ref },
+        })
+        if (inviter) {
+          await tx.referral.create({
+            data: {
+              inviterId: inviter.id,
+              userId: newUser.id,
+            },
+          })
+        }
+      }
 
       const site = await tx.site.create({
         data: {
@@ -362,7 +376,11 @@ export async function initUserByFarcasterId(fid: string) {
   )
 }
 
-export async function initUserByEmail(email: string, password: string) {
+export async function initUserByEmail(
+  email: string,
+  password: string,
+  ref: string,
+) {
   return prisma.$transaction(
     async (tx) => {
       const account = await tx.account.findUnique({
@@ -390,6 +408,20 @@ export async function initUserByEmail(email: string, password: string) {
           },
         },
       })
+
+      if (ref) {
+        const inviter = await tx.user.findUnique({
+          where: { referralCode: ref },
+        })
+        if (inviter) {
+          await tx.referral.create({
+            data: {
+              inviterId: inviter.id,
+              userId: newUser.id,
+            },
+          })
+        }
+      }
 
       const site = await tx.site.create({
         data: {

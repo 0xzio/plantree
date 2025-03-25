@@ -130,8 +130,11 @@ export async function POST(req: NextRequest) {
   const json = await req.json()
   const hostname = json?.host || ''
 
+  console.log('=======json:', json)
+
   if (isGoogleLogin(json)) {
-    const account = await initUserByGoogleInfo(json)
+    const ref = json?.ref || ''
+    const account = await initUserByGoogleInfo(json, ref)
     await updateSession(session, account)
     await registerSiteUser(hostname, account.userId)
     return Response.json(session)
@@ -185,7 +188,8 @@ export async function POST(req: NextRequest) {
 
       const email = decoded.email
       const password = decoded.password
-      const account = await initUserByEmail(email, password)
+      const ref = decoded.ref || ''
+      const account = await initUserByEmail(email, password, ref)
       await updateSession(session, account)
       await registerSiteUser(hostname, account.userId)
       return Response.json(session)

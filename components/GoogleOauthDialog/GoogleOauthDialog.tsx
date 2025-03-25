@@ -26,9 +26,9 @@ export function GoogleOauthDialog() {
   const loginWithGoogle = useCallback(
     async function () {
       const accessToken = searchParams?.get('access_token')!
+      const ref = searchParams?.get('ref') as string
       try {
         const info = await getGoogleUserInfo(accessToken)
-        console.log('=====info:', info)
 
         const result = await login({
           type: 'penx-google',
@@ -36,9 +36,8 @@ export function GoogleOauthDialog() {
           openid: info.sub,
           picture: info.picture,
           name: info.name,
+          ref: ref,
         })
-
-        console.log('=====result:', result)
       } catch (error) {
         console.log('>>>>>>>>>>>>erorr:', error)
         toast.error('Failed to sign in with Google. Please try again.')

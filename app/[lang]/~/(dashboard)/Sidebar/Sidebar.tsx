@@ -5,6 +5,7 @@ import { CreatePostButton } from '@/components/CreatePostButton'
 import { ModeToggle } from '@/components/ModeToggle'
 import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
+import { Separator } from '@/components/ui/separator'
 import { Link, usePathname } from '@/lib/i18n'
 import { isSuperAdmin } from '@/lib/isSuperAdmin'
 import { useSession } from '@/lib/useSession'
@@ -22,6 +23,7 @@ import {
   Settings,
   TableProperties,
   Users,
+  Zap,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
 import { useSearchParams } from 'next/navigation'
@@ -144,11 +146,21 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           ></SidebarItem>
         </Link>
 
+        <Separator></Separator>
+
         <Link href="/~/subscribers">
           <SidebarItem
             isActive={pathname.startsWith('/~/subscribers')}
             icon={<Users size={18} />}
             label={<Trans>Subscribers</Trans>}
+          ></SidebarItem>
+        </Link>
+
+        <Link href="/~/partner-program">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/partner-program')}
+            icon={<Zap size={18} />}
+            label={<Trans>Partner program</Trans>}
           ></SidebarItem>
         </Link>
 

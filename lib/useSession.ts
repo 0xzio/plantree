@@ -35,7 +35,10 @@ export function useSession() {
 
   async function login(data: LoginData & { host?: string }) {
     const res = await fetchJson<SessionData>(sessionApiRoute, {
-      body: JSON.stringify({ ...data, host: location.host }),
+      body: JSON.stringify({
+        ...data,
+        host: location.host,
+      }),
       method: 'POST',
     })
 
