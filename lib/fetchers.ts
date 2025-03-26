@@ -478,7 +478,11 @@ export async function getHomeSites() {
 export async function getSiteCount() {
   return await unstable_cache(
     async () => {
-      const count = await prisma.site.count()
+      const count = await prisma.site.count({
+        where: {
+          postCount: { gte: 2 },
+        },
+      })
       return count
     },
     ['site-count'],
