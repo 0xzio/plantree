@@ -6,8 +6,10 @@ import { Button } from '@/components/ui/button'
 import { useCopyToClipboard } from '@/hooks/useCopyToClipboard'
 import { trpc } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
-import { CopyIcon } from 'lucide-react'
+import { CopyIcon, PenSquareIcon } from 'lucide-react'
 import { toast } from 'sonner'
+import { EditReferralCodeForm } from './EditReferralCodeDialog/EditReferralCodeForm'
+import { EditReferralCodeFormDialog } from './EditReferralCodeDialog/EditReferralCodeFormDialog'
 
 export function ReferralLink() {
   const { copy } = useCopyToClipboard()
@@ -38,6 +40,8 @@ export function ReferralLink() {
               toast.success('Referral link copied to clipboard')
             }}
           />
+
+          <EditReferralCodeFormDialog />
         </div>
       </div>
       <div>

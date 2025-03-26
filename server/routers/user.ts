@@ -94,6 +94,31 @@ export const userRouter = router({
     }
   }),
 
+  updateReferralCode: protectedProcedure
+    .input(
+      z.object({
+        code: z
+          .string()
+          .min(4, { message: 'Code length should greater the three' })
+          .max(10, { message: 'Code length should not exceed ten' }),
+      }),
+    )
+    .mutation(async ({ ctx, input }) => {
+      try {
+        await prisma.user.update({
+          where: { id: ctx.token.uid },
+          data: {
+            referralCode: input.code,
+          },
+        })
+      } catch (error) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'This code is existed, please try another code.',
+        })
+      }
+    }),
+
   getAddressByUserId: publicProcedure
     .input(z.string())
     .query(async ({ input }) => {
