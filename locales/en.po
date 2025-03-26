@@ -64,7 +64,7 @@ msgstr "Already have an account"
 msgid "AMA"
 msgstr "AMA"
 
-#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:73
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:70
 msgid "Amount"
 msgstr "Amount"
 
@@ -93,7 +93,7 @@ msgstr "Asset"
 msgid "Authorize CLI login"
 msgstr "Authorize CLI login"
 
-#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:77
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:74
 msgid "Available"
 msgstr "Available"
 
@@ -223,7 +223,7 @@ msgstr "Comments"
 msgid "Comments built-in"
 msgstr "Comments built-in"
 
-#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:109
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:106
 msgid "Confirm"
 msgstr "Confirm"
 

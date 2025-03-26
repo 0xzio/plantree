@@ -21,6 +21,7 @@ import { messageRouter } from './routers/message'
 import { newsletterRouter } from './routers/newsletter'
 import { orderRouter } from './routers/order'
 import { pageRouter } from './routers/page'
+import { payoutRouter } from './routers/payout'
 import { payoutAccountRouter } from './routers/payout-account'
 import { planRouter } from './routers/plan'
 import { pledgeRouter } from './routers/pledge'
@@ -78,6 +79,7 @@ export const appRouter = router({
   referral: referralRouter,
   affiliate: affiliateRouter,
   payoutAccount: payoutAccountRouter,
+  payout: payoutRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

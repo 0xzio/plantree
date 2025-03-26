@@ -13,11 +13,8 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form'
-import { Input } from '@/components/ui/input'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { queryClient } from '@/lib/queryClient'
 import { api, trpc } from '@/lib/trpc'
-import { Balance } from '@/lib/types'
 import { toFloorFixed } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Trans } from '@lingui/react/macro'
@@ -46,7 +43,7 @@ export function WithdrawForm() {
       setLoading(true)
 
       const amount = parseInt((Number(data.amount) * 100).toFixed(0))
-      await api.stripe.withdraw.mutate({
+      await api.payout.withdrawCommission.mutate({
         amount,
       })
 

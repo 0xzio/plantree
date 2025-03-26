@@ -372,6 +372,7 @@ model Payout {
   id        String       @id @default(uuid()) @db.Uuid
   amount    Int          @default(0)
   status    PayoutStatus @default(PENDING)
+  type      PayoutType
   createdAt DateTime     @default(now())
   updatedAt DateTime     @updatedAt
   site      Site?        @relation(fields: [siteId], references: [id])

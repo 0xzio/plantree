@@ -152,7 +152,8 @@ export const protectedProcedure = t.procedure.use(
         'delivery.updateStatus',
         'tier.addTier',
         'tier.updateTier',
-        'stripe.withdraw',
+        'payout.withdrawSiteIncome',
+        'payout.withdrawCommission',
       ].includes(path)
     ) {
       // TODO: improve performance by caching the result of this query

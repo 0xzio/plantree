@@ -57,7 +57,7 @@ export function WithdrawForm() {
       setLoading(true)
 
       const amount = parseInt((Number(data.amount) * 100).toFixed(0))
-      await api.stripe.withdraw.mutate({
+      await api.payout.withdrawSiteIncome.mutate({
         amount,
       })
 
@@ -98,7 +98,9 @@ export function WithdrawForm() {
               </div>
               <FormControl>
                 <div className="relative">
-                  <span className="absolute top-2 left-3 text-foreground">$</span>
+                  <span className="absolute top-2 left-3 text-foreground">
+                    $
+                  </span>
                   <NumberInput
                     placeholder="0.00"
                     precision={2}
