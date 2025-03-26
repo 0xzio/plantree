@@ -64,6 +64,10 @@ msgstr "Already have an account"
 msgid "AMA"
 msgstr "AMA"
 
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:73
+msgid "Amount"
+msgstr "Amount"
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Analytics"
 msgstr "Analytics"
@@ -88,6 +92,10 @@ msgstr "Asset"
 #: app/[lang]/root/cli-login/CliLogin.tsx:72
 msgid "Authorize CLI login"
 msgstr "Authorize CLI login"
+
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:77
+msgid "Available"
+msgstr "Available"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
 msgid "Backup"
@@ -210,6 +218,10 @@ msgstr "Comments"
 #: app/[lang]/root/(home)/FeatureList.tsx:83
 msgid "Comments built-in"
 msgstr "Comments built-in"
+
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:109
+msgid "Confirm"
+msgstr "Confirm"
 
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:72
 msgid "Connect wallet to Claim $PEN"
@@ -741,6 +753,10 @@ msgstr "Tags"
 #: app/[lang]/root/(home)/FeatureList.tsx:38
 msgid "Tailored for individual creators to express themselves freely."
 msgstr "Tailored for individual creators to express themselves freely."
+
+#: app/[lang]/~/(dashboard)/settings/membership/MembershipTiers.tsx:43
+msgid "Tiers"
+msgstr "Tiers"
 
 #: components/theme-ui/PostActions/TippersDialog/TippersDialog.tsx:37
 msgid "Tip records"

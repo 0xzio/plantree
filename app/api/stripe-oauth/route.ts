@@ -100,5 +100,5 @@ export async function GET(req: Request) {
   //   },
   // })
 
-  return NextResponse.redirect(new URL('/~/settings/payment', req.url))
+  return NextResponse.redirect(new URL('/~/settings/membership', req.url))
 }

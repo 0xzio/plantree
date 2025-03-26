@@ -4,8 +4,6 @@ import { useMemo, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { NumberInput } from '@/components/NumberInput'
-import { useSiteContext } from '@/components/SiteContext'
-import { useSpaceContext } from '@/components/SpaceContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,

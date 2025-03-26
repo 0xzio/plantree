@@ -292,7 +292,6 @@ enum ProductType {
 
 model Product {
   id            String         @id @default(uuid()) @db.Uuid
-  stripeType    StripeType     @default(NONE)
   name          String         @default("") @db.VarChar(50)
   description   String         @default("") @db.Text
   details       String         @default("") @db.Text
@@ -1165,25 +1164,24 @@ model SystemEmail {
 }
 
 model Campaign {
-  id              String     @id @default(uuid()) @db.Uuid
-  stripeType      StripeType @default(NONE)
-  name            String     @default("") @db.VarChar(50)
-  description     String     @default("") @db.Text
-  details         String     @default("") @db.Text
-  image           String?    @default("") @db.VarChar(2183)
-  goal            Int        @default(0)
-  currentAmount   Int        @default(0)
-  backerCount     Int        @default(0)
+  id              String    @id @default(uuid()) @db.Uuid
+  name            String    @default("") @db.VarChar(50)
+  description     String    @default("") @db.Text
+  details         String    @default("") @db.Text
+  image           String?   @default("") @db.VarChar(2183)
+  goal            Int       @default(0)
+  currentAmount   Int       @default(0)
+  backerCount     Int       @default(0)
   deadline        DateTime?
-  isActive        Boolean    @default(true)
+  isActive        Boolean   @default(true)
   stripeProductId String?
   stripePriceId   String?
-  createdAt       DateTime   @default(now())
-  updatedAt       DateTime   @updatedAt
-  site            Site       @relation(fields: [siteId], references: [id])
-  siteId          String     @db.Uuid
-  user            User       @relation(fields: [userId], references: [id])
-  userId          String     @db.Uuid
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  site            Site      @relation(fields: [siteId], references: [id])
+  siteId          String    @db.Uuid
+  user            User      @relation(fields: [userId], references: [id])
+  userId          String    @db.Uuid
   pledges         Pledge[]
   invoices        Invoice[]
 

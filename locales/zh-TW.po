@@ -64,6 +64,10 @@ msgstr "已有账户"
 msgid "AMA"
 msgstr ""
 
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:73
+msgid "Amount"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Analytics"
 msgstr ""
@@ -87,6 +91,10 @@ msgstr ""
 
 #: app/[lang]/root/cli-login/CliLogin.tsx:72
 msgid "Authorize CLI login"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:77
+msgid "Available"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
@@ -209,6 +217,10 @@ msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:83
 msgid "Comments built-in"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/partner-program/WithdrawDialog/WithdrawForm.tsx:109
+msgid "Confirm"
 msgstr ""
 
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:72
@@ -740,6 +752,10 @@ msgstr "标签"
 
 #: app/[lang]/root/(home)/FeatureList.tsx:38
 msgid "Tailored for individual creators to express themselves freely."
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/settings/membership/MembershipTiers.tsx:43
+msgid "Tiers"
 msgstr ""
 
 #: components/theme-ui/PostActions/TippersDialog/TippersDialog.tsx:37
