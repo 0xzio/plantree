@@ -40,6 +40,7 @@ export function SettingNav({}: Props) {
     campaign: '/~/settings/campaign',
     design: '/~/settings/design',
     dangerous: '/~/settings/dangerous',
+    members: '/~/settings/members',
   }
 
   const linkClassName = (path: string) =>
@@ -105,6 +106,9 @@ export function SettingNav({}: Props) {
           className={linkClassName(Paths.membership)}
         >
           <Trans>Membership</Trans>
+        </Link>
+        <Link href={Paths.members} className={linkClassName(Paths.members)}>
+          <Trans>Members</Trans>
         </Link>
         <Link href={Paths.products} className={linkClassName(Paths.products)}>
           <Trans>Products</Trans>

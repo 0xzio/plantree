@@ -111,12 +111,15 @@ export const stripeRouter = router({
             siteId,
             priceId: input.priceId,
             productId: input.productId,
-            subscriptionTarget: SubscriptionTarget.PENX,
+            subscriptionTarget: SubscriptionTarget.SITE,
           },
         },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
         cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
         line_items: [{ price: input.priceId, quantity: 1 }],
+        invoice_creation: {
+          enabled: true,
+        },
       })
 
       if (!session.url) return { success: false as const }

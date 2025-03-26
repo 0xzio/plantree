@@ -35,6 +35,7 @@ import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
 import { stripeRouter } from './routers/stripe'
 import { subscriberRouter } from './routers/subscriber'
+import { subscriptionRouter } from './routers/subscription'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { tierRouter } from './routers/tier'
@@ -80,6 +81,7 @@ export const appRouter = router({
   affiliate: affiliateRouter,
   payoutAccount: payoutAccountRouter,
   payout: payoutRouter,
+  subscription: subscriptionRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)
