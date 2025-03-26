@@ -1,4 +1,5 @@
 import { cacheHelper } from '@/lib/cache-header'
+import { SubscriptionTarget } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Balance } from '@/lib/types'
@@ -38,40 +39,59 @@ export async function handleEvent(event: Stripe.Event) {
       session.subscription as string,
     )
 
-    if (subscription.id) {
-      const siteId = subscription.metadata.siteId
-      const site = await prisma.site.findUniqueOrThrow({
-        where: { id: siteId },
+    if (!subscription?.id) return
+
+    const siteId = subscription.metadata.siteId
+    const site = await prisma.site.findUniqueOrThrow({
+      where: { id: siteId },
+    })
+
+    await cacheHelper.updateCachedMySites(site.userId, null)
+
+    let balance = site.balance as Balance
+    if (!balance) {
+      balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
+    }
+
+    const productId = subscription.metadata.productId
+    const subscriptionTarget = subscription.metadata.subscriptionTarget
+
+    if (site.stripeType === StripeType.PLATFORM && productId) {
+      balance.withdrawable += event.data.object.amount_paid
+
+      await prisma.invoice.create({
+        data: {
+          siteId,
+          productId,
+          type: InvoiceType.SUBSCRIPTION,
+          amount: event.data.object.amount_paid,
+          currency: event.data.object.currency,
+          stripeInvoiceId: event.data.object.id,
+          stripeInvoiceNumber: event.data.object.number,
+          stripePeriodStart: event.data.object.period_start,
+          stripePeriodEnd: event.data.object.period_end,
+        },
+      })
+    }
+
+    if (subscriptionTarget === SubscriptionTarget.PENX) {
+      const referral = await prisma.referral.findUnique({
+        where: { userId: site.userId },
+        include: { user: true },
       })
 
-      await cacheHelper.updateCachedMySites(site.userId, null)
-
-      let balance = site.balance as Balance
-      if (!balance) {
-        balance = {
-          withdrawable: 0,
-          withdrawing: 0,
-          locked: 0,
+      if (referral) {
+        let balance = referral.user.commissionBalance as Balance
+        if (!balance) {
+          balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
         }
-      }
 
-      const productId = subscription.metadata.productId
-
-      if (site.stripeType === StripeType.PLATFORM && productId) {
-        balance.withdrawable += event.data.object.amount_paid
-
-        await prisma.invoice.create({
-          data: {
-            siteId,
-            productId,
-            type: InvoiceType.SUBSCRIPTION,
-            amount: event.data.object.amount_paid,
-            currency: event.data.object.currency,
-            stripeInvoiceId: event.data.object.id,
-            stripeInvoiceNumber: event.data.object.number,
-            stripePeriodStart: event.data.object.period_start,
-            stripePeriodEnd: event.data.object.period_end,
-          },
+        const rate = referral.user.commissionRate / 100
+        const commissionAmount = event.data.object.amount_paid * rate
+        balance.withdrawable += commissionAmount
+        await prisma.user.update({
+          where: { id: referral.userId },
+          data: { commissionBalance: balance },
         })
       }
 
@@ -87,9 +107,9 @@ export async function handleEvent(event: Stripe.Event) {
           ),
         },
       })
-
-      await cacheHelper.updateCachedMySites(site.userId, null)
     }
+
+    await cacheHelper.updateCachedMySites(site.userId, null)
   }
   if (event.type === 'customer.subscription.updated') {
     //add customer logic

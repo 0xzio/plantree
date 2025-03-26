@@ -208,3 +208,8 @@ export enum TierInterval {
   MONTHLY = 'MONTHLY',
   YEARLY = 'YEARLY',
 }
+
+export enum SubscriptionTarget {
+  PENX = 'PENX',
+  SITE = 'SITE',
+}

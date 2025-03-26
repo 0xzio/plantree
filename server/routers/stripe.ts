@@ -1,3 +1,4 @@
+import { SubscriptionTarget } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
 import { Balance, StripeInfo } from '@/lib/types'
@@ -98,7 +99,7 @@ export const stripeRouter = router({
         pathname: input.pathname,
       }
 
-      console.log('=======query:', successQuery)
+      // console.log('=======query:', successQuery)
 
       const oauthStripe = await getOAuthStripe(siteId)
       const session = await oauthStripe.checkout.sessions.create({
@@ -111,6 +112,7 @@ export const stripeRouter = router({
             siteId,
             priceId: input.priceId,
             productId: input.productId,
+            subscriptionTarget: SubscriptionTarget.PENX,
           },
         },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,

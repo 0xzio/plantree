@@ -8,6 +8,7 @@ import {
   STRIPE_STANDARD_YEARLY_PRICE_ID,
   STRIPE_TEAM_MONTHLY_PRICE_ID,
   STRIPE_TEAM_YEARLY_PRICE_ID,
+  SubscriptionTarget,
 } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
 import { getServerSession, getSessionOptions } from '@/lib/session'
@@ -91,6 +92,7 @@ export const billingRouter = router({
                 siteId: ctx.activeSiteId,
                 billingCycle: input.billingCycle,
                 planType: input.planType,
+                subscriptionTarget: SubscriptionTarget.PENX,
               },
             },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,

@@ -33,6 +33,19 @@ export const payoutAccountRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
+      const payoutAccount = await prisma.payoutAccount.findFirst({
+        where: {
+          transferMethod: TransferMethod.WALLET,
+          userId: ctx.token.uid,
+        },
+      })
+      if (payoutAccount) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'A wallet payout account already exists',
+        })
+      }
+
       return await prisma.payoutAccount.create({
         data: {
           userId: ctx.token.uid,

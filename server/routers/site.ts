@@ -7,6 +7,7 @@ import { stripe } from '@/lib/stripe'
 import { MySite, StripeInfo } from '@/lib/types'
 import { ProductType, StripeType, SubdomainType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
+import { revalidateTag } from 'next/cache'
 import { z } from 'zod'
 import { reservedDomains } from '../lib/constants'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
@@ -571,6 +572,7 @@ export const siteRouter = router({
             }
           }
 
+          revalidateTag(`${ctx.activeSiteId}-tiers`)
           await cacheHelper.updateCachedMySites(ctx.token.uid, null)
           await cacheHelper.updateCachedHomeSites(null)
         },

@@ -1,6 +1,7 @@
 import { sendEmail } from '@/lib/aws-ses-client'
 import { isProd, NETWORK, NetworkNames, ROOT_DOMAIN } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
+import { Balance } from '@/lib/types'
 import { ProviderType } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import jwt from 'jsonwebtoken'
