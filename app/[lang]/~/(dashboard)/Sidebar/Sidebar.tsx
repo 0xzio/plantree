@@ -80,8 +80,9 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         bordered && 'border-r',
       )}
     >
-      <div className="px-4 flex items-center h-16">
+      <div className="pl-4 flex items-center h-16 gap-1">
         <SitesPopover />
+        <ModeToggle />
       </div>
 
       {/* <QuickSearchTrigger /> */}
@@ -201,7 +202,6 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
         <UpgradeButton />
         <div className="flex items-center justify-between gap-1 pl-4 mb-4 ">
           <VisitSiteButton />
-          <ModeToggle />
         </div>
       </div>
     </div>

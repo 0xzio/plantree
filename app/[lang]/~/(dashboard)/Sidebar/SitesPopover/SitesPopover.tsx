@@ -72,7 +72,7 @@ export const SitesPopover = memo(function ProfilePopover({
           <ChevronDown size={14} />
         </div>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="w-56">
+      <DropdownMenuContent align="start" className="w-56">
         <DropdownMenuGroup className="px-2 py-1">
           <ProfileAvatar showName showCopy />
         </DropdownMenuGroup>

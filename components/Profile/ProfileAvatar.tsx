@@ -55,7 +55,29 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
           <>
             <div>
               {name && <div className="text-base">{name}</div>}
-              {showName && address && (
+
+              <div className="flex gap-2 items-center">
+                <div
+                  className={cn(
+                    'text-sm',
+                    name && 'text-xs text-foreground/60',
+                  )}
+                >
+                  {session?.email}
+                </div>
+                {showCopy && (
+                  <Copy
+                    size={14}
+                    className="text-foreground/60 cursor-pointer hover:text-foreground/80"
+                    onClick={() => {
+                      copy(session?.email || '')
+                      toast.success('Email copied to clipboard')
+                    }}
+                  ></Copy>
+                )}
+              </div>
+
+              {/* {showName && address && (
                 <div className="flex gap-2 items-center">
                   <div
                     className={cn(
@@ -76,7 +98,7 @@ export const ProfileAvatar = forwardRef<HTMLDivElement, Props>(
                     ></Copy>
                   )}
                 </div>
-              )}
+              )} */}
             </div>
           </>
         )}
