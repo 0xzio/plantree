@@ -21,13 +21,13 @@ msgstr "*** $PEN"
 msgid "100% run on Cloudflare and deploy freely."
 msgstr "100% run on Cloudflare and deploy freely."
 
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:63
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:67
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/book/AboutItem.tsx:34
 #: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr "About"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:162
 msgid "Access token"
 msgstr "Access token"
 
@@ -56,7 +56,7 @@ msgstr "All posts"
 msgid "All projects"
 msgstr "All projects"
 
-#: components/LoginDialog/RegisterForm.tsx:118
+#: components/LoginDialog/RegisterForm.tsx:124
 msgid "Already have an account"
 msgstr "Already have an account"
 
@@ -64,11 +64,11 @@ msgstr "Already have an account"
 msgid "AMA"
 msgstr "AMA"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Analytics"
 msgstr "Analytics"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:118
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
 msgid "Appearance"
 msgstr "Appearance"
 
@@ -89,15 +89,19 @@ msgstr "Asset"
 msgid "Authorize CLI login"
 msgstr "Authorize CLI login"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:171
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
 msgid "Backup"
 msgstr "Backup"
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:117
+msgid "Bank"
+msgstr "Bank"
 
 #: app/[lang]/root/(home)/FeatureList.tsx:92
 msgid "Beautiful themes"
 msgstr "Beautiful themes"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:83
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:90
 msgid "Billing & plan"
 msgstr "Billing & plan"
 
@@ -120,7 +124,6 @@ msgstr "Blog"
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:35
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
 msgstr "Book"
 
@@ -136,7 +139,7 @@ msgstr "Builtin"
 msgid "By subscribing, you'll receive the latest posts directly in your inbox."
 msgstr "By subscribing, you'll receive the latest posts directly in your inbox."
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:109
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:116
 msgid "Campaign"
 msgstr "Campaign"
 
@@ -144,7 +147,7 @@ msgstr "Campaign"
 msgid "Cancel"
 msgstr "Cancel"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:144
 msgid "Catalogue"
 msgstr "Catalogue"
 
@@ -169,7 +172,7 @@ msgstr "claimable"
 msgid "CLI login successfully"
 msgstr "CLI login successfully"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:149
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:156
 msgid "Collaborators"
 msgstr "Collaborators"
 
@@ -197,7 +200,6 @@ msgstr "Collectors"
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:41
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
 msgstr "Column"
 
@@ -217,7 +219,7 @@ msgstr "Connect wallet to Claim $PEN"
 msgid "Contribute"
 msgstr "Contribute"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:168
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:180
 msgid "Coupons"
 msgstr "Coupons"
 
@@ -241,10 +243,6 @@ msgstr "Created At"
 msgid "Customize your site with a variety of visually appealing themes."
 msgstr "Customize your site with a variety of visually appealing themes."
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
-msgid "Dangerous"
-msgstr "Dangerous"
-
 #: components/Profile/ProfilePopover.tsx:116
 #: components/Profile/Profile.tsx:61
 msgid "Dashboard"
@@ -254,7 +252,7 @@ msgstr "Dashboard"
 msgid "Data ownership"
 msgstr "Data ownership"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:134
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:136
 msgid "Databases"
 msgstr "Databases"
 
@@ -290,15 +288,15 @@ msgstr "Deploy your own site to Cloudflare Pages in 10 minutes."
 msgid "Description"
 msgstr "Description"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:140
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
 msgid "Design"
 msgstr "Design"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:177
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:189
 msgid "Discover"
 msgstr "Discover"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Domain"
 msgstr "Domain"
 
@@ -323,7 +321,7 @@ msgstr "Edit"
 msgid "Edit navigation"
 msgstr "Edit navigation"
 
-#: components/LoginDialog/RegisterForm.tsx:74
+#: components/LoginDialog/RegisterForm.tsx:80
 msgid "Email"
 msgstr "Email"
 
@@ -347,7 +345,7 @@ msgstr "Enjoy a seamless writing experience with our intuitive editor."
 msgid "Failed to update public status!"
 msgstr "Failed to update public status!"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:72
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:79
 #: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr "Features"
@@ -360,16 +358,16 @@ msgstr "Filename"
 msgid "Footer"
 msgstr "Footer"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 #: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr "Friends"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:114
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
 msgid "Gallery"
 msgstr "Gallery"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:69
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:76
 msgid "General"
 msgstr "General"
 
@@ -394,7 +392,7 @@ msgstr "Image"
 msgid "Image public status updated successfully!"
 msgstr "Image public status updated successfully!"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:185
 msgid "Import/Export"
 msgstr "Import/Export"
 
@@ -410,7 +408,7 @@ msgstr "individual blogs created"
 msgid "Latest"
 msgstr "Latest"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:61
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
 msgid "Link accounts"
 msgstr "Link accounts"
 
@@ -418,7 +416,7 @@ msgstr "Link accounts"
 msgid "Location"
 msgstr "Location"
 
-#: components/LoginDialog/RegisterForm.tsx:124
+#: components/LoginDialog/RegisterForm.tsx:130
 #: components/LoginDialog/LoginForm.tsx:115
 msgid "Log in"
 msgstr "Log in"
@@ -439,7 +437,7 @@ msgstr "logo"
 msgid "Maintain full control over your content and data."
 msgstr "Maintain full control over your content and data."
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:100
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:107
 #: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
 #: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
@@ -469,7 +467,7 @@ msgstr "My sites"
 msgid "Name"
 msgstr "Name"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:124
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:131
 msgid "Navigation"
 msgstr "Navigation"
 
@@ -525,7 +523,7 @@ msgstr "Operation"
 msgid "Optimize your content for search engines with ease."
 msgstr "Optimize your content for search engines with ease."
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:106
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
 msgid "Orders"
 msgstr "Orders"
 
@@ -533,17 +531,29 @@ msgstr "Orders"
 msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 msgstr "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:124
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:126
 msgid "Pages"
 msgstr "Pages"
 
-#: components/LoginDialog/RegisterForm.tsx:90
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:163
+msgid "Partner program"
+msgstr "Partner program"
+
+#: components/LoginDialog/RegisterForm.tsx:96
 msgid "Password"
 msgstr "Password"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:68
 msgid "Path"
 msgstr "Path"
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:62
+msgid "Payout account"
+msgstr "Payout account"
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:124
+msgid "Paypal"
+msgstr "Paypal"
 
 #: app/[lang]/root/(home)/Slogan.tsx:27
 msgid "PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators."
@@ -566,7 +576,7 @@ msgid "Podcast"
 msgstr "Podcast"
 
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:105
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:107
 msgid "Posts"
 msgstr "Posts"
 
@@ -579,15 +589,15 @@ msgstr "Powerful features to build to modern individual blog"
 msgid "Previous"
 msgstr "Previous"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:103
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:110
 msgid "Products"
 msgstr "Products"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:55
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:56
 msgid "Profile"
 msgstr "Profile"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:131
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:138
 #: components/theme-ui/NavigationItem.tsx:16
 #: themes/card/pages/HomePage.tsx:56
 #: themes/aside/pages/HomePage.tsx:48
@@ -615,7 +625,7 @@ msgstr "Published on"
 msgid "Read the deployment guide"
 msgstr "Read the deployment guide"
 
-#: components/LoginDialog/RegisterForm.tsx:112
+#: components/LoginDialog/RegisterForm.tsx:118
 msgid "Register"
 msgstr "Register"
 
@@ -635,7 +645,7 @@ msgstr "Select a location"
 msgid "Select a type"
 msgstr "Select a type"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:166
 msgid "SEO"
 msgstr "SEO"
 
@@ -643,13 +653,13 @@ msgstr "SEO"
 msgid "SEO friendly"
 msgstr "SEO friendly"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:145
 #: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr "Series"
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:159
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:171
 #: components/Profile/ProfilePopover.tsx:133
 msgid "Settings"
 msgstr "Settings"
@@ -674,7 +684,7 @@ msgstr "Size"
 msgid "Slug"
 msgstr "Slug"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:127
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
 msgid "Socials"
 msgstr "Socials"
 
@@ -705,11 +715,11 @@ msgstr "Subscribe to"
 msgid "Subscribed successfully!"
 msgstr "Subscribed successfully!"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:151
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:155
 msgid "Subscribers"
 msgstr "Subscribers"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:87
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:94
 #: components/theme-ui/NavigationItem.tsx:20
 #: themes/sue/components/PostListWithTag.tsx:32
 #: themes/paper/pages/TagListPage.tsx:14
@@ -741,7 +751,7 @@ msgstr "Tip records"
 msgid "Title"
 msgstr "Title"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:96
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:98
 msgid "Today"
 msgstr "Today"
 
@@ -766,6 +776,10 @@ msgstr "Update API token"
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:89
 msgid "Updated successfully!"
 msgstr "Updated successfully!"
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:110
+msgid "Wallet"
+msgstr "Wallet"
 
 #: components/LoginDialog/LoginDialogContent.tsx:70
 msgid "Wallet login "

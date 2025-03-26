@@ -21,13 +21,13 @@ msgstr ""
 msgid "100% run on Cloudflare and deploy freely."
 msgstr ""
 
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:63
+#: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:67
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/book/AboutItem.tsx:34
 #: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr "关于"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:155
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:162
 msgid "Access token"
 msgstr ""
 
@@ -56,7 +56,7 @@ msgstr "全部文章"
 msgid "All projects"
 msgstr "全部项目"
 
-#: components/LoginDialog/RegisterForm.tsx:118
+#: components/LoginDialog/RegisterForm.tsx:124
 msgid "Already have an account"
 msgstr "已有账户"
 
@@ -64,11 +64,11 @@ msgstr "已有账户"
 msgid "AMA"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:163
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Analytics"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:118
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:125
 msgid "Appearance"
 msgstr ""
 
@@ -89,15 +89,19 @@ msgstr ""
 msgid "Authorize CLI login"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:171
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
 msgid "Backup"
 msgstr "备份"
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:117
+msgid "Bank"
+msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:92
 msgid "Beautiful themes"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:83
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:90
 msgid "Billing & plan"
 msgstr ""
 
@@ -120,7 +124,6 @@ msgstr "博客"
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:35
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:142
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:24
 msgid "Book"
 msgstr ""
 
@@ -136,7 +139,7 @@ msgstr "内置"
 msgid "By subscribing, you'll receive the latest posts directly in your inbox."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:109
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:116
 msgid "Campaign"
 msgstr "众筹"
 
@@ -144,7 +147,7 @@ msgstr "众筹"
 msgid "Cancel"
 msgstr "取消"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:144
 msgid "Catalogue"
 msgstr ""
 
@@ -169,7 +172,7 @@ msgstr ""
 msgid "CLI login successfully"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:149
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:156
 msgid "Collaborators"
 msgstr ""
 
@@ -197,7 +200,6 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/series/[id]/SeriesInfo.tsx:41
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:138
-#: app/[lang]/site/[domain]/(blog)/series/[slug]/column/SeriesInfo.tsx:30
 msgid "Column"
 msgstr ""
 
@@ -217,7 +219,7 @@ msgstr ""
 msgid "Contribute"
 msgstr "投稿"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:168
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:180
 msgid "Coupons"
 msgstr "优惠码"
 
@@ -241,10 +243,6 @@ msgstr ""
 msgid "Customize your site with a variety of visually appealing themes."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
-msgid "Dangerous"
-msgstr ""
-
 #: components/Profile/ProfilePopover.tsx:116
 #: components/Profile/Profile.tsx:61
 msgid "Dashboard"
@@ -254,7 +252,7 @@ msgstr ""
 msgid "Data ownership"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:134
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:136
 msgid "Databases"
 msgstr ""
 
@@ -290,15 +288,15 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:140
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
 msgid "Design"
 msgstr "设计"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:177
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:189
 msgid "Discover"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:167
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Domain"
 msgstr "域名"
 
@@ -323,7 +321,7 @@ msgstr ""
 msgid "Edit navigation"
 msgstr ""
 
-#: components/LoginDialog/RegisterForm.tsx:74
+#: components/LoginDialog/RegisterForm.tsx:80
 msgid "Email"
 msgstr "邮箱"
 
@@ -347,7 +345,7 @@ msgstr ""
 msgid "Failed to update public status!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:72
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:79
 #: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr ""
@@ -360,16 +358,16 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 #: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr "友链"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:114
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:116
 msgid "Gallery"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:69
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:76
 msgid "General"
 msgstr ""
 
@@ -394,7 +392,7 @@ msgstr ""
 msgid "Image public status updated successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:185
 msgid "Import/Export"
 msgstr "导入/导出"
 
@@ -410,7 +408,7 @@ msgstr ""
 msgid "Latest"
 msgstr "最新文章"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:61
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
 msgid "Link accounts"
 msgstr ""
 
@@ -418,7 +416,7 @@ msgstr ""
 msgid "Location"
 msgstr ""
 
-#: components/LoginDialog/RegisterForm.tsx:124
+#: components/LoginDialog/RegisterForm.tsx:130
 #: components/LoginDialog/LoginForm.tsx:115
 msgid "Log in"
 msgstr "登录"
@@ -439,7 +437,7 @@ msgstr ""
 msgid "Maintain full control over your content and data."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:100
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:107
 #: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
 #: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
@@ -469,7 +467,7 @@ msgstr "我的站点"
 msgid "Name"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:124
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:131
 msgid "Navigation"
 msgstr ""
 
@@ -525,7 +523,7 @@ msgstr ""
 msgid "Optimize your content for search engines with ease."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:106
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
 msgid "Orders"
 msgstr "订单"
 
@@ -533,16 +531,28 @@ msgstr "订单"
 msgid "ou can claim some $PEN every day. Connect your wallet to see how much $PEN you’re eligible to claim."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:124
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:126
 msgid "Pages"
 msgstr "页面"
 
-#: components/LoginDialog/RegisterForm.tsx:90
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:163
+msgid "Partner program"
+msgstr ""
+
+#: components/LoginDialog/RegisterForm.tsx:96
 msgid "Password"
 msgstr "密码"
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:68
 msgid "Path"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:62
+msgid "Payout account"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:124
+msgid "Paypal"
 msgstr ""
 
 #: app/[lang]/root/(home)/Slogan.tsx:27
@@ -566,7 +576,7 @@ msgid "Podcast"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/posts/layout.tsx:31
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:105
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:107
 msgid "Posts"
 msgstr "文章"
 
@@ -579,15 +589,15 @@ msgstr ""
 msgid "Previous"
 msgstr "上一页"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:103
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:110
 msgid "Products"
 msgstr "商品"
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:55
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:56
 msgid "Profile"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:131
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:138
 #: components/theme-ui/NavigationItem.tsx:16
 #: themes/card/pages/HomePage.tsx:56
 #: themes/aside/pages/HomePage.tsx:48
@@ -615,7 +625,7 @@ msgstr ""
 msgid "Read the deployment guide"
 msgstr ""
 
-#: components/LoginDialog/RegisterForm.tsx:112
+#: components/LoginDialog/RegisterForm.tsx:118
 msgid "Register"
 msgstr "注册"
 
@@ -635,7 +645,7 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:159
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:166
 msgid "SEO"
 msgstr ""
 
@@ -643,13 +653,13 @@ msgstr ""
 msgid "SEO friendly"
 msgstr "SEO 友好"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:143
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:145
 #: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:159
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:171
 #: components/Profile/ProfilePopover.tsx:133
 msgid "Settings"
 msgstr "设置"
@@ -674,7 +684,7 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:127
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
 msgid "Socials"
 msgstr ""
 
@@ -705,11 +715,11 @@ msgstr "订阅"
 msgid "Subscribed successfully!"
 msgstr "订阅成功"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:151
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:155
 msgid "Subscribers"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:87
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:94
 #: components/theme-ui/NavigationItem.tsx:20
 #: themes/sue/components/PostListWithTag.tsx:32
 #: themes/paper/pages/TagListPage.tsx:14
@@ -741,7 +751,7 @@ msgstr ""
 msgid "Title"
 msgstr "标题"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:96
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:98
 msgid "Today"
 msgstr "今天"
 
@@ -765,6 +775,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:89
 msgid "Updated successfully!"
+msgstr ""
+
+#: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:110
+msgid "Wallet"
 msgstr ""
 
 #: components/LoginDialog/LoginDialogContent.tsx:70
