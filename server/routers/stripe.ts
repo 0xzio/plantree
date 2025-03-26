@@ -85,6 +85,10 @@ export const stripeRouter = router({
       console.log('=====>>>success_url:', success_url)
       const userId = ctx.token.uid
 
+      const subscription = await prisma.subscription.findFirst({
+        where: { userId, siteId },
+      })
+
       const cancelQuery = {
         host: input.host,
         pathname: input.pathname,
@@ -96,6 +100,7 @@ export const stripeRouter = router({
         productId: input.productId,
         host: input.host,
         pathname: input.pathname,
+        prevSubscriptionId: subscription?.sassSubscriptionId || '',
       }
 
       // console.log('=======query:', successQuery)
@@ -113,6 +118,7 @@ export const stripeRouter = router({
             priceId: input.priceId,
             productId: input.productId,
             subscriptionTarget: SubscriptionTarget.SITE,
+            prevSubscriptionId: subscription?.sassSubscriptionId || '',
           },
         },
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,

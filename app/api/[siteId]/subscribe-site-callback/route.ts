@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
   const penxProductId = url.searchParams.get('productId') || ''
   const host = url.searchParams.get('host') || ''
   const pathname = url.searchParams.get('pathname') || ''
+  const prevSubscriptionId = url.searchParams.get('prevSubscriptionId') || ''
 
   console.log('url========>>:', url)
 
@@ -87,6 +88,17 @@ export async function GET(req: NextRequest) {
     const dbSubscription = await prisma.subscription.findFirst({
       where: { siteId, userId },
     })
+
+    console.log('======111=dbSubscription:', dbSubscription)
+
+    if (prevSubscriptionId) {
+      try {
+        const canceledSubscription =
+          await stripe.subscriptions.cancel(prevSubscriptionId)
+
+        console.log('=======>>>>canceledSubscription:', canceledSubscription)
+      } catch (error) {}
+    }
 
     if (dbSubscription) {
       await prisma.subscription.update({

@@ -117,10 +117,6 @@ export async function GET(req: NextRequest) {
       throw new Error("No site ID found in session's client_reference_id.")
     }
 
-    const site = await prisma.site.findUniqueOrThrow({
-      where: { id: siteId },
-    })
-
     // console.log('=========site:', site)
     if (prevSubscriptionId) {
       try {
