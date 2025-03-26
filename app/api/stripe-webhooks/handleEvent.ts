@@ -46,8 +46,6 @@ export async function handleEvent(event: Stripe.Event) {
       where: { id: siteId },
     })
 
-    await cacheHelper.updateCachedMySites(site.userId, null)
-
     let balance = site.balance as Balance
     if (!balance) {
       balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
@@ -74,7 +72,7 @@ export async function handleEvent(event: Stripe.Event) {
       })
     }
 
-    console.log('========SubscriptionTarget:', SubscriptionTarget)
+    console.log('========SubscriptionTarget:', subscriptionTarget)
 
     if (subscriptionTarget === SubscriptionTarget.PENX) {
       const referral = await prisma.referral.findUnique({

@@ -109,6 +109,7 @@ export const stripeRouter = router({
         subscription_data: {
           metadata: {
             siteId,
+            userId,
             priceId: input.priceId,
             productId: input.productId,
             subscriptionTarget: SubscriptionTarget.SITE,

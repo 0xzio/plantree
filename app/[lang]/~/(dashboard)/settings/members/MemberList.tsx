@@ -39,6 +39,7 @@ export function ProductList({ site }: Props) {
             <TableHead>Tier</TableHead>
             <TableHead>Price</TableHead>
             <TableHead>Billing cycle</TableHead>
+            <TableHead>Current period end</TableHead>
             <TableHead>Created</TableHead>
           </TableRow>
         </TableHeader>
@@ -53,6 +54,10 @@ export function ProductList({ site }: Props) {
                   <span>{(item.product.price / 100).toFixed(2)}</span>
                 </TableCell>
                 <TableCell>{item.sassBillingCycle}</TableCell>
+                <TableCell>
+                  {item.sassCurrentPeriodEnd &&
+                    format(item.sassCurrentPeriodEnd, 'yyyy-MM-dd')}
+                </TableCell>
                 <TableCell>{format(item.createdAt, 'yyyy-MM-dd')}</TableCell>
               </TableRow>
             )

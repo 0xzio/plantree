@@ -96,9 +96,10 @@ export async function GET(req: NextRequest) {
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,
-          sassCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000,
-          ),
+          // TODO:
+          // sassCurrentPeriodEnd: new Date(
+          //   subscription.current_period_end * 1000,
+          // ),
           sassBillingCycle: BillingCycle.MONTHLY,
           sassProductId: productId,
         },
@@ -112,9 +113,9 @@ export async function GET(req: NextRequest) {
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,
-          sassCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000,
-          ),
+          // sassCurrentPeriodEnd: new Date(
+          //   subscription.current_period_end * 1000,
+          // ),
           sassBillingCycle: BillingCycle.MONTHLY,
           sassProductId: productId,
         },
