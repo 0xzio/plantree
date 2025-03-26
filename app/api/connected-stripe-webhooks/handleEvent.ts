@@ -1,6 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
 import { prisma } from '@/lib/prisma'
 import { stripe } from '@/lib/stripe'
+import { InvoiceType } from '@prisma/client'
 import type { Stripe } from 'stripe'
 
 export async function handleEvent(event: Stripe.Event) {
@@ -22,10 +23,7 @@ export async function handleEvent(event: Stripe.Event) {
 
     const siteId = subscription.metadata.siteId
     const userId = subscription.metadata.userId
-
-    const site = await prisma.site.findUniqueOrThrow({
-      where: { id: siteId },
-    })
+    const productId = subscription.metadata.productId
 
     const subscriptionTarget = subscription.metadata.subscriptionTarget
 
@@ -44,7 +42,20 @@ export async function handleEvent(event: Stripe.Event) {
       },
     })
 
-    await cacheHelper.updateCachedMySites(site.userId, null)
+    await prisma.invoice.create({
+      data: {
+        siteId,
+        productId,
+        userId,
+        type: InvoiceType.SITE_SUBSCRIPTION,
+        amount: event.data.object.amount_paid,
+        currency: event.data.object.currency,
+        stripeInvoiceId: event.data.object.id,
+        stripeInvoiceNumber: event.data.object.number,
+        stripePeriodStart: event.data.object.period_start,
+        stripePeriodEnd: event.data.object.period_end,
+      },
+    })
   }
   if (event.type === 'customer.subscription.updated') {
     //add customer logic

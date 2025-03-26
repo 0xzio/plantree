@@ -9,4 +9,7 @@ Stripe is our exclusive direct payments partner. Ghost collects no fees on any p
 音檔格式：MP3、M4A、AAC。檔案上限：400mb。建議響度：-14lufs。
 
 https://indiex.io/api/connected-stripe-webhooks
+https://penx.io/api/connected-stripe-webhooks
+
+
 

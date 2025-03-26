@@ -181,7 +181,8 @@ model User {
   siteUsers         SiteUser[]
   series            Series[]
   referrals         Referral[]
-  PayoutAccount     PayoutAccount[]
+  payoutAccounts    PayoutAccount[]
+  invoices          Invoice[]
 
   @@index([id])
   @@map("user")
@@ -409,6 +410,8 @@ model PayoutAccount {
 enum InvoiceType {
   NONE
   SUBSCRIPTION
+  PENX_SUBSCRIPTION
+  SITE_SUBSCRIPTION
   CAMPAIGN
   PRODUCT
 }
@@ -426,6 +429,8 @@ model Invoice {
   createdAt           DateTime    @default(now())
   site                Site        @relation(fields: [siteId], references: [id])
   siteId              String      @db.Uuid
+  user                User        @relation(fields: [userId], references: [id])
+  userId              String      @db.Uuid
   product             Product?    @relation(fields: [productId], references: [id])
   productId           String?     @db.Uuid
   campaign            Campaign?   @relation(fields: [campaignId], references: [id])

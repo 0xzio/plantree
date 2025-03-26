@@ -42,45 +42,21 @@ export async function handleEvent(event: Stripe.Event) {
     if (!subscription?.id) return
 
     const siteId = subscription.metadata.siteId
+    const productId = subscription.metadata.productId
+    const userId = subscription.metadata.userId
+    const subscriptionTarget = subscription.metadata.subscriptionTarget
+
+    console.log('========SubscriptionTarget:', subscriptionTarget)
+
     const site = await prisma.site.findUniqueOrThrow({
       where: { id: siteId },
     })
 
-    let balance = site.balance as Balance
-    if (!balance) {
-      balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
-    }
-
-    const productId = subscription.metadata.productId
-    const subscriptionTarget = subscription.metadata.subscriptionTarget
-
-    if (site.stripeType === StripeType.PLATFORM && productId) {
-      balance.withdrawable += event.data.object.amount_paid
-
-      await prisma.invoice.create({
-        data: {
-          siteId,
-          productId,
-          type: InvoiceType.SUBSCRIPTION,
-          amount: event.data.object.amount_paid,
-          currency: event.data.object.currency,
-          stripeInvoiceId: event.data.object.id,
-          stripeInvoiceNumber: event.data.object.number,
-          stripePeriodStart: event.data.object.period_start,
-          stripePeriodEnd: event.data.object.period_end,
-        },
-      })
-    }
-
-    console.log('========SubscriptionTarget:', subscriptionTarget)
-
-    if (subscriptionTarget === SubscriptionTarget.PENX) {
+    const subscribePenX = async () => {
       const referral = await prisma.referral.findUnique({
         where: { userId: site.userId },
         include: { user: true },
       })
-
-      console.log('=====referral:', referral)
 
       if (referral) {
         let balance = referral.user.commissionBalance as Balance
@@ -98,10 +74,8 @@ export async function handleEvent(event: Stripe.Event) {
       }
 
       await prisma.site.update({
-        // where: { sassSubscriptionId: subscription.id },
         where: { id: siteId },
         data: {
-          balance,
           sassSubscriptionId: subscription.id,
           sassCustomerId: subscription.customer as string,
           sassCurrentPeriodEnd: new Date(
@@ -109,9 +83,78 @@ export async function handleEvent(event: Stripe.Event) {
           ),
         },
       })
+
+      await prisma.invoice.create({
+        data: {
+          siteId,
+          productId,
+          userId,
+          type: InvoiceType.PENX_SUBSCRIPTION,
+          amount: event.data.object.amount_paid,
+          currency: event.data.object.currency,
+          stripeInvoiceId: event.data.object.id,
+          stripeInvoiceNumber: event.data.object.number,
+          stripePeriodStart: event.data.object.period_start,
+          stripePeriodEnd: event.data.object.period_end,
+        },
+      })
+
+      await cacheHelper.updateCachedMySites(site.userId, null)
     }
 
-    await cacheHelper.updateCachedMySites(site.userId, null)
+    const subscribeSite = async () => {
+      let balance = site.balance as Balance
+      if (!balance) {
+        balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
+      }
+
+      balance.withdrawable += event.data.object.amount_paid
+
+      const dbSubscription = await prisma.subscription.findFirstOrThrow({
+        where: { siteId, userId: userId },
+      })
+
+      await prisma.subscription.update({
+        where: { id: dbSubscription.id },
+        data: {
+          sassCurrentPeriodEnd: new Date(
+            subscription.current_period_start * 1000,
+          ),
+        },
+      })
+
+      await prisma.site.update({
+        where: { id: siteId },
+        data: {
+          balance,
+        },
+      })
+
+      await prisma.invoice.create({
+        data: {
+          siteId,
+          productId,
+          userId,
+          type: InvoiceType.SITE_SUBSCRIPTION,
+          amount: event.data.object.amount_paid,
+          currency: event.data.object.currency,
+          stripeInvoiceId: event.data.object.id,
+          stripeInvoiceNumber: event.data.object.number,
+          stripePeriodStart: event.data.object.period_start,
+          stripePeriodEnd: event.data.object.period_end,
+        },
+      })
+
+      //
+    }
+
+    if (subscriptionTarget === SubscriptionTarget.PENX) {
+      await subscribePenX()
+    }
+
+    if (subscriptionTarget === SubscriptionTarget.SITE) {
+      await subscribeSite()
+    }
   }
   if (event.type === 'customer.subscription.updated') {
     //add customer logic

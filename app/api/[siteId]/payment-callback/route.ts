@@ -137,7 +137,7 @@ export async function GET(req: NextRequest) {
         sassCustomerId: customerId,
         sassSubscriptionId: subscriptionId,
         sassSubscriptionStatus: subscription.status,
-        sassCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        // sassCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
         sassBillingCycle: billingCycle as any,
         sassPlanType: planType as any,
         sassProductId: productId,
