@@ -17,6 +17,7 @@ import { extensionRouter } from './routers/extension'
 import { githubRouter } from './routers/github'
 import { googleRouter } from './routers/google'
 import { hostedSiteRouter } from './routers/hosted-site'
+import { memberRouter } from './routers/memberRouter'
 import { messageRouter } from './routers/message'
 import { newsletterRouter } from './routers/newsletter'
 import { orderRouter } from './routers/order'
@@ -35,7 +36,6 @@ import { siteRouter } from './routers/site'
 import { spaceRouter } from './routers/space'
 import { stripeRouter } from './routers/stripe'
 import { subscriberRouter } from './routers/subscriber'
-import { subscriptionRouter } from './routers/subscription'
 import { tagRouter } from './routers/tag'
 import { themeRouter } from './routers/theme'
 import { tierRouter } from './routers/tier'
@@ -81,7 +81,7 @@ export const appRouter = router({
   affiliate: affiliateRouter,
   payoutAccount: payoutAccountRouter,
   payout: payoutRouter,
-  subscription: subscriptionRouter,
+  member: memberRouter,
 })
 
 export const createCaller = createCallerFactory(appRouter)

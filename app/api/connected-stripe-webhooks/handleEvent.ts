@@ -16,7 +16,7 @@ export async function handleEvent(event: Stripe.Event) {
       session.subscription as string,
     )
 
-    console.log('connected======checkout subscription:', subscription)
+    console.log('======checkout subscription:', subscription)
 
     await prisma.site.update({
       // where: { sassSubscriptionId: subscription.id },
@@ -34,7 +34,7 @@ export async function handleEvent(event: Stripe.Event) {
   }
 
   if (event.type === 'invoice.payment_succeeded') {
-    console.log('connected event==========>>>:', event)
+    console.log('event==========>>>:', event)
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     )

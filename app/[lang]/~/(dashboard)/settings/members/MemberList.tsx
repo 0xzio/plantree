@@ -20,7 +20,7 @@ interface Props {
 }
 
 export function ProductList({ site }: Props) {
-  const { data = [], isLoading } = trpc.subscription.list.useQuery()
+  const { data = [], isLoading } = trpc.member.list.useQuery()
 
   if (isLoading) {
     return (
