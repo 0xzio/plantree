@@ -628,11 +628,10 @@ export const siteRouter = router({
         await tx.post.deleteMany({ where: { siteId } })
         await tx.payout.deleteMany({ where: { siteId } })
         await tx.prop.deleteMany({ where: { siteId } })
-
         await tx.site.delete({ where: { id: siteId } })
-        // await tx.hostedSite.deleteMany({ where: { userId } })
-        // await tx.account.deleteMany({ where: { userId } })
-        // await tx.user.delete({ where: { id: userId } })
+        await tx.hostedSite.deleteMany({ where: { userId } })
+        await tx.account.deleteMany({ where: { userId } })
+        await tx.user.delete({ where: { id: userId } })
 
         await cacheHelper.updateCachedMySites(ctx.token.uid, null)
         await cacheHelper.updateCachedHomeSites(null)
