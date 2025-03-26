@@ -22,6 +22,7 @@ import { api, trpc } from '@/lib/trpc'
 import { Balance } from '@/lib/types'
 import { toFloorFixed } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { Trans } from '@lingui/react/macro'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { useWithdrawDialog } from './useWithdrawDialog'
@@ -70,10 +71,15 @@ export function WithdrawForm() {
           render={({ field }) => (
             <FormItem className="w-full">
               <div className="flex items-center justify-between">
-                <FormLabel>Amount</FormLabel>
-                <div>
-                  Available: ${toFloorFixed(balance.withdrawable / 100, 2)}
-                </div>
+                <FormLabel>
+                  <Trans>Amount</Trans>
+                </FormLabel>
+                {balance && (
+                  <div>
+                    <Trans>Available</Trans>: $
+                    {toFloorFixed(balance.withdrawable / 100, 2)}
+                  </div>
+                )}
               </div>
               <FormControl>
                 <div className="relative">
@@ -98,7 +104,13 @@ export function WithdrawForm() {
           className="w-full"
           disabled={isLoading || !form.formState.isValid}
         >
-          {isLoading ? <LoadingDots /> : <p>Confirm</p>}
+          {isLoading ? (
+            <LoadingDots />
+          ) : (
+            <span>
+              <Trans>Confirm</Trans>
+            </span>
+          )}
         </Button>
       </form>
     </Form>

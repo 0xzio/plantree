@@ -109,6 +109,13 @@ export const productRouter = router({
       const siteId = ctx.activeSiteId
       const price = parseInt((Number(input.price) * 100) as any)
 
+      if (price === 0) {
+        throw new TRPCError({
+          code: 'BAD_REQUEST',
+          message: 'Price must be greater than 0',
+        })
+      }
+
       const product = await prisma.product.findUniqueOrThrow({
         where: { id: input.id },
       })

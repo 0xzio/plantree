@@ -75,6 +75,7 @@ export const tierRouter = router({
             interval: TierInterval.MONTHLY,
           } as StripeInfo,
           siteId,
+          type: ProductType.TIER,
           userId: ctx.token.uid,
         },
       })

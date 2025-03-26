@@ -16,7 +16,6 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { useEthPrice } from '@/hooks/useEthPrice'
 import { editorDefaultValue } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { api, trpc } from '@/lib/trpc'
@@ -67,6 +66,8 @@ export function TierForm() {
         isEdit ? 'Tier updated successfully!' : 'Tier added successfully!',
       )
     } catch (error) {
+      console.log('=======error:', error)
+
       const msg = extractErrorMessage(error)
       toast.error(msg)
     }
@@ -99,7 +100,9 @@ export function TierForm() {
                 <FormLabel>Monthly price</FormLabel>
                 <FormControl>
                   <div className="relative">
-                    <span className="absolute top-2 left-3 text-foreground">$</span>
+                    <span className="absolute top-2 left-3 text-foreground">
+                      $
+                    </span>
                     <NumberInput
                       disabled={isEdit}
                       placeholder=""
