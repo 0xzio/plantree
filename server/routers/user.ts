@@ -212,13 +212,20 @@ export const userRouter = router({
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const account = await prisma.account.findFirst({
-        where: {
-          providerAccountId: input.email,
-        },
-      })
+      const [account, user] = await Promise.all([
+        prisma.account.findFirst({
+          where: {
+            providerAccountId: input.email,
+          },
+        }),
+        prisma.user.findFirst({
+          where: {
+            email: input.email,
+          },
+        }),
+      ])
 
-      if (account) {
+      if (account || user) {
         throw new TRPCError({
           code: 'BAD_REQUEST',
           message: 'Email already registered',

@@ -52,7 +52,7 @@ export function RegisterForm({}: Props) {
       setLoading(true)
       await api.user.registerByEmail.mutate({
         ...data,
-        ref,
+        ref: ref || '',
       })
       // setIsOpen(false)
       setAuthStatus('register-email-sent')
