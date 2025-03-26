@@ -11,8 +11,6 @@ import {
   CardTitle,
 } from '@/components/ui/card'
 import { Balance } from '@/lib/types'
-import { InputAddressDialog } from './InputAddressDialog/InputAddressDialog'
-import { useInputAddressDialog } from './InputAddressDialog/useInputAddressDialog'
 import { useWithdrawDialog } from './WithdrawDialog/useWithdrawDialog'
 import { WithdrawDialog } from './WithdrawDialog/WithdrawDialog'
 
@@ -20,7 +18,6 @@ interface Props {}
 
 export function Payout({}: Props) {
   const site = useSiteContext()
-  const inputAddressDialog = useInputAddressDialog()
   const withdrawDialog = useWithdrawDialog()
   const limit = Number(process.env.NEXT_PUBLIC_MIN_WITHDRAWAL_LIMIT)
 
@@ -36,7 +33,6 @@ export function Payout({}: Props) {
   }, [site.balance])
   return (
     <div className="space-y-2">
-      <InputAddressDialog />
       <WithdrawDialog />
       <div className="text-2xl font-bold">Payout</div>
       <Card>
@@ -71,31 +67,6 @@ export function Payout({}: Props) {
               </Button>
               <div className="text-foreground/50 text-sm">Minimum $50</div>
             </div>
-          </div>
-        </CardContent>
-      </Card>
-
-      <Card className="mt-4">
-        <CardHeader>
-          <CardTitle>Crypto Wallet</CardTitle>
-          <CardDescription>
-            Setup crypto wallets to enable withdrawals.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {site.walletAddress && (
-              <div className="text-foreground/80 text-base">
-                Address: {site.walletAddress}
-              </div>
-            )}
-            <Button
-              onClick={() => {
-                inputAddressDialog.setIsOpen(true)
-              }}
-            >
-              {site.walletAddress ? 'Update address' : 'Set address'}
-            </Button>
           </div>
         </CardContent>
       </Card>

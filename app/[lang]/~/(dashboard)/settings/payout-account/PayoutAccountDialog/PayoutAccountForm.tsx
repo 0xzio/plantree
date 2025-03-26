@@ -1,12 +1,8 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { PlateEditor } from '@/components/editor/plate-editor'
-import { FileUpload } from '@/components/FileUpload'
 import { LoadingDots } from '@/components/icons/loading-dots'
-import { NumberInput } from '@/components/NumberInput'
-import { useSiteContext } from '@/components/SiteContext'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -18,40 +14,36 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
-import { useSite } from '@/hooks/useSite'
-import { defaultNavLinks, editorDefaultValue } from '@/lib/constants'
+import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
-import { NavLink, NavLinkType } from '@/lib/theme.types'
 import { api, trpc } from '@/lib/trpc'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { produce } from 'immer'
+import { Trans } from '@lingui/react/macro'
+import { TransferMethod } from '@prisma/client'
 import { toast } from 'sonner'
 import { z } from 'zod'
 import { usePayoutAccountDialog } from './usePayoutAccountDialog'
 
 const FormSchema = z.object({
-  name: z.string().min(1, { message: 'Name is required' }),
-  price: z.string().min(1, { message: 'Price is required' }),
-  description: z.string().optional(),
-  details: z.any().optional(),
-  image: z.any().optional(),
+  address: z.string().min(1, { message: 'Address is required' }),
+  transferMethod: z.nativeEnum(TransferMethod),
 })
 
 export function PayoutAccountForm() {
   const [isLoading, setLoading] = useState(false)
-  const { setIsOpen, product, index } = usePayoutAccountDialog()
-  const { refetch } = trpc.product.list.useQuery()
-  const isEdit = !!product
+  const { setIsOpen, payoutAccount, index } = usePayoutAccountDialog()
+  const { refetch } = trpc.payoutAccount.list.useQuery()
+  const isEdit = !!payoutAccount
+
+  const info: any = payoutAccount?.info
 
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
-      name: isEdit ? product.name : '',
-      price: isEdit ? product.price.toString() : '',
-      description: isEdit ? product.description : '',
-      details: isEdit ? product.details : '',
-      image: isEdit ? product.image : '',
+      transferMethod: isEdit
+        ? payoutAccount.transferMethod
+        : TransferMethod.WALLET,
+      address: isEdit ? info.address : '',
     },
   })
 
@@ -59,16 +51,21 @@ export function PayoutAccountForm() {
     try {
       setLoading(true)
 
-      const { price, ...rest } = data
+      const { address, transferMethod } = data
       if (isEdit) {
-        await api.product.updateProduct.mutate({
-          id: product.id,
-          ...rest,
+        await api.payoutAccount.update.mutate({
+          id: payoutAccount.id,
+          transferMethod,
+          info: {
+            address,
+          },
         })
       } else {
-        await api.product.create.mutate({
-          ...data,
-          price: Number(data.price) * 100,
+        await api.payoutAccount.create.mutate({
+          transferMethod,
+          info: {
+            address,
+          },
         })
       }
       await refetch()
@@ -76,8 +73,8 @@ export function PayoutAccountForm() {
       setIsOpen(false)
       toast.success(
         isEdit
-          ? 'Product updated successfully!'
-          : 'Product added successfully!',
+          ? 'Payout account updated successfully!'
+          : 'Payout account added successfully!',
       )
     } catch (error) {
       const msg = extractErrorMessage(error)
@@ -91,12 +88,42 @@ export function PayoutAccountForm() {
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
         <FormField
           control={form.control}
-          name="name"
+          name="transferMethod"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Name</FormLabel>
+              <FormLabel>Transfer method</FormLabel>
+              <FormDescription>
+                PenX currently only supports withdrawals to crypto wallet.
+              </FormDescription>
               <FormControl>
-                <Input placeholder="" {...field} className="w-full" />
+                <ToggleGroup
+                  className="w-auto"
+                  size="lg"
+                  value={field.value}
+                  onValueChange={(v) => {
+                    if (!v) return
+                    field.onChange(v)
+                  }}
+                  type="single"
+                >
+                  <ToggleGroupItem className="" value={TransferMethod.WALLET}>
+                    <Trans>Wallet</Trans>
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    disabled
+                    className=""
+                    value={TransferMethod.BLANK}
+                  >
+                    <Trans>Bank</Trans>
+                  </ToggleGroupItem>
+                  <ToggleGroupItem
+                    disabled
+                    className=""
+                    value={TransferMethod.PAYPAL}
+                  >
+                    <Trans>Paypal</Trans>
+                  </ToggleGroupItem>
+                </ToggleGroup>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -105,84 +132,16 @@ export function PayoutAccountForm() {
 
         <FormField
           control={form.control}
-          name="description"
+          name="address"
           render={({ field }) => (
             <FormItem className="w-full">
-              <FormLabel>Description</FormLabel>
+              <FormLabel>Address</FormLabel>
               <FormControl>
-                <Textarea placeholder="" {...field} className="w-full" />
+                <Input placeholder="0x..." {...field} className="w-full" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
-        />
-
-        <FormField
-          control={form.control}
-          name="image"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Image</FormLabel>
-              <FileUpload {...field} />
-            </FormItem>
-          )}
-        />
-
-        {!isEdit && (
-          <FormField
-            control={form.control}
-            name="price"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel>Price</FormLabel>
-                <FormControl>
-                  <div className="relative">
-                    <span className="absolute top-2 left-3 text-foreground">
-                      $
-                    </span>
-                    <NumberInput
-                      disabled={isEdit}
-                      placeholder=""
-                      precision={2}
-                      {...field}
-                      className="w-full pl-7"
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        )}
-
-        <FormField
-          control={form.control}
-          name="details"
-          render={({ field }) => {
-            return (
-              <FormItem className="w-full">
-                <FormLabel>Details</FormLabel>
-                <FormControl>
-                  <div className="h-[250px]  border border-foreground/20 rounded-lg overflow-auto">
-                    <PlateEditor
-                      variant="default"
-                      className="min-h-[240px]"
-                      value={
-                        field.value
-                          ? JSON.parse(field.value)
-                          : editorDefaultValue
-                      }
-                      onChange={(v) => {
-                        // console.log('value:',v, JSON.stringify(v));
-                        field.onChange(JSON.stringify(v))
-                      }}
-                    />
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )
-          }}
         />
 
         <Button
@@ -193,7 +152,7 @@ export function PayoutAccountForm() {
           {isLoading ? (
             <LoadingDots />
           ) : (
-            <span>{isEdit ? 'Save' : 'Add product'}</span>
+            <span>{isEdit ? 'Save' : 'Confirm'}</span>
           )}
         </Button>
       </form>

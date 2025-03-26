@@ -10,23 +10,17 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table'
-import { useSite } from '@/hooks/useSite'
 import { api, trpc } from '@/lib/trpc'
-import { cn } from '@/lib/utils'
-import { Site, TransferMethod } from '@prisma/client'
+import { TransferMethod } from '@prisma/client'
 import { format } from 'date-fns'
-import { produce } from 'immer'
 import { Edit3, Eye, EyeOff } from 'lucide-react'
 import { toast } from 'sonner'
-import { PayoutAccountDialog } from './PayoutAccountDialog/PayoutAccountDialog'
 import { usePayoutAccountDialog } from './PayoutAccountDialog/usePayoutAccountDialog'
-import { useProductPriceDialog } from './ProductPriceDialog/useProductPriceDialog'
 
 interface Props {}
 
 export function PayoutAccountList({}: Props) {
   const { setState } = usePayoutAccountDialog()
-  const productPriceDialog = useProductPriceDialog()
   const { data = [], isLoading } = trpc.payoutAccount.list.useQuery()
 
   if (isLoading) {
@@ -39,9 +33,7 @@ export function PayoutAccountList({}: Props) {
 
   if (!data?.length)
     return (
-      <div className="text-center mt-2 bg-amber-100">
-        No payout accounts found.
-      </div>
+      <div className="text-foreground/50 mt-2">No payout accounts found.</div>
     )
   return (
     <>
@@ -67,17 +59,17 @@ export function PayoutAccountList({}: Props) {
               <TableRow key={index}>
                 <TableCell>{item.transferMethod}</TableCell>
                 <TableCell>{account}</TableCell>
-                <TableCell>{format(item.createdAt, 'MM-dd')}</TableCell>
+                <TableCell>{format(item.createdAt, 'yyyy-MM-dd')}</TableCell>
                 <TableCell className="flex items-center gap-1 text-foreground/70">
                   <Edit3
                     size={18}
                     className="cursor-pointer"
                     onClick={() => {
-                      // setState({
-                      //   isOpen: true,
-                      //   product: item,
-                      //   index,
-                      // })
+                      setState({
+                        isOpen: true,
+                        payoutAccount: item,
+                        index,
+                      })
                     }}
                   />
                 </TableCell>

@@ -194,7 +194,6 @@ export const siteRouter = router({
         themeName: z.string().optional(),
         themeConfig: z.record(z.any()).optional(),
         config: z.record(z.any()).optional(),
-        walletAddress: z.string().optional(),
         spaceId: z.string().optional(),
         navLinks: z
           .array(

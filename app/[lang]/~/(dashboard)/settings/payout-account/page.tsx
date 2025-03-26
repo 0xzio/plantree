@@ -3,10 +3,9 @@
 import { LoadingDots } from '@/components/icons/loading-dots'
 import { Button } from '@/components/ui/button'
 import { useSite } from '@/hooks/useSite'
-import { PayoutAccountList } from './PayoutAccountList'
 import { PayoutAccountDialog } from './PayoutAccountDialog/PayoutAccountDialog'
 import { usePayoutAccountDialog } from './PayoutAccountDialog/usePayoutAccountDialog'
-import { ProductPriceDialog } from './ProductPriceDialog/ProductPriceDialog'
+import { PayoutAccountList } from './PayoutAccountList'
 
 export const dynamic = 'force-static'
 
@@ -16,23 +15,22 @@ export default function Page() {
   return (
     <div className="grid gap-4">
       <div className="flex justify-between items-center">
-        <div className="text-2xl font-bold">Add payout account</div>
+        <div className="text-2xl font-bold">Payout accounts</div>
         <Button
           variant="secondary"
           size="sm"
           onClick={() => {
             setState({
               isOpen: true,
-              product: null as any,
+              payoutAccount: null as any,
               index: -1,
             })
           }}
         >
-          Create product
+          Add payout account
         </Button>
       </div>
 
-      <ProductPriceDialog />
       <PayoutAccountDialog />
       <PayoutAccountList />
     </div>

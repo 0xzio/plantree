@@ -1,8 +1,7 @@
 import { prisma } from '@/lib/prisma'
-import { StripeInfo } from '@/lib/types'
+import { TransferMethod } from '@prisma/client'
 import { TRPCError } from '@trpc/server'
 import { z } from 'zod'
-import { getOAuthStripe } from '../lib/getOAuthStripe'
 import { protectedProcedure, publicProcedure, router } from '../trpc'
 
 export const payoutAccountRouter = router({
@@ -29,67 +28,32 @@ export const payoutAccountRouter = router({
   create: protectedProcedure
     .input(
       z.object({
-        name: z.string(),
-        price: z.number(),
-        description: z.string().optional(),
-        details: z.any().optional(),
-        image: z.any().optional(),
+        transferMethod: z.nativeEnum(TransferMethod),
+        info: z.any(),
       }),
     )
-    .mutation(({ ctx, input }) => {
-      return prisma.$transaction(
-        async (tx) => {
-          const siteId = ctx.activeSiteId
-          const oauthStripe = await getOAuthStripe(siteId)
-
-          const product = await oauthStripe.products.create({
-            name: input.name,
-            description: input.description || input.name,
-            tax_code: 'txcd_10000000',
-          })
-
-          const price = await oauthStripe.prices.create({
-            unit_amount: input.price, // $10
-            currency: 'usd',
-            product: product.id,
-          })
-
-          return await tx.product.create({
-            data: {
-              ...input,
-              stripe: {
-                productId: product.id,
-                priceId: price.id,
-              } as StripeInfo,
-              siteId,
-              userId: ctx.token.uid,
-            },
-          })
+    .mutation(async ({ ctx, input }) => {
+      return await prisma.payoutAccount.create({
+        data: {
+          userId: ctx.token.uid,
+          ...input,
         },
-        {
-          maxWait: 5000, // default: 2000
-          timeout: 10000, // default: 5000
-        },
-      )
+      })
     }),
 
-  updateProduct: protectedProcedure
+  update: protectedProcedure
     .input(
       z.object({
         id: z.string(),
-        name: z.string(),
-        description: z.string().optional(),
-        details: z.any().optional(),
-        image: z.any().optional(),
+        transferMethod: z.nativeEnum(TransferMethod),
+        info: z.any(),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const { id, ...rest } = input
-      const product = await prisma.product.update({
-        where: { id: input.id },
+      return await prisma.payoutAccount.update({
+        where: { id },
         data: rest,
       })
-
-      return product
     }),
 })

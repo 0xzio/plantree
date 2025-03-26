@@ -12,14 +12,16 @@ import { PayoutAccountForm } from './PayoutAccountForm'
 import { usePayoutAccountDialog } from './usePayoutAccountDialog'
 
 export function PayoutAccountDialog() {
-  const { isOpen, setIsOpen, product } = usePayoutAccountDialog()
+  const { isOpen, setIsOpen, payoutAccount } = usePayoutAccountDialog()
 
   return (
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogDescription className="hidden"></DialogDescription>
       <DialogContent className="sm:max-w-[480px]">
         <DialogHeader>
-          <DialogTitle>{!!product ? 'Edit' : 'Add'} Product</DialogTitle>
+          <DialogTitle>
+            {!!payoutAccount ? 'Edit' : 'Add'} payout account
+          </DialogTitle>
         </DialogHeader>
         <PayoutAccountForm />
       </DialogContent>
