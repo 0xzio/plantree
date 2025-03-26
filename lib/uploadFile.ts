@@ -3,6 +3,7 @@ import { IPFS_GATEWAY, IPFS_UPLOAD_URL, STATIC_URL } from './constants'
 import { api } from './trpc'
 
 type UploadReturn = {
+  hash?: string
   contentDisposition?: string
   contentType?: string
   pathname?: string
@@ -53,9 +54,9 @@ export async function uploadFile(file: File, opt = {} as UploadOptions) {
     }
 
     data = await res.json()
-    data = { ...data, url }
+    data = { ...data, url, hash: fileHash }
   } else {
-    data = { ...data, url: asset.url }
+    data = { ...data, url: asset.url, hash: fileHash }
   }
 
   if (saveToDB) {
