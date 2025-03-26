@@ -74,11 +74,15 @@ export async function handleEvent(event: Stripe.Event) {
       })
     }
 
+    console.log('========SubscriptionTarget:', SubscriptionTarget)
+
     if (subscriptionTarget === SubscriptionTarget.PENX) {
       const referral = await prisma.referral.findUnique({
         where: { userId: site.userId },
         include: { user: true },
       })
+
+      console.log('=====referral:', referral)
 
       if (referral) {
         let balance = referral.user.commissionBalance as Balance
@@ -90,7 +94,7 @@ export async function handleEvent(event: Stripe.Event) {
         const commissionAmount = event.data.object.amount_paid * rate
         balance.withdrawable += commissionAmount
         await prisma.user.update({
-          where: { id: referral.userId },
+          where: { id: referral.inviterId },
           data: { commissionBalance: balance },
         })
       }

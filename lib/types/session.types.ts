@@ -8,6 +8,7 @@ export interface SessionData {
   isLoggedIn: boolean
   uid: string
   address: string
+  email: string
   name: string
   picture: string
   image: string

@@ -1,5 +1,9 @@
 import { Profile } from '@/components/Profile/Profile'
+import { initLingui } from '@/initLingui'
 import { getSite, getTiers } from '@/lib/fetchers'
+import { AppearanceConfig } from '@/lib/theme.types'
+import linguiConfig from '@/lingui.config'
+import { Trans } from '@lingui/react/macro'
 import Image from 'next/image'
 import { GoBackButton } from './GoBackButton'
 import { TierList } from './TierList'
@@ -7,12 +11,25 @@ import { TierList } from './TierList'
 export const dynamic = 'force-static'
 export const revalidate = 86400 // 3600 * 24
 
-export default async function HomePage({
-  params,
-}: {
-  params: Promise<{ domain: string }>
+export async function generateStaticParams() {
+  return linguiConfig.locales.map((lang: any) => ({ lang }))
+}
+
+export default async function HomePage(props: {
+  params: Promise<{ domain: string; lang: string }>
 }) {
-  const [site] = await Promise.all([getSite(await params)])
+  const params = await props.params
+  const site = await getSite(params)
+
+  const { appearance } = (site.config || {}) as {
+    appearance: AppearanceConfig
+  }
+  const lang = params.lang
+  const defaultLocale = appearance?.locale || 'en'
+  const locale = lang === 'pseudo' ? defaultLocale : lang
+
+  initLingui(locale)
+
   const tiers = await getTiers(site.id)
 
   return (
@@ -39,7 +56,7 @@ export default async function HomePage({
 
       <div className="flex flex-col items-center space-x-2 pt-8 gap-10">
         <div className="text-center text-4xl font-bold">
-          Choose a subscription plan
+          <Trans>Choose a subscription plan</Trans>
         </div>
 
         <TierList tiers={tiers} site={site} />

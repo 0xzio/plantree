@@ -12,7 +12,7 @@ export async function getOAuthStripe(siteOrId: string | Site) {
     })
   }
 
-  console.log('======site:', site, site.stripeType, site.stripeOAuthToken)
+  // console.log('======site:', site, site.stripeType, site.stripeOAuthToken)
 
   if (site.stripeType === StripeType.PLATFORM) {
     return stripe

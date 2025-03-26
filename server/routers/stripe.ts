@@ -105,7 +105,7 @@ export const stripeRouter = router({
       const session = await oauthStripe.checkout.sessions.create({
         mode: 'subscription',
         payment_method_types: ['card'],
-        // customer_email: email,
+        customer_email: ctx.token.email || '',
         client_reference_id: siteId,
         subscription_data: {
           metadata: {
@@ -166,6 +166,7 @@ export const stripeRouter = router({
       const session = await oauthStripe.checkout.sessions.create({
         mode: 'payment',
         payment_method_types: ['card'],
+        customer_email: ctx.token.email || '',
         // customer_email: email,
         client_reference_id: siteId,
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
@@ -221,6 +222,7 @@ export const stripeRouter = router({
       const session = await oauthStripe.checkout.sessions.create({
         mode: 'payment',
         payment_method_types: ['card'],
+        customer_email: ctx.token.email || '',
         // customer_email: email,
         client_reference_id: siteId,
         success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,

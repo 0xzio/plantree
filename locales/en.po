@@ -163,6 +163,10 @@ msgstr "Catalogue"
 msgid "Category"
 msgstr "Category"
 
+#: app/[lang]/site/[domain]/subscribe/page.tsx:59
+msgid "Choose a subscription plan"
+msgstr "Choose a subscription plan"
+
 #: components/theme-ui/Airdrop/AirdropDialog.tsx:168
 msgid "Claim $PEN"
 msgstr "Claim $PEN"

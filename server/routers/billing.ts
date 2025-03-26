@@ -81,7 +81,7 @@ export const billingRouter = router({
         // mode: 'subscription',
         mode: isBeliever ? 'payment' : 'subscription',
         payment_method_types: ['card'],
-        // customer_email: email,
+        customer_email: ctx.token.email || '',
         allow_promotion_codes: true,
         client_reference_id: ctx.activeSiteId,
         subscription_data: isBeliever

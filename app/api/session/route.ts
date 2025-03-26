@@ -54,6 +54,7 @@ async function updateSession(
   session.uid = account.userId
   session.userId = account.userId
   session.address = getAccountAddress(account)
+  session.email = account.user.email || ''
   session.ensName = account.user?.ensName as string
   session.name = account.user.name as string
   session.picture = account.user.image as string
@@ -130,7 +131,7 @@ export async function POST(req: NextRequest) {
   const json = await req.json()
   const hostname = json?.host || ''
 
-  console.log('=======json:', json)
+  // console.log('=======json:', json)
 
   if (isGoogleLogin(json)) {
     const ref = json?.ref || ''

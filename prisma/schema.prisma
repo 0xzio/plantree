@@ -566,6 +566,8 @@ model Post {
 
   @@unique([siteId, slug])
   @@index([siteId, isPage])
+  @@index([siteId, isPage, seriesId])
+  @@index([siteId, isPage, seriesId, status])
   @@index([siteId, status])
   @@index([userId, status])
   @@index([userId, type])

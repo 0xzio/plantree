@@ -532,7 +532,6 @@ export const siteRouter = router({
           if (input.stripeType === StripeType.PLATFORM) {
             const tier = await tx.product.findFirst({
               where: {
-                stripeType: input.stripeType,
                 siteId: ctx.activeSiteId,
                 type: ProductType.TIER,
               },
@@ -555,7 +554,6 @@ export const siteRouter = router({
               })
               await tx.product.create({
                 data: {
-                  stripeType: input.stripeType,
                   name: 'Member',
                   price: price,
                   type: ProductType.TIER,
