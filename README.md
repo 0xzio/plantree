@@ -10,3 +10,4 @@ Stripe is our exclusive direct payments partner. Ghost collects no fees on any p
 
 https://indiex.io/api/connected-stripe-webhooks
 https://penx.io/api/connected-stripe-webhooks
+

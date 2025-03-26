@@ -96,8 +96,9 @@ export default async function RootLayout({
                       {/* <Logo className="size-5" /> */}
                       <TextLogo />
                     </Link>
-                    <Nav />
                   </div>
+
+                  <Nav />
 
                   <div className="flex items-center gap-2">
                     <Profile />

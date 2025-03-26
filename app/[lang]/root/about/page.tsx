@@ -16,7 +16,7 @@ export default async function HomePage() {
   const content = page.content
 
   return (
-    <div className="mt-10 sm:mt-20 mx-auto w-full lg:max-w-3xl">
+    <div className="mt-10 sm:mt-20 mx-auto w-full lg:max-w-2xl">
       <ContentRender content={content} />
     </div>
   )
