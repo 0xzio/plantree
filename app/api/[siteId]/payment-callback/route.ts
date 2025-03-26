@@ -117,10 +117,6 @@ export async function GET(req: NextRequest) {
       throw new Error("No site ID found in session's client_reference_id.")
     }
 
-    const site = await prisma.site.findUniqueOrThrow({
-      where: { id: siteId },
-    })
-
     // console.log('=========site:', site)
     if (prevSubscriptionId) {
       try {
@@ -137,7 +133,7 @@ export async function GET(req: NextRequest) {
         sassCustomerId: customerId,
         sassSubscriptionId: subscriptionId,
         sassSubscriptionStatus: subscription.status,
-        sassCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
+        // sassCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
         sassBillingCycle: billingCycle as any,
         sassPlanType: planType as any,
         sassProductId: productId,

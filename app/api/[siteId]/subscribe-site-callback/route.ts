@@ -19,6 +19,7 @@ export async function GET(req: NextRequest) {
   const penxProductId = url.searchParams.get('productId') || ''
   const host = url.searchParams.get('host') || ''
   const pathname = url.searchParams.get('pathname') || ''
+  const prevSubscriptionId = url.searchParams.get('prevSubscriptionId') || ''
 
   console.log('url========>>:', url)
 
@@ -88,6 +89,17 @@ export async function GET(req: NextRequest) {
       where: { siteId, userId },
     })
 
+    console.log('======111=dbSubscription:', dbSubscription)
+
+    if (prevSubscriptionId) {
+      try {
+        const canceledSubscription =
+          await stripe.subscriptions.cancel(prevSubscriptionId)
+
+        console.log('=======>>>>canceledSubscription:', canceledSubscription)
+      } catch (error) {}
+    }
+
     if (dbSubscription) {
       await prisma.subscription.update({
         where: { id: dbSubscription.id },
@@ -96,9 +108,10 @@ export async function GET(req: NextRequest) {
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,
-          sassCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000,
-          ),
+          // TODO:
+          // sassCurrentPeriodEnd: new Date(
+          //   subscription.current_period_end * 1000,
+          // ),
           sassBillingCycle: BillingCycle.MONTHLY,
           sassProductId: productId,
         },
@@ -112,9 +125,9 @@ export async function GET(req: NextRequest) {
           sassCustomerId: customerId,
           sassSubscriptionId: subscriptionId,
           sassSubscriptionStatus: subscription.status,
-          sassCurrentPeriodEnd: new Date(
-            subscription.current_period_end * 1000,
-          ),
+          // sassCurrentPeriodEnd: new Date(
+          //   subscription.current_period_end * 1000,
+          // ),
           sassBillingCycle: BillingCycle.MONTHLY,
           sassProductId: productId,
         },

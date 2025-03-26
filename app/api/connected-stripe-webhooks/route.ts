@@ -6,11 +6,14 @@ import { handleEvent } from './handleEvent'
 export async function POST(req: NextRequest) {
   const payload = await req.text()
   const signature = req.headers.get('Stripe-Signature')!
+
+  console.log('========signature:', signature)
+
   try {
     const event = stripe.webhooks.constructEvent(
       payload,
       signature,
-      process.env.STRIPE_WEBHOOK_SECRET!,
+      process.env.CONNECTED_STRIPE_WEBHOOK_SECRET!,
     )
 
     await handleEvent(event)

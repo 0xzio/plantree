@@ -62,6 +62,7 @@ export async function GET(req: NextRequest) {
     await prisma.invoice.create({
       data: {
         siteId,
+        userId,
         campaignId,
         type: InvoiceType.CAMPAIGN,
         amount: paidAmount,

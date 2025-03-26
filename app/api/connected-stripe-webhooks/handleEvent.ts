@@ -1,9 +1,7 @@
 import { cacheHelper } from '@/lib/cache-header'
-import { SubscriptionTarget } from '@/lib/constants'
 import { prisma } from '@/lib/prisma'
-import { stripe } from '@/lib/stripe'
-import { Balance } from '@/lib/types'
-import { InvoiceType, StripeType } from '@prisma/client'
+import { getOAuthStripe } from '@/server/lib/getOAuthStripe'
+import { BillingCycle, InvoiceType } from '@prisma/client'
 import type { Stripe } from 'stripe'
 
 export async function handleEvent(event: Stripe.Event) {
@@ -12,108 +10,95 @@ export async function handleEvent(event: Stripe.Event) {
   if (session?.mode === 'payment') return
 
   if (event.type === 'checkout.session.completed') {
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string,
-    )
-
-    console.log('======checkout subscription:', subscription)
-
-    await prisma.site.update({
-      // where: { sassSubscriptionId: subscription.id },
-      where: {
-        id: session.client_reference_id!,
-      },
-      data: {
-        sassSubscriptionId: subscription.id,
-        sassCustomerId: subscription.customer as string,
-        sassCurrentPeriodEnd: new Date(
-          subscription.current_period_start * 1000,
-        ),
-      },
-    })
+    //
   }
 
   if (event.type === 'invoice.payment_succeeded') {
-    console.log('event==========>>>:', event)
+    // console.log('connected event==========>>>:', event)
+
+    console.log(
+      '========.subscription detail:',
+      (session as any)?.subscription_details,
+    )
+    const metaSiteId = (session as any).subscription_details.metadata.siteId
+
+    const stripe = await getOAuthStripe(metaSiteId)
+
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string,
     )
+
+    console.log('=======subscription:', subscription)
 
     if (!subscription?.id) return
 
     const siteId = subscription.metadata.siteId
-    const site = await prisma.site.findUniqueOrThrow({
-      where: { id: siteId },
-    })
-
-    await cacheHelper.updateCachedMySites(site.userId, null)
-
-    let balance = site.balance as Balance
-    if (!balance) {
-      balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
-    }
-
+    const userId = subscription.metadata.userId
     const productId = subscription.metadata.productId
+
     const subscriptionTarget = subscription.metadata.subscriptionTarget
 
-    if (site.stripeType === StripeType.PLATFORM && productId) {
-      balance.withdrawable += event.data.object.amount_paid
+    console.log('========SubscriptionTarget:', subscriptionTarget)
 
-      await prisma.invoice.create({
-        data: {
-          siteId,
-          productId,
-          type: InvoiceType.SUBSCRIPTION,
-          amount: event.data.object.amount_paid,
-          currency: event.data.object.currency,
-          stripeInvoiceId: event.data.object.id,
-          stripeInvoiceNumber: event.data.object.number,
-          stripePeriodStart: event.data.object.period_start,
-          stripePeriodEnd: event.data.object.period_end,
-        },
-      })
-    }
+    await prisma.$transaction(
+      async (tx) => {
+        const dbSubscription = await tx.subscription.findFirst({
+          where: { siteId, userId },
+        })
 
-    console.log('========SubscriptionTarget:', SubscriptionTarget)
+        console.log('=====dbSubscription:', dbSubscription)
 
-    if (subscriptionTarget === SubscriptionTarget.PENX) {
-      const referral = await prisma.referral.findUnique({
-        where: { userId: site.userId },
-        include: { user: true },
-      })
-
-      console.log('=====referral:', referral)
-
-      if (referral) {
-        let balance = referral.user.commissionBalance as Balance
-        if (!balance) {
-          balance = { withdrawable: 0, withdrawing: 0, locked: 0 }
+        if (dbSubscription) {
+          await tx.subscription.update({
+            where: { id: dbSubscription.id },
+            data: {
+              sassCurrentPeriodEnd: new Date(
+                subscription.current_period_start * 1000,
+              ),
+              sassCustomerId: subscription.customer.toString(),
+              sassSubscriptionId: subscription.id,
+              sassSubscriptionStatus: subscription.status,
+              sassProductId: productId,
+            },
+          })
+        } else {
+          await tx.subscription.create({
+            data: {
+              userId,
+              siteId,
+              productId,
+              sassCustomerId: subscription.customer.toString(),
+              sassSubscriptionId: subscription.id,
+              sassSubscriptionStatus: subscription.status,
+              sassCurrentPeriodEnd: new Date(
+                subscription.current_period_start * 1000,
+              ),
+              sassBillingCycle: BillingCycle.MONTHLY,
+              sassProductId: productId,
+            },
+          })
         }
 
-        const rate = referral.user.commissionRate / 100
-        const commissionAmount = event.data.object.amount_paid * rate
-        balance.withdrawable += commissionAmount
-        await prisma.user.update({
-          where: { id: referral.inviterId },
-          data: { commissionBalance: balance },
+        await tx.invoice.create({
+          data: {
+            siteId,
+            productId,
+            userId,
+            type: InvoiceType.SITE_SUBSCRIPTION,
+            amount: event.data.object.amount_paid,
+            currency: event.data.object.currency,
+            stripeInvoiceId: event.data.object.id,
+            stripeInvoiceNumber: event.data.object.number,
+            stripePeriodStart: event.data.object.period_start,
+            stripePeriodEnd: event.data.object.period_end,
+          },
         })
-      }
-
-      await prisma.site.update({
-        // where: { sassSubscriptionId: subscription.id },
-        where: { id: siteId },
-        data: {
-          balance,
-          sassSubscriptionId: subscription.id,
-          sassCustomerId: subscription.customer as string,
-          sassCurrentPeriodEnd: new Date(
-            subscription.current_period_start * 1000,
-          ),
-        },
-      })
-    }
-
-    await cacheHelper.updateCachedMySites(site.userId, null)
+      },
+      {
+        maxWait: 5000, // default: 2000
+        timeout: 10000, // default: 5000
+      },
+    )
   }
   if (event.type === 'customer.subscription.updated') {
     //add customer logic
