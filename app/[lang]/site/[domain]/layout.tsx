@@ -13,7 +13,7 @@ import { ROOT_DOMAIN } from '@/lib/constants'
 import { getSite } from '@/lib/fetchers'
 import { redirectTo404 } from '@/lib/redirectTo404'
 import { AppearanceConfig } from '@/lib/theme.types'
-import { cn } from '@/lib/utils'
+import { cn, getUrl } from '@/lib/utils'
 import linguiConfig from '@/lingui.config'
 // import { setI18n } from '@lingui/react/server'
 import { Metadata } from 'next'
@@ -26,12 +26,6 @@ import { Providers } from '../../providers'
 
 type Params = Promise<{ domain: string; lang: string }>
 
-const roboto = Poppins({
-  weight: ['100', '200', '300', '400', '500', '600', '700', '800', '900'],
-  subsets: ['latin'],
-  display: 'swap',
-})
-
 export async function generateMetadata({
   params,
 }: {
@@ -42,14 +36,27 @@ export async function generateMetadata({
   const title = site?.seoTitle || ''
   const description = site?.seoDescription || ''
 
+  const image = site?.logo
+    ? getUrl(site?.logo)
+    : 'https://penx.io/opengraph-image'
+
   return {
     title,
     description,
-    icons: [site?.logo || 'https://penx.io/favicon.ico'],
+    icons: [site?.logo ? getUrl(site?.logo) : 'https://penx.io/favicon.ico'],
     openGraph: {
       title,
       description,
+      images: [image],
     },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+      creator: '@zio_penx',
+    },
+    metadataBase: new URL('https://penx.io'),
   }
 }
 

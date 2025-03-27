@@ -63,7 +63,7 @@ export async function GET(req: Request) {
     .filter((p) => p.type === PostType.AUDIO)
     .slice(0, 20)
     .forEach((post) => {
-      const author = post?.user?.name || site.name
+      const author = post.authors[0]?.user?.name || site.name
       feed.addItem({
         title: post.title,
         guid: post.slug,

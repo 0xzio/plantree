@@ -2,6 +2,7 @@ import { initLingui } from '@/initLingui'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { AppearanceConfig } from '@/lib/theme.types'
+import { getUrl } from '@/lib/utils'
 import { GateType, Post } from '@prisma/client'
 import { produce } from 'immer'
 import { Metadata } from 'next'
@@ -30,9 +31,30 @@ export async function generateMetadata(props: {
   const site = await getSite(params)
   const slug = decodeURI(params.slug.join('/'))
   const post = await getPost(site.id, slug)
+
+  const title = post?.title || site.seoTitle
+  const description = post?.description || site.seoDescription
+
+  const image = post?.image
+    ? getUrl(post?.image)
+    : 'https://penx.io/opengraph-image'
+
   return {
-    title: post?.title || site.seoTitle,
-    description: post?.description || site.seoDescription,
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description,
+      images: [image],
+      // creator: '@zio_penx',
+    },
+    metadataBase: new URL('https://penx.io'),
   }
 }
 

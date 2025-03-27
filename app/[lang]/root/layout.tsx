@@ -34,7 +34,7 @@ const title = 'PenX - the home for writing'
 const description =
   'PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators.'
 
-// const image = 'https://vercel.pub/thumbnail.png'
+const image = 'https://penx.io/opengraph-image'
 
 export async function generateStaticParams() {
   return linguiConfig.locales.map((lang: any) => ({ lang }))
@@ -43,19 +43,18 @@ export async function generateStaticParams() {
 export const metadata: Metadata = {
   title,
   description,
-
   icons: ['https://penx.io/favicon.ico'],
   openGraph: {
     title,
     description,
-    // images: [image],
+    images: [image],
   },
   twitter: {
     card: 'summary_large_image',
     title,
     description,
-    // images: [image],
-    creator: '@penx',
+    images: [image],
+    creator: '@zio_penx',
   },
   metadataBase: new URL('https://penx.io'),
 }
