@@ -155,10 +155,13 @@ export async function getPosts(siteId: string) {
         return {
           ...post,
           image: getUrl(post.image || ''),
-          user: {
-            ...post.user,
-            image: getUrl(post.user.image || ''),
-          },
+          authors: post.authors.map((author) => ({
+            ...author,
+            user: {
+              ...author.user,
+              image: getUrl(author.user.image || ''),
+            },
+          })),
           content,
         }
       })
@@ -215,8 +218,19 @@ export async function getPost(siteId: string, slug: string) {
       const post = await prisma.post.findFirst({
         where: { slug, siteId },
         include: {
+          postTags: { include: { tag: true } },
           authors: {
-            include: { user: true },
+            include: {
+              user: {
+                select: {
+                  email: true,
+                  name: true,
+                  displayName: true,
+                  image: true,
+                  bio: true,
+                },
+              },
+            },
           },
         },
       })
@@ -226,6 +240,13 @@ export async function getPost(siteId: string, slug: string) {
       return {
         ...post,
         image: getUrl(post.image || ''),
+        authors: post.authors.map((author) => ({
+          ...author,
+          user: {
+            ...author.user,
+            image: getUrl(author.user.image || ''),
+          },
+        })),
       }
     },
     [`${siteId}-post-${slug}`],
@@ -497,17 +518,17 @@ function findManyPosts(siteId: string) {
   return prisma.post.findMany({
     include: {
       postTags: { include: { tag: true } },
-      user: {
-        select: {
-          accounts: {
+      authors: {
+        include: {
+          user: {
             select: {
-              providerAccountId: true,
-              providerType: true,
+              email: true,
+              name: true,
+              displayName: true,
+              bio: true,
+              image: true,
             },
           },
-          email: true,
-          name: true,
-          image: true,
         },
       },
     },

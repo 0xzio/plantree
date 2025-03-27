@@ -12,5 +12,5 @@ interface Props {
 }
 
 export function PostDetail(props: Props) {
-  return <PostPageWidget {...props} />
+  return <PostPageWidget {...props} titleClassName="" />
 }

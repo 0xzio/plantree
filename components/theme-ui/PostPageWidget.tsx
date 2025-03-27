@@ -20,15 +20,25 @@ interface Props {
   className?: string
   next?: { path: string; title: string }
   prev?: { path: string; title: string }
+  titleClassName?: string
 }
 
-export function PostPageWidget({ site, post, next, prev, className }: Props) {
+export function PostPageWidget({
+  site,
+  post,
+  next,
+  prev,
+  className,
+  titleClassName,
+}: Props) {
   return (
     <div className={cn('flex-1 flex flex-col  mt-8', className)}>
       <div className="mb-auto flex-1">
         <header className="space-y-4 pb-4 ">
           <div className="mb-4">
-            <PageTitle className="mb-2 mt-0">{post.title}</PageTitle>
+            <PageTitle className={cn('mb-2 mt-0', titleClassName)}>
+              {post.title}
+            </PageTitle>
             {post.description && (
               <PostSubtitle>{post.description}</PostSubtitle>
             )}

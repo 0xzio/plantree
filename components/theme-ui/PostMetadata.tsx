@@ -21,7 +21,7 @@ export function PostMetadata({ site, post, className }: Props) {
           {post.authors.map((item, index) => (
             <UserAvatar
               key={item.id}
-              address={item.user.name}
+              address={item.user.displayName}
               className={cn('ring-2 ring-background', index > 0 && '-ml-3')}
               image={getUrl(item.user.image || '')}
             ></UserAvatar>
@@ -34,7 +34,7 @@ export function PostMetadata({ site, post, className }: Props) {
                 {index > 0 && (
                   <span className="text-sm text-foreground/50 mx-1">and</span>
                 )}
-                <span>{formatUsername(item.user.name)}</span>
+                <span>{formatUsername(item.user.displayName)}</span>
               </div>
             ))}
           </div>
