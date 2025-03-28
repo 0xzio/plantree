@@ -25,10 +25,10 @@ const roboto = Poppins({
   display: 'swap',
 })
 
-const title = 'PenX - the home for writing'
+const title = 'PenX - build your own digital garden'
 
 const description =
-  'PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators.'
+  'PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.'
 
 const image = 'https://penx.io/opengraph-image'
 

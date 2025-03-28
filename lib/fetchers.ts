@@ -471,8 +471,8 @@ export async function getProjects(siteId: string) {
 export async function getHomeSites() {
   return await unstable_cache(
     async () => {
-      const cachedSites = await cacheHelper.getCachedHomeSites()
-      if (cachedSites) return cachedSites
+      // const cachedSites = await cacheHelper.getCachedHomeSites()
+      // if (cachedSites) return cachedSites
       const sites = await prisma.site.findMany({
         where: {
           postCount: { gte: 2 },

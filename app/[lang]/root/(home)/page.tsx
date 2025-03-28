@@ -31,12 +31,12 @@ export const revalidate = 86400 // 3600 * 24 * 365
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'PenX - the home for writing',
+    title: 'PenX - build your own Digital Garden',
     description:
-      'PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators.',
+      'PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.',
     openGraph: {
       title: 'PenX',
-      description: 'Modern blogging tools',
+      description: 'Build your own Digital Garden',
     },
     other: {
       'fc:frame': JSON.stringify(frame),
@@ -52,7 +52,14 @@ export default async function HomePage(props: { params: any }) {
   return (
     <div className="flex flex-col gap-y-32">
       <div className="flex justify-center mt-8">
-        <SiteCount count={count} sites={sites} />
+        <SiteCount
+          count={count}
+          sites={[
+            ...sites.slice(1, 4),
+            ...sites.slice(5, 6),
+            ...sites.slice(12, 13),
+          ]}
+        />
       </div>
 
       <FeatureList />
@@ -65,7 +72,7 @@ export default async function HomePage(props: { params: any }) {
 
       <div className="space-y-10">
         <div className="text-5xl font-bold text-center">
-          <Trans>Sites</Trans>
+          <Trans>Digital gardens</Trans>
         </div>
         <SiteList />
       </div>

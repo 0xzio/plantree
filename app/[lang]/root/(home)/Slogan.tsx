@@ -19,14 +19,17 @@ export function Slogan() {
     <div className="space-y-3 text-center">
       <div className="text-5xl md:text-6xl leading-none md:leading-tight font-bold space-y-2 text-foreground">
         <div className="">
-          <Trans>Modern blogging tools</Trans>
+          <Trans>
+            Build your own <span className="text-brand">Digital Garden</span>
+          </Trans>
         </div>
       </div>
 
       <div className="text-xl mx-auto max-w-lg text-foreground/80">
+        <Trans>PenX is a tool for building a digital garden.</Trans>
+        <br />
         <Trans>
-          PenX is a modern blogging tool. AI-native, beautiful out-of-the-box,
-          and built for creators.
+          Having your own garden, start planting, and watch it grow.
         </Trans>
       </div>
     </div>

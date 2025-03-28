@@ -22,7 +22,9 @@ export function Footer({}: Props) {
               target="_blank"
               className="flex items-center gap-1"
             >
-              <span>About</span>
+              <span>
+                <Trans>About</Trans>
+              </span>
               {/* <div className="inline-flex">
                 <ExternalLink size={16}></ExternalLink>
               </div> */}
@@ -35,7 +37,9 @@ export function Footer({}: Props) {
               target="_blank"
               className="flex items-center gap-1"
             >
-              <span>Docs</span>
+              <span>
+                <Trans>Docs</Trans>
+              </span>
             </a>
           </div>
 

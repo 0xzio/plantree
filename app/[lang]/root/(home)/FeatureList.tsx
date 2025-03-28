@@ -105,7 +105,7 @@ export function FeatureList() {
           <Trans>Features</Trans>
         </div>
         <div className="text-xl text-foreground/60">
-          <Trans>Powerful features to build to modern individual blog</Trans>
+          <Trans>Powerful features to build to digital garden</Trans>
         </div>
       </div>
       <div className="bg-transparent">

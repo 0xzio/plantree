@@ -4,6 +4,7 @@ import { ReactNode } from 'react'
 import SocialIcon from '@/components/theme-ui/SocialIcon'
 import { Link } from '@/lib/i18n'
 import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
 import { ArrowUpRight, ExternalLink, Flame } from 'lucide-react'
 import { toast } from 'sonner'
 
@@ -32,19 +33,19 @@ export const Nav = () => {
     //   to: '/sponsor',
     // },
     {
-      text: 'Docs',
+      text: <Trans>Docs</Trans>,
       to: '/docs/introduction',
     },
     {
-      text: 'Themes',
+      text: <Trans>Themes</Trans>,
       to: '/themes',
     },
     {
-      text: 'Hosted',
+      text: <Trans>Hosted</Trans>,
       to: '/self-hosted',
     },
     {
-      text: 'Pricing',
+      text: <Trans>Pricing</Trans>,
       to: '/pricing',
     },
     // {
@@ -57,7 +58,7 @@ export const Nav = () => {
     //   to: 'https://github.com/penx-labs/penx-desktop/releases',
     // },
     {
-      text: 'Partner program',
+      text: <Trans>Partner program</Trans>,
       to: '/partner-program',
     },
   ]

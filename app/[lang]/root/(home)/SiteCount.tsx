@@ -31,7 +31,7 @@ export function SiteCount({ count, sites }: Props) {
         <div className="space-x-1">
           <span className="font-bold">{count}</span>
           <span className="text-sm">
-            <Trans>individual blogs created</Trans>
+            <Trans>digital gardens created</Trans>
           </span>
         </div>
       </div>

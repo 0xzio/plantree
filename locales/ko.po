@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2025-03-08 18:18+0800\n"
+"POT-Creation-Date: 2025-03-28 13:38+0800\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,7 @@ msgstr ""
 
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/page.tsx:67
 #: app/[lang]/site/[domain]/(blog)/series/[slug]/book/AboutItem.tsx:34
+#: app/[lang]/root/Footer.tsx:26
 #: components/theme-ui/NavigationItem.tsx:21
 msgid "About"
 msgstr ""
@@ -113,7 +114,7 @@ msgstr ""
 msgid "Billing & plan"
 msgstr ""
 
-#: app/[lang]/root/Footer.tsx:49
+#: app/[lang]/root/Footer.tsx:53
 #: components/theme-ui/NavigationItem.tsx:15
 #: themes/wide/pages/BlogPage.tsx:25
 #: themes/sue/pages/BlogPage.tsx:25
@@ -137,6 +138,10 @@ msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:36
 msgid "Build for super individual"
+msgstr ""
+
+#: app/[lang]/root/(home)/Slogan.tsx:22
+msgid "Build your own <0>Digital Garden</0>"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:136
@@ -308,8 +313,21 @@ msgstr ""
 msgid "Design"
 msgstr ""
 
+#: app/[lang]/root/(home)/page.tsx:75
+msgid "Digital gardens"
+msgstr ""
+
+#: app/[lang]/root/(home)/SiteCount.tsx:34
+msgid "digital gardens created"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:190
 msgid "Discover"
+msgstr ""
+
+#: app/[lang]/root/Nav.tsx:36
+#: app/[lang]/root/Footer.tsx:41
+msgid "Docs"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
@@ -391,6 +409,10 @@ msgstr ""
 msgid "Guestbook"
 msgstr ""
 
+#: app/[lang]/root/(home)/Slogan.tsx:31
+msgid "Having your own garden, start planting, and watch it grow."
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:162
 msgid "Header"
 msgstr ""
@@ -398,6 +420,10 @@ msgstr ""
 #: components/theme-ui/NavigationItem.tsx:14
 #: components/Profile/ProfilePopover.tsx:98
 msgid "Home"
+msgstr ""
+
+#: app/[lang]/root/Nav.tsx:44
+msgid "Hosted"
 msgstr ""
 
 #: components/CreatePostButton.tsx:163
@@ -410,10 +436,6 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:189
 msgid "Import/Export"
-msgstr ""
-
-#: app/[lang]/root/(home)/SiteCount.tsx:34
-msgid "individual blogs created"
 msgstr ""
 
 #: themes/wide/pages/HomePage.tsx:37
@@ -465,10 +487,6 @@ msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:54
 msgid "Memberships built-in"
-msgstr ""
-
-#: app/[lang]/root/(home)/Slogan.tsx:22
-msgid "Modern blogging tools"
 msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:68
@@ -556,6 +574,7 @@ msgid "Pages"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:164
+#: app/[lang]/root/Nav.tsx:61
 msgid "Partner program"
 msgstr ""
 
@@ -575,8 +594,8 @@ msgstr ""
 msgid "Paypal"
 msgstr ""
 
-#: app/[lang]/root/(home)/Slogan.tsx:27
-msgid "PenX is a modern blogging tool. AI-native, beautiful out-of-the-box, and built for creators."
+#: app/[lang]/root/(home)/Slogan.tsx:29
+msgid "PenX is a tool for building a digital garden."
 msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:59
@@ -601,12 +620,16 @@ msgid "Posts"
 msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:108
-msgid "Powerful features to build to modern individual blog"
+msgid "Powerful features to build to digital garden"
 msgstr ""
 
 #: components/theme-ui/Pagination.tsx:25
 #: components/theme-ui/Pagination.tsx:37
 msgid "Previous"
+msgstr ""
+
+#: app/[lang]/root/Nav.tsx:48
+msgid "Pricing"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:114
@@ -692,10 +715,6 @@ msgstr ""
 msgid "Sign in to deploy"
 msgstr ""
 
-#: app/[lang]/root/(home)/page.tsx:68
-msgid "Sites"
-msgstr ""
-
 #: app/[lang]/~/(dashboard)/assets/AssetsTable/index.tsx:65
 msgid "Size"
 msgstr ""
@@ -760,6 +779,10 @@ msgstr ""
 
 #: app/[lang]/root/(home)/FeatureList.tsx:38
 msgid "Tailored for individual creators to express themselves freely."
+msgstr ""
+
+#: app/[lang]/root/Nav.tsx:40
+msgid "Themes"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/membership/MembershipTiers.tsx:43

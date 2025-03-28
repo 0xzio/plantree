@@ -5,7 +5,7 @@ export default async function manifest(): Promise<MetadataRoute.Manifest> {
   return {
     name: 'PenX',
     short_name: 'PenX',
-    description: 'Modern blogging tools',
+    description: 'Build your own Digital Garden',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',
