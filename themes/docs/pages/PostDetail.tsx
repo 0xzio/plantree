@@ -8,11 +8,11 @@ import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
 import { SubscribeNewsletterCard } from '@/components/theme-ui/SubscribeNewsletter/SubscribeNewsletterCard'
+import { Toc } from '@/components/theme-ui/Toc'
 import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { ExternalLink } from 'lucide-react'
-import { Toc } from '../components/Toc'
 
 interface LayoutProps {
   site: Site
@@ -25,7 +25,14 @@ interface LayoutProps {
 
 export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
   return (
-    <div className="flex gap-x-16 pt-4">
+    <div
+      className="flex gap-x-16 pt-4"
+      style={
+        {
+          '--header-height': '80px',
+        } as any
+      }
+    >
       <div className={cn('flex-1 flex flex-col', className)}>
         <div className="mb-auto flex-1">
           <header className="space-y-4 pb-4">
@@ -51,7 +58,13 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
         <Footer className="mt-auto" site={site} />
       </div>
 
-      <Toc content={post.content}></Toc>
+      <Toc
+        content={post.content}
+        className="sticky top-20 py-10 xl:block overflow-y-auto"
+        style={{
+          height: 'calc(100vh - 4rem)',
+        }}
+      />
     </div>
   )
 }

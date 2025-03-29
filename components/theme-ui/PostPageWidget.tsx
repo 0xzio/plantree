@@ -12,6 +12,7 @@ import { PostActions } from './PostActions'
 import { PostMetadata } from './PostMetadata'
 import { PostSubtitle } from './PostSubtitle'
 import { SubscribeNewsletterCard } from './SubscribeNewsletter/SubscribeNewsletterCard'
+import { Toc } from './Toc'
 
 interface Props {
   site: Site
@@ -32,46 +33,55 @@ export function PostPageWidget({
   titleClassName,
 }: Props) {
   return (
-    <div className={cn('flex-1 flex flex-col  mt-8', className)}>
-      <div className="mb-auto flex-1">
-        <header className="space-y-4 pb-4 ">
-          <div className="mb-4">
-            <PageTitle className={cn('mb-2 mt-0', titleClassName)}>
-              {post.title}
-            </PageTitle>
-            {post.description && (
-              <PostSubtitle>{post.description}</PostSubtitle>
-            )}
+    <div className="relative">
+      <div className={cn('flex-1 flex flex-col  mt-8', className)}>
+        <div className="mb-auto flex-1">
+          <header className="space-y-4 pb-4 ">
+            <div className="mb-4">
+              <PageTitle className={cn('mb-2 mt-0', titleClassName)}>
+                {post.title}
+              </PageTitle>
+              {post.description && (
+                <PostSubtitle>{post.description}</PostSubtitle>
+              )}
+            </div>
+            <PostMetadata site={site} post={post} />
+            <PostActions post={post} />
+          </header>
+
+          {!!post.image && (
+            <Image
+              src={post.image || ''}
+              alt=""
+              width={1000}
+              height={800}
+              className="object-cover w-full max-h-96 rounded-2xl"
+            />
+          )}
+
+          <div className="pt-2 md:pt-4">
+            <div className="flex flex-col gap-4">
+              {post.type === PostType.AUDIO && (
+                <div className="h-[130px] flex items-center mb-2">
+                  <PodcastPlayer post={post} />
+                </div>
+              )}
+              <ContentRender content={post.content} />
+              <SubscribeNewsletterCard site={site} />
+            </div>
+
+            <IPFSLink cid={post.cid} />
+            <PaginationNav prev={prev} next={next} />
           </div>
-          <PostMetadata site={site} post={post} />
-          <PostActions post={post} />
-        </header>
-
-        {!!post.image && (
-          <Image
-            src={post.image || ''}
-            alt=""
-            width={1000}
-            height={800}
-            className="object-cover w-full max-h-96 rounded-2xl"
-          />
-        )}
-
-        <div className="pt-2 md:pt-4">
-          <div className="flex flex-col gap-4">
-            {post.type === PostType.AUDIO && (
-              <div className="h-[130px] flex items-center mb-2">
-                <PodcastPlayer post={post} />
-              </div>
-            )}
-            <ContentRender content={post.content} />
-            <SubscribeNewsletterCard site={site} />
-          </div>
-
-          <IPFSLink cid={post.cid} />
-          <PaginationNav prev={prev} next={next} />
         </div>
       </div>
+      <Toc
+        content={post.content}
+        className="fixed top-0 bottom-0 flex-col justify-center items-center pr-10"
+        style={{
+          left: 'calc(100vw - 200px)',
+        }}
+      />
     </div>
   )
 }

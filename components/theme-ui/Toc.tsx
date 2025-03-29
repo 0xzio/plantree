@@ -1,0 +1,109 @@
+'use client'
+
+import { CSSProperties, useEffect, useState } from 'react'
+import { cn } from '@/lib/utils'
+import { Trans } from '@lingui/react/macro'
+import { slug } from 'github-slugger'
+import { Node } from 'slate'
+
+interface Props {
+  className?: string
+  content: any[]
+  style?: CSSProperties
+}
+
+export const Toc = ({ content, className, style = {} }: Props) => {
+  const headings = content.filter((node: any) =>
+    ['h1', 'h2', 'h3', 'h4', 'h5', 'h6'].includes(node.type),
+  )
+
+  const [activeId, setActiveId] = useState('')
+
+  useEffect(() => {
+    const headingElements = headings.map((node) => {
+      const text = Node.string(node)
+      const id = slug(text)
+      return document.getElementById(id)
+    })
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveId(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-100px 0px -80% 0px', threshold: 0 },
+    )
+
+    headingElements.forEach((element) => {
+      if (element) {
+        observer.observe(element)
+      }
+    })
+
+    return () => {
+      headingElements.forEach((element) => {
+        if (element) {
+          observer.unobserve(element)
+        }
+      })
+    }
+  }, [headings])
+
+  const types = Array.from(
+    new Set(headings.map((node: any) => Number(node.type.replace('h', '')))),
+  )
+  const min = Math.min(...types)
+
+  if (!headings.length) return null
+
+  return (
+    <aside
+      className={cn(
+        'sidebar w-56 shrink-0 hidden xl:flex pl-6 opacity-60 hover:opacity-100 transition-all',
+        className,
+      )}
+      style={{
+        ...style,
+      }}
+    >
+      <div className="">
+        <h2 className="font-semibold mb-4 text-xs text-foreground/90">
+          <Trans>On this page</Trans>
+        </h2>
+
+        <div className="flex flex-col gap-2">
+          {headings.map((node: any) => {
+            const text = Node.string(node)
+            const id = slug(text)
+            const depth = Number(node.type.replace('h', '')) - min
+            const isActive = activeId === id
+
+            return (
+              <div
+                key={node.id}
+                className={cn(
+                  'text-sm text-foreground/40 hover:text-foreground transition-all',
+                  isActive && 'text-foreground',
+                )}
+              >
+                <a
+                  className={cn('cursor-pointer')}
+                  style={{
+                    paddingLeft: depth * 12,
+                  }}
+                  href={`#${id}`}
+                  onClick={() => setActiveId(id)}
+                >
+                  {text}
+                </a>
+              </div>
+            )
+          })}
+        </div>
+      </div>
+    </aside>
+  )
+}

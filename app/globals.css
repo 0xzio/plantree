@@ -43,6 +43,8 @@
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
   --brand: oklch(0.656 0.241 354.308);
+
+  --header-height: 10px;
 }
 
 .dark {
@@ -331,4 +333,11 @@
 .shk.shikwasa {
   /* border-radius: 20px; */
   /* overflow: hidden; */
+}
+
+h1,
+h2,
+h3,
+h4 {
+  scroll-margin-top: var(--header-height);
 }
