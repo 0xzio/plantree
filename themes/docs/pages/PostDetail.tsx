@@ -60,7 +60,7 @@ export function PostDetail({ site, post, next, prev, className }: LayoutProps) {
 
       <Toc
         content={post.content}
-        className="sticky top-20 py-10 xl:block overflow-y-auto"
+        className="sticky top-20 py-10 xl:block overflow-y-auto w-56 hidden pl-6"
         style={{
           height: 'calc(100vh - 4rem)',
         }}

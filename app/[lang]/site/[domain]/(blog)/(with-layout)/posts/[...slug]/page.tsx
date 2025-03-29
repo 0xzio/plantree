@@ -3,12 +3,14 @@ import { initLingui } from '@/initLingui'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
 import { AppearanceConfig } from '@/lib/theme.types'
+import { SitePost } from '@/lib/types'
 import { getUrl } from '@/lib/utils'
 import { GateType, Post } from '@prisma/client'
 import { produce } from 'immer'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import readingTime from 'reading-time'
+import { createEditor, Editor, Element, Transforms } from 'slate'
 import { PaidContent } from './PaidContent'
 
 type Params = Promise<{ domain: string; slug: string[]; lang: string }>
@@ -77,11 +79,34 @@ export default async function Page(props: { params: Params }) {
   initLingui(locale)
 
   const slug = decodeURI(params.slug.join('/'))
-  const posts = await getPosts(site.id)
-  const rawPost = await getPost(site.id, slug)
+  const [posts, rawPost] = await Promise.all([
+    getPosts(site.id),
+    getPost(site.id, slug),
+  ])
 
   if (!rawPost) {
     return notFound()
+  }
+
+  let backLinkPosts: Post[] = []
+
+  for (const post of posts) {
+    if (post.id === rawPost.id) continue
+    const content = JSON.parse(post.content || '[]')
+    const editor = createEditor()
+    editor.children = content
+    for (const nodeEntry of Editor.nodes(editor, {
+      at: [],
+      match: (node) => {
+        return Element.isElement(node) && node.type === 'bidirectional_link'
+      },
+    })) {
+      const [node] = nodeEntry
+      if ((node as any).postId === rawPost.id) {
+        const find = backLinkPosts.find((p) => p.id === post.id)
+        if (!find) backLinkPosts.push(post)
+      }
+    }
   }
 
   const post = produce(rawPost, (draft) => {
@@ -107,7 +132,10 @@ export default async function Page(props: { params: Params }) {
   /** No gated */
   if (post?.gateType == GateType.FREE) {
     return (
-      <PostListProvider posts={posts as any}>
+      <PostListProvider
+        posts={posts as any}
+        backLinkPosts={backLinkPosts as any}
+      >
         <PostDetail
           site={site}
           post={{
@@ -124,7 +152,7 @@ export default async function Page(props: { params: Params }) {
   }
 
   return (
-    <PostListProvider posts={posts as any}>
+    <PostListProvider posts={posts as any} backLinkPosts={backLinkPosts as any}>
       <PaidContent
         site={site}
         postId={post.id}

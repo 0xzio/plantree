@@ -60,9 +60,9 @@ export const Toc = ({ content, className, style = {} }: Props) => {
   if (!headings.length) return null
 
   return (
-    <aside
+    <div
       className={cn(
-        'sidebar w-56 shrink-0 hidden xl:flex pl-6 opacity-60 hover:opacity-100 transition-all',
+        'sidebar shrink-0 opacity-60 hover:opacity-100 transition-all',
         className,
       )}
       style={{
@@ -70,8 +70,8 @@ export const Toc = ({ content, className, style = {} }: Props) => {
       }}
     >
       <div className="">
-        <h2 className="font-semibold mb-4 text-xs text-foreground/90">
-          <Trans>On this page</Trans>
+        <h2 className="font-semibold mb-4 text-sm text-foreground/90">
+          <Trans>Table of contents</Trans>
         </h2>
 
         <div className="flex flex-col gap-2">
@@ -104,6 +104,6 @@ export const Toc = ({ content, className, style = {} }: Props) => {
           })}
         </div>
       </div>
-    </aside>
+    </div>
   )
 }

@@ -3,24 +3,30 @@
 import { createContext, PropsWithChildren, useContext } from 'react'
 import { Post } from '@/lib/theme.types'
 
-export const PostListContext = createContext({} as Post[])
-
 interface Props {
   posts: Post[]
+  backLinkPosts: Post[]
 }
+
+export const PostListContext = createContext({} as Props)
 
 export const PostListProvider = ({
   posts,
+  backLinkPosts,
   children,
 }: PropsWithChildren<Props>) => {
   return (
-    <PostListContext.Provider value={posts}>
+    <PostListContext.Provider
+      value={{
+        posts,
+        backLinkPosts,
+      }}
+    >
       {children}
     </PostListContext.Provider>
   )
 }
 
 export function usePostListContext() {
-  const posts = useContext(PostListContext)
-  return posts
+  return useContext(PostListContext)
 }

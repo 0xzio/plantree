@@ -4,6 +4,7 @@ import { PageTitle } from '@/components/theme-ui/PageTitle'
 import { PostActions } from '@/components/theme-ui/PostActions'
 import { PostMetadata } from '@/components/theme-ui/PostMetadata'
 import { PostSubtitle } from '@/components/theme-ui/PostSubtitle'
+import { Toc } from '@/components/theme-ui/Toc'
 import { initLingui } from '@/initLingui'
 import { getPost, getPosts, getSeries, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
@@ -14,7 +15,6 @@ import { produce } from 'immer'
 import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import readingTime from 'reading-time'
-import { Toc } from '../book/Toc'
 
 type Params = Promise<{
   domain: string
@@ -108,7 +108,13 @@ export default async function Page(props: { params: Params }) {
         )}
       </div>
       {series?.seriesType === SeriesType.BOOK && (
-        <Toc content={post.content}></Toc>
+        <Toc
+          content={post.content}
+          className="sticky top-20 py-10 xl:block overflow-y-auto w-56 hidden pl-6"
+          style={{
+            height: 'calc(100vh - 4rem)',
+          }}
+        />
       )}
     </div>
   )

@@ -4,7 +4,6 @@ import { Site } from '@/lib/theme.types'
 import { Header } from '../components/Header'
 import SectionContainer from '../components/SectionContainer'
 import { Sidebar } from '../components/Sidebar'
-import { Toc } from '../components/Toc'
 
 interface Props {
   site: Site

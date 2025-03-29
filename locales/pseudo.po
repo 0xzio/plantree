@@ -98,6 +98,10 @@ msgstr ""
 msgid "Available"
 msgstr ""
 
+#: components/theme-ui/BackLinks.tsx:31
+msgid "Backlinks"
+msgstr ""
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
 msgid "Backup"
 msgstr ""
@@ -549,10 +553,6 @@ msgstr ""
 msgid "Offer exclusive content and benefits to loyal members."
 msgstr ""
 
-#: themes/aside/components/Toc.tsx:30
-msgid "On this page"
-msgstr ""
-
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:71
 msgid "Operation"
 msgstr ""
@@ -756,6 +756,10 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
 msgid "Subscribers"
+msgstr ""
+
+#: components/theme-ui/Toc.tsx:74
+msgid "Table of contents"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:95

@@ -98,6 +98,10 @@ msgstr "Authorize CLI login"
 msgid "Available"
 msgstr "Available"
 
+#: components/theme-ui/BackLinks.tsx:31
+msgid "Backlinks"
+msgstr "Backlinks"
+
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
 msgid "Backup"
 msgstr "Backup"
@@ -549,10 +553,6 @@ msgstr "Note"
 msgid "Offer exclusive content and benefits to loyal members."
 msgstr "Offer exclusive content and benefits to loyal members."
 
-#: themes/aside/components/Toc.tsx:30
-msgid "On this page"
-msgstr "On this page"
-
 #: app/[lang]/~/(dashboard)/settings/navigation/NavList.tsx:71
 msgid "Operation"
 msgstr "Operation"
@@ -757,6 +757,10 @@ msgstr "Subscribed successfully!"
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:156
 msgid "Subscribers"
 msgstr "Subscribers"
+
+#: components/theme-ui/Toc.tsx:74
+msgid "Table of contents"
+msgstr "Table of contents"
 
 #: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:95
 #: components/theme-ui/NavigationItem.tsx:20

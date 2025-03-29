@@ -2,6 +2,7 @@ import { SeriesProvider } from '@/components/SeriesContext'
 import { ContentRender } from '@/components/theme-ui/ContentRender'
 import { Footer } from '@/components/theme-ui/Footer'
 import { PageTitle } from '@/components/theme-ui/PageTitle'
+import { Toc } from '@/components/theme-ui/Toc'
 import { initLingui } from '@/initLingui'
 import { editorDefaultValue } from '@/lib/constants'
 import { getSeries, getSite } from '@/lib/fetchers'
@@ -13,7 +14,6 @@ import { SeriesType } from '@prisma/client'
 import { Metadata } from 'next'
 import { Header } from './book/Header'
 import { Sidebar } from './book/Sidebar'
-import { Toc } from './book/Toc'
 import { SeriesInfo } from './column/SeriesInfo'
 import { SeriesPostList } from './column/SeriesPostList'
 
@@ -82,6 +82,10 @@ export default async function Page(props: {
       </div>
       <Toc
         content={series?.about ? JSON.parse(series.about) : editorDefaultValue}
+        className="sticky top-20 py-10 xl:block overflow-y-auto w-56 hidden pl-6"
+        style={{
+          height: 'calc(100vh - 4rem)',
+        }}
       ></Toc>
     </div>
   )

@@ -24,7 +24,7 @@ export function BidirectionalLinkElementStatic({
   prefix?: string
 }) {
   const element = props.element as TBidirectionalLinkElement
-  const posts = usePostListContext()
+  const { posts } = usePostListContext()
   const post = posts.find((p) => p.id === element.postId)!
 
   return (

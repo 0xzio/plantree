@@ -3,6 +3,7 @@ import { Image } from '@/components/Image'
 import { Post, Site } from '@/lib/theme.types'
 import { cn } from '@/lib/utils'
 import { PostType } from '@prisma/client'
+import { BackLinks } from './BackLinks'
 import { ContentRender } from './ContentRender'
 import { IPFSLink } from './IPFSLink'
 import { PageTitle } from './PageTitle'
@@ -75,13 +76,17 @@ export function PostPageWidget({
           </div>
         </div>
       </div>
-      <Toc
-        content={post.content}
-        className="fixed top-0 bottom-0 flex-col justify-center items-center pr-10"
+      <aside
+        className="w-56 fixed top-0 bottom-0 hidden lg:flex flex-col justify-center -mt-32 pr-10"
         style={{
           left: 'calc(100vw - 200px)',
         }}
-      />
+      >
+        <div className="flex flex-col gap-y-10">
+          <Toc content={post.content} className="" />
+          <BackLinks />
+        </div>
+      </aside>
     </div>
   )
 }
