@@ -97,6 +97,12 @@ import {
   usePlateEditor,
   type CreatePlateEditorOptions,
 } from '@udecode/plate/react'
+import {
+  BidirectionalLinkInputPlugin,
+  BidirectionalLinkPlugin,
+} from '../custom-plate-plugins/bidirectional-link/react'
+import { BidirectionalLinkElement } from '../custom-plate-plugins/bidirectional-link/react/bidirectional-link-element'
+import { BidirectionalLinkInputElement } from '../custom-plate-plugins/bidirectional-link/react/bidirectional-link-input-element'
 import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
 import { CampaignElement } from '../custom-plate-plugins/campaign/react/campaign-element'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
@@ -142,6 +148,7 @@ export const viewComponents = {
   [LinkPlugin.key]: LinkElement,
   [MediaEmbedPlugin.key]: MediaEmbedElement,
   [MentionPlugin.key]: MentionElement,
+  [BidirectionalLinkPlugin.key]: BidirectionalLinkElement,
   [ParagraphPlugin.key]: ParagraphElement,
   [PlaceholderPlugin.key]: MediaPlaceholderElement,
   [StrikethroughPlugin.key]: withProps(PlateLeaf, { as: 's' }),
@@ -170,6 +177,7 @@ export const editorComponents = {
   [AIPlugin.key]: AILeaf,
   [EmojiInputPlugin.key]: EmojiInputElement,
   [MentionInputPlugin.key]: MentionInputElement,
+  [BidirectionalLinkInputPlugin.key]: BidirectionalLinkInputElement,
   [SlashInputPlugin.key]: SlashInputElement,
 }
 

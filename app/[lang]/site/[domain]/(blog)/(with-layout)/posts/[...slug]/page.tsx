@@ -1,3 +1,4 @@
+import { PostListProvider } from '@/components/PostListContext'
 import { initLingui } from '@/initLingui'
 import { getPost, getPosts, getSite } from '@/lib/fetchers'
 import { loadTheme } from '@/lib/loadTheme'
@@ -106,7 +107,7 @@ export default async function Page(props: { params: Params }) {
   /** No gated */
   if (post?.gateType == GateType.FREE) {
     return (
-      <>
+      <PostListProvider posts={posts as any}>
         <PostDetail
           site={site}
           post={{
@@ -118,17 +119,19 @@ export default async function Page(props: { params: Params }) {
           next={next}
           prev={prev}
         />
-      </>
+      </PostListProvider>
     )
   }
 
   return (
-    <PaidContent
-      site={site}
-      postId={post.id}
-      post={post}
-      next={next}
-      prev={prev}
-    />
+    <PostListProvider posts={posts as any}>
+      <PaidContent
+        site={site}
+        postId={post.id}
+        post={post}
+        next={next}
+        prev={prev}
+      />
+    </PostListProvider>
   )
 }

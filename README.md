@@ -15,17 +15,3 @@ https://penx.io/api/connected-stripe-webhooks
 zio.penx@gmail.com
 Ziyi_007
 
-
-Build your own Digital Garden
-build your own digital garden
-the home for writing
-
-构建造自己的数字花园
-
-
-PenX is tool to build Digital Garden. 开辟一片自留地，开始种植，慢慢成长。
-
-PenX 是一个构建数字花园的工具. 开辟一片自留地，开始种植，慢慢成长。
-
-
-PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.

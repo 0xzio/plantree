@@ -10,7 +10,6 @@ export const ParagraphElement = withRef<typeof PlateElement>(
     return (
       <PlateElement
         ref={ref}
-        as="p"
         {...props}
         className={cn(
           'm-0 px-0 py-2 leading-normal text-foreground/85',

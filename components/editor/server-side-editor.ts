@@ -104,6 +104,8 @@ import {
 } from '@udecode/plate-table'
 import { BaseTogglePlugin } from '@udecode/plate-toggle'
 import Prism from 'prismjs'
+import { BaseBidirectionalLinkPlugin } from '../custom-plate-plugins/bidirectional-link'
+import { BidirectionalLinkElementStatic } from '../custom-plate-plugins/bidirectional-link/react/bidirectional-link-static'
 import { BaseCampaignPlugin } from '../custom-plate-plugins/campaign'
 import { CampaignElementStatic } from '../custom-plate-plugins/campaign/react/campaign-element-static'
 import { BaseCommentBoxPlugin } from '../custom-plate-plugins/comment-box'
@@ -167,6 +169,7 @@ export const serverSideComponents = {
   [BaseSocialLinksPlugin.key]: SocialLinksElementStatic,
   [BaseCampaignPlugin.key]: CampaignElementStatic,
   [BasePodcastTimePlugin.key]: PodcastTimeElementStatic,
+  [BaseBidirectionalLinkPlugin.key]: BidirectionalLinkElementStatic,
 }
 
 export const serverSideEditor = createSlateEditor({
@@ -262,5 +265,6 @@ export const serverSideEditor = createSlateEditor({
     BaseSocialLinksPlugin,
     BaseCampaignPlugin,
     BasePodcastTimePlugin,
+    BaseBidirectionalLinkPlugin,
   ],
 })

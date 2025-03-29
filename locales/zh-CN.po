@@ -319,7 +319,7 @@ msgstr "数字花园"
 
 #: app/[lang]/root/(home)/SiteCount.tsx:34
 msgid "digital gardens created"
-msgstr "数字花园"
+msgstr "个数字花园"
 
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:190
 msgid "Discover"
@@ -699,7 +699,7 @@ msgstr ""
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:146
 #: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
-msgstr ""
+msgstr "专栏"
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
 #: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:172
