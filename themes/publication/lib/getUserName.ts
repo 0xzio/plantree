@@ -1,7 +1,8 @@
-import { isAddress } from '@/lib/utils'
 import { User } from '@/lib/theme.types'
+import { isAddress } from '@/lib/utils'
 
 export function getUserName(user: User) {
+  if (!user) return ''
   const { displayName = '', name } = user
 
   if (displayName) {

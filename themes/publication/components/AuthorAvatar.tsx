@@ -8,11 +8,13 @@ interface Props {
 }
 
 export const AuthorAvatar = ({ post, className }: Props) => {
-  if (post.user.image) {
+  const user = post.authors?.[0]?.user
+  if (!user) return null
+  if (user.image) {
     return (
       <Avatar className={cn('h-6 w-6', className)}>
-        <AvatarImage src={post.user.image || ''} />
-        <AvatarFallback>{post.user.displayName}</AvatarFallback>
+        <AvatarImage src={user.image || ''} />
+        <AvatarFallback>{user.displayName}</AvatarFallback>
       </Avatar>
     )
   }
@@ -21,7 +23,7 @@ export const AuthorAvatar = ({ post, className }: Props) => {
     <div
       className={cn(
         'bg-red-300 h-6 w-6 rounded-full shrink-0',
-        generateGradient(post.user.displayName || post.user.name),
+        generateGradient(user.displayName || user.name),
         className,
       )}
     ></div>

@@ -17,8 +17,8 @@ interface PostItemProps {
 
 export function PostItem({ post, receivers = [] }: PostItemProps) {
   const { slug, title } = post
-
-  const name = getUserName(post.user)
+  const user = post.authors?.[0]?.user
+  const name = getUserName(user)
 
   const params = useSearchParams()!
   const type = params.get('type')
@@ -76,11 +76,12 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
   }
 
   const getAvatar = () => {
-    if (post.user.image) {
+    if (!user) return null
+    if (user.image) {
       return (
         <Avatar className="h-6 w-6">
-          <AvatarImage src={post.user.image || ''} />
-          <AvatarFallback>{post.user.displayName}</AvatarFallback>
+          <AvatarImage src={user.image || ''} />
+          <AvatarFallback>{user.displayName}</AvatarFallback>
         </Avatar>
       )
     }
@@ -89,7 +90,7 @@ export function PostItem({ post, receivers = [] }: PostItemProps) {
       <div
         className={cn(
           'h-6 w-6 rounded-full shrink-0',
-          generateGradient(post.user.displayName || post.user.name),
+          generateGradient(user.displayName || user.name),
         )}
       ></div>
     )
@@ -175,6 +176,7 @@ function generateGradient(walletAddress: string) {
 }
 
 function getUserName(user: User) {
+  if (!user) return ''
   const { displayName = '', name } = user
 
   if (displayName) {

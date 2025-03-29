@@ -168,7 +168,6 @@ export type Post = {
       user: User
     }
   >
-  user: User
 }
 
 export type User = {

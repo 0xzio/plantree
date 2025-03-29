@@ -14,7 +14,8 @@ interface Props {
 }
 
 export default function FeaturedPost({ post }: Props) {
-  const name = getUserName(post.user)
+  const user = post.authors?.[0]?.user
+  const name = getUserName(user)
 
   const nodes: any[] =
     typeof post.content === 'string' && post.content.length

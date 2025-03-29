@@ -22,7 +22,7 @@ export const AboutCard = ({ site, about }: Props) => {
   const { setIsOpen } = useLoginDialog()
   const pathname = usePathname()
   return (
-    <div className="mb-10 hover:text-foreground text-foreground/80 bg-white p-5 drop-shadow-xs">
+    <div className="mb-10 hover:text-foreground text-foreground/80 p-5 drop-shadow-xs">
       <div className="flex flex-col shrink-0 mb-4">
         {site.logo && (
           <Image

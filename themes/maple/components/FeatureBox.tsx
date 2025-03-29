@@ -10,6 +10,7 @@ interface Props {
 }
 
 export function FeatureBox({ post }: Props) {
+  const user = post.authors?.[0]?.user
   return (
     <Link
       href={`/posts/${post.slug}`}
@@ -41,21 +42,21 @@ export function FeatureBox({ post }: Props) {
             {post.title}
           </h2>
         </div>
-        <div className="flex items-center gap-1">
-          <Avatar>
-            <AvatarImage src={getUrl(post.user.image || '')} />
-            <AvatarFallback>{post.user.name.slice(0, 1)}</AvatarFallback>
-          </Avatar>
-          <div>
-            <div className="font-semibold">
-              {post.user.displayName || post.user.name}
+        {user && (
+          <div className="flex items-center gap-1">
+            <Avatar>
+              <AvatarImage src={getUrl(user.image || '')} />
+              <AvatarFallback>{user.name.slice(0, 1)}</AvatarFallback>
+            </Avatar>
+            <div>
+              <div className="font-semibold">
+                {user.displayName || user.name}
+              </div>
+              <div>{post.description}</div>
             </div>
-            <div>{post.description}</div>
           </div>
-        </div>
+        )}
       </div>
-
     </Link>
-    
   )
 }

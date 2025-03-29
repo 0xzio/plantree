@@ -14,20 +14,11 @@ interface Props {
 }
 
 export function HomePage({ posts = [], site }: Props) {
-  const addresses = posts.reduce((acc, { user }) => {
-    const { accounts = [] } = user
-    for (const a of accounts) {
-      if (a.providerType === 'WALLET') acc.push(a.providerAccountId)
-    }
-    return acc
-  }, [] as string[])
-  const receivers = Array.from(new Set(addresses))
-
   return (
     <div className="mx-auto sm:max-w-xl flex flex-col gap-10 mt-4">
       <div className="flex flex-col divide-y divide-foreground/5">
         {posts.map((post) => {
-          return <PostItem key={post.slug} post={post} receivers={receivers} />
+          return <PostItem key={post.slug} post={post} receivers={[]} />
         })}
       </div>
     </div>

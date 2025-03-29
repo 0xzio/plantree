@@ -35,7 +35,9 @@ export const FeaturedPosts = ({ posts }: Props) => {
               <div className="flex items-center text-xs gap-2">
                 <div className="flex items-center gap-1">
                   <AuthorAvatar post={post} className="h-5 w-5" />
-                  <div className="font-medium">{getUserName(post.user)}</div>
+                  <div className="font-medium">
+                    {getUserName(post.authors[0]?.user)}
+                  </div>
                 </div>
                 <time className="text-xs text-foreground/50">
                   {/* {format(new Date(post.updatedAt), 'MM/dd')} */}

@@ -1,11 +1,11 @@
 import { ContentRender } from '@/components/theme-ui/ContentRender'
+import { Link } from '@/lib/i18n'
 import { Post, Site } from '@/lib/theme.types'
 import { cn, formatDate } from '@/lib/utils'
 import { format } from 'date-fns'
 import Image from 'next/image'
 import { getUserName } from '../lib/getUserName'
 import { AuthorAvatar } from './AuthorAvatar'
-import { Link } from '@/lib/i18n'
 
 interface Props {
   posts: Post[]
@@ -32,7 +32,9 @@ export const MostPopular = ({ posts }: Props) => {
               <div className="flex items-center text-xs gap-2">
                 <div className="flex items-center gap-1">
                   <AuthorAvatar post={post} className="h-5 w-5" />
-                  <div className="font-medium">{getUserName(post.user)}</div>
+                  <div className="font-medium">
+                    {getUserName(post.authors?.[0]?.user)}
+                  </div>
                 </div>
                 <time className="text-xs text-foreground/50">
                   {/* {format(new Date(post.updatedAt), 'MM/dd')} */}
