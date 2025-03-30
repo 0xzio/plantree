@@ -22,7 +22,7 @@ import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { cn } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
-import { PostType } from '@prisma/client'
+import { PostType } from '@/lib/theme.types'
 import {
   AudioLinesIcon,
   BookAudioIcon,

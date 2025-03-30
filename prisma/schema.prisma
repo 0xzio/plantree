@@ -502,16 +502,6 @@ model Prop {
   @@map("prop")
 }
 
-enum PostType {
-  ARTICLE
-  IMAGE
-  VIDEO
-  AUDIO
-  NFT
-  FIGMA
-  NOTE
-}
-
 enum GateType {
   FREE
   PAID
@@ -543,7 +533,7 @@ model Post {
   props         Json?
   cid           String        @default("") @db.VarChar(100)
   creationId    Int?          @db.Integer
-  type          PostType      @default(ARTICLE)
+  type          String        @default("ARTICLE") @db.VarChar(50)
   gateType      GateType      @default(FREE)
   status        PostStatus    @default(DRAFT)
   commentStatus CommentStatus @default(OPEN)

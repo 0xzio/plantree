@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog'
 import { useCreatePost } from '@/hooks/useCreatePost'
 import { cn } from '@/lib/utils'
-import { PostType } from '@prisma/client'
+import { PostType } from '@/lib/theme.types'
 import {
   CaseSensitive,
   Cat,

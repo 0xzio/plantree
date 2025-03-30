@@ -19,11 +19,11 @@ import { PostStatus, ROOT_DOMAIN } from '@/lib/constants'
 import { extractErrorMessage } from '@/lib/extractErrorMessage'
 import { getSiteDomain } from '@/lib/getSiteDomain'
 import { Link } from '@/lib/i18n'
+import { PostType } from '@/lib/theme.types'
 import { api } from '@/lib/trpc'
 import { useSession } from '@/lib/useSession'
 import { cn, getUrl } from '@/lib/utils'
 import { Trans } from '@lingui/react/macro'
-import { PostType } from '@prisma/client'
 import { format } from 'date-fns'
 import {
   Archive,
@@ -34,6 +34,8 @@ import {
 } from 'lucide-react'
 import Image from 'next/image'
 import { toast } from 'sonner'
+
+// import { PostType } from '@/lib/theme.types'
 
 interface PostItemProps {
   status: PostStatus

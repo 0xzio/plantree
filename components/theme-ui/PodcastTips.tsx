@@ -1,6 +1,6 @@
 import { Post } from '@/lib/theme.types'
 import { cn, convertSecondsToTime } from '@/lib/utils'
-import { PostType } from '@prisma/client'
+import { PostType } from '@/lib/theme.types'
 import { ExternalLink, PodcastIcon } from 'lucide-react'
 
 interface Props {
