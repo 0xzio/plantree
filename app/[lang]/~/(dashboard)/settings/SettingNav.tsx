@@ -38,7 +38,6 @@ export function SettingNav({}: Props) {
     orders: '/~/settings/orders',
     seo: '/~/settings/seo',
     campaign: '/~/settings/campaign',
-    design: '/~/settings/design',
     dangerous: '/~/settings/dangerous',
     members: '/~/settings/members',
   }
@@ -146,9 +145,6 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.catalogue} className={linkClassName(Paths.catalogue)}>
           <Trans>Catalogue</Trans>
-        </Link>
-        <Link href={Paths.design} className={linkClassName(Paths.design)}>
-          <Trans>Design</Trans>
         </Link>
       </Section>
 

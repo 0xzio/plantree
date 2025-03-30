@@ -12,6 +12,10 @@ import { useThemeName } from './hooks/useThemeName'
 
 const themes = [
   {
+    name: 'Garden',
+    value: 'garden',
+  },
+  {
     name: 'Minimal',
     value: 'minimal',
   },
@@ -50,10 +54,6 @@ const themes = [
   {
     name: 'Card',
     value: 'card',
-  },
-  {
-    name: 'Garden',
-    value: 'garden',
   },
   {
     name: 'Docs',

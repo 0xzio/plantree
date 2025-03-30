@@ -165,6 +165,14 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           ></SidebarItem>
         </Link>
 
+        <Link href="/~/design">
+          <SidebarItem
+            isActive={pathname.startsWith('/~/design')}
+            icon={<Zap size={18} />}
+            label={<Trans>Design</Trans>}
+          ></SidebarItem>
+        </Link>
+
         <Link href="/~/settings">
           <SidebarItem
             isActive={pathname === '/~/settings'}

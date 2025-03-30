@@ -62,6 +62,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
   const isSettings = pathname?.includes('/~/settings')
   const isDiscover = pathname?.includes('/~/discover')
   const isSeries = pathname?.includes('/~/series')
+  const isDesign = pathname?.includes('/~/design')
   const params = useSearchParams()!
   const isFullWidth =
     isPost ||
@@ -69,6 +70,7 @@ export function DashboardLayout({ children }: { children: ReactNode }) {
     isAssets ||
     isSettings ||
     isDiscover ||
+    isDesign ||
     !!params.get('id')
 
   if (!site || isLoading) {
