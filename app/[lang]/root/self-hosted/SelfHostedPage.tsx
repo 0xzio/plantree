@@ -86,7 +86,7 @@ function Content() {
               href="https://docs.plantree.xyz/en/posts/deploy-penx-with-one-click-tools"
               target="_blank"
             >
-              <Trans>Deploy PenX with One-click tools</Trans>
+              <Trans>Deploy Plantree with One-click tools</Trans>
             </a>
             .
           </div>

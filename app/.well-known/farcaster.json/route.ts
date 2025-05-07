@@ -9,7 +9,7 @@ export async function GET() {
     },
     frame: {
       version: '0.0.0',
-      name: 'PenX',
+      name: 'Plantree',
       iconUrl: `${appUrl}/images/logo-192.png`,
       splashImageUrl: `${appUrl}/images/logo-192.png`,
       splashBackgroundColor: '#f7f7f7',

@@ -19,7 +19,7 @@ export function SubscriptionGuideDialog({}: Props) {
     <Dialog open={isOpen} onOpenChange={(v) => setIsOpen(v)}>
       <DialogContent className="sm:max-w-[600px] grid gap-4">
         <DialogHeader>
-          <DialogTitle className="">Subscribe to PenX</DialogTitle>
+          <DialogTitle className="">Subscribe to Plantree</DialogTitle>
           <DialogDescription>
             Subscribe to Penx to support us in building the best product and
             enjoy the features:

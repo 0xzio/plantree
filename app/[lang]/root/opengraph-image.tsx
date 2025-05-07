@@ -24,7 +24,7 @@ export default async function Image() {
           }
         }
       >
-        <h1 tw="text-8xl -mt-6 leading-none">PenX</h1>
+        <h1 tw="text-8xl -mt-6 leading-none">Plantree</h1>
         <div tw="text-3xl leading-none">Build your own Digital Garden</div>
       </div>
     ),

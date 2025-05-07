@@ -5,7 +5,7 @@ export function PricingSlogan() {
         <div className="">Pricing</div>
       </div>
       <div className="w-full md:max-w-[600px] text-lg text-foreground/60 text-center mx-auto">
-        Become a member of PenX
+        Become a member of Plantree
       </div>
     </div>
   )

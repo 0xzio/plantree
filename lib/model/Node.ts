@@ -102,8 +102,8 @@ export class Node {
     if (this.isDatabaseRoot) return 'Databases'
     if (this.isDailyRoot) return 'Journals'
     if (this.isDatabase) {
-      if (this.isTodoDatabase) return 'PenX todos'
-      if (this.isFileDatabase) return 'PenX files'
+      if (this.isTodoDatabase) return 'Plantree todos'
+      if (this.isFileDatabase) return 'Plantree files'
       return this.props.name || ''
     }
 

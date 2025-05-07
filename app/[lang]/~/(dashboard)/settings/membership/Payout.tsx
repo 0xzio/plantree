@@ -39,7 +39,7 @@ export function Payout({}: Props) {
         <CardHeader>
           <CardTitle>Withdrawals</CardTitle>
           <CardDescription>
-            PenX currently only supports withdrawals to crypto wallet.
+            Plantree currently only supports withdrawals to crypto wallet.
           </CardDescription>
         </CardHeader>
         <CardContent>

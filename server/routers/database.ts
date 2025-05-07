@@ -775,7 +775,7 @@ export const databaseRouter = router({
           const recordFields = newFields.reduce(
             (acc, field, index) => {
               let value = ''
-              if (index === 0) value = 'PenX'
+              if (index === 0) value = 'Plantree'
               if (index === 1) value = 'modern dynamic blogging tools'
               if (index === 2) value = PENX_LOGO_URL
               if (index === 3) value = PENX_LOGO_URL
@@ -991,7 +991,7 @@ export const databaseRouter = router({
             (acc, field, index) => {
               let value: any = ''
               if (index === 0) value = 'Zio'
-              if (index === 1) value = 'Creator of PenX'
+              if (index === 1) value = 'Creator of Plantree'
               if (index === 2) value = PENX_LOGO_URL
               if (index === 3) value = 'https://zio.plantree.xyz'
               if (index === 4) value = [approvedId]

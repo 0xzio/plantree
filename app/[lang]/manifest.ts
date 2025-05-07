@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next'
 
 export default async function manifest(): Promise<MetadataRoute.Manifest> {
   return {
-    name: 'PenX',
-    short_name: 'PenX',
+    name: 'Plantree',
+    short_name: 'Plantree',
     description: 'Build your own Digital Garden',
     start_url: '/',
     display: 'standalone',

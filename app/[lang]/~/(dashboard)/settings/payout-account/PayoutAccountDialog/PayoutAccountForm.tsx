@@ -93,7 +93,7 @@ export function PayoutAccountForm() {
             <FormItem className="w-full">
               <FormLabel>Transfer method</FormLabel>
               <FormDescription>
-                PenX currently only supports withdrawals to crypto wallet.
+                Plantree currently only supports withdrawals to crypto wallet.
               </FormDescription>
               <FormControl>
                 <ToggleGroup

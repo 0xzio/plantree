@@ -13,7 +13,7 @@ export function getChain() {
 }
 
 export const wagmiConfig = getDefaultConfig({
-  appName: 'PenX',
+  appName: 'Plantree',
   projectId: PROJECT_ID,
   chains: [getChain()],
   ssr: true,

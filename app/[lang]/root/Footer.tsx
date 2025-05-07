@@ -84,7 +84,7 @@ export function Footer({}: Props) {
         <div className="flex gap-2 text-sm justify-center item-center text-foreground/50">
           <div className="flex items-center">{`© ${new Date().getFullYear()}`}</div>
           <div className="flex items-center">{` • `}</div>
-          <div className="flex items-center">PenX</div>
+          <div className="flex items-center">Plantree</div>
           <div className="flex items-center">{` • `}</div>
           <div className="flex items-center">All rights reserved</div>
           <div className="flex items-center">{` • `}</div>

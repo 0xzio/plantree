@@ -25,7 +25,7 @@ export function CliLogin() {
   return (
     <div className="p-10 h-screen flex items-center justify-center flex-col bg-background">
       <div className="text-3xl font-bold">
-        <Trans>Login to PenX CLI</Trans>
+        <Trans>Login to Plantree CLI</Trans>
       </div>
       <div className="text-foreground/500">
         <Trans>Please confirm your authorization for this login.</Trans>

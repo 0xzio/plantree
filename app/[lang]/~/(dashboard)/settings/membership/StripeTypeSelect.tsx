@@ -19,8 +19,8 @@ export function StripeTypeSelect({ value, onSelect }: StripeTypeSelectProps) {
       />
       <StripeTypeItem
         selected={value === StripeType.PLATFORM}
-        title="PenX stripe"
-        description="You don't have a own Stripe account, user will pay to PenX, and you can withdraw from PenX."
+        title="Plantree stripe"
+        description="You don't have a own Stripe account, user will pay to Plantree, and you can withdraw from Plantree."
         onClick={() => onSelect(StripeType.PLATFORM)}
       />
     </div>

@@ -52,7 +52,7 @@ export async function handleEvent(event: Stripe.Event) {
       where: { id: siteId },
     })
 
-    const subscribePenX = async () => {
+    const subscribePlantree = async () => {
       const referral = await prisma.referral.findUnique({
         where: { userId: site.userId },
         include: { user: true },
@@ -175,7 +175,7 @@ export async function handleEvent(event: Stripe.Event) {
     }
 
     if (subscriptionTarget === SubscriptionTarget.PENX) {
-      await subscribePenX()
+      await subscribePlantree()
     }
 
     if (subscriptionTarget === SubscriptionTarget.SITE) {

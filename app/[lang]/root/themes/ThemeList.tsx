@@ -34,7 +34,7 @@ export function ThemeList() {
       <div className="text-center space-y-4">
         <div className="text-6xl font-bold">Themes</div>
         <div className="text-xl text-foreground/60">
-          Some beautiful themes for PenX.
+          Some beautiful themes for Plantree.
         </div>
       </div>
       <div className="bg-transparent">

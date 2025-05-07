@@ -26,7 +26,7 @@ export function LoginDialog({}: Props) {
           <>
             <DialogHeader>
               <DialogTitle className="mb-4 text-2xl text-center">
-                <Trans>Welcome to PenX</Trans>
+                <Trans>Welcome to Plantree</Trans>
               </DialogTitle>
               <DialogDescription className="hidden"></DialogDescription>
             </DialogHeader>
@@ -38,7 +38,7 @@ export function LoginDialog({}: Props) {
           <div className="h-[290px]">
             <DialogHeader>
               <DialogTitle className="mb-6 text-2xl text-center">
-                <Trans>Register to PenX</Trans>
+                <Trans>Register to Plantree</Trans>
               </DialogTitle>
             </DialogHeader>
             <RegisterForm />

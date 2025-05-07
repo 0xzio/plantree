@@ -16,7 +16,7 @@ export function TextLogo({ className }: Props) {
     <div
       className={cn('font-bold text-2xl flex', logoFont.className, className)}
     >
-      <span className="">PenX</span>
+      <span className="">Plantree</span>
     </div>
   )
 }

@@ -87,7 +87,7 @@ export function ImportDialog({ open, onOpenChange }: ImportDialogProps) {
           <FileImportTab
             isImporting={isImporting}
             onFileSelect={handleFileImport}
-            description="Import JSON file exported from PenX."
+            description="Import JSON file exported from Plantree."
             acceptTypes="application/json"
             fileType="JSON"
           />

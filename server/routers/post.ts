@@ -60,7 +60,7 @@ export const postRouter = router({
     return await prisma.post.findMany({
       where: {
         title: {
-          notIn: ['Welcome to PenX!', ''],
+          notIn: ['Welcome to Plantree!', ''],
         },
         siteId: {
           notIn: ['cc79cefe-0cf8-4cd7-9970-66740024b618'],
@@ -277,7 +277,7 @@ export const postRouter = router({
         postId: z.string(),
         slug: z.string(),
         creationId: z.number().optional(),
-        type: z.nativeEnum(PostType),
+        type: z.string(),
         gateType: z.nativeEnum(GateType),
         collectible: z.boolean(),
         delivered: z.boolean(),

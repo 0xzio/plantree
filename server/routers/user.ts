@@ -248,7 +248,7 @@ export const userRouter = router({
         `${prefix}${ROOT_DOMAIN}/validate-email?token=${token}`,
       )
       const result = await sendEmail({
-        from: 'PenX<no-reply@plantree.xyz>',
+        from: 'Plantree<no-reply@plantree.xyz>',
         to: [input.email],
         subject: 'Verify your email address',
         html: content,

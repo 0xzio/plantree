@@ -54,11 +54,11 @@ export default function Page() {
           </div>
           <div className="">
             Tip token for{' '}
-            <span className="text-sky-500 font-bold">PenX community</span>
+            <span className="text-sky-500 font-bold">Plantree community</span>
           </div>
         </div>
         <div className="text-xl leading-relaxed text-foreground/80">
-          $PEN is the token of PenX community, a Web3 blogging platform that
+          $PEN is the token of Plantree community, a Web3 blogging platform that
           champions content ownership and free expression. Designed to reward
           quality creators, $PEN enables tipping, subscription models, and
           governance participation. By holding $PEN, users can engage in
@@ -88,7 +88,7 @@ export default function Page() {
             <div className="space-y-4">
               <AllocationItem
                 percent="66%"
-                desc="PenX community"
+                desc="Plantree community"
                 dotColor="bg-green-500"
               />
               <AllocationItem
@@ -122,7 +122,7 @@ export default function Page() {
           <div className="flex flex-col gap-4">
             <div className="flex items-center gap-4">
               <div className="text-xl font-medium">
-                1. Sponsor PenX project and get $PEN:{' '}
+                1. Sponsor Plantree project and get $PEN:{' '}
               </div>
               <Button size="sm" asChild variant="brand">
                 <Link href="/sponsor">Go to sponsor</Link>
@@ -138,7 +138,7 @@ export default function Page() {
             <div className="flex flex-col gap-2 text-foreground">
               <div className="flex items-center gap-4">
                 <div className="text-xl font-medium ">
-                  3. Contribute to the PenX project and earn rewards.
+                  3. Contribute to the Plantree project and earn rewards.
                 </div>
                 <Button size="sm" asChild variant="brand">
                   <Link href="/sponsor">Request rewards</Link>
@@ -148,65 +148,65 @@ export default function Page() {
                 <li>
                   Contribute code to{' '}
                   <a
-                    href="https://github.com/penx-lab/penx"
+                    href="https://github.com/0xzio/plantree"
                     className="text-brand"
                   >
-                    github.com/penx-lab/penx
+                    github.com/0xzio/plantree
                   </a>
                   .
                 </li>
                 <li>
                   Contribute valid issues to{' '}
                   <a
-                    href="https://github.com/penx-lab/penx"
+                    href="https://github.com/0xzio/plantree"
                     target="_blank"
                     className="text-brand"
                   >
-                    github.com/penx-lab/penx
+                    github.com/0xzio/plantree
                   </a>
                   .
                 </li>
                 <li>
                   Improve docs{' '}
                   <a
-                    href="https://github.com/penx-lab/penx-docs"
+                    href="https://github.com/0xzio/plantree-docs"
                     target="_blank"
                     className="text-brand"
                   >
-                    https:/github.com/penx-lab/penx-docs
+                    https:/github.com/0xzio/plantree-docs
                   </a>
                   .
                 </li>
                 <li>
                   Improve official themes{' '}
                   <a
-                    href="https://github.com/penx-lab/penx-themes"
+                    href="https://github.com/0xzio/plantree-themes"
                     target="_blank"
                     className="text-brand"
                   >
-                    github.com/penx-lab/penx-themes
+                    github.com/0xzio/plantree-themes
                   </a>
                   .
                 </li>
                 <li>Create new theme.</li>
-                <li>Any contributions to the PenX project...</li>
+                <li>Any contributions to the Plantree project...</li>
               </ul>
             </div>
 
             <div className="flex flex-col gap-2">
               <div className="flex items-center gap-4">
                 <div className="text-xl font-medium">
-                  4. Curate the PenX project and earn rewards.
+                  4. Curate the Plantree project and earn rewards.
                 </div>
                 <Button size="sm" asChild variant="brand">
                   <Link href="/sponsor">Request rewards</Link>
                 </Button>
               </div>
               <ul className="list-disc list-inside ml-5">
-                <li>Write some post about PenX</li>
-                <li>Post a tweet about PenX on X</li>
-                <li>Make a cast about PenX on Farcaster</li>
-                <li>Any curation to the PenX project...</li>
+                <li>Write some post about Plantree</li>
+                <li>Post a tweet about Plantree on X</li>
+                <li>Make a cast about Plantree on Farcaster</li>
+                <li>Any curation to the Plantree project...</li>
               </ul>
             </div>
           </div>

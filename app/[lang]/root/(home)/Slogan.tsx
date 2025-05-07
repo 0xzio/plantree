@@ -26,7 +26,7 @@ export function Slogan() {
       </div>
 
       <div className="text-xl mx-auto max-w-lg text-foreground/80">
-        <Trans>PenX is a tool for building a digital garden.</Trans>
+        <Trans>Plantree is a tool for building a digital garden.</Trans>
         <br />
         <Trans>
           Having your own garden, start planting, and watch it grow.

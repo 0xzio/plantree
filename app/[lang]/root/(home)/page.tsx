@@ -18,7 +18,7 @@ const frame = {
     title: 'Create my digital garden',
     action: {
       type: 'launch_frame',
-      name: 'PenX',
+      name: 'Plantree',
       url: appUrl,
       splashImageUrl: `${appUrl}/images/logo-192.png`,
       splashBackgroundColor: '#f7f7f7',
@@ -31,11 +31,11 @@ export const revalidate = 86400 // 3600 * 24 * 365
 
 export async function generateMetadata(): Promise<Metadata> {
   return {
-    title: 'PenX - build your own Digital Garden',
+    title: 'Plantree - build your own Digital Garden',
     description:
-      'PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.',
+      'Plantree is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.',
     openGraph: {
-      title: 'PenX',
+      title: 'Plantree',
       description: 'Build your own Digital Garden',
     },
     other: {

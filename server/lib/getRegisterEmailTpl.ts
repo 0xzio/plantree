@@ -17,7 +17,7 @@ export function getRegisterEmailTpl(link: string): string {
     <tbody>
       <tr style="width:100%">
         <td>
-          <h1>PenX</h1>
+          <h1>Plantree</h1>
           <h1 style="font-size:28px;font-weight:bold;margin-top:48px">
             Verify your email address
           </h1>
@@ -27,7 +27,7 @@ export function getRegisterEmailTpl(link: string): string {
               <tr>
                 <td>
                   <p style="font-size:16px;line-height:26px;margin-bottom:16px;margin-top: 0;">
-                    To start using PenX, just click the verify email button below:
+                    To start using Plantree, just click the verify email button below:
 
                   </p>
 
@@ -41,7 +41,7 @@ export function getRegisterEmailTpl(link: string): string {
             </tbody>
           </table>
           <p style="font-size:16px;line-height:26px;margin:16px 0">
-            Best,<br />- PenX Team
+            Best,<br />- Plantree Team
           </p>
         </td>
       </tr>

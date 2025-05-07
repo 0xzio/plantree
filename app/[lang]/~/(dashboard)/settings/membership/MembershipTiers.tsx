@@ -43,7 +43,7 @@ export function MembershipTiers({ type }: Props) {
             <Trans>Tiers</Trans>
           </div>
           <Badge>
-            {site.stripeType === StripeType.OWN ? 'Own stripe' : 'PenX stripe'}
+            {site.stripeType === StripeType.OWN ? 'Own stripe' : 'Plantree stripe'}
           </Badge>
         </div>
 

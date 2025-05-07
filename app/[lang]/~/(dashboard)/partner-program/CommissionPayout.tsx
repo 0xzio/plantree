@@ -21,7 +21,7 @@ export function CommissionPayout({}: Props) {
         <div className="space-y-1">
           <div className="text-xl font-semibold">Commission withdrawal</div>
           <div className="text-foreground/60">
-            PenX currently only supports withdrawals to crypto wallet.
+            Plantree currently only supports withdrawals to crypto wallet.
           </div>
         </div>
         <div className="border border-foreground/5 rounded-xl p-5">

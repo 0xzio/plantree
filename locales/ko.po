@@ -302,7 +302,7 @@ msgid "Deploy new site"
 msgstr ""
 
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:89
-msgid "Deploy PenX with One-click tools"
+msgid "Deploy Plantree with One-click tools"
 msgstr ""
 
 #: app/[lang]/root/self-hosted/SelfHostedPage.tsx:33
@@ -468,7 +468,7 @@ msgid "Log out"
 msgstr ""
 
 #: app/[lang]/root/cli-login/CliLogin.tsx:28
-msgid "Login to PenX CLI"
+msgid "Login to Plantree CLI"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/series/SeriesDialog/SeriesForm.tsx:114
@@ -595,7 +595,7 @@ msgid "Paypal"
 msgstr ""
 
 #: app/[lang]/root/(home)/Slogan.tsx:29
-msgid "PenX is a tool for building a digital garden."
+msgid "Plantree is a tool for building a digital garden."
 msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:59
@@ -673,7 +673,7 @@ msgid "Register"
 msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:41
-msgid "Register to PenX"
+msgid "Register to Plantree"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/navigation/NavLinkDialog/NavLinkForm.tsx:201
@@ -837,7 +837,7 @@ msgid "Wallet login "
 msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:29
-msgid "Welcome to PenX"
+msgid "Welcome to Plantree"
 msgstr ""
 
 #: themes/square/components/CreatePostButton.tsx:28

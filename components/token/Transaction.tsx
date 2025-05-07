@@ -52,7 +52,7 @@ export const Transaction = () => {
       setOutput('')
       inkBalance.refetch()
       eth.refetch()
-      toast.success('Sponsor PenX successfully!')
+      toast.success('Sponsor Plantree successfully!')
     } catch (error) {
       const msg = extractErrorMessage(error)
       toast.error(msg || 'Failed to sponsor')

@@ -73,7 +73,7 @@ export const Nav = () => {
               className="inline-flex text-foreground/80 cursor-pointer"
               onClick={() => {
                 toast.success(
-                  'Join PenX Discord and contact 0xZio in "Join this project" channel.',
+                  'Join Plantree Discord and contact 0xZio in "Join this project" channel.',
                 )
               }}
             >

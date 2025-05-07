@@ -27,7 +27,7 @@ export function LinkWalletButton() {
             return openConnectModal?.()
           }
           try {
-            const message = 'Link a wallet to PenX'
+            const message = 'Link a wallet to Plantree'
             const signature = await signMessageAsync({
               message,
             })

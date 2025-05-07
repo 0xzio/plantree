@@ -5,7 +5,7 @@ export function MarketplaceSlogan() {
         Extensions
       </div>
       <div className="text-2xl text-foreground/60">
-        Extensions for PenX Desktop App
+        Extensions for Plantree Desktop App
       </div>
     </div>
   )

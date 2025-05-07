@@ -42,7 +42,7 @@ export function ValidateEmail() {
 
   return (
     <div className="p-10 h-[80vh] flex items-center justify-center flex-col">
-      <div className="text-3xl font-bold">Creating new PenX account...</div>
+      <div className="text-3xl font-bold">Creating new Plantree account...</div>
 
       <div className="flex items-center justify-center mt-6">
         <LoadingDots className="bg-foreground" />

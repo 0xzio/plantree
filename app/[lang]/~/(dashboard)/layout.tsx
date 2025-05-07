@@ -25,10 +25,10 @@ const roboto = Poppins({
   display: 'swap',
 })
 
-const title = 'PenX - build your own digital garden'
+const title = 'Plantree - build your own digital garden'
 
 const description =
-  'PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.'
+  'Plantree is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.'
 
 const image = 'https://plantree.xyz/opengraph-image'
 
