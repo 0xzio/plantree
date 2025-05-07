@@ -533,7 +533,7 @@ model Post {
   props         Json?
   cid           String        @default("") @db.VarChar(100)
   creationId    Int?          @db.Integer
-  type          String        @default("ARTICLE") @db.VarChar(50)
+  type          String        @default("ARTICLE")
   gateType      GateType      @default(FREE)
   status        PostStatus    @default(DRAFT)
   commentStatus CommentStatus @default(OPEN)
