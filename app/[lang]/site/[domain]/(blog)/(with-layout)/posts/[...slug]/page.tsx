@@ -40,7 +40,7 @@ export async function generateMetadata(props: {
 
   const image = post?.image
     ? getUrl(post?.image)
-    : 'https://penx.io/opengraph-image'
+    : 'https://plantree.xyz/opengraph-image'
 
   return {
     title,
@@ -57,7 +57,7 @@ export async function generateMetadata(props: {
       images: [image],
       // creator: '@zio_penx',
     },
-    metadataBase: new URL('https://penx.io'),
+    metadataBase: new URL('https://plantree.xyz'),
   }
 }
 

@@ -520,6 +520,16 @@ enum CommentStatus {
   CLOSED
 }
 
+enum PostType {
+  ARTICLE
+  IMAGE
+  VIDEO
+  AUDIO
+  NFT
+  FIGMA
+  NOTE
+}
+
 model Post {
   id            String        @id @default(uuid()) @db.Uuid
   slug          String        @default(uuid())

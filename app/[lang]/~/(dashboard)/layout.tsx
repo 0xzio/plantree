@@ -30,7 +30,7 @@ const title = 'PenX - build your own digital garden'
 const description =
   'PenX is a tool for building a digital garden. Having your own garden, start planting, and watch it grow.'
 
-const image = 'https://penx.io/opengraph-image'
+const image = 'https://plantree.xyz/opengraph-image'
 
 export async function generateStaticParams() {
   return linguiConfig.locales.map((lang: any) => ({ lang }))
@@ -39,7 +39,7 @@ export async function generateStaticParams() {
 export const metadata: Metadata = {
   title,
   description,
-  icons: ['https://penx.io/favicon.ico'],
+  icons: ['https://plantree.xyz/favicon.ico'],
   openGraph: {
     title,
     description,
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     images: [image],
     creator: '@zio_penx',
   },
-  metadataBase: new URL('https://penx.io'),
+  metadataBase: new URL('https://plantree.xyz'),
 }
 
 export default async function RootLayout({

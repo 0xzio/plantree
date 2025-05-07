@@ -28,7 +28,7 @@ msgstr ""
 msgid "About"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:166
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:162
 msgid "Access token"
 msgstr ""
 
@@ -69,11 +69,11 @@ msgstr ""
 msgid "Amount"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
 msgid "Analytics"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:129
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:128
 msgid "Appearance"
 msgstr ""
 
@@ -102,7 +102,7 @@ msgstr ""
 msgid "Backlinks"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:182
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
 msgid "Backup"
 msgstr ""
 
@@ -114,7 +114,7 @@ msgstr ""
 msgid "Beautiful themes"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:91
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:90
 msgid "Billing & plan"
 msgstr ""
 
@@ -156,7 +156,7 @@ msgstr ""
 msgid "By subscribing, you'll receive the latest posts directly in your inbox."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:120
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:119
 msgid "Campaign"
 msgstr ""
 
@@ -164,7 +164,7 @@ msgstr ""
 msgid "Cancel"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:148
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:147
 msgid "Catalogue"
 msgstr ""
 
@@ -193,7 +193,7 @@ msgstr ""
 msgid "CLI login successfully"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:160
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:156
 msgid "Collaborators"
 msgstr ""
 
@@ -244,7 +244,7 @@ msgstr ""
 msgid "Contribute"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:181
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:189
 msgid "Coupons"
 msgstr ""
 
@@ -313,7 +313,7 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:151
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:172
 msgid "Design"
 msgstr ""
 
@@ -325,7 +325,7 @@ msgstr ""
 msgid "digital gardens created"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:190
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:198
 msgid "Discover"
 msgstr ""
 
@@ -334,7 +334,7 @@ msgstr ""
 msgid "Docs"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:178
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:174
 msgid "Domain"
 msgstr ""
 
@@ -351,7 +351,7 @@ msgid "Easily create and send newsletters to keep your audience engaged."
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/series/[id]/CatalogueBox/CatalogueItem.tsx:177
-#: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:132
+#: app/[lang]/~/(dashboard)/posts/components/PostItem.tsx:134
 msgid "Edit"
 msgstr ""
 
@@ -383,7 +383,7 @@ msgstr ""
 msgid "Failed to update public status!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:80
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:79
 #: app/[lang]/root/(home)/FeatureList.tsx:105
 msgid "Features"
 msgstr ""
@@ -396,7 +396,7 @@ msgstr ""
 msgid "Footer"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:145
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:144
 #: components/theme-ui/NavigationItem.tsx:17
 msgid "Friends"
 msgstr ""
@@ -405,7 +405,7 @@ msgstr ""
 msgid "Gallery"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:77
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:76
 msgid "General"
 msgstr ""
 
@@ -438,7 +438,7 @@ msgstr ""
 msgid "Image public status updated successfully!"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:189
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:185
 msgid "Import/Export"
 msgstr ""
 
@@ -450,7 +450,7 @@ msgstr ""
 msgid "Latest"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:69
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:68
 msgid "Link accounts"
 msgstr ""
 
@@ -479,11 +479,11 @@ msgstr ""
 msgid "Maintain full control over your content and data."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:111
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:110
 msgid "Members"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:108
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:107
 #: components/theme-ui/MembershipEntry/MembershipEntry.tsx:26
 #: themes/aside/components/Sidebar.tsx:81
 msgid "Membership"
@@ -509,7 +509,7 @@ msgstr ""
 msgid "Name"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:135
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:134
 msgid "Navigation"
 msgstr ""
 
@@ -561,7 +561,7 @@ msgstr ""
 msgid "Optimize your content for search engines with ease."
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:117
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:116
 msgid "Orders"
 msgstr ""
 
@@ -586,7 +586,7 @@ msgstr ""
 msgid "Path"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:63
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:62
 msgid "Payout account"
 msgstr ""
 
@@ -632,15 +632,15 @@ msgstr ""
 msgid "Pricing"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:114
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:113
 msgid "Products"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:57
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:56
 msgid "Profile"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:142
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:141
 #: components/theme-ui/NavigationItem.tsx:16
 #: themes/card/pages/HomePage.tsx:56
 #: themes/aside/pages/HomePage.tsx:48
@@ -688,7 +688,7 @@ msgstr ""
 msgid "Select a type"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:170
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:166
 msgid "SEO"
 msgstr ""
 
@@ -702,7 +702,7 @@ msgid "Series"
 msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/layout.tsx:15
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:172
+#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:180
 #: components/Profile/ProfilePopover.tsx:133
 msgid "Settings"
 msgstr ""
@@ -723,7 +723,7 @@ msgstr ""
 msgid "Slug"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:138
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:137
 msgid "Socials"
 msgstr ""
 
@@ -762,7 +762,7 @@ msgstr ""
 msgid "Table of contents"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:95
+#: app/[lang]/~/(dashboard)/settings/SettingNav.tsx:94
 #: components/theme-ui/NavigationItem.tsx:20
 #: themes/sue/components/PostListWithTag.tsx:32
 #: themes/paper/pages/TagListPage.tsx:14

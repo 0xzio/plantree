@@ -993,7 +993,7 @@ export const databaseRouter = router({
               if (index === 0) value = 'Zio'
               if (index === 1) value = 'Creator of PenX'
               if (index === 2) value = PENX_LOGO_URL
-              if (index === 3) value = 'https://zio.penx.io'
+              if (index === 3) value = 'https://zio.plantree.xyz'
               if (index === 4) value = [approvedId]
               return {
                 ...acc,

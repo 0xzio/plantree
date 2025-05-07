@@ -91,7 +91,7 @@ export async function initUserByAddress(address: string) {
         data: {
           name: address.slice(0, 6),
           description: 'My personal site',
-          logo: 'https://penx.io/logo.png',
+          logo: 'https://plantree.xyz/logo.png',
           domains: {
             create: [
               {
@@ -427,7 +427,7 @@ export async function initUserByEmail(
         data: {
           name: name,
           description: 'My personal site',
-          logo: 'https://penx.io/logo.png',
+          logo: 'https://plantree.xyz/logo.png',
           domains: {
             create: [
               {

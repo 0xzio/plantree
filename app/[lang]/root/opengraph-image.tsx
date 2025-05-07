@@ -18,7 +18,7 @@ export default async function Image() {
         tw="h-full w-full flex flex-col justify-center items-center relative text-white leading-none bg-black"
         style={
           {
-            // backgroundImage: 'url(https://frame.penx.io/og-bg.png)',
+            // backgroundImage: 'url(https://frame.plantree.xyz/og-bg.png)',
             // backgroundSize: 'cover',
             // backgroundPosition: 'bottom center',
           }

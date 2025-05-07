@@ -1,27 +1,27 @@
-export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.penx.io/api/google-oauth'
+export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.plantree.xyz/api/google-oauth'
 // export const GOOGLE_OAUTH_REDIRECT_URI =
 //   'http://localhost:4000/api/google-oauth'
 
 export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
-  'https://www.penx.io/api/link-google-account-oauth'
+  'https://www.plantree.xyz/api/link-google-account-oauth'
 
-export const PENX_URL = 'https://penx.io'
+export const PENX_URL = 'https://plantree.xyz'
 export const STATIC_URL = 'https://asset.penx.me'
 
 export const PENX_LOGO_URL =
   'https://asset.penx.me/6198953ddef817f4466460f15cb470fd766f9fda199918588792dcd0eb432e14'
 
-// export const IPFS_UPLOAD_URL = 'https://penx.io/api/ipfs-upload'
+// export const IPFS_UPLOAD_URL = 'https://plantree.xyz/api/ipfs-upload'
 export const IPFS_UPLOAD_URL = '/api/ipfs-upload'
-export const IPFS_ADD_URL = 'https://penx.io/api/ipfs-add'
+export const IPFS_ADD_URL = 'https://plantree.xyz/api/ipfs-add'
 // export const IPFS_ADD_URL = 'http://localhost:4000/api/ipfs-add'
 export const IPFS_GATEWAY = 'https://ipfs-gateway.spaceprotocol.xyz'
 
 export const GOOGLE_DRIVE_OAUTH_REDIRECT_URI =
-  'https://www.penx.io/api/google-drive-oauth'
+  'https://www.plantree.xyz/api/google-drive-oauth'
 
 export const REFRESH_GOOGLE_DRIVE_OAUTH_TOKEN_URL =
-  'https://www.penx.io/api/refresh-google-drive-token'
+  'https://www.plantree.xyz/api/refresh-google-drive-token'
 
 export enum NetworkNames {
   ARB_SEPOLIA = 'ARB_SEPOLIA',
@@ -55,10 +55,10 @@ export const SUBGRAPH_URL =
 
 export const ALLOCATION_CAP_URL =
   NETWORK === NetworkNames.BASE
-    ? 'https://penx.io/api/allocation-cap'
-    : 'https://sepolia.penx.io/api/allocation-cap'
+    ? 'https://plantree.xyz/api/allocation-cap'
+    : 'https://sepolia.plantree.xyz/api/allocation-cap'
 
 export const DAILY_CLAIM_CAP_URL =
   NETWORK === NetworkNames.BASE
-    ? 'https://penx.io/api/daily-claim-cap'
-    : 'https://sepolia.penx.io/api/daily-claim-cap'
+    ? 'https://plantree.xyz/api/daily-claim-cap'
+    : 'https://sepolia.plantree.xyz/api/daily-claim-cap'

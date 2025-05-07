@@ -101,7 +101,7 @@ export function SubscribeNewsletterForm({ site }: Props) {
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="hello@penx.io"
+                  placeholder="hello@plantree.xyz"
                   {...field}
                   className="w-full"
                 />

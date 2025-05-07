@@ -46,7 +46,7 @@ export function PostList() {
             <TableCell>{post.title}</TableCell>
             <TableCell className="flex flex-col gap-1">
               {post.site.domains.map((item) => {
-                let host = `${item.domain}.penx.io`
+                let host = `${item.domain}.plantree.xyz`
                 if (!item.isSubdomain) {
                   host = item.domain
                 }

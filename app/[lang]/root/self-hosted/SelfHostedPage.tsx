@@ -83,7 +83,7 @@ function Content() {
             <Trans>Read the deployment guide</Trans>:{' '}
             <a
               className="text-brand"
-              href="https://docs.penx.io/en/posts/deploy-penx-with-one-click-tools"
+              href="https://docs.plantree.xyz/en/posts/deploy-penx-with-one-click-tools"
               target="_blank"
             >
               <Trans>Deploy PenX with One-click tools</Trans>

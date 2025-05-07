@@ -90,7 +90,7 @@ export default async function middleware(req: NextRequest) {
   // console.log('====isRoot:', isRoot, path)
   if (isRoot) {
     if (path.startsWith('/docs/')) {
-      const newUrl = `https://docs.penx.io/${path.replace('/docs/', 'posts/')}`
+      const newUrl = `https://docs.plantree.xyz/${path.replace('/docs/', 'posts/')}`
       return NextResponse.rewrite(newUrl)
     }
 

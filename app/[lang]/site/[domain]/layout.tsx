@@ -38,12 +38,12 @@ export async function generateMetadata({
 
   const image = site?.logo
     ? getUrl(site?.logo)
-    : 'https://penx.io/opengraph-image'
+    : 'https://plantree.xyz/opengraph-image'
 
   return {
     title,
     description,
-    icons: [site?.logo ? getUrl(site?.logo) : 'https://penx.io/favicon.ico'],
+    icons: [site?.logo ? getUrl(site?.logo) : 'https://plantree.xyz/favicon.ico'],
     openGraph: {
       title,
       description,
@@ -56,7 +56,7 @@ export async function generateMetadata({
       images: [image],
       creator: '@zio_penx',
     },
-    metadataBase: new URL('https://penx.io'),
+    metadataBase: new URL('https://plantree.xyz'),
   }
 }
 

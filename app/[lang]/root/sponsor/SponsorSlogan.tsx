@@ -7,11 +7,11 @@ export function SponsorSlogan() {
       <div className="w-full md:max-w-[600px] text-lg text-foreground/60 text-center mx-auto">
         PenX is an open-source project and also it is a public good. If you love{' '}
         <a
-          href="https://www.penx.io/"
+          href="https://www.plantree.xyz/"
           target="_blank"
           className="underline decoration-brand text-brand"
         >
-          penx.io
+          plantree.xyz
         </a>{' '}
         project, you can sponsor the PenX project, and you will receive{' '}
         <span className="text-brand">$PEN</span> tokens.

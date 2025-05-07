@@ -40,7 +40,7 @@ const nextConfig = {
       },
       {
         source: '/blog/:path*',
-        destination: 'https://docs.penx.io/posts/:path*',
+        destination: 'https://docs.plantree.xyz/posts/:path*',
         // https://my-blog.super.so/blog/:path*
       },
     ]
@@ -65,9 +65,9 @@ const nextConfig = {
       { hostname: '*.public.blob.vercel-storage.com' },
       { hostname: '*.spaceprotocol.xyz' },
       { hostname: '*.respace.one' },
-      { hostname: '*.penx.io' },
+      { hostname: '*.plantree.xyz' },
       { hostname: '*.penx.me' },
-      { hostname: 'penx.io' },
+      { hostname: 'plantree.xyz' },
       { hostname: 'penx.me' },
       { hostname: 'i.imgur.com' },
       { hostname: 'res.cloudinary.com' },

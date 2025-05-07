@@ -65,7 +65,7 @@ export function Web3SettingForm({}: Props) {
             <FormItem className="w-full">
               <FormLabel>Space ID</FormLabel>
               <FormDescription>
-                Create a space to get a Space ID in: https://www.penx.io
+                Create a space to get a Space ID in: https://www.plantree.xyz
               </FormDescription>
               <FormControl>
                 <Input placeholder="" {...field} className="w-full" />

@@ -180,7 +180,7 @@ export function TipTokenDialog({
             <li>
               Linking your socials account to{' '}
               <a className="text-brand" href="https://farcaster.xyz">
-                penx.io
+                plantree.xyz
               </a>
               .
             </li>

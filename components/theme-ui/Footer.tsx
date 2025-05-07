@@ -25,7 +25,7 @@ export function Footer({ site, className }: Props) {
           <div className="flex items-center">{` • `}</div>
           <div className="flex items-center gap-1">
             Build with
-            <a href="https://penx.io" target="_blank" className="text-brand">
+            <a href="https://plantree.xyz" target="_blank" className="text-brand">
               PenX
             </a>
           </div>

@@ -40,8 +40,8 @@ export function ThemeList() {
       <div className="bg-transparent">
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 border-foreground/10 overflow-hidden border-l border-t justify-center">
           {themes.map((theme, index) => {
-            let host = `theme-${theme}.penx.io`
-            if (theme === 'docs') host = 'docs.penx.io'
+            let host = `theme-${theme}.plantree.xyz`
+            if (theme === 'docs') host = 'docs.plantree.xyz'
             const link = `https://${host}`
             return (
               <div

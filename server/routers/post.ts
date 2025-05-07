@@ -327,7 +327,7 @@ export const postRouter = router({
           content: getPostEmailTpl(
             post.title || '',
             renderSlateToHtml(JSON.parse(post.content)),
-            `https://${domain.domain}.penx.io/posts/${post.slug}`,
+            `https://${domain.domain}.plantree.xyz/posts/${post.slug}`,
             post.image ? getUrl(post.image) : '',
           ),
           creatorId: ctx.token.uid,
