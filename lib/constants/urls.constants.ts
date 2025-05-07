@@ -1,9 +1,10 @@
-export const GOOGLE_OAUTH_REDIRECT_URI = 'https://www.plantree.xyz/api/google-oauth'
+export const GOOGLE_OAUTH_REDIRECT_URI =
+  'https://plantree.xyz/api/google-oauth'
 // export const GOOGLE_OAUTH_REDIRECT_URI =
 //   'http://localhost:4000/api/google-oauth'
 
 export const LINK_GOOGLE_ACCOUNT_REDIRECT_URI =
-  'https://www.plantree.xyz/api/link-google-account-oauth'
+  'https://plantree.xyz/api/link-google-account-oauth'
 
 export const PENX_URL = 'https://plantree.xyz'
 export const STATIC_URL = 'https://asset.penx.me'
