@@ -47,7 +47,6 @@ import {
   TimerIcon,
   UserRoundIcon,
 } from 'lucide-react'
-import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
 import { PodcastTimePlugin } from '../custom-plate-plugins/podcast-time/react'
@@ -214,12 +213,6 @@ const groups: Group[] = [
         icon: <Lightbulb />,
         label: 'Project',
         value: ProjectsPlugin.key,
-      },
-      {
-        focusEditor: false,
-        icon: <DollarSignIcon />,
-        label: 'Campaign',
-        value: CampaignPlugin.key,
       },
       {
         focusEditor: false,

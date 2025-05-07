@@ -621,8 +621,6 @@ export const siteRouter = router({
         await tx.order.deleteMany({ where: { id: siteId } })
         await tx.subscription.deleteMany({ where: { id: siteId } })
         await tx.product.deleteMany({ where: { id: siteId } })
-        await tx.pledge.deleteMany({ where: { id: siteId } })
-        await tx.campaign.deleteMany({ where: { id: siteId } })
         await tx.series.deleteMany({ where: { id: siteId } })
         await tx.subscription.deleteMany({ where: { siteId } })
         await tx.post.deleteMany({ where: { siteId } })

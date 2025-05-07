@@ -188,62 +188,6 @@ export const stripeRouter = router({
       return { success: true, url: session.url }
     }),
 
-  buyCampaignCheckout: protectedProcedure
-    .input(
-      z.object({
-        campaignId: z.string(),
-        siteId: z.string(),
-        host: z.string(),
-        pathname: z.string(),
-        amount: z.number(),
-      }),
-    )
-    .mutation(async ({ ctx, input }) => {
-      const siteId = input.siteId
-      const success_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/buy-campaign-callback`
-      const cancel_url = `${process.env.NEXT_PUBLIC_ROOT_HOST}/api/${siteId}/checkout-cancel-callback`
-
-      const campaign = await prisma.campaign.findUniqueOrThrow({
-        where: { id: input.campaignId },
-      })
-      const priceId = campaign.stripePriceId as string
-
-      console.log('=====>>>success_url:', success_url)
-      const userId = ctx.token.uid
-
-      const cancelQuery = {
-        host: input.host,
-        pathname: input.pathname,
-      }
-
-      const successQuery = {
-        ...cancelQuery,
-        siteId,
-        userId,
-        campaignId: input.campaignId,
-        amount: input.amount,
-      }
-
-      const oauthStripe = await getOAuthStripe(siteId)
-      const session = await oauthStripe.checkout.sessions.create({
-        mode: 'payment',
-        payment_method_types: ['card'],
-        customer_email: ctx.token.email || '',
-        // customer_email: email,
-        client_reference_id: siteId,
-        success_url: `${success_url}?session_id={CHECKOUT_SESSION_ID}&${qs.stringify(successQuery)}`,
-        cancel_url: `${cancel_url}?${qs.stringify(cancelQuery)}`,
-        line_items: [{ price: priceId, quantity: input.amount }],
-        invoice_creation: {
-          enabled: true,
-        },
-      })
-
-      if (!session.url) return { success: false as const }
-
-      return { success: true, url: session.url }
-    }),
-
   cancelSubscription: protectedProcedure
     .input(
       z.object({

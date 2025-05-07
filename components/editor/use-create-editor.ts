@@ -103,8 +103,6 @@ import {
 } from '../custom-plate-plugins/bidirectional-link/react'
 import { BidirectionalLinkElement } from '../custom-plate-plugins/bidirectional-link/react/bidirectional-link-element'
 import { BidirectionalLinkInputElement } from '../custom-plate-plugins/bidirectional-link/react/bidirectional-link-input-element'
-import { CampaignPlugin } from '../custom-plate-plugins/campaign/react'
-import { CampaignElement } from '../custom-plate-plugins/campaign/react/campaign-element'
 import { CommentBoxPlugin } from '../custom-plate-plugins/comment-box/react'
 import { CommentBoxElement } from '../custom-plate-plugins/comment-box/react/comment-box-element'
 import { FriendsPlugin } from '../custom-plate-plugins/friends/react'
@@ -168,7 +166,6 @@ export const viewComponents = {
   [FriendsPlugin.key]: FriendsElement,
   [ProjectsPlugin.key]: ProjectsElement,
   [SocialLinksPlugin.key]: SocialLinksElement,
-  [CampaignPlugin.key]: CampaignElement,
   [PodcastTimePlugin.key]: PodcastTimeElement,
 }
 

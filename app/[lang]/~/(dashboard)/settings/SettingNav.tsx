@@ -37,7 +37,6 @@ export function SettingNav({}: Props) {
     products: '/~/settings/products',
     orders: '/~/settings/orders',
     seo: '/~/settings/seo',
-    campaign: '/~/settings/campaign',
     dangerous: '/~/settings/dangerous',
     members: '/~/settings/members',
   }
@@ -114,9 +113,6 @@ export function SettingNav({}: Props) {
         </Link>
         <Link href={Paths.orders} className={linkClassName(Paths.orders)}>
           <Trans>Orders</Trans>
-        </Link>
-        <Link href={Paths.campaign} className={linkClassName(Paths.campaign)}>
-          <Trans>Campaign</Trans>
         </Link>
       </Section>
 
