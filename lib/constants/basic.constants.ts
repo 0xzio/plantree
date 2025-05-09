@@ -7,8 +7,7 @@ export const isNavigator = typeof navigator !== 'undefined'
 
 export const ROOT_DOMAIN = process.env.NEXT_PUBLIC_ROOT_DOMAIN!
 
-export const GOOGLE_CLIENT_ID =
-  '864679274232-niev1df1dak216q5natclfvg5fhtp7fg.apps.googleusercontent.com'
+export const GOOGLE_CLIENT_ID = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID!
 
 export const PROJECT_ID =
   process.env.NEXT_PUBLIC_PROJECT_ID || '3d31c4aa12acd88d0b8cad38b0a5686a'
@@ -213,4 +212,3 @@ export enum SubscriptionTarget {
   PENX = 'PENX',
   SITE = 'SITE',
 }
-
