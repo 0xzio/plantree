@@ -17,14 +17,7 @@ interface Props {
 }
 
 export const Sidebar = ({ site, tags }: Props) => {
-  const links = [
-    ...site?.navLinks,
-    {
-      pathname: '/creator-fi',
-      title: 'CreatorFi',
-      visible: true,
-    },
-  ] as NavLink[]
+  const links = [...site?.navLinks] as NavLink[]
   return (
     <aside
       className="sidebar w-64 sticky top-0 shrink-0 pt-24 pb-4 overflow-y-auto flex-col pr-2 hidden md:flex"
@@ -69,18 +62,6 @@ export const Sidebar = ({ site, tags }: Props) => {
               </div>
             )
           })}
-
-          {site.spaceId && (
-            <Link
-              href="/membership"
-              className={cn(
-                'font-medium hover:text-brand text-foreground/90',
-                'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
-              )}
-            >
-              <Trans>Membership</Trans>
-            </Link>
-          )}
         </div>
 
         {!!tags.length && (

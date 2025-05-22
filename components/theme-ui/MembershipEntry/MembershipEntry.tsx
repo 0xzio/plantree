@@ -17,7 +17,7 @@ export function MembershipEntry({ className }: Props) {
     <Link
       href={`/subscribe?source=${pathname}`}
       className={cn(
-        'font-medium hover:text-brand text-foreground/90',
+        'font-medium inline-flex hover:text-brand text-foreground/90',
         'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
         isCN && 'py-1',
         className,

@@ -15,14 +15,7 @@ interface Props {
 }
 
 export const Sidebar = ({ site, tags }: Props) => {
-  const links = [
-    ...site?.navLinks,
-    {
-      pathname: '/creator-fi',
-      title: 'CreatorFi',
-      visible: true,
-    },
-  ]
+  const links = [...site?.navLinks]
   return (
     <aside
       className="sidebar w-52 sticky top-0 shrink-0 pl-8 pb-4 overflow-y-auto flex-col pr-2 hidden md:flex"

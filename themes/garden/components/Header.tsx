@@ -22,11 +22,6 @@ interface Props {
 export const Header = ({ site }: Props) => {
   const links = [
     ...site?.navLinks,
-    {
-      pathname: '/creator-fi',
-      title: 'CreatorFi',
-      visible: true,
-    },
   ] as NavLink[]
   return (
     <header className="">

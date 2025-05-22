@@ -40,18 +40,6 @@ export function Navigation({ site, className }: Props) {
       })}
 
       {site.products.length > 0 && <MembershipEntry />}
-
-      {/* {site.spaceId && (
-        <Link
-          href="/membership"
-          className={cn(
-            'font-medium hover:text-brand text-foreground/90',
-            'border border-brand text-brand rounded-full px-2 py-1 hover:bg-brand hover:text-background text-sm',
-          )}
-        >
-          Membership
-        </Link>
-      )} */}
     </div>
   )
 }

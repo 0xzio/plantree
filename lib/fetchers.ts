@@ -535,7 +535,7 @@ function findManyPosts(siteId: string) {
     where: {
       siteId,
       isPage: false,
-      seriesId: null,
+      // seriesId: null,
       status: PostStatus.PUBLISHED,
     },
     orderBy: [{ publishedAt: 'desc' }],
