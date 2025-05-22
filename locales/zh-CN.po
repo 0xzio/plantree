@@ -569,7 +569,6 @@ msgstr ""
 msgid "Pages"
 msgstr "页面"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:164
 #: app/[lang]/root/Nav.tsx:61
 msgid "Partner program"
 msgstr "合伙人计划"
@@ -692,7 +691,6 @@ msgstr ""
 msgid "SEO friendly"
 msgstr ""
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:146
 #: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr "专栏"
@@ -826,10 +824,6 @@ msgstr ""
 
 #: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:110
 msgid "Wallet"
-msgstr ""
-
-#: components/LoginDialog/LoginDialogContent.tsx:70
-msgid "Wallet login "
 msgstr ""
 
 #: components/LoginDialog/LoginDialog.tsx:29

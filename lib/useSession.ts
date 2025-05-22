@@ -73,9 +73,14 @@ export function useSession() {
     if (!session?.isLoggedIn) return undefined
     let planType = session.planType
 
+    const isBeliever =
+      session.believerPeriodEnd &&
+      new Date(session.believerPeriodEnd).getTime() > Date.now()
+
     if (
       session.currentPeriodEnd &&
-      Date.now() > new Date(session.currentPeriodEnd).getTime()
+      Date.now() > new Date(session.currentPeriodEnd).getTime() &&
+      !isBeliever
     ) {
       planType = PlanType.FREE
     }
@@ -87,15 +92,6 @@ export function useSession() {
     const isSubscription = [BillingCycle.MONTHLY, BillingCycle.YEARLY].includes(
       session?.billingCycle as any,
     )
-
-    let isBeliever = false
-
-    if (
-      session.believerPeriodEnd &&
-      new Date(session.believerPeriodEnd).getTime() > Date.now()
-    ) {
-      isBeliever = true
-    }
 
     return {
       ...session,

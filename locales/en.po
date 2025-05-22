@@ -569,7 +569,6 @@ msgstr "ou can claim some $PEN every day. Connect your wallet to see how much $P
 msgid "Pages"
 msgstr "Pages"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:164
 #: app/[lang]/root/Nav.tsx:61
 msgid "Partner program"
 msgstr "Partner program"
@@ -692,7 +691,6 @@ msgstr "SEO"
 msgid "SEO friendly"
 msgstr "SEO friendly"
 
-#: app/[lang]/~/(dashboard)/Sidebar/Sidebar.tsx:146
 #: app/[lang]/site/[domain]/(blog)/series/(series-list)/page.tsx:47
 msgid "Series"
 msgstr "Series"
@@ -827,10 +825,6 @@ msgstr "Updated successfully!"
 #: app/[lang]/~/(dashboard)/settings/payout-account/PayoutAccountDialog/PayoutAccountForm.tsx:110
 msgid "Wallet"
 msgstr "Wallet"
-
-#: components/LoginDialog/LoginDialogContent.tsx:70
-msgid "Wallet login "
-msgstr "Wallet login "
 
 #: components/LoginDialog/LoginDialog.tsx:29
 msgid "Welcome to Plantree"
