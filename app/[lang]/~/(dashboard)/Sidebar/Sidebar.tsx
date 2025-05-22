@@ -139,13 +139,13 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           </Link>
         )}
 
-        <Link href="/~/series">
+        {/* <Link href="/~/series">
           <SidebarItem
             isActive={pathname.startsWith('/~/series')}
             icon={<BookTextIcon size={18} />}
             label={<Trans>Series</Trans>}
           ></SidebarItem>
-        </Link>
+        </Link> */}
 
         <Separator></Separator>
 
@@ -157,13 +157,13 @@ export const Sidebar = ({ bordered = true }: SidebarProps) => {
           ></SidebarItem>
         </Link>
 
-        <Link href="/~/partner-program">
+        {/* <Link href="/~/partner-program">
           <SidebarItem
             isActive={pathname.startsWith('/~/partner-program')}
             icon={<Zap size={18} />}
             label={<Trans>Partner program</Trans>}
           ></SidebarItem>
-        </Link>
+        </Link> */}
 
         <Link href="/~/design">
           <SidebarItem

@@ -640,7 +640,10 @@ function findSitePosts(siteId: string) {
     where: {
       siteId,
       isPage: false,
-      seriesId: null,
+      // seriesId: null,
+      // publishedAt: {
+      //   not: null,
+      // },
     },
     include: {
       postTags: { include: { tag: true } },

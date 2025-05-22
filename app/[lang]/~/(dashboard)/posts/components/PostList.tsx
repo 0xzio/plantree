@@ -11,6 +11,7 @@ interface PostListProps {
 
 export function PostList({ status }: PostListProps) {
   const { data = [], isLoading } = usePosts()
+  // console.log('=========>>>>>>data:', data)
 
   const { id } = useSiteContext()
 
